@@ -1,0 +1,474 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html dir="ltr"><head>
+<title>Apache :: caching - htcacheclean</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta name="robots" content="all">
+<meta name="msapplication-config" content="none">
+<meta name="title" content="Apache 2 Server on Windows for (business) webmasters, developers, home users and programmers">
+<meta name="keywords" content="apache,module,php,mysql,perl,virus,server,forum,blog,download,support,web,host,hosting,proxy,cgi,webdav,http,help,java,log,mail,ssl,windows">
+<link rel="alternate" type="application/rss+xml" title="Apache Lounge" href="https://feedproxy.google.com/ApacheLounge">
+<style type="text/css">body{font-size:11px;font-family:Verdana,Tahoma,Arial,Helvetica,sans-serif;color:#333;background-color:#fff;margin:23px;padding:0}font,th,td,p{font-family:Verdana,Arial,Helvetica,sans-serif}hr{height:0px;border:dotted #F5DEB3 0px;border-top-width:1px}.forumline{background-color:#fff;border:1px #B6D2D3 solid}.top TABLE{border:2px #FFF8DC solid;background-color:#fff}a.mainlevel:link,a.mainlevel:visited{display:block;background:url(/images/menu.png) no-repeat;vertical-align:middle;font-size:11px;font-weight:bold;color:#525D76;text-align:left;padding-top:5px;padding-left:20px;height:20px;height:25px;width:88%;text-decoration:none}a.mainlevel:hover{background-position:0px -25px;text-decoration:underline;color:#0E97CB}td.row{background-image:url(../bg7.gif)}td.rowpic{background-color:#FFF;background-repeat:repeat-y}th{color:#FFA34F;font-size:11px;font-weight:bold;background-color:#B2C2DC;height:25px}td.cat,td.catHead,td.catBottom{height:29px;border-width:0px 0px 0px 0px}th.thHead,th.thSides,th.thTop,th.thLeft,th.thRight,th.thBottom,th.thCornerL,th.thCornerR{color:#fff;;font-size:10px;font-weight:bold;border:#efebe4;border-style:solid;height:16px}td.row3Right,td.spaceRow{background-image:url(../bg7.gif);border:#FFF;border-style:solid}th.thHead,td.catHead{font-size:12px;border-width:1px 1px 0px 1px}th.thSides,td.catSides,td.spaceRow{border-width:0px 1px 0px 1px}th.thRight,td.catRight,td.row3Right{border-width:0px 1px 0px 0px}th.thLeft,td.catLeft{border-width:0px 0px 0px 1px}th.thBottom,td.catBottom{border-width:0px 1px 1px 1px}th.thTop{border-width:1px 0px 0px 0px}th.thCornerL{border-width:1px 0px 0px 1px}th.thCornerR{border-width:1px 1px 0px 0px}.maintitle,h2{color:#525D76;font-weight:bold;font-size:14px;font-family:Verdana,Arial,Helvetica,sans-serif;text-decoration:none;line-height:120%;color:#000}.gen{font-size:12px}.genmed{font-size:11px}.gensmall{font-size:10px}.gen,.genmed,.gensmall{color:#000}.inputbox{border:1px solid #A7C5FF;background-color:#EAF7FB;padding:1px}a.gen,a.genmed,a.gensmall{color:#525D76;text-decoration:none}a.gen:hover,a.genmed:hover,a.gensmall:hover{color:#0E97CB;text-decoration:underline}.mainmenu{font-size:11px;color:#000}a.mainmenu{text-decoration:none;color:#525D76}a.mainmenu:hover{text-decoration:underline;color:#0E97CB}.cattitle{font-size:10px;color:#525D76}a.cattitle{text-decoration:none;color:#525D76}a.cattitle:hover{text-decoration:underline}.forumlink{font-weight:bold;font-size:12px;color:#525D76}a.forumlink:visited{text-decoration:none;color:#525D76}a.forumlink{text-decoration:none;color:#525D76}a.forumlink:hover{text-decoration:underline;color:#0E97CB}.nav{font-weight:bold;font-size:11px;color:#000}a.nav{text-decoration:none;color:#525D76}a.nav:hover{text-decoration:underline}.topictitle{font-weight:bold;font-size:11px;color:#000}a.topictitle:link{text-decoration:none;color:#525D76}a.topictitle:visited{text-decoration:none;color:#E49347}a.topictitle:hover{text-decoration:underline;color:#0E97CB}a:link,a:visited{text-decoration:none;color:#525D76}a:hover{text-decoration:underline;color:#0E97CB}.name{font-size:11px;color:#000}.postdetails{font-size:10px;color:#000}.postbody{font-size:11px}a.postlink:link{text-decoration:none;color:#525D76}a.postlink:visited{text-decoration:none;color:#525D76}a.postlink:hover{text-decoration:underline;color:#0E97CB}.code{font-family:Courier,'Courier New',sans-serif;font-size:11px;color:#000;background-color:#FAFAFA;border:#D1D7DC;border-style:solid;border-left-width:1px;border-top-width:1px;border-right-width:1px;border-bottom-width:1px}.quote{font-family:Verdana,Arial,Helvetica,sans-serif;font-size:11px;color:#444;line-height:125%;background-color:#FAFAFA;border:#D1D7DC;border-style:solid;border-left-width:1px;border-top-width:1px;border-right-width:1px;border-bottom-width:1px}input.post,textarea.post,select{background-color:#FFF}input{text-indent:2px}input.button{background-color:#EFEFEF;color:#000;font-size:11px;font-family:Verdana,Arial,Helvetica,sans-serif}input.mainoption{background-color:#FAFAFA;font-weight:bold}input.liteoption{background-color:#FAFAFA;font-weight:normal}.helpline{background-color:#DEE3E7;border-style:none}.type0{background-color:#B6D2D3}.darkborder{background-color:#999}.middleboxtitle{font-weight:bold;font-size:16px;background-color:#fff}.type5{font-weight:normal;font-size:11px;background-color:#fff}.smalltype{font-size:9px}.topclouds{background-color:#fff;background-image:url(/themes/smoky/images/topclouds.jpg);background-repeat:repeat-x}.leftcol{background-color:#fff;background-image:url(/themes/smoky/images/rightbg.jpg);background-repeat:repeat-y}.rightcol{background-color:#fff;background-image:url(/themes/smoky/images/rightbg.jpg);background-repeat:repeat-y}.jive-header TABLE{border:1px #B6D2D3 solid;background-color:#fff}hr{height:0px;border:dotted #B2C2DC 0px;border-top-width:1px}table,td,p{font-size:11px;font-family:Verdana,Tahoma,Arial,Helvetica,sans-serif}input.mod{font-family:"Arial";font-weight:bold;font-size:100%;color:#fff;background:#B2C2DC;border:1px solid #9cf;font-weight:bold}.postbody{line-height:18px}
+</style>
+<script src="Apache%20::%20caching%20-%20htcacheclean_files/ca-pub-6798050367024611.js"></script><script async="" src="Apache%20::%20caching%20-%20htcacheclean_files/analytics.js"></script><script id="twitter-wjs" src="Apache%20::%20caching%20-%20htcacheclean_files/widgets.js"></script><script type="text/javascript">
+    window.cookieconsent_options = {"message":"The forum uses cookies to ensure you get the best experience.","dismiss":"Got it!","learnMore":"More info","link":null,"theme":"light-bottom"};
+</script>
+<script type="text/javascript" src="Apache%20::%20caching%20-%20htcacheclean_files/cookieconsent.js"></script>
+<script type="text/javascript" charset="utf-8" async="" src="Apache%20::%20caching%20-%20htcacheclean_files/button.js"></script><link rel="stylesheet" type="text/css" href="Apache%20::%20caching%20-%20htcacheclean_files/light-bottom.css"></head>
+<body><div class="cc_banner-wrapper "><div class="cc_banner cc_container cc_container--open"><a href="#null" data-cc-event="click:dismiss" target="_blank" class="cc_btn cc_btn_accept_all">Got it!</a><p class="cc_message">The forum uses cookies to ensure you get the best experience. </p><a class="cc_logo" target="_blank" href="http://silktide.com/cookieconsent">Cookie Consent plugin for the EU cookie law</a></div></div>
+<a name="top"></a>
+<div class="jive-header">
+<table class="topclouds" width="100%" cellspacing="0" cellpadding="1">
+<tbody><tr><td><a href="https://www.apachelounge.com/"><img src="Apache%20::%20caching%20-%20htcacheclean_files/veer.gif" alt="logo" border="0"></a></td><td>
+<br><font size="+2" color="#525D76"><center><b>Apache Lounge</b></center></font><font color="#525D76"><center><b>Webmasters</b></center></font><br></td><td width="24%">&nbsp;</td></tr></tbody></table></div>
+<table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="leftcol" width="172" valign="top" align="left"><br>
+<table class="type0" width="170" cellspacing="0" cellpadding="1" border="0"><tbody><tr><td class="type0">
+<table class="type5" width="100%" cellspacing="0" cellpadding="5" border="0">
+<tbody><tr>
+<td class="type5" bgcolor="#E5E5E5"><br>
+<a href="https://www.apachelounge.com/contact.html" class="mainlevel"><b>About</b></a><br><br>
+<a href="https://www.apachelounge.com/" class="mainlevel"><b>Forum Index</b></a>
+<a href="https://www.apachelounge.com/download/" class="mainlevel"><b>Downloads</b></a>
+<a href="https://www.apachelounge.com/search.php" class="mainlevel"><b>Search</b></a>
+<a href="https://www.apachelounge.com/profile.php?mode=register" class="mainlevel"><b>Register</b></a>
+<a href="https://www.apachelounge.com/login.php" class="mainlevel"><b>Log in</b></a>
+&nbsp;<a href="https://feedproxy.google.com/ApacheLounge" target="_blank" class="mainlevel"><img src="Apache%20::%20caching%20-%20htcacheclean_files/rss.gif" alt="RSS Apache Lounge" border="0"></a>
+
+<br>&nbsp; <iframe id="twitter-widget-0" scrolling="no" allowtransparency="true" class="twitter-follow-button twitter-follow-button-rendered" style="position: static; visibility: visible; width: 145px; height: 20px;" title="Twitter Follow Button" src="Apache%20::%20caching%20-%20htcacheclean_files/follow_button.html" data-screen-name="Apachelounge" frameborder="0"></iframe>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+</td></tr></tbody></table></td></tr></tbody></table><br><br>
+
+<table class="type0" width="170" cellspacing="0" cellpadding="1" border="0"><tbody><tr><td class="type0">
+<table class="type5" width="100%" cellspacing="0" cellpadding="5" border="0">
+<tbody><tr>
+<td class="type5" align="left"><center>
+<script async="" src="Apache%20::%20caching%20-%20htcacheclean_files/adsbygoogle.js"></script>
+<!-- ApacheloungeLeft -->
+<ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-6798050367024611" data-ad-slot="6518563262" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:160px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:160px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;width:160px;height:600px;" width="160" height="600" frameborder="0"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</center>
+</td></tr></tbody></table></td></tr></tbody></table><br>
+<table class="type0" width="170" cellspacing="0" cellpadding="1" border="0"><tbody><tr><td class="type0">
+<table class="type5" width="100%" cellspacing="0" cellpadding="5" border="0">
+<tbody><tr>
+<td class="type5" align="left">
+<center><font color="#666666"><b>Keep Server Online</b><br></font></center><br>
+<span class="smalltype"><i>
+If you find the Apache Lounge, the downloads and overall help useful, please express your satisfaction with a donation.
+<br><br><center>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input name="cmd" value="_s-xclick" type="hidden">
+<input name="hosted_button_id" value="Q9LSP3QQS9TAE" type="hidden">
+<input src="Apache%20::%20caching%20-%20htcacheclean_files/don.gif" name="submit" alt="PayPal" type="image" border="0">
+</form>
+or<br><br>
+<a href="https://www.apachelounge.com/bitcoin.html"><img src="Apache%20::%20caching%20-%20htcacheclean_files/bc.png" alt="Bitcoin" border="0"></a>
+<br><br>
+</center>
+A donation makes a contribution towards the costs, the time and effort that's going in this site and building.<br><br>
+<center>Thank You! Steffen<br><br></center>
+Apache Lounge is not sponsored by anyone.<br><br>Your donations will help to keep this site alive and well, and continuing the building of the binaries.<br> <br>
+</i></span>
+</td></tr></tbody></table></td></tr></tbody></table><br><br>
+</td><td width="100%" valign="top" align="center"><table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr><td>
+<table width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td>
+<table style="border-collapse: collapse" width="100%" cellpadding="10" bgcolor="#FFFFFF">
+<tbody><tr valign="top"><td bgcolor="#ffffff"><table width="100%" cellspacing="0" cellpadding="0" border="0" align="center"><tbody><tr><td>
+<table width="100%" cellspacing="2" cellpadding="2" border="0">
+<tbody><tr>
+<td colspan="2" valign="bottom" align="left"><a class="maintitle" href="https://www.apachelounge.com/viewtopic.php?t=2253&amp;start=0&amp;postdays=0&amp;postorder=asc&amp;highlight=">caching - htcacheclean</a><br>
+<span class="gensmall"><b></b><br>&nbsp; </span></td>
+</tr>
+</tbody></table>
+<table width="100%" cellspacing="2" cellpadding="2" border="0">
+<tbody><tr>
+<td valign="bottom" nowrap="nowrap" align="left"><span class="nav"><a href="https://www.apachelounge.com/posting.php?mode=newtopic&amp;f=2"><img src="Apache%20::%20caching%20-%20htcacheclean_files/post.gif" alt="Post new topic" border="0" align="middle"></a>&nbsp;&nbsp;&nbsp;<a href="https://www.apachelounge.com/posting.php?mode=reply&amp;t=2253"><img src="Apache%20::%20caching%20-%20htcacheclean_files/reply.gif" alt="Reply to topic" border="0" align="middle"></a></span></td>
+<td width="100%" valign="middle" align="left"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="https://www.apachelounge.com/index.php" class="nav">Apache Forum Index</a>
+-&gt; <a href="https://www.apachelounge.com/viewforum.php?f=2" class="nav">Apache</a></span></td>
+</tr>
+</tbody></table>
+<hr><ins class="adsbygoogle" style="display: block; height: 90px;" data-ad-client="ca-pub-6798050367024611" data-ad-slot="2029651188" data-ad-format="link" data-adsbygoogle-status="done"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:1200px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:1200px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;width:1200px;height:90px;" width="1200" height="90" frameborder="0"></iframe></ins></ins></ins><br><br><table class="forumline" width="100%" cellspacing="1" cellpadding="3" border="0">
+<tbody><tr align="right">
+<td class="catHead" colspan="2" height="28"><span class="nav"><a href="https://www.apachelounge.com/viewtopic.php?t=2253&amp;view=previous" class="nav">View previous topic</a> :: <a href="https://www.apachelounge.com/viewtopic.php?t=2253&amp;view=next" class="nav">View next topic</a> &nbsp;</span></td>
+</tr>
+
+<tr>
+<th class="thLeft" width="130" nowrap="nowrap" height="26">Author</th>
+<th class="thRight" nowrap="nowrap">Message</th>
+</tr>
+<!-- ApacheloungeLink-Horz-Resp -->
+
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<tr>
+<td class="row" width="130" valign="top" align="left"><span class="name"><a name="10059"></a><b>paul_in_oz</b></span><br><span class="postdetails"><br><br><br>Joined: 13 Feb 2008<br>Posts: 3<br>Location: Melbourne</span><br></td>
+<td class="row" width="100%" valign="top" height="28"><table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td width="100%"><a href="https://www.apachelounge.com/viewtopic.php?p=10059#10059"><img src="Apache%20::%20caching%20-%20htcacheclean_files/icon_minipost.gif" alt="Post" title="Post" width="12" height="9" border="0"></a><span class="postdetails">Posted: Wed 13 Feb '08 5:07<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: caching - htcacheclean</span></td>
+<td valign="top" nowrap="nowrap"><a href="https://www.apachelounge.com/posting.php?mode=quote&amp;p=10059"><img src="Apache%20::%20caching%20-%20htcacheclean_files/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0"></a>   </td>
+</tr>
+<tr>
+<td colspan="2"><hr></td>
+</tr>
+<tr>
+<td colspan="2"><span class="postbody">Greetings,
+<br>
+
+<br>
+I have just started using Apache 2.2.6 at our organisation as a proxy 
+server. Running on windows server 2003 R2. I have enabled caching using 
+mod_cache / mod_disk_cache which is working well, however the cache has 
+blown out to 20 GB.
+<br>
+
+<br>
+I have tried to use htcacheclean, however I can not get the server to restart afterwards. A sample of my httpd.conf is below:-
+<br>
+
+<br>
+_______________________________________________________________
+<br>
+
+<br>
+LoadModule cache_module modules/mod_cache.so 
+<br>
+
+<br>
+&lt;IfModule mod_cache.c&gt; 
+<br>
+
+<br>
+ LoadModule disk_cache_module modules/mod_disk_cache.so 
+<br>
+# If you want to use mod_disk_cache instead of mod_mem_cache,
+<br>
+# uncomment the line above and comment out the LoadModule line below.
+<br>
+&lt;IfModule mod_disk_cache.c&gt;
+<br>
+
+<br>
+CacheRoot I:/Proxy/ApacheCache
+<br>
+CacheEnable disk /
+<br>
+CacheDirLevels 5
+<br>
+CacheDirLength 3
+<br>
+CacheMaxFileSize 128000
+<br>
+CacheMinFileSize 64 
+<br>
+CacheDisable <a href="http://au1.aconex.com/" target="_blank">http://au1.aconex.com</a>
+<br>
+
+<br>
+htcacheclean -n -t -p I:/Proxy/ApacheCache -l 10000M
+<br>
+
+<br>
+# switches 
+<br>
+# -n Be nice. This causes slower processing in favour of other 
+processes. #htcacheclean will sleep from time to time so that (a) the 
+disk IO will be #delayed and (b) the kernel can schedule other processes
+ in the meantime.
+<br>
+# -t Delete all empty directories.
+<br>
+# -p Path of the root of the cache
+<br>
+# -l Limit size of cache add B for Bytes, K for Kilobytes and M for Megabytes
+<br>
+
+<br>
+&lt;/IfModule&gt; 
+<br>
+
+<br>
+_______________________________________________________________
+<br>
+
+<br>
+I am sure I am missing something. Like a LoadModule or a way to call the
+ htcacheclean, but im not sure what. I have done a fairly extensive 
+search and come up with nothing.
+<br>
+
+<br>
+Can anyone set me on the right track on how to sort this out please?
+<br>
+
+<br>
+Regards,
+<br>
+
+<br>
+Paul.</span><span class="gensmall"></span></td>
+</tr>
+</tbody></table></td>
+</tr>
+<tr>
+<td class="row" width="150" valign="middle" align="left"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+<td class="row" width="100%" valign="bottom" nowrap="nowrap" height="28"><table width="18" cellspacing="0" cellpadding="0" height="18" border="0">
+</table></td>
+</tr>
+<tr>
+<td class="row" width="130" valign="top" align="left"><span class="name"><a name="10190"></a><b>James Blond</b></span><br><span class="postdetails">Moderator<br><img src="Apache%20::%20caching%20-%20htcacheclean_files/3066243e8d00d4770e.gif" alt="" border="0"><br><br>Joined: 19 Jan 2006<br>Posts: 6189<br>Location: Germany, Next to Hamburg</span><br></td>
+<td class="row" width="100%" valign="top" height="28"><table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td width="100%"><a href="https://www.apachelounge.com/viewtopic.php?p=10190#10190"><img src="Apache%20::%20caching%20-%20htcacheclean_files/icon_minipost.gif" alt="Post" title="Post" width="12" height="9" border="0"></a><span class="postdetails">Posted: Fri 29 Feb '08 15:37<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+<td valign="top" nowrap="nowrap"><a href="https://www.apachelounge.com/posting.php?mode=quote&amp;p=10190"><img src="Apache%20::%20caching%20-%20htcacheclean_files/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0"></a>   </td>
+</tr>
+<tr>
+<td colspan="2"><hr></td>
+</tr>
+<tr>
+<td colspan="2"><span class="postbody">First thing you can try is removing the Ifmodule blocks.
+<br>
+Second thing: start apache in debug mode (httpd -e debug) or enable server-info page to see which modules are loaded. 
+<br>
+Anything about that in the error log or windows event log?</span><span class="gensmall"></span></td>
+</tr>
+</tbody></table></td>
+</tr>
+<tr>
+<td class="row" width="150" valign="middle" align="left"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+<td class="row" width="100%" valign="bottom" nowrap="nowrap" height="28"><table width="18" cellspacing="0" cellpadding="0" height="18" border="0">
+</table></td>
+</tr>
+<tr>
+<td class="row" width="130" valign="top" align="left"><span class="name"><a name="10226"></a><b>paul_in_oz</b></span><br><span class="postdetails"><br><br><br>Joined: 13 Feb 2008<br>Posts: 3<br>Location: Melbourne</span><br></td>
+<td class="row" width="100%" valign="top" height="28"><table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td width="100%"><a href="https://www.apachelounge.com/viewtopic.php?p=10226#10226"><img src="Apache%20::%20caching%20-%20htcacheclean_files/icon_minipost.gif" alt="Post" title="Post" width="12" height="9" border="0"></a><span class="postdetails">Posted: Mon 03 Mar '08 2:05<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+<td valign="top" nowrap="nowrap"><a href="https://www.apachelounge.com/posting.php?mode=quote&amp;p=10226"><img src="Apache%20::%20caching%20-%20htcacheclean_files/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0"></a>   </td>
+</tr>
+<tr>
+<td colspan="2"><hr></td>
+</tr>
+<tr>
+<td colspan="2"><span class="postbody">Hi James,
+<br>
+
+<br>
+I #ed out the ifmodule and /ifmodule blocks as suggested. It didn't seem
+ to do anything - neither bad nor good. The server still worked fine.
+<br>
+
+<br>
+I ran a debug and got this error at the end:-
+<br>
+
+<br>
+(OS 10048)Only one usage of each socket address (protocol/network address/port)
+<br>
+is normally permitted.  : make_sock: could not bind to address 0.0.0.0:8080
+<br>
+no listening sockets available, shutting down
+<br>
+Unable to open logs.
+<br>
+
+<br>
+I checked through the windows event viewer and found 2 types of errors relating to this issue:-
+<br>
+
+<br>
+Event ID 3299
+<br>
+The Apache service named  reported the following error:
+<br>
+&gt;&gt;&gt; Invalid command 'htcacheclean', perhaps misspelled or 
+defined by a module not included in the server configuration     .
+<br>
+
+<br>
+Event ID 3299
+<br>
+The Apache service named  reported the following error:
+<br>
+&gt;&gt;&gt; Syntax error on line 537 of C:/Apache2.2/conf/httpd.conf:     .
+<br>
+
+<br>
+I can also post the full debug comments if you would like to see them. I am not sure how to enable server-info.
+<br>
+
+<br>
+Does the above info help at all?
+<br>
+
+<br>
+Regards 
+<br>
+
+<br>
+Paul.</span><span class="gensmall"></span></td>
+</tr>
+</tbody></table></td>
+</tr>
+<tr>
+<td class="row" width="150" valign="middle" align="left"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+<td class="row" width="100%" valign="bottom" nowrap="nowrap" height="28"><table width="18" cellspacing="0" cellpadding="0" height="18" border="0">
+</table></td>
+</tr>
+<tr>
+<td class="row" width="130" valign="top" align="left"><span class="name"><a name="10227"></a><b>tdonovan</b></span><br><span class="postdetails">Moderator<br><br><br>Joined: 17 Dec 2005<br>Posts: 610<br>Location: Milford, MA, USA</span><br></td>
+<td class="row" width="100%" valign="top" height="28"><table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td width="100%"><a href="https://www.apachelounge.com/viewtopic.php?p=10227#10227"><img src="Apache%20::%20caching%20-%20htcacheclean_files/icon_minipost.gif" alt="Post" title="Post" width="12" height="9" border="0"></a><span class="postdetails">Posted: Mon 03 Mar '08 4:02<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+<td valign="top" nowrap="nowrap"><a href="https://www.apachelounge.com/posting.php?mode=quote&amp;p=10227"><img src="Apache%20::%20caching%20-%20htcacheclean_files/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0"></a>   </td>
+</tr>
+<tr>
+<td colspan="2"><hr></td>
+</tr>
+<tr>
+<td colspan="2"><span class="postbody">Maybe you misunderstood what htcacheclean is.
+<br>
+
+<br>
+It is not an Apache directive that you put in your httpd.conf file - it 
+is a separate stand-alone program that you run.  The docs are <a href="http://httpd.apache.org/docs/2.2/programs/htcacheclean.html" target="_blank" class="postlink"><span style="text-decoration: underline">here</span></a>.
+<br>
+
+<br>
+Also - there is no space between switches and values for htcacheclean.
+<br>
+For example, it should be: <span style="font-weight: bold">-pI:/Proxy/ApacheCache</span>, not <span style="font-weight: bold">-p I:/Proxy/ApacheCache</span>.
+<br>
+
+<br>
+An example of starting up htcacheclean from the Windows command prompt  is:</span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tbody><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code">START /MIN "CacheClean" htcacheclean.exe -d5 -n -t -pI:/Proxy/ApacheCache -l10000M</td>	</tr></tbody></table><span class="postbody">This will cause the cache to be cleaned every 5 minutes.
+<br>
+You can stop the cache-cleaning process by closing the <span style="font-style: italic">(minimized)</span> CacheClean window.
+<br>
+Be careful not to get two or more instances of htcacheclean running at the same time.
+<br>
+
+<br>
+If you don't want to use the <span style="font-weight: bold">-d</span> switch to run htcacheclean continuously, check out the Windows <a href="http://msdn2.microsoft.com/en-us/library/bb736357%28VS.85%29.aspx" target="_blank" class="postlink">SCHTASKS</a> command to schedule it to run periodically.
+<br>
+
+<br>
+<span style="font-weight: bold"><span style="font-style: italic">-tom-</span></span></span><span class="gensmall"></span></td>
+</tr>
+</tbody></table></td>
+</tr>
+<tr>
+<td class="row" width="150" valign="middle" align="left"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+<td class="row" width="100%" valign="bottom" nowrap="nowrap" height="28"><table width="18" cellspacing="0" cellpadding="0" height="18" border="0">
+</table></td>
+</tr>
+<tr>
+<td class="row" width="130" valign="top" align="left"><span class="name"><a name="10247"></a><b>paul_in_oz</b></span><br><span class="postdetails"><br><br><br>Joined: 13 Feb 2008<br>Posts: 3<br>Location: Melbourne</span><br></td>
+<td class="row" width="100%" valign="top" height="28"><table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td width="100%"><a href="https://www.apachelounge.com/viewtopic.php?p=10247#10247"><img src="Apache%20::%20caching%20-%20htcacheclean_files/icon_minipost.gif" alt="Post" title="Post" width="12" height="9" border="0"></a><span class="postdetails">Posted: Tue 04 Mar '08 0:49<span class="gen">&nbsp;</span>&nbsp; &nbsp;Post subject: </span></td>
+<td valign="top" nowrap="nowrap"><a href="https://www.apachelounge.com/posting.php?mode=quote&amp;p=10247"><img src="Apache%20::%20caching%20-%20htcacheclean_files/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0"></a>   </td>
+</tr>
+<tr>
+<td colspan="2"><hr></td>
+</tr>
+<tr>
+<td colspan="2"><span class="postbody">Thanks tdonovan, (Tom)
+<br>
+
+<br>
+I could get it running from the command prompt OK, and it worked. So as a
+ work-around (or so I thought) I set it up as a scheduled task. Which 
+works OK as well.
+<br>
+
+<br>
+I was definitely under the impression that it ran from the httpd.conf file - thanks for straightening me out on that one!! 
+<br>
+
+<br>
+This is the first time I have ever used Apache - we had to build a new 
+proxy server as we had our old proxy service outsourced through 
+messagelabs and it was slow and laggy, and we didn't want to use ISA as 
+the boss was not too enamored with it. - He has used it before, I 
+haven't as I have never set up a proxy before.
+<br>
+
+<br>
+The Apache - once I started to figure it out - was very easy to set up, just seemed to work <img src="Apache%20::%20caching%20-%20htcacheclean_files/icon_smile.gif" alt="Smile" border="0"> but the htcacheclean kinda had me stumped!!
+<br>
+
+<br>
+Thanks to you and James for your help.....</span><span class="gensmall"></span></td>
+</tr>
+</tbody></table></td>
+</tr>
+<tr>
+<td class="row" width="150" valign="middle" align="left"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+<td class="row" width="100%" valign="bottom" nowrap="nowrap" height="28"><table width="18" cellspacing="0" cellpadding="0" height="18" border="0">
+</table></td>
+</tr>
+</tbody></table>
+<center>
+<br>
+<!-- ApacheloungeMiddle -->
+<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-6798050367024611" data-ad-slot="4059653137" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><ins id="aswift_2_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;width:728px;height:90px;" width="728" height="90" frameborder="0"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</center><br>
+<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
+<tbody><tr>
+<td valign="middle" nowrap="nowrap" align="left"><span class="nav"><a href="https://www.apachelounge.com/posting.php?mode=newtopic&amp;f=2"><img src="Apache%20::%20caching%20-%20htcacheclean_files/post.gif" alt="Post new topic" border="0" align="middle"></a>&nbsp;&nbsp;&nbsp;<a href="https://www.apachelounge.com/posting.php?mode=reply&amp;t=2253"><img src="Apache%20::%20caching%20-%20htcacheclean_files/reply.gif" alt="Reply to topic" border="0" align="middle"></a></span></td>
+<td width="100%" valign="middle" align="left"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="https://www.apachelounge.com/index.php" class="nav">Apache Forum Index</a>
+-&gt; <a href="https://www.apachelounge.com/viewforum.php?f=2" class="nav">Apache</a></span></td>
+<td valign="top" nowrap="nowrap" align="right"><span class="nav"></span>
+</td>
+</tr>
+<tr>
+<td colspan="3" align="left"><span class="nav">Page <b>1</b> of <b>1</b></span></td>
+</tr>
+</tbody></table>
+<table width="100%" cellspacing="2" border="0" align="center">
+<tbody><tr>
+<td width="40%" valign="top" nowrap="nowrap" align="left"><span class="gensmall"></span><br>
+</td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+</td></tr>
+</tbody></table>
+</td></tr>
+</tbody></table></td></tr></tbody></table>
+</td></tr></tbody></table>
+<table class="darkborder" width="100%" cellspacing="0" cellpadding="1" border="0"><tbody><tr><td>
+<table class="topclouds" width="100%" cellspacing="0" cellpadding="3" border="0"><tbody><tr><td class="nsclouds" align="right">&nbsp;
+</td></tr></tbody></table></td></tr></tbody></table>
+<center><br>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-170043-6', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- ApacheLoungeBottom -->
+<ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-6798050367024611" data-ad-slot="7417839583" data-adsbygoogle-status="done"><ins id="aswift_3_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><ins id="aswift_3_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;width:336px;height:280px;" width="336" height="280" frameborder="0"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</center>
+
+
+
+</body></html>

@@ -1,0 +1,1 @@
+if (typeof pluso != "undefined") pluso.setCounter("4", "http://loco.ru/materials/47-convert-database-to-utf8", undefined, undefined, undefined);

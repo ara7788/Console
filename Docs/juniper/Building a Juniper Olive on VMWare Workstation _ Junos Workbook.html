@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html class="csstransforms csstransforms3d csstransitions js js" lang="en-US"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+  <!-- Basic Page Needs -->
+  <meta charset="UTF-8">
+  <title>Building a Juniper Olive on VMWare Workstation | Junos Workbook</title>
+    
+    
+  
+  
+  <!-- Mobile Specific Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <!-- Custom google fonts load -->
+    
+    
+  <!-- Start Custom Style & JavaScript -->
+  <!-- Dark Style -->
+<link rel="stylesheet" href="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/dark-style.css"> 
+
+<!-- Color Skins -->
+<link rel="stylesheet" href="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/blue.css" name="skins"> 
+
+ 
+<!-- Layout Style -->
+<link rel="stylesheet" href="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/wide.css" name="layout"> 
+
+
+
+<!-- Responsive Layouts -->
+<link rel="stylesheet" href="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/skeleton.css"> 
+<link rel="stylesheet" href="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/javascript.css">
+<link rel="stylesheet" href="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/shortcodes.css">
+<link rel="stylesheet" href="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/style.css">
+<link rel="stylesheet" href="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/boxed.css">
+<link rel="stylesheet" href="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/switcher.css">
+<link rel="stylesheet" href="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/custom.css">
+  
+<!-- Small Icons -->
+<link rel="stylesheet" href="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/icons.css"> 
+
+<!-- All custom css codes -->
+
+
+<style>
+
+
+
+.js .selectnav { 
+	border:1px solid #262626;
+}
+
+
+
+
+
+
+
+
+.logo { margin-top:3px !important; }
+
+
+
+
+ul#nav { height:90px !important; }
+
+
+
+
+
+.navigation ul li a{
+	padding-top: 40px ;
+    padding-bottom: 37px ;
+}
+
+
+
+
+.navigation ul li ul { top:87px  !important; }
+
+
+
+
+/* ====================== Custom CSS Code ============================ */
+
+
+
+
+
+
+</style>
+
+
+<!--[if lt IE 9]>
+  <script src="http://www.junosworkbook.com/wp-content/themes/Crevision/js/html5.js"></script>
+<![endif]-->
+
+
+        <!-- End --> 
+  
+  
+  <!-- Favicons -->
+    <link rel="shortcut icon" href="http://www.junosworkbook.com/images/favico.ico">
+  
+  
+<!-- All in One SEO Pack 2.3.13.2 by Michael Torbert of Semper Fi Web Design[339,424] -->
+<meta name="description" content="Ever wondered how people build a Juniper Olive? This lab will demonstrate the steps needed to build your very own Junos Olive running 12.1 in VMWare Workstation">
+
+<meta name="keywords" content="juniper,juniper networks,jncia,junos,jncis,jncis-ent,j series,ex series,firefly,junosv,training,workbook,olive">
+
+<link href="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/junosworkbook.css" rel="stylesheet" type="text/css"> 
+<link rel="canonical" href="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/building-a-juniper-networks-junos-olive-on-vmware-works_002.html">
+			<script src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/cbgapi.loaded_1" async=""></script><script src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/ca-pub-6321519742657346.js"></script><script src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/cbgapi.loaded_0" async=""></script><script type="text/javascript" async="" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/plusone.js" gapi_processed="true"></script><script async="" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/analytics.js"></script><script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-46152895-1', 'auto');
+			
+			ga('send', 'pageview');
+			</script>
+<!-- /all in one seo pack -->
+<link rel="dns-prefetch" href="http://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Junos Workbook » Feed" href="http://www.junosworkbook.com/feed">
+<link rel="alternate" type="application/rss+xml" title="Junos Workbook » Comments Feed" href="http://www.junosworkbook.com/comments/feed">
+<link rel="alternate" type="application/rss+xml" title="Junos Workbook » Building a Juniper Networks Junos Olive on VMWare Workstation Comments Feed" href="http://www.junosworkbook.com/workbooks/jncia/building-a-juniper-networks-junos-olive-on-vmware-workstation/feed">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/www.junosworkbook.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.8"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b===c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/wp-emoji-release.js" type="text/javascript" defer="defer"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="sociablecss-css" href="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/sociable.css" type="text/css" media="all">
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/jquery_004.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/jquery-migrate.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/sociable.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/vuible.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/addtofavorites.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/jquery_007.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/jquery-ui.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/jquery_006.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/jquery_008.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/ddsmoothmenu.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/jquery_005.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/jquery_003.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/jquery_009.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/colortip.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/tytabs.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/carousel.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/jquery.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/jquery_002.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/selectnav.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/custom.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/jflickrfeed.js"></script>
+<link rel="https://api.w.org/" href="http://www.junosworkbook.com/wp-json/">
+<link rel="shortlink" href="http://www.junosworkbook.com/?p=279">
+<link rel="alternate" type="application/json+oembed" href="http://www.junosworkbook.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation">
+<link rel="alternate" type="text/xml+oembed" href="http://www.junosworkbook.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;format=xml">
+<script type="text/javascript">var base_url_sociable = 'http://www.junosworkbook.com/wp-content/plugins/sociable/'</script><script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/plusone_002.js" gapi_processed="true"></script>		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		  
+<script src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/secureAnonymousFramework"></script><script type="text/javascript" charset="utf-8" async="" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/button.js"></script><style type="text/css">* html #li_ui_li_gen_1501137524954_0 a#li_ui_li_gen_1501137524954_0-link{height:1% !important;}#li_ui_li_gen_1501137524954_0{position:relative !important;overflow:visible !important;display:block !important;}#li_ui_li_gen_1501137524954_0 span{-webkit-box-sizing:content-box !important;-moz-box-sizing:content-box !important;box-sizing:content-box !important;}#li_ui_li_gen_1501137524954_0 a#li_ui_li_gen_1501137524954_0-link{border:0 !important;height:20px !important;text-decoration:none !important;padding:0 !important;margin:0 !important;display:inline-block !important;}#li_ui_li_gen_1501137524954_0 a#li_ui_li_gen_1501137524954_0-link:link, #li_ui_li_gen_1501137524954_0 a#li_ui_li_gen_1501137524954_0-link:visited, #li_ui_li_gen_1501137524954_0 a#li_ui_li_gen_1501137524954_0-link:hover, #li_ui_li_gen_1501137524954_0 a#li_ui_li_gen_1501137524954_0-link:active{border:0 !important;text-decoration:none !important;}#li_ui_li_gen_1501137524954_0 a#li_ui_li_gen_1501137524954_0-link:after{content:"." !important;display:block !important;clear:both !important;visibility:hidden !important;line-height:0 !important;height:0 !important;}#li_ui_li_gen_1501137524954_0 #li_ui_li_gen_1501137524954_0-logo{background-image:url(https://static.licdn.com/scds/common/u/images/apps/connect/sprites/sprite_connect_v14.png) !important;background-position:0px -593px !important;background-repeat:no-repeat !important;background-color:#0077b5 !important;background-size:initial !important;cursor:pointer !important;border:0 !important;border-right:1px solid #066094 !important;text-indent:-9999em !important;overflow:hidden !important;padding:0 !important;margin:0 !important;position:absolute !important;left:0px !important;top:0px !important;display:block !important;width:20px !important;height:20px !important;float:right !important;border-radius:2px !important;-moz-border-radius:2px !important;border-top-right-radius:2px !important;border-bottom-right-radius:2px !important;-moz-border-radius-topright:2px !important;-moz-border-radius-bottomright:2px !important;}#li_ui_li_gen_1501137524954_0 #li_ui_li_gen_1501137524954_0-title{color:#fff !important;cursor:pointer !important;display:block !important;white-space:nowrap !important;float:left !important;margin-left:1px !important;vertical-align:top !important;overflow:hidden !important;text-align:center !important;height:18px !important;padding:0 4px 0 23px !important;border:1px solid #000 !important;border-top-color:#0077b5 !important;border-right-color:#0077b5 !important;border-bottom-color:#0077b5 !important;border-left-color:#0077b5 !important;text-shadow:0 -1px #005887 !important;line-height:20px !important;border-radius:2px !important;-moz-border-radius:2px !important;border-top-right-radius:2px !important;border-bottom-right-radius:2px !important;-moz-border-radius-topright:2px !important;-moz-border-radius-bottomright:2px !important;background-color:#0077b5 !important;background-image:-moz-linear-gradient(top, #0077b5 0%, #0077b5 100%) !important;}#li_ui_li_gen_1501137524954_0.hovered #li_ui_li_gen_1501137524954_0-title{border:1px solid #000 !important;border-top-color:#0369a0 !important;border-right-color:#0369a0 !important;border-bottom-color:#0369a0 !important;border-left-color:#0369a0 !important;background-color:#0369a0 !important;background-image:-moz-linear-gradient(top, #0369a0 0%, #0369a0 100%) !important;}#li_ui_li_gen_1501137524954_0.clicked #li_ui_li_gen_1501137524954_0-title, #li_ui_li_gen_1501137524954_0.down #li_ui_li_gen_1501137524954_0-title{color:#fff !important;border:1px solid #000 !important;border-top-color:#066094 !important;border-right-color:#066094 !important;border-bottom-color:#066094 !important;border-left-color:#066094 !important;background-color:#066094 !important;background-image:-moz-linear-gradient(top, #066094 0%, #066094 100%) !important;}.IN-shadowed #li_ui_li_gen_1501137524954_0 #li_ui_li_gen_1501137524954_0-title{}.IN-shadowed #li_ui_li_gen_1501137524954_0.hovered #li_ui_li_gen_1501137524954_0-title{}.IN-shadowed #li_ui_li_gen_1501137524954_0.clicked #li_ui_li_gen_1501137524954_0-title, .IN-shadowed #li_ui_li_gen_1501137524954_0.down #li_ui_li_gen_1501137524954_0-title{}#li_ui_li_gen_1501137524954_0 #li_ui_li_gen_1501137524954_0-title-text, #li_ui_li_gen_1501137524954_0 #li_ui_li_gen_1501137524954_0-title-text *{color:#fff !important;font-size:11px !important;font-family:Arial, sans-serif !important;font-weight:bold !important;font-style:normal !important;-webkit-font-smoothing:antialiased !important;display:inline-block !important;background:transparent none !important;vertical-align:top !important;height:18px !important;line-height:20px !important;float:none !important;}#li_ui_li_gen_1501137524954_0 #li_ui_li_gen_1501137524954_0-title-text strong{font-weight:bold !important;}#li_ui_li_gen_1501137524954_0 #li_ui_li_gen_1501137524954_0-title-text em{font-style:italic !important;}#li_ui_li_gen_1501137524954_0.hovered #li_ui_li_gen_1501137524954_0-title-text, #li_ui_li_gen_1501137524954_0.hovered #li_ui_li_gen_1501137524954_0-title-text *{color:#fff !important;}#li_ui_li_gen_1501137524954_0.clicked #li_ui_li_gen_1501137524954_0-title-text, #li_ui_li_gen_1501137524954_0.down #li_ui_li_gen_1501137524954_0-title-text, #li_ui_li_gen_1501137524954_0.clicked #li_ui_li_gen_1501137524954_0-title-text *, #li_ui_li_gen_1501137524954_0.down #li_ui_li_gen_1501137524954_0-title-text *{color:#fff !important;}#li_ui_li_gen_1501137524954_0 #li_ui_li_gen_1501137524954_0-title #li_ui_li_gen_1501137524954_0-mark{display:inline-block !important;width:0px !important;overflow:hidden !important;}.success #li_ui_li_gen_1501137524954_0 #li_ui_li_gen_1501137524954_0-title{color:#fff !important;border-top-color:#0077b5 !important;border-right-color:#0077b5 !important;border-bottom-color:#0077b5 !important;border-left-color:#0077b5 !important;background-color:#0077b5 !important;background-image:-moz-linear-gradient(top, #0077b5 0%, #0077b5 100%) !important;}.success #li_ui_li_gen_1501137524954_0 #li_ui_li_gen_1501137524954_0-title-text, .success #li_ui_li_gen_1501137524954_0 #li_ui_li_gen_1501137524954_0-title-text *{color:#fff !important;}.IN-shadowed .success #li_ui_li_gen_1501137524954_0 #li_ui_li_gen_1501137524954_0-title{}.success #li_ui_li_gen_1501137524954_0.hovered #li_ui_li_gen_1501137524954_0-title{color:#fff !important;border-top-color:#0369a0 !important;border-right-color:#0369a0 !important;border-bottom-color:#0369a0 !important;border-left-color:#0369a0 !important;background-color:#0369a0 !important;background-image:-moz-linear-gradient(top, #0369a0 0%, #0369a0 100%) !important;}.success #li_ui_li_gen_1501137524954_0.hovered #li_ui_li_gen_1501137524954_0-title-text, .success #li_ui_li_gen_1501137524954_0.hovered #li_ui_li_gen_1501137524954_0-title-text *{color:#fff !important;}.success #li_ui_li_gen_1501137524954_0.clicked #li_ui_li_gen_1501137524954_0-title, .success #li_ui_li_gen_1501137524954_0.down #li_ui_li_gen_1501137524954_0-title{color:#fff !important;border-top-color:#066094 !important;border-right-color:#066094 !important;border-bottom-color:#066094 !important;border-left-color:#066094 !important;background-color:#066094 !important;background-image:-moz-linear-gradient(top, #066094 0%, #066094 100%) !important;}.success #li_ui_li_gen_1501137524954_0.clicked #li_ui_li_gen_1501137524954_0-title-text, .success #li_ui_li_gen_1501137524954_0.down #li_ui_li_gen_1501137524954_0-title-text, .success #li_ui_li_gen_1501137524954_0.clicked #li_ui_li_gen_1501137524954_0-title-text *, .success #li_ui_li_gen_1501137524954_0.down #li_ui_li_gen_1501137524954_0-title-text *{color:#fff !important;}.IN-shadowed .success #li_ui_li_gen_1501137524954_0.clicked #li_ui_li_gen_1501137524954_0-title, .IN-shadowed .success #li_ui_li_gen_1501137524954_0.down #li_ui_li_gen_1501137524954_0-title{}#li_ui_li_gen_1501137524968_1-container.IN-right {display:inline-block !important;float:left !important;overflow:visible !important;position:relative !important;height:20px !important;padding-left:2px !important;line-height:1px !important;cursor:pointer !important;}#li_ui_li_gen_1501137524968_1.IN-right {display:block !important;float:left !important;height:20px !important;margin-right:4px !important;padding-right:4px !important;background-image:url(https://static.licdn.com/scds/common/u/images/apps/connect/sprites/sprite_connect_v14.png) !important;background-color:transparent !important;background-repeat:no-repeat !important;background-position:right -447px !important;}#li_ui_li_gen_1501137524968_1-inner.IN-right {display:block !important;float:left !important;padding-left:8px !important;text-align:center !important;background-image:url(https://static.licdn.com/scds/common/u/images/apps/connect/sprites/sprite_connect_v14.png) !important;background-color:transparent !important;background-repeat:no-repeat !important;background-position:0px -426px !important;}#li_ui_li_gen_1501137524968_1-content.IN-right {display:inline !important;font-size:11px !important;color:#4e4e4e !important;font-weight:bold !important;font-family:Arial, sans-serif !important;line-height:20px !important;padding:0 5px 0 5px !important;}#li_ui_li_gen_1501137524968_1-container.IN-empty {display:none !important;}#li_ui_li_gen_1501137524968_1-container.IN-hidden #li_ui_li_gen_1501137524968_1 {display:none !important;}</style></head>
+
+ 
+<body class="">
+
+  <div id="wrap" class="boxed">
+  
+  <header>
+    <div class="container clearfix">
+    
+      <div class="one-third column">
+        <div class="logo">
+        <a href="http://www.junosworkbook.com/">
+                  <img src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/logo.png" alt="Junos Workbook">
+                  </a>
+        </div>
+      </div><!-- End Logo -->
+      
+      <div class="two-thirds column">
+        <nav id="menu" class="navigation">
+        
+        			     <ul id="nav" class="menu"><li id="menu-item-9" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-9"><a href="http://www.junosworkbook.com/">Home</a></li>
+<li id="menu-item-29" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-29" style="z-index: 100;"><a href="http://www.junosworkbook.com/about">About<span class="downarrowclass"></span></a>
+<ul class="sub-menu" style="display: none; top: 93px; visibility: visible;">
+	<li id="menu-item-166" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-166"><a href="http://www.junosworkbook.com/about/donations-and-contributions">Donations</a></li>
+	<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-165"><a href="http://www.junosworkbook.com/about/junos-workbook-team">Junos Workbook Team</a></li>
+</ul>
+</li>
+<li id="menu-item-28" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-28"><a href="http://www.junosworkbook.com/blog">Blog</a></li>
+<li id="menu-item-661" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-661"><a href="http://www.junosworkbook.com/juno-lab">Juno Lab</a></li>
+<li id="menu-item-26" class="menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor menu-item-has-children menu-item-26" style="z-index: 99;"><a href="http://www.junosworkbook.com/workbooks" class="">Workbooks<span class="downarrowclass"></span></a>
+<ul class="sub-menu" style="top: 93px; visibility: visible; left: 0px; width: 180px; display: none;">
+	<li id="menu-item-27" class="menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor menu-item-27"><a href="http://www.junosworkbook.com/workbooks/jncia">JNCIA-Junos</a></li>
+	<li id="menu-item-650" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-650"><a href="http://www.junosworkbook.com/workbooks/jncia/jncia-practice-exam">JNCIA Practice Exam</a></li>
+	<li id="menu-item-653" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-653"><a href="http://www.junosworkbook.com/workbooks/jncis-ent">JNCIS-ENT</a></li>
+</ul>
+</li>
+<li id="menu-item-24" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24"><a href="http://www.junosworkbook.com/topology">Topology</a></li>
+</ul><select class="selectnav" id="selectnav1"><option value="" selected="selected">- Navigation Menu - </option><option value="http://www.junosworkbook.com/">Home</option><option value="http://www.junosworkbook.com/about">About</option><option value="http://www.junosworkbook.com/about/donations-and-contributions">- Donations</option><option value="http://www.junosworkbook.com/about/junos-workbook-team">- Junos Workbook Team</option><option value="http://www.junosworkbook.com/blog">Blog</option><option value="http://www.junosworkbook.com/juno-lab">Juno Lab</option><option value="http://www.junosworkbook.com/workbooks">Workbooks</option><option value="http://www.junosworkbook.com/workbooks/jncia">- JNCIA-Junos</option><option value="http://www.junosworkbook.com/workbooks/jncia/jncia-practice-exam">- JNCIA Practice Exam</option><option value="http://www.junosworkbook.com/workbooks/jncis-ent">- JNCIS-ENT</option><option value="http://www.junosworkbook.com/topology">Topology</option></select>			      
+          
+        </nav>
+      </div><!-- End Menu -->
+      
+      <div class="sixteen columns"><hr></div>
+      
+    </div><!-- End Container -->
+  </header><!-- <<< End Header >>> -->
+  
+  <div class="container gallery clearfix">
+  
+        
+  
+  
+
+<div class="sixteen columns"> <h1 class="page-title">Building a Juniper Networks Junos Olive on VMWare Workstation<span class="line"></span></h1>
+</div><!-- Page Title -->
+
+
+      
+  
+  <!-- Start Slider -->
+    
+  
+
+  
+  
+        
+
+
+    
+    <!-- Start Page -->
+    <div class="page-columns">
+    
+        
+           
+   <div id="welcome">
+   <div class="sixteen columns">
+   <div class="qoute">
+   <p>Ever wondered how people build a Juniper Olive router? This lab 
+will demonstrate the steps needed to build your very own Juniper 
+Networks Junos Olive running 12.1 in VMWare Workstation from start to 
+finish.</p>
+   </div>
+   </div>
+   </div>
+<div style="text-align:center;padding-bottom:0px;">
+
+<script async="" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/adsbygoogle.js"></script>
+<!-- JunosWorkbook - Large Leaderboard -->
+<ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px" data-ad-client="ca-pub-6321519742657346" data-ad-slot="1599289629" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:970px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:970px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;width:970px;height:90px;" width="970" height="90" frameborder="0"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</div>
+<p>&nbsp;<br>
+</p><div id="horizontal-tabs" class=""><br>
+<ul class="tabs"><br>
+<li id="tab1" class="current"> What is Junos Olive </li><br>
+<li id="tab2"> Patching the jinstall </li><br>
+<li id="tab3"> Building the Virtual Machine </li><br>
+<li id="tab4"> Installing Junos </li><br>
+</ul><div class="contents"><br>
+<div id="content1" class="tabscontent" style="display: block;"><br>
+<p><span class="dropcap black">T</span>the question that gets tossed 
+around the most by engineers wanting to learn Junos is “What is olive 
+and can it help me learn junos?” To answer the first part, you need to 
+look at the architecture of Junos. The Juniper Junos operating system 
+runs on FreeBSD Unix using x32_64, power pc or other processor 
+architectures. Keep in mind the underlying operating system is Unix. 
+Junos runs as an application on of the Unix Kernel so in a nut shell 
+Olive is an installation of Juniper Junos Software on a virtual machine 
+running FreeBSD.</p>
+<p>So can Olive help you learn Junos? Of course!</p>
+<p>There are several limitations of Olive that you may run into once you
+ have one built and you’re trying to learn general technologies for 
+example, Junos Olive interfaces do not support DHCP Client functionality
+ so you MUST assign an IP Address manually to the interface.</p>
+<p>Another limitation is the absence of a Packet Forwarding Engine (PFE)
+ which is an asic based engine used to speed up router performance using
+ hardware. With this in mind you could NEVER use olive in a production 
+environment due to all traffic being process routed so to speak. Traffic
+ patterns and performance would be unpredictable and the software would 
+be prone to crashing under heavy loads.</p>
+<p>Most people will build an Olive on qemu or virtualbox because they 
+are freely available however those platforms have additional learning 
+curves in which case the goal of this website is to teach you Junos in 
+the most effective, timely manner. VMWare Workstation is a paid product 
+however you can download the product for 30 days on a trial license.</p>
+<p>Due to the way the labs are published on Junos Workbook, using 
+virtualbox and qemu would requires some additional tinkering to match 
+the topology of the Junos Workbook.</p>
+<p>In order to build a Junos Olive you must first have the jinstall file
+ needed for i386 architecture. An example being; 
+jinstall-12.1R8.4-domestic-signed.tgz</p>
+<p>Once you have this file you must than obtain the minimal install iso for FreeBSD 4.11 which can be <a href="http://ftp-archive.freebsd.org/mirror/FreeBSD-Archive/old-releases/i386/ISO-IMAGES/4.11/4.11-RELEASE-i386-miniinst.iso" targert="_blank">downloaded here</a></p>
+<p>You will also need to do some modifying of the jinstall file in order
+ for the installation to be successful. These modifications can be 
+extremely complex for those who do not know Linux which is why a script 
+file is provided to complete these modifications for you with very 
+little effort. The script file can be <a href="http://www.junosworkbook.com/downloads/junos-olive-patch.zip" target="_blank">downloaded here</a></p>
+<p>Once you have these files you can continue on to the next tab that 
+show you how to fix up the jinstall file than on to building the VM and 
+installing Junos.<br>
+</p><br>
+</div><div id="content2" class="tabscontent"><br>
+<h2 class="title">Patching the jinstall file using the script<span class="line"></span></h2><br>
+<p>Prior to getting started you must prepare the jinstall file to ensure
+ that it can install successfully on Olive. If you have a freshly 
+downloaded copy of the jinstall file than there is a specific line of 
+code in the installer that will make the install fail due to unsupported
+ hardware. To go more into detail about this issue, the jinstall file 
+checks to see if the Physical Interface Cards (PIC’s) are present on the
+ system. This is a simple feature that attempts to detect if the machine
+ you’re installing the software on is an actual Juniper Networks 
+machine. This check can be disabled by using a script provided by Junos 
+Workbook which can be downloaded below;</p>
+<div style="text-align: center"><a href="http://www.junosworkbook.com/downloads/junos-olive-patch.zip" class="button small color"> Download Junos Olive Patch Script </a></div>
+<p>To patch the freshly downloaded jinstall file you’re going to need to
+ have access to a linux machine. This machine can be a virtual machine 
+as well that you can use temporary to fix the jinstall file. To quickly 
+build a virtual machine capable of patching the jinstall you can 
+download a LIVE linux distro such as Ubuntu or Fedora, this is obviously
+ your choice.</p>
+<p>Once you have the Live image running on a VM you will than need to 
+copy the jinstall file and the junos-olive-patch.sh script file to the 
+live box. Then from command line execute the following command;</p>
+<pre class="terminal">user@live:~$ <span class="config_cmd">./junos-olive-patch.sh jinstall-11.4R2.14-domestic-signed.tgz</span>
+</pre>
+<p>Once the patch is successful the new file name will be <span class="cmd">jinstall-11.4R2.14-domestic.tgz</span>. To make things easier down the road create an ISO file from the newly patched file using the following command;</p>
+<pre class="terminal">user@live:~$ <span class="config_cmd">mkisofs jinstall-11.4R2.14-domestic.tgz &gt; olive.iso</span>
+</pre>
+<p>Now that the ISO file has been created you must move this file back 
+to your desktop. Whatever method you use is up to you. FTP, web upload, 
+drag and drop, etc… Once the ISO file is now on your desktop you can 
+than continue onto building the virtual machine.</p>
+<p>Of course what kind of educational website would this be if we did 
+not tell you how to do this yourself manually without the script? The 
+script is provided without any guarantees and is used as a quick fix to 
+save you a ton of time but if you really want to know how to do it 
+yourself then keep reading, if not continue on to building the virtual 
+machine.</p>
+<p></p><h2 class="title">Manually patching the jinstall file<span class="line"></span></h2><br>
+The following is a command by command demonstration of what the junos olive patch script does automatically behind the scenes.<p></p>
+<pre class="terminal"># <span class="config_cmd">mount /cdrom</span>
+# <span class="config_cmd">cd /var/tmp</span>
+# <span class="config_cmd">mkdir jinstall</span>
+# <span class="config_cmd">cd jinstall</span>
+# <span class="config_cmd">tar zxvf /cdrom/jinstall-12.1R8.4-domestic-signed.tgz</span>     &lt;- your file name may be different.
+# <span class="config_cmd">mkdir pkgtools</span>
+# <span class="config_cmd">cd pkgtools</span>
+# <span class="config_cmd">tar zxvf ../pkgtools.tgz</span>
+# <span class="config_cmd">cd bin</span>
+# <span class="config_cmd">cp /usr/bin/true  checkpic</span>
+# <span class="config_cmd">cd ..</span>
+# <span class="config_cmd">tar zcvf ../pkgtools.tgz *</span>
+# <span class="config_cmd">cd ..</span>
+# <span class="config_cmd">rm -rf pkgtools</span>
+# <span class="config_cmd">tar zcvf ../jinstall-12.1R8.4-domestic-olive.tgz *</span>
+# <span class="config_cmd">cp jinstall-12.1R8.4-domestic-olive.tgz /root</span>
+# <span class="config_cmd">rm -rf jinstall</span>
+</pre>
+<p></p><br>
+</div><div id="content3" class="tabscontent"><br>
+<h2 class="title">Creating the Virtual Machine<span class="line"></span></h2><br>
+<p>To get started building an Olive we first need to create the Virtual 
+Machine within VMWare Workstation. You can download the Trial of VMWare 
+Workstation which has a 30 day license from the VMWare website or 
+clicking the link in the right footer navigation menu.</p>
+<p>Any version of VMWare Workstation after version 7 will be fine so if 
+you have an older version of VMWare Workstation than don’t be alarmed.</p>
+<p>Start by creating a new virtual machine and selecting the Custom (Advanced) option.</p>
+<p>Select the Workstation Version you wish to build the virtual machine 
+as, this of course can be left as the default value which will default 
+to the latest version.</p>
+<p>Select the installer disc image file location to the previously downloaded FreeBSD 4.11 ISO than click next.</p>
+<p>Give the virtual machine a pretty nice little name such as Superman vs Olive of whatever you like of course… and click next.</p>
+<p>Leave the default processor value of 1 processors and 1 cores. There 
+is no need to have any more than 1 cpu on an olive as its unsupported 
+and purely educational.</p>
+<p>Set the memory to 1GB, which is 1024MB. You may set it higher if you like but its not necessary.</p>
+<p>When you’re prompted about the network connection type you may choose
+ host only or bridge. If you want to attach your Olive to your home 
+network than use bridge but keep in mind you’ll have to assign a static 
+IP Address to the Junos Olive via CLI.</p>
+<p>Select the LSI Logic SCSI Controller (this will be disabled in the VMX file towards the end so dont worry about this…)</p>
+<p>The disk type needed is IDE. Leave the default and click next.</p>
+<p>You will need to create a new virtual disk and click next.</p>
+<p>You will only need about 6GB of space for the latest versions of 
+Olive but if you’re OCD then use 8GB. If you have a SSD than you’ll want
+ to store the disk as a SINGLE file. There is no need to allocate all 
+the disk space immediately.</p>
+<p>You can leave the default name and click next.</p>
+<p>Before clicking finish click on Customize Hardware then add a new 
+device. You may want to add additional NIC’s at which point this is the 
+perfect time to do so however if you want to access the console of the 
+Junos Olive you’ll need to add a Serial Port which will the output will 
+be directed towards a named pipe. You can keep the default named pipe of
+ \\.\pipe\com_1 if you like. Be sure to set the third option which by 
+default is “The other end is a virtual machine” down to “The other end 
+is an application.”</p>
+<p>Keep in mind that Junos Routers do not have sound cards nor do they 
+need floppy drives, you can choose to remove the USB port as well if you
+ like as its not needed for an olive.</p>
+<p>Once you’re all set click be sure to UNCHECK POWER ON before clicking
+ finish as you have to edit the VMX file manually to prevent an issue 
+while installing olive. You cannot do this while the virtual machine is 
+in the favorites so right click on the newly created machine and click 
+“remove”. Keep in mind this will NOT delete the machine but just remove 
+it from your favorites.</p>
+<p>Navigate to the virtual machines root directory and edit the VMX file. Locate the line that says <span class="cmd">scsi0.present = “TRUE”</span> and change it to <span class="cmd">scsi0.present = “FALSE”</span></p>
+<p>If you do not complete this step your olive installation may hang 
+when attempting to reboot after the initial install at the following 
+line;</p>
+<pre class="terminal">ad0: 8192MB at ata0-master UDMA33</pre>
+<p>Once you’ve made the changes, save the VMX file and re-add the 
+virtual machine to vmware by double clicking on the VMX file. Then 
+you’re ready to continue onto installing FreeBSD 4.11!<br>
+</p><br>
+<h2 class="title">Installing FreeBSD 4.11<span class="line"></span></h2><br>
+<p>After you’ve created the new Virtual Machine power on the VM and the FreeBSD ISO will boot automatically.</p>
+<p>You will first arrive at the Kernel Configuration Menu. Select “Skip 
+kernel configuration and continue with the installatoin” and press 
+enter.</p>
+<p>FreeBSD will continue to boot until you get to the setup screen. Use 
+the arrow keys to navigate down to Standard installation and press 
+enter.</p>
+<p>Press ok at the DOS-Style (“fdisk”) portioning message than you’ll be
+ prompted to partition the virtual machines hard disk. Press A for Use 
+Entire Disk and than Press Q for Finish.</p>
+<p>When prompted for the boot selector select “Standard – Install a standard MBR (no boot manager)” and press enter.</p>
+<p>You’ll then be prompted by a BSD partitioning message, press enter 
+for ok and here you’ll create the FreeBSD partitions on the drive. First
+ press C for create and manually type in 2GB and press enter then select
+ FS “A File System” and press enter and type in “/” without the 
+quotations and press enter for ok.</p>
+<p>You will need to do this again for “/config” which gets 512MB Space.</p>
+<p>Then create the swap file system by creating a new partition that is 512MB and selecting SWAP instead of File System.</p>
+<p>The last partition you need is “/var” which should have the rest of 
+the available space. You’ll see this remaining space towards the end of 
+the partition size screen (5119MB) are free. In this case type in 5119MB
+ and press okay.</p>
+<p>Once you’ve finished the FreeBSD Partitioning you should have 4 
+partitions; /, /config, /var and swap. Once you see these 4 press Q for 
+finish.</p>
+<p>When you’re prompted to “Choose Distributions” just select “Exit” and press ok.</p>
+<p>You’ll then be prompted to select the installation media which is “Install from a FreeBSD CD/DVD” then press enter.</p>
+<p>When prompted by the User Confirmation Requested box, this is just 
+warning you that you’re about to make changes to the hard drives 
+partitions in which case data will be lost. Press enter here and FreeBSD
+ will install.</p>
+<p>Once installed it will inform you that FreeBSD has successfully 
+installed. Click okay and you’ll then be prompted by several questions. 
+Answer No for the following questions;<br>
+“Would you like to configure any Ethernet or SLIP/PPP network Devices/”<br>
+“Do you want this machine to function as a network gateway/”<br>
+“Do you want to configure inetd and the network services that it provides?”<br>
+“Do you want to have anonymous FTP access to this machine?”<br>
+“Do you want to configure this machine as an NFS Server?”<br>
+“Do you want to configure this machine as an NFS Client?”<br>
+“Do you want to select a default security profile for this host”</p>
+<p>You’ll then see a message saying that Moderate security settings have been selected, just press enter and continue on.</p>
+<p>Answer no to the next two questions;<br>
+“Would you like to customize your system console settings?”<br>
+“Would you like to set this machines timezone now?”<br>
+“Would you like to enable Linux Binary compatibility?”<br>
+“Does this system have a non-USB mouse attached to it?”</p>
+<p>Also press no on browsing the collection of thousands of ready-to-run applications.</p>
+<p>Select no when prompted to add any initial user accounts to the system.</p>
+<p>You should now be notified that you must set the system manager’s 
+password. This is the root username password and it must be set. To make
+ this simple, set this password to juniper. You’ll need to confirm the 
+password so type it in twice.</p>
+<p>Select no when prompted to visit the general configuration menu for a last chance to set any last options.</p>
+<p>Now you should be back at the beginning of the installation screen. 
+Press X for Exit Install. The virtual machine will automatically reboot 
+and you’ll be ready to proceed with installing the Junos software.<br>
+</p><br>
+</div><div id="content4" class="tabscontent"><br>
+<h2 class="title">Installing the Junos Software<span class="line"></span></h2><p><br>
+Once the FreeBSD virtual machine has reboot, log into the machine using the root account. </p>
+<p>Make sure that you change the ISO file to the ISO file you created in
+ the patching jinstall section. This is the easiest way to get the 
+jinstall file onto the virtual machine.</p>
+<p>Once the jinstall ISO file is loaded onto the VM, mount the CDROM by using the following command;</p>
+<pre class="terminal"># <span class="config_cmd">mount /cdrom</span></pre>
+<p>Once mounted you can start the installation of Junos by executing the following command;</p>
+<pre class="terminal"># <span class="config_cmd">pkg_add -f /cdrom/jinstall.tgz</span></pre>
+<p>During the installation you’ll see an ERROR: hw.re.name sysctl not supported. You can disregard this.</p>
+<p>pkg_add: package /cdrom/jinstall.tgz fails requirements installing anyway</p>
+<p>Then you’ll see a bunch of warnings saying the package will load 
+JUNOS 12.1R8.4 (versions may vary depending on which version you’re 
+using)</p>
+<p>You’ll then see that the configuration files are being saved and 
+Junos installed the bootstrap installer. A reboot is required to load 
+this software correctly. From here you can now type in REBOOT and press 
+enter.</p>
+<p>While the system is rebooting you can use putty to connect to a 
+serial port using the \\.\pipe\com_10 as the serial line. The olive will
+ reboot twice during its installation.</p>
+<p>If you completed the steps successfully you’ll be prompted to login. 
+Use your root credentials again and then you’ll see Olive is now 
+installed;</p>
+<pre class="terminal">Loading /boot/loader
+
+Amnesiac (ttyv0) BTX version is 1.02
+
+login: <span class="config_cmd">root</span>
+password: 
+
+--- JUNOS 12.1R8.4 built 2013-10-17 05:15:20 UTC
+root@%
+</pre>
+<p>By typing in CLI at the root prompt you’ll then be placed into JUNOS CLI:</p>
+<pre class="terminal">root@% <span class="config_cmd">cli</span>
+root&gt;</pre>
+<p>Now you’re ready to have fun such as viewing the running configuration which of course is very basic;</p>
+<pre class="terminal">root&gt; <span class="config_cmd">show config</span>
+## Last commit: 2013-12-05 20:11:04 UTC by root
+version 12.1R8.4;
+system {
+    root-authentication {
+        encrypted-password "$1$JXMhLwpN$cZ0.A33BhDtO0wFpmRKU.."; ## SECRET-DATA
+    }
+    syslog {
+        user * {
+            any emergency;
+        }
+        file messages {
+            any notice;
+            authorization info;
+        }
+        file interactive-commands {
+            interactive-commands any;
+        }
+    }
+}
+</pre>
+<p></p><br>
+</div></div></div><p></p>
+<div style="float: left;"><a href="http://www.junosworkbook.com/workbooks/jncia/juniper-junos-versions-features-and-licensing" class="button small color"> ◄ Previous Lab </a></div>
+<div style="float: right;"><a href="http://www.junosworkbook.com/workbooks/jncia/deploying-firefly-perimeter-vsrx-on-vmware-workstation" class="button small color"> Next Lab ► </a></div>
+<div style="text-align:center; padding-bottom:12px; padding-top:12px;">
+
+<script async="" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/adsbygoogle.js"></script>
+<!-- JunosWorkbook - Bottom Page Banner -->
+<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-6321519742657346" data-ad-slot="6307460828" data-adsbygoogle-status="done"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;width:728px;height:90px;" width="728" height="90" frameborder="0"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</div>
+<!-- Start Sociable --><div class="sociable"><div class="sociable_tagline"><img src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/share_the_knowledge.png" alt="Share the Knowldge"></div><ul class="clearfix"><li><a title="Facebook" class="option1_32" style="background-position:-96px 0px" rel="nofollow" target="_blank" href="http://www.facebook.com/share.php?u=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;t=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation"></a></li><li><a title="Twitter" class="option1_32" style="background-position:-288px -32px" rel="nofollow" target="_blank" href="http://twitter.com/intent/tweet?text=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation%20-%20http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation%20"></a></li><li><a title="StumbleUpon" class="option1_32" style="background-position:-224px -32px" rel="nofollow" target="_blank" href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;title=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation"></a></li><li><a title="LinkedIn" class="option1_32" style="background-position:-288px 0px" rel="nofollow" target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;title=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation&amp;source=Junos+Workbook+The+Ultimate+Juniper+Training+Website%21&amp;summary=%0D%0A%0D%0A%0D%0A%26nbsp%3B%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A"></a></li><li><a title="Delicious" class="option1_32" style="background-position:-32px 0px" rel="nofollow" target="_blank" href="http://delicious.com/post?url=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;title=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation&amp;notes=%0D%0A%0D%0A%0D%0A%26nbsp%3B%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A"></a></li><li><a title="email" class="option1_32" style="background-position:-160px 0px" rel="nofollow" target="_blank" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to&amp;su=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation&amp;body=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;ui=2&amp;tf=1&amp;shva=1"></a></li><li><a class="option1_32" style="cursor:pointer;background-position:-128px 0px" rel="nofollow" title="Add to favorites - doesn't work in Chrome" onclick="javascript:AddToFavorites();"></a></li></ul><div onmouseout="fixOnMouseOut(this,event,'post-279')" id="sociable-post-279" style="display:none;">   
+
+    <div style="top: auto; left: auto; display: block;" id="sociable">
+
+
+
+		<div class="popup">
+
+			<div class="content">
+
+				<ul><li style="heigth:32px;width:32px"><a title="Myspace" class="option1_32" style="background-position:0px -32px" rel="nofollow" target="_blank" href="http://www.myspace.com/Modules/PostTo/Pages/?u=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;t=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation"></a></li><li style="heigth:32px;width:32px"><a title="Digg" class="option1_32" style="background-position:-64px 0px" rel="nofollow" target="_blank" href="http://digg.com/submit?phase=2&amp;url=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;title=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation&amp;bodytext=%0D%0A%0D%0A%0D%0A%26nbsp%3B%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A"></a></li><li style="heigth:32px;width:32px"><a title="Reddit" class="option1_32" style="background-position:-128px -32px" rel="nofollow" target="_blank" href="http://reddit.com/submit?url=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;title=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation"></a></li><li style="heigth:32px;width:32px"><a onclick="javascript:var%20ipinsite='Good%20Vibes.%20Vuible.com',ipinsiteurl='http://vuible.com/';(function(){if(window.ipinit!==undefined){ipinit();}else{document.body.appendChild(document.createElement('script')).src='http://vuible.com/wp-content/themes/ipinpro/js/ipinit.js';}})();" style="cursor:pointer" rel="nofollow" title="Vuible.com | Share positive messages (images and videos only)"></a><a title="Vuible.com | Share positive messages (images and videos only)"> <img style="" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/vuible_002.png"></a></li><li style="heigth:32px;width:32px"><a title="Google Bookmarks" class="option1_32" style="background-position:-192px 0px" rel="nofollow" target="_blank" href="http://www.google.com/bookmarks/mark?op=edit&amp;bkmk=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;title=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation&amp;annotation=%0D%0A%0D%0A%0D%0A%26nbsp%3B%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A"></a></li><li style="heigth:32px;width:32px"><a title="HackerNews" class="option1_32" style="background-position:-256px 0px" rel="nofollow" target="_blank" href="http://news.ycombinator.com/submitlink?u=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;t=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation"></a></li><li style="heigth:32px;width:32px"><a title="MSNReporter" class="option1_32" style="background-position:-352px 0px" rel="nofollow" target="_blank" href="http://reporter.es.msn.com/?fn=contribute&amp;Title=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation&amp;URL=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;cat_id=6&amp;tag_id=31&amp;Remark=%0D%0A%0D%0A%0D%0A%26nbsp%3B%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A"></a></li><li style="heigth:32px;width:32px"><a title="BlinkList" class="option1_32" style="background-position:0px 0px" rel="nofollow" target="_blank" href="http://www.blinklist.com/index.php?Action=Blink/addblink.php&amp;Url=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;Title=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation"></a></li><li style="heigth:32px;width:32px"><a title="Sphinn" class="option1_32" style="background-position:-192px -32px" rel="nofollow" target="_blank" href="http://sphinn.com/index.php?c=post&amp;m=submit&amp;link=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation"></a></li><li style="heigth:32px;width:32px"><a title="Posterous" class="option1_32" style="background-position:-64px -32px" rel="nofollow" target="_blank" href="http://posterous.com/share?linkto=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;title=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation&amp;selection=%0D%0A%0D%0A%0D%0A%26nbsp%3B%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A"></a></li><li style="heigth:32px;width:32px"><a title="Tumblr" class="option1_32" style="background-position:-256px -32px" rel="nofollow" target="_blank" href="http://www.tumblr.com/share?v=3&amp;u=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;t=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation&amp;s=%0D%0A%0D%0A%0D%0A%26nbsp%3B%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A"></a></li><li style="heigth:32px;width:32px"><a title="Google Reader" class="option1_32" style="background-position:-224px 0px" rel="nofollow" target="_blank" href="http://www.google.com/reader/link?url=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;title=Building%20a%20Juniper%20Networks%20Junos%20Olive%20on%20VMWare%20Workstation&amp;srcURL=http%3A%2F%2Fwww.junosworkbook.com%2Fworkbooks%2Fjncia%2Fbuilding-a-juniper-networks-junos-olive-on-vmware-workstation&amp;srcTitle=Junos+Workbook+The+Ultimate+Juniper+Training+Website%21"></a></li><li style="heigth:32px;width:32px"><a style="cursor:poainter" rel="nofollow" onmouseover="more(this,'post-279')"><img src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/more.html" title="Add to favorites" alt="Add to favorites"></a></li></ul>			
+
+			</div>        
+
+		  <a style="cursor:pointer" onclick="hide_sociable('post-279',true)" class="close">
+
+		  <img onclick="hide_sociable('post-279',true)" title="close" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/closelabel.png">
+
+		  </a>
+
+		</div>
+
+	</div> 
+
+  </div></div><div class="sociable" style="float:none"><ul class="clearfix"><li id="Facebook_Counter"><iframe src="http://www.facebook.com/plugins/like.php?href=http://www.junosworkbook.com/workbooks/jncia/building-a-juniper-networks-junos-olive-on-vmware-workstation&amp;send=false&amp;layout=button_count&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font" scrolling="no" style="border:none; overflow:hidden;height:32px;width:100px" allowtransparency="true" frameborder="0"></iframe></li><li id="Twitter_Counter"><iframe id="twitter-widget-0" scrolling="no" allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" style="position: static; visibility: visible; width: 60px; height: 20px;" title="Twitter Tweet Button" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/tweet_button.html" data-url="http://www.junosworkbook.com/workbooks/jncia/building-a-juniper-networks-junos-olive-on-vmware-workstation" frameborder="0"></iframe><script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/widgets.js"></script></li><li id="Google_p"><div style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent none repeat scroll 0% 0%; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 32px; height: 20px;" id="___plusone_0"><iframe ng-non-bindable="" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 32px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 20px;" tabindex="0" vspace="0" id="I0_1501137524872" name="I0_1501137524872" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/fastbutton.html" data-gapiattached="true" title="G+" width="100%" frameborder="0"></iframe></div></li><li id="LinkedIn_Counter"><script src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/in.js" type="text/javascript"></script><span style="line-height: 1; vertical-align: baseline; display: inline-block; text-align: center;" class="IN-widget"><span style="padding: 0px !important; margin: 0px !important; text-indent: 0px !important; display: inline-block !important; vertical-align: baseline !important; font-size: 1px !important;"><span id="li_ui_li_gen_1501137524954_0"><a id="li_ui_li_gen_1501137524954_0-link" href="javascript:void(0);"><span id="li_ui_li_gen_1501137524954_0-logo">in</span><span id="li_ui_li_gen_1501137524954_0-title"><span id="li_ui_li_gen_1501137524954_0-mark"></span><span id="li_ui_li_gen_1501137524954_0-title-text">Share</span></span></a></span></span><span style="padding: 0px !important; margin: 0px !important; text-indent: 0px !important; display: inline-block !important; vertical-align: baseline !important; font-size: 1px !important;"><span id="li_ui_li_gen_1501137524968_1-container" class="IN-right IN-hidden"><span id="li_ui_li_gen_1501137524968_1" class="IN-right"><span id="li_ui_li_gen_1501137524968_1-inner" class="IN-right"><span id="li_ui_li_gen_1501137524968_1-content" class="IN-right">0</span></span></span></span></span></span><script type="IN/Share+init" data-url="http://www.junosworkbook.com/workbooks/jncia/building-a-juniper-networks-junos-olive-on-vmware-workstation" data-counter="right"></script></li><li id="vuible_Counter"><a title="Vuible.com | Share positive messages (images and videos only)"><img onclick="ipinit();" style="cursor:pointer" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/vuible.png"></a></li></ul></div><!-- End Sociable -->
+        
+    </div><!-- End page -->
+    
+    
+
+
+</div><!-- <<< End Container >>> -->
+
+<footer>
+    <div class="container">
+    
+          
+      <!-- =========== Start [ 1/4 Column ] Layouts Footer Widgets ========= -->
+            <!-- =========== End ========= -->
+      
+      <!-- =========== Start [ 1/3 Column ] Layouts Footer Widgets  ========= -->
+            
+      <div class="one-third column">
+      <div id="text-3" class="widget bottom-3 widget_text"><h3 class="title">About Junos Workbook<span class="line"></span></h3>			<div class="textwidget"><p>Junos
+ Workbook was built to serve as a one stop shop to relieve your 
+frustration from searching for Junos training labs and configuration 
+examples.</p>
+&nbsp;
+<p>Founded in late 2013 with the goal of providing FREE Junos 
+educational content built upon the Juniper J-Series routers and EX 
+Series Switches.</p>
+
+<script type="text/javascript">
+ /*<![CDATA[*/
+ jQuery(document).ready(function() {jQuery(".abtlikebox").hover(function() {jQuery(this).stop().animate({right: "0"}, "medium");}, function() {jQuery(this).stop().animate({right: "-250"}, "medium");}, 500);});
+ /*]]>*/
+ </script>
+ <style type="text/css">
+ .abtlikebox{background: url("/images//fb-right.png") no-repeat scroll left center transparent !important; float: right;height: 270px;padding: 0 5px 0 46px;width: 245px;z-index:  99999;position:fixed;right:-250px;top:35%;}
+.abtlikebox div{ padding: 0; margin-right:-8px; border:4px solid  #3b5998; background:#fafafa;}
+.abtlikebox span{bottom: 4px;font: 8px "lucida grande",tahoma,verdana,arial,sans-serif;position: absolute;right: 6px;text-align: right;z-index: 99999;}
+ .abtlikebox span a{color: gray;text-decoration:none;}
+ .abtlikebox span a:hover{text-decoration:underline;}
+}
+</style>
+ <div class="abtlikebox" style="">
+     <div>
+     <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Ffacebook.com%2Fjunosworkbook&amp;width=245&amp;colorscheme=light&amp;show_faces=true&amp;border_color=white&amp;connections=12&amp;stream=false&amp;header=false&amp;height=270" scrolling="no" style="border: white; overflow: hidden; height: 269px; width: 245px;background:#fafafa;" frameborder="0"></iframe>
+     </div>
+ </div>
+
+<div class="afs_ads" style="display: none;">&nbsp;</div>
+<script>
+(function() {
+    var message = "We've detected that you have an Ad Blocker enabled! In order to view content correctly on this website you must disable your Ad Blocker for the junosworkbook.com domain.";
+
+        // Define a function for showing the message.
+        // Set a timeout of 2 seconds to give adblocker
+        // a chance to do its thing
+        var tryMessage = function() {
+            setTimeout(function() {
+                if(!document.getElementsByClassName) return;
+                var ads = document.getElementsByClassName('afs_ads'),
+                    ad  = ads[ads.length - 1];
+
+                if(!ad
+                    || ad.innerHTML.length == 0
+                    || ad.clientHeight === 0) {
+                    alert(message);
+                    //window.location.href = '[URL of the donate page. Remove the two slashes at the start of thsi line to enable.]';
+                } else {
+                    ad.style.display = 'none';
+                }
+
+            }, 2000);
+        }
+
+        /* Attach a listener for page load ... then show the message */
+        if(window.addEventListener) {
+            window.addEventListener('load', tryMessage, false);
+        } else {
+            window.attachEvent('onload', tryMessage); //IE
+        }
+})();
+</script></div>
+		</div>      </div><!-- End column -->
+      
+      <div class="one-third column">
+      <div id="latesttweets-widget-3" class="widget bottom-3 latesttweets"><h3 class="title">Latest Tweets<span class="line"></span></h3>  
+    
+    
+  <div id="tweets-footer" class="tweet query footer ">
+  
+  <ul class="tweet_list">
+      <li>
+     <span class="tweet_time"> 
+     <a href="http://twitter.com/Junos%20Workbook/status/578359144039632896" target="_blank">
+     2 years ago
+     </a>
+     </span>
+     <span class="tweet_text">The Junos Workbook is brought to you by advertisements and contributions by aspiring network engineers like youself! <a href="http://t.co/yj3JJUsEjp" target="_blank" rel="nofollow">http://t.co/yj3JJUsEjp</a></span>
+    </li>
+      <li>
+     <span class="tweet_time"> 
+     <a href="http://twitter.com/Junos%20Workbook/status/578358725720821760" target="_blank">
+     2 years ago
+     </a>
+     </span>
+     <span class="tweet_text">Just published the #Juniper #JNCIA Workbook Lab 2-10 - Configuring Static Default Routing! Check it out! <a href="http://t.co/D4t0XglbqF" target="_blank" rel="nofollow">http://t.co/D4t0XglbqF</a></span>
+    </li>
+    </ul>
+  
+  </div><!-- Tweets Code -->
+  
+  </div>      </div><!-- End column -->
+      
+      <div class="one-third column">
+      <div id="text-8" class="widget bottom-3 widget_text"><h3 class="title">Recommended Links<span class="line"></span></h3>			<div class="textwidget"><ul class="widget_recent_entries">
+   <li><a href="http://www.juniper.net/support/downloads/?p=junosvfirefly-eval#sw" target="_BLANK" rel="nofollow">Download Firefly Perimeter vSRX Evaluation</a></li>
+   <li><a href="http://www.chiark.greenend.org.uk/%7Esgtatham/putty/download.html" target="_BLANK" rel="nofollow">Putty Terminal Emulator (Free Download)</a></li>
+   <li><a href="http://forums.juniper.net/" target="_BLANK" rel="nofollow">J-Net Community Forums</a></li>
+   <li><a href="http://www.certificationkits.com/jncas-certification-kits/">Buy Used Juniper from CertificationKits.com</a></li>
+   <li><a href="http://www.freeccnaworkbook.com/" target="_BLANK">Free CCNA Workbook</a></li>
+   <li><a href="http://www.junosworkbook.com/workbooks/jncia/workbooks/jncia/jncia-practice-exam">Quiz Me! - JNCIA - Junos Practice Exam</a></li>
+</ul></div>
+		</div>      </div><!-- End column -->
+      
+            <!-- =========== End ========= -->
+      
+      <!-- =========== Start [ 1/2 Column ] Layouts Footer Widgets ========= -->
+            <!-- =========== End ========= -->
+      
+      <!-- =========== Start [ 11/5 Column ] Layouts Footer Widgets ========= -->
+            <!-- =========== End ========= -->
+      
+      <!-- =========== Start [ 12/4 Column ] Layouts Footer Widgets ========= -->
+            <!-- =========== End ========= -->
+      
+      <!-- =========== Start [ 16 Column ] Layouts Footer Widgets ========= -->
+            <!-- =========== End ========= -->
+      
+            
+      <div class="sixteen columns"><hr class="bottom"></div>
+      
+            
+            
+      
+      <div class="eight columns"><span class="copyright"><div style="text-align:center;"><p>© Copyright 2013-2014 <a href="http://www.junosworkbook.com/">Junos Workbook</a> All Rights Reserved.</p>
+<p><a href="http://www.junosworkbook.com/legal">Legal</a> | <a href="http://www.junosworkbook.com/privacy-policy">Privacy Policy</a> | <a href="http://www.junosworkbook.com/sitemap">Sitemap</a></p></div></span></div>
+      
+      <div class="eight columns">
+        <div class="social">
+                    <a href="http://www.twitter.com/junosworkbook"><img src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/twitter.png" alt=""></a>
+                              <a href="http://www.facebook.com/junosworkbook"><img src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/facebook.png" alt=""></a>
+                                                                                          <a href="http://www.youtube.com/junosworkbook"><img src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/youtube.png" alt=""></a>
+                              <a href="http://www.junosworkbook.com/feed"><img src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/rss.png" alt=""></a>
+        </div>
+      </div>
+    
+    </div><!-- End container -->
+  </footer><!-- <<< End Footer >>> -->
+  
+  </div><!-- End wrap -->
+  
+  <!-- Start Style Switcher -->
+  
+    <style>
+    .switcher {
+        display:none;
+    }
+    </style>
+    
+        <!-- End --> 
+  
+  
+
+<script>
+
+// Navigational Menu ddsmoothmenu
+jQuery(document).ready(function($) {
+
+
+
+// Flex Slider
+jQuery(document).ready(function($) {
+  $(window).ready(function() {
+  $('.flex-caption').css('display', 'block');
+  $('.flex-container').css('display', 'block');
+  $('.flexslider').flexslider({
+	animation: 'fade',
+	animationLoop: 1,             //Boolean: Should the animation loop? If false, directionNav will received "disable" classes at either end
+	slideshow: 1,                //Boolean: Animate slider automatically
+	slideshowSpeed: 4500,           //Integer: Set the speed of the slideshow cycling, in milliseconds
+	animationSpeed: 700,             //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
+	pauseOnHover: 1, 
+	pauseOnAction:0,
+	controlNav: 1,
+	directionNav: 0,
+	controlsContainer: '.flex-container'
+		});
+  
+  $('.flexslider2').flexslider({
+	animation: 'slide',
+	animationLoop: 1,             //Boolean: Should the animation loop? If false, directionNav will received "disable" classes at either end
+	slideshow: 1,                //Boolean: Animate slider automatically
+	slideshowSpeed: 4500,           //Integer: Set the speed of the slideshow cycling, in milliseconds
+	animationSpeed: 700,             //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
+	pauseOnHover: 1, 
+	pauseOnAction:0,
+	controlNav: 0,
+	directionNav: 1,
+	controlsContainer: '.flex-container'
+		});
+  
+  $('.flexslider3').flexslider({
+	animation: 'slide',
+	animationLoop: true,             //Boolean: Should the animation loop? If false, directionNav will received "disable" classes at either end
+	slideshow: false,                //Boolean: Animate slider automatically
+	slideshowSpeed: 4500,           //Integer: Set the speed of the slideshow cycling, in milliseconds
+	animationSpeed: 700,             //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
+	pauseOnHover: true, 
+	pauseOnAction:false,
+	controlNav: false,
+	directionNav: true,
+	controlsContainer: '.flex-container'
+		});
+  
+	});
+});
+
+
+
+// Elastic Slider
+jQuery(document).ready(function($) {
+  $('#ei-slider').eislideshow({
+	  animation			: 'center',
+	  autoplay			: 1,
+	  slideshow_interval	: 3000,
+	  thumbMaxWidth       : 188,
+	  titlesFactor		: 0
+  });
+});
+
+});
+</script>  
+  <!-- Start Style Switcher -->
+  <div class="switcher"></div>
+  <!-- End Style Switcher -->
+  
+    
+  <script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/comment-reply.js"></script>
+<script type="text/javascript" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/wp-embed.js"></script>
+    
+
+
+
+
+
+<iframe name="oauth2relay311486513" id="oauth2relay311486513" src="Building%20a%20Juniper%20Olive%20on%20VMWare%20Workstation%20%7C%20Junos%20Workbook_files/postmessageRelay.html" style="width: 1px; height: 1px; position: absolute; top: -100px;" tabindex="-1" aria-hidden="true"></iframe></body></html>
+<!-- Dynamic page generated in 0.952 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2017-07-27 03:48:45 -->
+<!-- Compression = gzip -->

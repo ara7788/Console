@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)http://wikiadmin.net/podnimaiem-siervier-na-centos-7/ -->
+<html class="js video maskImage placeholder" lang="ru"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>Поднимаем сервер на CentOS 7 -  Записная книжка сисадмина</title>
+  <meta name="author" content="Алексей Убоженко">
+  <link rel="alternate" hreflang="ru" href="http://wikiadmin.net/">
+  
+  <meta name="description" content="первоначальная установка сервера на CentOS7">
+  <meta name="keywords" content="centos, seven, 7, manual, install">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
+
+  
+  <link rel="canonical" href="http://wikiadmin.net/podnimaiem-siervier-na-centos-7/">
+  <link href="http://wikiadmin.net/favicon.png" rel="icon">
+  <link href="./Поднимаем сервер на CentOS 7 - Записная книжка сисадмина_files/bootstrap.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="./Поднимаем сервер на CentOS 7 - Записная книжка сисадмина_files/responsive.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="./Поднимаем сервер на CentOS 7 - Записная книжка сисадмина_files/syntax.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    body {
+      padding-bottom: 40px;
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .sharing, .meta, .pager {
+      margin: 20px 0px 20px 0px;
+    }
+    .page-footer p {
+      text-align: center;
+    }
+  </style>
+  <script type="text/javascript" async="" defer="" src="./Поднимаем сервер на CentOS 7 - Записная книжка сисадмина_files/piwik.js.Без названия"></script><script src="./Поднимаем сервер на CentOS 7 - Записная книжка сисадмина_files/jquery.js.Без названия"></script>
+  <script src="./Поднимаем сервер на CentOS 7 - Записная книжка сисадмина_files/modernizr-2.0.js.Без названия"></script>
+  <script src="./Поднимаем сервер на CentOS 7 - Записная книжка сисадмина_files/bootstrap.js.Без названия"></script>
+  <script src="./Поднимаем сервер на CentOS 7 - Записная книжка сисадмина_files/octopress.js.Без названия" type="text/javascript"></script>
+  <link href="http://wikiadmin.net/atom.xml" rel="alternate" title="RSS лента записной книжки сисадмина" type="application/atom+xml">
+  
+</head>
+
+<body>
+  <nav role="navigation"><div class="navbar navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="http://wikiadmin.net/">Записная книжка сисадмина</a>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+  <li><a href="http://wikiadmin.net/blog/archives/">Все статьи</a></li>
+  <li><a href="http://wikiadmin.net/blog/categories/centos/">Про CentOS</a></li>
+  <li><a href="http://wikiadmin.net/blog/categories/manual/">Различные IT-инструкции</a></li>
+  <li><a href="http://wikiadmin.net/blog/categories/web/">Веб-софт(CRM, Groupware и т.д.)</a></li>
+</ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+      
+<article class="hentry span9" role="article">
+
+  
+  <header class="page-header">
+    
+      <h1 class="entry-title">Поднимаем сервер на CentOS 7</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class="entry-date" datetime="2016-12-24T12:08:46+03:00"><span class="date"><span class="date-month">Dec</span> <span class="date-day">24</span><span class="date-suffix">th</span>, <span class="date-year">2016</span></span> <span class="time">12:08 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Первоначальная установка сервера на CentOS7. Разумеется, какие-то шаги вам могут не требоваться, просто пропустите их.</p>
+
+<h3>Нанимаем сервер</h3>
+
+<p>(Если уже есть или настраиваем локальную машину, пропускаем этот шаг)</p>
+
+<p>Если просто нужен недорогой и не сильно мощный сервер, достаточно будет взять VDS:</p>
+
+<blockquote><p>Идём <a href="https://flops.ru/?refid=11606">по этой ссылке и регистрируемся</a></p>
+
+<p>Выбираем сервер с CentOS 7 (самый простой стоит 250р, в дальнейшем можно перейти на тариф выше, если потребуется)</p>
+
+<p>На почту приходят данные по SSH - логинимся на сервер с этим логином и паролем и приступаем непосредственно к конфигурации.</p></blockquote>
+
+<h3>Добавляем пользователя и некоторые действия под него</h3>
+
+<blockquote><p>useradd everest</p></blockquote>
+
+<p>Задаём ему пароль</p>
+
+<blockquote><p>passwd everest</p></blockquote>
+
+<p>Указываем рутовую почту отправлять на данного пользователя</p>
+
+<blockquote><p>vi /etc/aliases</p></blockquote>
+
+<figure class="code"><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">root: everest</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>Разрешим пользователю sudo</p>
+
+<blockquote><p>visudo</p></blockquote>
+
+<figure class="code"><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># add at the last line: user 'everest' can use all root privilege
+</span><span class="line"> everest    ALL=(ALL)       ALL</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<h3>Укажем hostname</h3>
+
+<blockquote><p>hostnamectl set-hostname server1.wikiadmin.net</p></blockquote>
+
+<h3>Отключение firewall и selinux</h3>
+
+<p>Останавливаем файрвол и отключаем его загрузку</p>
+
+<blockquote><p>systemctl stop firewalld</p>
+
+<p>systemctl disable firewalld</p></blockquote>
+
+<p>Редактируем конфиг selinux</p>
+
+<figure class="code"><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">vi /etc/selinux/config
+</span><span class="line"># This file controls the state of SELinux on the system.
+</span><span class="line"># SELINUX= can take one of these three values:
+</span><span class="line">#     enforcing - SELinux security policy is enforced.
+</span><span class="line">#     permissive - SELinux prints warnings instead of enforcing.
+</span><span class="line">#     disabled - No SELinux policy is loaded.
+</span><span class="line">SELINUX=disabled# change it
+</span><span class="line"># SELINUXTYPE= can take one of these two values:
+</span><span class="line">#     targeted - Targeted processes are protected,
+</span><span class="line">#     minimum - Modification of targeted policy. Only selected processes are protected.
+</span><span class="line">#     mls - Multi Level Security protection.
+</span><span class="line">SELINUXTYPE=targeted</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>Перегружаемся</p>
+
+<blockquote><p>reboot</p></blockquote>
+
+<h3>Настройка SSH</h3>
+
+<p>Добавляем ключи</p>
+
+<blockquote><p>ssh-copy-id <a href="mailto:root@wikiadmin.net">root@wikiadmin.net</a></p></blockquote>
+
+<p>Меняем порт</p>
+
+<blockquote><p>vi /etc/ssh/sshd_config</p>
+
+<p>Port 222</p></blockquote>
+
+<p>Тут же выставляем заход рута только по ключам</p>
+
+<blockquote><p>PermitRootLogin without-password</p></blockquote>
+
+<p>Перезагрузка сервиса</p>
+
+<blockquote><p>systemctl restart sshd</p></blockquote>
+
+<h3>Обновление системы и добавление хранилищ epel и rpmforge</h3>
+
+<p>Подкачиваем изменения:</p>
+
+<blockquote><p>yum update</p></blockquote>
+
+<p>Смотрим что нового для семёрки сделали:</p>
+
+<blockquote><p>yum –enablerepo=cr list updates</p></blockquote>
+
+<p>Если вас всё устраивает, набираем:</p>
+
+<blockquote><p>yum –enablerepo=cr update</p></blockquote>
+
+<p>Добавим epel и rpmforge, если нас не устраивает то, что уже есть</p>
+
+<figure class="code"><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">yum -y install yum-plugin-priorities
+</span><span class="line">yum -y install epel-release
+</span><span class="line">yum -y install http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
+</span><span class="line">yum -y install http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+</span><span class="line">yum -y install http://linuxdownload.adobe.com/linux/x86_64/adobe-release-x86_64-1.0-1.noarch.rpm</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>Доустановим пакеты, которые нужны. Мне обычно это нужно:</p>
+
+<figure class="code"><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">yum install –enablerepo=epel –enablerepo=rpmforge mc screen htop wget git rsync lsof net-tools</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<h3>Сервисы</h3>
+
+<p>Смотрим что у нас запущено:</p>
+
+<blockquote><p>systemctl -t service</p></blockquote>
+
+<p>Заодно смотрим, кто выставлен наружу</p>
+
+<blockquote><p>lsof -Pni4</p></blockquote>
+
+<p>Если что-то не нужно, выключаем и убираем автозагрузку</p>
+
+<blockquote><p>systemctl stop postfix</p>
+
+<p>systemctl disable postfix</p>
+
+<p>systemctl stop chronyd</p>
+
+<p>systemctl disable chronyd</p></blockquote>
+
+<h3>Ставим apache и php</h3>
+
+<p>Ставим нужный пакет</p>
+
+<blockquote><p>yum -y install httpd</p></blockquote>
+
+<p>Удаляем стартовую страницу (зачем она нам)</p>
+
+<blockquote><p>rm -f /etc/httpd/conf.d/welcome.conf</p></blockquote>
+
+<p>Немного подредактируем конфиг</p>
+
+<blockquote><p>vi /etc/httpd/conf/httpd.conf</p></blockquote>
+
+<figure class="code"><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># line 86: change to admin's email address
+</span><span class="line">ServerAdmin root@wikiadmin.net
+</span><span class="line">
+</span><span class="line"># line 95: change to your server's name
+</span><span class="line">ServerName wikiadmin.net:80
+</span><span class="line">
+</span><span class="line"># line 151: change
+</span><span class="line">AllowOverride All
+</span><span class="line">
+</span><span class="line"># line 164: add file name that it can access only with directory's name
+</span><span class="line">DirectoryIndex index.html index.cgi index.php
+</span><span class="line">
+</span><span class="line"># add follows to the end
+</span><span class="line"># server's response header
+</span><span class="line">ServerTokens Prod
+</span><span class="line">ServerSignature Off
+</span><span class="line">
+</span><span class="line"># keepalive is ON
+</span><span class="line">KeepAlive On</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>Запускаем httpd и отправляем его в автозапуск</p>
+
+<blockquote><p>systemctl start httpd</p>
+
+<p>systemctl enable httpd</p></blockquote>
+
+<p>Добавим PHP для апача. Ставим нужные пакеты:</p>
+
+<blockquote><p>yum -y install php php-mbstring php-pear</p></blockquote>
+
+<p>Редактируем php.ini</p>
+
+<blockquote><p>vi /etc/php.ini</p></blockquote>
+
+<figure class="code"><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line"># line 878: раскоментим и укажем свой пояс (ну чёрный по карате, конечно)
+</span><span class="line">date.timezone = "Europe/Moscow"</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>Перегружаем апач</p>
+
+<blockquote><p>systemctl restart httpd</p></blockquote>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<br></p><hr><span class="byline author vcard">Posted by <span class="fn">Алексей Убоженко</span></span>
+
+      
+
+
+
+
+<time class="entry-date" datetime="2016-12-24T12:08:46+03:00"><span class="date"><span class="date-month">Dec</span> <span class="date-day">24</span><span class="date-suffix">th</span>, <span class="date-year">2016</span></span> <span class="time">12:08 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class="category" href="http://wikiadmin.net/blog/categories/centos/">centos</a>, <a class="category" href="http://wikiadmin.net/blog/categories/manual/">manual</a>
+  
+</span>
+
+
+    <p></p>
+    
+      <br>
+<hr>
+
+<div class="sharing">
+  
+  
+  
+</div>
+
+    
+    
+    <ul class="pager">
+      
+      <li class="previous"><a class="basic-alignment left" href="http://wikiadmin.net/batman/" title="Previous Post:
+        Настройка batman-adv для экспериментов с MESH-сетью">« Настройка batman-adv для экспериментов с MESH-сетью</a></li>
+      
+      <li><a href="http://wikiadmin.net/blog/archives/">Все статьи сайта</a></li>
+      
+    </ul>
+  </footer>
+</article>
+
+<aside class="sidebar-nav span3">
+  
+    <section class="well">
+  <img class="logo" alt="логотип wikiadmin, записной книжки системного администратора" title="логотип записной книжки системного администратора" src="./Поднимаем сервер на CentOS 7 - Записная книжка сисадмина_files/logo.png">
+</section>
+
+<h3>Что можно тут сделать:</h3>
+
+<p style="text-align: justify;">
+    </p><ul>
+    <li>Есть что добавить - напишите.
+    </li>
+    <li>Заметили ошибку - сообщите.
+    </li>
+    <li>Решение пригодилось - скопируйте.
+    </li>
+    <li>Страница принесла пользу - лайк и твит приветствуется.
+    </li>
+    <li>Нужна помощь в установке ПО - почта чуть ниже.
+    </li>
+    <li>Хотите предложить статью - почта там же.
+    </li>
+    </ul>
+<p></p>
+
+<hr>
+
+<div class="vcard">
+   <img class="photo" src="./Поднимаем сервер на CentOS 7 - Записная книжка сисадмина_files/iam.jpg" alt="Алексей Убоженко, системный администратор">
+   <strong class="fn">Алексей Убоженко</strong><br>
+   <span class="title">специалист в области системного
+   администрирования</span>, записная книжка <span class="org">Викиадмин</span><br>
+  <div>
+    <a class="email" href="mailto:aleksdem@gmail.com">aleksdem@gmail.com</a><br>
+    <a class="sip" href="sip:aleksdem@aleksdem.com">sip:aleksdem@aleksdem.com</a><br>
+  </div>
+   <span class="adr">
+      <span class="locality">Раменское</span>
+   </span>
+</div>
+
+<a href="https://www.mindmeister.com/?r=1985"><img src="./Поднимаем сервер на CentOS 7 - Записная книжка сисадмина_files/250x250.png" alt="Миндмап, карты памяти для системных администраторов"></a>
+
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+    _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+      _paq.push(["setCookieDomain", "*.wikiadmin.net"]);
+        _paq.push(["setDomains", ["*.wikiadmin.net"]]);
+          _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+              (function() {
+                  var u="//pi.aleksdem.com/";
+                      _paq.push(['setTrackerUrl', u+'piwik.php']);
+                          _paq.push(['setSiteId', 3]);
+                              var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                                  g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+                                    })();
+                                    </script>
+                                    <noscript>&lt;p&gt;&lt;img src="//pi.aleksdem.com/piwik.php?idsite=3" style="border:0;" alt="" /&gt;&lt;/p&gt;</noscript>
+                                    <!-- End Piwik Code -->
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo" class="page-footer"><br>
+<hr>
+<p>
+Copyright © 2008-2016. Автор <a href="http://aleksdem.com/" title="автор сайта">Алексей Убоженко</a>.
+<a href="https://plus.google.com/108452405935786182999" rel="publisher"></a>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>

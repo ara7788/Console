@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html class="js supports no-touchevents backgroundcliptext cssfilters flexbox flexboxlegacy no-flexboxtweener" style="" lang="ru-ru"><head prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb# article: https://ogp.me/ns/article#">
+		<!-- base href="https://cmscafe.ru/raznoe/346-obzor-configuration-php-fajla-nastroek-joomla" -->
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta property="og:description" content="Мы пройдемся по файлу configuration.php, создавая небольшую справку к каждой строке, и дополнительные примечания там, где необходимо большее пояснение. ">
+	<meta property="og:title" content="Обзор configuration.php - файла настроек Joomla">
+	<meta name="twitter:creator" content="@bzz0">
+	<meta http-equiv="x-ua-compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="copyright" content="CMScafe">
+	<meta name="application-name" content="CMScafe - портал для веб-разработчиков">
+	<meta name="msapplication-TileColor" content="#3A3A3A">
+	<meta name="msapplication-TileImage" content="https://cmscafe.ru/ff640369-2e86-4503-b54e-856086b2e769.png">
+	<title>Обзор configuration.php - файла настроек Joomla - CMScafe</title>
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Обзор configuration.php - файла настроек Joomla - CMScafe">
+	<meta property="og:site_name" content="CMScafe - портал для веб-разработчиков">
+	<meta property="og:url" content="https://cmscafe.ru/raznoe/346-obzor-configuration-php-fajla-nastroek-joomla">
+	<meta name="google:title" itemprop="name" content="Обзор configuration.php - файла настроек Joomla - CMScafe">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@joomlablog_ru">
+	<meta name="twitter:title" content="Обзор configuration.php - файла настроек Joomla - CMScafe">
+	<link rel="preload" href="https://cmscafe.ru/templates/cmscafe/fonts/robotoslab-bold-webfont.woff2" as="font" type="font/woff2" crossorigin="">
+	<link rel="preload" href="https://cmscafe.ru/templates/cmscafe/fonts/jmb-icon.woff2" as="font" type="font/woff2" crossorigin="">
+	<link rel="dns-prefetch" href="https://cse.google.com/">
+	<link rel="dns-prefetch" href="https://www.google-analytics.com/">
+	<link rel="dns-prefetch" href="https://pagead2.googlesyndication.com/">
+	<meta name="description" content="Мы пройдемся по файлу configuration.php, создавая небольшую справку к каждой строке, и дополнительные примечания там, где необходимо большее пояснение. ">
+	<meta name="og:description" content="Мы пройдемся по файлу configuration.php, создавая небольшую справку к каждой строке, и дополнительные примечания там, где необходимо большее пояснение. ">
+	<meta name="twitter:description" content="Мы пройдемся по файлу configuration.php, создавая небольшую справку к каждой строке, и дополнительные примечания там, где необходимо большее пояснение. ">
+	<link href="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/346-obzor-configuration-php-fajla-nastroek-joomla_003.html" rel="canonical">
+	<link href="https://cmscafe.ru/templates/cmscafe/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+
+	<script async="" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/async-ads.js"></script><script async="" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/analytics.js"></script><script type="text/javascript" async="" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/cse.js"></script><script id="twitter-wjs" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/widgets.js"></script><script type="text/javascript" async="" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/widget_002.js"></script><script type="text/javascript" async="" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/widget.js"></script><script src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/ca-pub-5120159964439306.js"></script><script>/*! modernizr 3.3.1 (Custom Build) | MIT *
+		 * https://modernizr.com/download/?-backgroundcliptext-cssfilters-flexbox-flexboxlegacy-flexboxtweener-touchevents-setclasses !*/
+		!function(e,n,t){function o(e,n){return typeof e===n}function r(){var e,n,t,r,s,i,a;for(var l in x)if(x.hasOwnProperty(l)){if(e=[],n=x[l],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(r=o(n.fn,"function")?n.fn():n.fn,s=0;s<e.length;s++)i=e[s],a=i.split("."),1===a.length?Modernizr[a[0]]=r:(!Modernizr[a[0]]||Modernizr[a[0]]instanceof Boolean||(Modernizr[a[0]]=new Boolean(Modernizr[a[0]])),Modernizr[a[0]][a[1]]=r),g.push((r?"":"no-")+a.join("-"))}}function s(e){var n=b.className,t=Modernizr._config.classPrefix||"";if(S&&(n=n.baseVal),Modernizr._config.enableJSClass){var o=new RegExp("(^|\\s)"+t+"no-js(\\s|$)");n=n.replace(o,"$1"+t+"js$2")}Modernizr._config.enableClasses&&(n+=" "+t+e.join(" "+t),S?b.className.baseVal=n:b.className=n)}function i(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):S?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function a(){var e=n.body;return e||(e=i(S?"svg":"body"),e.fake=!0),e}function l(e,t,o,r){var s,l,f,u,d="modernizr",c=i("div"),p=a();if(parseInt(o,10))for(;o--;)f=i("div"),f.id=r?r[o]:d+(o+1),c.appendChild(f);return s=i("style"),s.type="text/css",s.id="s"+d,(p.fake?p:c).appendChild(s),p.appendChild(c),s.styleSheet?s.styleSheet.cssText=e:s.appendChild(n.createTextNode(e)),c.id=d,p.fake&&(p.style.background="",p.style.overflow="hidden",u=b.style.overflow,b.style.overflow="hidden",b.appendChild(p)),l=t(c,e),p.fake?(p.parentNode.removeChild(p),b.style.overflow=u,b.offsetHeight):c.parentNode.removeChild(c),!!l}function f(e,n){return!!~(""+e).indexOf(n)}function u(e){return e.replace(/([a-z])-([a-z])/g,function(e,n,t){return n+t.toUpperCase()}).replace(/^-/,"")}function d(e,n){return function(){return e.apply(n,arguments)}}function c(e,n,t){var r;for(var s in e)if(e[s]in n)return t===!1?e[s]:(r=n[e[s]],o(r,"function")?d(r,t||n):r);return!1}function p(e){return e.replace(/([A-Z])/g,function(e,n){return"-"+n.toLowerCase()}).replace(/^ms-/,"-ms-")}function m(n,o){var r=n.length;if("CSS"in e&&"supports"in e.CSS){for(;r--;)if(e.CSS.supports(p(n[r]),o))return!0;return!1}if("CSSSupportsRule"in e){for(var s=[];r--;)s.push("("+p(n[r])+":"+o+")");return s=s.join(" or "),l("@supports ("+s+") { #modernizr { position: absolute; } }",function(e){return"absolute"==getComputedStyle(e,null).position})}return t}function h(e,n,r,s){function a(){d&&(delete N.style,delete N.modElem)}if(s=o(s,"undefined")?!1:s,!o(r,"undefined")){var l=m(e,r);if(!o(l,"undefined"))return l}for(var d,c,p,h,v,y=["modernizr","tspan","samp"];!N.style&&y.length;)d=!0,N.modElem=i(y.shift()),N.style=N.modElem.style;for(p=e.length,c=0;p>c;c++)if(h=e[c],v=N.style[h],f(h,"-")&&(h=u(h)),N.style[h]!==t){if(s||o(r,"undefined"))return a(),"pfx"==n?h:!0;try{N.style[h]=r}catch(g){}if(N.style[h]!=v)return a(),"pfx"==n?h:!0}return a(),!1}function v(e,n,t,r,s){var i=e.charAt(0).toUpperCase()+e.slice(1),a=(e+" "+j.join(i+" ")+i).split(" ");return o(n,"string")||o(n,"undefined")?h(a,n,r,s):(a=(e+" "+E.join(i+" ")+i).split(" "),c(a,n,t))}function y(e,n,o){return v(e,t,t,n,o)}var g=[],x=[],C={_version:"3.3.1",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){x.push({name:e,fn:n,options:t})},addAsyncTest:function(e){x.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=C,Modernizr=new Modernizr;var b=n.documentElement,S="svg"===b.nodeName.toLowerCase(),w=C._config.usePrefixes?" -webkit- -moz- -o- -ms- ".split(" "):["",""];C._prefixes=w;var _="CSS"in e&&"supports"in e.CSS,T="supportsCSS"in e;Modernizr.addTest("supports",_||T);var z=C.testStyles=l;Modernizr.addTest("touchevents",function(){var t;if("ontouchstart"in e||e.DocumentTouch&&n instanceof DocumentTouch)t=!0;else{var o=["@media (",w.join("touch-enabled),("),"heartz",")","{#modernizr{top:9px;position:absolute}}"].join("");z(o,function(e){t=9===e.offsetTop})}return t});var P="Moz O ms Webkit",j=C._config.usePrefixes?P.split(" "):[];C._cssomPrefixes=j;var E=C._config.usePrefixes?P.toLowerCase().split(" "):[];C._domPrefixes=E;var k={elem:i("modernizr")};Modernizr._q.push(function(){delete k.elem});var N={style:k.elem.style};Modernizr._q.unshift(function(){delete N.style}),C.testAllProps=v,C.testAllProps=y,Modernizr.addTest("backgroundcliptext",function(){return y("backgroundClip","text")}),Modernizr.addTest("cssfilters",function(){if(Modernizr.supports)return y("filter","blur(2px)");var e=i("a");return e.style.cssText=w.join("filter:blur(2px); "),!!e.style.length&&(n.documentMode===t||n.documentMode>9)}),Modernizr.addTest("flexbox",y("flexBasis","1px",!0)),Modernizr.addTest("flexboxlegacy",y("boxDirection","reverse",!0)),Modernizr.addTest("flexboxtweener",y("flexAlign","end",!0)),r(),s(g),delete C.addTest,delete C.addAsyncTest;for(var A=0;A<Modernizr._q.length;A++)Modernizr._q[A]();e.Modernizr=Modernizr}(window,document);	</script>
+	<style>@charset "UTF-8";.hidden-text{color:transparent;font:0/0 a;text-shadow:none}.jb-header,.jb-toolbar .wrapper,.wrapper{max-width:1200px;padding:0 20px}html{font:normal 100%/1.5 sans-serif}body{font-size:16px;margin:0;padding:0;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;font-family:Helvetica Neue,Lucida Grande,Helvetica,Segoe UI,Arial,sans-serif;color:#444;background:#f1f1f1;min-width:320px}.wrapper{margin:auto}a{color:#48b;text-decoration:none}.jb-toolbar{background:#343435;font-size:13px;color:#999;padding:6px 0;position:relative;text-shadow:0 1px rgba(0,0,0,.6);border-bottom:12px solid #ebebeb;overflow:hidden}.jb-toolbar__open{display:none;visibility:hidden}.jb-toolbar .wrapper{list-style:none;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;margin:auto}.jb-toolbar:before{content:'';position:absolute;bottom:-6px;left:0;right:0;border-top:1px dashed #bdbdbd}.jb-toolbar a{color:#999}.jb-toolbar .clear-menu a{position:relative;display:inline-block;vertical-align:top;padding:0 8px 0 7px}.jb-toolbar .clear-menu a:before{content:'';display:block;position:absolute;top:4px;right:0;height:10px;width:1px;background:#999}.jb-toolbar .clear-menu a:first-child{padding-left:0}.jb-toolbar .clear-menu a:last-child{padding-right:0}.jb-toolbar .clear-menu a:last-child:before{display:none}.jb-toolbar .clear-menu a.rekl{background:#11b885;color:#fff;margin-left:10px;padding:0 7px;margin-top:-7px;margin-bottom:-7px;font-weight:700;line-height:33px;box-shadow:inset 0 -5px 9px 0 rgba(0,0,0,.07)}.no-flexboxtweener .jb-toolbar__left{float:left}.no-flexboxtweener .jb-toolbar__right{float:right}.jb-header{list-style:none;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row;-webkit-align-content:center;-ms-flex-line-pack:center;align-content:center;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;margin:10px auto 15px;overflow:hidden}.jb-logo{max-width:313px;position:relative;overflow:hidden;margin:0}.jb-logo .hidden-text{position:absolute;height:1px;width:1px;left:-100px}.no-flexboxtweener .jb-logo{float:left}.jb-headerbar{margin-left:15px;max-width:100%}.no-flexboxtweener .jb-headerbar{float:right}.jb-main{background:#fff;border:1px solid #cecece;border-bottom:0;border-top:0;position:relative;z-index:10;box-shadow:0 0 10px 0 rgba(0,0,0,.08);padding-top:10px}.jb-main:after{content:"";display:table;clear:both}.jb-main:before{content:' ';position:absolute;z-index:1;left:0;right:0;top:0;display:block;height:9px;border-bottom:1px solid #e7e7e7;background-image:-webkit-linear-gradient(top,#e2e2e2,#f7f7f7 45%,#f8f8f8);background-image:linear-gradient(180deg,#e2e2e2 0%,#f7f7f7 45%,#f8f8f8)}.jb-main__wrapper--sidebar{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row;-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;align-items:stretch;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between}.no-flexboxtweener .jb-main__wrapper--sidebar:after{content:"";display:table;clear:both}.jb-content{padding:15px}.jb-content,.jb-content--sidebar{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}.jb-content--sidebar{max-width:100%;width:70%;border-right:1px solid #e3e2e2}.no-flexboxtweener .jb-content--sidebar{float:left}.jb-sidebar{padding:15px 15px 15px 25px;border-left:1px solid #fff;position:relative;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}.no-flexboxtweener .jb-sidebar{float:right}.jb-sidebar:before{content:'';position:absolute;left:-1px;top:0;bottom:0;background:#f8f8f8;width:10px}.jb-sidebar--main{width:30%}.module{margin-top:15px}.module:first-child{margin-top:0}.module--box{background:#fff;border:1px solid #d3d3d3;padding:10px;border-radius:4px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;box-shadow:0 1px 3px rgba(0,0,0,.14)}.module--box.documentation,.module--box.mod-search{border-radius:0;padding:0;border:0;box-shadow:0 0 0 transparent}.module__title{font-size:15px;font-weight:700;margin-bottom:13px;position:relative}.badge-hot .module__title{line-height:23px;padding-right:75px!important}.badge-hot .module__title:after{content:'Важное';padding:5px 6px;text-transform:lowercase;border-radius:2px;color:#fff;font-size:12px;background:#d50;position:absolute;top:8px;right:8px;line-height:1;font-weight:400;text-rendering:optimizeSpeed;box-shadow:0 1px 5px rgba(0,0,0,.17)}.module__title--box{margin:-10px -10px 10px;border-bottom:1px solid #d3d3d3;padding:13px 10px;border-radius:4px 4px 0 0;background-color:#fcfcfc;background-image:-webkit-linear-gradient(top,#fcfcfc,hsla(0,0%,90%,.5) 99%,#fff);background-image:linear-gradient(180deg,#fcfcfc 0%,hsla(0,0%,90%,.5) 99%,#fff)}.badge-hot .module__title--box{padding:9px 10px}.module__title.documentation{border-radius:0;padding:0;border:0;box-shadow:0 0 0 transparent;background:transparent;margin:15px 0;font-size:18px}.module__title a{color:inherit}.mod-search{min-height:47px}.jb-navigation{margin:15px auto 0;background:#3a3a3a;border-radius:5px 5px 0 0}.no-flexboxtweener .jb-navigation:after{content:"";display:table;clear:both}.jb-navigation__wrapper{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row;-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;align-items:stretch;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;position:relative;width:100%}.no-flexboxtweener .jb-navigation__wrapper{display:block;width:auto}.no-flexboxtweener .jb-navigation__wrapper:after{content:"";display:table;clear:both}.jb-navigation:after{content:'';position:absolute;height:10px;left:0;bottom:0;right:0;background:hsla(0,0%,100%,.04);z-index:1}.jb-navigation a{color:#ddd}.jb-menu{border-right:1px solid #595959}.no-flexboxtweener .jb-menu{float:left}.jb-menu ul{list-style:none;margin:0}.jb-menu__open{display:none;visibility:hidden;width:70px;height:55px;text-decoration:none;position:relative}.jb-menu__open span{height:3px;width:28px;background:#ddd;display:block;position:absolute;border-radius:3px;top:50%;left:50%;margin-left:-14px;margin-top:-7px}.jb-menu__open span:after,.jb-menu__open span:before{content:'';height:3px;background:#ddd;display:block;position:absolute;left:0;right:0}.jb-menu__open span:before{top:-7px}.jb-menu__open span:after{bottom:-7px}.jb-nav>li{float:left;position:relative;border-left:1px solid #595959;border-right:1px solid #2d2d2d}.jb-nav>li:first-child{border-left:0;margin-left:-15px;border-radius:5px 0 0 0}.jb-nav>li>a{font-size:13px;font-weight:700;padding:0 20px;line-height:48px;height:55px;display:block}.jb-nav>li.active>a{color:#fff;background:hsla(0,0%,100%,.05)}.jb-nav__child{position:absolute;top:100%;left:0;padding:10px;z-index:999;background:#343434;box-shadow:0 4px 11px -2px rgba(0,0,0,.45);border-radius:0 0 5px 5px;font-size:0;display:none;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;-webkit-transform:perspective(0) rotateX(0deg);transform:perspective(0) rotateX(0deg);will-change:box-shadow,transform}.jb-nav__child li{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;position:relative;padding-bottom:2px}.jb-nav__child li:after{content:'';border-top:1px solid #3d3d3d;border-bottom:1px solid #2e2d2d;position:absolute;bottom:0;left:0;right:0}.jb-nav__child li:last-child{padding-bottom:0}.jb-nav__child li:last-child:after{display:none}.jb-nav__child li:last-child a{padding-bottom:0}.jb-nav__child a{font-size:13px;display:block;color:#999;padding:7px 0;font-weight:700;white-space:nowrap}[class^=columns-]+.jb-nav__child{-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap;-webkit-box-align:stretch;-webkit-align-items:stretch;-ms-flex-align:stretch;-ms-grid-row-align:stretch;align-items:stretch;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;padding:5px}[class^=columns-]+.jb-nav__child li{width:48.34%;margin:0 .83%}[class^=columns-]+.jb-nav__child li:last-child a{padding-bottom:5px}[class^=columns-]+.jb-nav__child li:nth-last-child(2){padding-bottom:0}[class^=columns-]+.jb-nav__child li:nth-last-child(2):after{display:none}.columns-500+.jb-nav__child{width:500px}.jb-mobile-menu{margin:0}.jb-mobile-menu__child{margin:0}.jb-rekl{margin-top:10px}.jb-rekl:first-child{margin-top:0}.module-documentation{list-style:none;margin:0;padding:0}.module-documentation:after{content:"";display:table;clear:both}.module-documentation__item{margin:0 0 20px;padding:0 0 0 20px;position:relative}.module-documentation__item:before{content:'';position:absolute;z-index:3;top:0;left:8px;bottom:-20px;width:1px;background:rgba(0,0,0,.1)}.module-documentation__item:after{content:'\2022';position:absolute;z-index:4;left:5px;top:50%;margin-top:-13px;font-size:19px;color:rgba(0,0,0,.701961)}.module-documentation__item--lastes{padding-left:0;margin:0}.module-documentation__item--lastes:before{top:82%;bottom:0}.module-documentation__item--lastes:after{top:82%}.module-documentation__image{position:relative;z-index:1;display:block}.module-documentation__image:before{content:"";position:absolute;left:0;top:0;bottom:-2px;right:0;background-image:-webkit-linear-gradient(top,hsla(0,0%,100%,0) 20%,#fff);background-image:linear-gradient(180deg,hsla(0,0%,100%,0) 20%,#fff)}.blog-item{padding-bottom:25px;margin-bottom:12px;border-bottom:1px dotted #ccc}.blog-item:after{content:"";display:table;clear:both}.short-entry{margin-top:20px}.short-entry__user{font-size:13px;line-height:16px;width:108px;float:left}.short-entry__description{margin-left:160px}.short-entry__avatar{border-radius:50%;background:#e7ecf0;padding:4px;display:inline-block;vertical-align:top;max-width:100%}.short-entry__avatar img{border-radius:50%}.short-entry__meta{display:inline;text-align:center}.short-entry__name{margin-top:10px;color:#48b}.short-entry__time{display:block;margin-top:10px;color:#999}.short-entry__text{padding:10px;border:1px solid #e9e9e9;border-radius:3px;position:relative;min-height:64px;line-height:1.4em;margin-top:15px;font-family:Georgia,Cambria,Times New Roman,Times,serif;box-shadow:0 1px 3px 0 rgba(0,0,0,.1);font-size:17.6px}.short-entry__text a{word-wrap:break-word}.short-entry__text:before{top:31px;border-width:0 37px 31px 0;border-color:transparent #fff transparent transparent;z-index:2;-webkit-filter:drop-shadow(-5px 0 3px rgba(0,0,0,.1));filter:drop-shadow(-5px 0 3px rgba(0,0,0,.1))}.short-entry__text:before{content:'';position:absolute;right:100%;width:0;height:0;border-style:solid}.item-header{margin-bottom:15px}.item-header__title{margin:0;font-family:jmb-font,Georgia,Cambria,Times New Roman,Times,serif;color:#444;line-height:.95}.item-header__title a{color:#444}.item-header__title--short-tile{font-size:32px}.item-header__meta{color:#999;font-size:11px;display:block;margin-top:10px}.item-header__meta time{position:relative;padding-left:15px}.item-header__meta time:before{position:absolute;top:0;left:0}.item-header__meta:not(.item-header__meta--full) time:after{content:','}.item-header__cms{display:inline-block;margin-left:10px}.item-header__cms a{color:#fff;text-decoration:none!important;display:inline-block;padding:3px 5px;background:#11b885;border-radius:2px;box-shadow:0 2px 2px 0 rgba(0,0,0,.04),0 3px 1px -2px rgba(0,0,0,.2),0 1px 3px 0 rgba(0,0,0,.06);font-family:Helvetica Neue,Lucida Grande,Helvetica,Segoe UI,Arial,sans-serif;will-change:box-shadow,transform}.fc_categories{text-transform:uppercase;font-size:10px;font-weight:700;display:inline-block}.block-last{margin-top:10px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-align-content:center;-ms-flex-line-pack:center;align-content:center;-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row}.block-last:after{content:"";display:table;clear:both}.block-last:first-child{margin-top:0}.block-last img{max-width:38px;max-height:38px;margin-right:10px}.block-last__image{width:38px;margin-right:5px}.block-last__image,.block-last__name{display:inline-block;vertical-align:middle}.block-last__name{font-size:22px;text-transform:none;color:#212121;margin:0;font-weight:700}.block-last--pagekit img,.block-last--wordpress img{max-height:30px}h1,h2,h3{font-weight:700;margin-top:0;text-rendering:optimizeLegibility;margin-bottom:.5em}h1{font-size:2.475em;line-height:1}h2{line-height:.833333}h2,h3{font-size:1.6875em}h3{line-height:1;margin-bottom:.5em}ul{font-size:1em}li{line-height:1.5;margin:0}p{margin:auto auto 1em}p:last-child{margin-bottom:0}img{max-width:100%;height:auto;vertical-align:top;border:0}a,img{outline:0}a{text-decoration:none}.hidden-box{display:none!important;visibility:hidden!important}.clr{clear:both}ul{margin:15px 0}ul{padding-left:15px}.item-header__meta time:before{font-family:jmb-icon;speak:none;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;line-height:1;letter-spacing:0;-webkit-font-feature-settings:"liga";-moz-font-feature-settings:"liga=1";-moz-font-feature-settings:"liga";-ms-font-feature-settings:"liga" 1;-o-font-feature-settings:"liga";font-feature-settings:"liga"}.item-header__meta time:before{content:"\e603"}@font-face{font-family:jmb-font;src:url(/fonts/robotoslab-bold-webfont.woff2) format("woff2"),url(/fonts/robotoslab-bold-webfont.woff) format("woff");font-weight:700;font-style:normal}@font-face{font-family:jmb-icon;src:url(/fonts/jmb-icon.woff2) format("woff2"),url(/fonts/jmb-icon.woff) format("woff");font-weight:400;font-style:normal}@media screen and (max-width:1010px){.jb-content--sidebar{width:65%}.jb-sidebar{width:35%}}@media screen and (max-width:966px){.jb-main__wrapper--sidebar{-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap}.jb-content--sidebar{width:100%;border-right:0;border-bottom:1px solid #e3e2e2}.jb-sidebar{padding:25px 15px 15px;width:100%;border-left:0;border-top:1px solid #fff;-webkit-column-gap:15px;-moz-column-gap:15px;column-gap:15px;-webkit-column-count:2;-moz-column-count:2;column-count:2}.jb-sidebar .module{display:inline-block;width:100%;margin-top:0;margin-bottom:15px}.jb-sidebar:before{left:0;bottom:auto;width:100%;height:10px}}@media screen and (max-width:900px){.jb-header,.jb-toolbar .wrapper,.wrapper{padding:0 10px}.item-header__meta{margin-top:10px}.fc_categories{margin-bottom:14px}}@media screen and (max-width:890px){.jb-menu{display:none;visibility:hidden}.jb-menu__open{display:block;visibility:visible;border-right:1px solid #595959}.jb-menu__open:after{content:'';position:absolute;top:0;bottom:0;right:0;border-right:1px solid #2d2d2d}}@media screen and (max-width:860px){.jb-header{-webkit-flex-flow:column nowrap;-ms-flex-flow:column nowrap;flex-flow:column;text-align:center;margin:0 auto}.jb-headerbar{margin-left:0;margin-top:15px}.item-header__title,.item-header__title--short-tile{font-size:26px}h1{font-size:1.8em}h2{font-size:1.6em}h3{font-size:1.4em}}@media screen and (max-width:680px){.jb-logo{max-width:250px}}@media screen and (max-width:600px){.jb-toolbar__open{display:block;visibility:visible;text-align:center;width:100%}.jb-toolbar__left,.jb-toolbar__right{display:none;visibility:hidden}.short-entry__user{float:none;width:100%}.short-entry__description{margin-left:0;margin-top:10px}.short-entry__avatar{max-width:35px;float:left}.short-entry__meta{margin-left:55px;position:relative;padding-right:80px;display:block;text-align:left}.short-entry__name{margin-top:0;padding-top:8px}.short-entry__time{margin-top:0}.short-entry__text:before{display:none}}@media screen and (max-width:540px){.jb-sidebar{-webkit-column-gap:0;-moz-column-gap:0;column-gap:0;-webkit-column-count:1;-moz-column-count:1;column-count:1}}</style>
+<script type="text/javascript" charset="utf-8" async="" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/button.js"></script><script src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/jsapi" type="text/javascript"></script><link type="text/css" href="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/defaultru.css" rel="stylesheet"><link type="text/css" href="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/default.css" rel="stylesheet"><script type="text/javascript" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/defaultru.js"></script><link rel="stylesheet" type="text/css" media="screen" href="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/index.css"><script src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/hypertext.js"></script><style type="text/css">
+.gsc-control-cse {
+font-family: Arial, sans-serif;
+border-color: #FFFFFF;
+background-color: #FFFFFF;
+}
+.gsc-control-cse .gsc-table-result {
+font-family: Arial, sans-serif;
+}
+input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus {
+border-color: #D9D9D9;
+}
+input.gsc-search-button, input.gsc-search-button:hover, input.gsc-search-button:focus {
+border-color: #666666;
+background-color: #CECECE;
+background-image: none;
+filter: none;
+}
+.gsc-tabHeader.gsc-tabhInactive {
+border-color: #E9E9E9;
+background-color: #E9E9E9;
+}
+.gsc-tabHeader.gsc-tabhActive {
+border-color: #FF9900;
+border-bottom-color: #FFFFFF;
+background-color: #FFFFFF;
+}
+.gsc-tabsArea {
+border-color: #FF9900;
+}
+.gsc-webResult.gsc-result,
+.gsc-results .gsc-imageResult {
+border-color: #FFFFFF;
+background-color: #FFFFFF;
+}
+.gsc-webResult.gsc-result:hover,
+.gsc-imageResult:hover {
+border-color: #FFFFFF;
+background-color: #FFFFFF;
+}
+.gs-webResult.gs-result a.gs-title:link,
+.gs-webResult.gs-result a.gs-title:link b,
+.gs-imageResult a.gs-title:link,
+.gs-imageResult a.gs-title:link b {
+color: #0000CC;
+}
+.gs-webResult.gs-result a.gs-title:visited,
+.gs-webResult.gs-result a.gs-title:visited b,
+.gs-imageResult a.gs-title:visited,
+.gs-imageResult a.gs-title:visited b {
+color: #0000CC;
+}
+.gs-webResult.gs-result a.gs-title:hover,
+.gs-webResult.gs-result a.gs-title:hover b,
+.gs-imageResult a.gs-title:hover,
+.gs-imageResult a.gs-title:hover b {
+color: #0000CC;
+}
+.gs-webResult.gs-result a.gs-title:active,
+.gs-webResult.gs-result a.gs-title:active b,
+.gs-imageResult a.gs-title:active,
+.gs-imageResult a.gs-title:active b {
+color: #0000CC;
+}
+.gsc-cursor-page {
+color: #0000CC;
+}
+a.gsc-trailing-more-results:link {
+color: #0000CC;
+}
+.gs-webResult .gs-snippet,
+.gs-imageResult .gs-snippet,
+.gs-fileFormatType {
+color: #000000;
+}
+.gs-webResult div.gs-visibleUrl,
+.gs-imageResult div.gs-visibleUrl {
+color: #008000;
+}
+.gs-webResult div.gs-visibleUrl-short {
+color: #008000;
+}
+.gs-webResult div.gs-visibleUrl-short {
+display: none;
+}
+.gs-webResult div.gs-visibleUrl-long {
+display: block;
+}
+.gs-promotion div.gs-visibleUrl-short {
+display: none;
+}
+.gs-promotion div.gs-visibleUrl-long {
+display: block;
+}
+.gsc-cursor-box {
+border-color: #FFFFFF;
+}
+.gsc-results .gsc-cursor-box .gsc-cursor-page {
+border-color: #E9E9E9;
+background-color: #FFFFFF;
+color: #0000CC;
+}
+.gsc-results .gsc-cursor-box .gsc-cursor-current-page {
+border-color: #FF9900;
+background-color: #FFFFFF;
+color: #0000CC;
+}
+.gsc-webResult.gsc-result.gsc-promotion {
+border-color: #336699;
+background-color: #FFFFFF;
+}
+.gsc-completion-title {
+color: #0000CC;
+}
+.gsc-completion-snippet {
+color: #000000;
+}
+.gs-promotion a.gs-title:link,
+.gs-promotion a.gs-title:link *,
+.gs-promotion .gs-snippet a:link {
+color: #0000CC;
+}
+.gs-promotion a.gs-title:visited,
+.gs-promotion a.gs-title:visited *,
+.gs-promotion .gs-snippet a:visited {
+color: #0000CC;
+}
+.gs-promotion a.gs-title:hover,
+.gs-promotion a.gs-title:hover *,
+.gs-promotion .gs-snippet a:hover {
+color: #0000CC;
+}
+.gs-promotion a.gs-title:active,
+.gs-promotion a.gs-title:active *,
+.gs-promotion .gs-snippet a:active {
+color: #0000CC;
+}
+.gs-promotion .gs-snippet,
+.gs-promotion .gs-title .gs-promotion-title-right,
+.gs-promotion .gs-title .gs-promotion-title-right * {
+color: #000000;
+}
+.gs-promotion .gs-visibleUrl,
+.gs-promotion .gs-visibleUrl-short {
+color: #008000;
+}</style><style type="text/css">.gscb_a{display:inline-block;font:27px/13px arial,sans-serif}.gsst_a .gscb_a{color:#a1b9ed;cursor:pointer}.gsst_a:hover .gscb_a,.gsst_a:focus .gscb_a{color:#36c}.gsst_a{display:inline-block}.gsst_a{cursor:pointer;padding:0 4px}.gsst_a:hover{text-decoration:none!important}.gsst_b{font-size:16px;padding:0 2px;position:relative;user-select:none;-moz-user-select:none;white-space:nowrap}.gsst_e{opacity:0.55;}.gsst_a:hover .gsst_e,.gsst_a:focus .gsst_e{opacity:0.72;}.gsst_a:active .gsst_e{opacity:1;}.gsst_f{background:white;text-align:left}.gsst_g{background-color:white;border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-moz-box-shadow:0 2px 4px rgba(0,0,0,0.2);margin:-1px -3px;padding:0 6px}.gsst_h{background-color:white;height:1px;margin-bottom:-1px;position:relative;top:-1px}.gsib_a{width:100%;padding:4px 6px 0}.gsib_a,.gsib_b{vertical-align:top}.gssb_c{border:0;position:absolute;z-index:989}.gssb_e{border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-moz-box-shadow:0 2px 4px rgba(0,0,0,0.2);cursor:default}.gssb_f{visibility:hidden;white-space:nowrap}.gssb_k{border:0;display:block;position:absolute;top:0;z-index:988}.gsdd_a{border:none!important}.gsq_a{padding:0}.gsq_a{padding:0}.gscsep_a{display:none}.gssb_a{padding:0 7px}.gssb_a,.gssb_a td{white-space:nowrap;overflow:hidden;line-height:22px}#gssb_b{font-size:11px;color:#36c;text-decoration:none}#gssb_b:hover{font-size:11px;color:#36c;text-decoration:underline}.gssb_g{text-align:center;padding:8px 0 7px;position:relative}.gssb_h{font-size:15px;height:28px;margin:0.2em}.gssb_i{background:#eee}.gss_ifl{visibility:hidden;padding-left:5px}.gssb_i .gss_ifl{visibility:visible}a.gssb_j{font-size:13px;color:#36c;text-decoration:none;line-height:100%}a.gssb_j:hover{text-decoration:underline}.gssb_l{height:1px;background-color:#e5e5e5}.gssb_m{color:#000;background:#fff}.gsfe_a{border:1px solid #b9b9b9;border-top-color:#a0a0a0;box-shadow:inset 0px 1px 2px rgba(0,0,0,0.1);-moz-box-shadow:inset 0px 1px 2px rgba(0,0,0,0.1);-webkit-box-shadow:inset 0px 1px 2px rgba(0,0,0,0.1);}.gsfe_b{border:1px solid #4d90fe;outline:none;box-shadow:inset 0px 1px 2px rgba(0,0,0,0.3);-moz-box-shadow:inset 0px 1px 2px rgba(0,0,0,0.3);-webkit-box-shadow:inset 0px 1px 2px rgba(0,0,0,0.3);}.gssb_a{padding:0 9px}.gsib_a{padding-right:8px;padding-left:8px}.gsst_a{padding-top:3px}.gssb_e{border:0}.gssb_l{margin:5px 0}#gsc-i-id1::-webkit-input-placeholder{font-size:14px}#gsc-i-id1:-moz-placeholder{font-size:14px}#gsc-i-id1::-moz-placeholder{font-size:14px}#gsc-i-id1:-ms-input-placeholder{font-size:14px}#gsc-i-id1:focus::-webkit-input-placeholder{color:transparent}#gsc-i-id1:focus:-moz-placeholder{color:transparent}#gsc-i-id1:focus::-moz-placeholder{color:transparent}#gsc-i-id1:focus:-ms-input-placeholder{color:transparent}.gssb_c .gsc-completion-container{position:static}.gssb_c{z-index:5000}.gsc-completion-container table{background:transparent;font-size:inherit;font-family:inherit}.gssb_c > tbody > tr,.gssb_c > tbody > tr > td,.gssb_d,.gssb_d > tbody > tr,.gssb_d > tbody > tr > td,.gssb_e,.gssb_e > tbody > tr,.gssb_e > tbody > tr > td{padding:0;margin:0;border:0}.gssb_a table,.gssb_a table tr,.gssb_a table tr td{padding:0;margin:0;border:0}</style></head>
+
+<body class="item-id-346 item-catid-38 type-id-1 type-alias-article site raznoe " id="page"><span id="fc_filter_form_blocker"><span class="fc_blocker_opacity"></span><span class="fc_blocker_content">Применить<div class="fc_blocker_bar"><div></div></div></span></span><div class="mobile-submenu mm-menu mm-effect-panels-zoom mm-effect-listitems-drop mm-pagedim mm-offcanvas mm-bottom mm-front mm-autoheight" id="jb-mobile-submenu" style="height: 0px;"><div class="mm-panels"><div class="mm-panel mm-opened mm-current" id="mm-3"><ul class="jb-mobile-menu  mm-listview">
+<li><a href="https://cmscafe.ru/o-cmscafe">О проекте</a></li><li><a href="https://cmscafe.ru/stat-avtorom">Стать автором</a></li><li class="rekl"><a class="rekl" href="https://cmscafe.ru/enterprise">Реклама на сайте</a></li></ul></div></div></div><div class="mobile-menu mm-menu mm-theme-dark mm-border-full mm-effect-menu-slide mm-effect-listitems-slide mm-pageshadow mm-pagedim mm-offcanvas mm-hasnavbar-top-1" id="jb-mobile-menu"><div class="mm-navbar mm-navbar-top mm-navbar-top-1 mm-navbar-size-1 mm-hasbtns"><a class="mm-prev mm-btn mm-hidden"></a><a class="mm-title">Меню</a></div><div class="mm-panels"><div class="mm-panel mm-opened mm-current" id="mm-1"><div class="mm-navbar"><a class="mm-title">Меню</a></div><ul class="jb-mobile-menu  mm-listview">
+<li class="columns-500"><a class="mm-next" href="#mm-2" data-target="#mm-2"></a><a class="columns-500" href="https://cmscafe.ru/">Блоги</a></li><li><a href="https://cmscafe.ru/docs">Документация</a></li><li><a href="https://cmscafe.ru/shablony-joomla">  Шаблоны</a></li><li><a href="https://cmscafe.ru/uslugi">Услуги</a></li></ul></div><div class="mm-panel mm-hidden" id="mm-2"><div class="mm-navbar"><a class="mm-btn mm-prev" href="#mm-1" data-target="#mm-1"></a><a class="mm-title" href="#mm-1">Блоги</a></div><ul class="jb-mobile-menu__child mm-listview"><li><a href="https://cmscafe.ru/novosti">Анонсы и обзоры</a></li><li><a href="https://cmscafe.ru/analitika">Аналитические статьи</a></li><li><a href="https://cmscafe.ru/praktika">Практические решения</a></li><li><a href="https://cmscafe.ru/intervju">Интервью и события</a></li><li><a href="https://cmscafe.ru/razrabotka">Разработка</a></li><li><a href="https://cmscafe.ru/raznoe">Разное</a></li></ul></div></div></div>
+
+	<div id="mm-0" class="mm-page mm-slideout">
+					<div class="jb-toolbar">
+				<div class="wrapper">
+											<div class="jb-toolbar__left">
+							<nav class="clear-menu ">
+<a class="item-216  parent" href="https://cmscafe.ru/o-cmscafe">О проекте</a><a class="item-665" href="https://cmscafe.ru/stat-avtorom">Стать автором</a><a class="item-145 rekl" href="https://cmscafe.ru/enterprise">Реклама на сайте</a></nav>
+
+						</div>
+																<div class="jb-toolbar__right">
+							
+	<a href="https://cmscafe.ru/english">English info</a>
+						</div>
+										<a class="jb-toolbar__open" href="#jb-mobile-submenu" aria-hidden="true">Дополнительное меню</a>
+				</div>
+			</div>
+		
+					<header class="jb-header" role="banner">
+															<a class="jb-logo" href="https://cmscafe.ru/">
+							<span class="hidden-text">CMSCafe</span>
+							
+	<img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/cmscafe-logo.svg" alt="CMScafe - портал для веб-разработчиков" style="width: 300px;">
+						</a>
+									
+									<div class="jb-headerbar">
+						
+	<div class="jb-rekl">
+																																																															<a href="https://cmscafe.ru/component/banners/click/23" target="_blank" title="Jino - облачный хостинг для Joomla">
+							<img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/jino-joomla.jpg" alt="Jino - облачный хостинг для Joomla">
+						</a>
+															</div>
+
+
+					</div>
+							</header>
+				<div class="wrapper">
+							<div class="jb-navigation">
+					<div class="jb-navigation__wrapper">
+						<a class="jb-menu__open" href="#jb-mobile-menu" aria-hidden="true"><span class="hidden-text">MOBILE_OPEN_MENU</span></a>
+													<nav class="jb-menu" aria-label="MAIN_MENU">
+								<ul class="jb-nav ">
+	<li class="item-424 deeper parent" aria-haspopup="true"><a class="columns-500" href="https://cmscafe.ru/">Блоги</a><ul class="jb-nav__child"><li class="item-200"><a href="https://cmscafe.ru/novosti">Анонсы и обзоры</a></li><li class="item-201"><a href="https://cmscafe.ru/analitika">Аналитические статьи</a></li><li class="item-223"><a href="https://cmscafe.ru/praktika">Практические решения</a></li><li class="item-439"><a href="https://cmscafe.ru/intervju">Интервью и события</a></li><li class="item-224"><a href="https://cmscafe.ru/razrabotka">Разработка</a></li><li class="item-237 current active"><a href="https://cmscafe.ru/raznoe">Разное</a></li></ul></li><li class="item-700"><a href="https://cmscafe.ru/docs">Документация</a></li><li class="item-1313"><a href="https://cmscafe.ru/shablony-joomla">  Шаблоны</a></li><li class="item-1267"><a href="https://cmscafe.ru/uslugi">Услуги</a></li></ul>
+
+							</nav>
+																	</div>
+				</div>
+			
+			<div class="jb-main">
+				<div class="jb-main__wrapper">
+					<div class="jb-content">
+													<div class="jb-breadcrumbs">
+								<ol class="jb-pathway path" vocab="http://schema.org/" typeof="BreadcrumbList"><li class="jb-pathway__item" property="itemListElement" typeof="ListItem"><a class="jb-pathway__link" property="item" typeof="WebPage" href="https://cmscafe.ru/raznoe"><span property="name">Разное</span></a><meta property="position" content="1"></li><li class="jb-pathway__item" typeof="ListItem"><a class="jb-pathway__link jb-pathway__link--last" property="item" typeof="WebPage" href="https://cmscafe.ru/raznoe/346-obzor-configuration-php-fajla-nastroek-joomla"><span property="name">Обзор configuration.php - файла настроек Joomla</span></a><meta property="position" content="2"></li></ol>
+<script type="application/ld+json"> {
+	"@context": "http://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [
+		{
+			"@type": "ListItem",
+			"position": 1,
+			"item": {
+				"@id": "https://cmscafe.ru/raznoe",
+				"name": "Разное"
+			}
+		},
+			
+		{
+			"@type": "ListItem",
+			"position": 2,
+			"item": {
+				"@id": "https://cmscafe.ru/raznoe/346-obzor-configuration-php-fajla-nastroek-joomla",
+				"name": "Обзор configuration.php - файла настроек Joomla"
+			}
+		}]
+	}
+</script>
+
+							</div>
+						
+						
+						<main role="main" class="jb-blog">
+							<div id="system-message-container">
+	</div>
+
+							<div class="blog-full__wrapper">
+	<article class="blog-full blog-full--have-sidebar  blog-full--id-346 blog-full--type-1 blog-full--category-38" itemscope="" itemtype="https://schema.org/Article">
+
+		
+																<header class="item-header">
+
+																				<a class="fc_categories fc_category_38 fc_ismain_cat link_categories" href="https://cmscafe.ru/raznoe">Разное</a>						
+						<h1 itemprop="headline" class="item-header__title">Обзор configuration.php - файла настроек Joomla</h1>
+													<div class="item-header__meta item-header__meta--full">
+																										<meta itemprop="datePublished" content="2013-01-16">
+									<time itemprop="dateCreated" datetime="2013-01-16">16.01.2013</time>
+																									<span class="item-header__cms">
+																					<a rel="nofollow" href="https://cmscafe.ru/?filter_42=joomla">Joomla</a>																			</span>
+																							</div>
+											</header>
+																							<div class="blog-full__plugin blog-full__plugin--before">
+						<div id="google_before_display">
+			<script async="" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/adsbygoogle.js"></script>
+					<ins class="adsbygoogle" style="display: block; height: 90px;" data-ad-client="ca-pub-5120159964439306" data-ad-slot="7602495273" data-ad-format="auto" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:1168px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:1168px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;width:1168px;height:90px;" width="1168" height="90" frameborder="0"></iframe></ins></ins></ins>
+				<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+		</div>					</div>
+							
+			<div itemprop="articleBody" class="blog-full__content">
+								
+<p class="flexa"><img alt="obzor-configuration-php-fajla-nastroek-joomla" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/obzor-configuration-php-fajla-nastroek-joomla.jpg"></p>
+<h2>Расположение файла configuration.php</h2>
+<p>Файл <strong>configuration.php</strong> расположен в корневой папке 
+вашей установки Joomla. Если Joomla не была установлена в субдиректорию,
+ то обычно путь выглядит так:</p>
+<p><mark>/home/username/public_html/configuration.php</mark></p>
+<p data-hc-id="96c105d068942919bf92803401a8">Если Joomla была установлена в субдиректорию, то соответственно:<span class="hcc hc__ht hc_96c105d068942919bf92803401a8" data-hc-id="96c105d068942919bf92803401a8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p><mark>/home/username/public_html/subdirectory/configuration.php</mark></p>
+<p data-hc-id="d614daf032075147e8a1341acfe8">Например, на локальном компьютере (используя XAMPP в качестве примера):<span class="hcc hc__ht hc_d614daf032075147e8a1341acfe8" data-hc-id="d614daf032075147e8a1341acfe8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p><mark>C:\xampp\htdocs\j25\configuration.php</mark></p>
+<h2>Обзор configuration.php</h2>
+<p data-hc-id="5ad32dad46968239fa71362b0a28">Хочется в очередной раз напомнить – не забывайте делать резервную копию файла перед тем, как вы будете вносить в него изменения.<span class="hcc hc__ht hc_5ad32dad46968239fa71362b0a28" data-hc-id="5ad32dad46968239fa71362b0a28" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p data-hc-id="3d06d5a78c0cfbf8348fa58e2ec8">Мы пройдемся по всему 
+файлу, создавая небольшую справку к каждой строке, с некоторыми 
+дополнительными примечаниями там, где необходимо большее пояснение. За 
+основу взят файл с настройками по умолчанию для Joomla! 2.5.8.<span class="hcc hc__ht hc_3d06d5a78c0cfbf8348fa58e2ec8" data-hc-id="3d06d5a78c0cfbf8348fa58e2ec8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<h3>Настройки сайта</h3>
+<p></p><div class="prism-show-language"><div class="prism-show-language-label" data-language="PHP">PHP</div></div><pre data-start="1" class="line-numbers language-php" data-language="PHP" style="counter-reset: linenumber 0;"><code class=" language-php"><span class="token keyword">public</span> <span class="token variable">$offline</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$offline_message</span> <span class="token operator">=</span> 'Сайт закрыт на техническое обслуживание<span class="token punctuation">.</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span> <span class="token punctuation">/&gt;</span></span></span> Пожалуйста<span class="token punctuation">,</span> зайдите позже<span class="token punctuation">.</span>'<span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$display_offline_message</span> <span class="token operator">=</span> <span class="token string">'1'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$offline_image</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$sitename</span> <span class="token operator">=</span> <span class="token string">'J25 Демо'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$editor</span> <span class="token operator">=</span> <span class="token string">'tinymce'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$captcha</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$list_limit</span> <span class="token operator">=</span> <span class="token string">'20'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$access</span> <span class="token operator">=</span> <span class="token string">'1'</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p><code>$offline</code> : сайт выключен (offline). Если установлено '0', то сайт включен. Если установлено '1', то сайт выключен.<br><code>$offline_message</code> : сообщение при выключенном сайте. <br><code>$display_offline_message</code>
+ : показывать offline-сообщение. '0' - выключено. '1' - включено 
+(пользовательское сообщение). '2' - по умолчанию (из языкового файла). 
+По умолчанию - '1'.<br><code>$offline_image</code> : путь до изображения при выключенном сайте.<br><code>$sitename</code> : название сайта, которое отображается в заголовках.<br><code>$editor</code> : редактор, который выбран в общих настройках сайта. Значение по умолчанию 'tinymce'.<br><code>$captcha</code> : защита от спам-ботов. По умолчанию '0'.<br><code>$list_limit</code> : длина списков в панели управления для всех пользователей. По умолчанию установлено в '20'.<br><code>$access</code> : уровень доступа к сайту. '1' – публичный доступ; '2' – для зарегистрированных; '3' – специальный. По умолчанию - '1'.</p>
+<h3>Настройки отладки</h3>
+<p></p><div class="prism-show-language"><div class="prism-show-language-label" data-language="PHP">PHP</div></div><pre data-start="1" class="line-numbers language-php" data-language="PHP" style="counter-reset: linenumber 0;"><code class=" language-php"><span class="token keyword">public</span> <span class="token variable">$debug</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$debug_lang</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span></span></code></pre><p></p>
+<p><code>$debug</code> : '0' - выключено. '1' - включено.<br><code>$debug_lang</code> : '0' - выключено. '1' - включено.</p>
+<p><b>Примечания</b></p>
+<p data-hc-id="179ca80700524a2c577144ee3738">$debug : Включает систему 
+отладки Joomla. Когда включено, то этот инструмент предоставит 
+диагностическую информацию, языковые переводы и информацию о SQL 
+запросах. Эта информация отображается внизу страницы, как на самом 
+сайте, так и в панели управления. По умолчанию '0' - выключено.<span class="hcc hc__ht hc_179ca80700524a2c577144ee3738" data-hc-id="179ca80700524a2c577144ee3738" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p data-hc-id="b6f3e5878234630f577919af6608">$debug_lang : Включает 
+индикаторы отладки (*...*) илиr (?...?) для языковых файлов Joomla. 
+Отладка языка работает и с выключенной отладкой сайта. Но в таком случае
+ она не предоставит дополнительной справочной информации, которая могла 
+бы помочь в исправлении ошибок. По умолчанию '0' - выключено.<span class="hcc hc__ht hc_b6f3e5878234630f577919af6608" data-hc-id="b6f3e5878234630f577919af6608" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<h3>Настройки базы данных</h3>
+<p></p><div class="prism-show-language"><div class="prism-show-language-label" data-language="PHP">PHP</div></div><pre data-start="1" class="line-numbers language-php" data-language="PHP" style="counter-reset: linenumber 0;"><code class=" language-php"><span class="token keyword">public</span> <span class="token variable">$dbtype</span> <span class="token operator">=</span> <span class="token string">'mysqli'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$host</span> <span class="token operator">=</span> <span class="token string">'localhost'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$user</span> <span class="token operator">=</span> <span class="token string">'user'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$password</span> <span class="token operator">=</span> <span class="token string">'pass'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$db</span> <span class="token operator">=</span> <span class="token string">'demo_j25'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$dbprefix</span> <span class="token operator">=</span> <span class="token string">'fonza_'</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p><code>$dbtype</code> : тип базы данных - 'mysqli' или 'mysql'.<br><code>$host</code> : 'localhost' на большинстве серверах, но не на всех.<br><code>$user</code> : имя пользователя базы данных, который имеет к ней доступ.<br><code>$password</code> : пароль, ассоциированный с именем пользователя. Это не ваш админский пароль или пароль от FTP.<br><code>$db</code> : имя базы данных, которую вы создали для установки Joomla.<br><code>$dbprefix</code> : как минимум три символа с нижнем подчеркиванием в конце (прописывается при установке Joomla).</p>
+<p><b>Примечания</b></p>
+<p data-hc-id="4a29c3e3e2e5413f43dd4ac0bf18">Эта информация нужна вам 
+при установке сайта. Очень часто пользователи забывают менять эти 
+настройки при переносе сайта, что приводит к проблемам.<span class="hcc hc__ht hc_4a29c3e3e2e5413f43dd4ac0bf18" data-hc-id="4a29c3e3e2e5413f43dd4ac0bf18" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<h3>Дополнительные возможности</h3>
+<p></p><div class="prism-show-language"><div class="prism-show-language-label" data-language="PHP">PHP</div></div><pre data-start="1" class="line-numbers language-php" data-language="PHP" style="counter-reset: linenumber 0;"><code class=" language-php"><span class="token keyword">public</span> <span class="token variable">$live_site</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$secret</span> <span class="token operator">=</span> <span class="token string">'pUExyeiSuQRTVVCr'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$gzip</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$error_reporting</span> <span class="token operator">=</span> <span class="token string">'default'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$helpurl</span> <span class="token operator">=</span> 'http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//help.joomla.org/proxy/index.php?option=com_help&amp;keyref=Help{major}{minor}:{keyref}';</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p><code>$live_site</code> : фактический URL сайта, например - http://yourdomain.com (если конечно ваш сайт не находится в субдиректории).<br><code>$secret</code> : НЕ ИЗМЕНЯТЬ<br><code>$gzip</code> : gzip-сжатие страниц. '0' - выключено; '1' - включено. По умолчанию '0'.<br><code>$error_reporting</code> : сообщения об ошибках. 'default' - по умолчанию.<br><code>$helpurl</code> : справка Joomla по умолчанию.</p>
+<p><b>Примечания</b></p>
+<p data-hc-id="dfd84f336cbd620c5ba83d8204b8">$live_site : В новых 
+версиях Joomla не должно иметь значения. Но могут быть случаи, при 
+которых необходимо заполнить это значение. Например, если вы 
+перенаправляете url, то необходимо внести фактический url сайта. Или 
+если вы создаете копию сайта для тестирования. Скажем, у вас есть 
+тестовый сайт 'http://yourdomain.com.com/testsite', который является 
+копией вашего основного сайта. Тогда в тестовой копии необходимо внести 
+изменения и установить значение в 'http://yourdomain.com.com/testsite', 
+иначе вы получите ошибку «страница не найдена». Тоже самое касается и 
+переноса копии на субдомен.<span class="hcc hc__ht hc_dfd84f336cbd620c5ba83d8204b8" data-hc-id="dfd84f336cbd620c5ba83d8204b8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p data-hc-id="0fa9cd13a098100456da6dd2b508">$secret : Значение генерируется при первой установке Joomla и неизменяемо. Используется самой Joomla для безопасности.<span class="hcc hc__ht hc_0fa9cd13a098100456da6dd2b508" data-hc-id="0fa9cd13a098100456da6dd2b508" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p data-hc-id="cfe2579304d5454764a77439cea8">$error_reporting : 
+Устанавливает подходящий уровень отчета об ошибках: 'default' - по 
+умолчанию для системы, 'none' - нет, 'simple' - простой, 'maximum' - 
+максимум, 'development' - для разработчиков (все ошибки PHP). Могут 
+случаться ошибки, которые не влияют на работу сайта. Нет необходимости 
+логировать все сообщения, если только вы не занимаетесь какой-то 
+отладкой.<span class="hcc hc__ht hc_cfe2579304d5454764a77439cea8" data-hc-id="cfe2579304d5454764a77439cea8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p data-hc-id="c386edf68a9e72e9675ca7c6b7a8">$helpurl : Адрес, по 
+которому Joomla обращается за справочной информацией, когда вы кликаете 
+на кнопку "Справка". По умолчанию используется основной сайт Joomla, но 
+вы можете установить и свой.<span class="hcc hc__ht hc_c386edf68a9e72e9675ca7c6b7a8" data-hc-id="c386edf68a9e72e9675ca7c6b7a8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<h3>Настройки FTP</h3>
+<p></p><div class="prism-show-language"><div class="prism-show-language-label" data-language="PHP">PHP</div></div><pre data-start="1" class="line-numbers language-php" data-language="PHP" style="counter-reset: linenumber 0;"><code class=" language-php"><span class="token keyword">public</span> <span class="token variable">$ftp_host</span> <span class="token operator">=</span> <span class="token string">'127.0.0.1'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$ftp_port</span> <span class="token operator">=</span> <span class="token string">'21'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$ftp_user</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$ftp_pass</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$ftp_root</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$ftp_enable</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p><code>$ftp_host</code> : '127.0.0.1' – это IP по умолчанию для localhost.<br><code>$ftp_port</code> : '21' является нормальным по умолчанию. Но не все серверы настроены одинаково.<br><code>$ftp_user</code> : ваше FTP имя пользователя<br><code>$ftp_pass</code> : ваш FTP пароль<br><code>$ftp_root</code> : обычно путь типа '/home/username/public_html' (без последнего слэша)<br><code>$ftp_enable</code>
+ : эта настройка говорит Joomla использовать встроенную FTP функцию, 
+вместо процесса, используемого PHP. '0' - выключено; '1' – включено.</p>
+<h3>Настройки временной зоны</h3>
+<p></p><div class="prism-show-language"><div class="prism-show-language-label" data-language="PHP">PHP</div></div><pre data-start="1" class="line-numbers language-php" data-language="PHP" style="counter-reset: linenumber 0;"><code class=" language-php"><span class="token keyword">public</span> <span class="token variable">$offset</span> <span class="token operator">=</span> <span class="token string">'UTC'</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span></span></code></pre><p></p>
+<p><code>$offset</code> : часовой пояс сервера</p>
+<p><b>Примечания</b></p>
+<p data-hc-id="b19a42f0681d738c333e06328310">$offset: Устанавливает 
+текущую дату и время. Должно быть установлено в значение, где расположен
+ сервер. По умолчанию Всемирное время, Coordinated (UTC 00:00). Вот 
+пример смещения, если сервер находится в Москве - <code>$offset</code> = 'Europe/Moscow';<span class="hcc hc__ht hc_b19a42f0681d738c333e06328310" data-hc-id="b19a42f0681d738c333e06328310" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<h3>Настройки электронной почты</h3>
+<p></p><div class="prism-show-language"><div class="prism-show-language-label" data-language="PHP">PHP</div></div><pre data-start="1" class="line-numbers language-php" data-language="PHP" style="counter-reset: linenumber 0;"><code class=" language-php"><span class="token keyword">public</span> <span class="token variable">$mailer</span> <span class="token operator">=</span> <span class="token string">'mail'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$mailfrom</span> <span class="token operator">=</span> <span class="token string">'admin [at] yourdomain.com'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$fromname</span> <span class="token operator">=</span> <span class="token string">'J25 Демо'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$sendmail</span> <span class="token operator">=</span> <span class="token string">'/usr/sbin/sendmail'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$smtpauth</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$smtpuser</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$smtppass</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$smtphost</span> <span class="token operator">=</span> <span class="token string">'localhost'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$smtpsecure</span> <span class="token operator">=</span> <span class="token string">'none'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$smtpport</span> <span class="token operator">=</span> <span class="token string">'25'</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p><code>$mailer</code> : 'mail' использует функцию mail PHP; 'sendmail' использует SMTP почту на сервере.<br><code>$mailfrom</code> : адрес From. Адрес электронной почты, который использует Joomla для отправки почты с сайта.<br><code>$sendmail</code> : путь, по которому распложена программа Sendmail. Используется, если $mailer установлено в Sendmail.<br><code>$smtpauth</code> : если SMTP сервер требует аутентификацию для отправки почты, то устанавливается в '1'. Иначе '0'. Используется, если <code>$mailer</code> установлено в Sendmail.<br><code>$smtpuser</code> : имя пользователя для доступа к SMTP серверу. Используется, если <code>$mailer</code> установлено в Sendmail.<br><code>$smtppass</code>: пароль для доступа к SMTP серверу. Используется, если <code>$mailer</code> установлено в Sendmail.<br><code>$smtphost</code> : SMTP хост. Адрес SMTP сервера при отсылке почты. Используется, если <code>$mailer</code> установлено в Sendmail.<br><code>$smtpsecure</code> : выберите модель безопасности, которую использует ваш SMTP сервер: SSL или TLS. По умолчанию выключено. Используется, если <code>$mailer</code> установлено в Sendmail.<br><code>$smtpport</code> : SMTP порт. Наименее защищенные серверы используют порт 25, а более защищенные обычно используют порт 465.</p>
+<h3>Настройки кэша</h3>
+<p></p><div class="prism-show-language"><div class="prism-show-language-label" data-language="PHP">PHP</div></div><pre data-start="1" class="line-numbers language-php" data-language="PHP" style="counter-reset: linenumber 0;"><code class=" language-php"><span class="token keyword">public</span> <span class="token variable">$caching</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$cache_handler</span> <span class="token operator">=</span> <span class="token string">'file'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$cachetime</span> <span class="token operator">=</span> <span class="token string">'15'</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p>
+<p><code>$caching</code> : '0' - выключено; '1' стандартная настройка; '2' прогрессивная настройка. По умолчанию '0'.<br><code>$cache_handler</code> : обработчик кэша.<br><code>$cachetime</code> : время кэша.</p>
+<p><b>Примечания</b></p>
+<p data-hc-id="b510c0517a403b5ce217c5810228">$cache_handler : позволяет 
+выбрать доступные на сервере обработчики кэша. Если на сервере не 
+установлены обработчики кэша, то по умолчанию доступен только один 
+вариант - 'file'.<span class="hcc hc__ht hc_b510c0517a403b5ce217c5810228" data-hc-id="b510c0517a403b5ce217c5810228" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p data-hc-id="6330c417714d73dc723736aec708">$cachetime : устанавливает 
+максимальное количество времени (в минутах) для хранения файлов кэша, по
+ истечении которого они обновляются. По умолчанию равно 15 минутам.<span class="hcc hc__ht hc_6330c417714d73dc723736aec708" data-hc-id="6330c417714d73dc723736aec708" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<h3>Настройки метаданных</h3>
+<p></p><div class="prism-show-language"><div class="prism-show-language-label" data-language="PHP">PHP</div></div><pre data-start="1" class="line-numbers language-php" data-language="PHP" style="counter-reset: linenumber 0;"><code class=" language-php"><span class="token keyword">public</span> <span class="token variable">$MetaDesc</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$MetaKeys</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$MetaTitle</span> <span class="token operator">=</span> <span class="token string">'1'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$MetaAuthor</span> <span class="token operator">=</span> <span class="token string">'1'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$MetaVersion</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$robots</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p><code>$MetaDesc</code> : описание сайта для SEO. Это описание сайта, которое индексируется поисковиками.<br><code>$MetaKeys</code> : ключевые слова сайта (через запятую). Эти ключевые слова описывают сайт и являются базой для индексации сайта.<br><code>$MetaTitle</code>
+ : отображать или нет мета-тег title. '0' - выключено; '1' – включено. 
+На данный момент используется только в компоненте Weblinks. По умолчанию
+ '1'.<br><code>$MetaAuthor</code> : Показывать или нет мета-тег author. '0' - выключено; '1' – включено. По умолчанию '1'.<br><code>$MetaVersion</code> : Показывать или нет версию Joomla в мета-теге generator. '0' - выключено; '1' – включено. По умолчанию '0'.<br><code>$robots</code> : инструкции для роботов поисковых систем.</p>
+<h3>Настройки SEO (Search Engine Optimization)</h3>
+<p></p><div class="prism-show-language"><div class="prism-show-language-label" data-language="PHP">PHP</div></div><pre data-start="1" class="line-numbers language-php" data-language="PHP" style="counter-reset: linenumber 0;"><code class=" language-php"><span class="token keyword">public</span> <span class="token variable">$sef</span> <span class="token operator">=</span> <span class="token string">'1'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$sef_rewrite</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$sef_suffix</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$unicodeslugs</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$feed_limit</span> <span class="token operator">=</span> <span class="token string">'10'</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p><code>$sef</code> : '0' - выключено; '1' – включено.<br><code>$sef_rewrite</code> : '0' - выключено; '1' – включено.<br><code>$sef_suffix</code> : '0' - выключено; '1' – включено.<br><code>$unicodeslugs</code> : '0' - выключено; '1' – включено.<br><code>$feed_limit</code> : ограничение ленты новостей, по умолчанию '10'.</p>
+<p><b>Примечания</b></p>
+<p data-hc-id="d77343d72751436f70cd9d0804a8">$sef : контролирует Search 
+Engine Friendly (ЧПУ) URL-адреса. Когда установлено в '1', то URL-адреса
+ переписываются в более дружелюбный для поисковых систем формат. 
+Например, www.example.com/index.php?option=com_content&amp;view=blabla, 
+будет переделано в www.example.com/alias. У большинства элементов в 
+Joomla есть специальное поле "Алиас" для создания сокращенного 
+URL-адреса. По умолчанию '1' - включено.<span class="hcc hc__ht hc_d77343d72751436f70cd9d0804a8" data-hc-id="d77343d72751436f70cd9d0804a8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p data-hc-id="ff930fb020de522f528bacacbda8">$sef_rewrite : Когда 
+установлено в '1', Joomla для создания ЧПУ ссылок будет использовать 
+mod_rewrite модуль Apache. Обратите внимание на то, что не рекомендуется
+ изменять файл .htaccess без понимания того, как это работает. Вам 
+необходимо использовать файл .htaccess предоставленный вместе с Joomla. 
+Для использования этого файла, переименуйте файл htaccess.txt (находится
+ в корневой папке установки Joomla) в .htaccess. Если вы используете 
+сервер IIS, то переименуте файл web.config.txt (находится в корневой 
+папке установки Joomla) в web.config и убедитесь в том, что у вас 
+установлен модуль URL Rewrite для IIS. По умолчанию '0' - выключено.<span class="hcc hc__ht hc_ff930fb020de522f528bacacbda8" data-hc-id="ff930fb020de522f528bacacbda8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p data-hc-id="f7b163c47017530d709b8dafaca8">$sef_suffix : Когда 
+установлено в '1', Joomla будет добавлять к URL-адресам специальный 
+суффикс в зависимости от типа документа. По умолчанию '0' - выключено.<span class="hcc hc__ht hc_f7b163c47017530d709b8dafaca8" data-hc-id="f7b163c47017530d709b8dafaca8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p data-hc-id="95108540215461687145071ef1c8">$unicodeslugs : Режим 
+создания Алиасов. Выберите между транслитерацией и хранением в кодировке
+ Unicode. По умолчанию '0' - транслитерация.<span class="hcc hc__ht hc_95108540215461687145071ef1c8" data-hc-id="95108540215461687145071ef1c8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<h3>Настройки логов и папки временных файлов</h3>
+<p></p><div class="prism-show-language"><div class="prism-show-language-label" data-language="PHP">PHP</div></div><pre data-start="1" class="line-numbers language-php" data-language="PHP" style="counter-reset: linenumber 0;"><code class=" language-php"><span class="token keyword">public</span> <span class="token variable">$log_path</span> <span class="token operator">=</span> <span class="token string">'/home/username/public_html/logs'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$tmp_path</span> <span class="token operator">=</span> <span class="token string">'/home/username/public_html/tmp'</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span></span></code></pre><p></p>
+<p><code>$log_path</code> : путь до логов.<br><code>$tmp_path</code> : путь до папки временных файлов.</p>
+<p><b>Примечания</b></p>
+<p data-hc-id="35a1c695728d755d6e5e0ac606c0">$log_path : Путь, по 
+которому будут сохраняться логи. Установщик Joomla! должен автоматически
+ заполнить это значение. Не критично для сайта и если путь неверен, то 
+узнать это можно, только лишь проверив логи.<span class="hcc hc__ht hc_35a1c695728d755d6e5e0ac606c0" data-hc-id="35a1c695728d755d6e5e0ac606c0" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p data-hc-id="dc2d4855b2ad32a48dd83fc4b7b8">$tmp_path : Это очень 
+важная настройка и должна быть заполнена правильно. Довольно много 
+проблем возникает при неверно заполненном значении. Особенно часто это 
+встречается при переносе сайта, когда Joomla пытается использовать 
+старую папку временных файлов.<span class="hcc hc__ht hc_dc2d4855b2ad32a48dd83fc4b7b8" data-hc-id="dc2d4855b2ad32a48dd83fc4b7b8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<h3>Настройки сессии</h3>
+<p></p><div class="prism-show-language"><div class="prism-show-language-label" data-language="PHP">PHP</div></div><pre data-start="1" class="line-numbers language-php" data-language="PHP" style="counter-reset: linenumber 0;"><code class=" language-php"><span class="token keyword">public</span> <span class="token variable">$lifetime</span> <span class="token operator">=</span> <span class="token string">'15'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$session_handler</span> <span class="token operator">=</span> <span class="token string">'database'</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span></span></code></pre><p></p>
+<p><code>$lifetime</code> : время жизни сессии (целое число в минутах).<br><code>$session_handler</code> : обработчик сессии - 'database' или 'none'.</p>
+<p><b>Примечания</b></p>
+<p data-hc-id="231e8ed10c5c4a58f71222e64308">$lifetime : Устанавливает, как долго длится сессия и как долго пользователь остается залогиненным. По умолчанию 15 минут.<span class="hcc hc__ht hc_231e8ed10c5c4a58f71222e64308" data-hc-id="231e8ed10c5c4a58f71222e64308" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p data-hc-id="e2b8c20a70c7523cc8990eff23a8">$session_handler : 
+Устанавливает, каким образом будет обработана сессия как только 
+пользователь зайдет на сайт или выполнит вход (залогинится). По 
+умолчанию установлено в 'database' (база данных).<span class="hcc hc__ht hc_e2b8c20a70c7523cc8990eff23a8" data-hc-id="e2b8c20a70c7523cc8990eff23a8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<h3>Другие настройки</h3>
+<p></p><div class="prism-show-language"><div class="prism-show-language-label" data-language="PHP">PHP</div></div><pre data-start="1" class="line-numbers language-php" data-language="PHP" style="counter-reset: linenumber 0;"><code class=" language-php"><span class="token keyword">public</span> <span class="token variable">$MetaRights</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$sitename_pagetitles</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$force_ssl</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$feed_email</span> <span class="token operator">=</span> <span class="token string">'author'</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$cookie_domain</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token variable">$cookie_path</span> <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p><code>$MetaRights</code> : описание авторских прав.<br><code>$sitename_pagetitles</code> : включать название сайта в заголовок страницы. '0' - нет, '1' - до, '2' - после. По умолчанию '0'.<br><code>$force_ssl</code>
+ : включить SSL. '0' - выключено; '1' – включено. Рекомендуется не 
+включать эту настройку, только если вы точно уверены, что SSL доступен 
+на сервере. По умолчанию '0'.<br><code>$feed_email</code> : определяет, какой e-mail будет показан в лентах новостей: 'author' - e-mail автора (по умолчанию), 'site' - e-mail сайта.<br><code>$cookie_domain</code> : cookie домена.<br><code>$cookie_path</code> : путь для cookie.</p>
+<p><b>Примечания</b></p>
+<p data-hc-id="5d7953aca34957cb667d24b644e0">$cookie_domain : Домен, для
+ которого значение cookie действительно. Для того, чтобы разрешить 
+cookie для всех поддоменов, домен должен начинаться с '.' Например - 
+'.yourdomain.com'. По умолчанию используется доменное имя, на котором 
+была выполнена установка Joomla.<span class="hcc hc__ht hc_5d7953aca34957cb667d24b644e0" data-hc-id="5d7953aca34957cb667d24b644e0" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p data-hc-id="55ca47d5ead9138dde5c0cb247a8">$cookie_path : Путь на 
+сервере по которому для которого действительно значение cookie. 
+Например, если установлено в /test/, то cookie будет действительно 
+только внутри директории /test/ и всех субдиректорий (например 
+/test/dir/) домена. По умолчанию cookie действительно для всего домена, 
+на котором была выполнена установка Joomla.<span class="hcc hc__ht hc_55ca47d5ead9138dde5c0cb247a8" data-hc-id="55ca47d5ead9138dde5c0cb247a8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>			</div>
+
+
+												
+			<div class="blog-full__social social-likes social-likes_visible social-likes_ready" aria-hidden="true" data-url="https://cmscafe.ru/raznoe/346-obzor-configuration-php-fajla-nastroek-joomla" data-title="Обзор configuration.php - файла настроек Joomla">
+				<div class="social-likes__widget social-likes__widget_facebook" title="Поделиться ссылкой на Фейсбуке"><span class="social-likes__button social-likes__button_facebook"><span class="social-likes__icon social-likes__icon_facebook"></span>Facebook</span><span class="social-likes__counter social-likes__counter_facebook social-likes__counter_empty"></span></div>
+				<div class="social-likes__widget social-likes__widget_twitter" data-via="cmscafe_ru" title="Поделиться ссылкой в Твиттере"><span class="social-likes__button social-likes__button_twitter"><span class="social-likes__icon social-likes__icon_twitter"></span>Twitter</span></div>
+				<div class="social-likes__widget social-likes__widget_vkontakte" title="Поделиться ссылкой во Вконтакте"><span class="social-likes__button social-likes__button_vkontakte"><span class="social-likes__icon social-likes__icon_vkontakte"></span>Вконтакте</span><span class="social-likes__counter social-likes__counter_vkontakte">2</span></div>
+				<div class="social-likes__widget social-likes__widget_plusone" title="Поделиться ссылкой в Гугл-плюсе"><span class="social-likes__button social-likes__button_plusone"><span class="social-likes__icon social-likes__icon_plusone"></span>Google+</span><span class="social-likes__counter social-likes__counter_plusone social-likes__counter_empty"></span></div>
+				<div class="social-likes__widget social-likes__widget_livejournal" title="Share link on LiveJournal" data-html="&lt;a href='{url}'&gt;{title}&lt;/a&gt;"><span class="social-likes__button social-likes__button_livejournal"><span class="social-likes__icon social-likes__icon_livejournal"></span>LJ
+				</span><span class="social-likes__counter social-likes__counter_livejournal social-likes__counter_empty"></span></div>
+			</div>
+
+												<footer class="blog-full__plugin blog-full__plugin--after">
+						<div id="google_after_display">
+			<script async="" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/adsbygoogle.js"></script>
+					<ins class="adsbygoogle" style="display: block; height: 90px;" data-ad-client="ca-pub-5120159964439306" data-ad-slot="7602495273" data-ad-format="auto" data-adsbygoogle-status="done"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:1168px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:1168px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;width:1168px;height:90px;" width="1168" height="90" frameborder="0"></iframe></ins></ins></ins>
+				<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+		</div>
+<div class="jb-author" itemscope="" itemtype="http://schema.org/Person">
+	<div class="jb-author__name">
+		<h5 class="jb-author__title" itemprop="name">
+			Dmitry Rekun		</h5>
+					<div class="jb-author__twitter">
+				<iframe id="twitter-widget-0" scrolling="no" allowtransparency="true" class="twitter-follow-button twitter-follow-button-rendered" style="position: static; visibility: visible; width: 128px; height: 28px;" title="Twitter Follow Button" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/follow_button.html" data-screen-name="bzz0" frameborder="0"></iframe>
+			</div>
+			</div>
+
+	<div class="jb-author__avatar">
+		<img itemprop="image" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/c436d4601e076d50b56a8f8073fc37a3.jpeg" alt="">
+	</div>
+			<div class="jb-author__description" itemprop="description" data-hc-id="9582ada52a5d131e4d062d3e1598">
+			Работаю в банковской сфере, а с веб-разработкой (непосредственно с 
+Joomla) столкнулся в 2007 году. Теперь это моё хобби и время от времени 
+вторая работа. Какое-то время вёл свой блог, но решил попробовать 
+работать в команде. И вот c 2012 года я здесь :)							<div class="jb-author__info">
+											<a itemprop="url" class="jb-author__link i-link" href="http://cmscafe.ru/" rel="nofollow" target="_blank"></a>
+																<a class="jb-author__link i-fb" itemprop="sameAs" href="http://www.facebook.com/b2zlv" rel="nofollow" target="_blank"></a>
+																<a class="jb-author__link i-gplus" itemprop="sameAs" rel="author" href="https://plus.google.com/115585826963065764794" target="_blank"></a>
+																<a class="jb-author__link i-vk" itemprop="sameAs" href="http://www.vk.com/b2zlv" rel="nofollow" target="_blank"></a>
+									</div>
+					<span class="hcc hc__ht hc_9582ada52a5d131e4d062d3e1598" data-hc-id="9582ada52a5d131e4d062d3e1598" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></div>
+	
+
+</div>
+
+<script type="application/ld+json">
+{
+	"@context": "http://schema.org",
+	"@type": "Person",
+	"image": "//www.gravatar.com/avatar/c436d4601e076d50b56a8f8073fc37a3?d=mm&amp;s=105",
+	"name": "Dmitry Rekun",
+		"sameAs" : [
+	    "https://plus.google.com/115585826963065764794"
+	  ]
+	}
+</script>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>					</footer>
+									
+
+		
+
+					<aside class="comments">
+				<div id="hypercomments_widget"></div>
+				<script type="text/javascript">
+					_hcwp = window._hcwp || [];
+					_hcwp.push({widget:"Stream", widget_id: 91724, xid: "346"});
+					(function() {
+						if("HC_LOAD_INIT" in window)return;
+						HC_LOAD_INIT = true;
+						var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+						var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+						hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/91724/"+lang+"/widget.js";
+						var s = document.getElementsByTagName("script")[0];
+						s.parentNode.insertBefore(hcc, s.nextSibling);
+					})();
+				</script>
+			</aside>
+			</article>
+			<div class="jb-sidebar jb-sidebar--inner">
+			<div class="module module--box badge-hot"><h3 class="module__title module__title--box badge-hot">Последние релизы</h3>
+	<p><a class="block-last block-last--joomla" href="https://cmscafe.ru/novosti/921-vyshel-reliz-bezopasnosti-i-ispravlenij-joomla-3-7-4">
+	<span class="block-last__image"><img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/joomla.svg" alt="joomla"></span>
+	<span class="block-last__name">Joomla! 3.7.4</span>
+</a> <a class="block-last block-last--wordpress" href="https://cmscafe.ru/novosti/904-vyshel-reliz-wordpress-4-8">
+	<span class="block-last__image"><img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/wordpress.svg" alt="wordpress"></span>
+	<span class="block-last__name">WordPress 4.8</span>
+</a> <a class="block-last block-last--grav" href="https://cmscafe.ru/novosti/918-novaya-versiya-grav-1-3-i-admin-1-5">
+	<span class="block-last__image"><img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/grav.svg" alt="grav"></span>
+	<span class="block-last__name">Grav 1.3.1</span>
+</a> <a class="block-last block-last--pagekit" href="https://cmscafe.ru/novosti/799-vyshel-stabilnyj-reliz-pagekit-1-0">
+	<span class="block-last__image"><img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/pagekit.svg" alt="pagekit"></span>
+	<span class="block-last__name">Pagekit 1.0.12</span>
+</a> <a class="block-last block-last--pagekit" href="https://cmscafe.ru/novosti/907-vyshli-relizy-bezopasnosti-drupal-8-3-4-i-7-56">
+	<span class="block-last__image"><img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/drupal.svg" alt="pagekit"></span>
+	<span class="block-last__name">Drupal 8.3.5</span>
+</a></p></div><div class="module module--box mod-search">
+	<div id="___gcse_0"><div class="gsc-control-cse gsc-control-cse-ru"><div class="gsc-control-wrapper-cse" dir="ltr"><form class="gsc-search-box gsc-search-box-tools" accept-charset="utf-8"><table class="gsc-search-box" cellspacing="0" cellpadding="0"><tbody><tr><td class="gsc-input"><div class="gsc-input-box" id="gsc-iw-id1"><table style="width: 100%; padding: 0px;" id="gs_id50" class="gstl_50 " cellspacing="0" cellpadding="0"><tbody><tr><td id="gs_tti50" class="gsib_a"><input autocomplete="off" size="10" class="gsc-input" name="search" title="поиск" style="width: 100%; padding: 0px; border: medium none; margin: 0px; height: auto; outline: medium none; background: rgb(255, 255, 255) url(&quot;https://www.google.com/cse/static/images/1x/googlelogo_lightgrey_46x16dp.png&quot;) no-repeat scroll left center; text-indent: 48px;" id="gsc-i-id1" x-webkit-speech="" x-webkit-grammar="builtin:search" dir="ltr" spellcheck="false" placeholder="Пользовательский поиск" type="text" lang="ru"></td><td class="gsib_b"><div class="gsst_b" id="gs_st50" dir="ltr"><a class="gsst_a" href="javascript:void(0)" style="display: none;"><span class="gscb_a" id="gs_cb50">×</span></a></div></td></tr></tbody></table></div><input name="bgresponse" id="bgresponse" type="hidden"></td><td class="gsc-search-button"><input src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/search_box_icon.png" class="gsc-search-button gsc-search-button-v2" title="поиск" type="image"></td><td class="gsc-clear-button"><div class="gsc-clear-button" title="удалить результаты">&nbsp;</div></td></tr></tbody></table><table class="gsc-branding" cellspacing="0" cellpadding="0"><tbody><tr><td class="gsc-branding-user-defined"></td><td class="gsc-branding-text"><div class="gsc-branding-text">технология</div></td><td class="gsc-branding-img"><img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/googlelogo_grey_46x15dp.png" class="gsc-branding-img" srcset="https://www.google.com/cse/static/images/2x/googlelogo_grey_46x15dp.png 2x"></td></tr></tbody></table></form><div class="gsc-results-wrapper-overlay"><div class="gsc-results-close-btn" tabindex="0"></div><div class="gsc-tabsAreaInvisible"><div class="gsc-tabHeader gsc-inline-block gsc-tabhActive">Пользовательский поиск</div><span class="gs-spacer"> </span></div><div class="gsc-tabsAreaInvisible"></div><div class="gsc-above-wrapper-area-invisible"><table class="gsc-above-wrapper-area-container" cellspacing="0" cellpadding="0"><tbody><tr><td class="gsc-result-info-container"><div class="gsc-result-info-invisible"></div></td><td class="gsc-orderby-container"><div class="gsc-orderby-invisible"><div class="gsc-orderby-label gsc-inline-block">Упорядочить:</div><div class="gsc-option-menu-container gsc-inline-block"><div class="gsc-selected-option-container gsc-inline-block"><div class="gsc-selected-option">По релевантности</div><div class="gsc-option-selector"></div></div><div class="gsc-option-menu-invisible"><div class="gsc-option-menu-item gsc-option-menu-item-highlighted"><div class="gsc-option">По релевантности</div></div><div class="gsc-option-menu-item"><div class="gsc-option">По дате</div></div></div></div></div></td></tr></tbody></table></div><div class="gsc-adBlockInvisible"></div><div class="gsc-wrapper"><div class="gsc-adBlockInvisible"></div><div class="gsc-resultsbox-invisible"><div class="gsc-resultsRoot gsc-tabData gsc-tabdActive"><table class="gsc-resultsHeader" cellspacing="0" cellpadding="0"><tbody><tr><td class="gsc-twiddleRegionCell"><div class="gsc-twiddle"><div class="gsc-title">Интернет</div></div><div class="gsc-stats"></div><div class="gsc-results-selector gsc-all-results-active"><div class="gsc-result-selector gsc-one-result" title="показать один результат">&nbsp;</div><div class="gsc-result-selector gsc-more-results" title="показать другие результаты">&nbsp;</div><div class="gsc-result-selector gsc-all-results" title="показать все результаты">&nbsp;</div></div></td><td class="gsc-configLabelCell"></td></tr></tbody></table><div><div class="gsc-expansionArea"></div></div></div></div></div></div><div class="gsc-modal-background-image" tabindex="0"></div></div></div></div></div><div class="module module--box ">
+	<a href="https://cmscafe.ru/enterprise"><img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/sidebar-brick-horiz.png" alt=""></a> </div><div class="module module--box "><h3 class="module__title module__title--box ">Последние комментарии</h3>
+	<div id="hypercomments_mix"><div class="hcc hc__mix"><div class="hcc hc__mix__title" el="Title">Последние комментарии</div><div class="hcc" el="Tabs"></div><div class="hcc hc__mix__wrap" el="Cont"><div class="hcc hc__mix__message"><div class="hcc hc__mix__avatar"><img el="Avatar" data-href="https://profile.hypercomments.com/6818146" class="hcc" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/avatar.jpeg" onerror="if(this.src != 'https://static.hypercomments.com/data/avatars/0/avatar')this.src='https://static.hypercomments.com/data/avatars/0/avatar';" title="Борис Гаркун"></div><div class="hcc hc__mix__cont"><div class="hcc hc__mix__head"><span class="hcc hc__nick">Борис Гаркун</span><span class="hcc hc__time">37 минут назад</span></div><div class="hcc hc__mix__txt hc__message__txt"><div class="hcc hc__parent__txt">Здравствуйте.
+ Спасибо. Именно так, нет ответа, хотя в PHPStorm отладка регулярно 
+проходит по строке echo new JResponseJson($result); в контроллере, а <span class="hcc hc__moretxt hc__hide" el="HideP">в $result всегда есть массив для отправки. Как такое может быть? :)</span><span class="hcc hc__parent__toggle" el="More"> ещё...</span></div></div><div class="hcc hc__mix__link"><a target="_blank" href="https://cmscafe.ru/docs/joomla/developer/api/542-jresponsejson-vozvrashchaem-dannye-v-formate-json#hcm=1501662368679061" class="hcc hc__manager__item">JResponseJson – возвращаем данные в формате JSON - CMScafe</a></div></div><div class="hcc hc__clear"></div></div><div class="hcc hc__mix__message"><div class="hcc hc__mix__avatar"><img el="Avatar" data-href="https://profile.hypercomments.com/8467648" class="hcc" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/avatar_002.jpeg" onerror="if(this.src != 'https://static.hypercomments.com/data/avatars/0/avatar')this.src='https://static.hypercomments.com/data/avatars/0/avatar';" title="Dmitry Rekun"></div><div class="hcc hc__mix__cont"><div class="hcc hc__mix__head"><span class="hcc hc__nick">Dmitry Rekun</span><span class="hcc hc__time">22 часа назад</span></div><div class="hcc hc__mix__txt hc__message__txt">Откройте вкладку Network, там XHR. Выберите URL, и далее справа Response. Может ответа просто нет.</div><div class="hcc hc__mix__link"><a target="_blank" href="https://cmscafe.ru/docs/joomla/developer/api/542-jresponsejson-vozvrashchaem-dannye-v-formate-json#hcm=1501583287420086" class="hcc hc__manager__item">JResponseJson – возвращаем данные в формате JSON - CMScafe</a></div></div><div class="hcc hc__clear"></div></div><div class="hcc hc__mix__message"><div class="hcc hc__mix__avatar"><img el="Avatar" data-href="https://profile.hypercomments.com/6818146" class="hcc" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/avatar.jpeg" onerror="if(this.src != 'https://static.hypercomments.com/data/avatars/0/avatar')this.src='https://static.hypercomments.com/data/avatars/0/avatar';" title="Борис Гаркун"></div><div class="hcc hc__mix__cont"><div class="hcc hc__mix__head"><span class="hcc hc__nick">Борис Гаркун</span><span class="hcc hc__time">вчера в 11:27</span></div><div class="hcc hc__mix__txt hc__message__txt"><div class="hcc hc__parent__txt">Получилось забраться отладкой в js, вот какова ситуация, когда дело доходит до строки с функцией done:<br><a class="hcc" rel="nofollow" href="https://www.hypercomments.com/api/go?url=http%3A%2F%2Fpriscree.ru%2Fimg%2F472572b790aeac.jpg" target="_blank">http://priscree.ru/img/472572b790aeac.jpg</a><br>переменная с ответом r = <span class="hcc hc__moretxt hc__hide" el="HideP">not available</span><span class="hcc hc__parent__toggle" el="More"> ещё...</span></div></div><div class="hcc hc__mix__link"><a target="_blank" href="https://cmscafe.ru/docs/joomla/developer/api/542-jresponsejson-vozvrashchaem-dannye-v-formate-json#hcm=1501576031555640" class="hcc hc__manager__item">JResponseJson – возвращаем данные в формате JSON - CMScafe</a></div></div><div class="hcc hc__clear"></div></div><div class="hcc hc__mix__message"><div class="hcc hc__mix__avatar"><img el="Avatar" data-href="https://profile.hypercomments.com/6818146" class="hcc" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/avatar.jpeg" onerror="if(this.src != 'https://static.hypercomments.com/data/avatars/0/avatar')this.src='https://static.hypercomments.com/data/avatars/0/avatar';" title="Борис Гаркун"></div><div class="hcc hc__mix__cont"><div class="hcc hc__mix__head"><span class="hcc hc__nick">Борис Гаркун</span><span class="hcc hc__time">вчера в 10:17</span></div><div class="hcc hc__mix__txt hc__message__txt">В консоли не видел ошибок. Это переменная r в ранее приведённом коде jquery?</div><div class="hcc hc__mix__link"><a target="_blank" href="https://cmscafe.ru/docs/joomla/developer/api/542-jresponsejson-vozvrashchaem-dannye-v-formate-json#hcm=1501571850926191" class="hcc hc__manager__item">JResponseJson – возвращаем данные в формате JSON - CMScafe</a></div></div><div class="hcc hc__clear"></div></div><div class="hcc hc__mix__message"><div class="hcc hc__mix__avatar"><img el="Avatar" data-href="https://profile.hypercomments.com/8467648" class="hcc" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/avatar_002.jpeg" onerror="if(this.src != 'https://static.hypercomments.com/data/avatars/0/avatar')this.src='https://static.hypercomments.com/data/avatars/0/avatar';" title="Dmitry Rekun"></div><div class="hcc hc__mix__cont"><div class="hcc hc__mix__head"><span class="hcc hc__nick">Dmitry Rekun</span><span class="hcc hc__time">позавчера в 22:47</span></div><div class="hcc hc__mix__txt hc__message__txt">В консоли нет ошибок? Что приходит в response?</div><div class="hcc hc__mix__link"><a target="_blank" href="https://cmscafe.ru/docs/joomla/developer/api/542-jresponsejson-vozvrashchaem-dannye-v-formate-json#hcm=1501530474149486" class="hcc hc__manager__item">JResponseJson – возвращаем данные в формате JSON - CMScafe</a></div></div><div class="hcc hc__clear"></div></div></div></div></div>
+<script type="text/javascript">
+_hcwp = window._hcwp || [];
+_hcwp.push({widget:"Mixstream", widget_id:91724, filter:"last", limit:5});
+(function() {
+if("HC_LOAD_INIT" in window)return;
+HC_LOAD_INIT = true;
+var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage ||  "en").substr(0, 2).toLowerCase();
+var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/91724/"+lang+"/widget.js";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hcc, s.nextSibling);
+})();
+</script>
+</div><div class="module module--box ">
+	<ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-6869273327738401" data-ad-slot="4504217772" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_2_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;width:300px;height:600px;" width="300" height="600" frameborder="0"></iframe></ins></ins></ins>
+<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+		</div>
+	</div>
+
+<link rel="stylesheet" href="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/prism.css">
+						</main>
+
+											</div>
+									</div>
+			</div>
+							<footer class="footer">
+											<div class="footer__nav">
+							<div class="mod-theme">
+			<ul class="mod-theme__list">
+							<li class="mod-theme__item">
+											<a class="mod-theme__image" href="https://cmscafe.ru/shablony-joomla/rasshireniya/920-rnd-kinstance-tjomnyj-shablon-dlya-kunena">
+							<img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/s_kinstance-kunena5-template-released.jpg" alt="">
+						</a>
+										<h5 class="mod-theme__name">
+						<a href="https://cmscafe.ru/shablony-joomla/rasshireniya/920-rnd-kinstance-tjomnyj-shablon-dlya-kunena">
+							RND KInstance - тёмный шаблон для Kunena						</a>
+					</h5>
+				</li>
+							<li class="mod-theme__item">
+											<a class="mod-theme__image" href="https://cmscafe.ru/shablony-joomla/rasshireniya/916-rnd-kglorious-shablon-kunena">
+							<img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/s_glorious-full-2.jpg" alt="">
+						</a>
+										<h5 class="mod-theme__name">
+						<a href="https://cmscafe.ru/shablony-joomla/rasshireniya/916-rnd-kglorious-shablon-kunena">
+							RND Kglorious - шаблон для Kunena						</a>
+					</h5>
+				</li>
+							<li class="mod-theme__item">
+											<a class="mod-theme__image" href="https://cmscafe.ru/shablony-joomla/rasshireniya/846-portfolio-app-prilozhenie-portfolio-dlya-zoo">
+							<img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/s_portfolio-app-for-zoo.jpg" alt="">
+						</a>
+										<h5 class="mod-theme__name">
+						<a href="https://cmscafe.ru/shablony-joomla/rasshireniya/846-portfolio-app-prilozhenie-portfolio-dlya-zoo">
+							Portfolio App - приложение портфолио для ZOO						</a>
+					</h5>
+				</li>
+							<li class="mod-theme__item">
+											<a class="mod-theme__image" href="https://cmscafe.ru/shablony-joomla/rasshireniya/814-blog-pro-app-for-zoo">
+							<img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/s_blog-pro-app-for-zoo.jpg" alt="">
+						</a>
+										<h5 class="mod-theme__name">
+						<a href="https://cmscafe.ru/shablony-joomla/rasshireniya/814-blog-pro-app-for-zoo">
+							Blog Pro App - приложение для ZOO						</a>
+					</h5>
+				</li>
+							<li class="mod-theme__item">
+											<a class="mod-theme__image" href="https://cmscafe.ru/shablony-joomla/universalnye/804-jd-newyork-shablon-dlya-joomla">
+							<img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/s_jd-new-york.jpg" alt="">
+						</a>
+										<h5 class="mod-theme__name">
+						<a href="https://cmscafe.ru/shablony-joomla/universalnye/804-jd-newyork-shablon-dlya-joomla">
+							JD NewYork - шаблон для Joomla						</a>
+					</h5>
+				</li>
+					</ul>
+	</div>
+
+						</div>
+					
+											<div class="footer__block">
+							<div class="module module--footer style-inline" data-hc-id="dce27b26d88ae28a6b5efcf23778"><h3 class="module__title module__title--footer style-inline">Disclaimer</h3>
+	<!--noindex-->
+Данный сайт не собирает и не обрабатывает персональные данные 
+пользователей. Комментарии реализованы внешним сервисом HyperComments.
+<!--/noindex-->
+<br><br>
+<a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.ru"><img alt="Лицензия Creative Commons" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/ccby.png"></a>
+<br><br>Все материалы на сайте «<span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">CMScafe.ru</span>» публикуются на условиях <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.ru">лицензии Creative Commons «Attribution» («Атрибуция») 3.0 Непортированная</a>.<span class="hcc hc__ht hc_dce27b26d88ae28a6b5efcf23778" data-hc-id="dce27b26d88ae28a6b5efcf23778" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></div><div class="module module--footer "><h3 class="module__title module__title--footer ">Аффилированные проекты</h3>
+	<div style="text-align: center;">
+	<a href="https://www.norrnext.com/" rel="nofollow" target="_blank"><img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/norrnext.png" alt="NorrNext" style="max-width: 180px;     margin-top: 13px;   margin-bottom: 7px;"></a><br><br>
+	<a href="https://www.roundtheme.com/" rel="nofollow" target="_blank"><img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/roundtheme.png" alt="RoundTheme" style="max-width: 240px;    margin-bottom: 7px;"></a><br><br>
+	<a href="https://www.norrtheme.com/" rel="nofollow" target="_blank"><img src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/norrtheme.png" alt="NorrTheme" style="max-width: 210px;"></a>	
+</div>
+</div><div class="module module--footer style-inline"><h3 class="module__title module__title--footer style-inline">Оставайтесь с нами!</h3>
+	<ul class="line social-menu">
+<li><a href="https://feeds.feedburner.com/cmscafe" class="social-menu__rss i-rss" rel="nofollow" target="_blank">RSS-лента CMScafe</a></li>
+<li><a href="https://plus.google.com/+CmscafeRus/" class="social-menu__google i-gplus" rel="publisher" target="_blank">CMScafe в Google+</a></li>
+<li><a href="https://twitter.com/cmscafe_ru" class="social-menu__twitter i-twitter" rel="nofollow" target="_blank">CMScafe в Twitter</a></li>
+<li><a href="https://vk.com/cmscafe" class="social-menu__vk i-vk" rel="nofollow" target="_blank">CMScafe Вконтакте</a></li>
+<li><a href="https://www.facebook.com/cmscaferu" class="social-menu__fb i-fb" rel="nofollow" target="_blank">CMScafe в Facebook</a></li>
+</ul></div>
+						</div>
+									</footer>
+						<div class="copyright-block">
+				<div class="copyright-block__left">
+											<div class="copyright-block__nav">
+							<nav class="clear-menu ">
+<a class="item-794" href="https://cmscafe.ru/promo-articles">На правах рекламы</a><a class="item-403" href="https://cmscafe.ru/disclaimer">Дискламация</a><a class="item-791" href="https://cmscafe.ru/uslugi">Услуги</a></nav>
+
+						</div>
+									</div>
+				<div class="copyright-block__theme" data-hc-id="5981fce7a8dd608727a28391c6c8">
+					Joomla templates by <a target="_blank" href="https://norrtheme.com/">NorrTheme</a>
+					<a class="footer__up" href="#page" rel="nofollow">
+						<i class="i-up"></i>
+						Наверх					</a>
+				<span class="hcc hc__ht hc_5981fce7a8dd608727a28391c6c8" data-hc-id="5981fce7a8dd608727a28391c6c8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></div>
+			</div>
+			
+		</div>
+
+
+					<div class="hidden-box" aria-hidden="true">
+				
+				
+			</div>
+			</div>
+
+		<link rel="stylesheet" href="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/app.css">
+	<!-- Google -->
+	<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name" : "CMScafe.ru",
+      "url": "https://cmscafe.ru",
+      "logo": "https://cmscafe.ru/images/logo.png",
+	  "sameAs" : [
+	    "https://plus.google.com/+CmscafeRus/",
+	    "https://twitter.com/cmscafe_ru",
+	    "https://www.facebook.com/cmscaferu",
+	    "https://vk.com/cmscafe"
+	  ]
+    }
+    </script>
+	<script src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/main.js"></script>
+	<script src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/app.js"></script>
+	<script src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/menu.js"></script>
+	<script src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/joomla.js"></script>
+	<script type="text/javascript">
+		
+					var _FC_GET = {"controller":"","task":"","ilayout":"jmb-blog","flexi_callview":"item","view":"item","option":"com_flexicontent","isflexicontent":"yes"};
+					var jbase_url_fc = "https:\/\/cmscafe.ru\/";
+				
+				var fcvote_rfolder = "";
+			
+				var fcfav_rfolder = "";
+			
+
+				</script><script type="application/javascript" src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/swiper.js"></script>
+				<script src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/prism.js"></script>
+				<script>
+				$(document).ready(function() {
+					$(".cafe-slider").each(function () {
+						var slider           = $(this);
+						var sliderpagination = $(this).find(".swiper-pagination");
+						var Slider = new Swiper(slider, {
+							// Navigation arrows
+							scrollbarHide      : true,
+							pagination         : sliderpagination,
+							paginationHide     : false,
+							paginationClickable: true
+						});
+					});
+				});
+			
+		var fc_validateOnSubmitForm = 1;
+			window.setInterval(function(){var r;try{r=window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject("Microsoft.XMLHTTP")}catch(e){}if(r){r.open("GET","/index.php?option=com_ajax&format=json",true);r.send(null)}},3600000);
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.hasTooltip').tooltip({"html": true,"container": "body"});
+			$('.hasPopover').popover({"html": true,"trigger": "hover focus","container": "body"});
+			Joomla.JText.load({"FLEXI_APPLYING_FILTERING":"Фильтрация применяется","FLEXI_TYPE_TO_LIST":"\u041f\u043e\u0438\u0441\u043a \u043f\u043e \u043d\u0430\u0437\u0432\u0430\u043d\u0438\u044e","FLEXI_TYPE_TO_FILTER":" ... тип фильтра","FLEXI_UPDATING_CONTENTS":"Обновление контента","FLEXI_YOUR_BROWSER_DOES_NOT_SUPPORT_AJAX":"Ваш бразуер не поддерживает Ajax","FLEXI_LOADING":"загрузка","FLEXI_ADDED_TO_YOUR_FAVOURITES":"Добавлено","FLEXI_YOU_NEED_TO_LOGIN":"Вам нужно залогиниться что бы добавить в избранное.","FLEXI_REMOVED_FROM_YOUR_FAVOURITES":"Удалено","FLEXI_USERS":"пользователи","FLEXI_FAVOURE":"Добвить в избранное","FLEXI_REMOVE_FAVOURITE":"Удалить из избранного","FLEXI_FAVS_YOU_HAVE_SUBSCRIBED":"\u0421\u043e\u0445\u0440\u0430\u043d\u0435\u043d\u043e","FLEXI_FAVS_CLICK_TO_SUBSCRIBE":"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c","FLEXI_TOTAL":"Всего"});
+		});
+	</script>
+			<script src="%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20configuration.php%20-%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA%20Joomla%20-%20CMScafe_files/adsbygoogle.js"></script>
+		<script>
+			(function() {
+				var cx = '017533093314839551687:02wlo3jcpls';
+				var gcse = document.createElement('script');
+				gcse.type = 'text/javascript';
+				gcse.async = true;
+				gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+					'//cse.google.com/cse.js?cx=' + cx;
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(gcse, s);
+			})();
+		</script>
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+					(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-99822954-1', 'auto');
+			ga('send', 'pageview');
+
+		</script>
+	
+
+
+<div id="mm-blocker" class="mm-slideout"></div><table style="width: 175px; display: none; top: 591px; left: 1204px; position: absolute;" class="gstl_50 gssb_c" cellspacing="0" cellpadding="0"><tbody><tr><td class="gssb_f"></td><td class="gssb_e" style="width: 100%;"></td></tr></tbody></table></body></html>

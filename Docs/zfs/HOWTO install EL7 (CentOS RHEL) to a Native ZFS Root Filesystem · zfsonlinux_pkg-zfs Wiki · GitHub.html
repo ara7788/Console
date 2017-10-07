@@ -1,0 +1,731 @@
+Skip to content
+
+<#start-of-content>
+
+<https://github.com/>
+
+  * Features
+
+    <https://github.com/features>
+  * Business
+
+    <https://github.com/business>
+  * Explore
+
+    <https://github.com/explore>
+  * Marketplace
+
+    <https://github.com/marketplace>
+  * Pricing
+
+    <https://github.com/pricing>
+
+This repository
+<https://github.com/zfsonlinux/pkg-zfs/wiki/HOWTO-install-EL7-(CentOS-RHEL)-to-a-Native-ZFS-Root-Filesystem>
+
+
+Sign in
+<https://github.com/login?return_to=%2Fzfsonlinux%2Fpkg-zfs%2Fwiki%2FHOWTO-install-EL7-%28CentOS-RHEL%29-to-a-Native-ZFS-Root-Filesystem>
+or Sign up <https://github.com/join?source=header-repo>
+
+  * Watch
+
+    <https://github.com/login?return_to=%2Fzfsonlinux%2Fpkg-zfs> 43
+
+    <https://github.com/zfsonlinux/pkg-zfs/watchers>
+  * Star
+
+    <https://github.com/login?return_to=%2Fzfsonlinux%2Fpkg-zfs> 243
+
+    <https://github.com/zfsonlinux/pkg-zfs/stargazers>
+  * Fork
+
+    <https://github.com/login?return_to=%2Fzfsonlinux%2Fpkg-zfs> 41
+
+    <https://github.com/zfsonlinux/pkg-zfs/network>
+
+
+  zfsonlinux <https://github.com/zfsonlinux>/*pkg-zfs
+  <https://github.com/zfsonlinux/pkg-zfs>*
+
+Code
+
+<https://github.com/zfsonlinux/pkg-zfs> Issues 21
+
+<https://github.com/zfsonlinux/pkg-zfs/issues> Pull requests 0
+
+<https://github.com/zfsonlinux/pkg-zfs/pulls> Projects 0
+
+<https://github.com/zfsonlinux/pkg-zfs/projects> Wiki
+
+<https://github.com/zfsonlinux/pkg-zfs/wiki>
+Insights
+
+Pulse
+
+<https://github.com/zfsonlinux/pkg-zfs/pulse> Graphs
+
+<https://github.com/zfsonlinux/pkg-zfs/graphs>
+
+
+  HOWTO install EL7 (CentOS RHEL) to a Native ZFS Root Filesystem
+
+Jeffrey 'jf' Lim edited this page on 10 Jun · 29 revisions
+<https://github.com/zfsonlinux/pkg-zfs/wiki/HOWTO-install-EL7-(CentOS-RHEL)-to-a-Native-ZFS-Root-Filesystem/_history>
+
+
+
+      Pages 12
+
+  * *Home
+
+    <https://github.com/zfsonlinux/pkg-zfs/wiki>*
+  * *Dual booting Linux and Solaris with ZFS aware GRUB 0.97
+
+    <https://github.com/zfsonlinux/pkg-zfs/wiki/Dual-booting-Linux-and-Solaris-with-ZFS-aware-GRUB-0.97>*
+
+  * *HOWTO install EL7 (CentOS RHEL) to a Native ZFS Root Filesystem
+
+    <https://github.com/zfsonlinux/pkg-zfs/wiki/HOWTO-install-EL7-(CentOS-RHEL)-to-a-Native-ZFS-Root-Filesystem>*
+
+  * *HOWTO install Ubuntu 14.04 15.04 to a Native ZFS Root Filesystem
+
+    <https://github.com/zfsonlinux/pkg-zfs/wiki/HOWTO-install-Ubuntu-14.04---15.04-to-a-Native-ZFS-Root-Filesystem>*
+
+  * *HOWTO install Ubuntu 14.04 or Later to a Native ZFS Root Filesystem
+
+    <https://github.com/zfsonlinux/pkg-zfs/wiki/HOWTO-install-Ubuntu-14.04-or-Later-to-a-Native-ZFS-Root-Filesystem>*
+
+  * *HOWTO install Ubuntu 16.04 to a Whole Disk Native ZFS Root
+    Filesystem using Ubiquity GUI installer
+
+    <https://github.com/zfsonlinux/pkg-zfs/wiki/HOWTO-install-Ubuntu-16.04-to-a-Whole-Disk-Native-ZFS-Root-Filesystem-using-Ubiquity-GUI-installer>*
+
+  * *HOWTO install Ubuntu 16.10 to a Whole Disk Native ZFS Root
+    Filesystem using Ubiquity GUI installer
+
+    <https://github.com/zfsonlinux/pkg-zfs/wiki/HOWTO-install-Ubuntu-16.10-to-a-Whole-Disk-Native-ZFS-Root-Filesystem-using-Ubiquity-GUI-installer>*
+
+  * *HOWTO install Ubuntu 17.04 to a Whole Disk Native ZFS Root
+    Filesystem using Ubiquity GUI installer
+
+    <https://github.com/zfsonlinux/pkg-zfs/wiki/HOWTO-install-Ubuntu-17.04-to-a-Whole-Disk-Native-ZFS-Root-Filesystem-using-Ubiquity-GUI-installer>*
+
+  * *HOWTO install Ubuntu to a Native ZFS Root Filesystem
+
+    <https://github.com/zfsonlinux/pkg-zfs/wiki/HOWTO-install-Ubuntu-to-a-Native-ZFS-Root-Filesystem>*
+
+  * *HOWTO quickly reset the root password on a Linux system with a
+    native ZFS root filesystem
+
+    <https://github.com/zfsonlinux/pkg-zfs/wiki/HOWTO-quickly-reset-the-root-password-on-a-Linux-system-with-a-native-ZFS-root-filesystem>*
+
+  * *HOWTO use a zvol as a swap device
+
+    <https://github.com/zfsonlinux/pkg-zfs/wiki/HOWTO-use-a-zvol-as-a-swap-device>*
+
+  * *Troubleshooting mountall
+
+    <https://github.com/zfsonlinux/pkg-zfs/wiki/Troubleshooting-mountall>*
+
+
+          Clone this wiki locally
+
+------------------------------------------------------------------------
+
+*Note*
+
+  * zfs repositories have been upgraded to |0.6.5.2| which has known
+    incompatibilities with upstream grub. Do *NOT* run |zpool upgrade
+    rpool| as it could cause unbootable system
+
+------------------------------------------------------------------------
+
+These instructions were adapted from the original HOWTO
+<https://github.com/zfsonlinux/pkg-zfs/wiki/HOWTO-install-Ubuntu-14.04-or-Later-to-a-Native-ZFS-Root-Filesystem>
+with the following difference:
+
+  * Focus on EL7
+
+
+      <#system-requirements>System Requirements
+
+  * 64-bit EL7 installed
+  * 8GB free disk/partition available
+  * 4GB memory recommended
+
+
+      <#tested-versions>Tested Versions
+
+  * EL7
+  * grub2-2.02-0.17.0.1.el7.centos.4.x86_64 (standard distro provided
+    version)
+  * spl-dkms 0.6.5.2
+  * zfs-dkms 0.6.5.2
+  * zfs-initramfs 0.6.5.2
+
+
+    <#contents>Contents
+
+  * Step 1: Install EL7 and zfs <#step-1-install-el7-and-zfs>
+  * Step 2: Create the root pool <#step-2-create-the-root-pool>
+
+
+    <#step-1-install-el7-and-zfs>Step 1: Install EL7 and zfs
+
+All commands must be run as root.
+
+1.1 Install EL7 on a separate hard disk/USB disk that will NOT be part
+of the ZFS pool.
+
+EL7 installation process is not covered here, and should be pretty
+straight forward.
+
+  * NOTE: You must be running the latest (yum/dnf update) before proceeding
+
+If you want zfs-only setup without any other partitions, the easiest way
+would be to install ubuntu-on-ext4 on a USB disk first, boot from there,
+and then manually create partitions on the hard disk that will be used
+by zfs later. Remember to leave some space for GRUB:
+
+  * Using GPT necessitates creation of a small partition on the end for
+    BIOS GRUB partition (see raidz2 example later in this howto)
+
+1.2 Install zfs
+
+Install zfs as per the [instructions on the ZoL site]
+(https://github.com/zfsonlinux/zfs/wiki/RHEL-%26-CentOS) As a final
+step, install the zfs-dracut package:
+
+|# yum install zfs-dracut
+|
+
+1.3 Load and check the presence of ZFS module
+
+|# modprobe zfs
+# dmesg | egrep "SPL|ZFS"
+[ 1570.790748] SPL: Loaded module v0.6.5.2
+[ 1570.804042] ZFS: Loaded module v0.6.45.2, ZFS pool version 5000, ZFS filesystem version 5
+|
+
+  * Troubleshooting:
+      o If zfs module fails to load you may need to update your system
+        packages. Check to ensure that the "kernel", "kernel-core", and
+        "kernel-devel" are the same version. Subsequently check "uname
+        -a" to ensure you're running the matching version. If not, run
+        "dnf update ..." and then "shutdown -r now" to load the latest
+        kernel.
+
+
+    <#step-2-create-the-root-pool>Step 2: Create the root pool
+
+2.1 Create the root pool, enabling lz4 compression and ashift=12 if needed
+
+You should use |/dev/disk/by-id| links to create the pool. As an
+alternative, you could also create it using |/dev/sd*|, export it, and
+import it again using |-d /dev/disk/by-id|.
+
+Run |udevadm trigger| afterwards to make sure that the new udev rule is run.
+
+2.1.1 Example for pool with single vdev
+
+Create zpool with only GRUB-supported features enabled
+
+|# zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled -o ashift=12 -O compression=lz4 rpool /dev/sda3
+# zpool export rpool
+# zpool import -d /dev/disk/by-id rpool
+# zpool status -v rpool
+  pool: rpool
+ state: ONLINE
+status: Some supported features are not enabled on the pool. The pool can
+        still be used, but some features are unavailable.
+action: Enable all features using 'zpool upgrade'. Once this is done,
+        the pool may no longer be accessible by software that does not support
+        the features. See zpool-features(5) for details.
+  scan: none requested
+config:
+
+        NAME                                           STATE     READ WRITE CKSUM
+        rpool                                          ONLINE       0     0     0
+          ata-VBOX_HARDDISK_VB82d42f66-76355b71-part3  ONLINE       0     0     0
+
+errors: No known data errors
+
+# udevadm trigger
+# ls -la /dev/*part* | grep sda
+lrwxrwxrwx 1 root root 4 Aug  8 13:25 /dev/ata-VBOX_HARDDISK_VB82d42f66-76355b71-part3 -> sda3
+|
+
+Another example (tested on CentOS 7.3.1611):
+
+|zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled -o ashift=12 -O compression=lz4 -O copies=2 -O acltype=posixacl -O xattr=sa -O utf8only=on -O atime=off -O relatime=on rpool 
+
+|
+
+If you set |acltype=posixacl| you should set also |xattr=sa| (because it
+works faster this way). Because only one partition is used I set
+|copies=2| (data will be copied twice). |relatime=on| will be in effect
+only when |atime=on| (I set |relatime=on| it just in case).
+
+2.1.2 Example for pool with raidz2
+
+2.1.2.1 Create the partition table
+
+In this example, 5 disks (|/dev/sd[b-f]|) will be used by zfs. It will
+not be used for anything else (e.g. swap, another OS, etc). If you have
+an existing disk/partition setup, go straight to |2.1.2.2|.
+
+We need to create the partition table manually since grub-probe does not
+support whole-disk pools. On each disk, the first partition will be used
+by zfs. The second small partition at the end is necessary to prevent
+zfs from incorrectly detecting the whole disk as a vdev, and in a GPT
+setup, it will also be used by GRUB. The final goal is to set each disk
+up so that it looks like this (example shown for one disk, /dev/sdb):
+
+|# gdisk /dev/sdb
+GPT fdisk (gdisk) version 0.8.6
+
+Partition table scan:
+  MBR: protective
+  BSD: not present
+  APM: not present
+  GPT: present
+
+Found valid GPT with protective MBR; using GPT.
+
+Command (? for help): **p**
+Disk /dev/sda: 488397168 sectors, 232.9 GiB
+Logical sector size: 512 bytes
+Disk identifier (GUID): 948B55B3-300A-4610-A9D0-022FD36BD186
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 488397134
+Partitions will be aligned on 2048-sector boundaries
+Total free space is 2014 sectors (1007.0 KiB)
+
+Number  Start (sector)    End (sector)  Size       Code  Name
+   1            2048       487348223   232.4 GiB   BF01  Solaris /usr & Mac ZFS
+   9       487348224       488397134   512.2 MiB   EF02  BIOS boot partition
+|
+
+If you want to use GPT labels, and your zfs disks are |sdb-sdf|, you can
+follow the following script (example only shown for one disk, /dev/sdb).
+
+|# gdisk /dev/sdb
+GPT fdisk (gdisk) version 0.8.6
+
+Partition table scan:
+  MBR: protective
+  BSD: not present
+  APM: not present
+  GPT: present
+
+Found valid GPT with protective MBR; using GPT.
+Command (? for help): **p**
+Disk /dev/sda: 488397168 sectors, 232.9 GiB
+Logical sector size: 512 bytes
+Disk identifier (GUID): 948B55B3-300A-4610-A9D0-022FD36BD186
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 488397134
+Partitions will be aligned on 2048-sector boundaries
+Total free space is 488397101 sectors (232.9 GiB)
+
+Number  Start (sector)    End (sector)  Size       Code  Name
+
+Command (? for help): **n**
+Partition number (1-128, default 1): **9**
+First sector (34-488397134, default = 2048) or {+-}size{KMGTP}: **-512M**
+Information: Moved requested sector from 487348558 to 487348224 in
+order to align on 2048-sector boundaries.
+Use 'l' on the experts' menu to adjust alignment
+Last sector (487348224-488397134, default = 488397134) or {+-}size{KMGTP}: 
+Current type is 'Linux filesystem'
+Hex code or GUID (L to show codes, Enter = 8300): **ef02**
+Changed type of partition to 'BIOS boot partition'
+
+Command (? for help): **n**
+Partition number (1-128, default 1): 
+First sector (34-487348223, default = 2048) or {+-}size{KMGTP}: 
+Last sector (2048-487348223, default = 487348223) or {+-}size{KMGTP}: 
+Current type is 'Linux filesystem'
+Hex code or GUID (L to show codes, Enter = 8300): **bf01**
+Changed type of partition to 'Solaris /usr & Mac ZFS'
+
+Command (? for help): **x**
+
+Expert command (? for help): **a**
+Partition number (1-9): **9**
+Known attributes are:
+0: system partition
+1: hide from EFI
+2: legacy BIOS bootable
+60: read-only
+62: hidden
+63: do not automount
+
+Attribute value is 0000000000000000. Set fields are:
+  No fields set
+
+Toggle which attribute field (0-63, 64 or <Enter> to exit): **2**
+Have enabled the 'legacy BIOS bootable' attribute.
+Attribute value is 0000000000000004. Set fields are:
+2 (legacy BIOS bootable)
+
+Toggle which attribute field (0-63, 64 or <Enter> to exit): 
+
+Expert command (? for help): **m**
+
+Command (? for help): **w**
+|
+
+Repeat the above process for each of the disks you want to use in your
+ZFS pool. NOTE: GRUB may not be able to boot from bios_boot partitions
+beyond 2TB.
+
+2.1.2.2 Create the raidz2 pool
+
+From the example above, the vdevs are |/dev/sd[b-f]1|. Adjust as
+appropriate if you create your own partitions. The zpool must be created
+with only GRUB-supported features enabled
+
+|# zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled -o ashift=12 -O compression=lz4 rpool raidz2 /dev/sd[b-f]1
+# zpool export rpool
+# zpool import -d /dev/disk/by-id rpool
+# zpool status -v rpool
+  pool: rpool
+ state: ONLINE
+status: Some supported features are not enabled on the pool. The pool can
+        still be used, but some features are unavailable.
+action: Enable all features using 'zpool upgrade'. Once this is done,
+        the pool may no longer be accessible by software that does not support
+        the features. See zpool-features(5) for details.
+  scan: none requested
+config:
+
+    NAME                                             STATE     READ WRITE CKSUM
+    rpool                                            ONLINE       0     0     0
+      raidz2-0                                       ONLINE       0     0     0
+        ata-VBOX_HARDDISK_VB34e03168-af59f84b-part1  ONLINE       0     0     0
+        ata-VBOX_HARDDISK_VB0a394d20-76c87e6a-part1  ONLINE       0     0     0
+        ata-VBOX_HARDDISK_VBe51e2eb6-75e186e2-part1  ONLINE       0     0     0
+        ata-VBOX_HARDDISK_VBfbf70a2a-d7002bce-part1  ONLINE       0     0     0
+        ata-VBOX_HARDDISK_VB9bb2b6fd-2644ae68-part1  ONLINE       0     0     0
+
+# udevadm trigger
+# ls -la /dev/*part* | grep sd[b-f]
+lrwxrwxrwx 1 root root 4 Aug  8 13:25 /dev/ata-VBOX_HARDDISK_VB0a394d20-76c87e6a-part1 -> sdc1
+lrwxrwxrwx 1 root root 4 Aug  8 13:25 /dev/ata-VBOX_HARDDISK_VB34e03168-af59f84b-part1 -> sdb1
+lrwxrwxrwx 1 root root 4 Aug  8 13:25 /dev/ata-VBOX_HARDDISK_VB9bb2b6fd-2644ae68-part1 -> sdf1
+lrwxrwxrwx 1 root root 4 Aug  8 13:25 /dev/ata-VBOX_HARDDISK_VBe51e2eb6-75e186e2-part1 -> sdd1
+lrwxrwxrwx 1 root root 4 Aug  8 13:25 /dev/ata-VBOX_HARDDISK_VBfbf70a2a-d7002bce-part1 -> sde1
+|
+
+2.2 Create the root dataset and copy the original root
+
+*/QUERY/*: in the Ubuntu 14.04 instructions, we utilize a sub-dataset
+called rpool/ROOT/ubuntu, why would we not (or should we not?) do
+similar for RHEL here? e.g. go with rpool/ROOT/rhel.
+
+*Answer* I don't know, but I tested it with CentOS 7.3.1611 and it works
+(however with one problem: it does not work with |grub2-install
+--boot-directory=/rpool/ROOT /dev/sda| executed inside |chroot
+/rpool/ROOT/|, it worked with |grub2-install --boot-directory=/boot
+/dev/sda|). If you want to use |rpool/ROOT/rhel| you should make another
+filesystem (|zfs create rpool/ROOT/rhel|), but I can't explain why this
+is (or not) practical. Maybe the benefit of using |rpool/ROOT/something|
+is something related to inheritance of options.
+
+|# zfs create rpool/ROOT
+# mkdir /mnt/tmp
+# mount --bind / /mnt/tmp
+# rsync -avPX /mnt/tmp/. /rpool/ROOT/.
+# umount /mnt/tmp
+|
+
+2.3 Edit new fstab, comment out the old root entry
+
+If you still have swap on the same partition, you can leave swap entry
+enabled. If you use no-swap setup, use an empty fstab.
+
+|# cat /rpool/ROOT/etc/fstab
+#/dev/sda2 /               ext4    noatime,errors=remount-ro 0       1
+/dev/sda1 none            swap    sw              0       0
+|
+
+2.3 Edit new GRUB config on |/rpool/ROOT/etc/default/grub|
+
+You might need to comment-out |GRUB_HIDDEN_TIMEOUT| so you get GRUB menu
+during boot. This is needed to be able to select other boot entries.
+
+|#GRUB_HIDDEN_TIMEOUT=0
+|
+
+Next, add zfs boot parameter to |GRUB_CMDLINE_LINUX| (/tested it with
+CentOS 7.3.1611 and confirmed that there is no need to do this, maybe it
+was needed in old versions/):
+
+Old line:
+
+|GRUB_CMDLINE_LINUX="rhgb quiet"
+|
+
+After adding |boot=zfs root=ZFS=rpool/ROOT|:
+
+|GRUB_CMDLINE_LINUX="rhgb quiet boot=zfs root=ZFS=rpool/ROOT"
+|
+
+*/QUERY/*: in the Ubuntu 14.04 instructions, we go with: "boot=zfs
+rpool=rpool bootfs=rpool/ROOT/ubuntu", why is it different for RHEL
+here?. no rpool, and instead of "bootfs" we have "root"?
+
+Add part_gpt and zfs GRUB modules to |GRUB_PRELOAD_MODULES| (/tested it
+with CentOS 7.3.1611 and confirmed that there is no need to do this,
+maybe it was needed in old versions/):
+
+|GRUB_PRELOAD_MODULES="part_gpt zfs"
+|
+
+2.4 Generate new GRUB config, and verify it has the correct root entry
+
+|# for dir in proc sys dev;do mount --bind /$dir /rpool/ROOT/$dir;done
+# chroot /rpool/ROOT/
+# grub2-mkconfig -o /boot/grub2/grub.cfg
+# grep ROOT /boot/grub2/grub.cfg 
+	linux16 /ROOT@/boot/vmlinuz-3.10.0-229.14.1.el7.x86_64 ro quiet LANG=en_GB.UTF-8 boot=zfs root=ZFS=rpool/ROOT
+	initrd16 /ROOT@/boot/initramfs-3.10.0-229.14.1.el7.x86_64.img
+	linux16 /ROOT@/boot/vmlinuz-3.10.0-229.14.1.el7.x86_64 ro quiet LANG=en_GB.UTF-8 boot=zfs root=ZFS=rpool/ROOT
+	initrd16 /ROOT@/boot/initramfs-3.10.0-229.14.1.el7.x86_64.img
+	linux16 /ROOT@boot/vmlinuz-0-rescue-e3e29ca9199b4c6ea84172b7f8bbe3b1 boot=zfs root=ZFS=rpool/ROOT ro quiet
+	initrd16 /ROOT@/boot/initramfs-0-rescue-e3e29ca9199b4c6ea84172b7f8bbe3b1.img
+# exit
+# for dir in proc sys dev;do umount /rpool/ROOT/$dir;done
+|
+
+If you don't want to make test boot from existing GRUB installation
+(2.5) don't type exit and unmount proc, sys and dev (see 2.6).
+
+If you get the error |failed to get canonical path of ...| when doing
+|grub2-mkconfig|:
+
+|# grub2-mkconfig -o /boot/grub2/grub.cfg
+/usr/sbin/grub2-probe: error: failed to get canonical path of ‘/dev/ata-VBOX_HARDDISK_VB713ce3de-be27d19e-part2’.
+|
+
+You can fix it with:
+
+|# cd /dev/
+# ln -s /dev/disk/by-id/* . -i
+|
+
+2.5 (Optional) Test boot from existing grub installation
+
+This is to make sure that your root fs, initrd, and grub config file is
+already setup. In case something goes wrong in this stage, you will
+still boot Fedora on ext4 by default.
+
+  *
+
+    Reboot
+
+  *
+
+    Press |c| on grub menu for a command line
+
+  *
+
+    Load gpt/mbr grub module. This is only necessary if your current
+    partition label is of different type from your pool (e.g. your ext4
+    is on MBR disk while your pool is on GPT disk)
+
+  *
+
+    Load zfs module
+
+  *
+
+    Load the grub config file on the zfs root.
+
+      o Note that:
+          + Pool name does not matter in this case, only vdev name and
+            dataset name matters
+          + You can use |Tab| for file name completion if you don't
+            remember the partition numbers or file names
+      o Example for single vdev pool, mbr, zfs on |/dev/sda3|
+
+    |grub> insmod part_msdos
+    grub> insmod zfs
+    grub> configfile (hd0,msdos3)/ROOT/@/boot/grub2/grub.cfg
+    |
+
+      o Example for raidz2 pool, gpt, with |/dev/sdb1| as one of the vdevs
+
+    |grub> insmod part_gpt
+    grub> insmod zfs
+    grub> configfile (hd1,gpt1)/ROOT/@/boot/grub2/grub.cfg
+    |
+
+  *
+
+    It will display new grub menu, press |Enter| to boot the first entry
+
+  *
+
+    See *Step 4: verify you're on zfs root* (|mount |grep ' / '|) to
+    verify that it actually works
+
+  *
+
+    Reboot, then proceed to Step 2.6.
+
+2.6 Install GRUB onto the new BIOS boot partition/s
+
+If you did not rebooted you should execute the commands for installing
+GRUB (|grub2-install ...|) and rebuilding dracut (|dracut ...|) before
+to exit from |chroot /rpool/ROOT/|. If you already exited, you can
+return with:
+
+|# for dir in proc sys dev;do mount --bind /$dir /rpool/ROOT/$dir;done
+# chroot /rpool/ROOT/
+|
+
+If you rebooted and |/rpool/ROOT/| is mounted on |/|, there is no need
+to |chroot /rpool/ROOT/|.
+
+While installing GRUB, it is necessary for the device node names used by
+ZFS to be in /dev rather than /dev/disk/by-id.
+
+|# cd /dev; ln -s /dev/disk/by-id/* .
+|
+
+Now let's install GRUB onto our new BIOS boot partition/s.
+
+2.6.1 Example for pool with single vdev
+
+|# grub2-install --boot-directory=/boot /dev/sda
+|
+
+2.6.2 Example for pool with raidz2
+
+Following the previous raidz2 example, /dev/sd[b-f]1 is the vdev, and
+GRUB will be installed on on all disks (/dev/sd[b-f]).
+
+|# for d in /dev/sd[b-f];do grub2-install --boot-directory=/boot $d;done
+|
+
+2.6.3 Build a new initramfs image with ZFS support
+
+Add zfs to the list of modules dracut should include by default to
+/etc/dracut.conf (this is why you need to install zfs-dracut package
+mentioned early on) (/tested it with CentOS 7.3.1611 and confirmed that
+there is no need to do this, maybe it was needed in old versions/):
+
+|add_dracutmodules+="zfs"
+|
+
+Finally, rebuild the initramfs:
+
+|# dracut -f -v /boot/initramfs-$(uname -r).img $(uname -r)
+|
+
+/BUG!/ In my system (CentOS 7.3.1611) the above command was not enough.
+My GRUB menu looks like this:
+
+It does not boot when I select the first element of the menu:
+
+However, it works when I select the second element from the menu.
+
+The problem is that:
+
+|# uname -r
+3.10.0-514.el7.x86_64
+|
+
+and when I type:
+
+|# dracut -f -v /boot/initramfs-$(uname -r).img $(uname -r)
+|
+
+actually is executed this:
+
+|# dracut -f -v /boot/initramfs-3.10.0-514.el7.x86_64.img 3.10.0-514.el7.x86_64
+|
+
+In order system to be bootable when the first element of the menu
+(default) is selected, the |dracut| command should be executed /also/
+with these parameters:
+
+|# dracut -f -v /boot/initramfs-3.10.0-514.10.2.el7.x86_64.img 3.10.0-514.10.2.el7.x86_64
+|
+
+You can find the correct version string using this command (look at the
+string after the "vmlinuz-" on the first line):
+
+|# grep ZFS /boot/grub2/grub.cfg 
+	linux16 /ROOT@/boot/vmlinuz-3.10.0-514.10.2.el7.x86_64 root=ZFS=rpool/ROOT ro rhgb quiet 
+	linux16 /ROOT@/boot/vmlinuz-3.10.0-514.el7.x86_64 root=ZFS=rpool/ROOT ro rhgb quiet 
+	linux16 /ROOT@/boot/vmlinuz-0-rescue-4a06423a8b17417bb13254434dfc077c root=ZFS=rpool/ROOT ro rhgb quiet
+|
+
+or look at the output of the |grub2-mkconfig| command you wrote before
+(look at the string after the "vmlinuz-" on the first line):
+
+|[root@localhost /]# grub2-mkconfig -o /boot/grub2/grub.cfg
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-3.10.0-514.10.2.el7.x86_64
+Found initrd image: /boot/initramfs-3.10.0-514.10.2.el7.x86_64.img
+Found linux image: /boot/vmlinuz-3.10.0-514.el7.x86_64
+Found initrd image: /boot/initramfs-3.10.0-514.el7.x86_64.img
+Found linux image: /boot/vmlinuz-0-rescue-4a06423a8b17417bb13254434dfc077c
+Found initrd image: /boot/initramfs-0-rescue-4a06423a8b17417bb13254434dfc077c.img
+done
+|
+
+2.7 Remove |zpool.cache| from ext4 root
+
+(Why "from ext4 root"? We are still within the |chroot /rpool/ROOT/|!)
+
+The presence of |zpool.cache| can speed up pool import, but it can also
+cause problems when the pool layout has changed.
+
+|# rm /etc/zfs/zpool.cache
+|
+
+2.8 Exit the chroot and reboot
+
+|# exit
+# reboot
+|
+
+Make sure current root is on zfs
+
+|# df -h /
+Filesystem         Size  Used Avail Use% Mounted on
+rpool/ROOT     7.5G  823M  6.7G  11% /
+|
+
+
+      <#videos-of-example-installation>Videos of example installation
+
+  * Installing CentOS on a ZFS root filesystem on virtual server with
+    one disk <https://www.youtube.com/watch?v=JbkDr6Sl6zQ>
+
+  * Contact GitHub <https://github.com/contact>
+  * API <https://developer.github.com/>
+  * Training <https://training.github.com/>
+  * Shop <https://shop.github.com/>
+  * Blog <https://github.com/blog>
+  * About <https://github.com/about>
+
+<https://github.com/>
+
+  * © 2017 GitHub, Inc.
+  * Terms <https://github.com/site/terms>
+  * Privacy <https://github.com/site/privacy>
+  * Security <https://github.com/security>
+  * Status <https://status.github.com/>
+  * Help <https://help.github.com/>
+
+You can't perform that action at this time.
+You signed in with another tab or window. Reload to refresh your
+session. You signed out in another tab or window. Reload to refresh your
+session.
+

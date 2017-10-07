@@ -1,0 +1,617 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+	<title>Apachedev.ru » Настройка Apache от HEAnet</title>
+	<meta name="generator" content="WordPress 1.5.2"> <!-- leave this for stats please -->
+	<style type="text/css" media="screen">
+		@import url( /wp-content/themes/clasikue/style.css );
+	</style>
+		<link rel="alternate" type="text/xml" title="RSS .92" href="http://apache2dev.ru/feed/rss/">
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://apache2dev.ru/feed/atom/">
+    <link rel="shortcut icon" href="http://apache2dev.ru/images/apachedev.ico">
+    <link rel="stylesheet" type="text/css" media="print" href="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/print.css">
+	    	<link rel="archives" title="Октябрь 2007" href="http://apache2dev.ru/2007/10/">
+	<link rel="archives" title="Сентябрь 2007" href="http://apache2dev.ru/2007/09/">
+	<link rel="archives" title="Март 2007" href="http://apache2dev.ru/2007/03/">
+	<link rel="archives" title="Февраль 2007" href="http://apache2dev.ru/2007/02/">
+	<link rel="archives" title="Январь 2007" href="http://apache2dev.ru/2007/01/">
+	<link rel="archives" title="Декабрь 2006" href="http://apache2dev.ru/2006/12/">
+	<link rel="archives" title="Ноябрь 2006" href="http://apache2dev.ru/2006/11/">
+	<link rel="archives" title="Октябрь 2006" href="http://apache2dev.ru/2006/10/">
+	<link rel="archives" title="Сентябрь 2006" href="http://apache2dev.ru/2006/09/">
+	<link rel="archives" title="Август 2006" href="http://apache2dev.ru/2006/08/">
+	<link rel="archives" title="Июль 2006" href="http://apache2dev.ru/2006/07/">
+	<link rel="archives" title="Июнь 2006" href="http://apache2dev.ru/2006/06/">
+	<link rel="archives" title="Май 2006" href="http://apache2dev.ru/2006/05/">
+	<link rel="archives" title="Апрель 2006" href="http://apache2dev.ru/2006/04/">
+	<link rel="archives" title="Март 2006" href="http://apache2dev.ru/2006/03/">
+	<link rel="archives" title="Февраль 2006" href="http://apache2dev.ru/2006/02/">
+	<link rel="archives" title="Январь 2006" href="http://apache2dev.ru/2006/01/">
+		<script type="text/javascript" src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/prototype.js"></script>
+<script type="text/javascript" src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/live_search.js"></script>
+
+	<script type="text/javascript">
+		ls.url = "/wp-content/plugins/addicted_live_search/search_results.php";
+	</script><link type="text/css" href="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/live_search.css" rel="stylesheet">
+<meta name="description" content="Советы повышения производительности Apache 2 от HEAnet. Выбор MPM, оптимизация конфигурации, использование sendfile и mmap, а также использование модуля mod_cache.">
+<meta name="keywords" content="apache, оптимизация, mmap, sendfile, mod_cache">
+<script language="JavaScript" type="text/javascript" src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/description_selection.js"></script><link rel="stylesheet" type="text/css" media="screen" href="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/sociable.css">	</head>
+
+<body>
+<div id="rap">
+
+<div id="header">
+     <table summary="Заголовок" id="header_table"><tbody><tr>
+     <td id="img_cell">
+     <a href="http://apache2dev.ru/"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/logo.gif" alt="Apachedev.ru"></a>
+     </td>
+     <td id="slogan_cell">Для тех, кто работает с Apache.</td>
+     </tr></tbody></table>
+</div>
+
+<div id="navigation">
+  <form id="searchform" method="get" action="/index.php"><input name="PHPSESSID" value="b661c01e945aa88099a8071cf3636ab5" type="hidden">
+  <img alt="Live Search" src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/live.jpg" style="margin-right:2px;"><img alt="Live Search" src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/search.jpg" style="margin-right:8px;"><input name="s" id="s" size="15" style="border-color:#999;" autocomplete="off" type="text"><img alt="Loading" style="display:none;" id="loading" src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/load.gif">
+  <div id="live_search_results" style="display:none"></div></form>
+
+  <ul id="top_menu">
+  <li class="page_item"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/new.gif" alt="New feature" style="padding-bottom:3px;vertical-align:middle;"><a style="padding: 2px 20px;" href="http://apache2dev.ru/forum/" title="Форум ApacheDev">Форум</a></li>
+  <li class="page_item"><a href="http://apache2dev.ru/about/planyi/" title="План создания и переводов статей">План работы</a></li>  
+  <li class="page_item"><a href="http://apache2dev.ru/resources-html/" title="Файлы, книги, ссылки проекта ApacheDev.ru">Ресурсы</a></li>
+  <li class="page_item"><a href="http://apache2dev.ru/about/" title="О проекте, контакты, план работ, ...">О сайте</a></li>
+  </ul>
+</div>
+
+<div id="content">
+<!-- end header -->
+
+
+
+
+
+<div class="post">
+              <h1 id="post-52">Настройка Apache от HEAnet</h1>
+     
+	<div class="storycontent">
+			<!-- <index> --><br>
+<h2>Выбор MPM</h2>
+	<div class="paragraph">В Apache 2.x доступно множество мульти-процессных модулей (<a class="extern_link" title="МП-модули" href="http://httpd.apache.org/docs/2.0/mpm.html">MPM</a>),
+ которые предлагают разные методы управления процессами внутри Apache. В
+ Unix есть, по крайней мере, два наиболее стоящих модуля: <a class="inner_link" title="4.3.3 Многозадачная архитектура prefork" href="http://apache2dev.ru/2006/03/05/the-apache-modeling-project-glava-4-chast-1/#4.3.3">prefork MPM</a> и <a class="inner_link" title="4.3.6 МП-модуль Worker" href="http://apache2dev.ru/2006/03/05/the-apache-modeling-project-glava-4-chast-2/#4.3.6">worker MPM</a>.</div>
+	<div class="paragraph">Мы не стали уделять большого внимания выбору МП-модуля, а начали использовать модуль по умолчанию - <span class="module">prefork</span> <abbr title="Multi-Processing Modules">MPM</abbr>. Однако после множества советов, что, основанный на нитях, МП-модуль <span class="module">worker</span> дает увеличение производительности, мы решили оценить его работу.</div>
+<a id="more-52"></a><br>
+<div class="paragraph annot">Данная статья взята из выпуска №3 рассылки “Информационный бюллетень от ApacheDev.ru”. <a href="http://apache2dev.ru/about/subscribes/?from=tun_ap" class="inner_link" title="Подписаться на рассылку">Подписаться на рассылку…</a></div>
+<div style="text-align:center; border-width: 0px; width:300px; height:250px; float:right; margin-left: 10px;">
+</div><br>
+<div class="paragraph">К нашему сожалению, после 5 минут работы МП-модуль <span class="module">worker</span> выдал ошибку доступа к памяти. Дамп ядра не сильно помог нам (и httpd-dev) при поиске возможной причины.</div>
+	<div class="paragraph">Работая вместе с <a href="http://www.clove.org/%7Eaaron/" title="Домашняя страница Aaron Bannert" class="extern_link">Aaron Bannert</a> и Jeff Trawick и используя новые модули <span class="module">mod_forensic_id</span> и <span class="module">mod_backtrace</span>, в конце концов мы обнаружили ошибку переполнения стека в МП-модуле <span class="module">worker</span>. Этот баг был исправлен в Apache 2.0.49.</div>
+	<div class="paragraph">После исправления ошибки мы вновь провели собственные тесты МП-модуля <span class="module">worker</span>,
+ однако при нашей нагрузке он снизил количество запросов обработанных в 
+секунду. Тем не менее, он понизил объем используемой памяти, тем самым, 
+показав свое преимущество перед <span class="module">prefork</span> (он 
+может значительно увеличить производительность на таких платформах как 
+Solaris, которые поддерживают легковесные процессы). Однако для нас 
+более важным критерием является количество обработанных запросов в 
+секунду, а память сейчас относительно дешевая (по сравнению со временем 
+разработки), поэтому мы продолжили использовать МП-модуль <span class="module">prefork</span>.</div>
+	<div class="paragraph">Однако мы продолжаем периодически тестировать производительность МП-модуля <span class="module">worker</span>, а также других МП-модулей.</div>
+	<div class="paragraph">Во время тестирования МП-модуля <span class="module">worker</span> мы хорошо изучили как лучше настроить его. МП-модуль <span class="module">worker</span>
+ создает серию дочерних процессов, которые в свою очередь содержат нити.
+ Что более эффективно: иметь больше дочерних процессов с меньшим 
+количеством нитей на процесс или обратное?</div>
+	<div class="paragraph">После большого количества экспериментов при 
+нашей нагрузке мы обнаружили, что оптимальным будет 32 нити на процесс. 
+При большем числе нитей управление ими становится более трудоемким, чем 
+управление обычными процессами.</div>
+	<div class="paragraph">В результате мы получили следующую конфигурацию для МП-модуля <span class="module">worker</span>:</div>
+	<div class="paragraph directive_block">
+<span class="string">&lt;IfModule worker.c&gt;</span><br>
+  ServerLimit	900<br>
+  StartServers	10<br>
+  MaxClients	28800<br>
+  MinSpareThreads	25<br>
+  MaxSpareThreads	75<br>
+  ThreadsPerChild	32<br>
+  MaxRequestsPerChild	100<br>
+<span class="string">&lt;/IfModule&gt;</span></div>
+	<div class="paragraph">Оптимальная настройка МП-модуля <span class="module">prefork</span>
+ производится проще. Главной задачей тут является определение 
+необходимого количества “запасных” серверов, чтобы их было достаточно 
+для обработки новых запросов, когда количество поступающих соединений 
+превысит количество новых процессов, создаваемых Apache в единицу 
+времени.</div>
+	<div class="paragraph">При нашей нагрузке нам потребовалось только 10 
+запасных серверов. С таким количеством у нас не было отказов в обработке
+ соединений.</div>
+	<div class="paragraph">Наша конфигурация для МП-модуля <span class="module">prefork</span>:</div>
+	<div class="paragraph directive_block">
+<span class="string">&lt;IfModule prefork.c&gt;</span><br>
+  StartServers	100<br>
+  MinSpareServers	10<br>
+  MaxSpareServers	10<br>
+  ServerLimit		50000<br>
+  MaxClients		50000<br>
+  MaxRequestsPerChild	2000<br>
+<span class="string">&lt;/IfModule&gt;</span></div>
+	<div class="paragraph">Мы установили максимальное количество запросов 
+на процесс в основном из-за того, чтобы еще раз подстраховаться от любой
+ возможной утечки памяти. В системе с несколькими десятками тысяч 
+процессов httpd даже маленькая утечка приведет к большим проблемам.</div>
+	<h2>Статическая линковка или DSO</h2>
+	<div class="paragraph">Модули Apache могут быть скомпилированы в один 
+бинарник или в виде динамически загружаемых объектов (DSO), которые 
+подгружаются основным сервером. При нашей нагрузке мы получили некоторую
+ выгоду в производительности (примерно около 0.2%), когда скомпилировали
+ модули в сервер.</div>
+	<h2>Изменения в конфигурации</h2>
+	<div class="paragraph">Как показано в примере конфигурации <span class="file">highperformance.conf</span>, которая поставляется вместе с Apache, отключение файлов <span class="file">.htaccess</span> может значительно повысить скорость работы сервера. Вот часть файла конфигурации:</div>
+	<div class="paragraph directive_block">
+<span class="string">&lt;Directory “/ftp/”&gt;</span><br>
+  Options Indexes FollowSymLinks<br>
+  AllowOverride None<br>
+  Order allow,deny<br>
+  Allow from all<br>
+  IndexOptions	NameWidth=* +FancyIndexing \<br>
+			+SuppressHTMLPreamble	+XHTML<br>
+<span class="string">&lt;/Directory&gt;</span></div>
+	<div class="paragraph">Такой подход тоже имеет свои недостатки. Когда 
+сервер обслуживает более 50,000 проектов, то некоторые из них 
+обязательно будут содержать файлы <span class="file">.htaccess</span>.</div>
+	<div class="paragraph">Чтобы определить какие проекты нуждаются в переопределении доступа, мы регулярно запускаем <span class="code function">“find ./ -type а -name .htaccess”</span>. Для этого мы создали скрипт, который собирает все файлы <span class="file">.htaccess</span> в один большой файл конфигурации:</div>
+	<div class="paragraph code_block function">
+#!/bin/sh<br>
+for file in `find /ftp/ -type f -name .htaccess`; do<br>
+echo <span class="string">“&lt;Directory `basename $file`&gt;”</span><br>
+sed ’s/^/    /’ $file<br>
+echo <span class="string">“&lt;/Directory&gt;”</span><br>
+echo<br>
+done &gt; combined-htaccess.conf
+</div>
+	<div class="paragraph">Отдельные файлы <span class="file">.htaccess</span>
+ изменяются достаточно редко, поэтому такой подход не вызывает никаких 
+проблем. Также мы вручную просматриваем этот файл конфигурации, чтобы 
+убедиться, что он не содержит злонамеренных директив.</div>
+	<div class="paragraph">Тем не менее, проблема возникает, когда большое 
+число проектов использует множество символических связей с каталогами. 
+Однако редко возникают такие моменты, когда пользователю потребовался 
+контент по только что созданной символической связи, а соответственная 
+директива еще не обновлена.</div>
+	<div class="paragraph">Постоянное отслеживание изменений файлов <span class="file">.htaccess</span> является довольно трудоемкой задачей. Вместо этого можно разрешить использование <span class="file">.htaccess</span> для корня проектов, например:</div>
+	<div class="paragraph directive_block">
+<span class="string">&lt;Directory “/ftp/mirrors/www.apache.org/”&gt;</span><br>
+  IndexOptions FancyIndexing NameWidth=* FoldersFirst \<br>
+  ScanHTMLTitles DescriptionWidth=*<br>
+  HeaderName HEADER.html<br>
+  ReadmeName README.html<br>
+  AllowOverride FileInfo Indexes<br>
+  Options Indexes SymLinksIfOwnerMatch<br>
+<span class="string">&lt;/Directory&gt;</span>
+</div>
+	<h2>Sendfile</h2>
+	<div class="paragraph"><span class="module">Sendfile</span> - это 
+системный вызов, доступный во многих операционных системах. Он позволяет
+ программам передать ядру ОС работу по передаче файлов <abbr title="Transmission Control Protocol">TCP</abbr>
+ сокету. Следовательно, лучше заботы о распределении памяти и об 
+оптимальном размере буфера передать ядру, которое оптимизирует все 
+операции чтения.</div>
+	<div class="paragraph">Использование <span class="module">sendfile</span>
+ включается по умолчанию во время компиляции в случае, если Apache 
+определит, что операционная система поддерживает эту возможность. 
+Следующая директива в конфигурационном файле включает использование <span class="module">sendfile</span>:</div>
+	<div class="paragraph directive_block">
+  EnableSendfile On
+</div>
+	<div class="paragraph">Постоянное использование <span class="module">sendfile</span> существенно повысит производительность и эффективность. К сожалению, в нашем случае работа <span class="module">sendfile</span> на нашем оборудовании приводила к порче IPv6 сессий.</div>
+	<div class="paragraph annot">Примечание: Это происходило из-за ошибки 
+при расчете контрольной суммы TCP почти на всех сетевых интерфейсах. И 
+Linux использует неверную контрольную сумму при вызове <span class="module">sendfile</span>.
+ Данный баг был обнаружен при помощи Джо Ортона (Joe Orton). Так как 
+HEanet работает с IPv6 так же, как и с IPv4, то простое выключение 
+поддержки IPv6 неприемлемо для нас.</div>
+	<div class="paragraph">Решение заключалось в исправлении кода сервера, чтобы просто не использовать <span class="module">sendfile</span>, когда поступивший запрос использует IPv6. Теперь эта возможность добавлена в Apache Portable Runtime (APR).</div>
+	<h2>Mmap</h2>
+	<div class="paragraph">Следующей полезной вещью после <span class="module">sendfile</span> является <span class="module">mmap</span>. Использование <span class="module">mmap</span> может быть включено в конфигурации Apache с помощью директивы</div>
+	<div class="paragraph directive_block">
+  EnableMmap On
+</div>
+	<div class="paragraph">Поддержка <span class="module">mmap</span> 
+позволяет Apache работать с файлом как с единой областью памяти, что 
+существенно повышает скорость операций I/O за счет отказа от 
+дополнительных операций чтения.</div>
+	<div class="paragraph">Включение поддержки <span class="module">mmap</span>
+ оказало большое влияние на нашу производительность и позволило нам 
+обрабатывать файлы примерно в 3 раза быстрее. Конечно, использование <span class="module">sendfile</span> (если возможно!) вероятно принесет больший прирост производительности, но использование <span class="module">mmap</span> не влияет на работу с IPv6.</div>
+	<h2>mod_cache</h2>
+	<div class="paragraph">Модуль <span class="module">mod_cache</span> с <span class="module">mod_disc_cache</span>
+ является одной из самых лучших возможностей увеличения 
+производительности вашего сервера. Несмотря на то, что у нас хранится 
+примерно 3 терабайт контента (примерно 6 миллионов файлов), только 
+небольшая его часть популярна в определенное время. В определенное 
+6-часовое окно скачивается 50,000 различных файлов, что в совокупности 
+представляет только 10Гб уникального контента.</div>
+	<div class="paragraph">Наши файловые хранилища обслуживаются дисками 
+7200 RPM IDE, поэтому будет очень хорошо, если мы сможим снизить 
+нагрузку на наши файловые хранилища. Также мы создали 36 Gb RAID-0 
+хранилище, используя два 18 Гб 15k RPM SCSI диска. Комбинация RAID-0 и 
+15k RPM дисков делает это хранилище значительно быстрее.</div>
+	<div class="paragraph"><span class="module">mod_disc_cache</span> 
+кеширует файлы в заданное место при первой их обработке. Повторные 
+запросы обрабатываются уже из кеша, обходя более медленные файловые 
+хранилища. <span class="module">mod_disk_cache</span> содержит хороший пример конфигурации, но в нашей конфигурации мы увеличили <span class="directive">CacheDirLevel</span> до 5, чтобы увеличить количество файлов, которое помещается в кеш.</div>
+	<div class="paragraph directive_block">
+<span class="string">&lt;IfModule mod_cache.c&gt;</span><br>
+  <span class="string">&lt;IfModule mod_disk_cache.c&gt;</span><br>
+    CacheRoot <span class="path">/usr/local/web/cache/</span><br>
+    CacheEnable disk /<br>
+    CacheDirLevels 5<br>
+    CacheDirLength 3<br>
+  <span class="string">&lt;/IfModule&gt;</span><br>
+<span class="string">&lt;/IfModule&gt;</span>
+</div>
+	<div class="paragraph">Но следует учесть, что <span class="module">mod_disk_cache</span>
+ до сих пор является экспериментальным в Apache 2.0 и в Apache 2.1, и, 
+вероятно, не удовлетворяет требованиям производственного использования. 
+Тем не менее, если есть время для аккуратного исследования его 
+поведения, то он может стать источником большого повышения 
+производительности.</div>
+	<div class="paragraph">Еще одна вещь, которую нужно учесть, это то, что
+ Apache не занимается очисткой кеша. Некоторое время для этой цели мы 
+использовали комбинацию <span class="command_line">find</span>, <span class="command_line">xargs</span> и <span class="command_line">rm</span>, однако теперь Apache 2.1 включает утилиту <span class="module">htcacheclean</span>, которая используется для очистки кеша.</div>
+	<div class="paragraph"><span class="module">htcacheclean</span> 
+запускается либо cron-ом, либо в качестве демона, и периодически очищает
+ кеш. Необходимо только убедиться, что ваше хранилище обладает 
+необходимым объемом свободного места.</div>
+	<div class="paragraph annot">Примечание: Многие вопросы повышения производительности приведены в 8 главе книги "Apache для профессионалов". <a href="http://apache2dev.ru/2006/05/12/kniga-apache-dlya-professionalov/" class="inner_link" title="Описание книги ‘Apache для профессионалов’">Подробнее о книге…</a></div>
+	<h2>Параметры компиляции</h2>
+	<div class="paragraph">Вот параметры нашей сборки:</div>
+	<div class="paragraph code_block function">
+CFLAGS=”-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE”; export CFLAGS<br>
+“./configure” \<br>
+“--with-mpm=prefork” \<br>
+“--prefix=/usr/local/web” \<br>
+“--enable-cgid” \<br>
+“--enable-rewrite” \<br>
+“--enable-expires” \<br>
+“--enable-cache” \<br>
+“--enable-disk-cache” \<br>
+“--without-sendfile”
+</div>
+	<div class="paragraph">Дадим небольшие пояснения. Модули <span class="module">mod_rewrite</span> и <span class="module">mod_expires</span>
+ используются большим количеством обслуживающихся проектов. Наша цель во
+ время компиляции заключалась в том, чтобы сделать исполнительный файл <span class="file">httpd</span> как можно меньше. Параметры <span class="code function">CFLAGS</span> позволяют нам использовать файлы размером более 2 Гб.</div>
+	<div class="paragraph left">Автор: Colm MacCarthaigh <br>Перевод: <a class="mail_link" href="mailto:info@apachedev.ru?subject=Article:tun_ap" title="Написать автору статьи">Сипягин Максим</a><br><a title="Scaling Apache 2.x beyond 20,000 concurrent downloads" href="http://www.stdlib.net/%7Ecolmmacc/Apachecon-EU2005/scaling-apache-handout.pdf" class="extern_link">Оригинал документа (en)(pdf)</a></div>
+<!-- </index> --><br>
+
+<div class="sociable">
+<span class="sociable_tagline">
+
+	<span>These icons link to social bookmarking sites where readers can share and discover new web pages.</span>
+</span>
+<ul>
+	<li><a href="http://news2.ru/add_story.php?url=http%3A%2F%2Fapachedev.ru%2F2006%2F05%2F15%2Fnastroyka-apache-ot-heanet%2F" title="News2.ru" rel="nofollow"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/news2ru.png" title="News2.ru" alt="News2.ru" class="sociable-hovers"></a></li>
+	<li><a href="http://www.newsland.ru/News/Add" title="NewsLand.ru" rel="nofollow"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/newsland.gif" title="NewsLand.ru" alt="NewsLand.ru" class="sociable-hovers"></a></li>
+	<li><a href="http://del.icio.us/post?url=http%3A%2F%2Fapachedev.ru%2F2006%2F05%2F15%2Fnastroyka-apache-ot-heanet%2F&amp;title=%CD%E0%F1%F2%F0%EE%E9%EA%E0+Apache+%EE%F2+HEAnet" title="del.icio.us" rel="nofollow"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/delicious.png" title="del.icio.us" alt="del.icio.us" class="sociable-hovers"></a></li>
+	<li><a href="http://www.bobrdobr.ru/addext.html?url=http%3A%2F%2Fapachedev.ru%2F2006%2F05%2F15%2Fnastroyka-apache-ot-heanet%2F&amp;title=%CD%E0%F1%F2%F0%EE%E9%EA%E0+Apache+%EE%F2+HEAnet" title="BobrDobr.ru" rel="nofollow"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/bobrdobr.gif" title="BobrDobr.ru" alt="BobrDobr.ru" class="sociable-hovers"></a></li>
+	<li><a href="http://ma.gnolia.com/bookmarklet/add?url=http%3A%2F%2Fapachedev.ru%2F2006%2F05%2F15%2Fnastroyka-apache-ot-heanet%2F&amp;title=%CD%E0%F1%F2%F0%EE%E9%EA%E0+Apache+%EE%F2+HEAnet" title="Ma.gnolia" rel="nofollow"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/magnolia.png" title="Ma.gnolia" alt="Ma.gnolia" class="sociable-hovers"></a></li>
+	<li><a href="http://digg.com/submit?phase=2&amp;url=http%3A%2F%2Fapachedev.ru%2F2006%2F05%2F15%2Fnastroyka-apache-ot-heanet%2F&amp;title=%CD%E0%F1%F2%F0%EE%E9%EA%E0+Apache+%EE%F2+HEAnet" title="Digg" rel="nofollow" onfocus="sociable_description_link(this, 'bodytext')"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/digg.png" title="Digg" alt="Digg" class="sociable-hovers"></a></li>
+	<li><a href="http://reddit.com/submit?url=http%3A%2F%2Fapachedev.ru%2F2006%2F05%2F15%2Fnastroyka-apache-ot-heanet%2F&amp;title=%CD%E0%F1%F2%F0%EE%E9%EA%E0+Apache+%EE%F2+HEAnet" title="Reddit" rel="nofollow"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/reddit.png" title="Reddit" alt="Reddit" class="sociable-hovers"></a></li>
+	<li><a href="http://technorati.com/faves?add=http%3A%2F%2Fapachedev.ru%2F2006%2F05%2F15%2Fnastroyka-apache-ot-heanet%2F" title="Technorati" rel="nofollow"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/technorati.png" title="Technorati" alt="Technorati" class="sociable-hovers"></a></li>
+	<li><a href="http://slashdot.org/bookmark.pl?title=%CD%E0%F1%F2%F0%EE%E9%EA%E0+Apache+%EE%F2+HEAnet&amp;url=http%3A%2F%2Fapachedev.ru%2F2006%2F05%2F15%2Fnastroyka-apache-ot-heanet%2F" title="Slashdot" rel="nofollow"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/slashdot.png" title="Slashdot" alt="Slashdot" class="sociable-hovers"></a></li>
+	<li><a href="http://www.netscape.com/submit/?U=http%3A%2F%2Fapachedev.ru%2F2006%2F05%2F15%2Fnastroyka-apache-ot-heanet%2F&amp;T=%CD%E0%F1%F2%F0%EE%E9%EA%E0+Apache+%EE%F2+HEAnet" title="Netscape" rel="nofollow"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/netscape.gif" title="Netscape" alt="Netscape" class="sociable-hovers"></a></li>
+	<li><a href="http://www.dzone.com/links/add.html?url=http%3A%2F%2Fapachedev.ru%2F2006%2F05%2F15%2Fnastroyka-apache-ot-heanet%2F&amp;title=%CD%E0%F1%F2%F0%EE%E9%EA%E0+Apache+%EE%F2+HEAnet" title="DZone" rel="nofollow" onfocus="sociable_description_link(this, 'description')"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/dzone.png" title="DZone" alt="DZone" class="sociable-hovers"></a></li>
+	<li><a href="http://www.thisnext.com/pick/new/submit/sociable/?url=http%3A%2F%2Fapachedev.ru%2F2006%2F05%2F15%2Fnastroyka-apache-ot-heanet%2F&amp;name=%CD%E0%F1%F2%F0%EE%E9%EA%E0+Apache+%EE%F2+HEAnet" title="ThisNext" rel="nofollow"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/thisnext.png" title="ThisNext" alt="ThisNext" class="sociable-hovers"></a></li>
+	<li><a href="http://www.furl.net/storeIt.jsp?u=http%3A%2F%2Fapachedev.ru%2F2006%2F05%2F15%2Fnastroyka-apache-ot-heanet%2F&amp;t=%CD%E0%F1%F2%F0%EE%E9%EA%E0+Apache+%EE%F2+HEAnet" title="Furl" rel="nofollow"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/furl.png" title="Furl" alt="Furl" class="sociable-hovers"></a></li>
+	<li><a href="http://myweb2.search.yahoo.com/myresults/bookmarklet?u=http%3A%2F%2Fapachedev.ru%2F2006%2F05%2F15%2Fnastroyka-apache-ot-heanet%2F&amp;=%CD%E0%F1%F2%F0%EE%E9%EA%E0+Apache+%EE%F2+HEAnet" title="YahooMyWeb" rel="nofollow"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/yahoomyweb.png" title="YahooMyWeb" alt="YahooMyWeb" class="sociable-hovers"></a></li>
+</ul>
+</div>
+	</div>
+
+	<div class="meta">Опубликовано в: <a href="http://apache2dev.ru/category/administration/" title="Посмотреть все записи в Администрирование" rel="category tag">Администрирование</a> Май 15, 2006 </div>
+	
+	<div class="feedback">
+                        	</div>
+	
+	<!--
+	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+	    xmlns:dc="http://purl.org/dc/elements/1.1/"
+	    xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+		<rdf:Description rdf:about="/2006/05/15/nastroyka-apache-ot-heanet/"
+    dc:identifier="/2006/05/15/nastroyka-apache-ot-heanet/"
+    dc:title="Настройка Apache от HEAnet"
+    trackback:ping="/2006/05/15/nastroyka-apache-ot-heanet/trackback/" />
+</rdf:RDF>	-->
+
+</div>
+
+
+<h4 id="comments">28 Комментариев	<a href="#postcomment" title="Оставить комментарий">»</a>
+</h4>
+
+<ol id="commentlist">
+
+	<li id="comment-34">
+		Хотелось бы узнать о других MPM и еще я использую mod_mem_cache<br>
+	<p><cite>Комментарий от <a href="http://mosfasad.ru/" rel="external nofollow">AlienZzzz</a> — Май 17, 2006 @ <a href="#comment-34">10:02 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36">
+		Про другие MPM можно почитать <a href="http://apache2dev.ru/2006/03/05/the-apache-modeling-project-glava-4-chast-2/#4.3.4" rel="nofollow">тут</a>.<br>
+	<p><cite>Комментарий от <a href="http://" rel="external nofollow">Администратор</a> — Май 17, 2006 @ <a href="#comment-36">11:20 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-37">
+		worker конечно хорошо. Однако они забывают что он тянет за собой php и
+ перл, которые нужно перекомпилировать с поддержкой нитей. А php тянет 
+за собой Zend который тредовым не бывает. На этом все в моем случае и 
+закончилось.<br>
+	<p><cite>Комментарий от barzog — Май 18, 2006 @ <a href="#comment-37">10:03 am</a></cite> </p>
+	</li>
+
+	<li id="comment-7637">
+		PidFile /var/run/apache_aux2.pid<br>
+    LockFile /var/run/accept_aux2.lock<br>
+    ServerLimit         160<br>
+    StartServers         20<br>
+    MaxClients         4000<br>
+    MinSpareThreads      25<br>
+    MaxSpareThreads      75<br>
+    ThreadsPerChild      25<br>
+    MaxRequestsPerChild   0<br>
+	# apachectl -t<br>
+Syntax OK<br>
+# apachectl -k restart<br>
+В логе вижу:<br>
+WARNING: MaxClients of 4000 would require 160 servers,<br>
+and would exceed the ServerLimit value of 40.<br>
+Automatically lowering MaxClients to 1000.  To increase,<br>
+please see the ServerLimit directive.<br>
+	Что ему еще надо?<br>
+	<p><cite>Комментарий от sickboy — Июнь 21, 2007 @ <a href="#comment-7637">8:58 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-32824">
+		Многое знал, и многого не знал! Спасибо ща статью! Респект!!<br>
+	__________________<br>
+<a href="http://btrening.ru/" rel="nofollow">http://btrening.ru/</a><br>
+	<p><cite>Комментарий от <a href="http://btrening.ru/" rel="external nofollow">андрюха</a> — Август 29, 2008 @ <a href="#comment-32824">4:11 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-32973">
+		Погода портится скоро уже на улице не погуляешь <img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/icon_sad.gif" alt=":(" class="wp-smiley">  Скоро буду целыми вечерами в инете сидеть, а вы чем обычно осенью занимаетесь?<br>
+	<p><cite>Комментарий от <a href="http://www.mazka.ru/" rel="external nofollow">Смешной человек</a> — Сентябрь 7, 2008 @ <a href="#comment-32973">8:24 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-33458">
+		Супер! Спасибо! оч классная инфа!<br>
+__<br>
+<a href="http://plodosad.ru/" rel="nofollow">http://plodosad.ru/</a><br>
+	<p><cite>Комментарий от <a href="http://avtofora.ru/http://perfecthouse.ru/" rel="external nofollow">Dimon</a> — Сентябрь 26, 2008 @ <a href="#comment-33458">11:37 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36601">
+		Спасибо за статью. Попробую применить советы по оптимизации апача на 
+VDS от firstvds.ru, а то базовая конфигурация их серверов никак не 
+годится даже для wordpress’а<br>
+	<p><cite>Комментарий от <a href="http://splogmaster.ru/" rel="external nofollow">splogmaster</a> — Февраль 7, 2009 @ <a href="#comment-36601">7:24 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36815">
+		Спасибо! Буду настраивать!<br>
+	<p><cite>Комментарий от <a href="http://expeditor.com.ua/" rel="external nofollow">грузоперевозки</a> — Февраль 12, 2009 @ <a href="#comment-36815">2:08 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36816">
+		На портале вы найдете множество обзоров лучших фильмов он лайн. 
+Комедии, триллеры, хорроры, драмы, сериалы, мелодрамы. Все 
+представленные киноленты отсортированы по жанрам. Все о кинематографе на
+ одном сайте для вас. Фильмы он лайн. Купить DVD.<br>
+	<p><cite>Комментарий от <a href="http://cinemapark.net/" rel="external nofollow">скачать фильмы</a> — Февраль 12, 2009 @ <a href="#comment-36816">2:09 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36817">
+		Класс! Все настройки в одном посте!<br>
+	<p><cite>Комментарий от <a href="http://www.adensya.ru/" rel="external nofollow">Madoc</a> — Февраль 12, 2009 @ <a href="#comment-36817">2:10 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36818">
+		Курсовые, рефераты, дипломы<br>
+	<p><cite>Комментарий от <a href="http://www.student-shop.ru/" rel="external nofollow">Курсовые</a> — Февраль 12, 2009 @ <a href="#comment-36818">2:10 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36819">
+		Ух, сколько настроек ,которых я не знал!<br>
+	<p><cite>Комментарий от <a href="http://autotrailer.ru/" rel="external nofollow">Лок</a> — Февраль 12, 2009 @ <a href="#comment-36819">2:11 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36820">
+		Создание сайтов в Санкт-Петербурге, веб дизайн, оптимизация сайтов и продвижение сайта. Обращайтесь!<br>
+Настроечки-то помогли!<br>
+	<p><cite>Комментарий от <a href="http://" rel="external nofollow">Лок</a> — Февраль 12, 2009 @ <a href="#comment-36820">2:12 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36821">
+		Я, Абинка, столько  настроек еще для апача не видела…<br>
+	<p><cite>Комментарий от <a href="http://abink.ru/" rel="external nofollow">Крис</a> — Февраль 12, 2009 @ <a href="#comment-36821">2:13 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36822">
+		разгадать сон, сонник, сон, значение имен, значение фамилии, гороскоп<br>
+	<p><cite>Комментарий от <a href="http://pys.ru/" rel="external nofollow">Сонник</a> — Февраль 12, 2009 @ <a href="#comment-36822">2:13 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36823">
+		интересная работа<br>
+	<p><cite>Комментарий от <a href="http://mindhobby.com/" rel="external nofollow">работа мечты</a> — Февраль 12, 2009 @ <a href="#comment-36823">2:14 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36824">
+		Как хорошо, что вы обнаружили ошибку переполнения стека в МП-модуле worker. Очень помогли! Спасибо!<br>
+	<p><cite>Комментарий от <a href="http://okonkin.com/" rel="external nofollow">пластиковые окна</a> — Февраль 12, 2009 @ <a href="#comment-36824">2:15 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36825">
+		Так эти ошибки уже давно исправлены в новых версиях апача. Тема не актуальна!<br>
+	<p><cite>Комментарий от <a href="http://blogtalk.org.ua/" rel="external nofollow">Blogger008</a> — Февраль 12, 2009 @ <a href="#comment-36825">2:16 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36826">
+		Блоггер008, кто-то до сих пор юзает старые версии и на новые переходить не хочет. Так что для некоторых и актуальна!<br>
+	<p><cite>Комментарий от <a href="http://motivating.ru/" rel="external nofollow">Мотивация</a> — Февраль 12, 2009 @ <a href="#comment-36826">2:17 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36827">
+		Уже давно пора сменить платформу и кодить на новом апаче<br>
+	<p><cite>Комментарий от <a href="http://h2s.org.ua/" rel="external nofollow">Крюгер</a> — Февраль 12, 2009 @ <a href="#comment-36827">2:18 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36828">
+		Да что вы говорите. Лицензия дороговато обойдется<br>
+	<p><cite>Комментарий от <a href="http://www.formareklama.ru/" rel="external nofollow">наружка</a> — Февраль 12, 2009 @ <a href="#comment-36828">2:18 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36829">
+		Мы - мегаспецы по рекламе! Нужна качественная реклама? Тогда загляните к нам!<br>
+	<p><cite>Комментарий от <a href="http://www.ra-saor.ru/" rel="external nofollow">наружка</a> — Февраль 12, 2009 @ <a href="#comment-36829">2:19 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36830">
+		работа, бизнес - только у нас!!!<br>
+	<p><cite>Комментарий от <a href="http://www.wm-master.com/" rel="external nofollow">master</a> — Февраль 12, 2009 @ <a href="#comment-36830">2:20 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36831">
+		Кульная музыка только у нас! Заходите - не пожалеете!<br>
+	<p><cite>Комментарий от <a href="http://freshmp3.ru/" rel="external nofollow">новинки mp3</a> — Февраль 12, 2009 @ <a href="#comment-36831">2:20 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36832">
+		Так ничего в настройках и не понял…<br>
+	<p><cite>Комментарий от <a href="http://fitness-812.ru/" rel="external nofollow">stone</a> — Февраль 12, 2009 @ <a href="#comment-36832">2:22 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36834">
+		Stone, а разобраться влом что-ли? Немножко мозгов приложить и все<br>
+	<p><cite>Комментарий от <a href="http://krd-fitness.ru/" rel="external nofollow">Вася</a> — Февраль 12, 2009 @ <a href="#comment-36834">2:23 pm</a></cite> </p>
+	</li>
+
+	<li id="comment-36898">
+		Долга блин врубался в статью, но вконце концов разобрался, и настроил все как надо<br>
+	<p><cite>Комментарий от <a href="http://coolsaw.ru/" rel="external nofollow">Роман</a> — Февраль 14, 2009 @ <a href="#comment-36898">2:43 pm</a></cite> </p>
+	</li>
+
+
+</ol>
+
+
+<p id="comments_rss_link"><a href="http://apache2dev.ru/2006/05/15/nastroyka-apache-ot-heanet/feed/"><abbr title="Really Simple Syndication">RSS</abbr> лента комментариев этой записи.</a></p>
+
+<h4 id="postcomment">Оставить комментарий</h4>
+
+<p>You must be <a href="http://apache2dev.ru/wp-login.php?redirect_to=/2006/05/15/nastroyka-apache-ot-heanet/">logged in</a> to post a comment.</p>
+
+
+
+
+<!-- begin footer -->
+
+<p class="credit"><!--9 queries. 0.271 seconds. --> <cite>Работает на <a href="http://wordpress.org/" title="Работает на WordPress - современной системы персональных публикаций."><strong>WordPress</strong></a></cite></p>
+
+
+</div>
+
+</div>
+
+<!-- begin sidebar -->
+<div id="menu">
+
+<div id="categories" class="menu_item">
+    Рубрики    <ul>
+        	<li><a href="http://apache2dev.ru/category/architecture-apache/" title="Показать все записи в Архитектура">Архитектура</a> <span class="cat_count">(13)</span>
+</li>
+	<li><a href="http://apache2dev.ru/category/mod_development/" title="Показать все записи в Разработка модулей">Разработка модулей</a> <span class="cat_count">(9)</span>
+</li>
+	<li><a href="http://apache2dev.ru/category/security-apache/" title="Показать все записи в Безопасность">Безопасность</a> <span class="cat_count">(6)</span>
+</li>
+	<li><a href="http://apache2dev.ru/category/administration/" title="Показать все записи в Администрирование">Администрирование</a> <span class="cat_count">(8)</span>
+</li>
+	<li><a href="http://apache2dev.ru/category/install-apache/" title="Показать все записи в Установка Apache">Установка Apache</a> <span class="cat_count">(3)</span>
+</li>
+	<li><a href="http://apache2dev.ru/category/modules-apache/" title="Показать все записи в Модули Apache">Модули Apache</a> <span class="cat_count">(16)</span>
+</li>
+	<li><a href="http://apache2dev.ru/category/knigi/" title="Показать все записи в Книги">Книги</a> <span class="cat_count">(2)</span>
+</li>
+	<li><a href="http://apache2dev.ru/category/sovetyi/" title="Показать все записи в Советы">Советы</a> <span class="cat_count">(5)</span>
+</li>
+    </ul>
+</div>
+
+
+<div id="wanted" class="menu_item">
+   Самые популярные
+   <ul>
+   <li><a href="http://apache2dev.ru/2007/02/21/5-luchshih-rasshireniy-firefox-dlya-veb-razrabotchika/?from=top10" title="5 лучших расширений Firefox для веб-разработчика">5 лучших расширений Firefox для веб-разработч...</a></li><li><a href="http://apache2dev.ru/2007/01/09/modul-mod_rewrite-chast-2/?from=top10" title="Модуль mod_rewrite. Часть 2">Модуль mod_rewrite. Часть 2</a></li><li><a href="http://apache2dev.ru/2007/01/09/modul-mod_rewrite-chast-3/?from=top10" title="Модуль mod_rewrite. Часть 3">Модуль mod_rewrite. Часть 3</a></li><li><a href="http://apache2dev.ru/2007/02/09/zaschita-ot-spama-v-kommentariyah-s-pomoschyu-apache/?from=top10" title="Защита от спама в комментариях с помощью Apache">Защита от спама в комментариях с помощью Apac...</a></li><li><a href="http://apache2dev.ru/2007/02/27/generator-staticheskih-url/?from=top10" title="Генератор статических URL">Генератор статических URL</a></li><li><a href="http://apache2dev.ru/2007/03/18/kniga-administrirovanie-web-servera-apache/?from=top10" title="Книга 'Администрирование Web-сервера Apache'">Книга 'Администрирование Web-сервера Apache'</a></li><li><a href="http://apache2dev.ru/2007/03/25/kak-zastavit-poiskoviki-vozvraschatsya-na-sayt-posle-togo-kak-on-byil-nedostupen/?from=top10" title="Как заставить поисковики возвращаться на сайт, после того как он был недоступен">Как заставить поисковики возвращаться на сайт...</a></li><li><a href="http://apache2dev.ru/2007/03/24/chto-est-moduli-apache2-pod-microsoft-windows/?from=top10" title="Что есть модули Apache2 под Microsoft Windows">Что есть модули Apache2 под Microsoft Windows</a></li><li><a href="http://apache2dev.ru/2007/09/19/5-prostyih-sposobov-uskoreniya-sayta/?from=top10" title="5 простых способов “ускорения” сайта">5 простых способов “ускорения” сайта</a></li><li><a href="http://apache2dev.ru/2007/10/12/ukrashaem-listing-kataloga-v-apache/?from=top10" title="Украшаем листинг каталога в Apache">Украшаем листинг каталога в Apache</a></li>   </ul>
+</div>
+
+<div id="forum_list" class="menu_item">
+Последнее на форуме
+<ul>
+<li><a href="http://apache2dev.ru/forum/viewtopic.php?id=389&amp;action=new" title="Сайт не открывается в IE6,7 Логи Апача, подскажите, что не так?">Сайт не открывается в IE6 …</a></li>
+<li><a href="http://apache2dev.ru/forum/viewtopic.php?id=388&amp;action=new" title="Проблема с настройкой SSI.">Проблема с настройкой SSI.</a></li>
+<li><a href="http://apache2dev.ru/forum/viewtopic.php?id=387&amp;action=new" title="Index of / - проблемы с кодировкой.">Index of / - проблемы с к …</a></li>
+<li><a href="http://apache2dev.ru/forum/viewtopic.php?id=386&amp;action=new" title="Apache/2.0.63 (Win32) PHP/5.2.5 проблема">Apache/2.0.63 (Win32) PHP …</a></li>
+<li><a href="http://apache2dev.ru/forum/viewtopic.php?id=385&amp;action=new" title="Поведение на форуме">Поведение на форуме</a></li>
+<li><a href="http://apache2dev.ru/forum/viewtopic.php?id=384&amp;action=new" title="Не запускается Apache/2.2.4 (Win32) PHP/5.2.3">Не запускается Apache/2.2 …</a></li>
+<li><a href="http://apache2dev.ru/forum/viewtopic.php?id=383&amp;action=new" title="Проблемма apache(Даже незнаю как обьяснить)">Проблемма apache(Даже нез …</a></li>
+<li><a href="http://apache2dev.ru/forum/viewtopic.php?id=382&amp;action=new" title="mod_cband под Apache 2 Windows.">mod_cband под Apache 2 Wi …</a></li>
+<li><a href="http://apache2dev.ru/forum/viewtopic.php?id=381&amp;action=new" title="Настройка одновременное количество подключений от одного пользователя.">Настройка одновременное к …</a></li>
+<li><a href="http://apache2dev.ru/forum/viewtopic.php?id=380&amp;action=new" title="Количество одновременных подключений">Количество одновременных …</a></li>
+</ul>
+</div>
+
+<div id="links" class="menu_item">
+	Рекомендую посетить    <div style="width:99%; margin-top:4px; border: 1px solid #CCCCFF; padding: 5px 0px 5px 0px; font-family:Times; cursor: pointer; text-align:center;">
+        <a target="_blank" title="Все о Unix системах и открытых технологиях" href="http://www.opennet.ru/" style="color: #000; text-decoration: none; display:block;"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/opennet.png" alt="opennet.ru"><span style="margin-left:5px; font-weight:bold; color:#000099">opennet.ru</span><br>Все о Unix системах и открытых технологиях</a>    </div>
+</div>
+
+<!--<div id="archives" class="menu_item">
+     Архив     <ul>
+	  	</ul>
+</div>-->
+
+
+
+<div id="meta" class="menu_item">
+Орфография<br>
+<div id="meta_content">
+  <iframe id="orphus" src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/main.html" scrolling="no" width="88" height="31" frameborder="0"></iframe><br>
+  Выделите в тексте ошибку и нажмите Ctrl+Enter
+</div>
+</div>
+
+<div id="export" class="menu_item">
+RSS<br>
+<center><a href="http://apache2dev.ru/feed/rss/" title="RSS"><img src="Apachedev.ru%20%C2%BB%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Apache%20%D0%BE%D1%82%20HEAnet_files/feed.png" alt="RSS"></a></center>
+</div>
+
+
+
+
+
+
+
+
+<br clear="all">
+<div style="font-size:12px; padding: 5px;">
+</div>
+
+
+
+
+
+
+
+<!-- ~ --><div class="notify">
+    Внимание! Это реплика сайта <a href="http://apachedev.ru/">apachedev.ru</a>
+</div><!-- ~ -->
+
+</div></body></html>

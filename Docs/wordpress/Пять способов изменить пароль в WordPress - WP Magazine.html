@@ -1,0 +1,463 @@
+
+  WP Magazine <https://wpmag.ru/>
+
+
+Про WordPress на русском языке
+
+Меню Перейти к содержимому
+
+<#content>
+
+  * Главная
+
+    <https://wpmag.ru/>
+  * Новости
+
+    <https://wpmag.ru/category/news/>
+  * Темы
+
+    <https://wpmag.ru/category/themes/>
+  * Плагины
+
+    <https://wpmag.ru/category/plugins/>
+  * Разное
+
+    <https://wpmag.ru/category/other/>
+
+  * Вконтакте
+
+    <http://vk.com/wpmag>
+  * Twitter
+
+    <http://twitter.com/wpmagru>
+  * Facebook
+
+    <https://www.facebook.com/wpmag.ru>
+  * Google+
+
+    <https://plus.google.com/108553372817411783434?rel=author>
+  * RSS лента
+
+    <https://wpmag.ru/feed/>
+
+Главная <https://wpmag.ru/> → Разное <https://wpmag.ru/category/other/>
+→ Пять способов изменить пароль в WordPress
+
+
+  Пять способов изменить пароль в WordPress
+
+Понравилась тема нашего сайта? Скачайте ее бесплатно →
+<https://wpmag.ru/semicolon-theme/>
+
+Ваш пароль в WordPress — это ключ к вашему сайту. Как и любые другие
+ключи, пароль можно забыть или потерять. В этой статье мы рассмотрим
+пять способов смены пароля в WordPress, которые помогут вам восстановить
+доступ к вашему сайту в случае потери пароля, адреса электронной почты,
+и даже если вы стали жертвой взлома.
+
+
+    Изменение пароля через профиль пользователя
+
+Изменить пароль в WordPress вы можете через настройки профиля
+пользователя. После того как вы выполнили вход в панель
+администрирования WordPress, зайдите в меню *Пользователи → Ваш профиль*
+и найдите раздел *Новый пароль*. Здесь вы можете задать новый пароль для
+текущего пользователя.
+
+Изменение пароля через профиль пользователя
+
+Изменение пароля через профиль пользователя
+
+Если вы являетесь администратором сайта, то вы можете так же сменить
+пароль для другого пользователя, выбрав его в меню *Пользователи → Все
+пользователи*. Обратите внимание на шкалу надёжности, которая поможет
+вам выбрать более длинный и надёжный пароль.
+
+Данный метод является самым простым и удобным, но к сожалению не
+применимым в тех случаях, когда вы не можете выполнить вход в панель
+управления WordPress. К счастью есть и другие варианты, не требующие входа.
+
+
+    Восстановление пароля в WordPress
+
+Если вы забыли пароль от вашего сайта на WordPress, то вы можете
+восстановить его по электронной почте. В форме входа (по адресу
+/wp-login.php) вы можете щёлкнуть ссылку «Забыли пароль» и ввести адрес
+электронной почты вашего пользователя или имя пользователя.
+
+В течение нескольких минут на вашу электронную почту придёт письмо со
+специальной ссылкой для восстановления пароля. При переходе по этой
+ссылке, вам будет представлена форма, где вы сможете ввести новый пароль
+для вашего пользователя. Так же как и в первом методе, вам будет
+представлен индикатор надёжности пароля.
+
+Восстановление пароля WordPress
+
+Восстановление пароля WordPress
+
+Если у вас нет доступа к электронной почте пользователя или если по
+какой-либо причине не работает отправка электронной почты с вашего
+сервера, то вам придётся воспользоваться другим методом.
+
+
+    Изменение пароля с помощью phpMyAdmin
+
+Большинство хостинг-провайдеров <https://wpmag.ru/wordpress-hosting/>
+предоставляют доступ к phpMyAdmin — это утилита для работы с базами
+данных MySQL, где WordPress хранит всю информацию о своих пользователях.
+Если вы не можете зайти в phpMyAdmin, советуем обратиться за помощью к
+вашему хостинг-провайдеру, или же попробовать другой способ смены пароля.
+
+После того как вы выполнили вход в phpMyAdmin, найдите базу данных
+вашего сайта и выберите её в панели слева. Её легко распознать по
+наличию таблиц wp_posts, wp_postmeta, wp_comments, wp_commentmeta,
+wp_users, wp_usermeta и т.д. Учтите, что префикс может отличаться.
+
+Здесь нас интересует таблица *wp_users*. После того как вы её откроете,
+вы увидите список всех пользователей вашего сайта. Выберите того
+пользователя, чей пароль вы хотите изменить и щёлкните кнопку
+«редактировать». Вам будет представлена форма редактирования пользователя.
+
+Редактирование пользователя в phpMyAdmin
+
+Редактирование пользователя в phpMyAdmin
+
+Поле *user_pass* отвечает за пароль выбранного пользователя. Для смены
+пароля очень важно *выбрать функцию MD5* из выпадающего списка для поля
+user_pass, и затем ввести новый пароль в значении поля.
+
+После сохранения изменений вы сможете выполнить вход в панель
+администрирования WordPress используя ваш новый пароль. Учтите, что
+изменив пароль в phpMyAdmin, вы не увидите его в открытом виде в таблице
+wp_users, поскольку WordPress хранит все пароли в зашифрованом виде.
+
+
+    Изменение пароля с помощью консоли MySQL
+
+Если ваш хостинг провайдер не предоставляет пакет phpMyAdmin, то вы
+можете попытаться подключиться к вашей базе данных MySQL используя
+клиент MySQL через командную строку. Этот способ является более
+продвинутым и не рекомендуется новичкам.
+
+Подключившись к серверу через SSH, выполните вход на сервер MySQL через
+командную строку, заменив значения username и password (а так же
+localhost, если вы подключаетесь к удалённой базе данных):
+
+mysql -uusername -ppassword -hlocalhost
+
+Если вам удалось подключиться, то так же как и в предыдущем способе, вам
+нужно найти вашу базу данных WordPress. Вы можете это сделать используя
+команды SHOW DATABASES:
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| wordpress          |
++--------------------+
+
+Командой SHOW TABLES можно получить список всех таблиц определённой базы
+данных:
+
+mysql> SHOW TABLES IN wordpress;
++------------------------------+
+| Tables_in_wordpress          |
++------------------------------+
+| wp_commentmeta               |
+| wp_comments                  |
+| wp_links                     |
+| wp_options                   |
+...
+
+После того, как вы нашли интересующую вас базу данных, выберите её
+командой USE, и выведите список всех пользователей:
+
+mysql> USE wordpress;
+Database changed
+mysql> SELECT user_login FROM wp_users;
++---------------+
+| user_login    |
++---------------+
+| admin         |
+| kovshenin     |
+...
+
+Определив имя пользователя чей пароль вы хотите изменить, используйте
+команду UPDATE для смены пароля. Так же как и с phpMyAdmin, здесь
+необходимо воспользоваться функцией MD5 при вводе нового пароля:
+
+mysql> UPDATE wp_users SET user_pass = MD5('newpassword') WHERE user_login = 'kovshenin';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+После выполнения данного запроса вы сможете выполнить вход в панель
+администрирования WordPress, используя ваш новый пароль.
+
+При работе с запросами MySQL стоит быть предельно осторожным. Забыв
+например часть «WHERE…» в предыдущем запросе, вы измените пароли для
+всех пользователей и отменить это действие нельзя. Мы рекомендуем
+сделать резервную копию базы данных прежде чем начинать работу с
+консолью MySQL.
+
+
+    Изменение пароля с помощью PHP файла
+
+Когда другие методы не являются доступными, пароль в WordPress можно
+изменить с помощью простого PHP файла. Для данного способа вам
+понадобится доступ к FTP серверу, где хранится ваш сайт. Создайте новый
+PHP файл с произвольным именем (например password-recovery.php) и
+следующим содержанием:
+
+<?php
+add_action( 'init', 'my_password_recovery' );
+function my_password_recovery() {
+    $user = get_user_by( 'login', 'my-username' );
+    wp_set_password( 'my-new-password', $user->ID );
+}
+
+Данный код находит в базе данных пользователя с заданным именем
+пользователя, и изменяет его пароль. Не забудьте заменить значения
+my-username и my-new-password на ваше имя пользователя и пароль.
+
+После этого откройте ваш FTP клиент и подключитесь к серверу вашего
+сайта. В директории где установлен WordPress найдите папку wp-content и
+зайдите в неё. Найдите директорию *mu-plugins* (не путайте с директорией
+plugins). Если директория mu-plugins не существует — создайте её.
+Загрузите в директорию mu-plugins созданный вами PHP файл.
+
+Конечный путь до файла должен выглядеть примерно так:
+wordpress/wp-content/mu-plugins/password-recovery.php
+
+После того как вы загрузили ваш файл, вы сможете выполнить вход в
+административную панель WordPress используя пароль, который вы указали в
+вашем PHP файле.
+
+И наконец, не забудьте снова зайти в вашу директорию mu-plugins и
+*удалить созданный вами файл* password-recovery.php. Если вы этого не
+сделаете, WordPress будет изменять пароль при каждом посещении вашего
+сайта, что существенно снизит скорость его работы.
+
+------------------------------------------------------------------------
+
+Хотим так же напомнить, что слабый пароль является самой
+распространённой причиной взлома сайтов. Подробнее вы можете почитать в
+нашей статье о безопасности в WordPress
+<https://wpmag.ru/2013/osnovyi-bezopasnosti-wordpress/>.
+
+Если вам не подошёл ни один из выше перечисленных способов для смены
+пароль, оставьте комментарий, и мы обязательно постараемся вам помочь.
+
+<https://share.yandex.net/go.xml?service=vkontakte&url=https%3A%2F%2Fwpmag.ru%2F2013%2Fizmenit-parol-v-wordpress%2F&title=%D0%9F%D1%8F%D1%82%D1%8C%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D0%BE%D0%B2%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%B0%D1%80%D0%BE%D0%BB%D1%8C%20%D0%B2%20WordPress>
+
+<https://share.yandex.net/go.xml?service=facebook&url=https%3A%2F%2Fwpmag.ru%2F2013%2Fizmenit-parol-v-wordpress%2F&title=%D0%9F%D1%8F%D1%82%D1%8C%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D0%BE%D0%B2%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%B0%D1%80%D0%BE%D0%BB%D1%8C%20%D0%B2%20WordPress>
+
+<https://share.yandex.net/go.xml?service=twitter&url=https%3A%2F%2Fwpmag.ru%2F2013%2Fizmenit-parol-v-wordpress%2F&title=%D0%9F%D1%8F%D1%82%D1%8C%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D0%BE%D0%B2%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%B0%D1%80%D0%BE%D0%BB%D1%8C%20%D0%B2%20WordPress>
+
+<https://share.yandex.net/go.xml?service=gplus&url=https%3A%2F%2Fwpmag.ru%2F2013%2Fizmenit-parol-v-wordpress%2F&title=%D0%9F%D1%8F%D1%82%D1%8C%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D0%BE%D0%B2%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%B0%D1%80%D0%BE%D0%BB%D1%8C%20%D0%B2%20WordPress>
+
+  * Разное
+
+    <https://wpmag.ru/category/other/>
+
+WordPress
+
+<https://wpmag.ru/tag/wordpress/> администрирование
+
+<https://wpmag.ru/tag/administrirovanie/> безопасность
+
+<https://wpmag.ru/tag/security/>
+
+147490 <https://wordpress.org/plugins/pageviews/>
+
+
+      Константин Ковшенин <https://wpmag.ru/author/kovshenin/>
+      14.05.201313.11.2013
+
+Сооснователь журнала WP Magazine и первой конференции WordCamp в России.
+Разработчик в компании Automattic <http://automattic.com/>, принимает
+активное участие в развитии ядра WordPress. Любимый язык
+программирования: Python.
+
+
+      Подписаться на рассылку
+
+Подписаться →
+
+<https://wpmag.ru/subscribe/> Подпишитесь на бесплатную рассылку журнала
+WP Magazine и получайте новости, события, подборки тем и плагинов,
+уроки, советы и многое другое в мире WordPress!
+
+
+      Читайте также
+
+<https://wpmag.ru/2016/local-wordpress-vvv/>
+
+
+      Локальный сервер для WordPress за 5 минут с VVV, VirtualBox и Vagrant
+
+      <https://wpmag.ru/2016/local-wordpress-vvv/>
+
+28.11.2016
+
+<https://wpmag.ru/2016/local-wordpress-vvv/>09.03.2017Коля Коробочкин
+<https://wpmag.ru/author/korobochkin/>	
+
+<https://wpmag.ru/2016/wordpress-meetup-42/>
+
+
+      WordPress Meetup в Москве, 23 июля
+
+      <https://wpmag.ru/2016/wordpress-meetup-42/>
+
+18.07.2016
+
+<https://wpmag.ru/2016/wordpress-meetup-42/>21.07.2016Дмитрий Майоров
+<https://wpmag.ru/author/dmitrymayorov/>	
+
+WordPress Meetup в Москве
+
+<https://wpmag.ru/2016/wordpress-meetup-41/>
+
+
+      WordPress Meetup в Москве, 14 мая
+
+      <https://wpmag.ru/2016/wordpress-meetup-41/>
+
+12.05.2016
+
+<https://wpmag.ru/2016/wordpress-meetup-41/>12.05.2016Марина Устюжанина
+<https://wpmag.ru/author/marina/>	
+
+Отслеживание HTTP запросов в WordPress
+
+<https://wpmag.ru/2016/vneshnie-zaprosy-wordpress/>
+
+
+      Как отслеживать внешние HTTP запросы в WordPress
+
+      <https://wpmag.ru/2016/vneshnie-zaprosy-wordpress/>
+
+17.03.2016
+
+<https://wpmag.ru/2016/vneshnie-zaprosy-wordpress/>17.03.2016Константин
+Ковшенин <https://wpmag.ru/author/kovshenin/>	
+
+Раз в неделю, только все самое новое про WordPress и никакого спама!
+
+Подписаться → <https://wpmag.ru/subscribe/>
+
+WordCamp Moscow 2017 <https://2017.moscow.wordcamp.org/>
+
+
+    Поиск по сайту
+
+Найти:
+
+
+    Бесплатная книга
+
+Как защитить свой сайт от хакеров? Читайте в нашей электронной книге.
+
+<https://wpmag.ru/security-ebook/>
+
+Скачать PDF → <https://wpmag.ru/security-ebook/>
+
+Разместить рекламу → <https://wpmag.ru/reklama/>
+
+
+    Вакансии
+
+  * WordPress разработчик в компанию Grooni
+  * Web-разработчик со знанием WordPress в Pravmir.ru
+  * Ведущий WordPress-программист в компанию UpSolution
+  * WordPress-ниндзя в команду Pressjitsu
+  * WordPress разработчик в компанию Automattic
+
+Вакансии WordPress → <https://wpmag.ru/jobs/>
+
+Ищете крутую тему для WordPress? Попробуйте Maker
+<https://creativemarket.com/ThemePatio/604561-Maker-Portfolio-WordPress-Theme?u=wpmag>
+от ThemePatio:
+
+<https://creativemarket.com/ThemePatio/604561-Maker-Portfolio-WordPress-Theme?u=wpmag>
+
+
+    Популярные
+
+  * Пять способов изменить пароль в WordPress
+    <https://wpmag.ru/2013/izmenit-parol-v-wordpress/>
+    Пять способов изменить пароль в WordPress
+    <https://wpmag.ru/2013/izmenit-parol-v-wordpress/>
+  * Лучшие бесплатные темы для WordPress за июнь 2016
+    <https://wpmag.ru/2016/wordpress-themes-june-2016/>
+    Лучшие бесплатные темы для WordPress за июнь 2016
+    <https://wpmag.ru/2016/wordpress-themes-june-2016/>
+  * Как настроить HTTPS для WordPress
+    <https://wpmag.ru/2014/wordpress-https/>
+    Как настроить HTTPS для WordPress
+    <https://wpmag.ru/2014/wordpress-https/>
+  * Как увеличить максимальный размер файлов в WordPress
+    <https://wpmag.ru/2013/kak-uvelichit-maksimalnyiy-razmer-faylov-v-wordpress/>
+
+    Как увеличить максимальный размер файлов в WordPress
+    <https://wpmag.ru/2013/kak-uvelichit-maksimalnyiy-razmer-faylov-v-wordpress/>
+
+  * Как переводить темы для WordPress
+    <https://wpmag.ru/2013/kak-perevodit-temyi-wordpress/>
+    Как переводить темы для WordPress
+    <https://wpmag.ru/2013/kak-perevodit-temyi-wordpress/>
+  * Как редактировать CSS в WordPress
+    <https://wpmag.ru/2013/edit-css-wordpress/>
+    Как редактировать CSS в WordPress
+    <https://wpmag.ru/2013/edit-css-wordpress/>
+  * Как настроить редиректы в WordPress
+    <https://wpmag.ru/2015/wordpress-redirects/>
+    Как настроить редиректы в WordPress
+    <https://wpmag.ru/2015/wordpress-redirects/>
+  * Конфигурация SMTP в WordPress <https://wpmag.ru/2015/smtp-wordpress/>
+    Конфигурация SMTP в WordPress <https://wpmag.ru/2015/smtp-wordpress/>
+  * Что такое WordPress Multisite
+    <https://wpmag.ru/2014/wordpress-multisite/>
+    Что такое WordPress Multisite
+    <https://wpmag.ru/2014/wordpress-multisite/>
+  * 6 плагинов для резервного копирования WordPress
+    <https://wpmag.ru/2014/backup-wordpress/>
+    6 плагинов для резервного копирования WordPress
+    <https://wpmag.ru/2014/backup-wordpress/>
+
+
+      О проекте
+
+  * О проекте <https://wpmag.ru/about/>
+  * Стать автором <https://wpmag.ru/write-for-us/>
+  * Реклама на сайте <https://wpmag.ru/reklama/>
+  * Планета WordPress <http://planet.wpmag.ru/>
+  * Разместить вакансию <https://wpmag.ru/post-job/>
+  * Связаться с нами <mailto:wpmagru@gmail.com>
+
+
+      Рекомендуем
+
+  * Журнальная тема от WP Magazine <https://wpmag.ru/semicolon-theme/>
+  * Безопасность WordPress (книга) <https://wpmag.ru/security-ebook/>
+  * Премиум темы WordPress <https://wpmag.ru/premium-temy-wordpress/>
+  * Хостинг WordPress <https://wpmag.ru/wordpress-hosting/>
+
+© 2017 Копирование материалов без разрешения автора запрещено. WordPress
+и WordCamp являются зарегистрированными торговыми марками и принадлежат
+фонду WordPress Foundation <http://wordpressfoundation.org/>. Читайте
+правила использования торговых марок. Работает на WordPress
+<http://wordpress.org/>, хостится на Pressjitsu
+<https://pressjitsu.com/?utm_source=partner&utm_medium=footer&utm_campaign=wpmag-149>.
+
+
+×
+
+<#>
+
+Все про WordPress. Коротко. Раз в неделю.
+
+Адрес электронной почты:
+
+:)

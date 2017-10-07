@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html class="" lang="ru-RU"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta name="yandex-verification" content="64043a3c2a188480">
+        <!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+        <meta name="csrf-param" content="_csrf">
+    <meta name="csrf-token" content="cjFpOHk0SmIZcwF0NHMpITZlRFMRaxs2R2U.djpaKQYKQg92NwRnWw==">
+        <title>Полезные статьи. Автоматическая SSH-авторизация по ключу. LTD Beget</title>
+        <meta name="description" content="Автоматическая SSH-авторизация по ключу. Общие вопросы. Настройка программ. Программирование.">
+<link href="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/bootstrap.css" rel="stylesheet">
+<link href="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/bootstrap-select.css" rel="stylesheet">
+<link href="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/normalize.css" rel="stylesheet">
+<link href="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/font-awesome.css" rel="stylesheet">
+<link href="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/jquery.css" rel="stylesheet">
+<link href="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/suggestions.css" rel="stylesheet">
+<link href="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/jBox.css" rel="stylesheet">
+<link href="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/style_002.css" rel="stylesheet">
+        <link rel="icon" href="https://beget.com/favicon@2x.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="https://beget.com/favicon@2x.ico" type="image/x-icon">
+
+        <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+        <link rel="apple-touch-icon-precomposed" href="https://beget.com/apple-touch-icon-precomposed.png">
+
+        <!-- For the iPad mini and the first- and second-generation iPad on iOS ≤ 6: -->
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://beget.com/apple-touch-icon-72x72-precomposed.png">
+
+        <!-- For the iPad mini and the first- and second-generation iPad on iOS ≥ 7: -->
+        <link rel="apple-touch-icon-precomposed" sizes="76x76" href="https://beget.com/apple-touch-icon-76x76-precomposed.png">
+
+        <!-- For iPhone with high-resolution Retina display running iOS ≤ 6: -->
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://beget.com/apple-touch-icon-114x114-precomposed.png">
+
+        <!-- For iPhone with high-resolution Retina display running iOS ≥ 7: -->
+        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="https://beget.com/apple-touch-icon-120x120-precomposed.png">
+
+        <!-- For iPad with high-resolution Retina display running iOS ≤ 6: -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://beget.com/apple-touch-icon-144x144-precomposed.png">
+
+        <!-- For iPad with high-resolution Retina display running iOS ≥ 7: -->
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://beget.com/apple-touch-icon-152x152-precomposed.png">
+
+        <!-- BEGETCALL -->
+        <link rel="stylesheet" href="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/style.css">
+        <script type="text/javascript" async="" src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/watch.js"></script><script async="" src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/analytics.js"></script><script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/b1e8d4d13c9bd48fece01f39b603fe42.js" charset="UTF-8"></script>
+
+        <!--[if gte IE 9]>
+        <style type="text/css">
+            .gradient {
+                filter: none;
+            }
+        </style>
+        <![endif]-->
+        <!--
+        <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin,cyrillic-ext,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&subset=latin,cyrillic,cyrillic-ext,latin-ext' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Anonymous+Pro:400,400italic,700italic,700&subset=latin,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
+        -->
+        <!-- Google Analytics -->
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-61481163-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+        <!-- End Google Analytics -->
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">
+            (function (d, w, c) {
+                (w[c] = w[c] || []).push(function () {
+                    try {
+                        w.yaCounter29457045 = new Ya.Metrika({
+                            id: 29457045,
+                            clickmap: true,
+                            trackLinks: true,
+                            accurateTrackBounce: true,
+                            webvisor: true
+                        });
+                    } catch (e) {
+                    }
+                });
+
+                var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () {
+                        n.parentNode.insertBefore(s, n);
+                    };
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+                if (w.opera == "[object Opera]") {
+                    d.addEventListener("DOMContentLoaded", f, false);
+                } else {
+                    f();
+                }
+            })(document, window, "yandex_metrika_callbacks");
+        </script>
+        <noscript>
+            <div><img src="https://mc.yandex.ru/watch/29457045" style="position:absolute; left:-9999px;" alt=""/></div>
+        </noscript>
+        <!-- /Yandex.Metrika counter -->
+        <meta name="yandex-verification" content="7ac8ca39def47057">
+    <style type="text/css">.fancybox-margin{margin-right:10px;}</style></head>
+    <body>
+    
+    <div id="all">
+        <header>
+
+            <div id="header" class="container-fluid">
+
+                <div id="head-panel" class="container gradient">
+
+                    <div class="row">
+                        <div id="head-logo" class="col-xs-3">
+                            <a href="https://beget.com/ru/" title="На главную"><img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/logo.png" alt="Beget" width="195"></a>                        </div>
+                        <div id="head-menu" class="col-xs-4">
+                            <nav>
+                                <ul class="menu">
+                                    <!-- Для активной ссылки использовать -->
+                                    <!-- <li class="active"><a href="/ru/about">О компании</a></li> -->
+                                    <li><a href="https://beget.com/ru/about">О компании</a>                                    </li><li><a href="https://beget.com/ru/career">Вакансии</a>                                </li></ul>
+                                <ul class="menu">
+                                    <li><a href="https://beget.com/ru/virtual-hosting">Услуги</a>                                    </li><li><a href="https://beget.com/ru/free-hosting">Сервисы</a>                                </li></ul>
+                                <ul class="menu">
+                                    <li><a href="https://beget.com/ru/feedback">Поддержка</a>                                        <!--                                <li>--><!--</li>-->
+                                    </li><li><a href="https://beget.com/ru/contacts">Контакты</a>                                </li></ul>
+                            </nav>
+                        </div>
+                        <div id="head-contacts" class="col-xs-5">
+                            <!-- CHANGE LANG -->
+                            <!--                        убрать DE-->
+                            <!--                        <div class="lang_dropdown">-->
+                            <!--                            <div id="lang-button-ru" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >-->
+                            <!--                                <span>русский</span>-->
+                            <!--                                <span class="caret"></span>-->
+                            <!--                            </div>-->
+                            <!--                            <ul class="dropdown-menu lang-menu" role="menu">-->
+                            <!--                                <li id="en_lang"><img src="/img/icons/icons_country/us.png" style="position: relative; top:-1px; left:3px;"><span style="position: relative; left:7px;">english</span></li>-->
+                            <!--                                <li id="de_lang"><img src="/img/icons/icons_country/de.png" style="position: relative; top:-1px; left:3px;"><span style="position: relative; left:7px;">немецкий</span></li>-->
+                            <!--                            </ul>-->
+                            <!--                        </div>-->
+                            <div class="phone">
+                                <div class="dropdown">
+                                    <button id="head-phone-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="region">Россия</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="head-phone-dropdown">
+                                        <li><a href="#" data-number="8 (800) 700-06-08">Россия</a></li>
+                                        <li><a href="#" data-number="7 (812) 385-41-36">Санкт-Петербург</a></li>
+                                        <li><a href="#" data-number="7 (495) 721-80-88">Москва</a></li>
+                                        <li><a href="#" data-number="0 (800) 802-192">Украина</a></li>
+                                        <li><a href="#" data-number="380 (44) 300-02-18">Киев</a></li>
+                                    </ul>
+                                </div>
+                                <span class="fa fa-phone" data-beget-call="" style="cursor:pointer;"></span>
+                                <a onclick="return false" href="tel:88007000608" class="number">8 (800) 700-06-08</a>
+                            </div>
+                            <div class="contacts">
+                                <div class="icon icon-mail">
+                                    <a href="mailto:support@beget.com" style="font-size:14px;">support@beget.com</a>
+                                </div>
+                                <div class="icon icon-telegram">
+                                    <a style="font-size:14px;" href="tg://resolve?domain=begetbot">@begetbot</a></div>
+                                <div class="icon icon-call">
+                                    <a href="#" data-beget-call="" style="font-size:14px;">Звонок с сайта</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="head-submenu" class="container-fluid gradient">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <nav>
+                            <ul class="menu">
+    <li><a class="gradient" href="https://beget.com/ru/faq">Вопрос-Ответ</a></li><li><a class="gradient" href="https://beget.com/ru/feedback">Задать вопрос</a></li><li><a class="gradient" href="https://beget.com/ru/manual">Руководство по ПУ</a></li><li><a class="gradient" href="https://beget.com/ru/articles">Полезные статьи</a></li></ul>
+                        </nav>
+                    </div>
+                    <div id="loginWidget" class="col-xs-4">
+                        <div class="row">
+    <div class="col-xs-6">
+        <a class="btn btn-primary login" href="#">Вход</a>    </div>
+    <div class="col-xs-6">
+        <a class="btn btn-success register" href="https://beget.com/ru/order">Заказать</a>    </div>
+</div>                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cookie-notification" class="">
+            <p class="cookie-notification-text">Продолжая использовать beget.com вы соглашаетесь на использование файлов cookie. Более подробную информацию можно найти в <a href="https://beget.com/ru/cookie-policy">Политике cookie файлов</a></p>
+            <button id="cookie-close-button"><span class="cookie-close">×</span></button>
+        </div>
+        <main>
+            <div id="main">
+                                    <div id="breadcrumbs" class="container-fluid">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <nav>
+                                        <ul class=""><li><a href="https://beget.com/ru/">Главная</a></li>
+<li><a href="https://beget.com/ru/articles">Полезные статьи</a></li>
+<li class="active">Автоматическая SSH-авторизация по ключу</li>
+</ul>                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                <div id="main-faq" class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-9 col-xs-push-3 content">
+
+
+                <h1>Автоматическая SSH-авторизация по ключу</h1>
+                
+
+<p>Допустим, Вам необходимо настроить беспарольный вход по SSH, SCP или 
+SFTP на удаленный сервер remote.org.ua под пользователем user.
+Если имя Вашего локального пользователя совпадает с удаленным, то user@ 
+везде можно опустить.<br>
+По умолчанию в корневой директории пользователя находится директория <b>.ssh</b>, если по какой то причине её нет, то создаём её командой<br>
+
+</p>
+<pre class="code"><span class="KEYWORD">$</span> mkdir ~/.ssh
+</pre>
+<p>1) Cоздаем открытый и закрытый ключ нашей локальной системы:
+</p>
+<pre class="code"><span class="KEYWORD">$</span> ssh-keygen -t rsa -q -N '' -f ~/.ssh/id_rsa
+</pre>
+<p>Подробнее о ключах можете посмотреть с помощью команды:
+</p><pre>$ ssh-keygen --help</pre>
+<br><br>
+<p>2) Если в системе есть программа <b>ssh-copy-id</b>, то настраиваем удаленную систему на то, чтобы она авторизовывала <b>SSH</b> по открытому ключу:
+</p>
+<pre class="code"><span class="KEYWORD">$</span> ssh-copy-id -i ~/.ssh/id_rsa user@remote.org.ua
+</pre>
+<p>переходим к шагу <b>4</b>
+</p><p>3) Если <b>ssh-copy-id</b> нет, то можно сделать это вручную.<br><br> Вот последовательность действий:
+</p><p>3.1) копируем открытый ключ на удаленную систему
+</p>
+<pre><span class="KEYWORD">$</span> scp ~/.ssh/id_rsa.pub  user@remote.org.ua:~ </pre>
+<p>3.2) Авторизуемся на удаленном сервере:
+</p>
+<pre class="code"><span class="KEYWORD">$</span> ssh user@remoute.org.ua
+</pre>
+<p>3.3) Заносим открытый ключ нашей локальный системы в авторизованные 
+ключи удаленной системы, устанавливаем правильные права и "убираем за 
+собой мусор":</p>
+<pre class="code"><span class="COMMENT">remote</span><span class="KEYWORD">$</span> [ -d ~/.ssh ] || (mkdir ~/.ssh; chmod 711 ~/.ssh) <span class="COMMENT"># создаем директорию и даём права</span>
+<span class="COMMENT">remote</span><span class="KEYWORD">$</span> cat ~/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys        <span class="COMMENT"># добавляем открытый ключ</span>
+<span class="COMMENT">remote</span><span class="KEYWORD">$</span> chmod 600 ~/.ssh/authorized_keys                  <span class="COMMENT"># делаем правильные права </span>
+<span class="COMMENT">remote</span><span class="KEYWORD">$</span> rm ~/id_rsa.pub                                   <span class="COMMENT"># удаляем не нужное</span>
+</pre>
+<p>4) Проверяем, что все работает, запускаем на локальном компьютере:
+</p>
+<pre class="code"><span class="KEYWORD">$</span> ssh user@remoute.org.ua
+</pre>
+
+<h2>Рассмотрим пример автоматического подключения из Windows, используя утилиту Putty и PuTTYgen</h2>
+
+<p>
+
+    Для начала скачаем с официального сайта обе утилиты <a href="http://www.chiark.greenend.org.uk/%7Esgtatham/putty/download.html" target="blank" rel="nofollow">отсюда</a>.
+
+</p>
+
+<p>
+
+    Теперь утилитой <b>PuTTYgen</b> сгенерируем <b>публичный</b> и <b>приватный</b> ключ. Открываем утилиту и нажимаем <b>Generate</b>
+
+</p>
+
+<img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/puty.png">
+
+<p>
+
+    После нажатия, необходимо произвольно вводить мышкой для заполнения 
+массива случайных чисел, примерно в квадрате под полосой загрузки
+
+</p>
+
+<img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/puty1.png">
+
+<p>
+
+    По окончании процесса генерации, утилита предоставит Вам сгенерированный <b>приватный</b> и <b>публичный</b> ключ. <b>Публичный</b>, который обведен красным прямоугольником, нужно занести в файл <b>authorized_keys</b>, который находится в папке .ssh корне Вашего аккаунта на сервере, а <b>приватный</b> ключ сохраняем себе на компьютер. Для этого нажимаем на кнопку <b>Save private key</b>. Учтите, что приватный ключ нельзя ни показывать, ни передавать, иначе смысл безопасного подключения теряется.
+
+</p>
+
+<img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/puty2.png">
+
+<p>
+
+    Сейчас скопируем публичный ключ в файл <b>.ssh/authorized_keys</b> находящийся на Вашем аккаунте. Для этого открываем утилиту <b>Putty</b>
+
+</p>
+
+<img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/puty3.png">
+
+<p>
+
+    Вводим логин пользователя (он совпадает с именем от личного кабинета):
+
+</p>
+
+<img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/puty5.png">
+
+<p>
+
+    После ввода пароля видим, что нас вежливо приветствует система:
+
+</p>
+
+<img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/puty6.png">
+
+<p>
+
+    После этого полностью копируем публичный ключ из области, выделенной красным цветом (на слайде выше), в консоли пишем <b>cat &gt;&gt; .ssh/authorized_keys &lt;&lt; EOF</b>, нажимаем <b>Enter</b>, затем вставляем публичный ключ, еще раз нажимаем <b>Enter</b>, пишем <b>EOF</b> и еще раз жмем <b>Enter</b>
+
+</p>
+
+<img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/puty9.png">
+
+<p>
+
+    Отлично, ключ добавлен, теперь проверим нашу беспарольную авторизацию. Для этого открываем еще раз <b>Putty</b>, переходим во вкладку <b>Auth</b> затем нажимаем на <b>Browse</b>, выбираем наш приватный ключ, который мы сгенерировали и сохранили себе:
+
+</p>
+
+<img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/puty10.png">
+
+<p>
+
+    Теперь перемещаемся во вкладку <b>Session</b> и, также как ранее, вводим адрес нашего сервера, в нашем случае - это <i>matrix.beget.com</i> затем нажимаем <b>Open</b>
+
+</p>
+
+<img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/puty11.png">
+
+<p>
+
+    Теперь вводим логин пользователя, который совпадает с логином от входа в личный кабинет, в нашем случае - <b>denia0d3</b> дальше жмем <b>Enter</b>
+
+</p>
+
+<img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/puty12.png">
+
+<p>
+
+    После этого мы попали на сервер, <u><b>заметьте</b></u>, <b>БЕЗ ввода пароля</b>, что достаточно удобно при частых подключениях:
+
+</p>
+
+<img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/puty13.png">
+
+
+<br><br><br>
+<br>
+<p><b>Удачной работы!</b> Если возникнут вопросы - напишите нам, пожалуйста, тикет из <b>Панели управления аккаунта</b>, раздел "<a href="https://cp.beget.com/support" target="_blank"><b>Помощь и поддержка</b></a>".</p>
+
+            </div>
+            <div class="col-xs-3 col-xs-pull-9 sidebar content">
+                <aside>
+                    <nav>
+                        <h2>Разделы</h2>
+                                                    <h3>SSH</h3>
+                                                            <ul>
+                                                                                                                        <li>
+                                                <a href="https://beget.com/ru/articles/ssh">Что такое SSH</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/ssh_windows">Как подключиться по SSH из Windows</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/ssh_by_key">Автоматическая SSH-авторизация по ключу</a>                                            </li>
+                                                                                                            </ul>
+                                                                                <h3>FTP</h3>
+                                                            <ul>
+                                                                                                                        <li>
+                                                <a href="https://beget.com/ru/articles/ftp_main">Общие сведения</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/ftp_problems">Решение проблем</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/filezilla_ftp">Подключение по FTP через FileZilla</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/total_commander">Подключение по FTP через Total Commander</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/winscp">Подключение по SFTP через WinSCP</a>                                            </li>
+                                                                                                            </ul>
+                                                                                <h3>Почта</h3>
+                                                            <ul>
+                                                                                                                        <li>
+                                                <a href="https://beget.com/ru/articles/mail_main">Общие сведения</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/mail_problems">Решение проблем</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/mail_dkim">Настройка DKIM</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/yandex_mail">Настройка сервиса "Яндекс.Почта" для домена</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/microsoft_live_mail">Настройка Windows Live Mail</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/nastroika_outlook_express">Настройка Outlook Express</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/nastroika_the_bat">Настройка The Bat!</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/nastroika_mozilla_thunderbird">Настройка Mozilla Thunderbird</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/email_setup">Настройка Mail на Mac OS X</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/mobile">Настройка почты на мобильных приложениях</a>                                            </li>
+                                                                                                            </ul>
+                                                                                <h3>Сайты</h3>
+                                                            <ul>
+                                                                                                                        <li>
+                                                <a href="https://beget.com/ru/articles/bad_url_site">Неверное отображение домена в ссылках</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/bom_remove">Ошибка - Warning: Cannot modify header information...</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/russian_drupal">Русификация Drupal</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/problem_encoding">Сайт в неверной кодировке</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/razmeshenie_saita">Перенос сайта к нам</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/pattern_joomla">Как установить шаблон на CMS Joomla!</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/adobe_muse">Как опубликовать сайт, созданный в Adobe Muse</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/hosts_file">Как добавить соответствие IP-адреса и домена сайта в файл /etc/hosts</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/cms_admin_reset">Как сбросить пароль от панели управления сайтом в популярных CMS</a>                                            </li>
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+                                                            <li>
+                                                <a href="https://beget.com/ru/articles/cpatracker">Установка и настройка CPA-Tracker</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/use_ssl_trouble">Подключение SSL к сайту</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/manual_site_move">Перенос сайта с аккаунта на аккаунт</a>                                            </li>
+                                                                                                            </ul>
+                                                                                <h3>Web-приложения</h3>
+                                                            <ul>
+                                                                                                                        <li>
+                                                <a href="https://beget.com/ru/articles/webapp_main">Общие сведения по установке приложений (виртуальное окружение Docker)</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/webapp_php">PHP</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/webapp_nodejs">Node.js</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/webapp_ruby">Ruby</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/webapps_perl">Perl</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/webapp_python">Python</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/php-frameworks">Установка PHP-фреймворков</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/composer_install">Инструкция по установке composer</a>                                            </li>
+                                                                                                            </ul>
+                                                                                <h3>Диагностика проблем</h3>
+                                                            <ul>
+                                                                                                                        <li>
+                                                <a href="https://beget.com/ru/articles/ping_tracert_site">Как сделать пинг и трассировку в OC Windows</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/public_dns">Использование публичных DNS</a>                                            </li>
+                                                                                                            </ul>
+                                                                                <h3>Другое</h3>
+                                                            <ul>
+                                                                                                                        <li>
+                                                <a href="https://beget.com/ru/articles/backup_ssh">Полный бекап сайта через SSH</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/vim">Основы работы с редактором VIM</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/htaccess">Волшебный файл .htaccess</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/mod_rewrite">Примеры использования mod_rewrite</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/google_adsense">Установка GoogleAdsense и Яндекс.Директ</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/metrika_analytics">Подключение Google Analytics и Яндекс.Метрика</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/xdebug">XDebug - дебаг и профилирование кода php (profiling)</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/ddos">Защита сайта от DDoS-атак</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/other_bitrix">Мультисайтовость на движке Bitrix</a>                                            </li>
+                                                                        
+                                                                        
+                                                                        
+                    <li>
+                                                <a href="https://beget.com/ru/articles/ru_rf_transfer">Как перенести домены в зонах .RU и .РФ к регистратору Beget</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/syncookied">Система защиты от DDOS атак - Syncookied</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/restore_backup">Восстановление сайта из резервной копии, сохранённой в корень аккаунта</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/redis_session">Блокировка PHP сессий</a>                                            </li>
+                                                                                                            </ul>
+                                                                                <h3>Сервисы</h3>
+                                                            <ul>
+                                                                                                                        <li>
+                                                <a href="https://beget.com/ru/articles/memcached">Настройка и использование Memcached</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/voip_widget">Сервис телефонии</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/redis">Использование Redis </a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/sphinx">Использование Sphinx</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/sphinx_wordpress">Подключение Sphinx к WordPress</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/sphinx_joomla">Подключение Sphinx к Joomla</a>                                            </li>
+                                                                        
+                                                                        
+                <li>
+                                                <a href="https://beget.com/ru/articles/sphinx_bitrix">Настройка Sphinx в CMS Bitrix</a>                                            </li>
+                                                                        
+                                                                        
+                                        </ul>
+                                                                        </nav>
+                </aside>
+            </div>
+        </div>
+    </div>
+</div>            </div>
+        </main>
+
+        <footer>
+            <div id="footer" class="container-fluid gradient">
+                <div id="footer-panel" class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="footer-logo">
+                                <a href="https://beget.com/" title="BeGet"><img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/logo-white.png" alt="BeGet"></a>
+                            </div>
+                            <div id="footer-langs">
+                                <span id="en_lang"><img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/us.png" style="position: relative; top:-1px; left:3px;"><span style="position: relative; left:7px;">English</span></span>
+                            </div>
+                            <!--                        -->                            <div id="footer-socials" class="pull-right">
+                                <ul>
+                                    <li>
+                                        <a href="https://twitter.com/begetru" target="_blank" title="BeGet Twitter"><span class="fa fa-twitter"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="http://vk.com/begetru" target="_blank" title="BeGet ВКонтакте"><span class="fa fa-vk"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.facebook.com/LTDBeGet" target="_blank" title="BeGet FaceBook"><span class="fa fa-facebook"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/LTD-Beget" target="_blank" title="BeGet GitHub"><span class="fa fa-github"></span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div id="footer-contacts" class="col-xs-6">
+                            <h4>Контактная информация:</h4>
+
+                            <div class="by-country">
+                                <div class="phones">
+                                    <span>Россия:</span>
+                                    <ul>
+                                        <li>+7 (495) 721-80-88</li>
+                                        <li>+7 (812) 385-41-36</li>
+                                        <li>+7 (800) 700-06-08</li>
+                                    </ul>
+                                </div>
+                                <div class="phones">
+                                    <span>Украина:</span>
+                                    <ul>
+                                        <li>+380 (44) 300-02-18</li>
+                                        <li>0 (800) 802-192</li>
+                                    </ul>
+                                </div>
+
+                                <div id="beget-call-footer">
+                                    <a onclick="javascript: return false" style="display: inline-block; margin-left: 85px; margin-top: 10px; font-family: 'PT Sans', sans-serif; font-size: 14px; text-align: left;  margin-bottom: 2px; padding-left: 20px; color:#fff;" class="icon icon-call" href="#" data-beget-call="">Звонок с сайта</a>
+                                </div>
+                            </div>
+                            <div class="by-department">
+                                <ul>
+                                    <li>
+                                        <span class="label">Тех. поддержка: </span>
+                                    </li>
+                                    <li>
+                                        <a href="mailto:support@beget.com">support@beget.com</a>
+                                    </li>
+                                    <li>
+                                        <span class="label">Бухгалтерия: </span>
+                                    </li>
+                                    <li>
+                                        <a href="mailto:bills@beget.com">bills@beget.com</a>
+                                    </li>
+                                    <li>
+                                        <span class="label">Отзывы о работе: </span>
+                                    </li>
+                                    <li>
+                                        <a href="mailto:feedback@beget.com">feedback@beget.com</a>
+                                    </li>
+                                    <li>
+                                        <span class="label">Руководство: </span>
+                                    </li>
+                                    <li>
+                                        <a href="mailto:manager@beget.com">manager@beget.com</a>
+                                    </li>
+                                    <li><span class="label">Telegram: </span></li>
+                                    <li><a href="tg://resolve?domain=begetbot">@begetbot</a></li><a href="tg://resolve?domain=begetbot">
+                                    <li><span class="label">Skype: </span></li>
+                                    </a><li><a href="tg://resolve?domain=begetbot">
+                                        </a><a href="https://join.skype.com/bot/ceda3526-d09b-4157-b6f0-91a646073c7e?add" target="_blank">Добавить в Skype</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="footer-menu" class="col-xs-6">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h4>Меню:</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <nav>
+                                        <ul class="menu">
+                                            <li><a href="https://beget.com/ru/about">О компании</a>                                            </li><li><a href="https://beget.com/ru/news">Новости</a>                                            </li><li><a href="https://beget.com/ru/bonuses">Бонусы</a>                                            </li><li><a href="https://beget.com/ru/partnership">Партнерство</a>                                            </li><li><a href="https://beget.com/ru/documents">Документы</a>                                            </li><li><a href="https://beget.com/ru/career">Вакансии</a>                                            </li><li><a href="https://beget.com/ru/contacts">Контакты</a>                                        </li></ul>
+                                    </nav>
+                                </div>
+                                <div class="col-xs-4 no-padding">
+                                    <nav>
+                                        <ul class="menu">
+                                            <li><a href="https://beget.com/ru/virtual-hosting">Виртуальный хостинг</a>                                            </li><li><a href="https://beget.com/ru/vip-hosting">VIP-хостинг</a>                                            </li><li><a href="https://beget.com/ru/dedicated-servers">Аренда серверов</a>                                            </li><li><a href="https://beget.com/ru/domain-register">Регистрация доменов</a>                                            </li><li><a href="https://beget.com/ru/ssl-certificates">SSL сертификаты</a>                                            </li><li><a href="https://beget.com/ru/cms">Продажа CMS</a>                                            </li><li><a href="https://beget.com/ru/free-hosting">Бесплатный хостинг</a>                                        </li></ul>
+                                    </nav>
+                                </div>
+                                <div class="col-xs-4">
+                                    <nav>
+                                        <ul class="menu">
+                                            <li><a href="https://beget.com/ru/faq">Вопрос-Ответ</a>                                            </li><li><a href="https://beget.com/ru/feedback">Задать вопрос</a>                                            </li><li><a href="https://beget.com/ru/articles">Полезные статьи</a>                                            </li><li><a href="https://beget.com/ru/manual">Руководство по ПУ</a>                                            </li><li><a href="https://beget.com/ru/api">Beget.API</a>                                            </li><li><a href="https://sprut.io/">Sprut.io</a>                                            </li><li><a href="https://firststat.ru/">FirstStat.ru</a>
+                                        </li></ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="footer-copy" class="container">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <p>
+                                © 2007–2017 ООО «Бегет»<br>
+
+                                <span class="license">
+                                Зарегистрированный товарный знак <a href="https://beget.com/ru/documents?typelic=trademark">№530993</a>.
+                                Лицензия Роскомнадзор <a href="https://beget.com/ru/documents?typelic=telematic">№117737</a>.
+                                Свидетельство о регистрации СМИ <a href="https://beget.com/ru/documents?typelic=massmedia">№ФС77-62422</a>. Выдано Федеральной службой по надзору в сфере связи, информационных технологий и массовых коммуникаций (Роскомнадзор).
+                                <br>
+                                Сайт может содержать контент, не предназначенный для лиц младше 16 лет.
+                            </span>
+
+                            </p>
+                        </div>
+                        <div class="col-xs-6">
+                            <p class="pull-right">
+
+                            </p>
+                        </div>
+
+
+                    </div>
+                    <div class="row rkn-wrapper">
+                        <div class="rnk_lbl">
+                            16+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/jquery_004.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/yii.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/bootstrap.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/bootstrap-select.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/bowser.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/underscore.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/backbone.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/jquery_003.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/jquery_002.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/jquery.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/jBox.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/js.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/bb.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/mainSlider.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/clientSlider.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/blocksMenu.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/headPhoneDropdown.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/loginDialog.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/punycode.js"></script>
+<script src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/main.js"></script>    <div id="login-dialog" tabindex="-1" class="modal fade">
+        <div id="login-close"><span class="fa fa-times fa-2x"></span></div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="logo col-xs-12">
+                            <img src="%D0%9F%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5%20%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8.%20%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20SSH-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D1%83.%20LTD%20Beget_files/logo-login.png" alt="Beget">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <form id="login-form" action="https://cp.beget.com/login?action=auth" method="post">
+                            <div class="form-group row">
+                                <label for="login-input" class="hidden"></label>
+                                <input required="required" name="login" class="form-control" id="login-input" placeholder="логин" autofocus="" type="text">
+                            </div>
+                            <div class="form-group row">
+                                <label for="password-input" class="hidden"></label>
+                                <input required="required" name="password" class="form-control" id="password-input" placeholder="пароль" type="password">
+                            </div>
+                            <div id="two-factor" class="form-group row hidden">
+                                <label for="code-input" class="hidden"></label>
+                                <input name="code" class="form-control" id="code-input" placeholder="код подтверждения" type="text">
+                            </div>
+                            <div class="form-group space-between">
+                                <span class="checkbox">
+                                    <input id="remember-check" name="remember" type="checkbox">
+                                    <label for="remember-check">
+                                        запомнить меня
+                                    </label>
+                                </span>
+                                <span><a href="https://cp.beget.com/password_recovery" target="_blank">Забыли пароль?</a></span>
+                            </div>
+                            <div class="form-group space-between">
+                                <span>
+                                    <input id="login-submit" class="btn btn-primary submit" value="Войти" data-loading-text="Подождите" type="submit">
+                                </span>
+                                <span>
+                                    <a href="https://beget.com/ru/order" class="btn btn-success">Заказать</a>
+                                </span>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    
+    
+<div id="beget-call" class="beget-call beget-call--white"><audio id="beget-call__remote-audio-1499860540817" autoplay="autoplay"></audio>
+<div id="beget-call__modal-1499860540817" class="beget-call__modal beget-call__modal--only-callback">
+    <div id="beget-call__modal__inner-1499860540817" class="beget-call__modal__inner">
+        <div class="beget-call__modal__header beget-call-m-clearfix">
+            <span class="beget-call__modal__header__note">Позвонить</span>
+            <button type="button" id="beget-call__modal__close-1499860540817" class="beget-call__modal__close">
+                <span class="beget-call__modal__close__icon">×</span>
+            </button>
+        </div>
+        <div class="beget-call__modal__body">
+            <p class="beget-call__modal__title">Мы с удовольствием перезвоним вам прямо сейчас, просто скажите номер:</p>
+            <form id="beget-call__modal__body-callback-1499860540817" class="beget-call__modal__body-callback">
+                <div class="beget-call__modal__form__row">
+                    <input id="beget-call__modal__form__row__input-1499860540817" name="phone" class="beget-call__modal__form__row__input" placeholder="Ваш номер. Например +78123854136" autofocus="autofocus" type="text">
+                    <div id="beget-call__modal__form__row__error-1499860540817" class="beget-call__modal__form__row__error beget-call-m-text_small beget-call-m-text_error">
+                        Ошибка
+                    </div>
+                </div>
+                    <div class="beget-call__modal__form__row checkbox-element">
+                        <input id="beget-call__modal__form__row__checkbox-1499860540817" name="agreement" class="beget-call__modal__form__row__checkbox" value="1" type="checkbox">
+                        <label for="beget-call__modal__form__row__checkbox-1499860540817" class="beget-call__modal__form__row__label">Согласен на 
+                            <a href="data:text/html;base64,PCFET0NUWVBFIGh0bWw+DQo8aHRtbCBsYW5nPSJlbiI+DQo8aGVhZD4NCiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+DQogICAgPHRpdGxlPtCh0L7Qs9C70LDRiNC10L3QuNC1INC+0LEg0L7QsdGA0LDQsdC+0YLQutC1INC/0LXRgNGB0L7QvdCw0LvRjNC90YvRhSDQtNCw0L3QvdGL0YU8L3RpdGxlPg0KPC9oZWFkPg0KPGJvZHk+DQo8cD7Qrywg0YHRg9Cx0YrQtdC60YIg0L/QtdGA0YHQvtC90LDQu9GM0L3Ri9GFINC00LDQvdC90YvRhSwg0LIg0YHQvtC+0YLQstC10YLRgdGC0LLQuNC4INGBINCk0LXQtNC10YDQsNC70YzQvdGL0Lwg0LfQsNC60L7QvdC+0Lwg0L7RgiAyNyDQuNGO0LvRjyAyMDA2INCz0L7QtNCwIOKEliAxNTIgwqvQniDQv9C10YDRgdC+0L3QsNC70YzQvdGL0YUg0LTQsNC90L3Ri9GFwrsg0L/RgNC10LTQvtGB0YLQsNCy0LvRj9GOINGB0L7Qs9C70LDRgdC40LUg0L3QsCDQvtCx0YDQsNCx0L7RgtC60YMg0L/QtdGA0YHQvtC90LDQu9GM0L3Ri9GFINC00LDQvdC90YvRhSwg0YPQutCw0LfQsNC90L3Ri9GFINC80L3QvtC5INCyINGE0L7RgNC80LUg0L3QsCDRgdCw0LnRgtC1INCyINGB0LXRgtC4IMKr0JjQvdGC0LXRgNC90LXRgsK7LCDQstC70LDQtNC10LvRjNGG0LXQvCDQutC+0YLQvtGA0L7Qs9C+INGP0LLQu9GP0LXRgtGB0Y8g0J7Qv9C10YDQsNGC0L7RgC48L3A+DQo8cD7Qn9C+0LQg0L/QtdGA0YHQvtC90LDQu9GM0L3Ri9C80Lgg0LTQsNC90L3Ri9C80Lgg0YHRg9Cx0YrQtdC60YLQsCDQv9C10YDRgdC+0L3QsNC70YzQvdGL0YUg0LTQsNC90L3Ri9GFINC/0L7QvdC40LzQsNC10YLRgdGPINC90LjQttC10YPQutCw0LfQsNC90L3QsNGPINC+0LHRidCw0Y8g0LjQvdGE0L7RgNC80LDRhtC40Y86INC90L7QvNC10YAg0YLQtdC70LXRhNC+0L3QsC48L3A+DQo8cD7QnNC+0Lgg0L/QtdGA0YHQvtC90LDQu9GM0L3Ri9C1INC00LDQvdC90YvQtSDQv9GA0LXQtNC+0YHRgtCw0LLQu9GP0Y7RgtGB0Y8g0J7Qv9C10YDQsNGC0L7RgNGDINC00LvRjyDRhtC10LvQtdC5INC/0L7Qu9GD0YfQtdC90LjRjyDQvNC90L7RjiDQuNC90YTQvtGA0LzQsNGG0LjQuCDQuC/QuNC70Lgg0LrQvtC90YHRg9C70YzRgtCw0YbQuNC4INC+0LEg0YPRgdC70YPQs9Cw0YUg0L/RgNC10LTQvtGB0YLQsNCy0LvRj9C10LzRi9GFINCe0L/QtdGA0LDRgtC+0YDQvtC8LCDQstGL0L/QvtC70L3QtdC90LjQuCDQvtCx0Y/Qt9Cw0YLQtdC70YzRgdGC0LIg0J7Qv9C10YDQsNGC0L7RgNCwLCDQv9GA0L7QstC10LTQtdC90LjRjyDQntC/0LXRgNCw0YLQvtGA0L7QvCDQsNGD0LTQuNGC0LAg0Lgg0L/RgNC+0YfQuNGFINCy0L3Rg9GC0YDQtdC90L3QuNGFINC40YHRgdC70LXQtNC+0LLQsNC90LjQuSDRgSDRhtC10LvRjNGOINC/0L7QstGL0YjQtdC90LjRjyDQutCw0YfQtdGB0YLQstCwINC/0YDQtdC00L7RgdGC0LDQstC70Y/QtdC80YvRhSDRg9GB0LvRg9CzLjwvcD4NCjxwPtCf0YDQuNC90LjQvNCw0Y8g0L3QsNGB0YLQvtGP0YnQtdC1INCh0L7Qs9C70LDRiNC10L3QuNC1LCDRjyDQstGL0YDQsNC20LDRjiDRgdCy0L7RjiDQt9Cw0LjQvdGC0LXRgNC10YHQvtCy0LDQvdC90L7RgdGC0Ywg0Lgg0L/QvtC70L3QvtC1INGB0L7Qs9C70LDRgdC40LUsINGH0YLQviDQvtCx0YDQsNCx0L7RgtC60LAg0L/QtdGA0YHQvtC90LDQu9GM0L3Ri9GFINC00LDQvdC90YvRhSDQvNC+0LbQtdGCINCy0LrQu9GO0YfQsNGC0Ywg0LIg0YHQtdCx0Y8g0YHQu9C10LTRg9GO0YnQuNC1INC00LXQudGB0YLQstC40Y86INGB0LHQvtGALCDRgdC40YHRgtC10LzQsNGC0LjQt9Cw0YbQuNGOLCDQvdCw0LrQvtC/0LvQtdC90LjQtSwg0YXRgNCw0L3QtdC90LjQtSwg0YPRgtC+0YfQvdC10L3QuNC1ICjQvtCx0L3QvtCy0LvQtdC90LjQtSwg0LjQt9C80LXQvdC10L3QuNC1KSwg0LjRgdC/0L7Qu9GM0LfQvtCy0LDQvdC40LUsINC/0LXRgNC10LTQsNGH0YMgKNC/0YDQtdC00L7RgdGC0LDQstC70LXQvdC40LUsINC00L7RgdGC0YPQvyksINCx0LvQvtC60LjRgNC+0LLQsNC90LjQtSwg0YPQtNCw0LvQtdC90LjQtSwg0YPQvdC40YfRgtC+0LbQtdC90LjQtSwg0L7RgdGD0YnQtdGB0YLQstC70Y/QtdC80YvRhSDQutCw0Log0YEg0LjRgdC/0L7Qu9GM0LfQvtCy0LDQvdC40LXQvCDRgdGA0LXQtNGB0YLQsiDQsNCy0YLQvtC80LDRgtC40LfQsNGG0LjQuCAo0LDQstGC0L7QvNCw0YLQuNC30LjRgNC+0LLQsNC90L3QsNGPINC+0LHRgNCw0LHQvtGC0LrQsCksINGC0LDQuiDQuCDQsdC10Lcg0LjRgdC/0L7Qu9GM0LfQvtCy0LDQvdC40Y8g0YLQsNC60LjRhSDRgdGA0LXQtNGB0YLQsiAo0L3QtdCw0LLRgtC+0LzQsNGC0LjQt9C40YDQvtCy0LDQvdC90LDRjyDQvtCx0YDQsNCx0L7RgtC60LApLjwvcD4NCjxwPtCvINC/0L7QvdC40LzQsNGOINC4INGB0L7Qs9C70LDRiNCw0Y7RgdGMINGBINGC0LXQvCwg0YfRgtC+INC/0YDQtdC00L7RgdGC0LDQstC70LXQvdC90LDRjyDQuNC90YTQvtGA0LzQsNGG0LjRjywg0Y/QstC70Y/QtdGC0YHRjyDQv9C+0LvQvdC+0LksINGC0L7Rh9C90L7QuSDQuCDQtNC+0YHRgtC+0LLQtdGA0L3QvtC5OyDQv9GA0Lgg0L/RgNC10LTQvtGB0YLQsNCy0LvQtdC90LjQuCDQuNC90YTQvtGA0LzQsNGG0LjQuCDQvdC1INC90LDRgNGD0YjQsNC10YLRgdGPINC00LXQudGB0YLQstGD0Y7RidC10LUg0LfQsNC60L7QvdC+0LTQsNGC0LXQu9GM0YHRgtCy0L4g0KDQvtGB0YHQuNC50YHQutC+0Lkg0KTQtdC00LXRgNCw0YbQuNC4LCDQt9Cw0LrQvtC90L3Ri9C1INC/0YDQsNCy0LAg0Lgg0LjQvdGC0LXRgNC10YHRiyDRgtGA0LXRgtGM0LjRhSDQu9C40YY7INCy0YHRjyDQv9GA0LXQtNC+0YHRgtCw0LLQu9C10L3QvdCw0Y8g0LjQvdGE0L7RgNC80LDRhtC40Y8g0LfQsNC/0L7Qu9C90LXQvdCwINC80L3QvtGOINCyINC+0YLQvdC+0YjQtdC90LjQuCDRgdC10LHRjyDQu9C40YfQvdC+OyDQuNC90YTQvtGA0LzQsNGG0LjRjyDQvdC1INC+0YLQvdC+0YHQuNGC0YHRjyDQuiDQs9C+0YHRg9C00LDRgNGB0YLQstC10L3QvdC+0LksINCx0LDQvdC60L7QstGB0LrQvtC5INC4L9C40LvQuCDQutC+0LzQvNC10YDRh9C10YHQutC+0Lkg0YLQsNC50L3QtSwg0LjQvdGE0L7RgNC80LDRhtC40Y8g0L3QtSDQvtGC0L3QvtGB0LjRgtGB0Y8g0Log0LjQvdGE0L7RgNC80LDRhtC40Lgg0L4g0YDQsNGB0L7QstC+0Lkg0Lgv0LjQu9C4INC90LDRhtC40L7QvdCw0LvRjNC90L7QuSDQv9GA0LjQvdCw0LTQu9C10LbQvdC+0YHRgtC4LCDQv9C+0LvQuNGC0LjRh9C10YHQutC40YUg0LLQt9Cz0LvRj9C00LDRhSwg0YDQtdC70LjQs9C40L7Qt9C90YvRhSDQuNC70Lgg0YTQuNC70L7RgdC+0YTRgdC60LjRhSDRg9Cx0LXQttC00LXQvdC40Y/RhSwg0L3QtSDQvtGC0L3QvtGB0LjRgtGB0Y8g0Log0LjQvdGE0L7RgNC80LDRhtC40Lgg0L4g0YHQvtGB0YLQvtGP0L3QuNC4INC30LTQvtGA0L7QstGM0Y8g0Lgg0LjQvdGC0LjQvNC90L7QuSDQttC40LfQvdC4Lg0KICAgINCh0L7Qs9C70LDRgdC40LUg0LTQtdC50YHRgtCy0YPQtdGCINC/0L4g0LTQvtGB0YLQuNC20LXQvdC40Lgg0YbQtdC70LXQuSDQvtCx0YDQsNCx0L7RgtC60Lgg0LjQu9C4INCyINGB0LvRg9GH0LDQtSDRg9GC0YDQsNGC0Ysg0L3QtdC+0LHRhdC+0LTQuNC80L7RgdGC0Lgg0LIg0LTQvtGB0YLQuNC20LXQvdC40Lgg0Y3RgtC40YUg0YbQtdC70LXQuSwg0LXRgdC70Lgg0LjQvdC+0LUg0L3QtSDQv9GA0LXQtNGD0YHQvNC+0YLRgNC10L3QviDRhNC10LTQtdGA0LDQu9GM0L3Ri9C8INC30LDQutC+0L3QvtC8Lg0KICAgINCh0L7Qs9C70LDRgdC40LUg0LzQvtC20LXRgiDQsdGL0YLRjCDQvtGC0L7Qt9Cy0LDQvdC+INC80L3QvtGOINCyINC70Y7QsdC+0LUg0LLRgNC10LzRjyDQvdCwINC+0YHQvdC+0LLQsNC90LjQuCDQvNC+0LXQs9C+INC/0LjRgdGM0LzQtdC90L3QvtCz0L4g0LfQsNGP0LLQu9C10L3QuNGPLjwvcD4NCjwvYm9keT4NCjwvaHRtbD4=" download="">обработку персональных данных</a>
+                        </label>
+                    </div>
+                <div class="beget-call__modal__form__row">
+                    <button id="beget-call__btn--callback-1499860540817" class="beget-call__btn beget-call__btn-lg beget-call__btn-info beget-call__btn-block" type="submit" disabled="disabled">
+                        <span id="beget-call__btn__text-1499860540817" class="beget-call__btn__text">
+                            Жду звонка
+                        </span>
+                        <span id="beget-call__btn__status-text-1499860540817" class="beget-call__btn__status-text">
+                            Соединяем с оператором <i></i>
+                        </span>
+                    </button>
+                </div>
+            </form>
+            <div id="beget-call__modal__body-sip" class="beget-call__modal__body-sip">
+                <p class="beget-call__modal__body__splitter beget-call-m-text-center">
+                    <span>или</span>
+                </p>
+                <p>Вы можете позвонить нам сами прямо с сайта*</p>
+                <div class="beget-call__modal__body-sip__phone-icon"></div>
+                <button id="beget-call__btn--sip-1499860540817" class="beget-call__btn beget-call__btn-lg beget-call__btn-success beget-call__btn-block" type="submit">
+                    <span class="beget-call__btn__text">
+                        Позвонить
+                    </span>
+                    <span class="beget-call__btn__status-text">
+                        Идёт соединение<i></i>
+                    </span>
+                    <i class="beget-call__icon beget-call__icon--phone_white"></i>
+                </button>
+                <span class="beget-call__modal__body-sip__note beget-call-m-text_light beget-call-m-text_small">
+                    *Для совершения звонка необходимы микрофон и наушники.
+                </span>
+            </div>
+            <div id="beget-call__modal__body-message" class="beget-call__modal__body-message">
+                <span id="beget-call__modal__form__row__note" class="beget-call-m-text_light"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="beget-call__notify" id="beget-call__notify-1499860540817">
+    <div class="beget-call__notify__inner">
+        <div class="beget-call__notify__header beget-call-m-clearfix">
+            <span class="beget-call__notify__header__note">Позвонить</span>
+            <button type="button" id="beget-call__notify__close-1499860540817" class="beget-call__notify__close">
+                <span class="beget-call__notify__close__icon">×</span>
+            </button>
+        </div>
+        <div class="beget-call__notify__body" id="beget-call__notify__body-1499860540817"></div>
+        <div class="beget-call__notify__footer" id="beget-call__notify__footer-1499860540817"></div>
+    </div>
+</div></div></body></html>

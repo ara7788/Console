@@ -1,0 +1,596 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Введение в ELK: собираем, фильтруем и анализируем большие данные | статьи о программировании mkdev</title>
+
+  <link rel="apple-touch-icon" sizes="57x57" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/apple-touch-icon-57x57-ff0f0536cbf68c302f652d997a431776653d90e6b0b3d153e85fd340ab563913.png">
+<link rel="apple-touch-icon" sizes="60x60" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/apple-touch-icon-60x60-ef82f88b64257f55071cce4c5f995d513645e87d5c11608b2ad39e567cc10c9e.png">
+<link rel="apple-touch-icon" sizes="72x72" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/apple-touch-icon-72x72-378bb536bc878863fb0dfa79353ca3fd3589cbce65fda4caa3e533d05d2f96c5.png">
+<link rel="apple-touch-icon" sizes="76x76" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/apple-touch-icon-76x76-1fbfccd78a0a2a4d3a984dc371894aa6f9f061253257c8d6660380815db67509.png">
+<link rel="apple-touch-icon" sizes="114x114" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/apple-touch-icon-114x114-93b74cee49cd77852d08692741a85e97492aea57c846d6fcf4c72a92ad6f11d5.png">
+<link rel="apple-touch-icon" sizes="120x120" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/apple-touch-icon-120x120-44682a8c4bd75d4fa6a396cf1591ac027006bf68ce45f8eef278de321f1d5f64.png">
+<link rel="apple-touch-icon" sizes="144x144" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/apple-touch-icon-144x144-5b58ccd3144e5849e749855caa2c5ae3cbf227003aefe81e9f0a473df9acf73e.png">
+<link rel="apple-touch-icon" sizes="152x152" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/apple-touch-icon-152x152-8135c797c0576e0df0e0e935ddf4b2e23da110a6e9f687ccbdce17cd234a08de.png">
+<link rel="apple-touch-icon" sizes="180x180" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/apple-touch-icon-180x180-ddb4306bce01358bac8da214a1ca810c631b1940a3c2fb9f629c7fd9891a3905.png">
+<link rel="icon" type="image/png" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/favicon-32x32-248ab4c861210842faf4d48c8d955bc72b8de30af984c5a9a78a324c321d187d.png" sizes="32x32">
+<link rel="icon" type="image/png" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/android-chrome-192x192-c466ce61cfdcf52a281a196a38baf55a616446aa737f53bc1b86932d38a93230.png" sizes="192x192">
+<link rel="icon" type="image/png" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/favicon-96x96-bfad1f298f316a50f484757f8b4c69bd56214c1abfe08b56d2358a36a4eefad0.png" sizes="96x96">
+<link rel="icon" type="image/png" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/favicon-16x16-b09537eb45fc33bc12c8763b29fe50b313ed5940bbd6c103f3c20203645c9d42.png" sizes="16x16">
+<link rel="manifest" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/manifest-88edfca54e4734fbe0705de154147b44aff195766cee8c8d64885031e6316d29.json">
+<link rel="mask-icon" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/safari-pinned-tab-64e19e19c9529f39dcccba270a06725ca7378d1c1e58ade86ae5e5cbd6e3eae1.svg" color="#5bbad5">
+<link rel="shortcut icon" href="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/favicon-a03377783ea7b44fdefd0c83577bb2208340a1c498a80d45db8fc951623583f7.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-TileImage" content="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/mstile-144x144-c2df5000ea08ea8caeb81fe4396fbae431b098975b68d2b1373cab57480d9739.png">
+<meta name="msapplication-config" content="//d1qtiic7n9cgm9.cloudfront.net/assets/favicon/browserconfig-6091df1ca38c5e2483a742b84e26f5444978250facf7b44314e0173f1edcbda4.xml">
+<meta name="theme-color" content="#ffffff">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name='yandex-verification' content='4552bd5aac24d664' />
+  <meta charset="utf-8">
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"5ab71ef630","applicationID":"10271935","transactionName":"dQlXQUBWWQ5SQBZeW1sDFkVdSkERGEFRWUM=","queueTime":0,"applicationTime":26,"agent":""}</script>
+<script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(2),u=e(3),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}finally{f.emit("fn-end",[c.now()],t)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now()])}},{}],2:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],3:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],4:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=m(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){v[e]=m(e).concat(n)}function m(e){return v[e]||[]}function w(e){return p[e]=p[e]||o(t)}function g(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var v={},y={},b={on:l,emit:t,get:w,listeners:m,context:n,buffer:g,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(2),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=h.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+h.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===d.readyState&&i()}function i(){f("mark",["domContent",a()+h.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-h.offset}var u=(new Date).getTime(),f=e("handle"),c=e(2),s=e("ee"),p=window,d=p.document,l="addEventListener",m="attachEvent",w=p.XMLHttpRequest,g=w&&w.prototype;NREUM.o={ST:setTimeout,SI:p.setImmediate,CT:clearTimeout,XHR:w,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1044.min.js"},b=w&&g&&g[l]&&!/CriOS/.test(navigator.userAgent),h=n.exports={offset:u,now:a,origin:v,features:{},xhrWrappable:b};e(1),d[l]?(d[l]("DOMContentLoaded",i,!1),p[l]("load",r,!1)):(d[m]("onreadystatechange",o),p[m]("onload",r)),f("mark",["firstbyte",u],null,"api");var x=0,E=e(4)},{}]},{},["loader"]);</script>
+
+  <meta name="description" content="Настройка и использование elasticsearch, logstash и kibana для сборки и анализа логов Ruby on Rails приложений."/>
+  <meta name="keywords" content="">
+
+  <meta property="og:title" content="Введение в ELK: собираем, фильтруем и анализируем большие данные | статьи о программировании mkdev">
+  <meta property="og:description" content="Настройка и использование elasticsearch, logstash и kibana для сборки и анализа логов Ruby on Rails приложений.">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Введение в ELK: собираем, фильтруем и анализируем большие данные | статьи о программировании mkdev">
+  <meta name="twitter:description" content="Настройка и использование elasticsearch, logstash и kibana для сборки и анализа логов Ruby on Rails приложений.">
+
+    
+  <meta property="og:image" content="https://s3.eu-central-1.amazonaws.com/assets-mkdev/posts/covers/000/000/029/original/mkdev_article.png?1473946885">
+  <meta name="twitter:image" content="https://s3.eu-central-1.amazonaws.com/assets-mkdev/posts/covers/000/000/029/original/mkdev_article.png?1473946885">
+
+
+  <meta name="stripe-key" content="pk_live_SltX1E4R9N1MN5ElTYm6ln8I" />
+
+  <link href="/posts.atom" rel="alternate" title="RSS feed" type="application/rss+xml">
+
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="RUj6KEG4hd+d/gUuVZmJKFJiVpoVCx/9Nt2oKZSGmS/7HOrH3IS1ahwiMB0+ds1aZNKEt+xSadWsxGr1G9dF7w==" />
+
+      <script type="text/javascript">(window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=lH3p0TbJUla9eB0pkIGBM4tZohmSSfWK1hPGCfwP3UmZMTMn0heu2QjqfTq3Vmnp5sXE6C5l1*agsDgD5MDh2jzor85Ufl0W6YAZnB3dpQOfBGe6B5gReaBmC3vX147Y3oQis3H3bIIu6qqaM14XpHfhEhDf/2TaymDIUF1My7k-';</script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-37380012-3', 'auto');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
+
+    </script>
+
+
+
+  <link rel="stylesheet" media="all" href="//d1qtiic7n9cgm9.cloudfront.net/assets/application-d2c3c2774ab4824f985f37d5f3f072e2c507467e8da383d7069d7aa5a67f5b5d.css" />
+
+</head>
+
+<body lang="ru">
+
+<main class="main-wrapper">
+  <header class="main-header">
+  <div class="container">
+    <nav class="main-header__language">
+      <a class="" href="/en">en</a>
+      <span>/</span>
+      <a class="active" href="/">ru</a>
+    </nav>
+    <div class="row valign-row valign-row--bottom">
+      <div class="col-sm-3">
+        <div class="main-header__logo">
+          <a href="/">
+            <img alt="mkdev — квесты программирования с ментором" src="//d1qtiic7n9cgm9.cloudfront.net/assets/logo_small-b4e1257620252a2662d06055ae7b7287ce68c51d4acff777695903609cb9ac41.png" />
+</a>        </div>
+      </div>
+      <div class="col-sm-9">
+        <nav class="main-header__navigation">
+          <div>
+  <div class="main-header__navigation-item ">
+    <a href="/mentors">Менторы</a>  </div>
+</div>
+<div>
+  <div class="main-header__navigation-item ">
+    <a href="/specializations">Специализации</a>  </div>
+</div>
+<div>
+  <div class="main-header__navigation-item ">
+    <a href="/posts">Статьи</a>  </div>
+</div>
+  <div>
+    <div class="main-header__navigation-item ">
+      <a class="signup-link" data-source="header" href="/sign_up">Записаться</a>    </div>
+  </div>
+  <div>
+    <div class="main-header__navigation-item ">
+      <a href="/login">Войти</a>    </div>
+  </div>
+
+        </nav>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+
+
+    <div class="container">
+        
+
+
+
+  <section class="blog-post">
+    <div class="col-sm-12">
+  <article>
+    <div class="row">
+      <div class="col-md-8 col-sm-7 right-border-dashed">
+        <h1>
+          Введение в ELK: собираем, фильтруем и анализируем большие данные
+        </h1>
+        <nav class="post-date-mobile">
+          03.02.15
+          <a href="/categories/arhitektura-i-devops">Архитектура и DevOps</a>
+        </nav>
+        <img class="post-cover" src="https://s3.eu-central-1.amazonaws.com/assets-mkdev/posts/covers/000/000/029/original/mkdev_article.png?1473946885" alt="Mkdev article" />
+      </div>
+      <div class="col-md-4 col-sm-5">
+        <aside class="post-side-block">
+          <div class="mentor-photo-card ">
+    <h4><a href="/mentors/fodoj">Кирилл Ширинкин</a></h4>
+
+    <a class="avatar" href="/mentors/fodoj">
+        <img src="https://s3.eu-central-1.amazonaws.com/assets-mkdev/users/avatars/000/000/001/card/kirill-shirinkin.png?1490821233" alt="Kirill shirinkin" />
+</a>
+
+  <p>
+    DevOps консультант, эксперт по AWS, OpenStack, Puppet, Ansible, программист на Ruby и Go, технический директор и основатель mkdev.me.
+  </p>
+
+</div>
+
+        </aside>
+      </div>
+    </div>
+    <nav class="post-date row">
+      03.02.15
+      <a href="/categories/arhitektura-i-devops">Архитектура и DevOps</a>
+    </nav>
+  </article>
+  <img class="post-cover-mobile" src="https://s3.eu-central-1.amazonaws.com/assets-mkdev/posts/covers/000/000/029/original/mkdev_article.png?1473946885" alt="Mkdev article" />
+  <article>
+    <div class="row">
+      <div class="col-md-8 col-sm-7 right-border-dashed">
+        <div class="content-text-block">
+          <blockquote>
+<p><i><b>Внимание!</b> Статье уже два года и многое в используемых технологиях могло измениться. Не забываем консультироваться с офф. документацией.</i></p>
+</blockquote>
+
+<p>Что, если я скажу вам, что логи могут быть не только полезными и <a href="http://mkdev.me/categories/back-end/posts/nezamenimyy-navyk-smotret-v-logi">содержать тонну важной информации</a>, но и что работа с ними может быть классной, интересной и увлекательной? Настолько же увлекательной, интересной и классной, как кликанье через удобный интерфейс в браузере, позволяющий в считанные секунды вывести любой график и сравнить его с другим графиком? Да чего там: что, если я скажу вам, что после прочтения этой статьи вы сможете развернуть полноценный аналог Google Analytics для ваших логов? А я это и скажу. Точнее, я это уже сказал. Погнали!</p>
+
+<h3>Подготовим vagrant-коробку</h3>
+
+<p>Прежде чем перейдём к самой сути, нам необходимо провести небольшую подготовительную работу. Возможно, вы уже использовали <a href="https://www.vagrantup.com/">Vagrant</a>. Если нет – обязательно узнайте что это такое и начните использовать. Знание Vagrant не нужно для этой статьи, но будет классно (и позволит избежать возможных несоответствий в результате), если вы будете запускать примеры кода ниже используя такой же как у меня конфиг vagrant-бокса.</p>
+
+<p>Итак, создаём новую папку, выполняем в ней <code>vagrant init</code>, открываем <code>Vagrantfile</code> и помещаем туда этот конфиг:</p>
+<div class="highlight"><pre><span class="c1"># Vagrantfile API/syntax version. Don&#39;t touch unless you know what you&#39;re doing!</span>
+<span class="no">VAGRANTFILE_API_VERSION</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
+
+<span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="no">VAGRANTFILE_API_VERSION</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;hashicorp/precise64&quot;</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">forward_agent</span> <span class="o">=</span> <span class="kp">true</span>
+
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;forwarded_port&quot;</span><span class="p">,</span> <span class="n">guest</span><span class="p">:</span> <span class="mi">9200</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="mi">9200</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;forwarded_port&quot;</span><span class="p">,</span> <span class="n">guest</span><span class="p">:</span> <span class="mi">9292</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="mi">9292</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;forwarded_port&quot;</span><span class="p">,</span> <span class="n">guest</span><span class="p">:</span> <span class="mi">5601</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="mi">5601</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>Затем выполняем <code>vagrant up</code> и, пока наша виртуальная машинка создаётся, настраивается и запускается, читаем дальше.</p>
+
+<h3>ELK stack</h3>
+
+<p><a href="http://www.elasticsearch.org/">ELK</a> расшифровывается как elasticsearch, logstash и kibana. Раньше это были три самостоятельных продукта, но в какой-то момент они стали принадлежать одной компании и развиваться в одном направлении. Каждый из этих инструментов (с небольшими оговорками ниже) является полноценным независимым open source продуктом, а все вместе они составляют мощное решение для широкого спектра задач сбора, хранения и анализа данных. Теперь по порядку о каждом из них.</p>
+
+<h4>logstash</h4>
+
+<p>logstash – это утилита для сборки, фильтрации и последующего перенаправления в конечное хранилище данных. Вы могли слышать о <a href="http://www.fluentd.org/">fluentd</a> – logstash решает ту же самую задачу, но написан на jruby и чуть более лучше дружит с elasticsearch (потому что теперь это продукт одной и той же компании, помните?).</p>
+
+<p>Типичная конфигурация logstash представляет из себя несколько входящих потоков информации (input), несколько фильтров для этой информации (filter) и несколько исходящих потоков (output). Выглядит это как один конфигурационный файл, который в простейшем варианте (который не делает вообще ничего) выглядит вот так:</p>
+<div class="highlight"><pre>input {
+
+}
+filter {
+
+}
+output {
+
+}
+</pre></div>
+
+<p>Не волнуйтесь, мы скоро перейдём к настоящим примерам.</p>
+
+<blockquote>
+<p>– Так, так, стоп, Кирилл. Чё ещё за входящие потоки, какие ещё фильтры? Может пример какой приведёшь для этих терминов?</p>
+</blockquote>
+
+<p>Привожу: допустим, у вас есть лог веб-сервера (nginx). Это входящий поток информации, input. Допустим, вы хотите каждую запись лога не только превратить в json-объект, но ещё и добавить гео-информацию о ней, основываясь на ip. Это фильтр, filter. А после того, как запись лога обработана и обогащена гео-данными, вы хотите отправить её в elasticsearch (скоро поймём почему). Это исходящий поток информации, output.</p>
+
+<p>При этом у вас может быть сколько захочется input&#39;ов, сколько приспичит фильтров (но не забудьте, что чем больше фильтров, тем больше ресурсов понадобится на обработку каждой записи) и сколько душе угодно output&#39;ов. Logstash предоставляет из коробки внушительный <a href="http://logstash.net/docs/1.4.2/">набор готовых решений</a>, поэтому вам не придётся писать свой фильтр для гео-данных, например. Он уже есть из коробки. Это, кстати, выгодно отличает logstash от fluentd.</p>
+
+<h4>elasticsearch</h4>
+
+<p>Изначально, elasticsearch – это решение для полнотекстового поиска, построенное поверх <a href="http://lucene.apache.org/core/">Apache Lucene</a>, но с дополнительными удобствами, типа <a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-discovery.html">лёгкого масштабирования</a>, <a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/_basic_concepts.html">репликации и прочих радостей</a>, которые сделали elasticsearch <em>очень</em> удобным и хорошим решением для высоконагруженных проектов с большими объёмами данных.</p>
+
+<p>Особенно доставляет в elasticsearch его простота и работоспособность из коробки. Конфигурация по-умолчанию <em>скорее всего</em> будет работать как надо для проектов средней и относительно высокой нагруженности. При этом вокруг ES сложилось отличное сообщество, которое всегда подскажет, как правильно настроить ваш ES-кластер для вашей конкретной задачи.</p>
+
+<p>В какой-то момент elasticsearch стал настолько хорош, что использовать его только для поиска по товарам в интернет-магазинах (ну или там <a href="https://signalvnoise.com/posts/3167-code-spelunking-in-the-all-new-basecamp">поиску по Basecamp</a>) стало глупо и множество компаний начали основывать на ES свои решения по централизованному хранению логов и различной аналитики.</p>
+
+<h4>kibana</h4>
+
+<p>И вот у нас есть logstash, который собирает и обрабатывает данные со всех ваших тысяч серверов и elasticsearch, который изо всех сил эти данные хранит и позволяет искать по ним. Чего не хватает? Верно, не хватает Angular.js.</p>
+
+<p>Поэтому в какой-то момент товарищ <a href="https://github.com/rashidkpc">Rashid Khan</a> написал для elasticsearch красивое Angular.js приложение kibana, позволяющее брать\искать данные по elasticsearch и строить множество красивых графиков. Ребята из elasticsearch не дураки, поэтому, увидев всё удобство этого решения, они забрали разработчика kibana к себе на борт.</p>
+
+<p>Помните, я сказал, что все элементы ELK – независимые продукты? На самом деле, kibana бесполезна без elasticsearch. Это очень (очень) удобный интерфейс, позволяющий любому в вашей компании построить себе красивую панельку, на которую выводить аналитику всего, что logstash отправил в elasticsearch.</p>
+
+<h3>Пора практиковаться!</h3>
+
+<p>У меня возникла проблема: в какой-то момент в <a href="http://mkdev.me">mkdev.me</a> произошла какая-то беда, и чтобы разобраться в ней мне нужно было внимательно изучить что-то вроде сотни с лишним мегабайт логов. Удовольствие от использования <code>grep</code> для этой задачи сомнительное, поэтому я решил взять лог с сервера, залить его в elasticsearch при помощи logstash и спокойно проанализировать проблему через браузер при помощи kibana.</p>
+
+<p>Внимание! Возможно, у вас нет пары сотен с лишним мегабайт логов production приложения и вы скажете &quot;э! а мне то чего пихать в elasticsearch&quot;? Честно – не знаю. Но я почти уверен, что у вас локально лежит какое нибудь Ruby on Rails приложение, над которым вы работаете. А значит в папке <code>log</code> этого приложения есть необходимый вам файлик. Вот его и возьмите. А если нет такого файла, то можете попробовать найти в интернете чужие логи.</p>
+
+<p>Не отдам же я вам логи mkdev, в самом-то деле.</p>
+
+<p>Заходим в виртуалку: <code>vagrant ssh</code>.</p>
+
+<h4>Установка logstash</h4>
+
+<p>Я использовал logstash 2.2.0, <a href="https://www.elastic.co/guide/en/logstash/current/getting-started-with-logstash.html">документация по его установке валяется на оф. сайте</a>. Прежде чем перейти к установке необходимо дополнительно установить на машине java. Выполняем одно за другим:</p>
+<div class="highlight"><pre>sudo apt-get update
+sudo apt-get install openjdk-7-jdk curl
+curl -O https://download.elasticsearch.org/logstash/logstash/logstash-2.2.0.tar.gz
+tar zxvf logstash-2.2.0.tar.gz
+cd logstash-2.2.0
+</pre></div>
+
+<p>Всё, готово. Установили.</p>
+
+<h4>Установка elasticsearch</h4>
+
+<p>Версия elasticsearch тоже 2.2.0</p>
+<div class="highlight"><pre>sudo apt-get install unzip
+curl -L -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-2.2.0.zip
+unzip elasticsearch-2.2.0.zip
+cd elasticsearch-2.2.0
+</pre></div>
+
+<h4>Установка kibana</h4>
+
+<p>Используемая версия Kibana: 4.4.2. В реальных условиях, конечно, kibana должна быть отделена от logstash и elasticsearch и крутиться на отдельном сервере.</p>
+<div class="highlight"><pre>curl -O https://download.elastic.co/kibana/kibana/kibana-4.4.2-linux-x64.tar.gz
+tar zxvf kibana-4.4.2-linux-x64.tar.gz
+</pre></div>
+
+<h4>Конфигурируем logstash</h4>
+
+<p>У нас будет всего один input – <a href="https://www.elastic.co/guide/en/logstash/current/plugins-inputs-stdin.html">stdin</a>, стандартный ввод. Он позволит нам загрузить все данные из нашего лог-файла стандартной программой <code>cat</code>. Обратите внимание на <code>type</code> – к каждой итоговой записи, попадающей в output будет добавлено это поле.</p>
+<div class="highlight"><pre>input {
+  stdin {
+    type =&gt; &quot;rails&quot;
+  }
+}
+</pre></div>
+
+<p>Самая сложная часть – фильтры. Я использую <a href="https://www.elastic.co/guide/en/logstash/current/plugins-codecs-multiline.html">multiline</a>, потому что каждая запись в логах rails занимает несколько строчек. Опция <code>pattern</code> указывает на начало каждой записи.</p>
+<div class="highlight"><pre>filter {
+  multiline {
+      pattern =&gt; &quot;(?m)Started&quot;
+      negate =&gt; true
+      what =&gt; &quot;previous&quot;
+  }
+  # ...
+</pre></div>
+
+<p><a href="https://www.elastic.co/guide/en/logstash/current/plugins-filters-grok.html">grok</a> – это регулярные выражения на стероидах. Позволяет определять конкретные шаблоны регулярных выражений, которые могут содержать в себе другие шаблоны. В logstash куча встроенных шаблонов grok. К сожалению, для rails там встроенного шаблона нет. После недолгих поисков в интернете я нашёл почти готовый шаблон, немного отредактировал его и он отлично сработал для логов mkdev.me (см. чуть ниже).</p>
+<div class="highlight"><pre>  # ...
+  grok {
+    match =&gt; [
+      &quot;message&quot;, &quot;%{RAILS}&quot;
+    ]
+  }
+  if &quot;_grokparsefailure&quot; in [tags] {
+    drop { }
+  }
+  # ...
+</pre></div>
+
+<p>Найдите в папке logstash-2.2.0 папку <code>patterns</code>, закиньте туда файл <code>rails</code> со следующим содержанием:</p>
+<div class="highlight"><pre>RCONTROLLER (?&lt;controller&gt;[^#]+)#(?&lt;action&gt;\w+)
+RAILS (?m)Started %{WORD:verb} \&quot;%{URIPATHPARAM:request}\&quot; for %{IPORHOST:clientip} at (?&lt;timestamp&gt;%{YEAR}-%{MONTHNUM}-%{MONTHDAY} %{HOUR}:%{MINUTE}:%{SECOND} %{ISO8601_TIMEZONE}).*Processing by %{RCONTROLLER} as (?&lt;format&gt;\S+)(?:\W*Parameters: {%{DATA:params}}\W*)?
+</pre></div>
+
+<p>Объяснение структуры этого файла не входит в мои планы, но обратите внимание на такие вещи, как, например, <code>IPORHOST:clientip</code> – встроенный шаблон для распознавания ip-адресов. Выглядят grok-шаблоны уродливо, но с ними приходит великая сила. Есть отдельный сервис, на котором можно тестировать свои шаблоны: <a href="http://grokdebug.herokuapp.com/">http://grokdebug.herokuapp.com/</a>.</p>
+
+<p>Если какая-то запись не соответствует шаблону grok, то logstash добавит к ней тег <code>_grokparsefailure</code>. Если у записи есть такой тег, то мы её просто выкидываем. Заметьте, что фильтры выполняются сверху вниз.</p>
+
+<p>Последний фильтр – <a href="https://www.elastic.co/guide/en/logstash/current/plugins-filters-date.html">date</a>. Парсит дату, записывает её в поле <code>@timestamp</code> (формат, понятный kibana), а затем выкидывает оригинальное поле <code>timestamp</code> (чтобы избежать дубликации). Без этого фильтра все записи будут иметь сегодняшнюю дату, а не дату события из лога.</p>
+<div class="highlight"><pre>  # ...
+  date {
+    match =&gt; [ &quot;timestamp&quot;, &quot;YYYY-MM-dd HH:mm:ss Z&quot;]
+    target =&gt; &quot;@timestamp&quot;
+    remove_field =&gt; &quot;timestamp&quot;
+  }
+}
+</pre></div>
+
+<p>Целиком секция с фильтрами выглядит следующим образом:</p>
+<div class="highlight"><pre>filter {
+  multiline {
+      pattern =&gt; &quot;(?m)Started&quot;
+      negate =&gt; true
+      what =&gt; &quot;previous&quot;
+  }
+  grok {
+    match =&gt; [
+      &quot;message&quot;, &quot;%{RAILS}&quot;
+    ]
+  }
+  if &quot;_grokparsefailure&quot; in [tags] {
+    drop { }
+  }
+  date {
+    match =&gt; [ &quot;timestamp&quot;, &quot;YYYY-MM-dd HH:mm:ss Z&quot;]
+    target =&gt; &quot;@timestamp&quot;
+    remove_field =&gt; &quot;timestamp&quot;
+  }
+}
+</pre></div>
+
+<p>output у нас один – <a href="https://www.elastic.co/guide/en/logstash/current/plugins-outputs-elasticsearch.html">elasticsearch</a>.</p>
+<div class="highlight"><pre>output {
+  elasticsearch_http {
+    host =&gt; &quot;localhost&quot;
+  }
+}
+</pre></div>
+
+<p>Итоговый <code>logstash.conf</code> я загрузил в <a href="https://gist.github.com/Fodoj/528bca4166619ac244ec">gist</a>.</p>
+
+<h4>Конфигурируем elastisearch</h4>
+
+<p>Прежде чем мы перейдём к настоящим чудесам, нам необходимо добавить кое-что в конфиг elasticsearch. Открываем <code>elastichsearch-2.2.0/config/elasticsearch.yml</code> и добавляем в самый конец строчку <code>http.cors.enabled: true</code>. Это позволит проводить <a href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing">CORS-запросы</a> из kibana в ES.</p>
+
+<h4>Заливаем данные в elasticsearch</h4>
+
+<p>Переходим непосредственно к насыщенному экшену. Сначала запустим (из папки elasticsearch-2.2.0, созданной ранее при разархивировании) elasticsearch командой <code>bin/elasticsearch --config=./config/elasticsearch.yml</code>. Затем заходим в папку с logstash и выполняем:</p>
+<div class="highlight"><pre>cat production.log | nice bin/logstash -f logstash.conf
+</pre></div>
+
+<p>Вместо <code>production.log</code> подставьте путь к своему лог-файлу. На обработку и сохранение данных уйдёт какое-то время, особенно с учётом того, что мы всё это дело запускаем в виртуалке и того, что и logstash и elasticsearch любят брать много памяти (java же всё таки).</p>
+
+<h4>Смотрим данные</h4>
+
+<p>После того как обработка данных закончена мы можем их смотреть и анализировать. Это самая приятная часть. </p>
+
+<p>Сначала покажем Kibana где у нас Elasticsearch:</p>
+
+<p>Затем запускаем kibana командой <code>bin/kibana</code>. И открываем в браузере <code>localhost:5601</code>. Не выключайте elasticsearch, так как kibana берёт все данные оттуда.</p>
+
+<p>Интерфейс kibana должен быть относительно простым и интуитивным. Можно добавлять много разных панелей и проводить любые поддерживаемые elasticsearch поисковые запросы. Немного поигравшись, я построил вот такую панель, выводящую распределение запросов содержащих <code>dashboard</code> и <code>admin</code> по времени, а так же табличку с наиболее популярными контроллерами. Стоит ещё сказать, что это kibana 3. На момент написания статьи kibana 4 ещё не вышла из беты.</p>
+
+<p><a href="https://s3-eu-west-1.amazonaws.com/fjclub/blog_images/kibana3example.jpg">
+  <img src="https://s3-eu-west-1.amazonaws.com/fjclub/blog_images/kibana3example.jpg" />
+</a></p>
+
+<h4>Замечания</h4>
+
+<p>Естественно, приведённая выше конфигурация не является идеальной и не рекомендуется для production окружения. grok-шаблон, например, распознает далеко не все записи из рельсовых логов. Тем не менее, принцип работы остаётся тем же: logstash берёт данные, обрабатывает их и посылает в elasticsearch, к которому затем цепляется kibana.</p>
+
+<p>Если вас интересует как развернуть и автоматизировать production-ready elasticsearch кластер со всеми сопутствующими сервисами вокруг него и при помощи <a href="http://mkdev.me/categories/arhitektura-i-devops/posts/nastraivaem-servera-i-deploim-prilozheniya-pri-pomoschi-chef">chef</a> – обращайтесь ко <a href="mailto:fodojyko@gmail.com">мне на почту</a>.</p>
+
+<h3>Круто?!</h3>
+
+<p>Теперь, дорогие читатели, вы можете стать настоящими властелинами данных. Области применения ELK стэка ограничены лишь вашей фантазией. Централизованное хранилище логов – лишь простейший пример. Другая популярная задача – сбор различных бизнес-событий из приложений и их аналитика. В конце концов, лог – это любая строчка текста, к которой прикреплены дата и время.</p>
+
+<p>Не стоит забывать, что использовать ELK для небольших проектов не имеет особого смысла и затратно. Разворачивать на единственном маленьком сервере помимо самого приложение ещё и elasticsearch с logstash точно не стоит – как минимум память закончится очень быстро.</p>
+
+<p>Настоятельно рекомендую попробовать разные типы input&#39;ов, фильтров и output&#39;ов logstash. Буду рад ответить на любые вопросы в комментариях.</p>
+
+        </div>
+        <aside class="subscribe-block-aside push-to-right-column">
+          <h4>Нравится статья?</h4>
+          <p>
+            Расшарь статью в соц.сетях :)<br />И подпишись на нашу полезную рассылку, чтобы первым узнавать о свежих и крутых статьях. Без спама, обещаем!
+          </p>
+
+          <img src="//d1qtiic7n9cgm9.cloudfront.net/assets/mail-49111ced578729bbda39dc2361c8ce3f667a6de013409dea686a161cdfaaf061.png" alt="Mail" />
+
+          <div id="mc_embed_signup">
+            <form action="/subscribers" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="y0ARiz0Fa0+oXVSJeyxQfPfXj5OurPFqBif0zomO1YZ37knmNRBuby4Tt6CCT177D1i5MiyFYIpmj2cVNzgIaw==" />
+              <input placeholder="Email" class="required email" type="text" name="subscriber[email]" />
+              <input value="mkdev_post" type="hidden" name="subscriber[merge_vars[SIGNUP]]" />
+              <input value="1" type="hidden" name="subscriber[merge_vars[BONUS_BOOK]]" />
+
+              <input type="submit" name="commit" value="Подписаться" class="button button-orange button-block" style="padding: 0; margin-top: 16px;" onClick="ga(&#39;send&#39;, &#39;event&#39;, &#39;button&#39;, &#39;sign for newsletter&#39;);" data-disable-with="Подписаться" />
+
+              <div style="position: absolute; left: -5000px;"><input type="text" name="b_ff3de43464d88a379b0d23936_703b9f1b15" value=""></div>
+</form>          </div>
+        </aside>
+      </div>
+      <div class="col-md-4 col-sm-5">
+        <aside class="post-side-block ">
+          <h4>Ещё по теме</h4>
+          <ul class="similiar-posts-aside">
+              <li class="clearfix">
+                <a href="/categories/arhitektura-i-devops/posts/testirovanie-serverov-s-inspec-i-test-kitchen">
+                  <img class="pull-left" src="https://s3.eu-central-1.amazonaws.com/assets-mkdev/posts/cover_small_previews/000/000/057/normal/Testirovanie_serverov_s_inspec_i_test_kitchen_preview_small.png?1458065196" alt="Testirovanie serverov s inspec i test kitchen preview small" />
+                  Тестирование серверов с InSpec и Test Kitchen
+</a>              </li>
+              <li class="clearfix">
+                <a href="/categories/arhitektura-i-devops/posts/nastroyka-i-deploy-rails-prilozheniy-pri-pomoschi-ansible-i-capistrano">
+                  <img class="pull-left" src="https://s3.eu-central-1.amazonaws.com/assets-mkdev/posts/cover_small_previews/000/000/028/normal/nastroyka-i-deploy-rails-prilozheniy-pri-pomoschi-ansible-i-capistrano_preview_small.png?1449951896" alt="Nastroyka i deploy rails prilozheniy pri pomoschi ansible i capistrano preview small" />
+                  Настройка и деплой Rails приложений при помощи Ansible и Capistrano
+</a>              </li>
+              <li class="clearfix">
+                <a href="/categories/arhitektura-i-devops/posts/ci-i-monitoring-spark-prilozheniy">
+                  <img class="pull-left" src="https://s3.eu-central-1.amazonaws.com/assets-mkdev/posts/cover_small_previews/000/000/055/normal/ci_i_monitoring_spark_prilozheniy_preview_small.png?1454664932" alt="Ci i monitoring spark prilozheniy preview small" />
+                  CI и мониторинг Spark приложений
+</a>              </li>
+          </ul>
+
+          <div id="want-to-be-an-author-card" class="pull-left">
+            <img class="illustration" src="//d1qtiic7n9cgm9.cloudfront.net/assets/kittysmall-fd703acc93e1e26a56f36e36b9d441f3aa6cd39c62fcfc583161b48acb850348.png" alt="Kittysmall" />
+            <p>Хочешь написать или опубликовать статью?</p>
+            <a class="button button-subscribe" href="mailto:kirill@mkdev.me">Напиши нам</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </article>
+</div>
+
+  </section>
+
+
+<hr style="margin: 0;" />
+<div class="post-mentor-cta clearfix">
+
+  <h4>Хочешь быть таким же крутым, как Кирилл Ширинкин?</h4>
+  <p>Тогда записывайся на обучение! В своих статьях Кирилл делится лишь частью знаний. Научись большему со своим персональными наставником!</p>
+
+    <a class="button" onClick="ga(&#39;send&#39;, &#39;event&#39;, &#39;article button&#39;, &#39;appoint mentor&#39;, &#39;Кирилл Ширинкин&#39;);" href="/mentors/fodoj">Назначить ментором</a>
+
+  <a class="avatar pull-right" href="/mentors/fodoj">
+      <img src="https://s3.eu-central-1.amazonaws.com/assets-mkdev/users/avatars/000/000/001/card/kirill-shirinkin.png?1490821233" alt="Kirill shirinkin" />
+</a>
+</div>
+
+<hr style="margin: 0;" />
+
+<section>
+
+<div id="disqus_thread"></div>
+ <script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'fjclub'; // required: replace example with your forum shortname
+  var disqus_url = "https://mkdev.me/posts/vvedenie-v-elk-sobiraem-filtruem-i-analiziruem-bolshie-dannye";
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+    </div>
+
+  <footer class="new-footer">
+  <div class="container">
+    <ul>
+      <li class="list-heading">mkdev</li>
+      <li><a href="/mentors">Менторы</a></li>
+      <li><a href="/specializations">Специализации</a></li>
+      <li><a href="/posts">Статьи</a></li>
+      <li><a href="/board">Объявления</a></li>
+    </ul>
+    <ul>
+      <li class="list-heading">О проекте</li>
+      <li><a href="/mentorship">Что такое менторство</a></li>
+      <li><a href="/faq#q26">Как проходит обучение</a></li>
+      <li><a href="/faq">FAQ</a></li>
+      <li><a href="/impressum">Impressum</a></li>
+    </ul>
+    <ul>
+      <li class="list-heading">Аккаунт</li>
+        <li><a href="/login">Записаться</a></li>
+    </ul>
+    <ul>
+      <li class="list-heading">Соцсети</li>
+      <li class="list-mobile-inline"><a href="https://vk.com/mkdev"><img src="//d1qtiic7n9cgm9.cloudfront.net/assets/vk-7086cbf69d77cd353792a5712d84b0ad42639c14cbfdbe8551ae9ef67445955c.png" alt="Vk" /></a></li>
+      <li class="list-mobile-inline"><a href="http://twitter.com/mkdev_me"><img src="//d1qtiic7n9cgm9.cloudfront.net/assets/twitter-a475330e287dcf3374bcc5d7f8d6b0796ec229791e6fd168f4a2c73ba8bcd895.png" alt="Twitter" /></a></li>
+      <li class="list-mobile-inline"><a href="https://www.facebook.com/mkdev.me"><img src="//d1qtiic7n9cgm9.cloudfront.net/assets/facebook-9128bff2865d583c7a95428e5f0e9c1770610ef8a9c9b815a1d38d14333d6202.png" alt="Facebook" /></a></li>
+    </ul>
+    <p><img src="//d1qtiic7n9cgm9.cloudfront.net/assets/logo_tiny-cee7c475ffa8dbe87bbca1497cae616e0d7524028d464e13a5cfb39c89e94d1f.png" alt="Logo tiny" /> &copy; Copyright 2014 — 2017 mkdev |
+        Lang: <a href="/en">Russian</a>
+    </p>
+  </div>
+</footer>
+
+</main>
+
+
+
+      <script id="IntercomSettingsScriptTag">window.intercomSettings = {"language_override":"ru","app_id":"s8c558hj"};(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/s8c558hj';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}};})()</script>
+
+
+    <script type="text/javascript">(window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=Yw/X*2VqDGCQ4XD1NgWdIfDk9ZHDR9PG3YqozfR65OHHPSJV4GdWGVkUnHg/6icXXipA7G7lCNagM1JP1fqIAIIiaURB9zUamFZNFFs9p*pqill7Jk*V6zkASDYouTmV3p33G9y3vMfivdnwucLw7ahMpZ7lboYHo2xNNH0otPo-';</script>
+
+    <script>
+      (function() {
+      var _fbq = window._fbq || (window._fbq = []);
+      if (!_fbq.loaded) {
+      var fbds = document.createElement('script');
+      fbds.async = true;
+      fbds.src = '//connect.facebook.net/en_US/fbds.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(fbds, s);
+      _fbq.loaded = true;
+      }
+      _fbq.push(['addPixelId', '924743800902078']);
+      })();
+      window._fbq = window._fbq || [];
+      window._fbq.push(['track', 'PixelInitialized', {}]);
+    </script>
+    <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=924743800902078&amp;ev=PixelInitialized" /></noscript>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (d, w, c) {
+            (w[c] = w[c] || []).push(function() {
+                try {
+                    w.yaCounter31974561 = new Ya.Metrika({
+                        id:31974561,
+                        clickmap:true,
+                        trackLinks:true,
+                        accurateTrackBounce:true,
+                        webvisor:true,
+                        trackHash:true
+                    });
+                } catch(e) { }
+            });
+
+            var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function () { n.parentNode.insertBefore(s, n); };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+            if (w.opera == "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else { f(); }
+        })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/31974561" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+<script src="https://js.stripe.com/v1/"></script>
+<script src="//d1qtiic7n9cgm9.cloudfront.net/assets/application-4455557d9e03a41d649f4af9c59bced07ce8e3cd161d0102471365e6f55ba02e.js"></script>
+
+
+
+
+</body>
+</html>
+

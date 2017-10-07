@@ -1,0 +1,1253 @@
+
+  Contents
+
+  * Prerequisites
+
+  * Step 1 — Install Certbot
+
+  * Step 2 — Obtain a Certificate
+
+  * Step 3 — Configure TLS/SSL on Web Server (Nginx)
+
+  * Step 4 — Set Up Auto Renewal
+
+  * Conclusion
+
+
+  Share
+
+  *
+
+    <http://twitter.com/share?text=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=twshare>
+    Twitter
+    <http://twitter.com/share?text=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=twshare>
+
+  *
+
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=fbshare>
+    Facebook
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=fbshare>
+
+  *
+
+    <https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=gpshare>
+    Google+
+    <https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=gpshare>
+
+  *
+
+    <https://news.ycombinator.com/submitlink?t=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&u=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=hnshare>
+    Hacker News
+    <https://news.ycombinator.com/submitlink?t=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&u=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=hnshare>
+
+
+  * Prerequisites
+
+  * Step 1 — Install Certbot
+
+  * Step 2 — Obtain a Certificate
+
+  * Step 3 — Configure TLS/SSL on Web Server (Nginx)
+
+  * Step 4 — Set Up Auto Renewal
+
+  * Conclusion
+
+Mark as Complete
+
+
+  Share
+
+  *
+
+    <http://twitter.com/share?text=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=twshare>
+    Twitter
+    <http://twitter.com/share?text=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=twshare>
+
+  *
+
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=fbshare>
+    Facebook
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=fbshare>
+
+  *
+
+    <https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=gpshare>
+    Google+
+    <https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=gpshare>
+
+  *
+
+    <https://news.ycombinator.com/submitlink?t=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&u=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=hnshare>
+    Hacker News
+    <https://news.ycombinator.com/submitlink?t=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&u=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&utm_medium=community&utm_source=hnshare>
+
+
+× <javascript:;>
+
+
+        Sign up for our newsletter.
+
+Get the latest tutorials on SysAdmin and open source topics.
+Sign Up
+
+<javascript:;>
+Thanks for signing up!
+Sign Up
+
+<https://www.digitalocean.com/community/auth/digitalocean?display=sessionless+register>
+Log In
+
+<https://www.digitalocean.com/community/auth/digitalocean>
+
+submit
+
+  * Tutorials
+
+    <https://www.digitalocean.com/community/tutorials>
+  * Questions
+
+    <https://www.digitalocean.com/community/questions>
+  * Projects
+
+    <https://www.digitalocean.com/community/projects>
+  * Meetups
+
+    <https://www.meetup.com/pro/digitalocean/?utm_source=do_community>
+  * Main Site
+
+    <https://www.digitalocean.com/>
+
+DigitalOcean DigitalOcean <https://www.digitalocean.com/> Community
+<https://www.digitalocean.com/community>
+Menu
+
+  * Tutorials <https://www.digitalocean.com/community/tutorials>
+  * Questions <https://www.digitalocean.com/community/questions>
+  * Projects <https://www.digitalocean.com/community/projects>
+  * Meetups
+    <https://www.meetup.com/pro/digitalocean/?utm_source=do_community>
+  * Main Site <https://www.digitalocean.com/>
+
+Sign Up
+
+<https://www.digitalocean.com/community/auth/digitalocean?display=sessionless+register>
+Log In
+
+<https://www.digitalocean.com/community/auth/digitalocean>
+submit
+
+View All Results
+
+<https://www.digitalocean.com/community/search>
+
+manicas
+<https://www.digitalocean.com/community/users/manicas>
+By:
+Mitchell Anicas <https://www.digitalocean.com/community/users/manicas>
+Subscribe Subscribed
+<javascript:void(0);>
+Share <#>
+Contents <javascript:void(0);>
+How To Secure Nginx with Let's Encrypt on Ubuntu 14.04
+How To Secure Nginx with Let's Encrypt on Ubuntu 14.04
+
+<javascript:void();> We hope you find this tutorial helpful. In addition
+to guides like this one, we provide simple cloud infrastructure for
+developers. Learn more →
+<https://www.digitalocean.com/?utm_medium=community&utm_source=community_gencta&utm_campaign=needaserver&utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04>
+
+407
+
+
+  How To Secure Nginx with Let's Encrypt on Ubuntu 14.04
+
+PostedDecember 17, 2015 598.8kviews Nginx
+<https://www.digitalocean.com/community/tags/nginx?type=tutorials>
+Security
+<https://www.digitalocean.com/community/tags/security?type=tutorials>
+Let's Encrypt
+<https://www.digitalocean.com/community/tags/let-s-encrypt?type=tutorials>
+Ubuntu <https://www.digitalocean.com/community/tags/ubuntu?type=tutorials>
+
+
+      Introduction
+
+Let's Encrypt is a new Certificate Authority (CA) that provides an easy
+way to obtain and install free TLS/SSL certificates, thereby enabling
+encrypted HTTPS on web servers. It simplifies the process by providing a
+software client, |certbot|, that attempts to automate most (if not all)
+of the required steps. Currently, the entire process of obtaining and
+installing a certificate is fully automated only on Apache web servers.
+However, Let's Encrypt can be used to easily obtain a free SSL
+certificate, which can be installed manually, regardless of your choice
+of web server software.
+
+In this tutorial, we will show you how to use the Let's Encrypt client
+to obtain a free SSL certificate and use it with Nginx on Ubuntu 14.04.
+We will also show you how to automatically renew your SSL certificate.
+If you're running a different web server, simply follow your web
+server's documentation to learn how to use the certificate with your setup.
+
+Nginx with Let's Encrypt TLS/SSL Certificate and Auto-renewal
+
+
+    Prerequisites
+
+Before following this tutorial, you'll need a few things.
+
+You should have an Ubuntu 14.04 server with a non-root user who has
+|sudo| privileges. You can learn how to set up such a user account by
+following steps 1-3 in our initial server setup for Ubuntu 14.04
+tutorial
+<https://www.digitalocean.com/community/articles/initial-server-setup-with-ubuntu-14-04>.
+
+You must own or control the registered domain name that you wish to use
+the certificate with. If you do not already have a registered domain
+name, you may register one with one of the many domain name registrars
+out there (e.g. Namecheap, GoDaddy, etc.).
+
+If you haven't already, be sure to create an *A Record* that points your
+domain to the public IP address of your server. This is required because
+of how Let's Encrypt validates that you own the domain it is issuing a
+certificate for. For example, if you want to obtain a certificate for
+|example.com|, that domain must resolve to your server for the
+validation process to work. Our setup will use |example.com| and
+|www.example.com| as the domain names, so *both DNS records are required*.
+
+Once you have all of the prerequisites out of the way, let's move on to
+installing Certbot, the Let's Encrypt client software.
+
+
+    Step 1 — Install Certbot
+
+The first step to using Let's Encrypt to obtain an SSL certificate is to
+install the |certbot| software on your server. The Certbot developers
+maintain their own Ubuntu software repository with up-to-date versions
+of the software. Because Certbot is in such active development it's
+worth using this repository to install a newer Certbot than provided by
+Ubuntu.
+
+First, add the repository:
+
+|
+
+  * sudo add-apt-repository ppa:certbot/certbot
+|
+
+You'll need to press |ENTER| to accept. Afterwards, update the package
+list to pick up the new repository's package information:
+
+|
+
+  * sudo apt-get update
+|
+
+And finally, install Certbot with |apt-get|:
+
+|
+
+  * sudo apt-get install certbot
+|
+
+The |certbot| Let's Encrypt client is now ready to use.
+
+
+    Step 2 — Obtain a Certificate
+
+Let's Encrypt provides a variety of ways to obtain SSL certificates,
+through various plugins. Unlike the Apache plugin, which is covered in a
+different tutorial
+<https://www.digitalocean.com/community/tutorials/how-to-secure-apache-with-let-s-encrypt-on-ubuntu-14-04>,
+most of the plugins will only help you with obtaining a certificate
+which you must manually configure your web server to use. Plugins that
+only obtain certificates, and don't install them, are referred to as
+"authenticators" because they are used to authenticate whether a server
+should be issued a certificate.
+
+We'll show you how to use the *Webroot* plugin to obtain an SSL certificate.
+
+
+      How To Use the Webroot Plugin
+
+The Webroot plugin works by placing a special file in the |/.well-known|
+directory within your document root, which can be accessed (through your
+web server) by the Let's Encrypt servers for validation. Depending on
+your configuration, you may need to explicitly allow access to the
+|/.well-known| directory.
+
+If you haven't installed Nginx yet, do so with this command:
+
+|
+
+  * sudo apt-get install nginx
+|
+
+To ensure that the directory is accessible to |certbot| for validation,
+let's make a quick change to our Nginx configuration. By default, it's
+located at |/etc/nginx/sites-available/default|. We'll use |nano| to
+edit it:
+
+|
+
+  * sudo nano /etc/nginx/sites-available/default
+|
+
+Inside the server block, add this location block:
+
+Add to SSL server block
+
+|server {
+        . . .
+
+        location ~ /.well-known {
+                allow all;
+        }
+
+        . . .
+}
+|
+
+You will also want look up what your document root is set to by
+searching for the |root| directive, as the path is required to use the
+Webroot plugin. If you're using the default configuration file, the root
+will be |/usr/share/nginx/html|.
+
+Save and exit.
+
+Check the configuration file for syntax errors:
+
+|
+
+  * sudo nginx -t
+|
+
+If all is well, restart Nginx with this command:
+
+|
+
+  * sudo service nginx restart
+|
+
+Now that we know our |webroot-path|, we can use the Webroot plugin to
+request an SSL certificate with these commands. Here, we are also
+specifying our domain names with the |-d| option. If you want a single
+cert to work with multiple domain names (e.g. |example.com| and
+|www.example.com|), be sure to include all of them, starting with the
+most high level domain (e.g. |example.com|). Also, make sure that you
+replace the highlighted parts with the appropriate webroot path and
+domain name(s):
+
+|
+
+  * certbot certonly --webroot --webroot-path=/usr/share/nginx/html -d example.com -d www.example.com
+|
+
+*Note:* The |certbot| software requires superuser privileges, so you
+will be required to enter your password if you haven't used |sudo| recently.
+
+If this is your first time running |certbot|, you will be prompted to
+enter an email address and agree to the terms of service. After doing
+so, you should see a message telling you the process was successful and
+where your certificates are stored:
+
+|
+Output
+IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at
+   /etc/letsencrypt/live/example.com/fullchain.pem. Your cert
+   will expire on 2017-07-26. To obtain a new or tweaked version of
+   this certificate in the future, simply run certbot again. To
+   non-interactively renew *all* of your certificates, run "certbot
+   renew"
+ - If you lose your account credentials, you can recover through
+   e-mails sent to sammy@example.com.
+ - Your account credentials have been saved in your Certbot
+   configuration directory at /etc/letsencrypt. You should make a
+   secure backup of this folder now. This configuration directory will
+   also contain certificates and private keys obtained by Certbot so
+   making regular backups of this folder is ideal.
+ - If you like Certbot, please consider supporting our work by:
+
+   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+   Donating to EFF:                    https://eff.org/donate-le
+|
+
+You will want to note the path and expiration date of your certificate,
+highlighted in the example above.
+
+*Firewall Note:* If you receive an error like |Failed to connect to host
+for DVSNI challenge|, your server's firewall may need to be configured
+to allow TCP traffic on port |80| and |443|.
+
+*Note:* If your domain is routing through a DNS service like CloudFlare,
+you will need to temporarily disable it until you have obtained the
+certificate.
+
+
+      Certificate Files
+
+After obtaining the cert, you will have the following PEM-encoded files:
+
+  * *cert.pem:* Your domain's certificate
+  * *chain.pem:* The Let's Encrypt chain certificate
+  * *fullchain.pem:* |cert.pem| and |chain.pem| combined
+  * *privkey.pem:* Your certificate's private key
+
+It's important that you are aware of the location of the certificate
+files that were just created, so you can use them in your web server
+configuration. The files themselves are placed in a subdirectory in
+|/etc/letsencrypt/archive|. However, Certbot creates symbolic links to
+the most recent certificate files in the
+|/etc/letsencrypt/live/your_domain_name| directory. Because the links
+will always point to the most recent certificate files, this is the path
+that you should use to refer to your certificate files.
+
+You can check that the files exist by running this command (substituting
+in your domain name):
+
+|
+
+  * sudo ls -l /etc/letsencrypt/live/your_domain_name
+|
+
+The output should be the four previously mentioned certificate files. In
+a moment, you will configure your web server to use |fullchain.pem| as
+the certificate file, and |privkey.pem| as the certificate key file.
+
+
+      Generate Strong Diffie-Hellman Group
+
+To further increase security, you should also generate a strong
+Diffie-Hellman group. To generate a 2048-bit group, use this command:
+
+|
+
+  * sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+|
+
+This may take a few minutes but when it's done you will have a strong DH
+group at |/etc/ssl/certs/dhparam.pem|.
+
+
+    Step 3 — Configure TLS/SSL on Web Server (Nginx)
+
+Now that you have an SSL certificate, you need to configure your Nginx
+web server to use it.
+
+Edit the Nginx configuration that contains your server block. Again,
+it's at |/etc/nginx/sites-available/default| by default:
+
+|
+
+  * sudo nano /etc/nginx/sites-available/default
+|
+
+Find the |server| block. *Comment out* or *delete* the lines that
+configure this server block to listen on port 80. In the default
+configuration, these two lines should be deleted:
+
+Nginx configuration deletions
+
+|        listen 80 default_server;
+        listen [::]:80 default_server ipv6only=on;
+|
+
+We are going to configure this server block to listen on port 443 with
+SSL enabled instead. Within your |server {| block, add the following
+lines but replace all of the instances of |example.com| with your own
+domain:
+
+Nginx configuration additions — 1 of 3
+
+|        listen 443 ssl;
+
+        server_name example.com www.example.com;
+
+        ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+|
+
+This enables your server to use SSL, and tells it to use the Let's
+Encrypt SSL certificate that we obtained earlier.
+
+To allow only the most secure SSL protocols and ciphers, and use the
+strong Diffie-Hellman group we generated, add the following lines to the
+same server block:
+
+Nginx configuration additions — 2 of 3
+
+|        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+        ssl_prefer_server_ciphers on;
+        ssl_dhparam /etc/ssl/certs/dhparam.pem;
+        ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
+        ssl_session_timeout 1d;
+        ssl_session_cache shared:SSL:50m;
+        ssl_stapling on;
+        ssl_stapling_verify on;
+        add_header Strict-Transport-Security max-age=15768000;
+|
+
+Lastly, outside of the original server block (that is listening on
+HTTPS, port 443), add this server block to redirect HTTP (port 80) to
+HTTPS. Be sure to replace the highlighted part with your own domain name:
+
+Nginx configuration additions — 3 of 3
+
+|server {
+    listen 80;
+    server_name example.com www.example.com;
+    return 301 https://$host$request_uri;
+}
+|
+
+Save and exit.
+
+Test the configuration file for syntax errors by typing:
+
+|
+
+  * sudo nginx -t
+|
+
+Once you have verified that there are no syntax errors, put the changes
+into effect by restarting Nginx:
+
+|
+
+  * sudo service nginx restart
+|
+
+The Let's Encrypt TLS/SSL certificate is now in place. At this point,
+you should test that the TLS/SSL certificate works by visiting your
+domain via HTTPS in a web browser.
+
+You can use the Qualys SSL Labs Report to see how your server
+configuration scores:
+
+|
+In a web browser:
+https://www.ssllabs.com/ssltest/analyze.html?d=example.com
+|
+
+This SSL setup should report an *A+* rating.
+
+
+    Step 4 — Set Up Auto Renewal
+
+Let's Encrypt's certificates are only valid for ninety days. This is to
+encourage users to automate their certificate renewal process. We'll
+need to set up a regularly run command to check for expiring
+certificates and renew them automatically.
+
+To run the renewal check daily, we will use |cron|, a standard system
+service for running periodic jobs. We tell |cron| what to do by opening
+and editing a file called a |crontab|.
+
+|
+
+  * sudo crontab -e
+|
+
+Your text editor will open the default crontab which is a text file with
+some help text in it. Paste in the following line at the end of the
+file, then save and close it:
+
+crontab
+
+|. . .
+15 3 * * * /usr/bin/certbot renew --quiet --renew-hook "/usr/sbin/service nginx reload"
+|
+
+The |15 3 * * *| part of this line means "run the following command at
+3:15 am, every day". You may choose any time.
+
+The |renew| command for Certbot will check all certificates installed on
+the system and update any that are set to expire in less than thirty
+days. |--quiet| tells Certbot not to output information nor wait for
+user input. |--renew-hook "/usr/sbin/service nginx reload"| will reload
+Nginx to pick up the new certificate files, but only if a renewal has
+actually happened.
+
+|cron| will now run this command daily. All installed certificates will
+be automatically renewed and reloaded when they have thirty days or less
+before they expire.
+
+For more information on how to create and schedule cron jobs, you can
+check our How to Use Cron to Automate Tasks in a VPS
+<https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-on-a-vps>
+guide.
+
+
+    Conclusion
+
+That's it! Your web server is now using a free Let's Encrypt TLS/SSL
+certificate to securely serve HTTPS content.
+
+manicas
+<https://www.digitalocean.com/community/users/manicas>
+By:
+Mitchell Anicas <https://www.digitalocean.com/community/users/manicas>
+Upvote407
+Subscribe Subscribed
+<javascript:void(0);>
+Share <#>
+
+
+    Get started on DigitalOcean with free $10 credit
+
+You’ve read five tutorials on DigitalOcean this week and are well on
+your way to managing your infrastructure. Test your newfound knowledge
+by trying out DigitalOcean with $10 in free credit.
+
+Create a Free Account
+<https://cloud.digitalocean.com/registrations/new?refcode=74a1c5d63dac&utm_medium=btp_buildmode_ft_test>
+
+
+
+    Related Tutorials
+
+  * How To Install Matrix Synapse on Ubuntu 16.04
+    <https://www.digitalocean.com/community/tutorials/how-to-install-matrix-synapse-on-ubuntu-16-04>
+  * An Introduction to Let's Encrypt
+    <https://www.digitalocean.com/community/tutorials/an-introduction-to-let-s-encrypt>
+  * How to Install Bro on Ubuntu 16.04
+    <https://www.digitalocean.com/community/tutorials/how-to-install-bro-on-ubuntu-16-04>
+  * How To Install and Use Webmin on CentOS 7
+    <https://www.digitalocean.com/community/tutorials/how-to-install-and-use-webmin-on-centos-7>
+  * How To Create a Status Page with Cachet on Debian 8
+    <https://www.digitalocean.com/community/tutorials/how-to-create-a-status-page-with-cachet-on-debian-8>
+
+
+223 Comments
+
+  * Preview
+
+Markdown Preview
+
+  * B
+  * I
+  * H1
+  * H2
+  * H3
+  * UL
+  * OL
+  * Link
+  * Code
+  * Highlight
+  * Table
+
+Could not load preview. Try again <#>
+Loading preview...
+Log In to Comment
+
+<https://www.digitalocean.com/community/auth/digitalocean>
+
+    Load
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments>
+  *
+    7
+
+    adamatan <https://www.digitalocean.com/community/users/adamatan>
+    December 17, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41243>
+
+
+    Great article, and you were crazy-fast with the publication - a
+    jiffy after the public beta is out. Kudos!
+
+  *
+    0
+
+    jermdw <https://www.digitalocean.com/community/users/jermdw>
+    December 18, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41246>
+
+
+    great job, i was looking for how to do it on nginx, set it up easy
+    enough for an owncloud server running apache, this made it super
+    easy to secure a reverse proxy i am running using nginx, which i
+    prefer. thanks!
+
+  *
+    3
+
+    hannupekka <https://www.digitalocean.com/community/users/hannupekka>
+    December 18, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41255>
+
+
+    Line
+
+    |netstat -na | 'grep :80.*LISTEN'
+    |
+
+    should be
+
+    |netstat -na | grep ':80.*LISTEN'
+    |
+
+      o
+        1
+
+        manicas <https://www.digitalocean.com/community/users/manicas>
+        MOD December 18, 2015
+        <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41274>
+
+
+        Thanks for catching that. Fixed.
+
+  *
+    0
+
+    bojanrnr <https://www.digitalocean.com/community/users/bojanrnr>
+    December 18, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41267>
+
+
+    Does port 80 have to be always open in order for this to work? I
+    mean, what if I have some websites that are still http, so nginx
+    would be listening to port 80 for them...
+
+    Do I have to set https for all my websites and make sure the the
+    port 80 is not used by nginx ever, in order for this standalone
+    plugin to work?
+
+      o
+        0
+
+        manicas <https://www.digitalocean.com/community/users/manicas>
+        MOD December 18, 2015
+        <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41273>
+
+
+        The standalone plugin can work either on port 80 or 443 (if you
+        specify a different option). Because it runs its own web server,
+        one of those ports needs to be open when you request/renew a
+        certificate.
+
+        The webroot plugin, that is used in the renew section, requires
+        that your web server responds on port 80 and can serve the
+        hidden directory is created.
+
+  *
+    0
+
+    marshyon <https://www.digitalocean.com/community/users/marshyon>
+    December 20, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41320>
+
+
+    This is a great tutorial on lets encrypt with nginx. I have got
+    pretty much everything working as expected. I'm not certain if it's
+    required but I made the 'root' directory as specified in the .ini
+    file to be writeable by the user under which the web server runs. I
+    will experiment further to see if this is really necessary.
+
+    A question :
+
+    The script that is run under cron to check for the renewal status of
+    the certificates - does this need to be run as a user that can
+    'sudo' without a password ? I would have thought this to be the case
+    but it is not mentioned here or in the tutorial for setting sudo up
+    to which is referred. If so, would it be wise to limit the commands
+    that can be run by this user to be just the renewal script and
+    nothing else ?
+
+      o
+        0
+
+        manicas <https://www.digitalocean.com/community/users/manicas>
+        MOD December 21, 2015
+        <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41338>
+
+
+        Hey there. Yes, the script needs to be run by a user that has
+        superuser privileges without a password. The |sudo crontab -e|
+        command edits the root user's crontab, so the script will run as
+        root.
+
+        It is possible to set up a separate user with passwordless sudo,
+        if you want.
+
+  *
+    0
+
+    robvdw <https://www.digitalocean.com/community/users/robvdw>
+    December 21, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41347>
+
+
+    Great article!
+
+    Small detail: you are downloading the le-renew-webroot script to
+    /usr/local/sbin, but have /usr/sbin/le-renew-webroot in the crontab
+
+  *
+    0
+
+    stefk <https://www.digitalocean.com/community/users/stefk> December
+    22, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41378>
+
+
+    Great article, thanks!
+
+  *
+    1
+
+    jesusAM <https://www.digitalocean.com/community/users/jesusam>
+    December 22, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41391>
+
+
+    Great article, thank you very much!
+
+    I've followed the steps to allow only the most secure SSL protocols
+    and ciphers. However, Chromium says my web is encrypted with an
+    obsolete ciphersuite (roughly, because I'm using the Spanish
+    version). It uses AES-256-CBC, HMAC-SHA1 and ECDHE_RSA. Should it
+    use HMAC-SHA256 instead? Why is this happening?
+
+      o
+        0
+
+        m.kornobis
+        <https://www.digitalocean.com/community/users/m-kornobis>
+        December 23, 2015
+        <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41430>
+
+
+        The same issue I am facing and I would appreciate to get advice
+
+      o
+        4
+
+        philipsampaio
+        <https://www.digitalocean.com/community/users/philipsampaio>
+        December 27, 2015
+        <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41527>
+
+
+        I was getting the same message from Chrome. After reading this
+        article
+        <https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html#The_Cipher_Suite>,
+        I changed the |ssl_ciphers| configuration to something like:
+
+        |ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
+        |
+
+        And it works fine.
+        BTW, I recommend reading the full article
+        <https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html>.
+        And I also recommend this tool
+        <https://www.ssllabs.com/ssltest/index.html> to verify your SSL
+        configuration.
+
+          +
+            2
+
+            jesusAM
+            <https://www.digitalocean.com/community/users/jesusam>
+            January 2, 2016
+            <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41697>
+
+
+            That test is awesome, thank you!
+
+            I solved it using Mozilla SSL Configuration Generator
+            <https://mozilla.github.io/server-side-tls/ssl-config-generator/>.
+            I think it's really useful.
+
+  *
+    1
+
+    alexweissman
+    <https://www.digitalocean.com/community/users/alexweissman> December
+    23, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41411>
+
+
+    The |./letsencrypt-auto certonly --standalone| command seems to
+    fail, telling me that the domain name contains invalid characters.
+
+    I believe this is supposed to be:
+    |./letsencrypt-auto certonly --standalone -d example.com|
+
+  *
+    0
+
+    m.kornobis <https://www.digitalocean.com/community/users/m-kornobis>
+    December 23, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41429>
+
+
+    Really easy, I'm loving it!
+
+  *
+    3
+
+    pjcarly <https://www.digitalocean.com/community/users/pjcarly>
+    December 24, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41446>
+
+
+    i'm having errors, I believe it's because my nginx configuration
+    (from the one-click-app drupal install) blocks hidden directories.
+    Could you perhaps add a block to the nginx configuration that allows
+    the .well-known/acme-challenge directory
+
+      o
+        0
+
+        ose6fe5dcf405a2
+        <https://www.digitalocean.com/community/users/ose6fe5dcf405a2>
+        January 24, 2016
+        <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=42611>
+
+
+        I had the same problem but found this elegant solution:
+
+        server {
+        listen 80;
+        listen [::]:80;
+        server/name example.net example.org;
+        location '/.well-known/acme-challenge' {
+        default/type "text/plain";
+        root /tmp/letsencrypt-auto;
+        }
+
+        location / {
+        return 301 https://$server/name$request/uri;
+        }
+        }
+
+        https://gist.github.com/renchap/c093702f06df69ba5cac
+
+        This way you can also remove the location from your ssl sever
+        configuration.
+
+          +
+            0
+
+            estadamx
+            <https://www.digitalocean.com/community/users/estadamx> May
+            10, 2016
+            <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=46818>
+
+
+            I'm also having problems, not sure if its the same. Its says
+            "The server could not connect to the client to verify the
+            domain"
+
+            I tried the solution as provided by the link, but also
+            doesnt work. Now I have a few questions, do you keep the
+            server/name as example.net and example.org? Or do you change
+            it to your domain names? I tried both and didn't work. Also,
+            with $server/name$request_uri, do you change anything?
+
+            Im using a Rails droplet on Ubuntu 14.04 with Nginx. All
+            help appreciated!
+
+  *
+    1
+
+    baslangenberg
+    <https://www.digitalocean.com/community/users/baslangenberg>
+    December 28, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41533>
+
+
+    First of all, thank you for this very nice article! I used this on a
+    Centos 7.2 box and it worked like a charm!
+
+    I ran into an 'issue', I got only a B at SSL labs using this
+    configuration. I fixed it by generating a custom diffie hellman 2048
+    primes set as described on this page.
+
+    https://weakdh.org/sysadmin.html
+
+    Maybe you can update your guide with this, if you find it relevant.
+
+  *
+    0
+
+    stefanfromcodeplant
+    <https://www.digitalocean.com/community/users/stefanfromcodeplant>
+    December 28, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41540>
+
+
+    Thanks, great article! It worked on my Debian 8 minimal
+    installation, with only one little glitch: I had to install bc tool
+    manually, in order to get the le-renew-webroot script to work.
+
+  *
+    0
+
+    metamesa <https://www.digitalocean.com/community/users/metamesa>
+    December 30, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41595>
+
+
+    Thanks for this great tutorial!
+
+    I'm sure that, with advanced bash scripting skills, it should be
+    possible to adapt the /le-renew-webroot/ script to handle multiple
+    virtual hosts, but my bash skills are not what they should be.
+
+    In the meantime, will it be okay to create a script and a matching
+    cli config file for each virtual host?
+
+    E.g.
+
+    |/usr/local/sbin/le-renew-mywebsite.com
+    /usr/local/sbin/le-renew-anotherwebsite.org
+    ...
+    |
+
+    with corresponding config files:
+
+    |/usr/local/etc/le-renew-mywebsite.com.ini
+    /usr/local/etc/le-renew-anotherwebsite.org.ini
+    ...
+    |
+
+    Thanks.
+
+      o
+        1
+
+        littleguga
+        <https://www.digitalocean.com/community/users/littleguga>
+        January 10, 2016
+        <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41969>
+
+
+        I created a simple script for multiply domains github gist here
+        <https://gist.github.com/littleguga/6fba83b7660f3ee8c90d>
+
+          +
+            0
+
+            metamesa
+            <https://www.digitalocean.com/community/users/metamesa>
+            January 10, 2016
+            <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41971>
+
+
+            Thanks for this. If I'm reading the code correctly, it looks
+            as if I'll need a .ini file for each domain, but I will need
+            just one bash script. That will help a lot.
+
+              #
+                0
+
+                littleguga
+                <https://www.digitalocean.com/community/users/littleguga> January
+                10, 2016
+                <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41992>
+
+
+                Sorry, i forgot the instructions: in script the var
+                'config_path', by default it is '/usr/local/letssl/'.
+                Put there .ini file for each domain/subdomain(if it have
+                another root directory).
+
+  *
+    4
+
+    yvmarques <https://www.digitalocean.com/community/users/yvmarques>
+    December 30, 2015
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41601>
+
+
+    Great article, thanks !
+
+    I guess there is a little mistake here :
+
+    |30 2 * * 1 /usr/sbin/le-renew-webroot >> /var/log/le-renewal.log
+    |
+
+    It should be
+
+    |30 2 * * 1 /usr/local/sbin/le-renew-webroot >> /var/log/le-renewal.log
+    |
+
+  *
+    0
+
+    zxcvbn <https://www.digitalocean.com/community/users/zxcvbn> January
+    1, 2016
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41668>
+
+
+    Mitchell,
+
+    Excellent write up! Can't give you enough kudos for this article,
+    great stuff : )
+
+  *
+    0
+
+    XiXiao007 <https://www.digitalocean.com/community/users/xixiao007>
+    January 2, 2016
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41703>
+
+
+    I have a nginx reverse-proxy listening to port 80 and 443 (with
+    HTTPS enabled), it routes the traffic to another nginx web server
+    sitting behind.
+    In this scenario, am I able to use the script to auto-renew certs? I
+    would assume the answer is |no| since the website has no port80
+    directly exposing to internet?
+
+      o
+        0
+
+        XiXiao007
+        <https://www.digitalocean.com/community/users/xixiao007> January
+        2, 2016
+        <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41704>
+
+
+        or is the reverse-proxy able to take the role to renew the certs?
+
+          +
+            0
+
+            ztl8702
+            <https://www.digitalocean.com/community/users/ztl8702>
+            January 11, 2016
+            <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=42031>
+
+
+            I think yes. You just need to map the location
+            |/.well-known| to static file, while keeping other urls proxied.
+
+              #
+                0
+
+                andrew8712
+                <https://www.digitalocean.com/community/users/andrew8712> June
+                24, 2016
+                <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=48327>
+
+
+                Could you provide a piece of config file related to
+                this? I can't figure how to use renew with nginx reverse
+                proxy
+
+              #
+                0
+
+                Kalimetric
+                <https://www.digitalocean.com/community/users/kalimetric> December
+                13, 2016
+                <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=53785>
+
+
+                I would also like to see a little more detail regarding
+                this if possible, as I have the same set up.
+
+  *
+    1
+
+    abelokon <https://www.digitalocean.com/community/users/abelokon>
+    January 2, 2016
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41707>
+
+
+    This is great - thank you very much! It helped me a lot.. :)
+
+    You may want to add in 'Nginx configuration additions — 3 of 3' your
+    domain with www before (to prevent errors in the renewal step):
+
+    |    server_name example.com www.example.com;
+    |
+
+    Also I had to install bc to make your script work:
+
+    |sudo apt-get install bc
+    |
+
+  *
+    1
+
+    YuanModu <https://www.digitalocean.com/community/users/yuanmodu>
+    January 3, 2016
+    <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41718>
+
+
+    I need to publish both 80 and 443 ports in a docker container in
+    order to successfuly build the certs. Is it missed in the tutorial
+    (in verfy ports open section) or am I doing something wrong?
+
+Previous /1/ 2
+<https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=2>
+3
+<https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=3>
+4
+<https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=4>
+5
+<https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=5>
+6
+<https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=6>
+7
+<https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=7>
+8
+<https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=8>
+Next
+<https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=2>
+Load More Comments
+<javascript:void(0);>
+Creative Commons License
+<https://creativecommons.org/licenses/by-nc-sa/4.0/>
+This work is licensed under a Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 International License
+<https://creativecommons.org/licenses/by-nc-sa/4.0/>.
+Copyright © 2017 DigitalOcean™ Inc.
+
+  * Community <https://www.digitalocean.com/community>
+  * Tutorials <https://www.digitalocean.com/community/tutorials>
+  * Questions <https://www.digitalocean.com/community/questions>
+  * Projects <https://www.digitalocean.com/community/projects>
+  * Tags <https://www.digitalocean.com/community/tags>
+  * Newsletter <https://www.digitalocean.com/community/newsletter>
+  * RSS <https://www.digitalocean.com/community/tutorials/feed>
+
+
+  * Distros & One-Click Apps
+    <https://www.digitalocean.com/features/one-click-apps/>
+  * Terms, Privacy, & Copyright <https://www.digitalocean.com/legal/terms/>
+  * Security <https://www.digitalocean.com/security/>
+  * Report a Bug <#>
+  * Get Paid to Write
+    <https://www.digitalocean.com/community/get-paid-to-write>
+  * Shop <http://store.digitalocean.com/>
+
+
+  Almost there!
+
+Sign into your account, or create a new one, to start interacting.
+Log In <https://www.digitalocean.com/community/auth/digitalocean> Sign
+Up
+<https://www.digitalocean.com/community/auth/digitalocean?display=sessionless+register>
+
+
+
+  Report a Bug
+
+Use this form to report bugs related to the Community
+Report a bug:
+
+Name
+
+Email
+
+Message
+
+Message Scroll to top
+
+<#top>
+

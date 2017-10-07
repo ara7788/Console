@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html class="wf-proximanova-n6-active wf-proximanova-n4-active wf-proximanova-i4-active wf-proximanova-n3-active wf-active" style="" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>How To Configure Apache Content Caching on CentOS 7 | DigitalOcean</title>
+
+<meta name="description" content="Caching is a method of improving server performance by allowing commonly requested content to be temporarily stored in a way that allows for faster access. This speeds up processing and delivery by cutting out some resource intensive operations. By cr">
+<meta name="keywords" content="Server Optimization Apache Caching">
+
+<meta name="og:title" content="How To Configure Apache Content Caching on CentOS 7 | DigitalOcean">
+<meta name="og:description" content="Caching is a method of improving server performance by allowing commonly requested content to be temporarily stored in a way that allows for faster access. This speeds up processing and delivery by cutting out some resource intensive operations. By cr">
+<meta name="og:site_name" content="DigitalOcean">
+<meta name="og:type" content="article">
+
+<meta name="twitter:site" content="DigitalOcean">
+<meta name="twitter:title" content="How To Configure Apache Content Caching on CentOS 7 | DigitalOcean">
+<meta name="twitter:description" content="Caching is a method of improving server performance by allowing commonly requested content to be temporarily stored in a way that allows for faster access. This speeds up processing and delivery by cutting out some resource intensive operations. By cr">
+<meta name="twitter:creator" content="DigitalOcean">
+<meta name="twitter:card" content="photo">
+<meta name="twitter:url" content="https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7">
+
+<meta property="og:image" content="https://community-cdn-digitalocean-com.global.ssl.fastly.net/assets/tutorials/images/large/apache_caching_tw.jpg?1429024926">
+<meta name="twitter:image" content="https://community-cdn-digitalocean-com.global.ssl.fastly.net/assets/tutorials/images/large/apache_caching_tw.jpg?1429024926">
+
+  <link rel="canonical" href="https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7">
+
+
+    <link rel="stylesheet" media="all" href="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/application-a2cee2dda4908f423a67f86a1f36e49d.css">
+
+    
+    <meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="AjgqD2/bn0XI5ul5075ZXGoQjb8QyOl3O8CEIK03vZA8u95lOyfT9eQCSl3AiEd1Z+gScN+/BTo8y+NdLy7Crg==">
+      <script type="text/javascript" async="" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/linkid.js"></script><script type="text/javascript" async="" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/munchkin_002.js"></script><script async="" id="demandbase_js_lib" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/014ab3bd.js"></script><script type="text/javascript" async="" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/analytics.js"></script><script async="" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/gtm.js"></script><script type="text/javascript" async="" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/analytics_002.js"></script><script src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/izu1uqu.js"></script>
+      <style type="text/css">.tk-proxima-nova{font-family:"proxima-nova",sans-serif;}</style><style type="text/css">@font-face{font-family:tk-proxima-nova-n6;src:url(https://use.typekit.net/af/752410/00000000000000003b9ad1bb/27/l?subset_id=2&fvd=n6&v=3) format("woff2"),url(https://use.typekit.net/af/752410/00000000000000003b9ad1bb/27/d?subset_id=2&fvd=n6&v=3) format("woff"),url(https://use.typekit.net/af/752410/00000000000000003b9ad1bb/27/a?subset_id=2&fvd=n6&v=3) format("opentype");font-weight:600;font-style:normal;}@font-face{font-family:tk-proxima-nova-n4;src:url(https://use.typekit.net/af/a3ca77/00000000000000003b9ad1b9/27/l?subset_id=2&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/a3ca77/00000000000000003b9ad1b9/27/d?subset_id=2&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/a3ca77/00000000000000003b9ad1b9/27/a?subset_id=2&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;}@font-face{font-family:tk-proxima-nova-i4;src:url(https://use.typekit.net/af/98849f/00000000000000003b9ad1ba/27/l?subset_id=2&fvd=i4&v=3) format("woff2"),url(https://use.typekit.net/af/98849f/00000000000000003b9ad1ba/27/d?subset_id=2&fvd=i4&v=3) format("woff"),url(https://use.typekit.net/af/98849f/00000000000000003b9ad1ba/27/a?subset_id=2&fvd=i4&v=3) format("opentype");font-weight:400;font-style:italic;}@font-face{font-family:tk-proxima-nova-n3;src:url(https://use.typekit.net/af/0e059c/00000000000000003b9ad1b5/27/l?subset_id=2&fvd=n3&v=3) format("woff2"),url(https://use.typekit.net/af/0e059c/00000000000000003b9ad1b5/27/d?subset_id=2&fvd=n3&v=3) format("woff"),url(https://use.typekit.net/af/0e059c/00000000000000003b9ad1b5/27/a?subset_id=2&fvd=n3&v=3) format("opentype");font-weight:300;font-style:normal;}</style><script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <script src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/bugsnag-2.js" data-apikey="9ffc01bc3e1fa7891bfd20909d1bfb0e">
+    </script>
+    <!--<script src="//cdn.optimizely.com/js/701281621.js"></script>-->
+    <script type="text/javascript">
+      if(window.analytics=window.analytics||[],window.analytics.included)window.console&&console.error&&console.error("analytics.js included twice");else{window.analytics.included=!0,window.analytics.methods=["identify","group","track","page","pageview","alias","ready","on","once","off","trackLink","trackForm","trackClick","trackSubmit"],window.analytics.factory=function(a){return function(){var n=Array.prototype.slice.call(arguments);return n.unshift(a),window.analytics.push(n),window.analytics}};for(var i=0;i<window.analytics.methods.length;i++){var key=window.analytics.methods[i];window.analytics[key]=window.analytics.factory(key)}window.analytics.load=function(a){var n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+a+"/analytics.min.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(n,t)},window.analytics.SNIPPET_VERSION="2.0.9",
+      window.analytics.load("puo3uv968t")}
+      window.analytics.page();
+    </script>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.digitalocean.com/community/tutorials/feed">
+    <script src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/polyfill.js"></script>
+    <script>
+      window.comApp = {
+        prefix: '/community',
+        svgIconPath: 'https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg',
+        railsEnv: 'production',
+        rootUrl: 'https://www.digitalocean.com/community'
+      };
+    </script>
+      <script src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/forms2.js"></script>
+
+    <script src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/application-53f5f8a4487416e090c7a50e4caed16f.js"></script>
+  <style>.fluidvids {width: 100%; max-width: 100%; position: relative;}.fluidvids-item {position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;}</style><script id="twitter-wjs" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/widgets.js"></script><style type="text/css">@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/752410/00000000000000003b9ad1bb/27/l?subset_id=2&fvd=n6&v=3) format("woff2"),url(https://use.typekit.net/af/752410/00000000000000003b9ad1bb/27/d?subset_id=2&fvd=n6&v=3) format("woff"),url(https://use.typekit.net/af/752410/00000000000000003b9ad1bb/27/a?subset_id=2&fvd=n6&v=3) format("opentype");font-weight:600;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/a3ca77/00000000000000003b9ad1b9/27/l?subset_id=2&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/a3ca77/00000000000000003b9ad1b9/27/d?subset_id=2&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/a3ca77/00000000000000003b9ad1b9/27/a?subset_id=2&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/98849f/00000000000000003b9ad1ba/27/l?subset_id=2&fvd=i4&v=3) format("woff2"),url(https://use.typekit.net/af/98849f/00000000000000003b9ad1ba/27/d?subset_id=2&fvd=i4&v=3) format("woff"),url(https://use.typekit.net/af/98849f/00000000000000003b9ad1ba/27/a?subset_id=2&fvd=i4&v=3) format("opentype");font-weight:400;font-style:italic;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/0e059c/00000000000000003b9ad1b5/27/l?subset_id=2&fvd=n3&v=3) format("woff2"),url(https://use.typekit.net/af/0e059c/00000000000000003b9ad1b5/27/d?subset_id=2&fvd=n3&v=3) format("woff"),url(https://use.typekit.net/af/0e059c/00000000000000003b9ad1b5/27/a?subset_id=2&fvd=n3&v=3) format("opentype");font-weight:300;font-style:normal;}</style><script id="facebook-jssdk" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/all.js"></script><link id="mktoForms2BaseStyle" rel="stylesheet" type="text/css" href="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/forms2.css"><link id="mktoForms2ThemeStyle" rel="stylesheet" type="text/css" href="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/forms2-theme-simple.css"><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_loader{background-color:#f6f7f9;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{width:auto;height:auto;min-height:initial;min-width:initial;background:none}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{color:#fff;display:block;padding-top:20px;clear:both;font-size:18px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;bottom:0;left:0;right:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #29487d;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f6f7f9;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(http://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-repeat:no-repeat;background-position:50% 50%;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}</style><script type="text/javascript" async="" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/munchkin.js"></script></head>
+  <body class="feature-filter-bar feature-upvotes tutorials-controller tutorial-single" data-env="production" data-prefix="/community" data-user-id="" data-facebook-app-id="694818843983011" data-completed-tutorial-id="" data-tutorial-id="1565" data-js="tutorial">
+    <script>
+//<![CDATA[
+
+//]]>
+</script>
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KHWBBT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KHWBBT');</script>
+<!-- End Google Tag Manager -->
+
+    
+
+    <div class="outside_viewport">
+        <div id="contents-modal" class="modal fade mini-modal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1>Contents</h1>
+          <button class="close-button icon icon-close-light" data-dismiss="modal" aria-label="close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="table-of-contents-modal tocify"><ul id="tocify-header0" class="tocify-header"><li class="tocify-item" data-unique="an-introduction-to-caching-in-apache"><a>An Introduction to Caching in Apache</a></li></ul><ul id="tocify-header1" class="tocify-header"><li class="tocify-item" data-unique="file-caching"><a>File Caching</a></li></ul><ul id="tocify-header2" class="tocify-header"><li class="tocify-item tocify-focus" data-unique="key-value-caching"><a>Key-Value Caching</a></li></ul><ul id="tocify-header3" class="tocify-header"><li class="tocify-item" data-unique="standard-http-caching"><a>Standard HTTP Caching</a></li></ul><ul id="tocify-header4" class="tocify-header"><li class="tocify-item" data-unique="setting-expires-and-caching-headers-on-content"><a>Setting Expires and Caching Headers on Content</a></li></ul><ul id="tocify-header5" class="tocify-header"><li class="tocify-item" data-unique="conclusion"><a>Conclusion</a></li></ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="share-modal" class="modal fade mini-modal" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Share</h1>
+        <button type="button" class="close-button icon icon-close-light" aria-label="close" data-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="social-sharing social-sharing-container">
+          <ul class="top ">
+            <li class="shareBtn" id="sbTwitter">
+              <a href="http://twitter.com/share?text=How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207&amp;url=https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=twshare" class="share-icon share-popup" title="Share on Twitter">
+                <span class="sIcon icon-bird"></span>
+              </a>
+              <a href="http://twitter.com/share?text=How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207&amp;url=https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=twshare" class="share-link share-popup" title="Share on Twitter">
+                Twitter
+              </a>
+            </li>
+            <li class="shareBtn" id="sbFacebook">
+              <a class="share-icon facebook-share" href="https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=fbshare" onclick="" title="Share on Facebook">
+                <span class="sIcon icon-facebook-B"></span>
+              </a>
+
+              <a class="share-link facebook-share" href="https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=fbshare" onclick="" title="Share on Facebook">
+                Facebook
+              </a>
+            </li>
+            <li class="shareBtn" id="sbGoogle">
+              <a href="https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=gpshare" class="share-icon share-popup" title="Share on Google+">
+                <span class="sIcon icon-google-plus-B"></span>
+              </a>
+              <a href="https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=gpshare" class="share-link share-popup" title="Share on Google+">
+                Google+
+              </a>
+            </li>
+            <li class="shareBtn" id="sbYC">
+              <a href="https://news.ycombinator.com/submitlink?t=How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207&amp;u=https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=hnshare" class="share-icon share-popup" target="_blank" title="Submit to Hacker News">
+                <span class="sIcon icon-hacker-news"></span>
+              </a>
+              <a href="https://news.ycombinator.com/submitlink?t=How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207&amp;u=https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=hnshare" class="share-link share-popup" target="_blank" title="Submit to Hacker News">
+                Hacker News
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="table-of-contents has-init sticky" style="top: 72px;">
+    <div data-js="tableOfContentsDesktop" class="tocify"><ul id="tocify-header0" class="tocify-header"><li class="tocify-item" data-unique="an-introduction-to-caching-in-apache"><a>An Introduction to Caching in Apache</a></li></ul><ul id="tocify-header1" class="tocify-header"><li class="tocify-item" data-unique="file-caching"><a>File Caching</a></li></ul><ul id="tocify-header2" class="tocify-header"><li class="tocify-item tocify-focus" data-unique="key-value-caching"><a>Key-Value Caching</a></li></ul><ul id="tocify-header3" class="tocify-header"><li class="tocify-item" data-unique="standard-http-caching"><a>Standard HTTP Caching</a></li></ul><ul id="tocify-header4" class="tocify-header"><li class="tocify-item" data-unique="setting-expires-and-caching-headers-on-content"><a>Setting Expires and Caching Headers on Content</a></li></ul><ul id="tocify-header5" class="tocify-header"><li class="tocify-item" data-unique="conclusion"><a>Conclusion</a></li></ul></div>
+    <button type="button" class="Button--reset Tutorial-button " data-js="markAsComplete" data-tutorialinteraction="" data-tutorialsingle=""><svg class="svg-icon svg-icon-completed"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-completed"></use></svg><span>Mark as Complete</span></button>
+  </div>
+  
+  <div id="share-modal" class="modal fade mini-modal" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Share</h1>
+        <button type="button" class="close-button icon icon-close-light" aria-label="close" data-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="social-sharing social-sharing-container">
+          <ul class="bottom ">
+            <li class="shareBtn" id="sbTwitter">
+              <a href="http://twitter.com/share?text=How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207&amp;url=https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=twshare" class="share-icon share-popup" title="Share on Twitter">
+                <span class="sIcon icon-bird"></span>
+              </a>
+              <a href="http://twitter.com/share?text=How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207&amp;url=https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=twshare" class="share-link share-popup" title="Share on Twitter">
+                Twitter
+              </a>
+            </li>
+            <li class="shareBtn" id="sbFacebook">
+              <a class="share-icon facebook-share" href="https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=fbshare" onclick="" title="Share on Facebook">
+                <span class="sIcon icon-facebook-B"></span>
+              </a>
+
+              <a class="share-link facebook-share" href="https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=fbshare" onclick="" title="Share on Facebook">
+                Facebook
+              </a>
+            </li>
+            <li class="shareBtn" id="sbGoogle">
+              <a href="https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=gpshare" class="share-icon share-popup" title="Share on Google+">
+                <span class="sIcon icon-google-plus-B"></span>
+              </a>
+              <a href="https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=gpshare" class="share-link share-popup" title="Share on Google+">
+                Google+
+              </a>
+            </li>
+            <li class="shareBtn" id="sbYC">
+              <a href="https://news.ycombinator.com/submitlink?t=How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207&amp;u=https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=hnshare" class="share-icon share-popup" target="_blank" title="Submit to Hacker News">
+                <span class="sIcon icon-hacker-news"></span>
+              </a>
+              <a href="https://news.ycombinator.com/submitlink?t=How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207&amp;u=https://www.digitalocean.com/community/tutorials/how-to-configure-apache-content-caching-on-centos-7?utm_content=how-to-configure-apache-content-caching-on-centos-7&amp;utm_medium=community&amp;utm_source=hnshare" class="share-link share-popup" target="_blank" title="Submit to Hacker News">
+                Hacker News
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div id="newsletter-signup-dialog" class="newsletter-signups-dialog reveal" data-newsletter-signup-dialog="" data-article-target=".content-body">
+  <div class="form-message">
+  <div class="pull-right">
+    <a href="javascript:;" class="newsletter-signups-dialog-dismiss" data-newsletter-signup-dismiss="">×</a>
+
+  </div>
+  <h4 class="newsletter-signups-dialog-title">
+    Sign up for our newsletter.
+  </h4>
+  <p class="newsletter-signups-dialog-description">
+    Get the latest tutorials on SysAdmin and open source topics.
+  </p>
+  <form class="newsletter-signup" id="new_newsletter_signup" data-newsletter-signup="true" action="/community/newsletter" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" value="✓" type="hidden">
+
+  <input data-newsletter-signup-field="url" name="newsletter_signup[url]" id="newsletter_signup_url" type="hidden">
+  <input data-newsletter-signup-field="title" name="newsletter_signup[title]" id="newsletter_signup_title" type="hidden">
+
+  <div class="newsletter-signup-ajax-error" data-newsletter-signup-ajax-error=""></div>
+
+
+  <div class="form-group">
+    <input placeholder="Enter your email address" required="required" class="field" name="newsletter_signup[email]" id="newsletter_signup_email" type="email">
+  </div>
+
+  <button data-disable-with="Sign Up" class="button blue-button">
+    Sign Up
+  </button>
+
+</form>
+
+</div>
+
+<div class="thanks-message hidden" data-newsletter-signup-successful=""> 
+  <div class="pull-right"> 
+    <a href="javascript:;" class="newsletter-signups-dialog-dismiss icon icon-close-light" data-newsletter-signup-dismiss=""></a> 
+  </div> 
+
+  <span class="newsletter-signups-dialog-success"> 
+    Thanks for signing up! 
+  </span> 
+</div>
+
+</div>
+
+
+      
+    </div>
+
+      <div class="mobile-nav">
+  
+<div class="account-buttons">
+    <div id="entrance">
+      <a id="sign-up" class="button" href="https://www.digitalocean.com/community/auth/digitalocean?display=sessionless+register">Sign Up</a>
+      <a id="log-in" class="button" href="https://www.digitalocean.com/community/auth/digitalocean">Log In</a>
+    </div>
+</div>
+
+  <button type="button" aria-label="close" class="close-panel icon-close"></button>
+
+  <form class="mobile-search" role="search" action="/community/search" accept-charset="UTF-8" method="get"><input name="utf8" value="✓" type="hidden">
+    <span class="icon icon-search-thin"></span>
+    <input name="q" id="q" title="Search" placeholder="Search" type="text">
+    <button name="button" type="submit" class="icon-btn">submit</button>
+</form>
+  
+<nav>
+
+  <ul>
+    <li><a class="active" href="https://www.digitalocean.com/community/tutorials">Tutorials</a></li>
+    <li><a href="https://www.digitalocean.com/community/questions">Questions</a></li>
+    <li><a href="https://www.digitalocean.com/community/projects">Projects</a></li>
+    <li><a href="https://www.meetup.com/pro/digitalocean/?utm_source=do_community" target="_blank">Meetups</a></li>
+    <li class="mobile-nav-only"><a href="https://www.digitalocean.com/">Main Site</a></li>
+  </ul>
+</nav>
+
+  
+</div>
+
+      
+      <header>
+  <div class="flash-container"></div>
+
+  <div class="main-menu-container">
+    <div class="wrapper">
+      <div class="logo">
+        <a class="logo-icon" href="https://www.digitalocean.com/">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 32" class="do-icon">
+<title>DigitalOcean</title>
+<path class="path1" d="M16.016 32v-6.204c6.584 0 11.648-6.52 9.147-13.42-0.95-2.564-2.975-4.59-5.539-5.539-6.9-2.501-13.42 2.564-13.42 9.147 0 0 0 0 0 0l-6.204 0.032c0-10.477 10.129-18.643 21.112-15.225 4.811 1.488 8.609 5.317 10.097 10.097 3.418 10.983-4.716 21.112-15.193 21.112z"></path>
+<path class="path2" d="M16.016 25.828h-6.172v-6.172h6.172z"></path>
+<path class="path3" d="M9.844 30.576h-4.748v-4.748h4.748v4.748z"></path>
+<path class="path4" d="M5.096 25.828h-3.988v-3.988h3.988z"></path>
+<path class="path5" d="M56.973 9.242c-1.836-1.266-4.115-1.931-6.773-1.931h-5.792v18.39h5.792c2.659 0 4.938-0.665 6.773-2.026 1.013-0.696 1.804-1.709 2.342-2.944s0.823-2.69 0.823-4.336c0-1.614-0.285-3.070-0.823-4.305-0.538-1.203-1.329-2.152-2.342-2.849zM47.794 10.445h1.836c2.026 0 3.703 0.411 4.969 1.171 1.393 0.855 2.121 2.469 2.121 4.779 0 2.406-0.728 4.083-2.121 5.001v0c-1.203 0.791-2.88 1.203-4.938 1.203h-1.867v-12.154z"></path>
+<path class="path6" d="M64.19 7.122c-0.57 0-1.044 0.19-1.424 0.57s-0.601 0.855-0.601 1.393c0 0.57 0.19 1.044 0.601 1.424 0.38 0.38 0.855 0.601 1.424 0.601s1.044-0.19 1.424-0.601c0.38-0.38 0.601-0.886 0.601-1.424 0-0.57-0.19-1.044-0.601-1.393-0.38-0.38-0.886-0.57-1.424-0.57z"></path>
+<path class="path7" d="M62.512 12.787h3.26v12.977h-3.26v-12.977z"></path>
+<path class="path8" d="M77.642 13.864c-0.981-0.886-2.089-1.393-3.26-1.393-1.804 0-3.292 0.633-4.463 1.836s-1.741 2.785-1.741 4.653c0 1.836 0.57 3.387 1.741 4.653 1.171 1.203 2.659 1.836 4.463 1.836 1.266 0 2.342-0.348 3.228-1.044v0.285c0 1.076-0.285 1.899-0.855 2.5-0.57 0.57-1.361 0.855-2.342 0.855-1.519 0-2.437-0.601-3.608-2.152l-2.216 2.121 0.063 0.095c0.475 0.665 1.203 1.329 2.184 1.962s2.184 0.95 3.64 0.95c1.931 0 3.513-0.601 4.653-1.773 1.171-1.171 1.741-2.754 1.741-4.716v-11.743h-3.197v1.076zM76.787 21.523c-0.57 0.633-1.298 0.95-2.247 0.95s-1.678-0.317-2.216-0.95c-0.57-0.633-0.855-1.488-0.855-2.532s0.285-1.931 0.855-2.564c0.57-0.633 1.298-0.981 2.216-0.981 0.95 0 1.678 0.317 2.247 0.981 0.57 0.633 0.855 1.519 0.855 2.564s-0.317 1.899-0.855 2.532z"></path>
+<path class="path9" d="M83.624 12.787h3.26v12.977h-3.26v-12.977z"></path>
+<path class="path10" d="M85.302 7.122c-0.57 0-1.044 0.19-1.424 0.57s-0.601 0.855-0.601 1.393c0 0.57 0.19 1.044 0.601 1.424 0.38 0.38 0.855 0.601 1.424 0.601s1.044-0.19 1.424-0.601c0.38-0.38 0.601-0.886 0.601-1.424 0-0.57-0.19-1.044-0.601-1.393-0.38-0.38-0.886-0.57-1.424-0.57z"></path>
+<path class="path11" d="M94.038 9.274h-3.197v3.513h-1.867v2.975h1.867v5.381c0 1.678 0.348 2.88 1.013 3.577s1.836 1.044 3.513 1.044c0.538 0 1.076-0.032 1.583-0.063h0.158v-2.975l-1.108 0.063c-0.791 0-1.298-0.127-1.551-0.411s-0.38-0.855-0.38-1.709v-4.906h3.039v-2.975h-3.039v-3.513z"></path>
+<path class="path12" d="M112.364 7.343h3.26v18.39h-3.26v-18.39z"></path>
+<path class="path13" d="M148.574 21.112c-0.57 0.665-1.171 1.234-1.646 1.519v0c-0.443 0.285-1.013 0.443-1.678 0.443-0.95 0-1.741-0.348-2.374-1.076s-0.95-1.646-0.95-2.754 0.317-2.026 0.918-2.722c0.633-0.728 1.393-1.076 2.342-1.076 1.044 0 2.152 0.665 3.102 1.773l2.152-2.057c-1.393-1.836-3.197-2.69-5.349-2.69-1.804 0-3.355 0.665-4.621 1.931s-1.899 2.912-1.899 4.843 0.633 3.545 1.899 4.843c1.266 1.298 2.817 1.931 4.621 1.931 2.374 0 4.273-1.013 5.539-2.88l-2.057-2.026z"></path>
+<path class="path14" d="M161.962 14.591c-0.475-0.633-1.108-1.171-1.867-1.551-0.791-0.38-1.678-0.57-2.69-0.57-1.836 0-3.323 0.665-4.431 1.994-1.076 1.329-1.646 2.944-1.646 4.874 0 1.962 0.601 3.577 1.804 4.843 1.171 1.234 2.785 1.867 4.716 1.867 2.184 0 4.020-0.886 5.349-2.659l0.063-0.095-2.121-2.057c-0.19 0.253-0.475 0.506-0.728 0.76-0.317 0.317-0.633 0.538-0.95 0.696-0.475 0.253-1.044 0.348-1.646 0.348-0.918 0-1.646-0.253-2.216-0.791-0.538-0.475-0.855-1.139-0.918-1.962h8.641l0.032-1.203c0-0.855-0.127-1.646-0.348-2.406-0.222-0.728-0.57-1.456-1.044-2.089zM154.841 17.63c0.158-0.633 0.443-1.139 0.855-1.551 0.443-0.443 1.013-0.665 1.709-0.665 0.791 0 1.393 0.222 1.804 0.665 0.38 0.411 0.601 0.918 0.665 1.519h-5.033z"></path>
+<path class="path15" d="M174.497 13.737v0c-0.981-0.855-2.342-1.266-4.051-1.266-1.076 0-2.089 0.253-3.007 0.696-0.855 0.443-1.678 1.139-2.216 2.089l0.032 0.032 2.089 1.994c0.855-1.361 1.804-1.836 3.070-1.836 0.696 0 1.234 0.19 1.678 0.538s0.633 0.823 0.633 1.393v0.633c-0.823-0.253-1.614-0.38-2.406-0.38-1.614 0-2.944 0.38-3.925 1.139s-1.488 1.867-1.488 3.229c0 1.203 0.411 2.216 1.266 2.944 0.855 0.696 1.899 1.076 3.134 1.076s2.406-0.506 3.45-1.361v1.076h3.197v-8.324c0.063-1.583-0.443-2.817-1.456-3.672zM168.704 20.795c0.38-0.253 0.886-0.38 1.551-0.38 0.791 0 1.614 0.158 2.469 0.475v1.266c-0.696 0.665-1.646 0.981-2.817 0.981-0.57 0-1.013-0.127-1.298-0.38s-0.443-0.538-0.443-0.95c0-0.443 0.19-0.76 0.538-1.013z"></path>
+<path class="path16" d="M188.55 13.99c-0.918-1.013-2.184-1.519-3.798-1.519-1.298 0-2.342 0.38-3.134 1.108v-0.791h-3.197v12.977h3.26v-7.185c0-0.981 0.222-1.773 0.696-2.311 0.475-0.57 1.076-0.823 1.931-0.823 0.728 0 1.298 0.253 1.709 0.728 0.411 0.506 0.633 1.171 0.633 2.026v7.501h3.26v-7.47c0-1.804-0.443-3.229-1.361-4.241z"></path>
+<path class="path17" d="M108.281 13.737v0c-0.981-0.855-2.342-1.266-4.051-1.266-1.076 0-2.089 0.253-3.007 0.696-0.855 0.443-1.678 1.139-2.216 2.089l0.032 0.032 2.089 1.994c0.855-1.361 1.804-1.836 3.070-1.836 0.696 0 1.234 0.19 1.678 0.538s0.633 0.823 0.633 1.393v0.633c-0.823-0.253-1.614-0.38-2.406-0.38-1.614 0-2.944 0.38-3.925 1.139s-1.488 1.867-1.488 3.229c0 1.203 0.411 2.216 1.266 2.944 0.855 0.696 1.899 1.076 3.134 1.076s2.406-0.506 3.45-1.361v1.076h3.197v-8.324c0.032-1.583-0.475-2.817-1.456-3.672zM102.489 20.795c0.38-0.253 0.886-0.38 1.551-0.38 0.791 0 1.614 0.158 2.469 0.475v1.266c-0.696 0.665-1.646 0.981-2.817 0.981-0.57 0-1.013-0.127-1.298-0.38s-0.443-0.538-0.443-0.95c0-0.443 0.158-0.76 0.538-1.013z"></path>
+<path class="path18" d="M127.462 26.018c-5.223 0-9.496-4.241-9.496-9.496s4.241-9.496 9.496-9.496 9.496 4.241 9.496 9.496-4.273 9.496-9.496 9.496zM127.462 10.382c-3.387 0-6.14 2.754-6.14 6.14s2.754 6.14 6.14 6.14 6.14-2.754 6.14-6.14-2.754-6.14-6.14-6.14z"></path>
+</svg>
+
+          <span class="sr-only">DigitalOcean</span>
+</a>
+        <span class="logo-separator"></span>
+
+        <a class="home-link" href="https://www.digitalocean.com/community">
+          <span class="logo-community-text">Community</span>
+</a>      </div>
+
+      <a class="mobile-nav-toggle icon-menu-thin" data-role="left">
+        <span>Menu</span>
+      </a>
+
+      
+<nav>
+
+  <ul>
+    <li><a class="active" href="https://www.digitalocean.com/community/tutorials">Tutorials</a></li>
+    <li><a href="https://www.digitalocean.com/community/questions">Questions</a></li>
+    <li><a href="https://www.digitalocean.com/community/projects">Projects</a></li>
+    <li><a href="https://www.meetup.com/pro/digitalocean/?utm_source=do_community" target="_blank">Meetups</a></li>
+    <li class="mobile-nav-only"><a href="https://www.digitalocean.com/">Main Site</a></li>
+  </ul>
+</nav>
+
+
+      
+<div class="account-buttons">
+    <div id="entrance">
+      <a id="sign-up" class="button" href="https://www.digitalocean.com/community/auth/digitalocean?display=sessionless+register">Sign Up</a>
+      <a id="log-in" class="button" href="https://www.digitalocean.com/community/auth/digitalocean">Log In</a>
+    </div>
+</div>
+      <div class="header-search open">
+  <form action="/community/search" accept-charset="UTF-8" method="get"><input name="utf8" value="✓" type="hidden">
+    <span class="icon icon-search-thin"></span>
+    <input name="q" id="q" title="Search" placeholder="Search" autocomplete="off" spellcheck="false" class="header-search__input" data-algolia-application-id="6ZHEUVKJ88" data-algolia-api-key="c5470567eae7fa1177d43222e18ba086" type="text">
+    <button name="button" type="submit" class="icon-btn">submit</button>
+</form></div>
+
+<div class="search-results-dropdown dropdown" data-root-path="https://www.digitalocean.com/community">
+  <div class="container">
+    <div class="header-search-results-list"></div>
+
+    <div id="btn-wrap">
+      <a class="more-search-results" data-search-path="/community/search" href="https://www.digitalocean.com/community/search">
+        <span class="icon-mag"></span>
+        View All Results
+</a>    </div>
+  </div>
+</div>
+
+<script type="text/template" id="autocomplete-hits-template">
+  <div class="inner-search">
+    <ul>
+        {{#hits}}
+          <li>
+            <span class='icon icon-{{type}}'></span>
+            <a href='{{url}}'>{{title}}</a>
+          </li>
+        {{/hits}}
+    </ul>
+  </div>
+</script>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <div class="wrapper">
+    
+  </div>
+</header>
+
+
+      
+
+      <div class="wrapper layout-wrapper">
+
+        
+
+
+
+
+
+
+
+
+
+<div class="section-content section-content-growable content Tutorial-content content-has-mobile-image">
+  <div class="postable-info-bar-container">
+  <div class="postable-info-bar">
+    <div class="left-section">
+        <div class="tutorial-author-avatar">
+    <a href="https://www.digitalocean.com/community/users/jellingwood"><div class="mod-avatar mod-avatar-small"><img alt="jellingwood" class="avatar avatar-small" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/60d901f61a6146e14a3e989bc1f4ef11.png" width="80" height="80"><span class="mod-star" title="" data-toggle="tooltip" data-container="body" data-original-title="MOD"><span class="mod-star-icon"></span></span></div></a>
+  </div>
+  <div class="author-and-date">
+    <div class="tutorial-author">
+      <div class="by">By: </div>
+      <a href="https://www.digitalocean.com/community/users/jellingwood">Justin Ellingwood</a>
+    </div>
+  </div>
+
+      
+    </div>
+
+    <div class="right-section">
+      
+
+
+      <div class="section-item section-item-subscribe">
+  <span class="opt-in-switch off signed-out-subscribe">
+    <span class="subscribe-label">
+      <span class="icon icon-subscribe"></span>
+      <span class="subscription-label subscribe">Subscribe</span>
+      <span class="icon icon-subscribed"></span>
+      <span class="subscription-label subscribed">Subscribed</span>
+    </span>
+    <a data-toggle="modal" data-target="#sign-in-modal" class="mini-switch-container" href="javascript:void(0);"><div class="mini-switch off signed-out-subscribe"><div class="switch-handle"></div></div></a>
+  </span>
+</div>
+
+<div class="section-item social-sharing-item">
+  <div class="sharing">
+  <a class="share-button" href="#" data-toggle="modal" data-target="#share-modal">
+    <span class="icon icon-share-square"></span>
+    <span class="share-button-text">Share</span>
+  </a>
+</div>
+
+</div>
+
+        <div class="section-item table-of-contents-triggers"><div class="toc-trigger-mobile" data-toggle="modal" data-target="#contents-modal">
+  <a href="javascript:void(0);">
+    <span class="icon icon-contents"></span>
+    <span class="title">Contents</span>
+    <span class="icon icon-arrow-down"></span>
+  </a>
+</div>
+
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+    <img alt="How To Configure Apache Content Caching on CentOS 7" title="How To Configure Apache Content Caching on CentOS 7" class="tutorial-image-mobile" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/apache_caching_tw.jpg">
+
+  <div class="container tutorial-header">
+      <img alt="How To Configure Apache Content Caching on CentOS 7" title="How To Configure Apache Content Caching on CentOS 7" class="tutorial-image" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/apache_caching_tw.jpg">
+
+      <div class="info-cta">
+    <a class="icon-close-light" href="javascript:void();"></a>
+    We hope you find this tutorial helpful. In addition to guides like 
+this one, we provide simple cloud infrastructure for developers. <a href="https://www.digitalocean.com/?utm_medium=community&amp;utm_source=community_gencta&amp;utm_campaign=needaserver&amp;utm_content=how-to-configure-apache-content-caching-on-centos-7">
+        Learn more →
+</a>  </div>
+
+
+    <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="1565" data-upvotable-type="Tutorial"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">5</span></button>
+
+    <h1 class="content-title Tutorial-header">
+      <button type="button" class="Button--reset Tutorial-headerButton " data-toggle="tooltip" title="" data-js="markAsComplete" data-tutorialinteraction="" data-tutorialsingle="" data-original-title="Mark as Complete">
+        <svg class="svg-icon svg-icon-completed"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-completed"></use></svg>
+      </button> How To Configure Apache Content Caching on CentOS 7
+    </h1>
+
+    <span class="meta-section timestamp"><span class="tutorial-date-text">Posted</span><span class="tutorial-date">April 13, 2015</span></span>
+
+    <span class="meta-section pageviews"><span class="icon icon-eye v-mid"></span><span class="views-count v-mid">32.8k</span><span class="sr-only"> views</span></span>
+
+    <span class="meta-section tags">
+      <a class="tag" href="https://www.digitalocean.com/community/tags/apache?type=tutorials">Apache</a> <a class="tag" href="https://www.digitalocean.com/community/tags/caching?type=tutorials">Caching</a> <a class="tag" href="https://www.digitalocean.com/community/tags/server-optimization?type=tutorials">Server Optimization</a>
+      <a class="tag" href="https://www.digitalocean.com/community/tags/centos?type=tutorials">CentOS</a>
+    </span>
+  </div>
+
+    <div class="content-body tutorial-content" data-growable-markdown="">
+      <h3 id="what-is-caching">What is Caching?</h3>
+
+<p>Caching is a method of improving server performance by allowing 
+commonly requested content to be temporarily stored in a way that allows
+ for faster access.  This speeds up processing and delivery by cutting 
+out some resource intensive operations.</p>
+
+<p>By creating effective caching rules, content that is suitable for 
+caching will be stored to improve response times, conserve resources, 
+and minimize load.  Apache provides a variety of caches suitable for 
+speeding up different types of operations.  In this guide, we will be 
+discussing how to configure Apache 2.4 on CentOS 7 using its various 
+caching modules.</p>
+
+<p>To learn more about developing general caching strategies, check out <a href="https://www.digitalocean.com/community/tutorials/web-caching-basics-terminology-http-headers-and-caching-strategies">this article</a>.</p>
+
+<div name="an-introduction-to-caching-in-apache" data-unique="an-introduction-to-caching-in-apache"></div><h2 id="an-introduction-to-caching-in-apache">An Introduction to Caching in Apache</h2>
+
+<p>Apache can cache content with varying levels of sophistication and 
+scalability.  The project divides these into three groups according to 
+the method in which the content is cached.  The general breakdown is:</p>
+
+<ul>
+<li><strong>File Caching</strong>: The most basic caching strategy, this
+ simply opens files or file descriptors when the server starts and keeps
+ them available to speed up access.</li>
+<li><strong>Key-Value Caching</strong>: Mainly used for SSL and 
+authentication caching, key-value caching uses a shared object model 
+that can store items which are costly to compute repeatedly.</li>
+<li><strong>Standard HTTP caching</strong>: The most flexible and 
+generally useful caching mechanism, this three-state system can store 
+responses and validate them when they expire.  This can be configured 
+for performance or flexibility depending on your specific needs.</li>
+</ul>
+
+<p>A quick look at the above descriptions may reveal that the above 
+methods have some overlap, but also that it may be helpful to use more 
+than one strategy at the same time.  For instance, using a key-value 
+store for your SSL sessions and enabling a standard HTTP cache for 
+responses could allow you to take significant load off of your data 
+sources and speed up many content delivery operations for your clients.</p>
+
+<p>Now that you have a broad understanding of each of Apache's caching mechanisms, let's look at these systems in more detail.</p>
+
+<div name="file-caching" data-unique="file-caching"></div><h2 id="file-caching">File Caching</h2>
+
+<h3 id="general-overview">General Overview</h3>
+
+<ul>
+<li><strong>Primary modules involved</strong>: <code>mod_file_cache</code></li>
+<li><strong>Main use cases</strong>: storing either file contents or 
+file descriptors when the server starts.  These are static 
+representations that cannot reliably be changed until the server is 
+restarted.</li>
+<li><strong>Features</strong>: simple, improves performance of slow filesystems</li>
+<li><strong>Drawbacks</strong>: experimental feature, does not respond 
+to updates on the filesystem, must be used sparingly to fit within 
+operating system's limitations, can only be used on static files</li>
+</ul>
+
+<h3 id="the-details">The Details</h3>
+
+<p>The <code>mod_file_cache</code> module is mainly used to speed up 
+file access on servers with slow filesystems.  It provides a choice of 
+two configuration directives, both of which aim to accelerate the 
+process of serving static files by performing some of the work when the 
+server is started rather than when the files are requested.</p>
+
+<p>The <code>CacheFile</code> directive is used to specify the path to 
+files on disk that you would like to accelerate access to.  When Apache 
+is started, Apache will open the static files that were specified and 
+cache the file handle, avoiding the need to open the file when it is 
+requested.  The number of files that can be opened in this way is 
+subject to the limitations set by your operating system.</p>
+
+<p>The <code>MMapFile</code> directive also opens files when Apache is first started.  However, <code>MMapFile</code>
+ caches the file's contents in memory rather than just the file handler.
+  This allows for faster performance for those pages, but it has some 
+serious limitations.  It maintains no record of the amount of memory it 
+has used, so it is possible to run out of memory.  Also note that child 
+processes will copy any of the allocated memory, which can result in 
+faster resource depletion than you initially may anticipate.  Only use 
+this directive sparingly.</p>
+
+<p>These directives are evaluated only when Apache starts.  This means 
+that you cannot rely on Apache to pick up changes made after it has 
+started.  Only use these on static files that will not change for the 
+lifetime of the Apache session.  Depending on how the files are 
+modified, the server may be notified of changes, but this is not 
+expected behavior and will not always work correctly.  If changes must 
+be made to files passed to these directives, restart Apache after the 
+changes have been made.</p>
+
+<h3 id="how-to-enable-file-caching">How To Enable File Caching</h3>
+
+<p>File caching is provided by the <code>mod_file_cache</code> module.  To use this functionality, you'll need to enable the module.</p>
+
+<p>When running CentOS 7, the module will be installed when you install 
+Apache, but the default configuration does not load the module.  To load
+ the module, we'll create a simple file in our <code>/etc/httpd/conf.modules.d</code> directory to load the module.  We'll call this file <code>00-cache.conf</code>:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo nano /etc/httpd/conf.modules.d/00-cache.conf
+</li></ul></code></pre>
+<p>Inside, we need to use the <code>LoadModule</code> directive to enable the functionality we need.  Add the following line to the file:</p>
+<div class="code-label " title="/etc/httpd/conf.modules.d/00-cache.conf">/etc/httpd/conf.modules.d/00-cache.conf</div><pre class="code-pre "><code class="code-highlight language-apache hljs "><span class="hljs-keyword"><span class="hljs-common">LoadModule</span></span> file_cache_module modules/mod_file_cache.so
+</code></pre>
+<p>Save and close the file when you're finished.</p>
+
+<p>Afterwards, you should edit the main configuration file to set up your file caching directives.  Open the file by typing:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo nano /etc/httpd/conf/httpd.conf
+</li></ul></code></pre>
+<p>To set up file handle caching, use the <code>CacheFile</code> directive.  This directive takes a list of file paths, separated by spaces, like this:</p>
+<div class="code-label " title="/etc/httpd/conf/httpd.conf">/etc/httpd/conf/httpd.conf</div><pre class="code-pre "><code class="code-highlight language-apache hljs "><span class="hljs-keyword">CacheFile</span> /var/www/html/index.html /var/www/html/somefile.index
+</code></pre>
+<p>When the server is restarted, Apache will open the files listed and store their file handles in the cache for faster access.</p>
+
+<p>If, instead, you wish to map a few files directly into memory, you can use the <code>MMapFile</code> directive.  Its syntax is basically the same as the last directive, in that it simply takes a list of file paths:</p>
+<div class="code-label " title="/etc/httpd/conf/httpd.conf">/etc/httpd/conf/httpd.conf</div><pre class="code-pre "><code class="code-highlight language-apache hljs "><span class="hljs-keyword">MMapFile</span> /var/www/html/index.html /var/www/html/somefile.index
+</code></pre>
+<p>In practice, there would be no reason to configure <em>both</em> <code>CacheFile</code> and <code>MMapFile</code> for the same set of files, but you could use both on different sets of files.</p>
+
+<p>When you are finished, you can save and close the files.  Check the configuration file syntax by typing:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo apachectl configtest
+</li></ul></code></pre>
+<p>If the last line reads <code>Syntax OK</code>, you can safely restart your Apache instance:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo systemctl restart httpd
+</li></ul></code></pre>
+<p>Apache will restart, caching the file contents or handlers depending on the directives you used.</p>
+
+<div name="key-value-caching" data-unique="key-value-caching"></div><h2 id="key-value-caching">Key-Value Caching</h2>
+
+<h3 id="general-overview">General Overview</h3>
+
+<ul>
+<li><strong>Primary modules involved</strong>: <code>mod_socache_dbm</code>, <code>mod_socache_dc</code>, <code>mod_socache_memcache</code>, <code>mod_socache_shmcb</code></li>
+<li><strong>Supporting modules involved</strong>: <code>mod_authn_socache</code>, <code>mod_ssl</code></li>
+<li><strong>Main use cases</strong>: storing SSL sessions or authentication details, SSL stapling</li>
+<li><strong>Features</strong>: shared object cache to store complex resources, can assist in SSL session caching and stapling, flexible backends</li>
+<li><strong>Drawbacks</strong>: has no validation mechanisms, need to configure separate software for more performant/flexible backends, some bugs in code</li>
+</ul>
+
+<h3 id="the-details">The Details</h3>
+
+<p>Key-value caching is more complex than file caching and has more 
+focused benefits.  Also known as a shared object cache, Apache's 
+key-value cache is mainly used to avoid repeating expensive operations 
+involved with setting up a client's access to content, as opposed to the
+ content itself.  Specifically, it can be used to cache authentication 
+details, SSL sessions, and to provide SSL stapling.</p>
+
+<p></p><div class="code-label notes-and-warnings note" title="Note">Note</div><span class="note">
+Currently, there are some issues with <em>every</em> shared object cache
+ provider.  References to the issues will be outlined below.  Take these
+ into consideration when evaluating whether to enable this feature.<br></span><p></p>
+
+<p>The actual caching is accomplished through the use of one of the shared object caching provider modules.  These are:</p>
+
+<ul>
+<li><strong><code>mod_socache_dbm</code></strong>: This backend uses the simple <code>dbm</code>
+ database engine, which is a file-based key-value store that makes use 
+of hashing and fixed-size buckets.  This provider suffers from some 
+memory leaks, so for most cases it is recommended to use <code>mod_socache_shmcb</code> instead.</li>
+<li><strong><code>mod_socache_dc</code></strong>: This provider uses the
+ distcache session caching software.  This project has not been updated 
+since 2004 and is not even packaged for some distributions, so use with a
+ healthy dose of caution.</li>
+<li><strong><code>mod_socache_memcache</code></strong>: This uses the 
+memcache distributed memory object cache for storing items.  This is the
+ best option for a distributed cache among multiple servers.  Currently,
+ it does not properly expire entries, but a <a href="https://bz.apache.org/bugzilla/show_bug.cgi?id=55445">patch</a> was committed to the trunk of Apache's version control that fixes the issue.</li>
+<li><strong><code>mod_socache_shmcb</code></strong>: Currently, this is 
+the best option for key-value caching.  This caches to a cyclic buffer 
+in shared memory, which will remove entries as it becomes full.  It 
+currently chokes on <a href="https://bz.apache.org/bugzilla/show_bug.cgi?id=57023">entries over 11k in size</a>.</li>
+</ul>
+
+<p>Along with the above provider modules, additional modules will be 
+required depending on the objects being cached.  For instance, to cache 
+SSL sessions or to configure SSL stapling, <code>mod_ssl</code> must be enabled, which will provide the <code>SSLSessionCache</code> and <code>SSLStaplingCache</code> directives respectively.  Similarly, to set up authentication caching, the <code>mod_authn_socache</code> module must be enabled so that the <code>AuthnCacheSOCache</code> directive can be set.</p>
+
+<h3 id="how-to-enable-key-value-caching">How To Enable Key-Value Caching</h3>
+
+<p>With the above bugs and caveats in mind, if you still wish to configure this type of caching in Apache, follow along below.</p>
+
+<p>The method used to set up the key-value cache will depend on what it 
+will be used for and what provider you are using.  We'll go over the 
+basics of both authentication caching and SSL session caching below.</p>
+
+<p>Currently, there is <a href="https://bz.apache.org/bugzilla/show_bug.cgi?id=54342">a bug with authentication caching</a>
+ that prevents passing arguments to the cache provider.  So any 
+providers that do not provide default settings to fall back on will have
+ issues.</p>
+
+<h4 id="authentication-caching">Authentication Caching</h4>
+
+<p>Authentication caching is useful if you are using an expensive 
+authentication method, such as LDAP or database authentication.  These 
+types of operations can have a significant impact on performance if the 
+backend must be hit every time an authentication request is made.</p>
+
+<p>Setting up caching involves modifying your existing authentication 
+configuration (we will not cover how to set up authentication in this 
+guide).  The modifications themselves will be much the same regardless 
+of the backend authentication method.  We'll use <code>mod_socache_shmcb</code> for our demonstration.  This module is already enabled in our <code>/etc/httpd/conf.modules.d/00-base.conf</code> file.</p>
+
+<p>Open your main Apache configuration file so that you can specify this shared cache backend for use with authentication:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo nano /etc/httpd/conf/httpd.conf
+</li></ul></code></pre>
+<p>Inside, towards the top of the file, add the <code>AuthnCacheSOCache</code> directive.  Specify that <code>shmcb</code>
+ should be used as the provider.  If the bug discussed earlier 
+preventing option passing is fixed by the time you read this, you can 
+specify a location and size for the cache.  The number is in bytes, so 
+the commented example will result in a 512 kilobyte cache:</p>
+<div class="code-label " title="/etc/httpd/conf/httpd.conf">/etc/httpd/conf/httpd.conf</div><pre class="code-pre "><code class="code-highlight language-apache hljs "><span class="hljs-keyword">AuthnCacheSOCache</span> shmcb
+
+<span class="hljs-comment"># If the bug preventing passed arguments to the provider gets fixed,</span>
+<span class="hljs-comment"># you can customize the location and size like this</span>
+<span class="hljs-comment">#AuthnCacheSOCache shmcb:${APACHE_RUN_DIR}/auth_cache(512000)</span>
+</code></pre>
+<p>Save and close the file when you are finished.</p>
+
+<p>Next, open your virtual host configuration page that has 
+authentication configured.  We'll assume you're using a virtual host 
+config called <code>site.conf</code> located within the <code>/etc/httpd/conf.d</code> directory, but you should modify it to reflect your environment:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo nano /etc/httpd/conf.d/site.conf
+</li></ul></code></pre>
+<p>A basic virtual host set up with authentication may look something like this:</p>
+<div class="code-label " title="/etc/httpd/conf.d/site.conf">/etc/httpd/conf.d/site.conf</div><pre class="code-pre "><code class="code-highlight language-apache hljs "><span class="hljs-tag">&lt;VirtualHost *:80&gt;</span>
+    <span class="hljs-keyword"><span class="hljs-common">ServerName</span></span> <span class="highlight">server_domain_or_IP</span>
+    <span class="hljs-keyword"><span class="hljs-common">DocumentRoot</span></span> /var/www/html
+
+    <span class="hljs-tag">&lt;Directory /var/www/html/private&gt;</span>
+        <span class="hljs-keyword">AuthType</span> Basic
+        <span class="hljs-keyword">AuthName</span> <span class="hljs-string">"Restricted Files"</span>
+        <span class="hljs-keyword">AuthUserFile</span> /etc/httpd/.htpasswd
+        <span class="hljs-keyword">AuthBasicProvider</span> file
+        <span class="hljs-keyword">Require</span> valid-user
+    <span class="hljs-tag">&lt;/Directory&gt;</span>
+<span class="hljs-tag">&lt;/VirtualHost&gt;</span>
+</code></pre>
+<p>In the location where you've configured authentication, modify the block to add caching.  Specifically, you need to add the <code>AuthnCacheProvideFor</code> to tell it which authentication sources to cache, add a cache timeout with <code>AuthnCacheTimeout</code>, and add <code>socache</code> to the <code>AuthBasicProvider</code> list ahead of your conventional authentication method.  The results will look something like this:</p>
+<div class="code-label " title="/etc/httpd/conf.d/site.conf">/etc/httpd/conf.d/site.conf</div><pre class="code-pre "><code class="code-highlight language-apache hljs "><span class="hljs-tag">&lt;VirtualHost *:80&gt;</span>
+    <span class="hljs-keyword"><span class="hljs-common">ServerName</span></span> <span class="highlight">server_domain_or_IP</span>
+    <span class="hljs-keyword"><span class="hljs-common">DocumentRoot</span></span> /var/www/html
+
+    <span class="hljs-tag">&lt;Directory /var/www/html/private&gt;</span>
+        <span class="hljs-keyword">AuthType</span> Basic
+        <span class="hljs-keyword">AuthName</span> <span class="hljs-string">"Restricted Files"</span>
+        <span class="hljs-keyword">AuthUserFile</span> /etc/apache/.htpasswd
+        <span class="hljs-keyword">AuthBasicProvider</span> <span class="highlight">socache</span> file
+        <span class="highlight"><span class="hljs-keyword">AuthnCacheProvideFor</span> file</span>
+        <span class="highlight"><span class="hljs-keyword">AuthnCacheTimeout</span> 300</span>
+        <span class="hljs-keyword">Require</span> valid-user
+    <span class="hljs-tag">&lt;/Directory&gt;</span>
+<span class="hljs-tag">&lt;/VirtualHost&gt;</span>
+</code></pre>
+<p>The above example is for file authentication, which probably won't 
+benefit from caching very much.  However, the implmentation should be 
+very similar when using other authentiation methods.  The only 
+substantial difference would be where the "file" specification is in the
+ above example, the other authentication method would be used instead.</p>
+
+<p>Save and close the file.  Check your changes for syntax errors by typing:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo apachectl configtest
+</li></ul></code></pre>
+<p>If no syntax errors are found, restart Apache to implement your caching changes:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo systemctl restart httpd
+</li></ul></code></pre>
+<h4 id="ssl-session-caching">SSL Session Caching</h4>
+
+<p>The handshake that must be performed to establish an SSL connection 
+carries significant overhead.  As such, caching the session data to 
+avoid this initialization step for further requests can potentially 
+skirt this penalty.  The shared object cache is a perfect place for 
+this.</p>
+
+<p>If you have SSL already configured for your Apache server, <code>mod_ssl</code> will be enabled (if not, use <code>yum</code> to install the <code>mod_ssl</code> module).  On CentOS 7, this means that an <code>ssl.conf</code> file will be available in the <code>/etc/httpd/conf.d</code> directory.  This actually already sets up caching.  Inside, you will see some lines like this:</p>
+<div class="code-label " title="/etc/httpd/conf.d/ssl.conf">/etc/httpd/conf.d/ssl.conf</div><pre class="code-pre "><code class="code-highlight language-apache hljs ">. . .
+
+<span class="hljs-keyword">SSLSessionCache</span>         shmcb:/run/httpd/sslcache(512000)
+<span class="hljs-keyword">SSLSessionCacheTimeout</span>  300
+
+. . .
+</code></pre>
+<p>This is actually enough to set up session caching.  To test this, you can use OpenSSL's connection client.  Type:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">openssl s_client -connect 127.0.0.1:443 -reconnect -no_ticket | grep Session-ID
+</li></ul></code></pre>
+<p>If the session ID is the same in all of the results, your session 
+cache is working correctly.  Press CTRL-C to exit back to the terminal.</p>
+
+<div name="standard-http-caching" data-unique="standard-http-caching"></div><h2 id="standard-http-caching">Standard HTTP Caching</h2>
+
+<h3 id="general-overview">General Overview</h3>
+
+<ul>
+<li><strong>Primary modules involved</strong>: <code>mod_cache</code></li>
+<li><strong>Supporting modules involved</strong>: <code>mod_cache_disk</code>, <code>mod_cache_socache</code></li>
+<li><strong>Main use cases</strong>: Caching general content</li>
+<li><strong>Features</strong>: Can correctly interpret HTTP caching 
+headers, can revalidate stale entries, can be deployed for maximum speed
+ or flexibility depending on your needs</li>
+<li><strong>Drawbacks</strong>: Can leak sensitive data if incorrectly configured, must use additional modules to correctly set the caching policy</li>
+</ul>
+
+<h3 id="the-details">The Details</h3>
+
+<p>The HTTP protocol encourages and provides the mechanisms for caching 
+responses all along the content delivery path.  Any computer that 
+touches the content can potentially cache each item for a certain amount
+ of time depending on the caching policies set forth at the content's 
+origins and the computer's own caching rules.</p>
+
+<p>The Apache HTTP caching mechanism caches responses according to the 
+HTTP caching policies it sees.  This is a general purpose caching system
+ that adheres to the same rules that any intermediary server would 
+follow that has a hand in the delivery.  This makes this system very 
+flexible and powerful and allows you to leverage the headers that you 
+should already be setting on your content (we'll cover how to do this 
+below).</p>
+
+<p>Apache's HTTP cache is also known as a "three state" cache.  This is 
+because the content it has stored can be in one of three states.  It can
+ be fresh, meaning it is allowed to be served to clients with no further
+ checking, it can be stale, meaning that the TTL on the content has 
+expired, or it can be non-existent if the content is not found in the 
+cache.</p>
+
+<p>If the content becomes stale, at the next request, the cache can 
+revalidate it by checking the content at the origin.  If it hasn't 
+changed, it can reset the freshness date and serve the current content. 
+ Otherwise, it fetches the changed content and stores that for the 
+length of time allowed by its caching policy.</p>
+
+<h4 id="module-overview">Module Overview</h4>
+
+<p>The HTTP caching logic is available through the <code>mod_cache</code> module.  The actual caching is done with one of the caching providers.  Typically, the cache is stored on disk using the <code>mod_cache_disk</code> module, but shared object caching is also available through the <code>mod_cache_socache</code> module.</p>
+
+<p>The <code>mod_cache_disk</code> module caches on disk, so it can be 
+useful if you are proxying content from a remote location, generating it
+ from a dynamic process, or just trying to speed things up by caching on
+ a faster disk than your content typically resides on.  This is the most
+ well-tested provider and should probably be your first choice in most 
+cases.  The cache is not cleaned automatically, so a tool called <code>htcacheclean</code> must be run occasionally to slim down the cache.  This can be run manually, set up as a regular <code>cron</code> job, or run as a daemon.</p>
+
+<p>The <code>mod_cache_socache</code> module caches to one of the shared
+ object providers (the same ones discussed in the last section).  This 
+can potentially have better performance than <code>mod_cache_disk</code>
+ (depending on which shared cache provider is selected).  However, it is
+ much newer and relies on the shared object providers, which have the 
+bugs discussed earlier.  Comprehensive testing is recommended before 
+implementing the <code>mod_cache_socache</code> option.</p>
+
+<h4 id="http-cache-placement">HTTP Cache Placement</h4>
+
+<p>Apache's HTTP cache can be deployed in two different configurations depending on your needs.</p>
+
+<p>If the <code>CacheQuickHandler</code> is set to "on", the cache will 
+be checked very early in the request handling process.  If content is 
+found, it will be served directly without any further handling.  This 
+means that it is incredibly quick, but it also means that it does not 
+allow for processes like authentication for content.  If there is 
+content in your cache that normally requires authentication or access 
+control, it will be accessible to <strong>anyone</strong> without authentication if the <code>CacheQuickHandler</code> is set to "on". </p>
+
+<p>Basically, this emulates a separate cache in front of your web 
+server.  If your web server needs to do any kind of conditional 
+checking, authentication, or authorization, this will not happen.  
+Apache will not even evaluate directives within <code>&lt;Location&gt;</code> or <code>&lt;Directory&gt;</code> blocks.  Note that <code>CacheQuickHandler</code> is set to "on" by <strong>default</strong>!</p>
+
+<p>If the <code>CacheQuickHandler</code> is set to "off", the cache will
+ be checked significantly later in the request processing sequence.  
+Think of this configuration as placing the cache between your Apache 
+processing logic and your actual content.  This will allow the 
+conventional processing directives to be run prior to retrieving content
+ from the cache.  Setting this to "off" trades a bit of speed for the 
+ability to process requests more deeply.</p>
+
+<h3 id="how-to-configure-standard-http-caching">How To Configure Standard HTTP Caching</h3>
+
+<p>In order to enable caching, you'll need to enable the <code>mod_cache</code> module as well as one of its caching providers.  As we stated above, <code>mod_cache_disk</code> is well tested, so we will rely on that.</p>
+
+<h4 id="setting-up-htcacheclean-to-automatically-manage-the-cache">Setting Up htcacheclean to Automatically Manage the Cache</h4>
+
+<p>On a CentOS 7 system, the <code>htcacheclean</code> utility, which is used to pare down the cache as it grows, is installed during the <code>httpd</code> installation.  A <code>systemd</code> unit file called <code>htcacheclean.service</code> is included by default.</p>
+
+<p>If you plan on setting up caching, it is a good idea to configure 
+this service to run automatically.  The service file actually daemonizes
+ the service, running the cleaning operation at a configurable interval.
+  However, by default, there is not a mechanism for starting it when 
+Apache starts.</p>
+
+<p>To set this up, we'll make a directory called <code>httpd.service.requires</code> within the <code>/etc/systemd/system</code> directory.  This can be used to specify dependencies of the <code>httpd.service</code> unit file that starts Apache:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo mkdir -p /etc/systemd/system/httpd.service.requires
+</li></ul></code></pre>
+<p>Afterwards, we can link the <code>htcacheclean.service</code> unit file into this directory.  This will cause the <code>htcacheclean</code> service to start and clean the cache at regular intervals when Apache is started:</p>
+<pre class="code-pre "><code langs="">sudo ln -s /usr/lib/systemd/system/htcacheclean.service /etc/systemd/system/httpd.service.requires
+</code></pre>
+<p>You can configure the <code>htcacheclean</code> options, including the cleaning interval, by editing the <code>htcacheclean</code> file in the <code>/etc/sysconfig</code> directory:</p>
+<pre class="code-pre "><code langs="">sudo nano /etc/sysconfig/htcacheclean
+</code></pre>
+<p>Here, you can modify the cleaning interval, the cache root, the maximum cache size, and any other options for the utility:</p>
+<div class="code-label " title="/etc/sysconfig/htcacheclean">/etc/sysconfig/htcacheclean</div><pre class="code-pre "><code langs="">INTERVAL=15
+CACHE_ROOT=/var/cache/httpd/proxy
+LIMIT=100M
+OPTIONS=
+</code></pre>
+<p></p><div class="code-label notes-and-warnings note" title="Note">Note</div><span class="note">
+Keep in mind that if you change the value of <code>CACHE_ROOT</code>, you will need to adjust the value the <code>CacheRoot</code> directive that we will be setting in our Apache configuration.<br></span><p></p>
+
+<p>When you are finished, save and close the file.</p>
+
+<p>Restart Apache to start the <code>htcacheclean</code> to automatically clean the cache:</p>
+<pre class="code-pre "><code langs="">sudo systemctl restart httpd
+</code></pre>
+<h4 id="modifying-the-global-configuration">Modifying the Global Configuration</h4>
+
+<p>Most of the configuration for caching will take place within 
+individual virtual host definitions or location blocks.  However, there 
+are also some global configuration items that should be used to set up 
+some general attributes.  Open your main Apache config file to configure
+ these items:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo nano /etc/httpd/conf/httpd.conf
+</li></ul></code></pre>
+<p>We need to add the <code>CacheRoot</code> directory to point to the path that should be used to store our cached items.  This should always match the <code>CACHE_ROOT</code> value found in your <code>/etc/sysconfig/htcacheclean</code> file so that the cache can be managed correctly.  We will also set the <code>CacheDirLevels</code> and <code>CacheDirLength</code> directives, which both contribute towards defining how the cache directory structure will be built:</p>
+<div class="code-label " title="/etc/httpd/conf/httpd.conf">/etc/httpd/conf/httpd.conf</div><pre class="code-pre "><code class="code-highlight language-apache hljs "><span class="hljs-keyword">CacheRoot</span> /var/cache/httpd/proxy
+<span class="hljs-keyword">CacheDirLevels</span> 2
+<span class="hljs-keyword">CacheDirLength</span> 1
+</code></pre>
+<p>The <code>CacheDirLevels</code> and <code>CacheDirLength</code> both contribute towards defining how the cache directory structure will be built.  An <code>md5</code>
+ hash of the URL being served will be created as the key used to store 
+the data.  The data will be organized into directories derived from the 
+beginning characters of each hash.  <code>CacheDirLevels</code> specifies the number of subdirectories to create and <code>CacheDirLength</code> specifies how many characters to use as the name of each directory.  So a hash of <code>b1946ac92492d2347c6235b4d2611184</code> with the default values shown above would be filed in a directory structure of <code>b/1/946ac92492d2347c6235b4d2611184</code>.  Usually, you won't need to modify these values, but it's good to know what they're used for.</p>
+
+<p>Some other values you can set in this file are <code>CacheMaxFileSize</code> and <code>CacheMinFileSize</code> which set the ranges of file sizes in bytes that Apache will commit to the cache, as well as <code>CacheReadSize</code> and <code>CacheReadTime</code>,
+ which allows you to wait and buffer content before sending to the 
+client.  This can be useful if the content resides somewhere other than 
+this server.</p>
+
+<h4 id="modifying-the-virtual-server">Modifying the Virtual Server</h4>
+
+<p>Most of the configuration for caching will happen on a more granular 
+level, either in the virtual host definition or in a specific location 
+block.</p>
+
+<p>Open one of your virtual host files to follow along.  We'll assume you're using a file called <code>site.conf</code> within your <code>/etc/httpd/conf.d</code> directory in this guide:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo nano /etc/httpd/conf.d/site.conf
+</li></ul></code></pre>
+<p>In the virtual host block, outside of any location block, we can 
+begin configuring some of the caching properties.  In this guide, we'll 
+assume that we want to turn the <code>CacheQuickHandler</code> off so that more processing is done.  This allows us up more complete caching rules.</p>
+
+<p>We will also take this opportunity to configure cache locking.  This 
+is a system of file locks that Apache will use when it is checking in 
+with the content origin to see whether content is still valid.  During 
+the time when this query is being satisfied, if additional requests for 
+the same content come in, it would result in additional requests to the 
+backend resource, which could cause load spikes.</p>
+
+<p>Setting a cache lock for a resource during validation tells Apache 
+that the resource is currently being refreshed.  During this time, the 
+stale resource can be served with a warning header indicating its state.
+  We'll set this up with a cache lock directory in the <code>/tmp</code>
+ folder.  We'll allow a maximum of 5 seconds for a lock to be considered
+ valid.  These examples are taken directly from Apache's documentation, 
+so they should work well for our purposes.</p>
+
+<p>We will also tell Apache to ignore the <code>Set-Cookie</code> 
+headers and not store them in the cache.  Doing so will prevent Apache 
+from accidentally leaking user-specific cookies out to other parties.  
+The <code>Set-Cookie</code> header will be stripped before the headers are cached.</p>
+<div class="code-label " title="/etc/httpd/conf.d/site.conf">/etc/httpd/conf.d/site.conf</div><pre class="code-pre "><code class="code-highlight language-apache hljs "><span class="hljs-tag">&lt;VirtualHost *:80&gt;</span>
+    <span class="hljs-keyword"><span class="hljs-common">ServerName</span></span> <span class="highlight">server_domain_or_IP</span>
+    <span class="hljs-keyword"><span class="hljs-common">DocumentRoot</span></span> /var/www/html
+
+    <span class="highlight"><span class="hljs-keyword">CacheQuickHandler</span> <span class="hljs-literal">off</span></span>
+
+    <span class="highlight"><span class="hljs-keyword">CacheLock</span> <span class="hljs-literal">on</span></span>
+    <span class="highlight"><span class="hljs-keyword">CacheLockPath</span> /tmp/mod_cache-lock</span>
+    <span class="highlight"><span class="hljs-keyword">CacheLockMaxAge</span> 5</span>
+
+    <span class="highlight"><span class="hljs-keyword">CacheIgnoreHeaders</span> Set-Cookie</span>
+<span class="hljs-tag">&lt;/VirtualHost&gt;</span>
+</code></pre>
+<p>We still need to actually enable caching for this virtual host.  We can do this with the <code>CacheEnable</code> directive.  If this is set in a virtual host block, we would need to provide the caching method (<code>disk</code> or <code>socache</code>) as well as the requested URIs that should be cached.  For example, to cache all responses, this could be set to <code>CacheEnable disk /</code>, but if you only wanted to cache responses under the <code>/public</code> URI, you could set this to <code>CacheEnable disk /public</code>.</p>
+
+<p>We will take a different approach by enabling our cache within a 
+specific location block.  Doing so means we don't have to provide a URI 
+path to the <code>CacheEnable</code> command.  Any URI that would be served from that location will be cached.  We will also turn on the <code>CacheHeader</code> directive so that our response headers will indicate whether the cache was used to serve the request or not.</p>
+
+<p>Another directive we'll set is <code>CacheDefaultExpire</code> so that we can set an expiration (in seconds) if neither the <code>Expires</code> nor the <code>Last-Modified</code> headers are set on the content.  Similarly, we'll set <code>CacheMaxExpire</code> to cap the amount of time items will be saved.  We'll set the <code>CacheLastModifiedFactor</code> so that Apache can create an expiration date if it has a <code>Last-Modified</code> date, but no expiration.  The factor is multiplied by the time since modification to set a reasonable expiration.</p>
+<div class="code-label " title="/etc/httpd/conf.d/site.conf">/etc/httpd/conf.d/site.conf</div><pre class="code-pre "><code class="code-highlight language-apache hljs "><span class="hljs-tag">&lt;VirtualHost *:80&gt;</span>
+    <span class="hljs-keyword"><span class="hljs-common">ServerName</span></span> <span class="highlight">server_domain_or_IP</span>
+    <span class="hljs-keyword"><span class="hljs-common">DocumentRoot</span></span> /var/www/html
+
+    <span class="hljs-keyword">CacheQuickHandler</span> <span class="hljs-literal">off</span>
+
+    <span class="hljs-keyword">CacheLock</span> <span class="hljs-literal">on</span>
+    <span class="hljs-keyword">CacheLockPath</span> /tmp/mod_cache-lock
+    <span class="hljs-keyword">CacheLockMaxAge</span> 5
+
+    <span class="hljs-keyword">CacheIgnoreHeaders</span> Set-Cookie
+
+    <span class="highlight"><span class="hljs-tag">&lt;Location /&gt;</span></span>
+        <span class="highlight"><span class="hljs-keyword">CacheEnable</span> disk</span>
+        <span class="highlight"><span class="hljs-keyword">CacheHeader</span> <span class="hljs-literal">on</span></span>
+
+        <span class="highlight"><span class="hljs-keyword">CacheDefaultExpire</span> 600</span>
+        <span class="highlight"><span class="hljs-keyword">CacheMaxExpire</span> 86400</span>
+        <span class="highlight"><span class="hljs-keyword">CacheLastModifiedFactor</span> 0.5</span>
+    <span class="highlight"><span class="hljs-tag">&lt;/Location&gt;</span></span>
+<span class="hljs-tag">&lt;/VirtualHost&gt;</span>
+</code></pre>
+<p>Save and close your file when you've configured everything that you need.</p>
+
+<p>Check your entire configuration for syntax errors by typing:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo apachectl configtest
+</li></ul></code></pre>
+<p>If no errors are reported, restart your service by typing:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo systemctl restart httpd
+</li></ul></code></pre>
+<div name="setting-expires-and-caching-headers-on-content" data-unique="setting-expires-and-caching-headers-on-content"></div><h2 id="setting-expires-and-caching-headers-on-content">Setting Expires and Caching Headers on Content</h2>
+
+<p>In the above configuration, we configured HTTP caching, which relies 
+on HTTP headers.  However, none of the content we're serving actually 
+has the <code>Expires</code> or <code>Cache-Control</code> headers needed to make intelligent caching decisions.  To set these headers, we need to take advantage of a few more modules.</p>
+
+<p>The <code>mod_expires</code> module can set both the <code>Expires</code> header and the <code>max-age</code> option in the <code>Cache-Control</code> header.  The <code>mod_headers</code> module can be used to add more specific <code>Cache-Control</code> options to tune the caching policy further.  Both of these modules are enabled by default in the CentOS 7 Apache package.</p>
+
+<p>We can go straight to modifying our virtual host file again to begin configuring these items:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo nano /etc/httpd/conf.d/site.conf
+</li></ul></code></pre>
+<p>The <code>mod_expires</code> module provides just three directives.  The <code>ExpiresActive</code>
+ turns expiration processing on in a certain context by setting it to 
+"on".  The other two directives are very similar to each other.  The <code>ExpiresDefault</code> directive sets the default expiration time, and the <code>ExpiresByType</code> sets the expiration time according to the MIME type of the content.  Both of these will set the <code>Expires</code> and the <code>Cache-Control</code> "max-age" to the correct values.</p>
+
+<p>These two settings can take two different syntaxes.  The first is 
+simply "A" or "M" followed by a number of seconds.  This sets the 
+expiration in relation to the last time the content was "accessed" or 
+"modified" respectively.  For example, these both would expire content 
+30 seconds after it was accessed.</p>
+<pre class="code-pre "><code langs="">ExpiresDefault A30
+ExpireByType text/html A30
+</code></pre>
+<p>The other syntax allows for more verbose configuration.  It allows 
+you to use units other than seconds that are easier for humans to 
+calculate.  It also uses the full word "access" or "modification".  The 
+entire expiration configuration should be kept in quotes, like this:</p>
+<pre class="code-pre "><code langs="">ExpiresDefault "modification plus 2 weeks 3 days 1 hour"
+ExpiresByType text/html "modification plus 2 weeks 3 days 1 hour"
+</code></pre>
+<p>For our purposes, we'll just set a default expiration.  We will start
+ by setting it to 5 minutes so that if we make a mistake while getting 
+familiar, it won't be stored on our clients' computers for an extremely 
+long time.  When we're more confident in our ability to select policies 
+appropriate for our content, we can adjust this to something more 
+aggressive:</p>
+<div class="code-label " title="/etc/httpd/conf.d/site.conf">/etc/httpd/conf.d/site.conf</div><pre class="code-pre "><code class="code-highlight language-apache hljs "><span class="hljs-tag">&lt;VirtualHost *:80&gt;</span>
+    <span class="hljs-keyword"><span class="hljs-common">ServerName</span></span> <span class="highlight">server_domain_or_IP</span>
+    <span class="hljs-keyword"><span class="hljs-common">DocumentRoot</span></span> /var/www/html
+
+    <span class="hljs-keyword">CacheQuickHandler</span> <span class="hljs-literal">off</span>
+
+    <span class="hljs-keyword">CacheLock</span> <span class="hljs-literal">on</span>
+    <span class="hljs-keyword">CacheLockPath</span> /tmp/mod_cache-lock
+    <span class="hljs-keyword">CacheLockMaxAge</span> 5
+
+    <span class="hljs-keyword">CacheIgnoreHeaders</span> Set-Cookie
+
+    <span class="hljs-tag">&lt;Location /&gt;</span>
+        <span class="hljs-keyword">CacheEnable</span> disk
+        <span class="hljs-keyword">CacheHeader</span> <span class="hljs-literal">on</span>
+
+        <span class="hljs-keyword">CacheDefaultExpire</span> 600
+        <span class="hljs-keyword">CacheMaxExpire</span> 86400
+        <span class="hljs-keyword">CacheLastModifiedFactor</span> 0.5
+
+        <span class="highlight"><span class="hljs-keyword">ExpiresActive</span> <span class="hljs-literal">on</span></span>
+        <span class="highlight"><span class="hljs-keyword">ExpiresDefault</span> <span class="hljs-string">"access plus 5 minutes"</span></span>
+    <span class="hljs-tag">&lt;/Location&gt;</span>
+<span class="hljs-tag">&lt;/VirtualHost&gt;</span>
+</code></pre>
+<p>This will set our <code>Expires</code> header to five minutes in the future and set <code>Cache-Control max-age=300</code>.  In order to refine our caching policy further, we can use the <code>Header</code> directive.  We can use the <code>merge</code> option to add additional <code>Cache-Control</code> options.  You can call this multiple times and add whichever additional policies you'd like.  Check out <a href="https://www.digitalocean.com/community/tutorials/web-caching-basics-terminology-http-headers-and-caching-strategies">this guide</a>
+ to get an idea about the caching policies you'd like to set for your 
+content.  For our example, we'll just set "public" so that other caches 
+can be sure that they're allowed to store copies.</p>
+
+<p>To set <code>ETags</code> for static content on our site (to use for validation), we can use the <code>FileETag</code>
+ directive.  This will work for static content.  For dynamically 
+generated content, you're application will be responsible for correctly 
+generating <code>ETags</code>.</p>
+
+<p>We can use the directive to set the attributes that Apache will use to calculate the <code>Etag</code>.  This can be <code>INode</code>, <code>MTime</code>, <code>Size</code>, or <code>All</code> depending on if we want to modify the <code>ETag</code> whenever the file's <code>inode</code>
+ changes, its modification time changes, its size changes, or all of the
+ above.  You can provide more than one value, and you can modify the 
+inherited setting in child contexts by preceding the new settings with a
+ <code>+</code> or <code>-</code>.  For our purposes, we'll just use "all" so that all changes are registered:</p>
+<div class="code-label " title="/etc/httpd/conf.d/site.conf">/etc/httpd/conf.d/site.conf</div><pre class="code-pre "><code class="code-highlight language-apache hljs "><span class="hljs-tag">&lt;VirtualHost *:80&gt;</span>
+    <span class="hljs-keyword"><span class="hljs-common">ServerName</span></span> <span class="highlight">server_domain_or_IP</span>
+    <span class="hljs-keyword"><span class="hljs-common">DocumentRoot</span></span> /var/www/html
+
+    <span class="hljs-keyword">CacheQuickHandler</span> <span class="hljs-literal">off</span>
+
+    <span class="hljs-keyword">CacheLock</span> <span class="hljs-literal">on</span>
+    <span class="hljs-keyword">CacheLockPath</span> /tmp/mod_cache-lock
+    <span class="hljs-keyword">CacheLockMaxAge</span> 5
+
+    <span class="hljs-keyword">CacheIgnoreHeaders</span> Set-Cookie
+
+    <span class="hljs-tag">&lt;Location /&gt;</span>
+        <span class="hljs-keyword">CacheEnable</span> disk
+        <span class="hljs-keyword">CacheHeader</span> <span class="hljs-literal">on</span>
+
+        <span class="hljs-keyword">CacheDefaultExpire</span> 600
+        <span class="hljs-keyword">CacheMaxExpire</span> 86400
+        <span class="hljs-keyword">CacheLastModifiedFactor</span> 0.5
+
+        <span class="hljs-keyword">ExpiresActive</span> <span class="hljs-literal">on</span>
+        <span class="hljs-keyword">ExpiresDefault</span> <span class="hljs-string">"access plus 5 minutes"</span>
+
+        <span class="highlight"><span class="hljs-keyword"><span class="hljs-common">Header</span></span> merge Cache-Control public</span>
+        <span class="highlight"><span class="hljs-keyword">FileETag</span></span> <span class="hljs-literal">All</span>
+    <span class="hljs-tag">&lt;/Location&gt;</span>
+<span class="hljs-tag">&lt;/VirtualHost&gt;</span>
+</code></pre>
+<p>This will add "public" (separated by a comma) to whatever value <code>Cache-Control</code> already has and will include an <code>ETag</code> for our static content.</p>
+
+<p>When you are finished, save and close the file.  Check the syntax of your changes by typing:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo apachectl configtest
+</li></ul></code></pre>
+<p>If no errors were found, restart your service to implement your caching policies:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo systemctl restart httpd
+</li></ul></code></pre>
+<div name="conclusion" data-unique="conclusion"></div><h2 id="conclusion">Conclusion</h2>
+
+<p>Configuring caching with Apache can seem like a daunting job due to 
+how many options there are.  Luckily, it is easy to start simple and 
+then grow as you require more complexity.  Most administrators will not 
+require each of the caching types.</p>
+
+<p>When configuring caching, keep in mind the specific problems that 
+you're trying to solve to avoid getting lost in the different 
+implementation choices.  Most users will benefit from at least setting 
+up headers.  If you are proxying or generating content, setting an HTTP 
+cache may be helpful.  Shared object caching is useful for specific 
+tasks like storing SSL sessions or authentication details if you are 
+using a backend provider.  File caching can probably be limited to those
+ with slow systems.</p>
+
+    </div>
+</div>
+
+<div class="tutorial-footer">
+  <div class="tutorial-footer-details">
+
+  <div class="postable-info-bar-container">
+  <div class="postable-info-bar">
+    <div class="left-section">
+        <div class="tutorial-author-avatar">
+    <a href="https://www.digitalocean.com/community/users/jellingwood"><div class="mod-avatar mod-avatar-small"><img alt="jellingwood" class="avatar avatar-small" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/60d901f61a6146e14a3e989bc1f4ef11.png" width="80" height="80"><span class="mod-star" title="" data-toggle="tooltip" data-container="body" data-original-title="MOD"><span class="mod-star-icon"></span></span></div></a>
+  </div>
+  <div class="author-and-date">
+    <div class="tutorial-author">
+      <div class="by">By: </div>
+      <a href="https://www.digitalocean.com/community/users/jellingwood">Justin Ellingwood</a>
+    </div>
+  </div>
+
+    </div>
+    <div class="right-section">
+      <div class="upvote-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="false" data-upvotable-id="1565" data-upvotable-type="Tutorial"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-heart"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-heart"></use></svg></span><span class="new-upvote-text">Upvote</span><span class="new-upvote-count">5</span></button>
+      </div>
+      <div class="section-item section-item-subscribe">
+  <span class="opt-in-switch off signed-out-subscribe">
+    <span class="subscribe-label">
+      <span class="icon icon-subscribe"></span>
+      <span class="subscription-label subscribe">Subscribe</span>
+      <span class="icon icon-subscribed"></span>
+      <span class="subscription-label subscribed">Subscribed</span>
+    </span>
+    <a data-toggle="modal" data-target="#sign-in-modal" class="mini-switch-container" href="javascript:void(0);"><div class="mini-switch off signed-out-subscribe"><div class="switch-handle"></div></div></a>
+  </span>
+</div>
+
+<div class="section-item social-sharing-item">
+  <div class="sharing">
+  <a class="share-button" href="#" data-toggle="modal" data-target="#share-modal">
+    <span class="icon icon-share-square"></span>
+    <span class="share-button-text">Share</span>
+  </a>
+</div>
+
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+  <div class="section-content tutorial-contributors one">
+
+
+  </div>
+</div>
+
+
+  
+  <div class="tutorial-ctas" style="background-image:url(https://assets.digitalocean.com/labs/btp/meetups.png); background-color:#172232; background-position:bottom center; padding-top:-10px;">
+  <div class="section-content">
+    <div class="cta-description">
+      <h2 style="color: rgb(255, 255, 255);">DigitalOcean, live from your hometown</h2>
+
+      <p style="color: rgb(255, 255, 255); padding: 15px 0px; line-height: 1.3em;">Meet
+ developers of all skill levels to share resources and form discussions 
+around cloud and DevOps topics. Attend a meetup, start one in your city,
+ or apply to speak at one near you.</p>
+
+      <a class="cloud-tutorial-cta" href="https://www.meetup.com/pro/digitalocean/?utm_medium=btp_regulars_meetups" style="background:#FFF;color:#0069FF;">Find a Meetup</a>
+    </div>
+  </div>
+</div>
+    <div class="related-tutorials">
+    <div class="section-content">
+      <h2>Related Tutorials</h2>
+
+      <ul>
+        <li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-configure-content-caching-using-apache-modules-on-a-vps">How To Configure Content Caching Using Apache Modules On A VPS</a></li>
+<li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-virtualmin-with-webmin-lamp-bind-and-postfix-on-ubuntu-16-04">How to Install Virtualmin with Webmin, LAMP, BIND, and PostFix on Ubuntu 16.04</a></li>
+<li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-zabbix-to-securely-monitor-remote-servers-on-ubuntu-16-04">How to Install and Configure Zabbix to Securely Monitor Remote Servers on Ubuntu 16.04</a></li>
+<li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-16-04">How To Install the Apache Web Server on Ubuntu 16.04</a></li>
+<li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-host-a-website-with-caddy-on-centos-7">How To Host a Website with Caddy on CentOS 7</a></li>
+
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="content-comments">
+  <div class="section-content">
+    <div class="tutorial commentable" id="tutorial_1565">
+
+  <div class="comments-header">
+    <h4 class="comments-count"><span>0 Comments</span></h4>
+  </div>
+
+  <div class="response response-form no-avatar no-comments">
+  <div class="js-display-on-error flash error hidden"></div>
+
+
+  <form class="content-form disabled-form" id="new_comment" action="/community/tutorials/how-to-configure-apache-content-caching-on-centos-7/comments" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" value="✓" disabled="disabled" type="hidden">
+
+    <div class="meltdown_wrap" style="height: auto;"><div class="meltdown_topmargin"></div><div class="meltdown_bar"><ul class="meltdown_controls meltdown_controls_preview"><li class="meltdown_control-preview meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Toggle Preview"><span>Preview</span></li></ul><div class="preview-header">Markdown Preview</div><ul class="meltdown_controls meltdown_controls_main"><li class="meltdown_control-bold meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Bold" style=""><span unselectable="on">B</span></li><li class="meltdown_control-italics meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Italics"><span unselectable="on">I</span></li><li class="meltdown_control-h1 meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Header 1"><span unselectable="on">H1</span></li><li class="meltdown_control-h2 meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Header 2"><span unselectable="on">H2</span></li><li class="meltdown_control-h3 meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Header 3"><span unselectable="on">H3</span></li><li class="meltdown_control-ul meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Unordered List"><span unselectable="on">UL</span></li><li class="meltdown_control-ol meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Ordered List"><span unselectable="on">OL</span></li><li class="meltdown_control-link meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Link"><span unselectable="on">Link</span></li><li class="meltdown_control-code meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Code"><span unselectable="on">Code</span></li><li class="meltdown_control-highlight meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Highlight"><span unselectable="on">Highlight</span></li><li class="meltdown_control-table meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Table" style=""><span unselectable="on">Table</span></li></ul></div><div class="meltdown_editor-wrap"><div class="meltdown_editor-deco"><textarea name="comment[content]" id="comment_content" placeholder="Leave a comment..." class="js-comment-content tutorial-comment-field meltdown_editor" data-markdown="true" disabled="disabled" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 120px;"></textarea></div></div><div class="meltdown_preview-wrap"><div class="meltdown_preview-wrap2"><div class="meltdown_preview-error-message">Could not load preview. <a href="#">Try again</a></div><div class="meltdown_preview-loading-message">Loading preview...</div><div class="meltdown_preview content-body"></div></div></div><div class="meltdown_bottommargin"></div></div>
+
+      <div class="log-in-notice "><a href="https://www.digitalocean.com/community/auth/digitalocean">Log In to Comment</a></div>
+
+    <div class="clearfix"></div>
+</form>
+</div>
+
+
+  <div class="comments">
+    <ul class="response-list">
+    </ul>
+
+  </div>
+
+  <div class="load-more-container"></div>
+</div>
+
+
+  </div>
+</div>
+
+<div class="creative-commons">
+  <a class="creative-commons-image" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img rel="license" alt="Creative Commons License" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/creativecommons-08b32a9279fcd47fcd78ac6a26331389.png"></a>
+    <div class="license-text">This work is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</div>
+</div>
+
+
+
+
+
+        <div class="clearfix"></div>
+      </div>
+
+
+      <footer class="Footer">
+  <span class="Footer-logo icon-sammy"></span>
+
+  <div>Copyright © 2017 DigitalOcean™ Inc.</div>
+
+  <ul class="Footer-nav">
+    <li><a href="https://www.digitalocean.com/community">Community</a></li>
+    <li><a href="https://www.digitalocean.com/community/tutorials">Tutorials</a></li>
+    <li><a href="https://www.digitalocean.com/community/questions">Questions</a></li>
+    <li><a href="https://www.digitalocean.com/community/projects">Projects</a></li>
+    <li><a href="https://www.digitalocean.com/community/tags">Tags</a></li>
+    <li><a href="https://www.digitalocean.com/community/newsletter">Newsletter</a></li>
+    <li>
+      <a href="https://www.digitalocean.com/community/tutorials/feed">
+        RSS <span class="icon-rss"></span>
+</a>    </li>
+  </ul>
+
+  <br>
+
+  <ul class="Footer-nav Footer-nav--secondary">
+    <li><a href="https://www.digitalocean.com/features/one-click-apps/">Distros &amp; One-Click Apps</a></li>
+    <li><a href="https://www.digitalocean.com/legal/terms/">Terms, Privacy, &amp; Copyright</a></li>
+    <li><a href="https://www.digitalocean.com/security/">Security</a></li>
+      <li><a data-toggle="modal" data-target="#sign-in-modal" href="#">Report a Bug</a></li>
+    <li><a href="https://www.digitalocean.com/community/write-for-digitalocean">Write for DigitalOcean</a></li>
+    <li><a href="http://store.digitalocean.com/">Shop</a></li>
+  </ul>
+</footer>
+
+
+
+
+
+      <div id="sign-in-modal" class="modal fade mini-modal" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Almost there!</h1>
+        <a class="close-button" data-dismiss="modal" aria-label="close" href=""><span class="icon icon-close-light"></span></a>
+      </div>
+      <div class="modal-body">
+        <div class="sign-in-message">Sign into your account, or create a new one, to start interacting.</div>
+
+        <div class="sign-in-modal-actions">
+          <a class="sign-in-link button blue-button" data-default-url="/community/auth/digitalocean" href="https://www.digitalocean.com/community/auth/digitalocean">Log In</a>
+          <a class="sign-up-link button green-button" data-default-url="/community/auth/digitalocean?display=sessionless+register" href="https://www.digitalocean.com/community/auth/digitalocean?display=sessionless+register">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    
+  <script>
+    $(function() {
+      if (!!window.init_sharing) {
+        window.init_sharing();
+      }
+      new window.NewsletterSignup();
+      new window.GrowableMarkdown({ target: '[data-growable-markdown]' });
+
+      window.Bugsnag.beforeNotify = function(payload, metaData) {
+        // custom logic to determine groupingHash
+        metaData.groupingHash = "tutorialShow";
+      }
+    });
+  </script>
+
+  <div id="report-a-bug-modal" class="modal fade mini-modal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1>Report a Bug</h1>
+          <a class="close-button" data-dismiss="modal" aria-label="close" href=""><span class="icon icon-close-light"></span></a>
+        </div>
+        <div class="modal-body">
+          <div class="report-a-bug-message text-center">Use this form to report bugs related to the Community</div>
+          <div class="report-a-bug-actions do-form">
+            <div class="form-wrap">
+              <form class="new_bug_report" id="new_bug_report" action="/community/bug_reports" accept-charset="UTF-8" method="post"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="AjgqD2/bn0XI5ul5075ZXGoQjb8QyOl3O8CEIK03vZA8u95lOyfT9eQCSl3AiEd1Z+gScN+/BTo8y+NdLy7Crg==" type="hidden">
+                <fieldset name="report-a-bug-info">
+                <legend class="sr-only">Report a bug:</legend>
+                  <div class="field">
+                    <label for="bug_reporter_name" class="sr-only">Name</label>
+                    <input placeholder="Name" id="bug_reporter_name" name="bug_report[name]" type="text">
+                  </div>
+                  <div class="field">
+                    <label for="bug_reporter_email" class="sr-only">Email</label>
+                    <input name="Email" placeholder="Email" id="bug_reporter_email" required="required" type="text">
+                  </div>
+                  <div class="field">
+                    <label for="bug_reporter_message" class="sr-only">Message</label>
+                    <textarea name="Message" placeholder="Message" id="bug_reporter_message" required="required" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 125px;"></textarea>
+                  </div>
+
+                  <div class="field actions">
+                    <input name="commit" value="Submit" class="button" type="submit">
+                  </div>
+                </fieldset>
+</form>            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    
+  
+
+<textarea tabindex="-1" aria-hidden="true" ,="" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px none; padding: 0px; box-sizing: content-box; overflow-wrap: break-word; height: 0px !important; min-height: 0px !important; overflow: hidden; transition: none 0s ease 0s ; font-family: &quot;proxima-nova&quot;,sans-serif; font-size: 17px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; word-spacing: 0px; text-indent: 0px; line-height: 20px; width: 58px;" class="autosizejs" id="autosizejs">Message
+</textarea><a id="scrollUp" href="#top" style="position: fixed; z-index: 1000;">Scroll to top</a><div id="scrollUp-active" style="position: absolute; top: 300px; width: 100%; border-top: 1px dotted rgb(0, 255, 255); z-index: 1000;"></div><script type="text/javascript" id="">var
+ 
+wait_count=0,jQWait=window.setInterval(function(){window.jQuery&&function(){window.clearInterval(window.jQWait);var
+ 
+f=window.BelowTutorialPanel=function(b){$.extend(this,{activeTest:"default",panelBodyTarget:"div.tutorial-ctas",panelContentTarget:"div.cta-description",relatedLinksTarget:"div.related-tutorials",tagSelector:'a.tag:contains("$TAG")',experimentName:"Below
+ Tutorial 
+Panel",tutorialRecommendationPath:"https://assets.digitalocean.com/labs/tutorial_recommendations/",scrollCheckInterval:1E3},
+b||{},{event_fired:!1});this.initialize()};$.extend(f.prototype,{initialize:function(){this.$panelBody=$($(this.panelBodyTarget).get(0));this.$relatedLinks=$(this.relatedLinksTarget);this.userTraits={};this.analyticsActive()&&(this.userTraits=window.analytics.user().traits());this.audience=this.getAudience(Object.keys(this.panelData),this.parseCookies(document.cookie),this.userTraits);this.panel=this.getPanel(this.panelData[this.audience]);this.panelContent=this.panel.content[Math.floor(Math.random()*
+this.panel.content.length)];this.$panelBody.attr("style",this.panel.style||"").find("h2").text(this.panelContent.title||"").css({color:this.panel.darkBG?"#FFF":"inherit"}).end().find("p").html(this.panelContent.desc||"").css({color:this.panel.darkBG?"#FFF":"inherit",padding:"15px
+ 
+0","line-height":"1.3em"}).end().find(".cloud-tutorial-cta").text(this.panelContent.cta||"").attr("style",this.panel.darkBG?"background:#FFF;color:#0069FF;":"").attr("href",this.panelContent.url+(0<this.panelContent.url.indexOf("?")?
+"\x26":"?")+"utm_medium\x3dbtp_"+this.audience+"_"+this.panel.name);"recommendation_algo"===this.panel.name?this.loadRecommendations($("body").data("tutorial-id"),this.panel.template,this.panel.template_short):this.initTracking(this.$panelBody.offset().top,this.$panelBody.height(),this.audience+"
+ \x3e "+this.panel.name+" \x3e 
+"+this.panelContent.cta||"",this.$panelBody.find("a"))},loadRecommendations:function(b,e,a){$.getJSON(this.tutorialRecommendationPath+b+".json",function(a){var
+ b=a.length,c,
+g,f="{SLUG} {TITLE} {DESC} {LIKES} {DATE} {COMMENTS}".split(" 
+"),k="";if(0<b){for(c=0;c<b&&2>c;c++){var 
+h=e;for(g=0;g<f.length;g++)h=h.replace(f[g],a[c][g]);k+=h.replace("{FIRST}",0==c?"margin-right:15px;":"")}this.$panelBody.find("h2").after('\x3cdiv
+ style\x3d"text-align:center; padding:15px 
+0;"\x3e'+k+"\x3c/div\x3e").end().find("p, 
+.cloud-tutorial-cta").remove();this.$relatedLinks.remove();this.initTracking(this.$panelBody.offset().top,this.$panelBody.height(),this.audience+"
+ \x3e "+this.panel.name+
+" \x3e 
+"+this.panelContent.cta||"",this.$panelBody.find("a"))}}.bind(this)).error(function(){var
+ 
+b="",d;for(d=0;4>d;d++)b+=a.replace("{FIRST}",0==d%2?"margin-right:15px;":"").replace("{TITLE}",this.$relatedLinks.find(".related-link").eq(d).text()).replace("{SLUG}",this.$relatedLinks.find(".related-link").eq(d).attr("href"));this.$panelBody.find("h2").after('\x3cdiv
+ style\x3d"text-align:center; padding:15px 
+0;"\x3e'+b+"\x3c/div\x3e").end().find("p, 
+.cloud-tutorial-cta").remove();this.$relatedLinks.remove();
+this.initTracking(this.$panelBody.offset().top,this.$panelBody.height(),this.audience+"
+ (fallback) \x3e "+this.panel.name+" \x3e 
+"+this.panelContent.cta||"",this.$panelBody.find("a"))}.bind(this))},getPanel:function(b){var
+ e=b.length,a,c,d=[];for(a=0;a<e;a++){if("tags"in 
+b[a])for(c=0;c<b[a].tags.length;c++)if(0<$(this.tagSelector.replace("$TAG",b[a].tags[c])).length)return
+ b[a];"priority"in 
+b[a]&&d.push({panel:a,priority:b[a].priority})}if(0<d.length)for(a=0;a<d.length;a++)if(Math.random()<d[a].priority)return
+ b[d[a].panel];
+return 
+b[Math.floor(Math.random()*e)]},getAudience:function(b,e,a){return-1<b.indexOf("customers")&&("signed_in"in
+ e||"ajs_user_id"in 
+e&&10<e.ajs_user_id.length)?"customers":-1<b.indexOf("refcode")&&"refcode"in
+ e?"refcode":-1<b.indexOf("buildmode")&&"recent"in a&&a.recent 
+instanceof 
+Array&&4===a.recent.length&&2===a.recent[3].length&&8>Math.round(+new 
+Date/864E5)-a.recent[3][1]?"buildmode":-1<b.indexOf("regulars")&&"recent"in
+ a&&a.recent instanceof 
+Array&&4===a.recent.length&&2===a.recent[3].length&&
+30>Math.round(+new 
+Date/864E5)-a.recent[3][1]?"regulars":"everyone_else"},analyticsActive:function(){return"object"===typeof
+ window.analytics},parseCookies:function(b){b=b.split(";");var 
+e={},a;for(a=0;a<b.length;a++){var 
+c=b[a].split("\x3d");e[c[0].trim()]=c[1].trim()}return 
+e},convertToId:function(b){return"string"===typeof 
+b?b.replace(/\W+/g,"_").toLowerCase():""},initTracking:function(b,e,a,c){if(this.analyticsActive()){var
+ 
+d,f=window.setInterval(function(){d=$(window).scrollTop();d+$(window).height()>
+b-e&&(window.clearInterval(f),analytics.track("Experiment
+ 
+Viewed",{experimentId:this.convertToId(this.experimentName),experimentName:this.experimentName,variationId:this.convertToId(a),variationName:a}))}.bind(this),1E3);analytics.trackLink(c,"Experiment
+ 
+Success",{experimentId:this.convertToId(this.experimentName),experimentName:this.experimentName,variationId:this.convertToId(a),variationName:a})}}});new
+ 
+f({panelData:{refcode:[{name:"referrals",style:"background-image:url(https://assets.digitalocean.com/labs/btp/referrals.png);
+ background-color:#1b78f8; background-position:bottom center;",
+darkBG:!0,content:[{title:"Your free credit awaits!",desc:"Sign up to 
+redeem your credit, and start deploying your sites and apps within 
+minutes.",cta:"Use Your 
+Credit",url:"https://cloud.digitalocean.com/registrations/new"},{title:"Free
+ credit active.",desc:"You came to digitalocean.com via 
+someone\x26apos;s referral link in the past month,\x3cbr\x3e making you 
+eligible for $10 credit when you sign up for an account.",cta:"Redeem 
+Credit",url:"https://cloud.digitalocean.com/registrations/new"}]}],
+customers:[{name:"highcpu",priority:.5,style:"background-image:url(https://assets.digitalocean.com/labs/btp/highcpu.png);
+ background-color:#1b78f8; background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"Introducing High CPU 
+Droplets",desc:"Spin up droplets with a new industry-leading CPU for 
+compute intensive tasks like high-load app-servers and queue/batch 
+processing.",cta:"Get Access 
+Here",url:"https://www.digitalocean.com/products/compute/high-cpu/"}]},{name:"objectstorage",
+priority:.5,style:"background-image:url(https://assets.digitalocean.com/labs/btp/objectstorage.png),
+ linear-gradient(to right, #04338b, #040434);  
+background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"Early access to Object 
+Storage",desc:"Store and serve a virtually unlimited amount of data. 
+Sign up for early access and receive 1TB of free usage until October 31,
+ 2017.",cta:"Learn 
+More",url:"https://www.digitalocean.com/products/storage/object-storage/"}]},{name:"firewalls",
+tags:["Firewall"],style:"background-image:url(https://assets.digitalocean.com/labs/btp/firewalls.png);
+ background-color:#1b78f8; background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"New on DigitalOcean: 
+Cloud Firewalls",desc:"Secure your infrastructure and define what 
+services are visible on your Droplets. Cloud Firewalls are free and 
+perfect for staging and production deployments.",cta:"Get started with 
+Firewalls",url:"https://cloud.digitalocean.com/networking/firewalls"}]},
+{name:"meetups",style:"background-image:url(https://assets.digitalocean.com/labs/btp/meetups.png);
+ background-color:#172232; background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"DigitalOcean, live from 
+your hometown",desc:"Meet developers of all skill levels to share 
+resources and form discussions around cloud and DevOps topics. Attend a 
+meetup, start one in your city, or apply to speak at one near 
+you.",cta:"Find a 
+Meetup",url:"https://www.meetup.com/pro/digitalocean/"}]},
+{name:"load-balancers",tags:["Load 
+Balancing"],style:"background-image:url(https://assets.digitalocean.com/labs/btp/load-balancers.png);
+ background-color:#1b78f8; background-position:bottom 
+center;",darkBG:!0,content:[{title:"Load Balancers now available on 
+DigitalOcean",desc:"Distribute traffic across your infrastructure, 
+managed from the control panel or API.",cta:"Learn 
+More",url:"https://cloud.digitalocean.com/networking/load_balancers"}]}],buildmode:[{name:"ft_test",style:"background-image:url(https://assets.digitalocean.com/labs/btp/general.png);
+ background-color:#1b78f8; background-position:bottom center; 
+overflow:hidden;",
+darkBG:!0,content:[{title:"Get started on DigitalOcean with free $10 
+credit",desc:"You\u2019ve read five tutorials on DigitalOcean this week 
+and are well on your way to managing your infrastructure. Test your 
+newfound knowledge by trying out DigitalOcean with $10 in free 
+credit.",cta:"Create a Free 
+Account",url:"https://cloud.digitalocean.com/registrations/new?refcode\x3d74a1c5d63dac"},{title:"Get
+ started on DigitalOcean with free $10 credit",desc:"Cheers to you, 
+voracious reader of Community Tutorials. You've read five tutorials in 
+the last week!\x3cbr/\x3eIf you haven't already spun up servers on DO, 
+here's $10 to give it a try.",
+cta:"Create an Account to Redeem 
+Credit",url:"https://cloud.digitalocean.com/registrations/new?refcode\x3d74a1c5d63dac"}]}],regulars:[{name:"deploy",content:[{title:"Spin
+ up an SSD cloud server in under a minute.",desc:"Simple setup. Full 
+root access. Straightforward pricing.",cta:"Deploy 
+Server",url:"https://cloud.digitalocean.com/registrations/new"}]},{name:"firewalls",tags:["Firewall"],style:"background-image:url(https://assets.digitalocean.com/labs/btp/firewalls.png);
+ background-color:#1b78f8; background-position:bottom center; 
+padding-top:-10px;",
+darkBG:!0,content:[{title:"New on DigitalOcean: Cloud 
+Firewalls",desc:"Secure your infrastructure and define what services are
+ visible on your Droplets. Cloud Firewalls are free and perfect for 
+staging and production deployments.",cta:"More on Cloud 
+Firewalls",url:"https://blog.digitalocean.com/cloud-firewalls-secure-droplets-by-default/"}]},{name:"oneclicks",style:"background-image:url(https://assets.digitalocean.com/labs/btp/oneclicks.png),
+ linear-gradient(to bottom, #4e9afb 0%,#0b7fff 100%); 
+background-position:bottom center; padding-top:-10px;",
+darkBG:!0,content:[{title:"Pre-built applications on 
+DigitalOcean",desc:"Get straight to deploying your code using one of our
+ pre-configured images supporting Node.js, Rails, Redis, MongoDB, 
+Cassandra, Docker, and many more.",cta:"View 
+One-Clicks",url:"https://www.digitalocean.com/products/one-click-apps/"}]},{name:"recommendation_algo",style:"background-image:url(https://assets.digitalocean.com/labs/btp/general.png);
+ background-color:#1b78f8; background-position:bottom center; 
+overflow:hidden;",
+darkBG:!0,template:'\x3ca style\x3d"width:330px; height:130px; 
+border-radius:3px; padding:12px 15px 15px; float:left; 
+margin-bottom:100px; background-color: #f9fcff; color: #0080ff; border: 
+1px solid #7fc0ff; text-align:left; position:relative; {FIRST}" 
+href\x3d"/community/tutorials/{SLUG}?utm_medium\x3dbtb_algo"\x3e\x3cstrong
+ style\x3d"font-size:15px; line-height:1.3; width:100%; overflow: 
+hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: 
+-webkit-box; -webkit-line-clamp: 2;"\x3e{TITLE}\x3c/strong\x3e\x3chr 
+style\x3d"border-top:1px solid #0080ff; opacity:0.25;"\x3e\x3cspan 
+style\x3d"font-size: 13px; line-height:1.3; width:100%; overflow: 
+hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: 
+-webkit-box; -webkit-line-clamp: 2; 
+max-height:2.6em;"\x3e{DESC}\x3c/span\x3e\x3cdiv style\x3d"font-size: 
+13px; position: absolute; left: 15px; right: 15px; bottom: 10px;"\x3e 
+\x3cspan style\x3d"margin-right: 4px;"\x3e\x3csvg style\x3d"height: 
+12px; width: 12px; stroke: currentColor; position: relative; top: -1px; 
+color: #0080ff; vertical-align: middle;"\x3e\x3cuse 
+xmlns:xlink\x3d"http://www.w3.org/1999/xlink" 
+xlink:href\x3d"https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-comment"\x3e\x3c/use\x3e\x3c/svg\x3e
+ {COMMENTS}\x3c/span\x3e \x3cspan style\x3d"margin-right: 
+4px;"\x3e\x3csvg style\x3d"height: 12px; width: 12px; stroke: 
+currentColor; fill:#0080ff; position: relative; top: -1px; color: 
+#0080ff; vertical-align: middle;"\x3e\x3cuse 
+xmlns:xlink\x3d"http://www.w3.org/1999/xlink" 
+xlink:href\x3d"https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-heart"\x3e\x3c/use\x3e\x3c/svg\x3e
+ {LIKES}\x3c/span\x3e\x3cspan style\x3d"float:right; 
+opacity:0.5;"\x3e{DATE}\x3c/span\x3e\x3c/div\x3e\x3c/a\x3e',
+template_short:'\x3ca style\x3d"width:330px; height:40px; 
+border-radius:3px; padding:12px 15px 15px; float:left; 
+margin-bottom:20px; background-color: #f9fcff; color: #0080ff; border: 
+1px solid #7fc0ff; text-align:left; position:relative; {FIRST}" 
+href\x3d"{SLUG}?utm_medium\x3dbtb_algo"\x3e\x3cstrong 
+style\x3d"font-size:15px; line-height:1.3; width:100%; overflow: hidden;
+ text-overflow: ellipsis; -webkit-box-orient: vertical; display: 
+-webkit-box; -webkit-line-clamp: 
+2;"\x3e{TITLE}\x3c/strong\x3e\x3c/a\x3e',
+content:[{title:"Related Tutorials:",desc:"",cta:"View Related 
+Tutorial",url:""}]},{name:"meetups",style:"background-image:url(https://assets.digitalocean.com/labs/btp/meetups.png);
+ background-color:#172232; background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"DigitalOcean, live from 
+your hometown",desc:"Meet developers of all skill levels to share 
+resources and form discussions around cloud and DevOps topics. Attend a 
+meetup, start one in your city, or apply to speak at one near you.",
+cta:"Find a 
+Meetup",url:"https://www.meetup.com/pro/digitalocean/"}]},{name:"highcpu",style:"background-image:url(https://assets.digitalocean.com/labs/btp/highcpu.png);
+ background-color:#1b78f8; background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"Introducing High CPU 
+Droplets",desc:"Spin up servers with a new industry-leading CPU for 
+compute intensive tasks like high-load app-servers and queue/batch 
+processing.",cta:"Get Access 
+Here",url:"https://www.digitalocean.com/products/compute/high-cpu/"}]},
+{name:"objectstorage",style:"background-image:url(https://assets.digitalocean.com/labs/btp/objectstorage.png),
+ linear-gradient(to right, #04338b, #040434); background-position:bottom
+ center; padding-top:-10px;",darkBG:!0,content:[{title:"Introducing 
+Object Storage",desc:"Store and serve a virtually unlimited amount of 
+data. Sign up for early access and receive 1TB of free usage until 
+October 31, 2017.",cta:"Learn 
+More",url:"https://www.digitalocean.com/products/storage/object-storage/"}]}],everyone_else:[{name:"objectstorage",
+priority:.75,style:"background-image:url(https://assets.digitalocean.com/labs/btp/objectstorage.png),
+ linear-gradient(to right, #04338b, #040434); background-position:bottom
+ center; padding-top:-10px;",darkBG:!0,content:[{title:"Introducing 
+Object Storage",desc:"Store and serve a virtually unlimited amount of 
+data. Sign up for early access and receive 1TB of free usage until 
+October 31, 2017.",cta:"Learn 
+More",url:"https://www.digitalocean.com/products/storage/object-storage/"}]},{name:"firewalls",
+tags:["Firewall"],style:"background-image:url(https://assets.digitalocean.com/labs/btp/firewalls.png);
+ background-color:#1b78f8; background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"New on DigitalOcean: 
+Cloud Firewalls",desc:"Secure your infrastructure and define what 
+services are visible on your Droplets. Cloud Firewalls are free and 
+perfect for staging and production deployments.",cta:"More on Cloud 
+Firewalls",url:"https://blog.digitalocean.com/cloud-firewalls-secure-droplets-by-default/"}]},
+{name:"wallpapers",style:"background-image:url(https://assets.digitalocean.com/labs/btp/wallpapers.png);
+ background-color:#1b78f8; background-position:bottom 
+center;",darkBG:!0,content:[{title:"A work of art on your 
+desktop",desc:"Like our tutorial illustrations? Choose the right one for
+ your workspace from among dozens of original DigitalOcean 
+illustrations.",cta:"Find a 
+Wallpaper",url:"https://imgur.com/a/q6i58"}]},{name:"load-balancers",style:"background-image:url(https://assets.digitalocean.com/labs/btp/load-balancers.png);
+ background-color:#1b78f8; background-position:bottom center;",
+darkBG:!0,content:[{title:"Load Balancers now available on 
+DigitalOcean",desc:"Distribute traffic across your infrastructure, 
+managed from the control panel or API.",cta:"Learn 
+More",url:"https://www.digitalocean.com/products/load-balancer/"}]},{name:"recommendation_algo",style:"background-image:url(https://assets.digitalocean.com/labs/btp/general.png);
+ background-color:#1b78f8; background-position:bottom center; 
+overflow:hidden;",darkBG:!0,template:'\x3ca style\x3d"width:330px; 
+height:130px; border-radius:3px; padding:12px 15px 15px; float:left; 
+margin-bottom:100px; background-color: #f9fcff; color: #0080ff; border: 
+1px solid #7fc0ff; text-align:left; position:relative; {FIRST}" 
+href\x3d"/community/tutorials/{SLUG}?utm_medium\x3dbtb_algo"\x3e\x3cstrong
+ style\x3d"font-size:15px; line-height:1.3; width:100%; overflow: 
+hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: 
+-webkit-box; -webkit-line-clamp: 2;"\x3e{TITLE}\x3c/strong\x3e\x3chr 
+style\x3d"border-top:1px solid #0080ff; opacity:0.25;"\x3e\x3cspan 
+style\x3d"font-size: 13px; line-height:1.3; width:100%; overflow: 
+hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: 
+-webkit-box; -webkit-line-clamp: 2; 
+max-height:2.6em;"\x3e{DESC}\x3c/span\x3e\x3cdiv style\x3d"font-size: 
+13px; position: absolute; left: 15px; right: 15px; bottom: 10px;"\x3e 
+\x3cspan style\x3d"margin-right: 4px;"\x3e\x3csvg style\x3d"height: 
+12px; width: 12px; stroke: currentColor; position: relative; top: -1px; 
+color: #0080ff; vertical-align: middle;"\x3e\x3cuse 
+xmlns:xlink\x3d"http://www.w3.org/1999/xlink" 
+xlink:href\x3d"https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-comment"\x3e\x3c/use\x3e\x3c/svg\x3e
+ {COMMENTS}\x3c/span\x3e \x3cspan style\x3d"margin-right: 
+4px;"\x3e\x3csvg style\x3d"height: 12px; width: 12px; stroke: 
+currentColor; fill:#0080ff; position: relative; top: -1px; color: 
+#0080ff; vertical-align: middle;"\x3e\x3cuse 
+xmlns:xlink\x3d"http://www.w3.org/1999/xlink" 
+xlink:href\x3d"https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-heart"\x3e\x3c/use\x3e\x3c/svg\x3e
+ {LIKES}\x3c/span\x3e\x3cspan style\x3d"float:right; 
+opacity:0.5;"\x3e{DATE}\x3c/span\x3e\x3c/div\x3e\x3c/a\x3e',
+template_short:'\x3ca style\x3d"width:330px; height:40px; 
+border-radius:3px; padding:12px 15px 15px; float:left; 
+margin-bottom:20px; background-color: #f9fcff; color: #0080ff; border: 
+1px solid #7fc0ff; text-align:left; position:relative; {FIRST}" 
+href\x3d"{SLUG}?utm_medium\x3dbtb_algo"\x3e\x3cstrong 
+style\x3d"font-size:15px; line-height:1.3; width:100%; overflow: hidden;
+ text-overflow: ellipsis; -webkit-box-orient: vertical; display: 
+-webkit-box; -webkit-line-clamp: 
+2;"\x3e{TITLE}\x3c/strong\x3e\x3c/a\x3e',
+content:[{title:"Related Tutorials:",desc:"",cta:"View Related 
+Tutorial",url:""}]},{name:"monitoring",tags:["monitoring"],style:"background-image:url(https://assets.digitalocean.com/labs/btp/monitoring.png);
+ background-color:#1b78f8; background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"Free Performance 
+Monitoring and Alerting",desc:"Know how your Droplets are performing 
+over time and get notified whenever critical issues arise in your 
+infrastructure for free with Monitoring on DigitalOcean.",
+cta:"Learn 
+More",url:"https://www.digitalocean.com/products/monitoring/"},{title:"DigitalOcean
+ Monitoring",desc:"Collect metrics, monitor Droplet performance, and 
+receive alerts when \x3cbr\x3eproblems arise in your 
+infrastructure\u2014no configuration required. Coming 2017.",cta:"Read 
+More",url:"https://www.digitalocean.com/products/monitoring/"}]},{name:"d4d",style:"background-image:url(https://assets.digitalocean.com/labs/btp/d4d.png);
+ background-color:#1b78f8; background-position:bottom center; 
+padding-top:-10px;",
+darkBG:!0,content:[{title:"Need free Droplets for a presentation? 
+Let\u2019s talk.",desc:"Receive free infrastructure credits to power 
+your next tech talk or live demo. ",cta:"Learn 
+More",url:"https://www.digitalocean.com/droplets-for-demos/"},{title:"Open
+ Source Presentation Grants",desc:"Receive free infrastructure credits 
+to power your next tech talk or live demo. ",cta:"Learn 
+More",url:"https://www.digitalocean.com/droplets-for-demos/"}]}],inactive:[{tags:["disabled"],style:"background-image:url(https://assets.digitalocean.com/labs/btp/hatch.png);
+ background-color:#ffffff; background-position:bottom center; 
+padding-top:-10px;",
+content:[{title:"It\u2019s Hatchening!",desc:"Gain a stronger foothold 
+as you scale your startup with 12 months of infrastructure credit, 
+technical support, resources, and access to exclusive perks from the 
+Hatch community.",cta:"Read 
+More",url:"https://www.digitalocean.com/hatch/"}]},{name:"write4do",style:"background-image:url(https://assets.digitalocean.com/labs/btp/write4do.png);
+ background-color:#1b78f8; background-position:bottom 
+center;",darkBG:!0,content:[{title:"Write for DigitalOcean",desc:"Share 
+your technical expertise with an audience of millions.",
+cta:"Learn 
+More",url:""}]}]}})}();10<wait_count++&&window.clearInterval(window.jQWait)},100);</script><script type="text/javascript" id="">(function(){try{analytics&&analytics.ready(function(){var
+ 
+c=analytics.user().traits(),a=c.recent||[],d=[$("body").data("tutorial-id")||"",Math.round(new
+ Date/864E5)],e=a.length,b;for(b=0;b<e;b++)if(a[b]instanceof 
+Array&&a[b][0]===d[0]){a.splice(b,1);break}a.unshift(d);5<=a.length&&a.pop();c.recent=a;analytics.user().traits(c)})}catch(c){}})();</script><script type="text/javascript" id="">try{document.addEventListener("copy",function(a){window.getSelection&&$(window.getSelection().anchorNode).parents("pre").length&&analytics.track("Web
+ Interaction",{action:"Code 
+Copy",name:window.getSelection().toString().substring(0,64)+(64<window.getSelection().toString().length?"\u2026":"")})})}catch(a){};</script><script type="text/javascript" id="">try{var
+ 
+t_id=document.querySelector("body").getAttribute("data-tutorial-id");if(t_id&&0==parseInt(t_id,10)%2){if("/community/tutorials/an-introduction-to-haproxy-and-load-balancing-concepts"===window.location.pathname){var
+ 
+amp=document.createElement("link");amp.setAttribute("rel","amphtml");amp.setAttribute("href","https://assets.digitalocean.com/labs/amp/an-introduction-to-haproxy-and-load-balancing-concepts.html");document.head.appendChild(amp)}var
+ xhr=new 
+XMLHttpRequest;xhr.open("GET","https://assets.digitalocean.com/labs/tutorial_recommendations/"+
+window.location.pathname.replace("/community/tutorials/","")+".json");xhr.onload=function(){if(200===xhr.status){var
+ 
+a=document.createElement("script");a.setAttribute("type","application/ld+json");a.innerHTML=xhr.responseText;document.body.appendChild(a)}};xhr.send()}}catch(a){};</script><div id="mktoStyleLoaded" style="display: none; border-top-color: rgb(18, 52, 86);"></div><div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_https" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" style="border: medium none;" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/XBwzv5Yrm_1.html" frameborder="0"></iframe></div></div></div><script type="text/javascript" id="">(function(){function
+ 
+b(){!1===c&&window.Munchkin&&(c=!0,window.Munchkin.init("937-EID-756",{disableClickDelay:!0,clickTime:0,asyncOnly:!0}))}var
+ 
+c=!1,a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="//munchkin.marketo.net/munchkin.js";a.onreadystatechange=function(){"complete"!=this.readyState&&"loaded"!=this.readyState||b()};a.onload=b;document.getElementsByTagName("head")[0].appendChild(a)})();</script><script type="text/javascript" id="">(function(a,b,c,d,e){a=b.createElement(c);b=b.getElementsByTagName(c)[0];a.async=1;a.id=e;a.src=d;b.parentNode.insertBefore(a,b)})(window,document,"script","https://scripts.demandbase.com/014ab3bd.min.js","demandbase_js_lib");</script><img style="display:none" alt="Demandbase pixel" id="db_pixel_ad" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/pixel"><img style="display:none" alt="Demandbase pixel" id="db_pixel_rt" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/pixel_002"><iframe src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/ect.html" id="db_ect" style="display: none;" width="0" height="0"></iframe><form novalidate="novalidate" style="font-family: Helvetica,Arial,sans-serif; font-size: 13px; color: rgb(51, 51, 51); visibility: hidden; position: absolute; top: -500px; left: -1000px; width: 1845px;" class="mktoForm mktoHasWidth mktoLayoutLeft"></form><iframe name="mktoFormsXDIframe0.3999788040007266" id="MktoForms2XDIframe" style="display: none;" src="How%20To%20Configure%20Apache%20Content%20Caching%20on%20CentOS%207%20%7C%20DigitalOcean_files/XDFrame.html"></iframe><script type="text/javascript" id="">(function(){try{analytics&&(analytics.track("dwell",{time:"5
+ minute"}),analytics.ready(function(){var 
+c=analytics.user().traits(),a=c.dwell||[],d=[$("body").data("tutorial-id")||"",Math.round(new
+ Date/864E5)],e=a.length,b;for(b=0;b<e;b++)if(a[b]instanceof 
+Array&&a[b][0]===d[0]){a.splice(b,1);break}a.unshift(d);5<=a.length&&a.pop();c.dwell=a;analytics.user().traits(c)}))}catch(c){}})();</script></body></html>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html dir="ltr" class="client-js" lang="ru"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Перенаправление Apache и Nginx — Энциклопедия хостинга</title>
+<meta charset="UTF-8">
+<meta name="generator" content="MediaWiki 1.19.1">
+<link rel="shortcut icon" href="http://firstwiki.ru/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="http://firstwiki.ru/opensearch_desc.php" title="Энциклопедия хостинга (ru)">
+<link rel="EditURI" type="application/rsd+xml" href="http://firstwiki.ru/api.php?action=rsd">
+<link rel="alternate" type="application/atom+xml" title="Энциклопедия хостинга&nbsp;— Atom-лента" href="http://firstwiki.ru/index.php?title=%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:RecentChanges&amp;feed=atom">
+<link rel="stylesheet" href="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/load.css">
+<link rel="stylesheet" href="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/customHead.css"><style type="text/css" media="all">.js-messagebox{margin:1em 5%;padding:0.5em 2.5%;border:1px solid #ccc;background-color:#fcfcfc;font-size:0.8em}.js-messagebox .js-messagebox-group{margin:1px;padding:0.5em 2.5%;border-bottom:1px solid #ddd}.js-messagebox .js-messagebox-group:last-child{border-bottom:thin none transparent}
+
+/* cache key: wiki:resourceloader:filter:minify-css:7:8b08bdc91c52a9ffba396dccfb5b473c */
+
+
+.mw-collapsible-toggle{float:right} li .mw-collapsible-toggle{float:none} .mw-collapsible-toggle-li{list-style:none}
+
+/* cache key: wiki:resourceloader:filter:minify-css:7:4250852ed2349a0d4d0fc6509a3e7d4c */
+</style><meta name="ResourceLoaderDynamicStyles" content="">
+<style>a:lang(ar),a:lang(ckb),a:lang(fa),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}a.new,#quickbar a.new{color:#ba0000}
+
+/* cache key: wiki:resourceloader:filter:minify-css:7:c88e2bcd56513749bec09a7e29cb3ffa */
+</style>
+
+<script type="text/javascript" async="" src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/get.html"></script><script type="text/javascript" async="" src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/get_002.html"></script><script type="text/javascript" async="" src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/ga.js"></script><script type="text/javascript" async="" src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/watch.js"></script><script src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/load_005.php"></script><script src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/load_002.php"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Перенаправление_Apache_и_Nginx","wgTitle":"Перенаправление Apache и Nginx","wgCurRevisionId":9121,"wgArticleId":33,"wgIsArticle":true,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Apache","Установка и настройка ПО","Решение проблем","CentOS","Debian","Ubuntu"],"wgBreakFrames":false,"wgPageContentLanguage":"ru","wgSeparatorTransformTable":[",	."," 	,"],"wgDigitTransformTable":["",""],"wgRelevantPageName":"Перенаправление_Apache_и_Nginx","wgRestrictionEdit":[],"wgRestrictionMove":[]});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($){mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":5,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"ru","language":"ru","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false});;},{},{});mw.loader.implement("user.tokens",function($){mw.user.tokens.set({"editToken":"+\\","watchToken":false});;},{},{});
+
+/* cache key: wiki:resourceloader:filter:minify-js:7:9b30591450e90b16bbc0b3548217d82b */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax"]);
+}</script><script type="text/javascript" src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/load_004.php"></script>
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/skins/vector/csshover.min.htc")}</style><![endif]--></head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Перенаправление_Apache_и_Nginx skin-vector action-view">
+
+<!--Orph-->
+
+<script type="text/javascript" src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/jq.js"></script>
+<script type="text/javascript" src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/orph.js"></script>
+<link rel="stylesheet" href="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/css.css">
+<!--/Orph-->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter23436169 = new Ya.Metrika({id:23436169,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/23436169" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- GoogleAnalytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-10974470-11']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- /GoogleAnalytics -->
+
+<style>
+	.link-main {
+		background: transparent url(http://firstvds.ru/sites/all/themes/firstvds/images/wiki_img/vps.png) no-repeat left center;
+	}
+	.link-vds {
+		background: transparent url(http://firstvds.ru/sites/all/themes/firstvds/images/wiki_img/dedic.png) no-repeat left center;
+	}
+	.link-help {
+		background: transparent url(http://firstvds.ru/sites/all/themes/firstvds/images/wiki_img/game.png) no-repeat left center;
+	}
+	.link-company {
+		background: transparent url(http://firstvds.ru/sites/all/themes/firstvds/images/wiki_img/ssl.png) no-repeat left center;
+	}
+	.link-main a,
+	.link-vds a,
+	.link-help a,
+	.link-company a {
+		margin-left: 30px !important;
+	}
+</style>
+
+<div id="customHeaderTable">
+<table class="pagetbl aaaaaaaa">
+    <tbody>
+        <tr>
+            <td class="header-left">
+                <img src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/e.html">
+            </td>
+            <td class="header-content">
+                <table>
+                    <tbody><tr>
+                            <td class="noheight" colspan="3"><img src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/e.html" width="1008" height="1"></td>
+                        </tr>
+                        <tr>
+                            <td class="headerlogo">
+								<a href="http://firstwiki.ru/"><img src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/logo_firstwiki.png" class="logo" style="position: absolute; left: 10px" width="425" height="74"></a>
+								
+							</td>
+                            <td class="headerlogin">  <div class="region region-login">
+                                    <div id="block-block-1" class="block block-block">
+
+
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="headerphone">  <div class="region region-phone">
+                                    <div id="block-block-2" class="block block-block">
+
+
+                                        <div class="content">
+                                    		
+                                    		
+                                    </div>
+                                </div>
+                            </div></td>
+                        </tr>
+                    </tbody></table>
+            </td>
+            <td class="header-right"><img src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/e.html"></td>
+        </tr>
+        <tr>
+            <td class="menu-content" colspan="2">
+                <table class="menuline">
+                    <tbody><tr>
+                            <td class="menuline1">  <div class="region region-menu">
+                                    <div id="block-nice-menus-1" class="block block-nice-menus">
+                                        <div class="content" style="margin-top: 7px">
+                                            <ul class="nice-menu nice-menu-down sf-js-enabled" id="nice-menu-1">
+                                                <li class="first">
+                                                    <table class="mi"><tbody><tr><td class="mil"></td><td class="mic link-main"><a rel="nofollow" href="http://firstvds.ru/products/vds_vps_hosting">VDS / VPS серверы</a></td><td class="mir"></td></tr></tbody></table>
+                                                </li>
+                                                <li class="menuparent">
+                                                    <table class="mi"><tbody><tr><td class="mil"></td><td class="mic link-vds"><a rel="nofollow" href="http://firstdedic.ru/">Выделенные серверы</a></td><td class="mir"></td></tr></tbody></table>
+                                                </li>
+                                                <!--<li class="menuparent">
+                                                    <table class="mi"><tbody><tr><td class="mil"></td><td class="mic link-help"><a href="http://firstgame.ru">Игровые серверы</a></td><td class="mir"></td></tr></tbody></table>
+                                                </li>-->
+                                                <li class="menuparent">
+                                                    <table class="mi"><tbody><tr><td class="mil"></td><td class="mic link-company"><a rel="nofollow" href="http://firstvds.ru/products/ssl_certificate">SSL сертификаты</a></td><td class="mir"></td></tr></tbody></table>
+                                                </li>
+                                                <!--<li class="menu-path-forumfirstvdsru even">
+                                                    <table class="mi"><tbody><tr><td class="mil"></td>
+                                                        <td class="mic" valign="center">
+                                                            <div style="float:right;margin-left:5px;position:relative;top:1px;">
+                                                                <a href="http://forum.firstvds.ru/rss.php"><img src="/skins/monobook/img/rss.png" alt="RSS Feed" title=""></a>
+                                                            </div>
+                                                            <a href="http://forum.firstvds.ru" class="active" style="position:relative;top:1px;">Форум</a>
+                                                        </td>
+                                                    <td class="mir"></td></tr></tbody></table>
+                                                </li>
+                                                <li class="menu-path-wikifirstvdsru odd  last active-trail ">
+                                                    <table class="mi"><tbody><tr><td class="mil"></td><td class="mic"><a href="http://firstwiki.ru">Wiki</a></td><td class="mir"></td></tr></tbody></table>
+                                                </li>-->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="menuline2">&nbsp;</td>
+                        </tr>
+                    </tbody></table>
+            </td>
+            <td class="menu-right">&nbsp;</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content" class="mw-body">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;" class="js-messagebox"></div>
+						<!-- firstHeading -->
+				<!-- -D0-9F-D0-B5-D1-80-D0-B5-D0-BD-D0-B0-D0-BF-D1-80-D0-B0-D0-B2-D0-BB-D0-B5-D0-BD-D0-B8-D0-B5_Apache_-D0-B8_Nginx -->
+									<h1 id="firstHeading" class="firstHeading">
+						<span dir="auto">Перенаправление Apache и Nginx</span>
+					</h1>
+												<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<style>
+					#customHeaderTable {
+						overflow: hidden;
+					}
+				</style>
+													<style>
+						#bodyContent {
+							overflow: hidden;
+						}
+						.bodyContent__LeftBlock {
+							width: 80%;
+							float: left;
+						}
+						.bodyContent__RightBlock {
+							width: 20%;
+							float: left;
+						}
+						#bodyContent__RightBlock__BannerFirstVDS {
+							-webkit-box-sizing: border-box;
+							-moz-box-sizing: border-box;
+							box-sizing: border-box;
+							height: 600px;
+							margin-left: 10px;
+						}
+						.BLOCK-FIXED {
+							position: fixed;
+							top: 0;
+						}
+						#bodyContent__RightBlock__BannerFirstVDS.BLOCK-FIXED {
+							width: 20%;
+							padding-right: 29px;
+						}
+						pre {
+							word-wrap: break-word;
+						}
+					</style>
+								<div class="bodyContent__LeftBlock">
+										<!-- tagline -->
+					<div id="siteSub">Материал из Энциклопедия хостинга</div>
+					<!-- /tagline -->
+										<!-- subtitle -->
+					<div id="contentSub"></div>
+					<!-- /subtitle -->
+																				<!-- jumpto -->
+					<div id="jump-to-nav" class="mw-jump">
+						Перейти к: <a href="#mw-head">навигация</a>,
+						<a href="#p-search">поиск</a>
+					</div>
+					<!-- /jumpto -->
+										<!-- bodycontent -->
+					<div id="mw-content-text" dir="ltr" class="mw-content-ltr" lang="ru"><div style="background: #f9f9f9; border: 1px solid #aaa; font-family: Arial,Tahoma,Helvetica,Sans-Serif; font-size: 9pt; margin-bottom: 30px; padding: 5px 8px;"><div style="display:inline-block; float:left; padding-right:5px;">Иерархия : <a href="http://firstwiki.ru/index.php/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0" title="Заглавная страница">Заглавная страница</a></div><div style="display:inline-block"><div> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5_%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B" title="Категория:Технические вопросы">Технические вопросы</a> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B" title="Категория:Операционные системы">Операционные системы</a> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:CentOS" title="Категория:CentOS">CentOS</a></div><div> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5_%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B" title="Категория:Технические вопросы">Технические вопросы</a> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B" title="Категория:Операционные системы">Операционные системы</a> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:Debian" title="Категория:Debian">Debian</a></div><div> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5_%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B" title="Категория:Технические вопросы">Технические вопросы</a> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B" title="Категория:Операционные системы">Операционные системы</a> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:Ubuntu" title="Категория:Ubuntu">Ubuntu</a></div><div> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5_%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B" title="Категория:Технические вопросы">Технические вопросы</a> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A0%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC" title="Категория:Решение проблем">Решение проблем</a></div><div> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5_%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B" title="Категория:Технические вопросы">Технические вопросы</a> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A1%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D1%8B" title="Категория:Сервисы">Сервисы</a> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:Apache" title="Категория:Apache">Apache</a></div><div> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5_%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B" title="Категория:Технические вопросы">Технические вопросы</a> &gt; <a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%B8_%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0_%D0%9F%D0%9E" title="Категория:Установка и настройка ПО">Установка и настройка ПО</a></div></div></div><table id="toc" class="toc"><tbody><tr><td><div id="toctitle"><h2>Содержание</h2><span class="toctoggle">&nbsp;[<a href="#" class="internal" id="togglelink">убрать</a>]&nbsp;</span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Apache"><span class="tocnumber">1</span> <span class="toctext">Apache</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#.D0.9F.D0.BE.D0.B4.D0.BA.D0.BB.D1.8E.D1.87.D0.B5.D0.BD.D0.B8.D1.8F_.D0.BC.D0.BE.D0.B4.D1.83.D0.BB.D1.8F_mod_rewrite"><span class="tocnumber">1.1</span> <span class="toctext">Подключения модуля mod_rewrite</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#.D0.9F.D1.80.D0.B0.D0.B2.D0.B8.D0.BB.D0.B0_Redirect"><span class="tocnumber">1.2</span> <span class="toctext">Правила Redirect</span></a>
+<ul>
+<li class="toclevel-3 tocsection-4"><a href="#Redirect_.D0.B8.D0.BB.D0.B8_RedirectPermanent"><span class="tocnumber">1.2.1</span> <span class="toctext">Redirect или RedirectPermanent</span></a></li>
+<li class="toclevel-3 tocsection-5"><a href="#RedirectMatch"><span class="tocnumber">1.2.2</span> <span class="toctext">RedirectMatch</span></a></li>
+<li class="toclevel-3 tocsection-6"><a href="#RewriteRule"><span class="tocnumber">1.2.3</span> <span class="toctext">RewriteRule</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#.D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_.D1.81_.D0.BE.D0.B4.D0.BD.D0.BE.D0.B3.D0.BE_.D1.81.D0.B0.D0.B9.D1.82.D0.B0_.D0.BD.D0.B0_.D0.B4.D1.80.D1.83.D0.B3.D0.BE.D0.B9"><span class="tocnumber">1.2.4</span> <span class="toctext">Редирект с одного сайта на другой</span></a>
+<ul>
+<li class="toclevel-4 tocsection-8"><a href="#.D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_.D1.81_www_.D0.BD.D0.B0_.D0.B1.D0.B5.D0.B7_www"><span class="tocnumber">1.2.4.1</span> <span class="toctext">Редирект с www на без www</span></a></li>
+<li class="toclevel-4 tocsection-9"><a href="#.D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_.D1.81_.D0.B1.D0.B5.D0.B7_www_.D0.BD.D0.B0_www"><span class="tocnumber">1.2.4.2</span> <span class="toctext">Редирект с без www на www</span></a></li>
+<li class="toclevel-4 tocsection-10"><a href="#.D0.9F.D0.B5.D1.80.D0.B5.D0.BD.D0.B0.D0.BF.D1.80.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D0.B5_.D0.B4.D0.BE.D0.BC.D0.B5.D0.BD.D0.B0_.D1.81_https_.D0.BD.D0.B0_http"><span class="tocnumber">1.2.4.3</span> <span class="toctext">Перенаправление домена с https на http</span></a></li>
+<li class="toclevel-4 tocsection-11"><a href="#.D0.9F.D0.B5.D1.80.D0.B5.D0.BD.D0.B0.D0.BF.D1.80.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D0.B5_.D0.B4.D0.BE.D0.BC.D0.B5.D0.BD.D0.B0_.D1.81_http_.D0.BD.D0.B0_https"><span class="tocnumber">1.2.4.4</span> <span class="toctext">Перенаправление домена с http на https</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-12"><a href="#Nginx"><span class="tocnumber">2</span> <span class="toctext">Nginx</span></a>
+<ul>
+<li class="toclevel-2 tocsection-13"><a href="#.D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_301_.D1.81_www.domain.com_.D0.BD.D0.B0_domain.com"><span class="tocnumber">2.1</span> <span class="toctext">Редирект 301 с www.domain.com на domain.com</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#.D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_301_.D1.81_domain.com_.D0.BD.D0.B0_www.domain.com"><span class="tocnumber">2.2</span> <span class="toctext">Редирект 301 с domain.com на www.domain.com</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#.D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_301_.D1.81_https_.D0.BD.D0.B0_http"><span class="tocnumber">2.3</span> <span class="toctext">Редирект 301 с https на http</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#.D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_301_.D1.81_http_.D0.BD.D0.B0_https"><span class="tocnumber">2.4</span> <span class="toctext">Редирект 301 с http на https</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></tbody></table>
+<h1> <span class="mw-headline" id="Apache">Apache</span></h1>
+<h2> <span class="mw-headline" id=".D0.9F.D0.BE.D0.B4.D0.BA.D0.BB.D1.8E.D1.87.D0.B5.D0.BD.D0.B8.D1.8F_.D0.BC.D0.BE.D0.B4.D1.83.D0.BB.D1.8F_mod_rewrite"> Подключения модуля mod_rewrite</span></h2>
+<p>Для включения перенаправления средствами Apache, достаточно чтобы модуль mod_rewrite.so был загружен в <a href="http://firstwiki.ru/index.php/Apache" title="Apache">Apache</a>.
+</p>
+<pre>LoadModule rewrite_module /usr/lib/apache2/modules/mod_rewrite.so
+</pre>
+<p>Для того ,чтобы директивы mod_rewrite можно было использовать в 
+.htaccess, надо в конфигурационном файле Apache, в соответствующем 
+разделе "&lt;Directory /путь/до/директории&gt;" прописать:
+</p>
+<pre>AllowOverride all
+</pre>
+<p>После внесения изменений в конфигурационный файл Apache, для вступления в силу этих изменений, нужно перезапустить веб сервер:
+</p>
+<pre>apachectl restart
+</pre>
+<p>или 
+</p>
+<pre>apache2ctl restart
+</pre>
+<p>В .htaccess для работы перенаправления нужно указать следующую директиву:
+</p>
+<pre>RewriteEngine On
+</pre>
+<h2> <span class="mw-headline" id=".D0.9F.D1.80.D0.B0.D0.B2.D0.B8.D0.BB.D0.B0_Redirect">Правила Redirect</span></h2>
+<p>Эти директивы вы можете прописывать как в конфиге Apache для нужного virtualhost, так в файле .htaccess.
+</p>
+<h3> <span class="mw-headline" id="Redirect_.D0.B8.D0.BB.D0.B8_RedirectPermanent">Redirect или RedirectPermanent</span></h3>
+<p>Главный недостаток данных правил заключается в том, что для каждого 
+адреса необходимо прописывать новое правило. Если необходимо сделать 
+несколько редиректов, то каждый новый редирект пишется с новой строки.
+</p><p>Если нужно сделать несколько редиректов, то каждый новый редирект нужно написать с новой строки. 
+</p>
+<pre>Redirect 301 /old-page.html <a rel="nofollow" class="external free" href="http://new-domain.ru/new-page.html">http://new-domain.ru/new-page.html</a>
+</pre>
+<p>или
+</p>
+<pre>Redirect permanent /old-page.html <a rel="nofollow" class="external free" href="http://new-domain.ru/new-page.html">http://new-domain.ru/new-page.html</a>
+</pre>
+<p>Для перенаправления всех запросов на другой сайт вы можете использовать следующую конструкцию:
+</p>
+<pre>Redirect 301 / <a rel="nofollow" class="external free" href="http://new-domain.ru/">http://new-domain.ru/</a>
+</pre>
+<p>или
+</p>
+<pre>Redirect permanent / <a rel="nofollow" class="external free" href="http://new-domain.ru/">http://new-domain.ru/</a>
+</pre>
+<h3> <span class="mw-headline" id="RedirectMatch">RedirectMatch</span></h3>
+<p>Этот редирект отличается тем, что в нем можно использовать регулярное
+ выражение. Например, при переносе сайта с Windows на Linux, необходимо 
+сменить все ссылки с *.php на *.aspx:
+</p>
+<pre>RedirectMatch /(.*)\.aspx$ /$1.php
+</pre>
+<h3> <span class="mw-headline" id="RewriteRule">RewriteRule</span></h3>
+<p>Для работы данного модуля убедитесь в том, что включена опция <b>FollowSymLinks</b>, эту функцию нужно прописать в конфигурационном файле Apache или в файле <b>.htaccess</b> как указано ниже.
+</p><p>Рассмотрим самые распространённые варианты её использования.
+</p><p><br>
+</p>
+<h3> <span class="mw-headline" id=".D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_.D1.81_.D0.BE.D0.B4.D0.BD.D0.BE.D0.B3.D0.BE_.D1.81.D0.B0.D0.B9.D1.82.D0.B0_.D0.BD.D0.B0_.D0.B4.D1.80.D1.83.D0.B3.D0.BE.D0.B9">Редирект с одного сайта на другой </span></h3>
+<pre>RewriteEngine On
+RewriteCond&nbsp;%{HTTP_HOST} domain1.ua
+RewriteRule (.*) <a rel="nofollow" class="external free" href="http://domain2.ua/$1">http://domain2.ua/$1</a> [R=301,L]
+</pre>
+<h4> <span class="mw-headline" id=".D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_.D1.81_www_.D0.BD.D0.B0_.D0.B1.D0.B5.D0.B7_www">Редирект с www на без www</span></h4>
+<pre>Options +FollowSymLinks
+RewriteEngine On
+RewriteCond&nbsp;%{HTTP_HOST} ^www\.(.*) [NC]
+RewriteRule ^(.*)$ <a rel="nofollow" class="external free" href="http://%1/$1">http://%1/$1</a> [R=301,L]
+</pre>
+<p>Или более понятный синтаксис
+</p>
+<pre>Options +FollowSymLinks
+RewriteEngine On
+RewriteCond&nbsp;%{HTTP_HOST} ^www.domain\.com$ [NC]
+RewriteRule ^(.*)$ <a rel="nofollow" class="external free" href="http://domain.com/$1">http://domain.com/$1</a> [R=301,L]
+</pre>
+<p>Вы можете использовать любой.
+</p>
+<h4> <span class="mw-headline" id=".D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_.D1.81_.D0.B1.D0.B5.D0.B7_www_.D0.BD.D0.B0_www">Редирект с без www на www</span></h4>
+<pre>RewriteEngine On
+RewriteCond&nbsp;%{HTTP_HOST}&nbsp;!^www\.(.*) [NC]
+RewriteRule ^(.*)$ <a rel="nofollow" class="external free" href="http://www.%1/$1">http://www.%1/$1</a> [R=301,L] 
+</pre>
+<p>Альтернатива:
+</p>
+<pre>Options +FollowSymLinks
+RewriteEngine On
+RewriteCond&nbsp;%{HTTP_HOST} ^domain\.com$ [NC]
+RewriteRule ^(.*)$ <a rel="nofollow" class="external free" href="http://www.domain.com/$1">http://www.domain.com/$1</a> [R=301,L]
+</pre>
+<h4> <span class="mw-headline" id=".D0.9F.D0.B5.D1.80.D0.B5.D0.BD.D0.B0.D0.BF.D1.80.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D0.B5_.D0.B4.D0.BE.D0.BC.D0.B5.D0.BD.D0.B0_.D1.81_https_.D0.BD.D0.B0_http">Перенаправление домена с https на http</span></h4>
+<p>Для того, чтобы данное перенаправление работало, должен использоваться только Web-сервер <b>Apache</b>. При использовании связки <b>Nginx</b>+<b>Apache</b>  будет возникать ошибка циклической переадресации. Поэтому редирект нужно будет  <a rel="nofollow" class="external text" href="http://firstwiki.ru/index.php?title=%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_Apache_%D0%B8_Nginx#.D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_301_.D1.81_https_.D0.BD.D0.B0_http">настраивать именно в Nginx</a>
+</p>
+<pre>RewriteEngine On
+RewriteCond&nbsp;%{SERVER_PORT} ^443$ [OR]
+RewriteCond&nbsp;%{HTTPS} =on
+RewriteRule ^(.*)$ <a rel="nofollow" class="external free" href="http://www.domain.com/$1">http://www.domain.com/$1</a> [R=301,L]
+</pre>
+<h4> <span class="mw-headline" id=".D0.9F.D0.B5.D1.80.D0.B5.D0.BD.D0.B0.D0.BF.D1.80.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D0.B5_.D0.B4.D0.BE.D0.BC.D0.B5.D0.BD.D0.B0_.D1.81_http_.D0.BD.D0.B0_https">Перенаправление домена с http на https</span></h4>
+<p>Для того, чтобы данное перенаправление работало, должен использоваться только Web-сервер <b>Apache</b>. При использовании связки <b>Nginx</b>+<b>Apache</b>  будет возникать ошибка циклической переадресации. Поэтому редирект нужно будет <a rel="nofollow" class="external text" href="http://firstwiki.ru/index.php?title=%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_Apache_%D0%B8_Nginx#.D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_301_.D1.81_http_.D0.BD.D0.B0_https">настраивать именно в Nginx</a>
+</p>
+<pre>RewriteEngine On
+RewriteCond&nbsp;%{SERVER_PORT} ^80$ [OR]
+RewriteCond&nbsp;%{HTTP} =on
+RewriteRule ^(.*)$ <a rel="nofollow" class="external free" href="https://www.domain.com/$1">https://www.domain.com/$1</a> [R=301,L]
+</pre>
+<h1> <span class="mw-headline" id="Nginx">Nginx</span></h1>
+<p>Модуль ngx_http_rewrite_module, необходимый для настройки перенаправлений, он устанавливается автоматически вместе с Nginx.
+</p>
+<h3> <span class="mw-headline" id=".D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_301_.D1.81_www.domain.com_.D0.BD.D0.B0_domain.com">Редирект 301 с www.domain.com на domain.com</span></h3>
+<p>Для Nginx вам нужно создать две секции <b>server</b> в конфигурационный файл, одна для домена с www, вторая для домена без www:
+</p><p>Секция <b>server</b> для редиректа:
+</p>
+<pre>server {
+     listen  80;
+     server_name  www.domain.com;
+     rewrite ^ <a rel="nofollow" class="external free" href="http://domain.com$request_uri/">http://domain.com$request_uri</a>? permanent; 
+}
+</pre>
+<p>Секция <b>server</b>, где находятся основные настройки домена:
+</p>
+<pre>server {
+     listen  80;
+     server_name domain.com;
+.....
+}
+</pre>
+<p>После внесения изменений в конфигурационный файл Nginx, для вступления в силу этих изменений, нужно перезапустить веб сервер.
+</p>
+<pre>service nginx restart
+</pre>
+<h3> <span class="mw-headline" id=".D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_301_.D1.81_domain.com_.D0.BD.D0.B0_www.domain.com">Редирект 301 с domain.com на www.domain.com </span></h3>
+<p>Для Nginx вам нужно создать две секции server в конфигурационный файл, одна для домена без www, вторая для домена с www. 
+</p><p>Секция <b>server</b> для редиректа:
+</p>
+<pre>server {
+     listen  80;
+     server_name  domain.com;
+     rewrite ^ <a rel="nofollow" class="external free" href="http://www.domain.com$request_uri/">http://www.domain.com$request_uri</a>? permanent; 
+}
+</pre>
+<p>Секция <b>server</b>, где находятся основные настройки домена. 
+</p>
+<pre>server {
+     listen  80;
+     server_name www.domain.com;
+.....
+}
+</pre>
+<p>После внесения изменений в конфигурационный файл Nginx, для вступления в силу этих изменений, нужно перезапустить веб сервер.
+</p>
+<pre>service nginx restart
+</pre>
+<h2> <span class="mw-headline" id=".D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_301_.D1.81_https_.D0.BD.D0.B0_http">Редирект 301 с https на http</span></h2>
+<p>Для Nginx вам нужно создать две секции <b>server</b> в конфигурационный файл, одна для https(443 порт), вторая для http(80 порт). 
+</p><p>Секция <b>server</b> для открытия по https(443 порт) и настройки редиректа:
+</p>
+<pre>server {
+   listen  443;
+   server_name  www.domain.com;
+   rewrite ^ <a rel="nofollow" class="external free" href="http://www.domain.com$request_uri/">http://www.domain.com$request_uri</a>? permanent; 
+}
+</pre>
+<p>Секция <b>server</b>, для открытия по http(80 порт), где находятся основные настройки домена.
+</p>
+<pre>server {
+   listen  80;
+   server_name www.domain.com;
+.....
+}
+</pre>
+<p>После внесения изменений в конфигурационный файл Nginx, для вступления в силу этих изменений, нужно перезапустить веб сервер.
+</p>
+<pre>service nginx restart
+</pre>
+<h2> <span class="mw-headline" id=".D0.A0.D0.B5.D0.B4.D0.B8.D1.80.D0.B5.D0.BA.D1.82_301_.D1.81_http_.D0.BD.D0.B0_https">Редирект 301 с http на https</span></h2>
+<p>Для Nginx вам нужно создать две секции <b>server</b> в конфигурационный файл, одна для http(80 порт), вторая для https(443 порт). 
+</p><p><b> Для нового домена в конф. файле nginx </b>
+</p><p>Секция <b>server</b>, для открытия по http(80 порт) и настройки перенаправления:
+</p>
+<pre>server {
+    listen  IP.се.рве.ра:80;
+    server_name  www.domain.com;
+    rewrite ^ <a rel="nofollow" class="external free" href="https://www.domain.com$request_uri/">https://www.domain.com$request_uri</a>? permanent; 
+}
+</pre>
+<p>Секция <b>server</b>, для открытия по https(443 порт), где находятся основные настройки домена.
+</p>
+<pre>server {
+    listen  IP.се.рве.ра:443;
+    server_name www.domain.com;
+.....
+}
+</pre>
+<p><b> Для существующего домена в конф. файле nginx </b>
+</p><p>Если вы вносите изменения в существующую секцию конф. файла nginx делайте это так:
+Из основной секции домена удалите строку вида
+</p>
+<pre>     listen  IP.се.рве.ра:80;
+</pre>
+<p>И создайте новую секцию server такого вида:
+</p>
+<pre>server {
+    listen  IP.се.рве.ра:80;
+    server_name  www.domain.com;
+    rewrite ^ <a rel="nofollow" class="external free" href="https://www.domain.com$request_uri/">https://www.domain.com$request_uri</a>? permanent; 
+}
+</pre>
+<p>После внесения изменений в конфигурационный файл Nginx, для вступления в силу этих изменений, нужно его перезапустить так:
+</p>
+<pre>service nginx restart
+</pre>
+<!-- 
+NewPP limit report
+Preprocessor node count: 62/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key wiki:pcache:idhash:33-0!*!0!!ru!*!* and timestamp 20170821025054 -->
+</div>					<div id="bannerRotate" style="width: 100%; height: 31px;"><iframe allowtransparency="true" scrolling="no" src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/Populal.html" width="100%" height="100%" frameborder="no"></iframe></div>
+					<!-- /bodycontent -->
+										<!-- printfooter -->
+					<div class="printfooter">
+					Источник — «<a href="http://firstwiki.ru/index.php?title=%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_Apache_%D0%B8_Nginx&amp;oldid=9121">http://firstwiki.ru/index.php?title=%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_Apache_%D0%B8_Nginx&amp;oldid=9121</a>»					</div>
+					<!-- /printfooter -->
+															<!-- catlinks -->
+					<div id="catlinks" class="catlinks"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="http://firstwiki.ru/index.php/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:Categories" title="Служебная:Categories">Категории</a>: <ul><li><a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:Apache" title="Категория:Apache">Apache</a></li><li><a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%D0%B8_%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0_%D0%9F%D0%9E" title="Категория:Установка и настройка ПО">Установка и настройка ПО</a></li><li><a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A0%D0%B5%D1%88%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC" title="Категория:Решение проблем">Решение проблем</a></li><li><a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:CentOS" title="Категория:CentOS">CentOS</a></li><li><a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:Debian" title="Категория:Debian">Debian</a></li><li><a href="http://firstwiki.ru/index.php/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:Ubuntu" title="Категория:Ubuntu">Ubuntu</a></li></ul></div></div>					<!-- /catlinks -->
+															<div class="visualClear"></div>
+					<!-- debughtml -->
+										<!-- /debughtml -->
+				</div>
+				<div class="bodyContent__RightBlock">
+					<noindex><div id="bodyContent__RightBlock__BannerFirstVDS" class=""><iframe allowtransparency="true" scrolling="no" src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/vds_vps.html" width="100%" height="100%" frameborder="no"></iframe></div></noindex>
+				</div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Личные инструменты</h5>
+	<ul>
+		<li id="pt-login"><a href="http://firstwiki.ru/index.php?title=%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:UserLogin&amp;returnto=%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5+Apache+%D0%B8+Nginx" title="Здесь можно зарегистрироваться в системе, но это необязательно. [alt-shift-o]" accesskey="o">Представиться системе</a></li>
+	</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-mainpage" class="vectorTabs" style="margin-right: 5em;">
+	<ul>
+		<li><span><a href="http://firstwiki.ru/index.php/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0" title="Заглавная страница">Заглавная страница</a></span></li>
+	</ul>
+</div>
+
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Пространства имён</h5>
+	<ul>
+					<li id="ca-nstab-main" class="selected"><span><a href="http://firstwiki.ru/index.php/%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_Apache_%D0%B8_Nginx" title="Содержание статьи [alt-shift-c]" accesskey="c">Статья</a></span></li>
+					<li id="ca-talk"><span><a href="http://firstwiki.ru/index.php/%D0%9E%D0%B1%D1%81%D1%83%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5:%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_Apache_%D0%B8_Nginx" title="Обсуждение содержания страницы [alt-shift-t]" accesskey="t">Обсуждение</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+	<h4>
+		</h4>
+	<h5><span>Варианты</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Просмотры</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="http://firstwiki.ru/index.php/%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_Apache_%D0%B8_Nginx">Чтение</a></span></li>
+					<li id="ca-viewsource"><span><a href="http://firstwiki.ru/index.php?title=%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_Apache_%D0%B8_Nginx&amp;action=edit" title="Эта страница защищена от изменений, но вы можете посмотреть и скопировать её исходный текст [alt-shift-e]" accesskey="e">Просмотр</a></span></li>
+					<li id="ca-history" class="collapsible"><span><a href="http://firstwiki.ru/index.php?title=%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_Apache_%D0%B8_Nginx&amp;action=history" title="Журнал изменений страницы [alt-shift-h]" accesskey="h">История</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Действия</span><a href="#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Поиск</label></h5>
+	<form action="/index.php" id="searchform">
+				<div>
+			<input name="search" title="Искать это слово [alt-shift-f]" accesskey="f" id="searchInput" type="search">			<input name="go" value="Перейти" title="Перейти к странице, имеющей в точности такое название" id="searchGoButton" class="searchButton" type="submit">			<input name="fulltext" value="Найти" title="Найти страницы, содержащие указанный текст" id="mw-searchButton" class="searchButton" type="submit">					<input name="title" value="Служебная:Search" type="hidden">
+		</div>
+	</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(/first-logo-135x135.png);" href="http://firstwiki.ru/index.php/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0" title="Заглавная страница"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id="p-navigation">
+	<h5>Навигация</h5>
+	<div class="body">
+		<ul>
+			<li id="n-mainpage"><a href="http://firstwiki.ru/index.php/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0" title="Перейти на заглавную страницу [alt-shift-z]" accesskey="z">Заглавная страница</a></li>
+			<li id="n-portal"><a href="http://firstwiki.ru/index.php/%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F_%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0:%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D1%81%D0%BE%D0%BE%D0%B1%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B0" title="О проекте, о том, что вы можете сделать, где что находится">Сообщество</a></li>
+			<li id="n-recentchanges"><a href="http://firstwiki.ru/index.php/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:RecentChanges" title="Список последних изменений [alt-shift-r]" accesskey="r">Свежие правки</a></li>
+			<li id="n-help"><a href="http://firstwiki.ru/index.php/%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%A1%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5" title="Справочник по проекту «Энциклопедия хостинга»">Справка</a></li>
+		</ul>
+	</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Инструменты</h5>
+	<div class="body">
+		<ul>
+			<li id="t-whatlinkshere"><a href="http://firstwiki.ru/index.php/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:WhatLinksHere/%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_Apache_%D0%B8_Nginx" title="Список всех страниц, которые ссылаются на эту страницу [alt-shift-j]" accesskey="j">Ссылки сюда</a></li>
+			<li id="t-recentchangeslinked"><a href="http://firstwiki.ru/index.php/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:RecentChangesLinked/%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_Apache_%D0%B8_Nginx" title="Последние изменения в страницах, на которые ссылается эта страница [alt-shift-k]" accesskey="k">Связанные правки</a></li>
+			<li id="t-specialpages"><a href="http://firstwiki.ru/index.php/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:SpecialPages" title="Список служебных страниц [alt-shift-q]" accesskey="q">Спецстраницы</a></li>
+			<li><a href="http://firstwiki.ru/index.php?title=%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_Apache_%D0%B8_Nginx&amp;printable=yes" rel="alternate">Версия для печати</a></li>
+			<li id="t-permalink"><a href="http://firstwiki.ru/index.php?title=%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_Apache_%D0%B8_Nginx&amp;oldid=9121" title="Постоянная ссылка на эту версию страницы">Постоянная ссылка</a></li>
+		</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+				<div id="aside-thing" style="text-align:center; background-color: #f3f3f3;">
+					<h4>Заметили ошибку?</h4>
+    				<div style="padding:5px 0 0;">Выделите ее и нажмите CTRL+ENTER</div>
+				</div>
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+			        				<ul id="footer-info">
+											<li id="footer-info-lastmod"> Последнее изменение этой страницы: 03:32, 24 марта 2017.</li>
+											<li id="footer-info-viewcount">К этой странице обращались 166&nbsp;795 раз.</li>
+									</ul>
+			         
+          <div style="font-weight: bold; color: red; font-size: 0.8rem;">Нашли на странице ошибку? Выделите её и нажмите Ctrl+Enter</div>
+        				<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="http://firstwiki.ru/index.php/%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F_%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0:%D0%9F%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0_%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B4%D0%B5%D0%BD%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D0%B8" title="Энциклопедия хостинга:Политика конфиденциальности">Политика конфиденциальности</a></li>
+											<li id="footer-places-about"><a href="http://firstwiki.ru/index.php/%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F_%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0:%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5" title="Энциклопедия хостинга:Описание">Описание Энциклопедия хостинга</a></li>
+											<li id="footer-places-disclaimer"><a href="http://firstwiki.ru/index.php/%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F_%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0:%D0%9E%D1%82%D0%BA%D0%B0%D0%B7_%D0%BE%D1%82_%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8" title="Энциклопедия хостинга:Отказ от ответственности">Отказ от ответственности</a></li>
+									</ul>
+							<ul id="footer-places">
+					<li><a href="http://firstwiki.ru/index.php/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:SpecialPages" title="Список служебных страниц [ctrl-option-q]" accesskey="q">Спецстраницы</a></li>
+					<li><a href="http://firstwiki.ru/index.php/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:Upload" title="Загрузить изображения или мультимедиа-файлы [ctrl-option-u]" accesskey="u">Загрузить файл</a></li>
+				</ul>
+							<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="http://www.mediawiki.org/"><img src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31"></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		<script src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/load.php"></script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.user","mediawiki.page.ready"], null, true);
+}</script><script src="%D0%9F%D0%B5%D1%80%D0%B5%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20Apache%20%D0%B8%20Nginx%20%E2%80%94%20%D0%AD%D0%BD%D1%86%D0%B8%D0%BA%D0%BB%D0%BE%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_files/load_003.php" type="text/javascript"></script>
+<!-- Served in 0.101 secs. -->
+	<script type="text/javascript">
+		(function (d, w) {
+			var n = d.getElementsByTagName("script")[0],
+				s = d.createElement("script"),
+				f = function () { n.parentNode.insertBefore(s, n); };
+
+			s.type = "text/javascript";
+			s.async = true;
+			s.src = (d.location.protocol == "https:" ? "https:" : "http:") + 
+"//abs.firstvds.ru/get?divID=bodyContent__RightBlock__BannerFirstVDS&clientID=409225&additionalParameters=utm_source%3Dfirstwiki.ru%26utm_medium%3Ddisplay%26utm_content%3D%7Bbannername%7D%26utm_campaign%3D%D0%91%D0%B0%D0%BD%D0%BD%D0%B5%D1%80%D1%8B+Firstwiki";
+
+
+			if (w.opera == "[object Opera]") {
+				d.addEventListener("DOMContentLoaded", f, false);
+			} else {
+				f();
+			}
+		})(document, window);
+
+		(function (d, w) {
+			var n = d.getElementsByTagName("script")[0],
+				s = d.createElement("script"),
+				f = function () { n.parentNode.insertBefore(s, n); };
+
+			s.type = "text/javascript";
+			s.async = true;
+			s.src = (d.location.protocol == "https:" ? "https:" : "http:") + 
+"//abs.firstvds.ru/get?divID=bannerRotate&clientID=409225&additionalParameters=utm_source%3Dfirstwiki.ru%26utm_medium%3Ddisplay%26utm_content%3D%7Bbannername%7D%26utm_campaign%3D%D0%91%D0%B0%D0%BD%D0%BD%D0%B5%D1%80%D1%8B+Firstwiki";
+
+
+			if (w.opera == "[object Opera]") {
+				d.addEventListener("DOMContentLoaded", f, false);
+			} else {
+				f();
+			}
+		})(document, window);
+		
+		$(function() {
+			$(document).ready(function() {
+				var FirstVDSBanner = $('#bodyContent__RightBlock__BannerFirstVDS');
+				
+				if(FirstVDSBanner){
+					var FirstVDSBannerOffsetTop = FirstVDSBanner.offset().top,
+						changeOffset = function(){
+							windowOffsetTop = window.pageYOffset;
+
+							if(FirstVDSBannerOffsetTop < windowOffsetTop){
+								FirstVDSBanner.addClass('BLOCK-FIXED');
+							} else {
+								FirstVDSBanner.removeClass('BLOCK-FIXED');
+							}
+							console.log('window ' + windowOffsetTop + ' block ' + 
+FirstVDSBannerOffsetTop);
+						};
+
+					changeOffset();
+					$(window).scroll(changeOffset);	
+				}
+			});
+		});
+	</script>
+		
+	
+
+<div style="display: none; z-index: 1000; outline: 0px none;" class="ui-dialog ui-widget ui-widget-content ui-corner-all" tabindex="-1" role="dialog" aria-labelledby="ui-dialog-title-orph-dialog"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title" id="ui-dialog-title-orph-dialog">Ошибка</span><a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button"><span class="ui-icon ui-icon-closethick">close</span></a></div><div id="orph-dialog" style="display: block;" class="ui-dialog-content ui-widget-content">
+	<div>«...<span id="orph-text-show"></span>...»</div>
+    <h2 style="margin:10px 0 5px;">В чем проблема?</h2>
+	<input name="text" id="orph-text" type="hidden">
+    <textarea name="problem" id="orph-problem" style="width:100%;height:120px;"></textarea>
+    <div class="on-done">Спасибо! Скоро мы исправим ошибку. Это окно закроется автоматически через 5 секунд.</div>
+</div><div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix"><div class="ui-dialog-buttonset"><button type="button">Отправить</button><button type="button">Закрыть</button></div></div></div></body></html>

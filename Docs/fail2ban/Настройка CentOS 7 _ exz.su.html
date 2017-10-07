@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<!--[if IE 6]>
+<html id="ie6" lang="ru-RU">
+<![endif]-->
+<!--[if IE 7]>
+<html id="ie7" lang="ru-RU">
+<![endif]-->
+<!--[if IE 8]>
+<html id="ie8" lang="ru-RU">
+<![endif]-->
+<!--[if !(IE 6) | !(IE 7) | !(IE 8)  ]><!-->
+<html slick-uniqueid="3" lang="ru-RU"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>Настройка CentOS 7 | exz.su</title>
+
+<link rel="profile" href="http://gmpg.org/xfn/11">
+
+<link rel="pingback" href="https://exz.su/xmlrpc.php">
+
+<link rel="dns-prefetch" href="https://s0.wp.com/">
+<link rel="dns-prefetch" href="https://secure.gravatar.com/">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="exz.su » Лента" href="https://exz.su/feed/">
+<link rel="alternate" type="application/rss+xml" title="exz.su » Лента комментариев" href="https://exz.su/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="exz.su » Лента комментариев к «Настройка CentOS 7»" href="https://exz.su/2015/01/27/%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-centos-7/feed/">
+		<script type="text/javascript" async="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/watch_002.js"></script><script type="text/javascript" async="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/watch.js"></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/exz.su\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.8"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b===c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/wp-emoji-release_002.js" type="text/javascript" defer="defer"></script><script src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/wp-emoji-release.js" type="text/javascript" defer="defer"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="wendy-one-font-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/css_003.css" type="text/css" media="all">
+<link rel="stylesheet" id="open-sans-font-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/css.css" type="text/css" media="all">
+<link rel="stylesheet" id="oswald-font-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/css_002.css" type="text/css" media="all">
+<link rel="stylesheet" id="normalize-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/normalize.css" type="text/css" media="all">
+<link rel="stylesheet" id="static-style-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="github-profile-octicons-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/octicons.css" type="text/css" media="all">
+<link rel="stylesheet" id="enlighter-local-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/EnlighterJS.css" type="text/css" media="all">
+<link rel="stylesheet" id="jetpack_css-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/jetpack.css" type="text/css" media="all">
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/jquery.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/jquery-migrate.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/menu.js"></script>
+<link rel="https://api.w.org/" href="https://exz.su/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://exz.su/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://exz.su/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Установка Redmine на CentOS 7" href="https://exz.su/2015/01/24/%d0%a3%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%ba%d0%b0-redmine-%d0%bd%d0%b0-centos-7/">
+<link rel="next" title="Настройка Redmine nginx unicorn god" href="https://exz.su/2015/02/01/%d0%9d%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-redmine-nginx-unicorn-god/">
+<meta name="generator" content="WordPress 4.8">
+<link rel="canonical" href="https://exz.su/2015/01/27/%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-centos-7/">
+<link rel="shortlink" href="https://wp.me/p4KZft-2i">
+<link rel="alternate" type="application/json+oembed" href="https://exz.su/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fexz.su%2F2015%2F01%2F27%2F%25d0%25bd%25d0%25b0%25d1%2581%25d1%2582%25d1%2580%25d0%25be%25d0%25b9%25d0%25ba%25d0%25b0-centos-7%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://exz.su/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fexz.su%2F2015%2F01%2F27%2F%25d0%25bd%25d0%25b0%25d1%2581%25d1%2582%25d1%2580%25d0%25be%25d0%25b9%25d0%25ba%25d0%25b0-centos-7%2F&amp;format=xml">
+
+<link rel="dns-prefetch" href="https://v0.wordpress.com/">
+<!-- All in one Favicon 4.5 --><link rel="shortcut icon" href="http://exz.su/wp-content/uploads/2014/10/bluelake_favicon.ico">
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Настройка CentOS 7">
+<meta property="og:url" content="https://exz.su/2015/01/27/%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-centos-7/">
+<meta property="og:description" content="В этой статье пойдет разговор о настройке ОС перед началом ввода в эксплуатацию. 1) Настроим сеть 2) Изменим настройки ssh и firewall, настроим fail2ban для повышения безопасности 3) Настроим систе…">
+<meta property="article:published_time" content="2015-01-26T20:05:25+03:00">
+<meta property="article:modified_time" content="2017-01-10T13:43:12+03:00">
+<meta property="og:site_name" content="exz.su">
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" type="text/css" id="gravatar-card-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/services.css"></head>
+
+<body class="post-template-default single single-post postid-142 single-format-standard">
+<div id="page" class="hfeed">
+	<header id="branding" role="banner">
+		<hgroup>
+			<h1 id="site-title"><a href="https://exz.su/" title="exz.su" rel="home">exz.su</a></h1>
+			<h2 id="site-description"># make love </h2>
+		</hgroup>
+
+		<nav id="access" role="navigation" class="fixedMenu">
+			<h1 class="assistive-text section-heading">Main menu</h1>
+			<div class="skip-link screen-reader-text"><a href="#content" title="Skip to content">Skip to content</a></div>
+
+					</nav><!-- #access -->
+	</header><!-- #branding -->
+
+	<div id="main">
+		<div id="primary">
+			<div id="content" role="main">
+
+			
+					<nav id="nav-above">
+		<h1 class="assistive-text section-heading">Post navigation</h1>
+
+	
+		<div class="nav-previous"><a href="https://exz.su/2015/01/24/%d0%a3%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%ba%d0%b0-redmine-%d0%bd%d0%b0-centos-7/" rel="prev"><span class="meta-nav">←</span> Установка Redmine на CentOS 7</a></div>		<div class="nav-next"><a href="https://exz.su/2015/02/01/%d0%9d%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-redmine-nginx-unicorn-god/" rel="next">Настройка Redmine nginx unicorn god <span class="meta-nav">→</span></a></div>
+	
+	</nav><!-- #nav-above -->
+	
+				
+<article id="post-142" class="post-142 post type-post status-publish format-standard hentry category-centos tag-centos tag-fail2ban tag-firewalld tag-network tag-postfix tag-sshd tag-yum-cron">
+	<header class="entry-header">
+		<h1 class="entry-title">Настройка CentOS 7</h1>
+
+		<div class="entry-meta">
+			<span class="sep">Posted on </span><a href="https://exz.su/2015/01/27/%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-centos-7/" title="01:05" rel="bookmark"><time class="entry-date" datetime="2015-01-27T01:05:25+03:00" pubdate="">27.01.2015</time></a><span class="byline"> <span class="sep"> by </span> <span class="author vcard"><a class="url fn n" href="https://exz.su/author/mr-exz/" title="View all posts by mr.exz" rel="author">mr.exz</a></span></span>		</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<p>В этой статье пойдет разговор о настройке ОС перед началом ввода в эксплуатацию.<br>
+1) Настроим сеть<br>
+2) Изменим настройки ssh и firewall, настроим fail2ban для повышения безопасности<br>
+3) Настроим систему уведомлений на почту через сервера yandex’a<br>
+4) Настроим уведомления о доступных обновлениях</p>
+<p><span id="more-142"></span></p>
+<h1>Настройка сети</h1>
+<p><strong>1) Посмотрим доступные сетевые интерфейсы</strong><br>
+<code><br>
+# ip link show<br>
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT<br>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00<br>
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000<br>
+link/ether 00:0c:29:7d:46:b9 brd ff:ff:ff:ff:ff:ff<br>
+</code></p>
+<p><strong>2) Откроем конфигурационный фаил интерфейса eth0</strong><br>
+<code><br>
+# vim /etc/sysconfig/network-scripts/ifcfg-eth0<br>
+DEVICE=eth0 </code><span style="color: #999999;">#Имя интерфейса</span><code><br>
+ONBOOT=yes </code><span style="color: #999999;">#Включать при загрузке</span><code><br>
+BOOTPROTO=none </code><span style="color: #999999;">#Протокол при загрузке dhcp/static/none</span><code><br>
+NETWORK=192.168.211.0 </code><span style="color: #999999;">#Адрес сети</span><code><br>
+NETMASK=255.255.255.0 </code><span style="color: #999999;">#Маска сети</span><code><br>
+IPADDR=192.168.211.3 </code><span style="color: #999999;">#IP Адрес хоста</span><code><br>
+DNS1=192.168.211.2 </code><span style="color: #999999;">#DNS сервер</span><code><br>
+GATEWAY=192.168.211.2 </code><span style="color: #999999;">#Шлюз</span><code><br>
+DEFROUTE=yes </code><span style="color: #999999;">#Да этот шлюз по умолчанию</span><code><br>
+USERCTL=no </code><span style="color: #999999;">#Запрещаем другим не root пользователям менять настройки</span></p>
+<p># systemctl restart network</p>
+<h1>Настройка&nbsp;безопасности</h1>
+<p><strong>1) Отключить selenux</strong></p>
+<p>Желательно отключить selenux так как он может блокировать работу многих сервисов.<br>
+Или есть второй вариант — грамотно его настроить, но это&nbsp;в другой раз.</p>
+<p><code> # vim /etc/sysconfig/selinux<br>
+</code><span style="color: #999999;">#поменять значение SELINUX</span><code><br>
+SELINUX=disabled</code></p>
+<p><strong>2) Настроим </strong><a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Security_Guide/sec-Using_Firewalls.html" target="_blank"><strong>firewalld</strong><br>
+</a><br>
+Добавим новое правило для нового порта sshd,&nbsp;<code><br>
+# firewall-cmd --permanent --zone=public --add-port=44322/tcp</code><br>
+Должен будет измениться фаил /etc/firewalld/zones/public.xml</p>
+<p><strong>3) Настроим sshd на другой порт&nbsp;</strong></p>
+<p><code> # vim /etc/ssh/sshd_config<br>
+</code><span style="color: #999999;">#изменим с дефолтного 22 порта на другой</span><code><br>
+Port 44322<br>
+# systemctl restart sshd</code></p>
+<p><strong>4) Настроим fail2ban для защиты от перебора паролей к ssh</strong></p>
+<p><span style="color: #999999;"> #установим fail2ban</span><code><br>
+# yum install fail2ban.noarch fail2ban-firewalld.noarch fail2ban-sendmail.noarch fail2ban-server.noarch fail2ban-systemd.noarch<br>
+</code><span style="color: #999999;">#скопируем фаил настроек</span><code><br>
+# cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local<br>
+</code><span style="color: #999999;">#добавим настройки для sshd</span><code><br>
+# vim /etc/fail2ban/jail.local<br>
+[sshd]<br>
+enabled = true </code><span style="color: #999999;">#вклюим fail2ban для ssh</span><code><br>
+action = iptables-multiport[name=SSH,port=44322] </code><span style="color: #999999;">#так как мы изменили порт по умолчанию, перенастроим&nbsp;fail2ban на другой порт ssh</span><code><br>
+logpath = %(sshd_log)s</code></p>
+<p><span style="color: #999999;">#запустим fqil2ban</span><br>
+# systemctl start fail2ban<br>
+<span style="color: #999999;">#добавим в автозагрзку</span><br>
+# systemctl enable fail2ban<br>
+<span style="color: #999999;">#посмотрим состояние fail2ban</span><br>
+# fail2ban-client status sshd<br>
+Status for the jail: sshd<br>
+|- Filter<br>
+| |- Currently failed: 1<br>
+| |- Total failed: 6<br>
+| `- File list: /var/log/secure<br>
+`- Actions<br>
+|- Currently banned: 0<br>
+|- Total banned: 2<br>
+`- Banned IP list:<br>
+<span style="color: #999999;">#так же проверим новое правило в iptables</span><br>
+# iptables -L -v -n<br>
+Chain INPUT (policy ACCEPT 0 packets, 0 bytes)<br>
+<span style="line-height: 1.5;">pkts bytes target prot opt in out source destination<br>
+</span><span style="line-height: 1.5;">1835 124K f2b-SSH tcp — * * 0.0.0.0/0 0.0.0.0/0 multiport dports 44322</span></p>
+<h1>Настройка уведомлений</h1>
+<p><strong>1) Настройка postfix</strong></p>
+<p><span style="color: #999999;"> #установим поддержку sasl аутентификации</span><code><br>
+# yum reinstall cyrus-sasl-plain<br>
+</code><span style="color: #999999;">#перейдем к настройке postfix</span></p>
+<p># vim /etc/postfix/main.cf<br>
+myhostname = test.localnet <span style="color: #999999;">#имя сервера</span><br>
+inet_interfaces = localhost <span style="color: #999999;">#запускать сервис на lo интерфейсе</span><br>
+inet_protocols = ipv4 <span style="color: #999999;">#использовать только ipv4 протокол</span><br>
+relayhost = [smtp.yandex.ru]:587 <span style="color: #999999;">#хост для relay</span><br>
+sender_dependent_relayhost_maps = hash:/etc/postfix/sender_relay <span style="color: #999999;">#укажим привзяку домена к конретному релеэю</span><br>
+smtp_sender_dependent_authentication = yes <span style="color: #999999;">#аутентификация будет зависеть от того, с какого домена будет происходить отправка</span><br>
+smtp_generic_maps = hash:/etc/postfix/generic <span style="color: #999999;">#фаил подмену локального имени и с которого должно быть отправлено письмо</span><br>
+append_dot_mydomain = no <span style="color: #999999;">#не добавлять точку доменному имени</span><br>
+smtpd_tls_security_level = encrypt <span style="color: #999999;">#шифрование may и encrypt — используется если сервер реле постоянно использует шифрование</span><br>
+smtpd_tls_auth_only = yes <span style="color: #999999;">#передавать авторизационные данные только зашифрованными</span><br>
+broken_sasl_auth_clients = yes<br>
+smtp_sasl_auth_enable = yes <span style="color: #999999;">#включить sasl аутентификацию</span><br>
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd <span style="color: #999999;">#фаил с описание учетных записей для отправки писем</span><br>
+smtp_sasl_security_options = noanonymous <span style="color: #999999;">#более безопасным подход,защита TLS шифрованием сеанса</span><br>
+smtp_sasl_type = cyrus <span style="color: #999999;">#какой плагин должен использовать postfix для sasl аутентификации</span><br>
+smtp_sasl_mechanism_filter = login <span style="color: #999999;">#какой механизм авторизации использовать на удаленном сервер</span></p>
+<p>smtp_tls_loglevel = 1<br>
+smtp_use_tls = yes<br>
+smtp_tls_scert_verifydepth = 4<br>
+smtp_tls_exclude_ciphers = aNULL<br>
+smtp_tls_mandatory_protocols = SSLv3, TLSv1<br>
+smtp_tls_CAfile = /etc/ssl/certYA.pem #tls сертификат yandex<br>
+smtp_helo_timeout = 15<br>
+smtp_connect_timeout = 15<br>
+smtp_data_init_timeout = 15<br>
+smtp_data_xfer_timeout = 15<br>
+smtp_data_done_timeout = 15<br>
+smtp_mail_timeout = 15<br>
+smtp_quit_timeout = 15<br>
+smtp_rcpt_timeout = 15<br>
+smtp_rset_timeout = 10<br>
+smtp_starttls_timeout = 15<br>
+smtp_xforward_timeout = 15</p>
+<p><span style="color: #999999;">#создадим фаил сертификата yandex</span><br>
+# openssl s_client -starttls smtp -crlf -connect smtp.yandex.ru:587</p>
+<p><span style="color: #999999;">#из вывода нам понадобиться только сертификат</span><br>
+——BEGIN CERTIFICATE——<br>
+MIIGeTCCBWGgAwIBAgIQE0EU3D2I+BSAZoLMDvIr1DANBgkqhkiG9w0BAQUFADB3<br>
+MQswCQYDVQQGEwJQTDEiMCAGA1UEChMZVW5pemV0byBUZWNobm9sb2dpZXMgUy5B<br>
+LjEnMCUGA1UECxMeQ2VydHVtIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MRswGQYD<br>
+VQQDExJDZXJ0dW0gTGV2ZWwgSVYgQ0EwHhcNMTMxMjEwMTAyMjM4WhcNMTYxMjA5<br>
+MTAyMjM4WjCBmjELMAkGA1UEBhMCUlUxEzARBgNVBAoMCllhbmRleCBMTEMxDDAK<br>
+BgNVBAsMA0lUTzEPMA0GA1UEBwwGTW9zY293MRswGQYDVQQIDBJSdXNzaWFuIEZl<br>
+ZGVyYXRpb24xFzAVBgNVBAMMDnNtdHAueWFuZGV4LnJ1MSEwHwYJKoZIhvcNAQkB<br>
+FhJwa2lAeWFuZGV4LXRlYW0ucnUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK<br>
+AoIBAQDs0+Go9ihLOt96aLf4hscMACZccUaovpmGVTndrkHYUAHGkF8fVh55bezF<br>
+tr+gWX0+WJ5NXSkDOr6y4ocRYLDs04uUZ1hQPPcclHGzUzW/tMmfcAGXRkaFTIkP<br>
+wOD69kAh9UrzAJWGqA7o8+kVLtueCzE5JmsEJRyXkanS7iPv6wDgLnPTZobVNb2t<br>
+I0H2KeSGgtXRsgqmVbZQ7VSLkU+iXX6v7FwwLyL+ZUuKZORGOjq2okOwqVzuC0Cg<br>
+OoJLGiFMSg54kXDz6BMGHXmMGLpcMxbBgX/jrIgYc0rQIkrwLQltosPU+xicbeFT<br>
+YvnYdh8ZtFbDC+w/5+1xXb6sBv+HAgMBAAGjggLbMIIC1zAMBgNVHRMBAf8EAjAA<br>
+MCwGA1UdHwQlMCMwIaAfoB2GG2h0dHA6Ly9jcmwuY2VydHVtLnBsL2w0LmNybDAf<br>
+BgNVHSMEGDAWgBTNSkbKA2WQ5jEQGoLGpRxe0VDPHzAdBgNVHQ4EFgQUk7Y1gZeQ<br>
+XPP4gwvGHoW8tzHUlFUwDgYDVR0PAQH/BAQDAgWgMFoGCCsGAQUFBwEBBE4wTDAh<br>
+BggrBgEFBQcwAYYVaHR0cDovL29jc3AuY2VydHVtLnBsMCcGCCsGAQUFBzAChhto<br>
+dHRwOi8vd3d3LmNlcnR1bS5wbC9sNC5jZXIwggE9BgNVHSAEggE0MIIBMDCCASwG<br>
+CiqEaAGG9ncCAgQwggEcMCUGCCsGAQUFBwIBFhlodHRwczovL3d3dy5jZXJ0dW0u<br>
+cGwvQ1BTMIHyBggrBgEFBQcCAjCB5TAgFhlVbml6ZXRvIFRlY2hub2xvZ2llcyBT<br>
+LkEuMAMCAQIagcBVc2FnZSBvZiB0aGlzIGNlcnRpZmljYXRlIGlzIHN0cmljdGx5<br>
+IHN1YmplY3RlZCB0byB0aGUgQ0VSVFVNIENlcnRpZmljYXRpb24gUHJhY3RpY2Ug<br>
+U3RhdGVtZW50IChDUFMpIGluY29ycG9yYXRlZCBieSByZWZlcmVuY2UgaGVyZWlu<br>
+IGFuZCBpbiB0aGUgcmVwb3NpdG9yeSBhdCBodHRwczovL3d3dy5jZXJ0dW0ucGwv<br>
+cmVwb3NpdG9yeS4wHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMBEGCWCG<br>
+SAGG+EIBAQQEAwIGwDB6BgNVHREEczBxgg5zbXRwLnlhbmRleC5ydYIPc210cC55<br>
+YW5kZXguY29tgg5zbXRwLnlhbmRleC5ieYIOc210cC55YW5kZXgua3qCDnNtdHAu<br>
+eWFuZGV4LnVhghJzbXRwLnlhbmRleC5jb20udHKCCnNtdHAueWEucnUwDQYJKoZI<br>
+hvcNAQEFBQADggEBANUBIrLMkKoHW4zYYacsy1wOuMZiwAG7pxin+UFPZNNPrpoN<br>
+Y6TgpgAN3b4IHDkUrQd01ww0dCw5Z7akgPjun9aYszF+mTAjEQ9S0JM8uHA6wPx+<br>
+f534rV7Sv6C2X8QmjxOvu9oGbEG3u64HVQIiqmRFH2rtZtPPZHFYK3SWLZAUwL3P<br>
+IDELM/Dn7P8hBlbjWSDHndtwYkaRRKLzoOs71+mMxecuBzSdoKMTwuhRXTb0zkaV<br>
+FH5SBk7OaQ5xn0E3sL2UnpwwvsIhb03zOqjTrR2UXO5r88PsTG1H50quJbGpUaBT<br>
+QvzoYDBJMDRJlVUwCd6++cIP261zTKBFdBxlpdw=<br>
+——END CERTIFICATE——</p>
+<p><span style="color: #999999;">#отредактируем фил generic добавки туда строчку со своим доменом на pdd.yandex.ru</span><br>
+# vim /etc/postfix/generic<br>
+root support@exz.su</p>
+<p><span style="color: #999999;"> #отредактируем фаил /etc/postfix/sasl_passwd</span><br>
+# vim /etc/postfix/sasl_passwd<br>
+smtp.yandex.ru support@exz.su:123456<br>
+[smtp.yandex.ru] support@exz.su:123456 <span style="color: #999999;">#аккаунт по умолчанию</span></p>
+<p><span style="color: #999999;">#отредактируем фаил /etc/postfix/sender_relay</span><br>
+# vim /etc/postfix/sender_relay<br>
+@exz.su [smtp.yandex.ru]</p>
+<p><span style="color: #999999;">#создадим postfix таблици</span><br>
+# cd /etc/postfix<br>
+# postmap generic sender_relay sasl_passwd</p>
+<p><span style="color: #999999;">#отредактируем фил /etc/hostname</span><br>
+# vim /etc/hostname<br>
+test.localnet</p>
+<p><span style="color: #999999;">#отредактируем фаил /etc/hosts</span><br>
+# vim /etc/hosts<br>
+127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4 test.localnet</p>
+<p><span style="color: #999999;">#перезапустил postfix и добавим в автозагрузу</span><br>
+# systemctl restart postfix<br>
+# systemctl enable postfix</p>
+<p><span style="color: #999999;">#проверим отправку писем через mailx</span><br>
+# yum install mailx<br>
+# echo «test» | mail -s test root@exz.su</p>
+<p><strong>2) Настройка уведомлений fail2ban</strong></p>
+<p><span style="color: #999999;"> #настроим фил aliases что бы все письма приходившие руку попадали к нам</span><code><br>
+# vim /etc/aliases<br>
+root: root@exz.su<br>
+</code></p>
+<p><span style="color: #999999;">#настроим теперь fail2ban</span><code><br>
+# vim /etc/fail2ban/jail.local<br>
+</code><span style="color: #999999;">#найдем в разделе DEFAULT строку action = %(action_)s и заменим ее</span><code><br>
+action = %(action_mw)s<br>
+</code><span style="color: #999999;">#в описание jail’a sshd добавим к action строку</span><code><br>
+action = iptables-multiport[name=SSH,port=44322]<br>
+mail[name=ssh, dest=root@localhost]<br>
+</code></p>
+<p><span style="color: #999999;">#перезапустим fail2ban</span><code><br>
+# systemctl restart fail2ban<br>
+</code></p>
+<p><strong>3) Настройка yum-cron для своевременного оповещения об обновлениях</strong><br>
+<code><br>
+# yum install yum-cron<br>
+# vim&nbsp;/etc/yum/yum-cron.conf</code></p>
+<p>[commands]<br>
+update_messages = yes<br>
+download_updates = no<br>
+apply_updates = no<br>
+random_sleep = 360</p>
+<p>[emitters]<br>
+system_name = test.localnet<br>
+emit_via = stdio<br>
+ouput_width = 80</p>
+<p>[email]<br>
+email_from = root@localhost<br>
+email_to = root<br>
+email_host = localhost</p>
+<p>[groups]<br>
+group_list = None<br>
+group_package_types = mandatory, default</p>
+<p>[base]<br>
+debuglevel = -2<br>
+mdpolicy = group:main</p>
+<p><span style="color: #999999;">#активируем проверку обновлений и запустим yum-cron</span><br>
+# systemctl enable yum-cron<br>
+# systemctl start yum-cron</p>
+<p>&nbsp;</p>
+			</div><!-- .entry-content -->
+
+	<footer class="entry-meta">
+		This entry was posted in <a href="https://exz.su/category/centos/" rel="category tag">CentOS</a> and tagged <a href="https://exz.su/tag/centos/" rel="tag">CentOS</a>, <a href="https://exz.su/tag/fail2ban/" rel="tag">fail2ban</a>, <a href="https://exz.su/tag/firewalld/" rel="tag">firewalld</a>, <a href="https://exz.su/tag/network/" rel="tag">network</a>, <a href="https://exz.su/tag/postfix/" rel="tag">Postfix</a>, <a href="https://exz.su/tag/sshd/" rel="tag">sshd</a>, <a href="https://exz.su/tag/yum-cron/" rel="tag">yum-cron</a>. Bookmark the <a href="https://exz.su/2015/01/27/%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-centos-7/" title="Permalink to Настройка CentOS 7" rel="bookmark">permalink</a>.
+			</footer><!-- .entry-meta -->
+</article><!-- #post-142 -->
+
+					<nav id="nav-below">
+		<h1 class="assistive-text section-heading">Post navigation</h1>
+
+	
+		<div class="nav-previous"><a href="https://exz.su/2015/01/24/%d0%a3%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%ba%d0%b0-redmine-%d0%bd%d0%b0-centos-7/" rel="prev"><span class="meta-nav">←</span> Установка Redmine на CentOS 7</a></div>		<div class="nav-next"><a href="https://exz.su/2015/02/01/%d0%9d%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-redmine-nginx-unicorn-god/" rel="next">Настройка Redmine nginx unicorn god <span class="meta-nav">→</span></a></div>
+	
+	</nav><!-- #nav-below -->
+	
+					<div id="comments">
+	
+	
+			<h2 id="comments-title">
+			3 thoughts on “<span>Настройка CentOS 7</span>”		</h2>
+
+		
+		<ol class="commentlist">
+				<li class="comment even thread-even depth-1" id="li-comment-516">
+		<article id="comment-516" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/4bcf813194e0548165c1e73890e4de74.png" alt="" class="avatar avatar-40wp-user-avatar wp-user-avatar-40 alignnone photo avatar-default grav-hashed grav-hijack" id="grav-4bcf813194e0548165c1e73890e4de74-0" width="40" height="40">					<cite class="fn">Леонид</cite> <span class="says">says:</span>				</div><!-- .comment-author .vcard -->
+				
+				<div class="comment-meta commentmetadata">
+					<a href="https://exz.su/2015/01/27/%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-centos-7/#comment-516"><time pubdate="" datetime="2015-11-04T12:13:50+03:00">
+					04.11.2015 at 12:13					</time></a>
+									</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content"><p>Благодарю за подробное описание, попробую сегодня установить, надеюсь получится</p>
+</div>
+
+			<div class="reply">
+				<a rel="nofollow" class="comment-reply-link" href="https://exz.su/2015/01/27/%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-centos-7/?replytocom=516#respond" onclick='return addComment.moveForm( "comment-516", "516", "respond", "142" )' aria-label="Комментарий к записи Леонид">Ответить</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback: <a href="https://exz.su/2016/06/28/time-machine-%d0%b0%d0%b2%d1%82%d0%be%d1%80%d0%b8%d0%b7%d0%b0%d1%86%d0%b8%d1%8f-%d1%87%d0%b5%d1%80%d0%b5%d0%b7-active-directory-centos-7/" rel="external nofollow" class="url">Time Machine авторизация через Active Directory CentOS 7 | exz.su</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback: <a href="https://exz.su/2017/01/17/%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-centos-7-%d1%87%d0%b5%d1%80%d0%b5%d0%b7-chef-solo/" rel="external nofollow" class="url">Настройка CentOS 7 через chef-solo | exz.su</a></p>
+	</li><!-- #comment-## -->
+		</ol>
+
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Добавить комментарий <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://exz.su/2015/01/27/%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0-centos-7/#respond" style="display:none;">Отменить ответ</a></small></h3>			<form action="https://exz.su/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+				<p class="comment-notes"><span id="email-notes">Ваш e-mail не будет опубликован.</span> Обязательные поля помечены <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Комментарий</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></p><p class="comment-form-author"><label for="author">Имя <span class="required">*</span></label> <input id="author" name="author" size="30" maxlength="245" aria-required="true" required="required" type="text"></p>
+<p class="comment-form-email"><label for="email">E-mail <span class="required">*</span></label> <input id="email" name="email" size="30" maxlength="100" aria-describedby="email-notes" aria-required="true" required="required" type="text"></p>
+<p class="comment-form-url"><label for="url">Сайт</label> <input id="url" name="url" size="30" maxlength="200" type="text"></p>
+<p class="form-submit"><input name="submit" id="submit" class="submit" value="Отправить комментарий" type="submit"> <input name="comment_post_ID" value="142" id="comment_post_ID" type="hidden">
+<input name="comment_parent" id="comment_parent" value="0" type="hidden">
+</p><p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" value="dd2852eddb" type="hidden"></p><p class="comment-subscription-form"><input name="subscribe_comments" id="subscribe_comments" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;" type="checkbox"> <label class="subscribe-label" id="subscribe-label" for="subscribe_comments">Уведомить меня о новых комментариях по email.</label></p><p class="comment-subscription-form"><input name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;" type="checkbox"> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Уведомлять меня о новых записях почтой.</label></p><p style="display: none;"></p>			<input id="ak_js" name="ak_js" value="1501077083838" type="hidden"></form>
+			</div><!-- #respond -->
+	
+</div><!-- #comments -->
+
+			
+			</div><!-- #content -->
+		</div><!-- #primary -->
+
+		<div id="secondary" class="widget-area" role="complementary">
+						<aside id="search-2" class="widget widget_search"><form role="search" method="get" id="searchform" class="searchform" action="https://exz.su/">
+				<div>
+					<label class="screen-reader-text" for="s">Найти:</label>
+					<input name="s" id="s" type="text">
+					<input id="searchsubmit" value="Поиск" type="submit">
+				</div>
+			</form></aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h1 class="widget-title">Свежие записи</h1>		<ul>
+					<li>
+				<a href="https://exz.su/2017/07/06/redmine-vs-jira/">Redmine vs Jira</a>
+						</li>
+					<li>
+				<a href="https://exz.su/2017/01/17/%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-centos-7-%d1%87%d0%b5%d1%80%d0%b5%d0%b7-chef-solo/">Настройка CentOS 7 через chef-solo</a>
+						</li>
+					<li>
+				<a href="https://exz.su/2016/06/28/time-machine-%d0%b0%d0%b2%d1%82%d0%be%d1%80%d0%b8%d0%b7%d0%b0%d1%86%d0%b8%d1%8f-%d1%87%d0%b5%d1%80%d0%b5%d0%b7-active-directory-centos-7/">Time Machine  CentOS 7 авторизация через Active Directory</a>
+						</li>
+					<li>
+				<a href="https://exz.su/2015/05/30/%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-freebsd-10/">Настройка FreeBSD 10</a>
+						</li>
+					<li>
+				<a href="https://exz.su/2015/02/01/%d0%9d%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-redmine-nginx-unicorn-god/">Настройка Redmine nginx unicorn god</a>
+						</li>
+				</ul>
+		</aside>		<aside id="categories-2" class="widget widget_categories"><h1 class="widget-title">Рубрики</h1>		<ul>
+	<li class="cat-item cat-item-40"><a href="https://exz.su/category/centos/">CentOS</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="https://exz.su/category/chef/">Chef</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://exz.su/category/cisco/">Cisco</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://exz.su/category/freebsd/">FreeBSD</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="https://exz.su/category/hardware/">Hardware</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://exz.su/category/programing/">Programing</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="https://exz.su/category/redmine/">Redmine</a>
+</li>
+		</ul>
+</aside><aside id="archives-2" class="widget widget_archive"><h1 class="widget-title">Архивы</h1>		<ul>
+			<li><a href="https://exz.su/2017/07/">Июль 2017</a></li>
+	<li><a href="https://exz.su/2017/01/">Январь 2017</a></li>
+	<li><a href="https://exz.su/2016/06/">Июнь 2016</a></li>
+	<li><a href="https://exz.su/2015/05/">Май 2015</a></li>
+	<li><a href="https://exz.su/2015/02/">Февраль 2015</a></li>
+	<li><a href="https://exz.su/2015/01/">Январь 2015</a></li>
+	<li><a href="https://exz.su/2014/10/">Октябрь 2014</a></li>
+	<li><a href="https://exz.su/2014/09/">Сентябрь 2014</a></li>
+	<li><a href="https://exz.su/2014/07/">Июль 2014</a></li>
+	<li><a href="https://exz.su/2014/06/">Июнь 2014</a></li>
+		</ul>
+		</aside><aside id="tag_cloud-3" class="widget widget_tag_cloud"><h1 class="widget-title">Метки</h1><div class="tagcloud"><a href="https://exz.su/tag/active-directory/" class="tag-cloud-link tag-link-52 tag-link-position-1" style="font-size: 8pt;" aria-label="Active Directory (1 элемент)">Active Directory</a>
+<a href="https://exz.su/tag/admin-tools/" class="tag-cloud-link tag-link-28 tag-link-position-2" style="font-size: 8pt;" aria-label="admin tools (1 элемент)">admin tools</a>
+<a href="https://exz.su/tag/apple-filing-protocol/" class="tag-cloud-link tag-link-32 tag-link-position-3" style="font-size: 8pt;" aria-label="Apple Filing Protocol (1 элемент)">Apple Filing Protocol</a>
+<a href="https://exz.su/tag/bind/" class="tag-cloud-link tag-link-21 tag-link-position-4" style="font-size: 8pt;" aria-label="bind (1 элемент)">bind</a>
+<a href="https://exz.su/tag/bittorrent/" class="tag-cloud-link tag-link-35 tag-link-position-5" style="font-size: 8pt;" aria-label="bittorrent (1 элемент)">bittorrent</a>
+<a href="https://exz.su/tag/cpp/" class="tag-cloud-link tag-link-5 tag-link-position-6" style="font-size: 8pt;" aria-label="C++ (1 элемент)">C++</a>
+<a href="https://exz.su/tag/centos/" class="tag-cloud-link tag-link-38 tag-link-position-7" style="font-size: 14.588235294118pt;" aria-label="CentOS (5 элементов)">CentOS</a>
+<a href="https://exz.su/tag/chef/" class="tag-cloud-link tag-link-54 tag-link-position-8" style="font-size: 8pt;" aria-label="Chef (1 элемент)">Chef</a>
+<a href="https://exz.su/tag/cisco-2/" class="tag-cloud-link tag-link-8 tag-link-position-9" style="font-size: 10.470588235294pt;" aria-label="cisco (2 элемента)">cisco</a>
+<a href="https://exz.su/tag/cisco-asa/" class="tag-cloud-link tag-link-12 tag-link-position-10" style="font-size: 8pt;" aria-label="Cisco ASA (1 элемент)">Cisco ASA</a>
+<a href="https://exz.su/tag/dhcp/" class="tag-cloud-link tag-link-25 tag-link-position-11" style="font-size: 8pt;" aria-label="dhcp (1 элемент)">dhcp</a>
+<a href="https://exz.su/tag/dns/" class="tag-cloud-link tag-link-22 tag-link-position-12" style="font-size: 8pt;" aria-label="dns (1 элемент)">dns</a>
+<a href="https://exz.su/tag/dyndns/" class="tag-cloud-link tag-link-26 tag-link-position-13" style="font-size: 8pt;" aria-label="DynDNS (1 элемент)">DynDNS</a>
+<a href="https://exz.su/tag/fail2ban/" class="tag-cloud-link tag-link-42 tag-link-position-14" style="font-size: 8pt;" aria-label="fail2ban (1 элемент)">fail2ban</a>
+<a href="https://exz.su/tag/firewalld/" class="tag-cloud-link tag-link-43 tag-link-position-15" style="font-size: 8pt;" aria-label="firewalld (1 элемент)">firewalld</a>
+<a href="https://exz.su/tag/freebsd-2/" class="tag-cloud-link tag-link-10 tag-link-position-16" style="font-size: 22pt;" aria-label="FreeBSD (20 элементов)">FreeBSD</a>
+<a href="https://exz.su/tag/freebsd-update/" class="tag-cloud-link tag-link-50 tag-link-position-17" style="font-size: 8pt;" aria-label="freebsd-update (1 элемент)">freebsd-update</a>
+<a href="https://exz.su/tag/fsbackup/" class="tag-cloud-link tag-link-17 tag-link-position-18" style="font-size: 8pt;" aria-label="fsbackup (1 элемент)">fsbackup</a>
+<a href="https://exz.su/tag/god/" class="tag-cloud-link tag-link-47 tag-link-position-19" style="font-size: 8pt;" aria-label="god (1 элемент)">god</a>
+<a href="https://exz.su/tag/jira/" class="tag-cloud-link tag-link-55 tag-link-position-20" style="font-size: 8pt;" aria-label="jira (1 элемент)">jira</a>
+<a href="https://exz.su/tag/localtime/" class="tag-cloud-link tag-link-29 tag-link-position-21" style="font-size: 8pt;" aria-label="localtime (1 элемент)">localtime</a>
+<a href="https://exz.su/tag/nagios/" class="tag-cloud-link tag-link-14 tag-link-position-22" style="font-size: 8pt;" aria-label="Nagios (1 элемент)">Nagios</a>
+<a href="https://exz.su/tag/netatalk/" class="tag-cloud-link tag-link-31 tag-link-position-23" style="font-size: 10.470588235294pt;" aria-label="Netatalk (2 элемента)">Netatalk</a>
+<a href="https://exz.su/tag/network/" class="tag-cloud-link tag-link-7 tag-link-position-24" style="font-size: 10.470588235294pt;" aria-label="network (2 элемента)">network</a>
+<a href="https://exz.su/tag/nginx/" class="tag-cloud-link tag-link-48 tag-link-position-25" style="font-size: 8pt;" aria-label="nginx (1 элемент)">nginx</a>
+<a href="https://exz.su/tag/openssl/" class="tag-cloud-link tag-link-18 tag-link-position-26" style="font-size: 8pt;" aria-label="OpenSSL (1 элемент)">OpenSSL</a>
+<a href="https://exz.su/tag/openvpn/" class="tag-cloud-link tag-link-19 tag-link-position-27" style="font-size: 8pt;" aria-label="OpenVPN (1 элемент)">OpenVPN</a>
+<a href="https://exz.su/tag/perl/" class="tag-cloud-link tag-link-27 tag-link-position-28" style="font-size: 8pt;" aria-label="Perl (1 элемент)">Perl</a>
+<a href="https://exz.su/tag/pf/" class="tag-cloud-link tag-link-16 tag-link-position-29" style="font-size: 13.490196078431pt;" aria-label="PF (4 элемента)">PF</a>
+<a href="https://exz.su/tag/postfix/" class="tag-cloud-link tag-link-41 tag-link-position-30" style="font-size: 8pt;" aria-label="Postfix (1 элемент)">Postfix</a>
+<a href="https://exz.su/tag/ppp/" class="tag-cloud-link tag-link-24 tag-link-position-31" style="font-size: 8pt;" aria-label="ppp (1 элемент)">ppp</a>
+<a href="https://exz.su/tag/pptp/" class="tag-cloud-link tag-link-20 tag-link-position-32" style="font-size: 8pt;" aria-label="pptp (1 элемент)">pptp</a>
+<a href="https://exz.su/tag/radius/" class="tag-cloud-link tag-link-9 tag-link-position-33" style="font-size: 10.470588235294pt;" aria-label="radius (2 элемента)">radius</a>
+<a href="https://exz.su/tag/redmine/" class="tag-cloud-link tag-link-37 tag-link-position-34" style="font-size: 12.117647058824pt;" aria-label="Redmine (3 элемента)">Redmine</a>
+<a href="https://exz.su/tag/ruby/" class="tag-cloud-link tag-link-39 tag-link-position-35" style="font-size: 8pt;" aria-label="ruby (1 элемент)">ruby</a>
+<a href="https://exz.su/tag/samba/" class="tag-cloud-link tag-link-23 tag-link-position-36" style="font-size: 8pt;" aria-label="samba (1 элемент)">samba</a>
+<a href="https://exz.su/tag/sshd/" class="tag-cloud-link tag-link-44 tag-link-position-37" style="font-size: 8pt;" aria-label="sshd (1 элемент)">sshd</a>
+<a href="https://exz.su/tag/ssmtp/" class="tag-cloud-link tag-link-49 tag-link-position-38" style="font-size: 8pt;" aria-label="ssmtp (1 элемент)">ssmtp</a>
+<a href="https://exz.su/tag/time-machine/" class="tag-cloud-link tag-link-33 tag-link-position-39" style="font-size: 8pt;" aria-label="Time Machine (1 элемент)">Time Machine</a>
+<a href="https://exz.su/tag/transmission/" class="tag-cloud-link tag-link-34 tag-link-position-40" style="font-size: 8pt;" aria-label="transmission (1 элемент)">transmission</a>
+<a href="https://exz.su/tag/unicorn/" class="tag-cloud-link tag-link-46 tag-link-position-41" style="font-size: 8pt;" aria-label="unicorn (1 элемент)">unicorn</a>
+<a href="https://exz.su/tag/windows-server-2012/" class="tag-cloud-link tag-link-51 tag-link-position-42" style="font-size: 8pt;" aria-label="Windows Server 2012 (1 элемент)">Windows Server 2012</a>
+<a href="https://exz.su/tag/yum-cron/" class="tag-cloud-link tag-link-45 tag-link-position-43" style="font-size: 8pt;" aria-label="yum-cron (1 элемент)">yum-cron</a>
+<a href="https://exz.su/tag/zfs/" class="tag-cloud-link tag-link-15 tag-link-position-44" style="font-size: 8pt;" aria-label="ZFS (1 элемент)">ZFS</a>
+<a href="https://exz.su/tag/zoneinfo/" class="tag-cloud-link tag-link-30 tag-link-position-45" style="font-size: 8pt;" aria-label="zoneinfo (1 элемент)">zoneinfo</a></div>
+</aside><aside id="media_image-4" class="widget widget_media_image"><a href="https://noshutdown.ru/" class="" rel="" target="_blank"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/noshutdown_logo_2-copy1.png" class="image wp-image-274 alignnone attachment-full size-full" alt="" style="max-width: 100%; height: auto;" width="241" height="35"></a></aside><aside id="media_image-3" class="widget widget_media_image"><a href="http://www.redminecrm.com/" class="" rel="" target="_blank"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/Screen-Shot-2015-03-19-at-22.png" class="image wp-image-224 alignnone attachment-full size-full" alt="" style="max-width: 100%; height: auto;" title="RedmineCRM" width="166" height="38"></a></aside><aside id="wpcom_social_media_icons_widget-3" class="widget widget_wpcom_social_media_icons_widget"><h1 class="widget-title">#</h1><ul><li><a href="https://github.com/mr-exz/" class="genericon genericon-github" target="_blank"><span class="screen-reader-text">Просмотреть профиль mr-exz на GitHub</span></a></li></ul></aside>		</div><!-- #secondary .widget-area -->
+	</div><!-- #main -->
+
+	<footer id="colophon" role="contentinfo">
+		<div id="site-info">
+			<a href="https://exz.su/" title="exz.su" rel="home">exz.su</a>
+		</div><!-- #site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter28180773 = new Ya.Metrika({id:28180773,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/28180773" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->	<div style="display:none">
+	<div class="grofile-hash-map-4bcf813194e0548165c1e73890e4de74">
+	</div>
+	</div>
+<link rel="stylesheet" id="genericons-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/genericons.css" type="text/css" media="all">
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/devicepx-jetpack.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/gprofiles.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/wpgroho.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/comment-reply.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/mootools-core-yc.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/EnlighterJS.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/wp-embed.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/form.js"></script>
+<script type="text/javascript">/* <![CDATA[ */EnlighterJS_Config = 
+{"selector":{"block":"pre.EnlighterJSRAW","inline":"code.EnlighterJSRAW"},"language":"generic","theme":"enlighter","indent":2,"hover":"hoverEnabled","showLinenumbers":true,"rawButton":true,"infoButton":true,"windowButton":true,"rawcodeDoubleclick":false,"grouping":true,"cryptex":{"enabled":false,"email":"mail@example.tld"}};!function(){var
+
+ a=function(a){var b="Enlighter Error: 
+";console.error?console.error(b+a):console.log&&console.log(b+a)};return
+ window.addEvent?"undefined"==typeof EnlighterJS?void a("Javascript 
+Resources not loaded yet!"):"undefined"==typeof EnlighterJS_Config?void 
+a("Configuration not loaded yet!"):void 
+window.addEvent("domready",function(){EnlighterJS.Util.Init(EnlighterJS_Config.selector.block,EnlighterJS_Config.selector.inline,EnlighterJS_Config)}):void
+
+ a("MooTools Framework not loaded yet!")}();;/* ]]> */</script><script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/e-201728.js" async="" defer="defer"></script>
+<script type="text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:5.1',blog:'70303875',post:'142',tz:'5',srv:'exz.su'} ]);
+	_stq.push([ 'clickTrackerInit', '70303875', '142' ]);
+</script>
+
+
+<img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/g_002.gif" alt=":)" id="wpstats" width="6" height="5"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20CentOS%207%20%7C%20exz.su_files/g.gif" alt=":)" id="wpstats" width="6" height="5"></body></html>

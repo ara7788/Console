@@ -1,0 +1,1425 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<title>Статья как настроить роутер MikroTik. Настройка Mikrotik RouterBoard | Интернет-магазин Wi-Fi оборудования ТехноТрейд</title>
+	<META http-equiv=Content-Type content="text/html; charset=windows-1251">
+	<meta name="keywords" content="mikrotik, настройка, сброс, подключение, routerboard, Wi-Fi">
+	<meta name="description" content="Инструкция как настроить MikroTik. В статье описана простая настройка MikroTik и Wi-Fi точки доступа для подключения к провайдеру">
+
+			<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="@technotrade_llc">
+		<meta name="twitter:creator" content="@technotrade_llc">
+		<meta name="twitter:title" content="Настройка роутера MikroTik">
+		<meta name="twitter:description" content="Инструкция как настроить MikroTik. В статье описана простая настройка MikroTik и Wi-Fi точки доступа для подключения к провайдеру">
+	
+	<link rel="canonical" href="http://www.technotrade.com.ua/Articles/mikrotik_router_setup.php">
+
+	<link rel="stylesheet" type="text/css" href="/static/css/article.min.css?v=1504286622">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/Images/favicon.ico" type="image/x-icon">
+
+<!--[if (gte IE 8)&(lt IE 10)]>
+    <link rel="stylesheet" type="text/css" href="/static/css/style-ie-lt10.min.css?v=1504286618">
+<![endif]-->
+<!--[if lt IE 8]>
+    <link rel="stylesheet" type="text/css" href="/static/css/style-ie-lt8.min.css?v=1504286621">
+<![endif]-->
+
+    <meta property="fb:admins" content="100003933922611">
+    <meta property="fb:app_id" content="1017715834941644">
+	</HEAD>
+<BODY>
+
+	
+<div class="site shapka">
+    <div>
+
+        <div class="shapka_content shapka_menu_cart">
+            <div class="shapka_menu">
+                <ul class="main-menu">
+            <li class="item">
+            <a href="/actions.php" 
+               class="tophref ">Акция</a>
+        </li>    
+            <li class="item">
+            <a href="/Site_Razdel/services.php" 
+               class="tophref ">Услуги</a>
+        </li>    
+            <li class="item">
+            <a href="/Site_Razdel/Svedenija-o-dostavkeoplate.php" 
+               class="tophref ">Доставка и оплата</a>
+        </li>    
+            <li class="item">
+            <a href="/Site_Razdel/garantiya-i-service.php" 
+               class="tophref ">Гарантия</a>
+        </li>    
+            <li class="item">
+            <a href="/Site_Razdel/price-list.php" 
+               class="tophref ">Прайс</a>
+        </li>    
+            <li class="item">
+            <a href="/contacts" 
+               class="tophref ">Контакты</a>
+        </li>    
+        
+</ul>
+
+<div class="main-menu-sm">
+    <div class="item menu-icon">
+        <a id="menu-sm" href="#" class="tophref">Меню</a>
+    </div>
+    <div class="item menu-catalog">
+        <a id="menu-cat" href="/" class="tophref">Каталог</a>
+    </div>
+</div>            </div>
+            <div class="shapka_cart">
+                <TABLE class="cart_block" border="0" cellSpacing="0" cellPadding="0">
+                    <TR>
+                        <TD class="topmenu2">
+
+                                                            <div class="header_cart">
+                                    <span class="cartMenu">
+                                        Корзина
+                                        <span class="signSprt">&nbsp;</span>
+                                    </span>
+                                </div>
+                            
+                        </TD>
+                    </TR>
+                </TABLE>
+
+                <div class="shapka_menu_fx">
+                    <div id="currencyMenu">
+                        <span>Валюта:</span>
+                        <ul>
+                                                    <li><span class="currency-node currency-node-sel">UAH</span></li>
+                        
+                                                    <li><a href="?currency=USD" class="ch3 currency-node">USD</a></li>
+                        		
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="shapka_content shapka_menu_mix">
+
+            <div class="shapka_menu_logo">
+                <strong class="logo"><a href="/" title="Перейти на главную страницу">ТехноТрейд</a></strong>
+            </div>
+
+            <div class="shapka_menu_search">
+                <div class="searchbox"> 
+                    <form action="/search" method="GET">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td>
+                                    <div style="position: relative;">
+                                        <input name="s" id="Search_Full" type="text" class="field srch" style="width: 162px; height:17px; " value="">
+                                        <img src="/Images/m07.gif" alt="" style="position: absolute; top: 4px; left: 4px;">
+                                    </div>
+                                </td>
+                                <td>
+                                    <input id="Search_Prod" type="submit" value="Найти" class="ttButton ttRightBtn srchBtn" style="width:55px; height:20px; font-weight: bold;">
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+
+                <div class="loginbox">
+                                            <a href="/login.php" id="login" class=""><span>Вход</span></a>
+                        <a href="/Registration.php" class="margl">Регистрация</a>
+                    		
+                </div>			
+            </div>
+
+            <div class="shapka_menu_phones">
+                <div>
+                    <a href="#" id="callback" title="Заказать обратный звонок" class="callback">Хотите, мы Вам перезвоним?</a>
+                </div>
+
+                <ul class="shapka_cityphones">
+                    <li>Киев: <b>(044)&nbsp;383-54-55</b></li>
+                    <li>Днепр-вск: <b>(056)&nbsp;767-50-05</b></li>
+                    <li>Харьков: <b>(057)&nbsp;764-02-54</b></li>				
+                    <li>Запорожье: <b>(061)&nbsp;707-78-07</b></li>
+                </ul>
+
+                <div>
+                    <a href="#" id="mobphones" title="Мобильные телефоны">Мобильные номера</a>
+                </div>
+            </div>
+
+        </div>		
+
+    </div>
+</div>	
+
+<div id="mobile" style="display: none;">
+	<div class="mobphones">
+		<h5>Мобильные телефоны:</h5>
+		<ul>
+			<li>+38 (097) 085-80-08</li>
+			<li>+38 (099) 238-88-98</li>
+			<li>+38 (099) 322-60-10</li>
+			<li>+38 (063) 563-33-93</li>
+		</ul>
+		<h5>Киев:</h5>
+		<ul>
+			<li>+38 (044) 223-10-98</li>
+			<li>+38 (066) 147-21-88</li>
+		</ul>		
+	</div>
+</div>
+
+<div id="loginMenu" style="display: none;">
+	<div style="font-size: 10pt; padding: 6px;">
+	<form action="/login.php" method="post" name="Login">
+		<div>
+			<label for="Email_login" style="font-size: 12pt">Электронная почта:<span style="color: Red; font-size:86%; margin-left: 2px">*</span></label><br>
+			<input type="text" name="Email_login" id="Email_login" style="width: 200px" value="">
+		</div>
+
+		<div style="margin-top: 6px;">
+			<label for="Pass_login" style="font-size: 12pt">Пароль:<span style="color: Red; font-size:86%; margin-left: 2px">*</span></label><br>
+			<input type="password" name="Pass_login" id="Pass_login" style="width: 200px" value="">
+		</div>
+
+		<div style="margin-top: 6px;">
+			<input type="checkbox" name="keep_login" id="keep_login" style="vertical-align:middle" value="1" checked>
+			<label for="keep_login">Оставаться на сайте<br><span style="font-size: 70%">(если это чужой компьютер снимите флажок)</span></label>
+		</div>
+
+		<div style="margin-top: 10px; text-align: center">
+			<input type="submit" name="insert" value="Войти" class="ttButton" style="font-weight:bold; width:80px">
+			<input type="button" value="Отмена" class="ttButton ttDarkBtn" onclick="smLogin.hide()">
+		</div>
+
+		<div style="margin-top: 1em; text-align: center">
+			<a href="/registration-restore.php" style="line-height: 2em">Напомнить пароль</a>			
+			<br>
+			<a href="/Registration.php">Зарегистрироваться</a>
+		</div>
+	</form>
+	</div>
+</div>
+
+<div id="callbackForm" style="display: none;">
+	<div class="callbackForm">
+	<h5>Заказать обратный звонок</h5>
+	<div class="addtext">Оставьте Ваш телефон и&nbsp;мы&nbsp;перезвоним вам в&nbsp;течении 5&nbsp;минут, и&nbsp;ответим на&nbsp;все вопросы.</div>
+	<table border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto">
+	  <tr>
+		  <td><input type="text" id="cbPhone" onkeyup="callbackPress(event)"></td>
+		  <td><input type="submit" value="Заказать звонок" class="ttButton" onclick="goCallback()"></td>
+	  </tr>
+	  <tr>
+	  	<td colspan="2">
+	  		<div class="addphones">
+	  			<span>или позвоните:</span>
+	  			<ul>
+	  				<li>+38 (097) 085-80-08</li> 
+	  				<li>+38 (099) 238-88-98</li>
+	  			</ul>
+	  		</div>
+	  	</td>
+	  </tr>
+	</table>
+	</div>
+</div>
+
+    <div class="site maincont">
+		<div class="cat-menu">
+
+			<TABLE cellSpacing="0" cellPadding="0" border="0" style="margin-top:1px;"><TBODY>
+	<TR><TD style="height: 10px; font-size: 4px;">&nbsp;</TD></TR>
+
+	<TR>
+		<TD>
+			<div class="boxHead">Продукция</div>
+		</TD>
+	</TR>   
+	<TR>
+		<TD >
+			<TABLE cellSpacing="2" cellPadding="2" width="239"><TBODY>
+				<TR>
+					<TD class="ch5" style="PADDING-LEFT: 9px">
+						<div class="catMenu"><ul>
+<li><a href="/catalog-661"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span>  Готовые решения Wi-Fi</a><ul>
+<li><a href="/catalog-827"><span class="catListArrow"></span>Wi-Fi для гостиницы</a></li>
+<li><a href="/catalog-801"><span class="catListArrow"></span>Wi-Fi для моряков</a></li>
+<li><a href="/catalog-764"><span class="catListArrow"></span>Базовые станции</a><ul>
+<li><a href="/catalog-829"><span class="catListArrow"></span>2.4 ГГц</a><ul>
+<li><a href="/catalog-766"><span class="catListArrow"></span>Ubiquiti</a></li>
+</ul>
+</li>
+<li><a href="/catalog-830"><span class="catListArrow"></span>5 ГГц</a><ul>
+<li><a href="/catalog-775"><span class="catListArrow"></span>Ubiquiti</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="/catalog-767"><span class="catListArrow"></span>Беспроводные мосты</a><ul>
+<li><a href="/catalog-831"><span class="catListArrow"></span>2.4 ГГц</a><ul>
+<li><a href="/catalog-768"><span class="catListArrow"></span>MikroTik</a></li>
+<li><a href="/catalog-769"><span class="catListArrow"></span>Ubiquiti</a></li>
+</ul>
+</li>
+<li><a href="/catalog-832"><span class="catListArrow"></span>5 ГГц</a><ul>
+<li><a href="/catalog-777"><span class="catListArrow"></span>MikroTik</a></li>
+<li><a href="/catalog-778"><span class="catListArrow"></span>Ubiquiti</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="/catalog-835"><span class="catListArrow"></span>Высокоскоростные решения</a><ul>
+<li><a href="/catalog-836"><span class="catListArrow"></span>Беспроводные мосты</a><ul>
+<li><a href="/catalog-837"><span class="catListArrow"></span>2.4 ГГц</a><ul>
+<li><a href="/catalog-841"><span class="catListArrow"></span>MikroTik</a></li>
+<li><a href="/catalog-840"><span class="catListArrow"></span>Ubiquiti</a></li>
+</ul>
+</li>
+<li><a href="/catalog-838"><span class="catListArrow"></span>5 ГГц</a><ul>
+<li><a href="/catalog-842"><span class="catListArrow"></span>MikroTik</a></li>
+<li><a href="/catalog-839"><span class="catListArrow"></span>Ubiquiti</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="/catalog-659"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span>  Роутеры (маршрутизаторы)</a><ul>
+<li><a href="/catalog-806"><span class="catListArrow"></span>Alfa Network</a></li>
+<li><a href="/catalog-691"><span class="catListArrow"></span>MikroTik</a><ul>
+<li><a href="/catalog-814"><span class="catListArrow"></span>Cloud Core Routers</a></li>
+<li><a href="/catalog-815"><span class="catListArrow"></span>RB1100/1200 серия</a></li>
+<li><a href="/catalog-816"><span class="catListArrow"></span>RB2011 серия</a></li>
+<li><a href="/catalog-817"><span class="catListArrow"></span>RB75x/951 серия</a></li>
+<li><a href="/catalog-818"><span class="catListArrow"></span>RouterBoard платы</a></li>
+</ul>
+</li>
+<li><a href="/catalog-720"><span class="catListArrow"></span>TP-Link</a></li>
+</ul>
+</li>
+<li><a href="/catalog-654"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span>  Точки доступа Wi-Fi</a><ul>
+<li><a href="/catalog-749"><span class="catListArrow"></span>MikroTik</a></li>
+<li><a href="/catalog-695"><span class="catListArrow"></span>TP-Link</a></li>
+<li><a href="/catalog-724"><span class="catListArrow"></span>Ubiquiti</a><ul>
+<li><a href="/catalog-668"><span class="catListArrow"></span>802.11a/b/g ISP решения</a></li>
+<li><a href="/catalog-788"><span class="catListArrow"></span>AirFiber</a></li>
+<li><a href="/catalog-669"><span class="catListArrow"></span>AirMax ISP решения</a></li>
+<li><a href="/catalog-844"><span class="catListArrow"></span>PowerBeam</a></li>
+<li><a href="/catalog-667"><span class="catListArrow"></span>UniFi</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="/catalog-716"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span> Wi-Fi адаптеры</a><ul>
+<li><a href="/catalog-657"><span class="catListArrow"></span>USB</a><ul>
+<li><a href="/catalog-799"><span class="catListArrow"></span>Alfa Network</a></li>
+<li><a href="/catalog-731"><span class="catListArrow"></span>TP-Link</a></li>
+</ul>
+</li>
+<li><a href="/catalog-663"><span class="catListArrow"></span>miniPCI карты</a><ul>
+<li><a href="/catalog-828"><span class="catListArrow"></span>EnGenius</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="/catalog-714"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span> Wi-Fi антенны</a><ul>
+<li><a href="/catalog-652"><span class="catListArrow"></span>2.4 ГГц</a><ul>
+<li><a href="/catalog-684"><span class="catListArrow"></span>Всенаправленные</a></li>
+<li><a href="/catalog-682"><span class="catListArrow"></span>Направленные</a></li>
+<li><a href="/catalog-685"><span class="catListArrow"></span>Панельные</a></li>
+<li><a href="/catalog-683"><span class="catListArrow"></span>Секторные</a></li>
+</ul>
+</li>
+<li><a href="/catalog-660"><span class="catListArrow"></span>5 ГГц</a><ul>
+<li><a href="/catalog-746"><span class="catListArrow"></span>Всенаправленные</a></li>
+<li><a href="/catalog-745"><span class="catListArrow"></span>Направленные</a></li>
+<li><a href="/catalog-747"><span class="catListArrow"></span>Секторные</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="/catalog-850"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span> Wi-Fi усилители</a></li>
+<li><a href="/catalog-805"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span>3G модемы</a></li>
+<li><a href="/catalog-851"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span>GSM усилители</a></li>
+<li><a href="/catalog-757"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span>IP-камеры</a><ul>
+<li><a href="/catalog-763"><span class="catListArrow"></span>Ubiquiti</a></li>
+</ul>
+</li>
+<li><a href="/catalog-717"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span>Аксессуары</a><ul>
+<li><a href="/catalog-662"><span class="catListArrow"></span>PoE адаптеры</a><ul>
+<li><a href="/catalog-750"><span class="catListArrow"></span>MikroTik</a></li>
+<li><a href="/catalog-725"><span class="catListArrow"></span>Ubiquiti</a></li>
+</ul>
+</li>
+<li><a href="/catalog-784"><span class="catListArrow"></span>Powerline адаптеры</a><ul>
+<li><a href="/catalog-785"><span class="catListArrow"></span>TP-Link</a></li>
+</ul>
+</li>
+<li><a href="/catalog-658"><span class="catListArrow"></span>Грозозащиты</a></li>
+<li><a href="/catalog-665"><span class="catListArrow"></span>Корпуса и гермобоксы</a><ul>
+<li><a href="/catalog-690"><span class="catListArrow"></span>MikroTik</a></li>
+<li><a href="/catalog-751"><span class="catListArrow"></span>RF Elements</a></li>
+</ul>
+</li>
+<li><a href="/catalog-744"><span class="catListArrow"></span>Крепления</a><ul>
+<li><a href="/catalog-752"><span class="catListArrow"></span>Ubiquiti</a></li>
+</ul>
+</li>
+<li><a href="/catalog-794"><span class="catListArrow"></span>Обжимной инструмент</a></li>
+</ul>
+</li>
+<li><a href="/catalog-655"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span>Кабель и разъемы</a><ul>
+<li><a href="/catalog-802"><span class="catListArrow"></span>Витая пара</a></li>
+<li><a href="/catalog-728"><span class="catListArrow"></span>Коаксиальный кабель</a></li>
+<li><a href="/catalog-730"><span class="catListArrow"></span>Переходники (пигтейлы)</a></li>
+<li><a href="/catalog-729"><span class="catListArrow"></span>Разъемы</a></li>
+</ul>
+</li>
+<li><a href="/catalog-734"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span>Коммутаторы<span style="font-size: 10px; font-weight: normal;">&nbsp;(свитчи)</span></a><ul>
+<li><a href="/catalog-743"><span class="catListArrow"></span>MikroTik</a></li>
+<li><a href="/catalog-735"><span class="catListArrow"></span>TP-Link</a></li>
+<li><a href="/catalog-852"><span class="catListArrow"></span>Ubiquiti</a></li>
+</ul>
+</li>
+<li><a href="/catalog-795"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span>Мачты связи</a><ul>
+<li><a href="/catalog-796"><span class="catListArrow"></span>Телескопические мачты</a><ul>
+<li><a href="/catalog-797"><span class="catListArrow"></span>Детали для мачт</a></li>
+</ul>
+</li>
+<li><a href="/catalog-845"><span class="catListArrow"></span>Трехгранные мачты</a></li>
+</ul>
+</li>
+<li><a href="/catalog-807"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span>Оптическое оборудование</a><ul>
+<li><a href="/catalog-800"><span class="catListArrow"></span>SFP модули</a></li>
+<li><a href="/catalog-808"><span class="catListArrow"></span>Медиаконвертеры</a></li>
+<li><a href="/catalog-849"><span class="catListArrow"></span>Оптические патч-корды </a></li>
+<li><a href="/catalog-803"><span class="catListArrow"></span>Оптоволоконный кабель</a></li>
+</ul>
+</li>
+<li><a href="/catalog-792"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span>Программы и ОС</a><ul>
+<li><a href="/catalog-793"><span class="catListArrow"></span>RouterOS</a></li>
+</ul>
+</li>
+<li class="lastList"><a href="/catalog-809"><span class="catListArrow" style="margin-right: 4px;"><img class="catListImg" src="/Images/treearrows.gif" alt="" width="4" height="14"></span>Шкафы и стойки</a><ul>
+<li><a href="/catalog-811"><span class="catListArrow"></span>Аксессуары</a></li>
+<li><a href="/catalog-813"><span class="catListArrow"></span>Серверные стойки</a></li>
+<li><a href="/catalog-823"><span class="catListArrow"></span>Шкафы антивандальные</a><ul>
+<li><a href="/catalog-824"><span class="catListArrow"></span>Серия Forpost</a></li>
+<li><a href="/catalog-825"><span class="catListArrow"></span>Серия БК</a></li>
+</ul>
+</li>
+<li><a href="/catalog-812"><span class="catListArrow"></span>Шкафы напольные</a></li>
+</ul>
+</li>
+</ul>
+</div>												
+												<div class="catMenu">
+							<ul>
+								<li>
+									<a href="/sellout.php"  style="color:red;">
+										<span style="margin-right: 4px;" class="catListArrow">
+											<img width="4" height="14" alt="" src="/Images/treearrows.gif" class="catListImg">
+										</span>Распродажа
+									</a>
+								</li>
+							</ul>
+						</div>
+
+						<div class="catMenu">
+							<ul>
+								<li>
+									<a href="/Site_Razdel/closeout.php"  style="color:red;">
+										<span style="margin-right: 4px;" class="catListArrow">
+											<img width="4" height="14" alt="" src="/Images/treearrows.gif" class="catListImg">
+										</span>Уцененный товар
+									</a>
+								</li>
+							</ul>
+						</div>
+
+						<div class="catMenu">
+							<ul>
+								<li>
+									<a href="/archive.php" >
+										<span style="margin-right: 4px;" class="catListArrow">
+											<img width="4" height="14" alt="" src="/Images/treearrows.gif" class="catListImg">
+										</span>Архивные товары
+									</a>
+								</li>
+							</ul>
+						</div>
+
+					</TD>
+				</TR>
+			</TBODY></TABLE>
+		</TD>
+	</TR>	
+</TBODY></TABLE>
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td style="height: 10px; font-size: 4px;">&nbsp;</td>
+	</tr>
+	<tr>
+		<td valign="top">
+			<div class="boxHead">Производители</div>
+		</td>
+	</tr>   
+	<tr>
+		<td style="padding-left: 1px;">
+		
+			<table width="239" cellspacing="2" cellpadding="2">
+				<tr>
+					<td style="padding-left: 14px;" class="ch5">
+						
+						<table width="210" cellspacing="0" cellpadding="0" border="0">
+							<tr><td height="5"></td></tr>
+
+
+							<tr>
+								<td class="mainmenu ">
+									
+									<table width="100%" cellspacing="1" cellpadding="1" border="0">
+										<tr>
+											<td valign="middle">
+																								<a href="/brand-13" class="ml8 ">Ubiquiti</a>
+																							</td>
+										</tr>
+									</table>
+								
+								</td>
+							</tr>
+							<tr>
+								<td height="3"></td>
+							</tr>
+
+							<tr>
+								<td class="mainmenu ">
+									
+									<table width="100%" cellspacing="1" cellpadding="1" border="0">
+										<tr>
+											<td valign="middle">
+																								<a href="/brand-14" class="ml8 ">MikroTik</a>
+																							</td>
+										</tr>
+									</table>
+								
+								</td>
+							</tr>
+							<tr>
+								<td height="3"></td>
+							</tr>
+
+							<tr>
+								<td class="mainmenu ">
+									
+									<table width="100%" cellspacing="1" cellpadding="1" border="0">
+										<tr>
+											<td valign="middle">
+																								<a href="/brand-16" class="ml8 ">TP-Link</a>
+																							</td>
+										</tr>
+									</table>
+								
+								</td>
+							</tr>
+							<tr>
+								<td height="3"></td>
+							</tr>
+
+							<tr>
+								<td class="mainmenu ">
+									
+									<table width="100%" cellspacing="1" cellpadding="1" border="0">
+										<tr>
+											<td valign="middle">
+																								<a href="/brands/engenius" class="ml8 ">EnGenius</a>
+																							</td>
+										</tr>
+									</table>
+								
+								</td>
+							</tr>
+							<tr>
+								<td height="3"></td>
+							</tr>
+
+							<tr>
+								<td class="mainmenu ">
+									
+									<table width="100%" cellspacing="1" cellpadding="1" border="0">
+										<tr>
+											<td valign="middle">
+																								<a href="/brand-21" class="ml8 ">Quantum</a>
+																							</td>
+										</tr>
+									</table>
+								
+								</td>
+							</tr>
+							<tr>
+								<td height="3"></td>
+							</tr>
+
+							<tr>
+								<td class="mainmenu ">
+									
+									<table width="100%" cellspacing="1" cellpadding="1" border="0">
+										<tr>
+											<td valign="middle">
+																								<a href="/brand-22" class="ml8 ">RF Elements</a>
+																							</td>
+										</tr>
+									</table>
+								
+								</td>
+							</tr>
+							<tr>
+								<td height="3"></td>
+							</tr>
+
+							<tr>
+								<td class="mainmenu lastList">
+									
+									<table width="100%" cellspacing="1" cellpadding="1" border="0">
+										<tr>
+											<td valign="middle">
+																								<a href="/brand-24" class="ml8 ">Alfa Network</a>
+																							</td>
+										</tr>
+									</table>
+								
+								</td>
+							</tr>
+							<tr>
+								<td height="3"></td>
+							</tr>
+
+
+						</table>
+					
+					</td>
+				</tr>
+			</table>
+			
+		</td>
+	</tr>
+</table> 
+			<TABLE cellspacing="0" cellpadding="0">
+	<TR>
+		<TD style="height: 10px; font-size: 4px;">&nbsp;</TD>
+	</TR>
+	<TR>
+		<TD valign="top">		
+			<div class="boxHead">Новости</div>		
+		</TD>
+	</TR> 
+	<TR>
+		<TD style="PADDING-LEFT: 1px">
+		
+			<TABLE cellspacing="0" cellpadding="0" width="239">
+				<TR>
+					<TD class="ch5" style="PADDING-LEFT: 14px">
+						
+						<TABLE width="210" border="0" cellpadding="0" cellspacing="0">
+							<TR>
+								<TD height=5></TD>
+							</TR>
+							<TR>
+								<TD class="mainmenu">
+								
+									<table width="100%"  border="0" cellspacing="2" cellpadding="2">
+										<tr>
+																							
+											<td>												
+												<A class="ml2 " href="/Articles/update_routeros_2017-09-07.php">Обновление MikroTik RouterOS v6.40.3</A>
+											</td>
+										</tr>
+									</table>
+								
+								</TD>
+							</TR>
+							<TR>
+								<TD height=3></TD>
+							</TR>
+
+							<TR>
+								<TD class="mainmenu">
+								
+									<table width="100%"  border="0" cellspacing="2" cellpadding="2">
+										<tr>
+																							
+											<td>												
+												<A class="ml2 " href="/Articles/update_routeros_2017-08-14.php">Обновление MikroTik RouterOS v6.40.2</A>
+											</td>
+										</tr>
+									</table>
+								
+								</TD>
+							</TR>
+							<TR>
+								<TD height=3></TD>
+							</TR>
+
+							<TR>
+								<TD class="mainmenu">
+								
+									<table width="100%"  border="0" cellspacing="2" cellpadding="2">
+										<tr>
+																							
+											<td>												
+												<A class="ml2 " href="/Articles/update_routeros_2017-08-09.php">Обновление MikroTik RouterOS v6.40.1</A>
+											</td>
+										</tr>
+									</table>
+								
+								</TD>
+							</TR>
+							<TR>
+								<TD height=3></TD>
+							</TR>
+
+
+							<TR>
+								<TD class="mainmenu lastList">									
+									<table width="100%" border="0" cellspacing="2" cellpadding="2">
+										<tr>
+											<td>
+												<A href="/news" class="ml2">Все новости&nbsp;<span style="font-size: 125%">&raquo;</span></A>
+																								<!--<div style="margin-top:0.4em">
+												<A href="https://twitter.com/technotrade_llc" rel="nofollow" target="_blank" class="ml2 twttr">													
+													Узнавайте новости первыми<i></i>													
+												</A>
+												</div>-->
+																							</td>
+										</tr>
+									</table>
+								
+								</TD>
+							</TR>
+							<TR>
+								<TD height="3"></TD>
+							</TR>
+						</TABLE>
+						
+					</TD>
+				</TR>
+			</TABLE>
+			
+		</TD>
+		
+	</TR>
+</TABLE>
+<TABLE cellspacing="0" cellpadding="0">
+	<TR>
+		<TD style="height: 10px; font-size: 4px;">&nbsp;</TD>
+	</TR>
+	<TR>
+		<TD valign="top">		
+			<div class="boxHead">Статьи</div>		
+		</TD>
+	</TR> 
+	<TR>
+		<TD style="PADDING-LEFT: 1px">
+		
+			<TABLE cellspacing="0" cellpadding="0" width="239">
+				<TR>
+					<TD class="ch5" style="PADDING-LEFT: 14px">
+						
+						<TABLE width="210" border="0" cellpadding="0" cellspacing="0">
+							<TR>
+								<TD height=5></TD>
+							</TR>
+							<TR>
+								<TD class="mainmenu">
+								
+									<table width="100%"  border="0" cellspacing="2" cellpadding="2">
+										<tr>
+																							
+											<td>												
+												<A class="ml2 " href="/Articles/mikrotik-parental-control.php">Настройка родительского контроля на роутере MikroTik</A>
+											</td>
+										</tr>
+									</table>
+								
+								</TD>
+							</TR>
+							<TR>
+								<TD height=3></TD>
+							</TR>
+
+							<TR>
+								<TD class="mainmenu">
+								
+									<table width="100%"  border="0" cellspacing="2" cellpadding="2">
+										<tr>
+																							
+											<td>												
+												<A class="ml2 " href="/Articles/mikrotik-netinstall-recovery.php">Как восстановить прошивку MikroTik с помощью Netinstall</A>
+											</td>
+										</tr>
+									</table>
+								
+								</TD>
+							</TR>
+							<TR>
+								<TD height=3></TD>
+							</TR>
+
+							<TR>
+								<TD class="mainmenu">
+								
+									<table width="100%"  border="0" cellspacing="2" cellpadding="2">
+										<tr>
+																							
+											<td>												
+												<A class="ml2 " href="/Articles/Alfa-AWUS036ACH-Kali-Linux-driver-setup.php">Установка драйвера Alfa AWUS036ACH в Kali Linux</A>
+											</td>
+										</tr>
+									</table>
+								
+								</TD>
+							</TR>
+							<TR>
+								<TD height=3></TD>
+							</TR>
+
+
+							<TR>
+								<TD class="mainmenu lastList">									
+									<table width="100%" border="0" cellspacing="2" cellpadding="2">
+										<tr>
+											<td>
+												<A href="/articles" class="ml2">Все статьи&nbsp;<span style="font-size: 125%">&raquo;</span></A>
+																							</td>
+										</tr>
+									</table>
+								
+								</TD>
+							</TR>
+							<TR>
+								<TD height="3"></TD>
+							</TR>
+						</TABLE>
+						
+					</TD>
+				</TR>
+			</TABLE>
+			
+		</TD>
+		
+	</TR>
+</TABLE>
+ <table class="social_widgets">
+    	<tr>
+		<td>
+			<div class="fb-page" data-href="https://www.facebook.com/technotrade.com.ua/" data-small-header="true" data-width="220" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/technotrade.com.ua/"><a href="https://www.facebook.com/technotrade.com.ua/">Технотрейд - магазин Wi-Fi оборудования</a></blockquote></div></div>
+		</td>
+	</tr>
+</table>
+
+	 
+
+			
+		</div>
+
+        <div class="content content_middle">
+        	<div class="page_edge">
+            	
+<a name="top"></a>
+<div class="partHeadCrumbs breadcrumb">
+	<a href="/">Главная</a>&nbsp;»&nbsp;<a href="/articles">Статьи</a></div>
+
+
+	<div class="hreview-aggregate">
+
+		<div class="maincont-page">	
+			<div style="float: left; text-align: left; width: 85%">
+				<h1>
+					<span class="item">
+						<span class="fn">Настройка роутера MikroTik</span>
+					</span>
+				</h1>
+			</div>
+			<div style="float: right">
+				<div style="float: right; height: 20px; width: 80px; padding:3px 1px 0 2px; margin:2px 3px 0 0; background: #FF9900 url(/Images/BG_Date.gif) no-repeat scroll top left; color: white; font-weight: bold; text-align: center;">
+					05.05.2012				</div>
+				<div class="cls"></div>
+			</div>	
+			<div class="cls"></div>
+
+			<div class="cardAbout">
+				<p style="text-align: justify;">Это инструкция, как пошагово настроить роутер MikroTik RouterBoard с нуля без использования заводской конфигурации.</p><p>Содержание:</p><p><a id="mikrotik_connect_scheme" name="mikrotik_connect_scheme"></a></p><ol><li><a href="#mikrotik_connect_scheme">Подключение роутера Mikrotik</a></li><li><a href="#network_card_setup">Настройка сетевой карты компьютера</a></li><li><a href="#enter_setup">Вход в настройки роутера</a></li><li><a href="#reset_settings">Сброс настроек роутера</a></li><li><a href="#interfaces_comments">Описание сетевых интерфейсов</a></li><li><a href="#wan_setup">Настройка WAN интерфейса MikroTik</a><ul><li><a href="#wan_setup">Смена MAC адреса WAN порта</a></li><li><a href="#dynamic_ip_setup">Настройка Dynamic IP</a></li><li><a href="#static_ip_setup">Настройка Static IP</a></li><li><a href="#pppoe_setup">Настройка PPPoE</a></li></ul></li><li><a href="#local_network_setup">Настройка локальной сети MikroTik</a><ul><li><a href="#local_network_setup">Настройка портов в режим свитча</a></li><li><a href="#bridge_local">Объединение Wi-Fi и проводных интерфейсов в локальную сеть</a></li><li><a href="#local_ip_setup">Назначение IP адреса локальной сети</a></li><li><a href="#dhcp_server_setup">Настройка DHCP сервера</a></li></ul></li><li><a href="#wifi_setup">Настройка Wi-Fi точки доступа MikroTik</a></li><li><a href="#firewall_setup">Настройка Firewall и NAT</a></li><li><a href="#change_pwd">Изменение пароля доступа к роутеру MikroTik</a></li><li><a href="#mikrotik_reset">Сброс роутера MikroTik к заводским настройкам</a></li></ol><h2><strong>Подключение роутера MikroTik</strong></h2><p>Для настройки Wi-Fi роутера MikroTik нам понадобятся:</p><ul><li>кабель провайдера интернета (Triolan, MaxNet, Воля, Airbites, Vega или любые другие);&nbsp;</li><li>компьютер или ноутбук с Wi-Fi; &nbsp;</li><li><a href="/catalog-691">роутер MikroTik</a> <i>(в нашем случае RB751U-2HnD)</i>. Он будет раздавать Интернет по кабелю, а также по Wi-Fi на ноутбук, смартфон, телевизор с Wi-Fi или планшет.</li></ul><p>Схема подключения роутера MikroTik:</p><ul><li>кабель провайдера интернета подключаем в первый порт роутера;</li><li>компьютер подключаем к роутеру MikroTik сетевым кабелем в любой LAN порт от 2 до 5;</li><li>ноутбук и другие беспроводные устройства подключим по Wi-Fi;</li><li>блок питания включаем в разъем &laquo;Power&raquo; роутера MikroTik.</li></ul><p style="text-align: center"><img alt="Схема подключения роутера MikroTik" height="392" src="/userfiles/images/mikrotik_setup/mikrotik_scheme.png" width="639" /></p><h2><a id="network_card_setup" name="network_card_setup"></a></h2><h2><strong>Настройка сетевой карты компьютера</strong></h2><p style="text-align: justify">Чтобы на компьютере можно было зайти в настройки роутера Mikrotik, настроим сетевую карту на получение автоматических настроек.</p><p style="text-align: justify">Открываем &laquo;Пуск&raquo; &rarr; &laquo;Панель управления&raquo; &rarr; &laquo;Центр управления сетями и общим доступом&raquo;.</p><p style="text-align: center"><img alt="Windows7 - Панель управления " src="/userfiles/images/mikrotik_setup/controlp.jpg" /></p><p>Перейдем в &laquo;Изменение параметров адаптера&raquo;.</p><p style="text-align: center"><img alt="Windows7 - Изменение параметров адаптера" src="/userfiles/images/mikrotik_setup/adapters.png" /></p><p style="text-align: justify">Нажимаем правой кнопкой мыши на &laquo;Подключение по локальной сети&raquo; и выбираем &laquo;Свойства&raquo;</p><p style="text-align: center"><img alt="Windows7 - Подключение по локальной сети" src="/userfiles/images/mikrotik_setup/settings.png" /></p><p>Нажимаем на &laquo;Протокол Интернета версии 4 (TCP/IPv4)&raquo; и кнопку &laquo;Свойства&raquo;.</p><p style="text-align: center"><img alt="Windows7 - Протокол Интернета версии 4 (TCP/IPv4)" src="/userfiles/images/mikrotik_setup/tcp00000.png" /></p><p>Выбираем &laquo;Получить IP-адрес автоматически&raquo; и нажимаете кнопку &laquo;OK&raquo;.</p><p style="text-align: center"><img alt="Windows7 - Получить IP-адрес автоматически" height="342" src="/userfiles/images/mikrotik_setup/ipauto.png" width="293" /></p><div style="background-color:#FFF8DC; padding:1em; -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;">Если сетевая карта не получает автоматически IP адрес из подсети 192.168.88.x, попробуйте его указать вручную (например: 192.168.88.21) или <a href="#mikrotik_reset">сбросить роутер Mikrotik к заводским настройкам</a>.</div><p style="text-align: center"><a id="enter_setup" name="enter_setup"></a></p><h2>Вход в настройки роутера MikroTik</h2><p>Откройте браузер Internet Explorer (или любой другой) и напишите адрес 192.168.88.1 &mdash; это IP адрес по умолчанию для роутера MikroTik.</p><p align="center"><img alt="192.168.88.1" height="61" src="/userfiles/images/mikrotik_setup/iexplorer.png" width="350" /></p><div style="background-color:#FFF8DC; padding:1em; -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px;">Внимание! В настройках браузера не должен быть указан proxy-сервер&nbsp;</div><p>Выполнить настройку роутера MikroTik можно разными способами:</p><ul><li><strong>Winbox</strong> &mdash; настройка с помощью специальной программы для ОС Windows;</li><li><strong>Webfig</strong> &mdash; настройка через Web интерфейс;</li><li><strong>Telnet</strong> &mdash; настройка по телнету.</li></ul><p style="text-align: justify">Мы будем настраивать роутер Mikrotik с помощью программы Winbox, поэтому в окне браузера выбираем <strong>Winbox</strong>, сохраняем программу и запускаем.</p><p align="center"><img alt="Выбор способов настройки роутера MikroTik" height="331" src="/userfiles/images/mikrotik_setup/winbox.png" width="506" /></p><p>&nbsp;</p><p>Подключаемся к роутеру MikroTik:</p><ol><li>Нажимаем кнопку <strong>...</strong> для отображения устройств MikroTik;</li><li>Выбираем в списке наш роутер;</li><li>Нажимаем кнопку <strong>Connect</strong>. <strong>Login</strong> по умолчанию <strong>admin</strong>, пароль пустой.</li></ol><p align="center"><img alt="MikroTik WinBox" height="121" src="/userfiles/images/mikrotik_setup/connect.png" width="424" /></p><p align="center">&nbsp;</p><p><a id="reset_settings" name="reset_settings"></a></p><h2>Сброс настроек роутера</h2><p>Сбросим все настройки роутера MikroTik через программу Winbox:</p><ol><li>Выбираем слева меню <strong>New Terminal</strong>;</li><li>В терминале вводим команду <strong>system</strong>;</li><li>Потом вводим команду <strong>reset</strong>;</li><li>Нажимаем кнопку <strong>y</strong> на клавиатуре для подтверждения сброса настроек.</li></ol><p style="text-align: center"><img alt="Сбросить настройки MikroTik" height="349" src="/userfiles/images/mikrotik_setup/reset_mikrotik.png" width="640" /></p><p style="text-align: justify">После перезагрузки устройства заходим еще раз в настройки MikroTik с помощью программы Winbox.</p><p align="center"><img alt="MikroTik WinBox" height="121" src="/userfiles/images/mikrotik_setup/connect.png" width="424" /></p><p style="text-align: justify">В появившемся окне нажимаем кнопку <strong>Remove Configuration</strong> и ждем, пока роутер перезагрузится.</p><p align="center"><img alt="Очистить конфигурацию MikroTik" height="401" src="/userfiles/images/mikrotik_setup/remove_config.png" width="543" /></p><p align="center">&nbsp;</p><h2><a id="interfaces_comments" name="interfaces_comments"></a></h2><h2>Описание сетевых интерфейсов</h2><p style="text-align: justify">Конфигурация сетевых интерфейсов MikroTik будет выглядеть следующим образом: первый порт будет подключен к провайдеру (WAN порт), остальные порты будут работать в режиме свитча для подключения компьютеров локальной сети.</p><p>Чтобы не путать сетевые интерфейсы, опишем их с помощью комментариев.</p><p>Входим в настройки MikroTik с помощью программы Winbox.</p><p align="center"><img alt="MikroTik WinBox" height="121" src="/userfiles/images/mikrotik_setup/connect.png" width="424" /></p><p align="left">Записываем для первого порта ether1 комментарий &quot;WAN&quot;:</p><ol><li>Открываем меню <strong>Interfaces</strong>;</li><li>Выбираем первый интерфейс <strong>ether1</strong>;</li><li>Нажимаем желтую кнопку <strong>Comment</strong>;</li><li>В появившемся окне вводим комментарий &quot;<strong>WAN</strong>&quot;;</li><li>Нажимаем кнопку <strong>OK</strong>.</li></ol><p align="center"><img alt="Описание WAN интерфейса MikroTik" height="334" src="/userfiles/images/mikrotik_setup/wan_comment.png" width="640" /></p><p align="left">Записываем для второго порта ether2 комментарий &quot;LAN&quot;:</p><ol><li>Выбираем первый интерфейс <strong>ether2</strong>;</li><li>Нажимаем желтую кнопку <strong>Comment</strong>;</li><li>В появившемся окне вводим комментарий &quot;<strong>LAN</strong>&quot;;</li><li>Нажимаем кнопку <strong>OK</strong>.</li></ol><p align="left" style="text-align: center"><img alt="Описание LAN интерфейса MikroTik" height="335" src="/userfiles/images/mikrotik_setup/lan_comment.png" width="640" /></p><p>Теперь в списке интерфейсов четко видно их назначение.</p><p align="center"><img alt="Список интерфейсов MikroTik" height="222" src="/userfiles/images/mikrotik_setup/intrface_list.png" width="258" /></p><p align="center">&nbsp;</p><h2><a id="wan_setup" name="wan_setup"></a></h2><h2>Настройка WAN интерфейса MikroTik</h2><h2>Смена MAC адреса WAN порта</h2><p style="text-align: justify">Если Ваш провайдер блокирует доступ к сети по MAC адресу, то необходимо сначала изменить MAC адрес WAN порта роутера MikroTik. В противном случае пропустите этот пункт.</p><p style="text-align: justify">Чтобы изменить MAC адрес порта MikroTik, открываем в программе Winbox меню<strong> New Terminal</strong> и вводим команду:</p><p><strong>/interface ethernet set ether1 mac-address=00:01:02:03:04:05</strong></p><p>, где <strong>ether1</strong> - имя WAN интерфейса, <strong>00:01:02:03:04:05</strong> - разрешенный MAC адрес.</p><p align="center"><img alt="Изменить MAC адрес MikroTik" height="30" src="/userfiles/images/mikrotik_setup/change_mac.png" width="640" /></p><p>&nbsp;</p><p>Чтобы вернуть родной MAC адрес порта, нужно выполнить команду:</p><p><strong>/interface ethernet reset-mac ether1</strong></p><p>, где <strong>ether1</strong> - имя интерфейса.</p><p align="center"><img alt="Вернуть родной MAC адрес MikroTik" height="23" src="/userfiles/images/mikrotik_setup/reset_mac.png" width="525" /></p><p align="center">&nbsp;<a id="dynamic_ip_setup" name="dynamic_ip_setup"></a></p><h2>Настройка Dynamic IP</h2><p style="text-align: justify">Если интернет провайдер выдает Вам сетевые настройки автоматически, то необходимо настроить WAN порт роутера MikroTik на получение настроек по DHCP:</p><ol><li>Открываем меню <strong>IP</strong>;</li><li>Выбираем <strong>DHCP Client</strong>;</li><li>В появившемся окне нажимаем кнопку Add (красный крестик);</li><li>В новом окне в списке <strong>Interface</strong>: выбираем WAN интерфейс <strong>ether1</strong>;</li><li>Нажимаем кнопку <strong>OK</strong> для сохранения настроек.</li></ol><p align="center"><img alt="Настройка DHCP клиента MikroTik" height="285" src="/userfiles/images/mikrotik_setup/dhcp_client.png" width="640" /></p><p style="text-align: justify">Теперь мы получили IP адрес от провайдера, который отображается в столбце <strong>IP Adress</strong>.</p><p align="center"><img alt="Получение IP адреса по DHCP MikroTik" height="88" src="/userfiles/images/mikrotik_setup/get_dhcp_ip.png" width="387" /></p><div align="center">&nbsp;</div><p>Проверим, что есть связь с интернетом:</p><ol><li>Открываем меню <strong>New Terminal</strong>;</li><li>В терминале пишем команду <strong>ping ya.ru</strong> (пингуем сайт ya.ru).</li></ol><p style="text-align: justify">Как видим, идут пинги по 20ms, значит интернет подключен и работает. Остановить выполнение команды можно комбинацией клавиш Ctrl+C.</p><p align="center"><img alt="ping MikroTik" height="111" src="/userfiles/images/mikrotik_setup/ping_ya_ru.png" width="639" /></p><p align="center">&nbsp;</p><div style="background-color:#FFF8DC; padding:1em; -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; text-align:justify">На компьютерах, подключенных к роутеру MikroTik, интернет не будет работать, пока вы не настроите локальную сеть, Firewall и NAT.</div><p><a id="static_ip_setup" name="static_ip_setup"></a></p><h2>Настройка Static IP</h2><p style="text-align: justify">Если вы используете статические сетевые настройки, необходимо настроить WAN порт роутера MikroTik вручную.</p><p>Настроим статический IP адрес и маску подсети WAN порта MikroTik :</p><ol><li>Открываем меню <strong>IP</strong>;</li><li>Выбираем <strong>Addresses</strong>;</li><li>В появившемся окне нажимаем кнопку Add (красный крестик);</li><li>В новом окне в поле <strong>Address</strong>: прописываем статический <strong>IP адрес / маску подсети</strong>;</li><li>В списке <strong>Interface:</strong> выбираем WAN интерфейс <strong>ether1</strong>;</li><li>Для сохранения настроек нажимаем кнопку <strong>OK</strong>.</li></ol><p align="center"><img alt="Настройка статического адреса MikroTik" height="292" src="/userfiles/images/mikrotik_setup/static_ip.png" width="640" /></p><p>Настоим адрес интернет шлюза MikroTik:</p><ol><li>Открываем меню <strong>IP</strong>;</li><li>Выбираем <strong>Routes</strong>;</li><li>В появившемся окне нажимаем кнопку Add (красный крестик);</li><li>В новом окне в поле <strong>Gateway</strong>: прописываем <strong>IP адрес шлюза</strong>;</li><li>Нажимаем кнопку <strong>OK</strong> для сохранения настроек.</li></ol><p align="center"><img alt="Настройка шлюза MikroTik" height="261" src="/userfiles/images/mikrotik_setup/gateway_setup.png" width="640" /></p><p>Добавим адреса DNS серверов MikroTik:</p><ol><li>Открываем меню <strong>IP</strong>;</li><li>Выбираем<strong> DNS</strong>;</li><li>В появившемся окне нажимаем кнопку <strong>Settings</strong>;</li><li>В новом окне в поле <strong>Servers</strong>: прописываем IP адрес предпочитаемого DNS сервера;</li><li>Нажимаем кнопку &quot;вниз&quot; (черный треугольник), чтобы добавить еще одно поле для ввода;</li><li>В новом поле прописываем IP адрес альтернативного DNS сервера;</li><li>Ставим галочку <strong>Allow Remote Requests</strong>;</li><li>Нажимаем кнопку <strong>OK</strong> для сохранения настроек.</li></ol><p align="center"><img alt="Настройка DNS MikroTik" height="267" src="/userfiles/images/mikrotik_setup/dns_setup.png" width="640" /></p><p>Проверим, что есть доступ к интернету:</p><ol><li>Открываем меню <strong>New Terminal</strong>;</li><li>В терминале пишем команду <strong>ping ya.ru</strong> (пингуем сайт ya.ru).</li></ol><p>Как видим, идут пинги по 20ms, значит интернет подключен и работает. Остановить выполнение команды можно комбинацией клавиш Ctrl+C.</p><p align="center"><img alt="ping MikroTik" height="111" src="/userfiles/images/mikrotik_setup/ping_ya_ru.png" width="639" /></p><p align="center">&nbsp;</p><div style="background-color:#FFF8DC; padding:1em; -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; text-align:justify">На компьютерах, подключенных к роутеру MikroTik, интернет не будет работать, пока вы не настроите локальную сеть, Firewall и NAT.</div><p>&nbsp;</p><p><a id="static_ip_setup" name="static_ip_setup"></a><a id="pppoe_setup" name="pppoe_setup"></a></p><h2>Настройка PPPoE</h2><div style="background-color:#FFF8DC; padding:1em; -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; text-align:justify">Если вы используете ADSL модем, к которому по сетевому кабелю подключен роутер MikroTik, сначала необходимо настроить ADSL модем в режим Bridge (мост).</div><p>&nbsp;Настроим клиентское PPPoE соединение на роутере MikroTik:</p><ol><li>Слева выбираем меню <strong>PPP</strong>;</li><li>Нажимаем кнопку Add (красный плюсик);</li><li>Выбираем <strong>PPPoE Client</strong>.</li></ol><p align="center"><img alt="Настройка PPPoE MikroTik" height="370" src="/userfiles/images/mikrotik_setup/pppoe_client.png" width="303" /></p><p>Настраиваем параметры PPPoE соединения MikroTik:</p><p align="center"><img alt="Выбор интерфейса PPPoE MikroTik" height="283" src="/userfiles/images/mikrotik_setup/pppoe_interface.png" width="477" /></p><ol><li>В поле <strong>Name</strong> указываем имя соединения;</li><li>В списке <strong>Interfaces</strong> выбираем первый WAN порт <strong>ether1</strong>, который подключен к провайдеру;</li><li>Переходим на вкладку<strong> Dial Out</strong>;</li><li>В поле <strong>User</strong> указываем имя пользователя;</li><li>В поле <strong>Password</strong> вводим пароль;</li><li>Ставим галочку <strong>Use Peer DNS</strong>;</li><li>Нажимаем кнопку <strong>OK</strong>.</li></ol><p align="center"><img alt="Настройка пользователя и пароля PPPoE MikroTik" height="362" src="/userfiles/images/mikrotik_setup/pppoe_pwd.png" width="476" /></p><p style="text-align: justify">После создания PPPoE соединения напротив него должна появиться буква <strong>R</strong>, которая говорит о том, что соединение установлено.</p><p align="center"><img alt="PPPoE соединение на MikroTik установлено" height="144" src="/userfiles/images/mikrotik_setup/pppoe_r.png" width="415" /></p><p>Проверим, что есть связь с интернетом:</p><ol><li>Открываем меню <strong>New Terminal</strong>;</li><li>В терминале пишем команду <strong>ping ya.ru</strong> (пингуем сайт ya.ru).</li></ol><p style="text-align: justify">Как видим, идут пинги по 20ms, значит интернет подключен и работает. Остановить выполнение команды можно комбинацией клавиш Ctrl+C.</p><p align="center"><img alt="ping MikroTik" height="111" src="/userfiles/images/mikrotik_setup/ping_ya_ru.png" width="639" /></p><p>&nbsp;</p><div style="background-color:#FFF8DC; padding:1em; -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; text-align:justify">На компьютерах, подключенных к роутеру MikroTik, интернет не будет работать, пока вы не настроите локальную сеть, Firewall и NAT.</div><p><a id="local_network_setup" name="local_network_setup"></a></p><h2>Настройка локальной сети MikroTik</h2><h2>Настройка портов в режим свитча</h2><p>Выполним объединение портов MikroTik ether2 - ether5 в свитч:</p><ol><li>Выбираем двойным щелчком мыши интерфейс <strong>ether3</strong>;</li><li>В списке <strong>Master Port</strong> выбираем <strong>ether2</strong> (главный порт свитча);</li><li>Нажимаем кнопку <strong>ОК</strong>.</li></ol><p>Эту операцию повторяем для интерфейсов ether4, ether5.</p><p align="left" style="text-align: center"><img alt="Настройка портов MikroTik в свитч" height="341" src="/userfiles/images/mikrotik_setup/master_port.png" width="640" /></p><p>В итоге напротив портов ether3-ether5 должна стоять буква S (Slave - ведомый).</p><p align="center"><img alt="Интерфейсы MikroTik" height="206" src="/userfiles/images/mikrotik_setup/switch_ports_list.png" width="210" /></p><p align="center">&nbsp;</p><p align="left"><a id="bridge_local" name="bridge_local"></a></p><h2 align="left">Объединение Wi-Fi и проводных интерфейсов в локальную сеть</h2><p style="text-align: justify"><b>Если Вы используете роутер MikroTik без Wi-Fi (<a href="/Products/mikrotik-rb750.php">RB750</a>, RB750GL, RB450G), то пропустите этот пункт.</b></p><p style="text-align: justify">Чтобы компьютеры, подключенные к роутеру по кабелю и по Wi-Fi, друг друга &laquo;видели&raquo;, необходимо объединить беспроводной и проводные интерфейсы MikroTik.</p><p align="left">Создаем объединение <strong>bridge-local</strong> (мост);</p><ol><li>Открываем меню <strong>Bridge</strong>;</li><li>Нажимаем кнопку <strong>Add</strong> (красный крестик);</li><li>В поле <strong>Name</strong> прописываем имя объединения <strong>bridge-local</strong>;</li><li>Нажимаем кнопку <strong>OK</strong>.</li></ol><p align="center"><img alt="Настройка локальной сети MikroTik" height="374" src="/userfiles/images/mikrotik_setup/bridge.png" width="620" /></p><p>Добавляем в объединение ethetnet порты:</p><ol><li>Переходим на вкладку <strong>Ports</strong>;</li><li>Нажимаем кнопку <strong>Add</strong> (красный крестик);</li><li>В списке <strong>Interface</strong> выбираем главный ethernet порт свитча <strong>ether2</strong>;</li><li>В списке<strong> Bridge</strong><strong> </strong>выбираем имя объединения <strong>bridge-local</strong>;</li><li>Нажимаем кнопку <strong>OK</strong>.</li></ol><p align="center"><img alt="Объединение ethernet портов MikroTik в локальную сеть" height="334" src="/userfiles/images/mikrotik_setup/bridge_ether.png" width="490" /></p><p>Добавляем в объединение Wi-Fi интерфейс:</p><ol><li>Переходим на вкладку <strong>Ports</strong>;</li><li>Нажимаем кнопку <strong>Add</strong> (красный крестик);</li><li>В списке <strong>Interface</strong> выбираем беспроводной интерфейс<strong>&nbsp;wlan1</strong>;</li><li>В списке<strong> Bridge</strong><strong> </strong>выбираем имя объединения <strong>bridge-local</strong>;</li><li>Нажимаем кнопку <strong>OK</strong>.</li></ol><p align="center"><img alt="Объединение Wi-Fi интерфейса MikroTik в локальную сеть" height="334" src="/userfiles/images/mikrotik_setup/bridge_wlan.png" width="490" /></p><p align="center"><br /><a id="local_ip_setup" name="local_ip_setup"></a></p><h2>Назначение IP адреса локальной сети</h2><p>Настроим IP адрес локальной сети MikroTik:</p><ol><li>Открываем меню <strong>IP</strong>;</li><li>Выбираем <strong>Addresses</strong>;</li><li>Нажимаем кнопку <strong>Add</strong> (красный крестик);</li><li>В поле <strong>Address</strong> вводим адрес и маску локальной сети, например 192.168.88.1/24;</li><li>В списке <strong>Interface</strong> выбираем <strong>bridge-local</strong> (eсли вы используете роутер MikroTik без Wi-Fi (RB750, RB750GL, RB450G), то в списке <b>Interface</b> выбираем главный интерфейс свитча <b>ether2</b>);</li><li>Нажимаем кнопку <strong>OK</strong>.</li></ol><p align="center"><img alt="Назначение IP адреса локальной сети MikroTik" src="/userfiles/images/mikrotik_setup/ip_adresses.png" /></p><p align="center">&nbsp;</p><p><a id="dhcp_server_setup" name="dhcp_server_setup"></a></p><h2>Настройка DHCP сервера</h2><p style="text-align: justify">Чтобы компьютеры, подключенные к роутеру, получали сетевые настройки автоматически, настроим DHCP сервер MikroTik:</p><div align="center"><img alt="Настройка DHCP сервера MikroTik" height="221" src="/userfiles/images/mikrotik_setup/dhcp_setup.png" width="615" /></div><div align="center"><img alt="Выбор интерфейса DHCP сервера MikroTik" src="/userfiles/images/mikrotik_setup/dhcp_interface.png" /></div><div align="center"><img alt="Настройка IP адрес локальной сети MikroTik" height="144" src="/userfiles/images/mikrotik_setup/dhcp_space.png" width="339" /></div><div align="center"><img alt="Настройка IP адрес шлюза для локальной сети MikroTik" height="145" src="/userfiles/images/mikrotik_setup/dhcp_gateway.png" width="340" /></div><div align="center"><img alt="Настройка диапазона IP адресов DHCP сервера MikroTik" height="143" src="/userfiles/images/mikrotik_setup/dhcp_ip_range.png" width="338" /></div><div align="center"><img alt="Настройка DNS серверов DHCP сервера MikroTik" height="169" src="/userfiles/images/mikrotik_setup/dns_servers.png" width="338" /></div><div align="center"><img alt="" height="173" src="/userfiles/images/mikrotik_setup/dhcp_lease_time.png" width="340" /></div><div align="center"><img alt="Настройка DHCP сервера MikroTik успешно завершена" height="101" src="/userfiles/images/mikrotik_setup/dhcp_completed.png" width="234" /></div><ol><li>Открываем меню <strong>IP</strong>;</li><li>Выбираем <strong>DHCP Server</strong>;</li><li>Нажимаем кнопку <strong>DHCP Setup</strong>;</li><br /><li>В списке <strong>DHCP Server Interface</strong> выбираем <strong>bridge-local</strong> (если вы используете роутер MikroTik без Wi-Fi (RB750, RB750GL, RB450G), то в списке DHCP Server <b>Interface</b> выбираем главный интерфейс свитча <b>ether2</b>);</li><li>Нажимаем кнопку <strong>Next</strong>;</li><br /><li>В этом окне выбирается сеть для DHCP. Оставляем без изменений и нажимаем кнопку <strong>Next</strong>;</li><br /><li>В следующем окне указывается адрес шлюза. Нажимаем кнопку <strong>Next</strong>;</li><br /><li>В этом окне прописывается диапазон IP адресов, которые будет раздавать DHCP сервер. Нажимаем кнопку <strong>Next</strong>;</li><br /><li>Далее вводятся адреса DNS серверов. Нажимаем кнопку <strong>Next</strong>;</li><br /><li>Здесь задается время резервирования IP адресов. Нажимаем кнопку <strong>Next</strong>;</li><br /><li>Настройка DHCP сервера успешно завершена. Жмем кнопку <strong>OK</strong>.</li></ol><p>Теперь сетевой кабель компьютера отключаем от роутера и еще раз подключаем к нему.</p><p>&nbsp;</p><p><a id="wifi_setup" name="wifi_setup"></a></p><h2>Настройка Wi-Fi точки доступа MikroTik</h2><p>Сначала необходимо включить Wi-Fi модуль:</p><ol><li>Открываем меню <strong>Wireless</strong>;</li><li>Выбираем Wi-Fi интерфейс <strong>wlan1</strong>;</li><li>Нажимаем кнопку <strong>Enable</strong> (синяя галочка).</li></ol><p align="center"><img alt="Настройка Wi-Fi точки MikroTik" height="131" src="/userfiles/images/mikrotik_setup/wlan_enable.png" width="450" /></p><p>Создаем пароль для подключения к точке доступа MikroTik:</p><ol><li>Открываем вкладку<strong> Security Profiles</strong>;</li><li>Нажимаем кнопку Add (красный крестик);</li><li>В новом окне в поле <strong>Name</strong>: указываем имя профиля безопасности;</li><li>Для лучшей безопасности оставляем только регистрацию по протоколу <strong>WPA2 PSK</strong>;</li><li>В поле <strong>WPA2 Pre-Shared Key</strong> вводим пароль для доступа к Wi-Fi точке;</li><li>Для сохранения настроек нажимаем кнопку <strong>OK</strong>.</li></ol><p align="center"><img alt="Настройка пользователя и пароля Wi-Fi точки MikroTik" height="473" src="/userfiles/images/mikrotik_setup/ap_pwd.png" width="554" /></p><p>&nbsp;</p><p>Настраиваем параметры Wi-Fi точки MikroTik:</p><ol><li>Открываем вкладку<strong> Interfaces</strong>;</li><li>Делаем двойной клик кнопкой мыши на Wi-Fi интерфейсе <strong>wlan1</strong>, чтобы зайти в его настройки;</li><li>Переходим на вкладку <strong>Wireless</strong>;</li><li>В списке <strong>Mode:</strong> выбираем режим работы <strong>ap bridge</strong> (точка доступа в режиме моста);</li><li>В списке <strong>Band</strong>: выбираем в каких стандартах будет работать Wi-Fi точка, мы выбрали <strong>B/G/N</strong>;</li><li>В поле <strong>SSID</strong>: прописываем имя точки доступа;</li><li>В списке <strong>Security Profile</strong> выбираем имя профиля безопасности, в котором мы создавали пароль для доступа к Wi-Fi точке;</li><li>Нажимаем кнопку <strong>OK</strong> для сохранения настроек.</li></ol><p align="center"><img alt="Настройка  беспроводной точки доступа MikroTik" height="445" src="/userfiles/images/mikrotik_setup/ap_setup.png" width="556" /></p><p align="left">Теперь можно подключаться к роутеру по Wi-Fi.</p><div style="background-color:#FFF8DC; padding:1em; -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; text-align:justify">На компьютерах, подключенных к роутеру MikroTik по Wi-Fi, интернет не будет работать, пока вы не настроите Firewall и NAT.</div><p>&nbsp;</p><p><a id="firewall_setup" name="firewall_setup"></a></p><h2>Настройка Firewall и NAT</h2><p style="text-align: justify">Чтобы компьютеры получали доступ к интернету, необходимо настроить Firewall и NAT на роутере MikroTik.</p><p style="text-align: justify">Откройте меню New Terminal для ввода команд.</p><p>&nbsp;</p><p><strong>Настройка NAT</strong> выполняется следующими командами:</p><div style="background-color:#FFF8DC; padding:1em; -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; text-align:justify">ip firewall nat add chain=srcnat out-interface=<strong>интерфейс провайдера</strong> action=masquerade</div><p>, где <strong>интерфейс провайдера</strong> - это интерфейс, на который приходит интернет от провайдера, например ether1. Для PPPoE соединений указывается название PPPoE интерфейса. Настройки NAT достаточно, чтобы заработал интернет.</p><p>&nbsp;</p><p><strong>Protect router</strong> - команды для защиты роутера:</p><div style="background-color:#FFF8DC; padding:1em; -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; text-align:left">ip firewall filter add action=accept chain=input disabled=no protocol=icmp<br />ip firewall filter add action=accept chain=input connection-state=established disabled=no in-interface=<strong>интерфейс провайдера</strong><br />ip firewall filter add action=accept chain=input connection-state=related disabled=no in-interface=<strong>интерфейс провайдера</strong><br />ip firewall filter add action=drop chain=input disabled=no in-interface=<strong>интерфейс провайдера</strong></div><p><br /><strong>Protect LAN</strong> - защита внутренней сети:</p><div style="background-color:#FFF8DC; padding:1em; -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; text-align:justify">ip firewall filter add action=jump chain=forward disabled=no in-interface=<strong>интерфейс провайдера</strong> jump-target=customer<br />ip firewall filter add action=accept chain=customer connection-state=established disabled=no<br />ip firewall filter add action=accept chain=customer connection-state=related disabled=no<br />ip firewall filter add action=drop chain=customer disabled=no</div><p>&nbsp;</p><p>Назначаем типы интерфейсов для защиты внутренней сети (external - внешний, internal - внутренний LAN):</p><div style="background-color:#FFF8DC; padding:1em; -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; text-align:justify">ip upnp interfaces add disabled=no interface=ether1 type=external<br />ip upnp interfaces add disabled=no interface=ether2 type=internal<br />ip upnp interfaces add disabled=no interface=ether3 type=internal<br />ip upnp interfaces add disabled=no interface=ether4 type=internal<br />ip upnp interfaces add disabled=no interface=ether5 type=internal<br />ip upnp interfaces add disabled=no interface=bridge-local type=internal</div><p>&nbsp;</p><p align="left"><a id="change_pwd" name="change_pwd"></a></p><h2><strong>Изменение пароля доступа к роутеру MikroTik</strong></h2><p style="text-align: justify">Чтобы изменить пароль доступа к роутеру MikroTik, выполните следующие действия:</p><ol><li>Открываем меню <strong>System</strong>;</li><li>Выбираем <strong>Users</strong>;</li><li>Делаем двойной клик кнопкой мыши на пользователе<strong> admin</strong>;</li><li>Нажимаем кнопку<strong> Password...</strong>;</li><li>В поле <strong>New Password </strong> вводим новый пароль;</li><li>В поле <strong>Confirm Password </strong> подтверждаем новый пароль;</li><li>В окне <strong>Change Password</strong> нажимаем кнопку <strong>OK</strong>;</li><li>В окне <strong>User <admin></admin></strong> нажимаем кнопку <strong>OK</strong>.</li></ol><p align="center"><img alt="Изменение пароля доступа к роутеру MiktoTik" height="529" src="/userfiles/images/mikrotik_setup/change_pwd.png" width="636" /></p><p align="center">&nbsp;</p><p><a id="mikrotik_reset" name="mikrotik_reset"></a></p><h2><strong>Сброс роутера MikroTik к заводским настройкам</strong></h2><p style="text-align: justify">Чтобы сбросить MikroTik к заводским настройкам выполните следующее:</p><ol><li>Отключите питание роутера;</li><li>Нажмите и держите кнопку <strong>Reset</strong>;</li><li>Включите питание роутера;</li><li>Дождитесь пока замигает индикатор <strong>ACT</strong> и отпустите кнопку <strong>Reset</strong>.</li></ol><p align="center"><img alt="Сброс роутера MikroTik к заводским настройкам" height="153" src="/userfiles/images/mikrotik_setup/mikrotik_front.jpg" width="510" /></p><p style="text-align: justify">После этого роутер перезагрузится, и вы сможете зайти в его настройки со стандартным именем пользователя <strong>admin</strong> без пароля.</p><p style="text-align: justify">Если вы войдете в настройки с помощью программы Winbox, то появится следующее окно:</p><p align="center"><img alt="Быстрая настройка роутера MikroTik" height="402" src="/userfiles/images/mikrotik_setup/routeros_reset.png" width="541" /></p><p style="text-align: justify">C помощью кнопки <strong>OK</strong> можно выполнить быструю настройку роутера по умолчанию.</p><p style="text-align: justify">Кнопка <strong>Remove Configuration</strong> позволяет сбросить все настройки для последующей ручной настройки роутера.</p><p>&nbsp;</p>
+							</div>
+
+			<div style="margin: 10px 0 15px;">
+				<span style="padding-right: 2em">
+					<a href="/print/article.php?id=132" class="print" target="_blank"><b>Печатная версия</b></a>
+				</span>
+
+				<span style="font-size:11px;color: #7F888C;margin-right: 5px;"><b>Поделитесь статьёй:</b></span>
+				<div style="display: inline; position: relative; top: 0.38em;">
+				<script type="text/javascript">
+					(function() {
+						document.write(String.fromCharCode(60)+'a href="https://twitter.com/share" class="twitter-share-button" data-lang="ru" data-related="technotrade_llc"'+String.fromCharCode(62)+'Твитнуть'+String.fromCharCode(60)+'/a'+String.fromCharCode(62));
+						!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+					})();
+				</script>
+				</div>
+				<div class="fb-share-button" data-layout="button"></div>
+                			</div>
+		</div>
+
+		<div class="partHeadCrumbs">	
+			<a href="#top" class="backToTop">В начало</a>
+			<div class="breadcrumb">
+				<a href="/">Главная</a>&nbsp;»&nbsp;<a href="/articles">Статьи</a>			</div>		
+		</div>
+
+						<div class="section">
+				 <ul class="tabs">
+					 <li class="current">Обычная форма</li>
+                    					 <li>Facebook</li>
+				 </ul>
+				 <div class="box visible">
+					<div class="maincont-page commentDiv">
+						<a id="commentitstart" name="commentitstart"></a>
+						<h3 style="margin: 0;">Отзывы о статье</h3>
+
+						
+						<div style="color: gray">
+							<div class="rating-foreground r5" style="float: left"></div>
+							&nbsp;
+							Оценка:&nbsp;<span class="rating"><span class="average">5</span></span>,	
+							Голосов:&nbsp;<span class="votes">127</span>, 
+							Комментариев:&nbsp;<span class="count">358</span>
+						</div>
+
+													
+<script src='/Commentit/ajax.js.php' type='text/javascript'></script>
+<div id="tableDiv" style="display:none;"><img alt="" src="/Commentit/loader.gif" style="border:0; vertical-align: middle; margin-right: 0.5em"> Идёт загрузка...</div><div id='addfomz'><br>
+<form name="addcomm" action="" onKeyPress="if (event.keyCode==10 || (event.ctrlKey && event.keyCode==13)) {send_message();}" method="post">
+<div style="text-align:right">
+	<span style="padding:1px 1em 0 0"><a href="/Commentit/rss.php?url=/Articles/mikrotik_router_setup.php"><img alt="RSS" title="RSS" src="/Commentit/rss.png" style="vertical-align:top;border:0"></a> <a href="/Commentit/rss.php?url=/Articles/mikrotik_router_setup.php" style="color:#58646A">Читать отзывы</a></span>
+</div>
+<table class="addcom" cellpadding="2" cellspacing="0" border="0">
+	<tr>
+		<td width="136px">
+			
+		</td>
+		<td colspan="2">
+			<b style="font-size:12pt">Добавить отзыв</b>
+		</td>
+	</tr>	
+	<tr>
+		<td width="136px" style="text-align:right">
+			Ваше&nbsp;Имя:&nbsp;<span style="color:#AB0000;">*</span>
+		</td>
+		<td colspan="2">
+			<input id="nick" type="text" name="namenew" maxlength="20" value="" size="20">
+		</td>
+	</tr>
+	<tr>
+		<td width="136px" style="text-align:right">
+			Ваш e-mail: &nbsp;
+		</td>
+		<td colspan="2">
+			<input id="usmail" type="text" name="usemail" value="" size="20">
+		</td>
+	</tr>
+	<tr style="text-align:right; display:none;">
+		<td width="136px"></td>
+		<td colspan="2">
+			<br />
+		</td>
+	</tr>
+	<tr>
+		<td width="136px" style="text-align:right">
+			Отзыв:&nbsp;<span style="color:#AB0000;">*</span>
+		</td>
+		<td>
+			<textarea onkeyup="autosize(this)" onfocus="autosize(this)" rows="5" cols="50" id="textz" name="comment"></textarea>
+		</td>
+		<td>
+			
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align:right">
+			Оценка: &nbsp;
+		</td>
+		<td colspan="2">
+			<select name="vote" id="vote" size="1">
+	<option value="5" >&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+	<option value="4" >&#9733;&#9733;&#9733;&#9733;</option>
+	<option value="3" >&#9733;&#9733;&#9733;</option>
+	<option value="2" >&#9733;&#9733;</option>
+	<option value="1" >&#9733;</option>
+	<option value="0" selected="selected">- выбрать -</option>	
+</select>
+		</td>
+	</tr>
+	<tr>
+		<td width="136px" style="text-align:right">
+			Введите символы: <span style="color:#AB0000;">*</span>
+
+		</td>
+		<td colspan="2">
+			<div style="width:120px;height:80px;text-align:center;float:left">
+				<img id="capt" src="/Commentit/capt.php?PHPSESSID=f1qs7q09q1dskj3se546chqtq4" alt="">
+				<span onclick="refcapt()" style="cursor:pointer;border-bottom:1px dotted">Обновить</span>
+			</div>		
+			<input type="text" id="keystringz" name="keystring" style="font-size:39px;height:55px;margin-left:5px;width:155px;">
+		</td>
+	</tr>
+	<tr>
+		<td width="136px">&nbsp;</td>	
+		<td colspan="2" style="padding-top:7px">
+			<button id="enter" type="button" class="commentBtn" onclick="send_message()" name="addcomment"><b style="font-size:13px">Добавить</b> [Ctrl+Enter]</button>
+			<img alt="Идёт загрузка..." id="miniload" src="/Commentit/loadermini.gif" style="display:none;border:0;vertical-align:middle">
+		</td>
+	</tr>
+</table>
+</form>
+</div><div id='ok'><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 0px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">Дмитрий.</span>
+	
+	<span style="font-size:8pt;color:gray;float:right">13.09.2017 19:27:11</span>
+	<div style="clear:both">Большое спасибо! Лучшее описание.</div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18423" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18423',oldid);">Ответить</button>
+<button id="repl-18423" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18423',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18423'></div>
+</div><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 0px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">Eugene</span>
+	<span class="rating-foreground r5 rating" style="float:left; margin:2px 0 0 5px;"><span class="value-title" title="5"></span></span>
+	<span style="font-size:8pt;color:gray;float:right">29.08.2017 14:52:02</span>
+	<div style="clear:both">статья супер, настроил быстро, все работает </div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18375" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18375',oldid);">Ответить</button>
+<button id="repl-18375" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18375',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18375'></div>
+</div><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 0px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">Дмитий</span>
+	<span class="rating-foreground r5 rating" style="float:left; margin:2px 0 0 5px;"><span class="value-title" title="5"></span></span>
+	<span style="font-size:8pt;color:gray;float:right">28.08.2017 21:50:33</span>
+	<div style="clear:both">Спасибо всё отлично расписано, вот только работает всё и на компьютере есть инет и на ноутбуке по вай-фай есть инет, а вот на телефоне нет енета. Что нужно сделать?</div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18361" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18361',oldid);">Ответить</button>
+<button id="repl-18361" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18361',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18361'></div>
+</div><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 0px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">Alex-mlt</span>
+	
+	<span style="font-size:8pt;color:gray;float:right">18.07.2017 08:02:31</span>
+	<div style="clear:both">Извините, глупый вопрос. Если я хочу временно отключить интернет, но оставить локальную сеть, мне достаточно временно отключить nat в настройках? Спасибо. </div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18300" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18300',oldid);">Ответить</button>
+<button id="repl-18300" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18300',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18300'></div>
+</div><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 20px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">zerg</span>
+	
+	<span style="font-size:8pt;color:gray;float:right">31.07.2017 16:52:17</span>
+	<div style="clear:both">ага</div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18312" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18312',oldid);">Ответить</button>
+<button id="repl-18312" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18312',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18312'></div>
+</div><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 0px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">DagMen</span>
+	
+	<span style="font-size:8pt;color:gray;float:right">27.06.2017 19:59:52</span>
+	<div style="clear:both">Интересно. <br>А у меня такая ситуация. MikriTik hex подключены 3 антенны локо м2 в режиме точки доступа. Нужно фильтровать клиентов по мак адресу, добавлять и чтоб автоматически удалялись через месяц </div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18264" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18264',oldid);">Ответить</button>
+<button id="repl-18264" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18264',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18264'></div>
+</div><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 0px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">Накелус</span>
+	<span class="rating-foreground r4 rating" style="float:left; margin:2px 0 0 5px;"><span class="value-title" title="4"></span></span>
+	<span style="font-size:8pt;color:gray;float:right">04.05.2017 20:34:18</span>
+	<div style="clear:both">Спасибо</div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18093" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18093',oldid);">Ответить</button>
+<button id="repl-18093" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18093',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18093'></div>
+</div><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 0px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">Александр</span>
+	<span class="rating-foreground r5 rating" style="float:left; margin:2px 0 0 5px;"><span class="value-title" title="5"></span></span>
+	<span style="font-size:8pt;color:gray;float:right">21.04.2017 10:48:57</span>
+	<div style="clear:both">Приветы, статья интересная и нужная спасибо.<br>Нигде не могу найти ответ на простой казалось бы вопрос, где прописать понятные имена клиентов DHCP. Есть привязка IP к MAC, устройство передает свой Hostname в виде &quot;android-878........&quot; . Хотелось бы привязывать клиентов с понятным Ником типа &quot;ТЁЩЯ&quot;. Спасибо.</div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18056" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18056',oldid);">Ответить</button>
+<button id="repl-18056" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18056',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18056'></div>
+</div><div class="viewcom" style="background:#e7ecf1;border:#d5d9de 1px solid;padding:5px;margin:10px 0 10px 20px;">
+	<span style="color:#AB0000;font-weight:bold">Техподдержка</span>
+	<span style="font-size:8pt;color:gray;float:right">21.04.2017 11:27:08</span>
+	<div style="clear:both">Откройте меню IP - DHCP Server - вкладка Leases.<br>Откройте необходимое устройство и нажмите кнопку Make Static.<br>После этого еще раз откройте его, нажмите кнопку Comment и напишите необходимый комментарий.</div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18057" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18057',oldid);">Ответить</button>
+<button id="repl-18057" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18057',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18057'></div>
+</div><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 40px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">Александр</span>
+	<span class="rating-foreground r5 rating" style="float:left; margin:2px 0 0 5px;"><span class="value-title" title="5"></span></span>
+	<span style="font-size:8pt;color:gray;float:right">21.04.2017 13:16:52</span>
+	<div style="clear:both">Вот спасибо!!! Теперь все по полочкам)))</div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18061" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18061',oldid);">Ответить</button>
+<button id="repl-18061" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18061',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18061'></div>
+</div><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 20px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">owt</span>
+	
+	<span style="font-size:8pt;color:gray;float:right">03.08.2017 13:11:52</span>
+	<div style="clear:both">Воспользуйтесь полем Comment</div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18325" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18325',oldid);">Ответить</button>
+<button id="repl-18325" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18325',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18325'></div>
+</div><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 0px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">Вадим</span>
+	<span class="rating-foreground r5 rating" style="float:left; margin:2px 0 0 5px;"><span class="value-title" title="5"></span></span>
+	<span style="font-size:8pt;color:gray;float:right">08.04.2017 18:01:08</span>
+	<div style="clear:both">Всем добрый день. Статья хорошая 5 из 5. Но я немного не понял. (интернет-RB951) В принципе, после обновления прошивки интернет нормально работает (зачем всё стирать и писать по новой?) и наверное всё бы устроило (просто настраивал всё по статье и настроил нат по статье, а фаервол и защиту роутера не настраивал и не смог обращаться к компьютерам внутри сети,а интернет был, поэтому настройку решил не сбрасывать заводскую с ней всё работает)<br></div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18005" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18005',oldid);">Ответить</button>
+<button id="repl-18005" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18005',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18005'></div>
+</div><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 20px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">Вадим</span>
+	<span class="rating-foreground r5 rating" style="float:left; margin:2px 0 0 5px;"><span class="value-title" title="5"></span></span>
+	<span style="font-size:8pt;color:gray;float:right">08.04.2017 18:02:31</span>
+	<div style="clear:both">но если подключать по схеме (интернет- hex-RB951). Хекс тоже обновлён и использованы заводские настройки. - в этом случае по вайфай не возможно подключиться к интернету, через провод нормально, если по схеме (интеренет-hex-tp link WR740N) то интернет по вай фай работает нормально. Хочу в будущем использовать после  hex 4 подсети на 2011-х, а они с вай фай, что куда добавить, чтобы по вайфай также интенет был? ну и чтобы все компы в подсетях видели друг друга? Заранее спасибо.</div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18006" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18006',oldid);">Ответить</button>
+<button id="repl-18006" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18006',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18006'></div>
+</div><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 40px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">Вадим</span>
+	<span class="rating-foreground r5 rating" style="float:left; margin:2px 0 0 5px;"><span class="value-title" title="5"></span></span>
+	<span style="font-size:8pt;color:gray;float:right">08.04.2017 18:22:17</span>
+	<div style="clear:both">Вот, что я нашел на форуме. &quot;Чтобы второй маршрутизатор отозвался в LAN за первым маршрутизатором, на нем (на втором) надо добавить статический маршрут: подсеть - 192.168.1.0/24, шлюз - 192.168.2.1, интерфейс (pref.source, можно не указывать) - 192.168.2.2.&quot;<br>Можно или командами это записать или картинками? И ссылочку на статью где подробно пишут про DHCP сервер и прочие прелести эсернета. (кроме &quot;IP адресс&quot; еще ничего не знаю :)   ).</div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18007" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18007',oldid);">Ответить</button>
+<button id="repl-18007" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18007',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18007'></div>
+</div><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 60px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">Вадим</span>
+	<span class="rating-foreground r5 rating" style="float:left; margin:2px 0 0 5px;"><span class="value-title" title="5"></span></span>
+	<span style="font-size:8pt;color:gray;float:right">08.04.2017 22:26:52</span>
+	<div style="clear:both">Не знаю, можно ли чужие ссылки вставлять, но, вот,что я нашел. Общая инфа, думаю форумчанам типа меня будет интересно. (главное, бесплатно). Прошу не банить, это не реклама. https://www.asozykin.ru/courses/networks_online</div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18008" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18008',oldid);">Ответить</button>
+<button id="repl-18008" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18008',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18008'></div>
+</div><div class="viewcom" style="background:#ededed; border:#dadada 1px solid; padding:5px; margin:10px 0 10px 0px;">
+	<span style="color:#AB0000;float:left;font-weight:bold">Сергій</span>
+	<span class="rating-foreground r5 rating" style="float:left; margin:2px 0 0 5px;"><span class="value-title" title="5"></span></span>
+	<span style="font-size:8pt;color:gray;float:right">06.04.2017 11:37:35</span>
+	<div style="clear:both">Добрий день! Налаштовую CRS 125-24g-1s. крім 8.8.8.8 нічого не пінгується. Хто підскаже що може бути</div>
+	<div style="text-align: right; margin-top:4px">
+<button id="span-18000" type="button" class="commentBtn" onclick="var oldid=document.getElementById('oldid').value;otvet('18000',oldid);">Ответить</button>
+<button id="repl-18000" type="button" class="commentBtn" style="display:none" onclick="var oldid=document.getElementById('oldid').value;resetrepl('18000',oldid);">Отменить ответ</button>
+</div>
+<div id='comment-18000'></div>
+</div>Страницы: <span style="line-height: 2.2em;"><b class="pages" style="font-weight:bold;font-size:105%">1</b>, <a href="/Articles/mikrotik_router_setup.php?comments_page=2" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=1&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">2</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=3" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=2&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">3</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=4" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=3&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">4</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=5" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=4&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">5</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=6" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=5&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">6</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=7" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=6&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">7</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=8" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=7&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">8</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=9" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=8&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">9</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=10" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=9&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">10</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=11" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=10&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">11</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=12" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=11&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">12</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=13" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=12&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">13</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=14" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=13&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">14</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=15" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=14&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">15</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=16" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=15&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">16</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=17" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=16&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">17</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=18" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=17&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">18</a>, <a href="/Articles/mikrotik_router_setup.php?comments_page=19" class="commentBtn cmntitPages" style="cursor: pointer;" onclick=" var oldid=document.getElementById('oldid').value; makeRequest('/Commentit/func.php?viewread=true&amp;ads=18&amp;url=/Articles/mikrotik_router_setup.php','ok',oldid); return false;">19</a></span></div><input type="hidden" name="url" id="urls" value="/Articles/mikrotik_router_setup.php">
+<input type="hidden" name="for" id="forms" value="123">
+<input type="hidden" name="idcom" id="idcomnow" value="0">
+<input type="hidden" name="oldid" id="oldid" value="addfomz">
+
+											</div>
+				</div>
+                				 <div class="box">
+					<div class="fb-comments" data-width="100%" data-order-by="reverse_time" data-numposts="10" data-href="http://www.technotrade.com.ua/Articles/mikrotik_router_setup.php"></div>
+				 </div>
+				 
+			</div>
+		
+	</div>
+
+            </div>
+        </div>
+    </div>
+
+	<div class="site bottom">
+    <div>
+
+        <dl class="bottom_cc">
+            <dt>Call-центр</dt>
+            <dd>
+                <ul class="bottom_phones">
+                    <li><b>+38&nbsp;097&nbsp;085-80-08</b></li>
+                    <li><b>+38&nbsp;099&nbsp;238-88-98</b></li>
+                    <li><b>+38&nbsp;099&nbsp;322-60-10</b></li>
+                    <li><b>+38&nbsp;063&nbsp;563-33-93</b></li>
+                    <li>График работы:<br>Пн&ndash;Пт с&nbsp;9&nbsp;до&nbsp;18</li>
+                </ul>
+            </dd>
+        </dl>
+	
+        <dl class="bottom_store">
+            <dt>Магазины</dt>
+            <dd>
+                <ul class="bottom_phones">
+                    <li><b>Киев: <span>+38&nbsp;044&nbsp;223-10-98</span></b></li>
+                    <li><b>Харьков: <span>+38&nbsp;057&nbsp;764-02-54</span></b></li>
+                    <li><b>Днепр-ск: <span>+38&nbsp;056&nbsp;767-50-05</span></b></li>
+                    <li><b>Запорожье: <span>+38&nbsp;061&nbsp;707-78-07</span></b></li>
+                </ul>
+            </dd>
+        </dl>
+
+        <div class="bottom_partners">
+            <dl>
+                <dt>Наши партнеры</dt>
+                <dd>
+                    <a href="http://ubnt.com/" title="Перейти на сайт Ubiquiti" target="_blank" rel="nofollow" class="bottom_partner" style="width: 72px;">&nbsp;</a>
+                    <a href="http://www.mikrotik.com/" title="Перейти на сайт Mikrotik" target="_blank" rel="nofollow" class="bottom_partner" style="width: 60px; background-position: -74px 0;">&nbsp;</a>
+                    <a href="http://www.engeniustech.com/" title="Перейти на сайт EnGenius" target="_blank" rel="nofollow" class="bottom_partner" style="width: 160px; background-position: -138px 0;">&nbsp;</a>
+                </dd>
+            </dl>
+
+            <div style="color: #ffa320; margin-top: 1em; clear: left;">
+                &copy; 2003&ndash;2017 &laquo;Компания&nbsp;ТехноТрейд&raquo;
+                <br>интернет-магазин сетевого оборудования
+            </div>
+        </div>
+
+        <div class="cls"></div>
+
+        <div class="bottom_menu">
+                            <div class="item">
+                    <a href="/actions.php" 
+                       class="">Акция</a>
+                </div>    
+                            <div class="item">
+                    <a href="/Site_Razdel/services.php" 
+                       class="">Услуги</a>
+                </div>    
+                            <div class="item">
+                    <a href="/Site_Razdel/Svedenija-o-dostavkeoplate.php" 
+                       class="">Доставка и оплата</a>
+                </div>    
+                            <div class="item">
+                    <a href="/Site_Razdel/garantiya-i-service.php" 
+                       class="">Гарантия</a>
+                </div>    
+                            <div class="item">
+                    <a href="/Site_Razdel/price-list.php" 
+                       class="">Прайс</a>
+                </div>    
+                            <div class="item">
+                    <a href="/contacts" 
+                       class="">Контакты</a>
+                </div>    
+                    </div>
+
+        <div class="cls"></div>
+
+    </div>
+</div>
+
+<div id="deck-cat">
+    <div class="grid">
+    	<div style="position: relative">
+    		<div id="deck-cat-close" style="cursor: pointer; position: absolute; color: #ff5d00; right: 10px; font-size: 28px; line-height: 18px; top: 2px;">&times;</div>
+    		<strong class="logo"><a id="deck-cat-close2" href="#">ТехноТрейд</a></strong>		
+    	</div>
+    </div>
+</div>
+
+<div id="deck-sm-menu">
+    <div class="grid">
+    	<div style="position: relative">
+    		<div class="deck-close" style="cursor: pointer; position: absolute; color: #ff5d00; right: 10px; font-size: 28px; line-height: 18px; top: 2px;">&times;</div>
+    		<strong class="logo"><a class="deck-close" href="#">ТехноТрейд</a></strong>		
+    	</div>
+    
+    	<ul class="deck-v-menu">
+    		    			<li class="item" style="margin-bottom: 1em"><a href="/">Главная страница</a></li>
+    		
+    	    	    	
+    	        <li class="item">
+    	            <a href="/actions.php">Акция</a>
+    	        </li>
+    	    	    	
+    	        <li class="item">
+    	            <a href="/Site_Razdel/services.php">Услуги</a>
+    	        </li>
+    	    	    	
+    	        <li class="item">
+    	            <a href="/Site_Razdel/Svedenija-o-dostavkeoplate.php">Доставка и оплата</a>
+    	        </li>
+    	    	    	
+    	        <li class="item">
+    	            <a href="/Site_Razdel/garantiya-i-service.php">Гарантия</a>
+    	        </li>
+    	    	    	
+    	        <li class="item">
+    	            <a href="/Site_Razdel/price-list.php">Прайс</a>
+    	        </li>
+    	    	    	
+    	        <li class="item">
+    	            <a href="/contacts">Контакты</a>
+    	        </li>
+    	        
+
+    	    <li class="item" style="margin-top: 1em"><a href="/" class="show-deck-cat">Каталог товаров</a></li>
+    	        	</ul>
+    
+    	<div class="deck-v-menu-fx">
+    		<span>Валюта:</span>
+    		<ul>
+    		    			<li><span class="currency-node currency-node-sel">UAH</span></li>
+    		    
+    		    			<li><a href="?currency=USD" class="ch3 currency-node">USD</a></li>
+    				
+    		</ul>
+    	</div>
+    </div>
+</div>
+
+<script src="/js/jquery-1.11.0.min.js" type="text/javascript"></script>
+
+
+    	<!-- FB-comments -->
+	<script defer="defer">(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.5&appId=153744261649046";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+	</script>
+	<!-- FB-comments-end  -->
+<script src="/static/js/tabs_comment.min.js?v=1504286622" type="text/javascript" charset="UTF-8" defer="defer"></script>
+
+<script src="/static/js/main.min.js?v=1504286622" type="text/javascript" charset="UTF-8" defer="defer"></script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-3927689-1']);
+	_gaq.push(['_addOrganic', 'mail.ru', 'q']);
+	_gaq.push(['_addOrganic', 'rambler.ru', 'q']);
+	_gaq.push(['_addOrganic', 'go.mail.ru', 'query']);
+	_gaq.push(['_addOrganic', 'nova.rambler.ru', 'query']);
+	_gaq.push(['_addOrganic', 'nigma.ru', 's']);
+	_gaq.push(['_addOrganic', 'blogs.yandex.ru', 'text']);
+	_gaq.push(['_addOrganic', 'webalta.ru', 'q']);
+	_gaq.push(['_addOrganic', 'aport.ru', 'r']);
+	_gaq.push(['_addOrganic', 'meta.ua', 'q']);
+	_gaq.push(['_addOrganic', 'bigmir.net', 'q']);
+	_gaq.push(['_addOrganic', 'tut.by', 'q']);
+	_gaq.push(['_addOrganic', 'ukr.net', 'search_query']);
+	_gaq.push(['_addOrganic', 'poisk.ru', 'text']);
+	_gaq.push(['_addOrganic', 'liveinternet.ru', 'ask']);
+	_gaq.push(['_addOrganic', 'gogo.ru', 'q']);
+	_gaq.push(['_addOrganic', 'gde.ru', 'keywords']);
+	_gaq.push(['_addOrganic', 'quintura.ru', 'request']);
+	_gaq.push(['_addOrganic', 'qip.ru', 'query']);
+	_gaq.push(['_addOrganic', 'metabot.ru', 'st']);
+	_gaq.push(['_setSiteSpeedSampleRate', 30]);
+	_gaq.push(['_trackPageview']);
+</script>
+
+<div style="bottom: 0; height: 0; overflow: hidden; position: absolute; visibility: hidden;">
+	
+
+		<script type="text/javascript">
+						
+		(function(){
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+						ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+		<script type="text/javascript">
+	(function (d, w, c) {
+	    (w[c] = w[c] || []).push(function() {
+	        try {
+	            w.yaCounter140956 = new Ya.Metrika({id:140956,
+			            webvisor:true,
+	                    clickmap:true,
+	                    trackHash:true});
+	        } catch(e) { }
+	    });
+
+	    var n = d.getElementsByTagName("script")[0],
+	        s = d.createElement("script"),
+	        f = function () { n.parentNode.insertBefore(s, n); };
+	    s.type = "text/javascript";
+	    s.async = true;
+	    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+	    if (w.opera == "[object Opera]") {
+	        d.addEventListener("DOMContentLoaded", f, false);
+	    } else { f(); }
+	})(document, window, "yandex_metrika_callbacks");
+	</script>
+	<noscript><div><img src="//mc.yandex.ru/watch/140956" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+	
+
+
+	<table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td>
+			
+					
+								<script type="text/javascript">
+					var google_conversion_id = 1014525291;
+					var google_conversion_language = "en";
+					var google_conversion_format = "3";
+					var google_conversion_color = "ffffff";
+					var google_conversion_label = "HbqUCOWQ_gMQ69rh4wM";
+					var google_conversion_value = 0;
+				</script>
+				<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js"></script>
+				<noscript>
+				<div style="display:inline;">
+				<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/1014525291/?value=0&amp;label=HbqUCOWQ_gMQ69rh4wM&amp;guid=ON&amp;script=0"/>
+				</div>
+				</noscript>
+									
+
+								
+						</td>
+		</tr>
+	</table>
+
+
+	
+</div>
+
+
+	<script src="/static/js/article.min.js?v=1504286618" type="text/javascript" charset="UTF-8" defer="defer"></script>	
+
+	
+	
+</BODY>
+</HTML>

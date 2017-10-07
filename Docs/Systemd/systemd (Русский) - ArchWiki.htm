@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>systemd (Русский) - ArchWiki</title>
+<script>document.documentElement.className = document.documentElement.className.replace( /(^|\s)client-nojs(\s|$)/, "$1client-js$2" );</script>
+<script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Systemd_(Русский)","wgTitle":"Systemd (Русский)","wgCurRevisionId":489692,"wgRevisionId":489692,"wgArticleId":11206,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["Pages with broken package links","Pages or sections flagged with Template:Accuracy","Daemons and system services (Русский)","Boot process (Русский)","Русский"],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"Systemd_(Русский)","wgRelevantArticleId":11206,"wgRequestId":"9dc87c91631930a352025bb4","wgIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]});mw.loader.state({"site.styles":"ready","noscript":"ready","user.styles":"ready","user":"ready","user.options":"loading","user.tokens":"loading","zzz.ext.archLinux.styles":"ready","skins.vector.styles.responsive":"ready","mediawiki.legacy.shared":"ready","mediawiki.legacy.commonPrint":"ready","mediawiki.sectionAnchor":"ready","mediawiki.skinning.interface":"ready","skins.vector.styles":"ready"});mw.loader.implement("user.options@0j3lz3q",function($,jQuery,require,module){mw.user.options.set({"variant":"en"});});mw.loader.implement("user.tokens@0wg329i",function ( $, jQuery, require, module ) {
+mw.user.tokens.set({"editToken":"+\\","patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});/*@nomin*/;
+
+});mw.loader.load(["mediawiki.toc","mediawiki.action.view.postEdit","site","mediawiki.page.startup","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest","skins.vector.js"]);});</script>
+<link rel="stylesheet" href="/load.php?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cmediawiki.sectionAnchor%7Cmediawiki.skinning.interface%7Cskins.vector.styles%7Cskins.vector.styles.responsive%7Czzz.ext.archLinux.styles&amp;only=styles&amp;skin=vector"/>
+<script async="" src="/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=vector"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/load.php?debug=false&amp;lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=vector"/>
+<meta name="generator" content="MediaWiki 1.29.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ArchWiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://wiki.archlinux.org/api.php?action=rsd"/>
+<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html"/>
+<link rel="alternate" type="application/atom+xml" title="ArchWiki Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-Systemd_Русский rootpage-Systemd_Русский skin-vector action-view"><div id="archnavbar" class="noprint">
+    <div id="archnavbarlogo">
+        <p><a id="logo" href="https://www.archlinux.org/"></a></p>
+    </div>
+    <div id="archnavbarmenu">
+        <ul id="archnavbarlist">
+                        <li id="anb-home"><a href="https://www.archlinux.org/">Home</a></li>            <li id="anb-packages"><a href="https://www.archlinux.org/packages/">Packages</a></li>            <li id="anb-forums"><a href="https://bbs.archlinux.org/">Forums</a></li>            <li id="anb-wiki" class="anb-selected"><a href="https://wiki.archlinux.org/">Wiki</a></li>            <li id="anb-bugs"><a href="https://bugs.archlinux.org/">Bugs</a></li>            <li id="anb-security"><a href="https://security.archlinux.org/">Security</a></li>            <li id="anb-aur"><a href="https://aur.archlinux.org/">AUR</a></li>            <li id="anb-download"><a href="https://www.archlinux.org/download/">Download</a></li>        </ul>
+    </div>
+</div>
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+
+						<div class="mw-indicators mw-body-content">
+</div>
+			<h1 id="firstHeading" class="firstHeading" lang="en">systemd (Русский)</h1>
+									<div id="bodyContent" class="mw-body-content">
+									<div id="siteSub">From ArchWiki</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-head">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><p><span></span>
+</p>
+<div class="archwiki-template-meta-related-articles-start"><p>Ссылки по теме</p><ul>
+<li><a href="/index.php/Systemd/%D0%9F%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C" class="mw-redirect" title="Systemd/Пользователь">Systemd/Пользователь</a></li>
+<li><a href="/index.php/Systemd/T%D0%B0%D0%B9%D0%BC%D0%B5%D1%80%D1%8B" class="mw-redirect" title="Systemd/Tаймеры">Systemd/Tаймеры</a></li>
+<li><a href="/index.php/Systemd_FAQ" title="Systemd FAQ">systemd FAQ</a></li>
+<li><a href="/index.php/Init" title="Init">init</a></li>
+<li><a href="/index.php/Init_Rosetta_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Init Rosetta (Русский)">Init Rosetta (Русский)</a></li>
+<li><a href="/index.php/%D0%94%D0%B5%D0%BC%D0%BE%D0%BD%D1%8B#.D0.A1.D0.BF.D0.B8.D1.81.D0.BE.D0.BA_.D0.B4.D0.B5.D0.BC.D0.BE.D0.BD.D0.BE.D0.B2" class="mw-redirect" title="Демоны">Демоны#Список демонов</a></li>
+<li><a href="/index.php/Udev_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Udev (Русский)">Udev (Русский)</a></li>
+<li><a href="/index.php/%D0%A3%D0%B2%D0%B5%D0%BB%D0%B8%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D0%B8/%D0%9F%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B" class="mw-redirect" title="Увеличение производительности/Процесс загрузки системы">Увеличение производительности/Процесс загрузки системы</a></li>
+<li><a href="/index.php/%D0%A0%D0%B0%D0%B7%D1%80%D0%B5%D1%88%D0%B8%D1%82%D1%8C_%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8F%D0%BC_%D0%B2%D1%8B%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B" class="mw-redirect" title="Разрешить пользователям выключение системы">Разрешить пользователям выключение системы</a></li>
+</ul></div>
+<div class="noprint archwiki-template-message">
+<p><a href="/index.php/File:Tango-preferences-desktop-locale.png" class="image"><img alt="Tango-preferences-desktop-locale.png" src="/images/d/dc/Tango-preferences-desktop-locale.png" width="48" height="48" /></a><b>Эта страница нуждается в сопроводителе</b><a href="/index.php/File:Tango-preferences-desktop-locale.png" class="image"><img alt="Tango-preferences-desktop-locale.png" src="/images/d/dc/Tango-preferences-desktop-locale.png" width="48" height="48" /></a></p>
+<div>Статья не гарантирует актуальность информации. Помогите русскоязычному сообществу поддержкой подобных страниц. См. <a href="/index.php/%D0%9A%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0_%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4%D1%87%D0%B8%D0%BA%D0%BE%D0%B2_ArchWiki" class="mw-redirect" title="Команда переводчиков ArchWiki">Команда переводчиков ArchWiki</a></div>
+</div>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Состояние перевода: </strong>На этой странице представлен перевод статьи <a href="/index.php/Systemd" title="Systemd">systemd</a>. Дата последней синхронизации: 20 сентября 2015‎. Вы можете <a href="/index.php/ArchWiki_Translation_Team_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="ArchWiki Translation Team (Русский)"> помочь</a> синхронизировать перевод, если в английской версии произошли <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php?title=Systemd&amp;diff=0&amp;oldid=400997">изменения</a>.</div>
+<p>Цитата с <a rel="nofollow" class="external text" href="http://freedesktop.org/wiki/Software/systemd">веб-страницы проекта</a>:
+</p>
+<dl><dd><i>systemd</i> - менеджер системы и служб для Linux, совместимый со скриптами инициализации SysV и LSB. systemd обеспечивает возможности агрессивной параллелизации, использует сокеты и активацию <a href="/index.php/D-Bus" title="D-Bus">D-Bus</a> для запускаемых служб, предлагает запуск демонов по необходимости, отслеживает процессы при помощи <a href="/index.php/Control_groups" class="mw-redirect" title="Control groups">контрольных групп</a> Linux, поддерживает мгновенные снимки и восстановление состояния системы, монтирование и точки монтирования, а также внедряет основанную на зависимостях логику контроля процессов сложных транзакций.</dd></dl>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Примечание: </strong>За детальным объяснением причин происходящего перехода Arch'а на <i>systemd</i> обратитесь к <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=1149530#p1149530">сообщению на англоязычном форуме</a></div>
+<div id="toc" class="toc"><div id="toctitle" class="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#.D0.9E.D1.81.D0.BD.D0.BE.D0.B2.D1.8B_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D1.8F_systemctl"><span class="tocnumber">1</span> <span class="toctext">Основы использования systemctl</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#.D0.90.D0.BD.D0.B0.D0.BB.D0.B8.D0.B7_.D1.81.D0.BE.D1.81.D1.82.D0.BE.D1.8F.D0.BD.D0.B8.D1.8F_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D1.8B"><span class="tocnumber">1.1</span> <span class="toctext">Анализ состояния системы</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#.D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2"><span class="tocnumber">1.2</span> <span class="toctext">Использование юнитов</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#.D0.A3.D0.BF.D1.80.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D0.B5_.D0.BF.D0.B8.D1.82.D0.B0.D0.BD.D0.B8.D0.B5.D0.BC"><span class="tocnumber">1.3</span> <span class="toctext">Управление питанием</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-5"><a href="#.D0.9D.D0.B0.D0.BF.D0.B8.D1.81.D0.B0.D0.BD.D0.B8.D0.B5_.D1.84.D0.B0.D0.B9.D0.BB.D0.BE.D0.B2_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2"><span class="tocnumber">2</span> <span class="toctext">Написание файлов юнитов</span></a>
+<ul>
+<li class="toclevel-2 tocsection-6"><a href="#.D0.9E.D0.B1.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.BA.D0.B0_.D0.B7.D0.B0.D0.B2.D0.B8.D1.81.D0.B8.D0.BC.D0.BE.D1.81.D1.82.D0.B5.D0.B9"><span class="tocnumber">2.1</span> <span class="toctext">Обработка зависимостей</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#.D0.A2.D0.B8.D0.BF.D1.8B_.D1.81.D0.BB.D1.83.D0.B6.D0.B1"><span class="tocnumber">2.2</span> <span class="toctext">Типы служб</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#.D0.A0.D0.B5.D0.B4.D0.B0.D0.BA.D1.82.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D0.BF.D1.80.D0.B5.D0.B4.D0.BE.D1.81.D1.82.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.BD.D1.8B.D1.85_.D0.BF.D0.B0.D0.BA.D0.B5.D1.82.D0.B0.D0.BC.D0.B8_.D1.84.D0.B0.D0.B9.D0.BB.D0.BE.D0.B2_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2"><span class="tocnumber">2.3</span> <span class="toctext">Редактирование предоставленных пакетами файлов юнитов</span></a>
+<ul>
+<li class="toclevel-3 tocsection-9"><a href="#.D0.97.D0.B0.D0.BC.D0.B5.D0.BD.D0.B0_.D1.84.D0.B0.D0.B9.D0.BB.D0.BE.D0.B2_.D1.8E.D0.BD.D0.B8.D1.82.D0.B0"><span class="tocnumber">2.3.1</span> <span class="toctext">Замена файлов юнита</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#Drop-in_snippets"><span class="tocnumber">2.3.2</span> <span class="toctext">Drop-in snippets</span></a></li>
+<li class="toclevel-3 tocsection-11"><a href="#.D0.9F.D1.80.D0.B8.D0.BC.D0.B5.D1.80.D1.8B"><span class="tocnumber">2.3.3</span> <span class="toctext">Примеры</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-12"><a href="#.D0.A6.D0.B5.D0.BB.D0.B8"><span class="tocnumber">3</span> <span class="toctext">Цели</span></a>
+<ul>
+<li class="toclevel-2 tocsection-13"><a href="#.D0.9F.D0.BE.D0.BB.D1.83.D1.87.D0.B5.D0.BD.D0.B8.D0.B5_.D0.B8.D0.BD.D1.84.D0.BE.D1.80.D0.BC.D0.B0.D1.86.D0.B8.D0.B8_.D0.BE_.D1.82.D0.B5.D0.BA.D1.83.D1.89.D0.B8.D1.85_.D1.86.D0.B5.D0.BB.D1.8F.D1.85"><span class="tocnumber">3.1</span> <span class="toctext">Получение информации о текущих целях</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#.D0.A1.D0.BE.D0.B7.D0.B4.D0.B0.D0.BD.D0.B8.D0.B5_.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D1.82.D0.B5.D0.BB.D1.8C.D1.81.D0.BA.D0.BE.D0.B9_.D1.86.D0.B5.D0.BB.D0.B8"><span class="tocnumber">3.2</span> <span class="toctext">Создание пользовательской цели</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#.D0.A2.D0.B0.D0.B1.D0.BB.D0.B8.D1.86.D0.B0_.D1.86.D0.B5.D0.BB.D0.B5.D0.B9"><span class="tocnumber">3.3</span> <span class="toctext">Таблица целей</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#.D0.98.D0.B7.D0.BC.D0.B5.D0.BD.D0.B5.D0.BD.D0.B8.D0.B5_.D1.82.D0.B5.D0.BA.D1.83.D1.89.D0.B5.D0.B9_.D1.86.D0.B5.D0.BB.D0.B8"><span class="tocnumber">3.4</span> <span class="toctext">Изменение текущей цели</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#.D0.98.D0.B7.D0.BC.D0.B5.D0.BD.D0.B5.D0.BD.D0.B8.D0.B5_.D1.86.D0.B5.D0.BB.D0.B8_.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B8_.D0.BF.D0.BE_.D1.83.D0.BC.D0.BE.D0.BB.D1.87.D0.B0.D0.BD.D0.B8.D1.8E"><span class="tocnumber">3.5</span> <span class="toctext">Изменение цели загрузки по умолчанию</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-18"><a href="#.D0.92.D1.80.D0.B5.D0.BC.D0.B5.D0.BD.D0.BD.D1.8B.D0.B5_.D1.84.D0.B0.D0.B9.D0.BB.D1.8B"><span class="tocnumber">4</span> <span class="toctext">Временные файлы</span></a></li>
+<li class="toclevel-1 tocsection-19"><a href="#.D0.A2.D0.B0.D0.B9.D0.BC.D0.B5.D1.80.D1.8B"><span class="tocnumber">5</span> <span class="toctext">Таймеры</span></a></li>
+<li class="toclevel-1 tocsection-20"><a href="#.D0.96.D1.83.D1.80.D0.BD.D0.B0.D0.BB"><span class="tocnumber">6</span> <span class="toctext">Журнал</span></a>
+<ul>
+<li class="toclevel-2 tocsection-21"><a href="#.D0.A4.D0.B8.D0.BB.D1.8C.D1.82.D1.80.D0.B0.D1.86.D0.B8.D1.8F_.D0.B2.D1.8B.D0.B2.D0.BE.D0.B4.D0.B0"><span class="tocnumber">6.1</span> <span class="toctext">Фильтрация вывода</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#.D0.9E.D0.B3.D1.80.D0.B0.D0.BD.D0.B8.D1.87.D0.B5.D0.BD.D0.B8.D0.B5_.D1.80.D0.B0.D0.B7.D0.BC.D0.B5.D1.80.D0.B0_.D0.B6.D1.83.D1.80.D0.BD.D0.B0.D0.BB.D0.B0"><span class="tocnumber">6.2</span> <span class="toctext">Ограничение размера журнала</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#.D0.9E.D1.87.D0.B8.D1.81.D1.82.D0.BA.D0.B0_.D1.84.D0.B0.D0.B9.D0.BB.D0.BE.D0.B2_.D0.B6.D1.83.D1.80.D0.BD.D0.B0.D0.BB.D0.B0_.D0.B2.D1.80.D1.83.D1.87.D0.BD.D1.83.D1.8E"><span class="tocnumber">6.3</span> <span class="toctext">Очистка файлов журнала вручную</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#Journald_.D0.B2_.D1.81.D0.B2.D1.8F.D0.B7.D0.BA.D0.B5_.D1.81_.D0.BA.D0.BB.D0.B0.D1.81.D1.81.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.B8.D0.BC_.D0.B4.D0.B5.D0.BC.D0.BE.D0.BD.D0.BE.D0.BC_syslog"><span class="tocnumber">6.4</span> <span class="toctext">Journald в связке с классическим демоном syslog</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#.D0.9F.D0.B5.D1.80.D0.B5.D0.BD.D0.B0.D0.BF.D1.80.D0.B0.D0.B2.D0.B8.D1.82.D1.8C_.D0.B6.D1.83.D1.80.D0.BD.D0.B0.D0.BB_.D0.BD.D0.B0_.2Fdev.2Ftty12"><span class="tocnumber">6.5</span> <span class="toctext">Перенаправить журнал на /dev/tty12</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#.D0.9A.D0.BE.D0.BC.D0.B0.D0.BD.D0.B4.D0.B0_.D0.BF.D1.80.D0.BE.D1.81.D0.BC.D0.BE.D1.82.D1.80.D0.B0_.D0.B4.D1.80.D1.83.D0.B3.D0.BE.D0.B3.D0.BE_.D0.B6.D1.83.D1.80.D0.BD.D0.B0.D0.BB.D0.B0"><span class="tocnumber">6.6</span> <span class="toctext">Команда просмотра другого журнала</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-27"><a href="#.D0.9E.D0.BF.D1.82.D0.B8.D0.BC.D0.B8.D0.B7.D0.B0.D1.86.D0.B8.D1.8F"><span class="tocnumber">7</span> <span class="toctext">Оптимизация</span></a>
+<ul>
+<li class="toclevel-2 tocsection-28"><a href="#.D0.90.D0.BD.D0.B0.D0.BB.D0.B8.D0.B7_.D0.BF.D1.80.D0.BE.D1.86.D0.B5.D1.81.D1.81.D0.B0_.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B8"><span class="tocnumber">7.1</span> <span class="toctext">Анализ процесса загрузки</span></a>
+<ul>
+<li class="toclevel-3 tocsection-29"><a href="#.D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_systemd-analyze"><span class="tocnumber">7.1.1</span> <span class="toctext">Использование systemd-analyze</span></a></li>
+<li class="toclevel-3 tocsection-30"><a href="#.D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_systemd-bootchart"><span class="tocnumber">7.1.2</span> <span class="toctext">Использование systemd-bootchart</span></a></li>
+<li class="toclevel-3 tocsection-31"><a href="#.D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_bootchart2"><span class="tocnumber">7.1.3</span> <span class="toctext">Использование bootchart2</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-32"><a href="#.D0.A0.D0.B5.D1.88.D0.B5.D0.BD.D0.B8.D0.B5_.D0.BF.D1.80.D0.BE.D0.B1.D0.BB.D0.B5.D0.BC"><span class="tocnumber">8</span> <span class="toctext">Решение проблем</span></a>
+<ul>
+<li class="toclevel-2 tocsection-33"><a href="#.D0.98.D0.B7.D1.83.D1.87.D0.B5.D0.BD.D0.B8.D0.B5_.D0.BE.D1.88.D0.B8.D0.B1.D0.BE.D0.BA_systemd"><span class="tocnumber">8.1</span> <span class="toctext">Изучение ошибок systemd</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#.D0.94.D0.B8.D0.B0.D0.B3.D0.BD.D0.BE.D1.81.D1.82.D0.B8.D0.BA.D0.B0_.D0.BF.D1.80.D0.BE.D0.B1.D0.BB.D0.B5.D0.BC_.D1.81_.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.BE.D0.B9_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D1.8B"><span class="tocnumber">8.2</span> <span class="toctext">Диагностика проблем с загрузкой системы</span></a></li>
+<li class="toclevel-2 tocsection-35"><a href="#.D0.94.D0.B8.D0.B0.D0.B3.D0.BD.D0.BE.D1.81.D1.82.D0.B8.D0.BA.D0.B0_.D0.BF.D1.80.D0.BE.D0.B1.D0.BB.D0.B5.D0.BC_.D0.B2_.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.B5_.D0.BE.D0.BF.D1.80.D0.B5.D0.B4.D0.B5.D0.BB.D0.B5.D0.BD.D0.BD.D0.BE.D0.B9_.D1.81.D0.BB.D1.83.D0.B6.D0.B1.D1.8B"><span class="tocnumber">8.3</span> <span class="toctext">Диагностика проблем в работе определенной службы</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#.D0.92.D1.8B.D0.BA.D0.BB.D1.8E.D1.87.D0.B5.D0.BD.D0.B8.D0.B5.2F.D0.BF.D0.B5.D1.80.D0.B5.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B0_.D0.BF.D1.80.D0.BE.D0.B8.D1.81.D1.85.D0.BE.D0.B4.D1.8F.D1.82_.D1.83.D0.B6.D0.B0.D1.81.D0.BD.D0.BE_.D0.B4.D0.BE.D0.BB.D0.B3.D0.BE"><span class="tocnumber">8.4</span> <span class="toctext">Выключение/перезагрузка происходят ужасно долго</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="#.D0.9F.D0.BE-.D0.B2.D0.B8.D0.B4.D0.B8.D0.BC.D0.BE.D0.BC.D1.83.2C_.D0.BF.D1.80.D0.BE.D1.86.D0.B5.D1.81.D1.81.D1.8B_.D1.81_.D0.BA.D1.80.D0.B0.D1.82.D0.BA.D0.B8.D0.BC_.D1.81.D1.80.D0.BE.D0.BA.D0.BE.D0.BC_.D0.B6.D0.B8.D0.B7.D0.BD.D0.B8_.D0.BD.D0.B5_.D0.BE.D1.81.D1.82.D0.B0.D0.B2.D0.BB.D1.8F.D1.8E.D1.82_.D0.B7.D0.B0.D0.BF.D0.B8.D1.81.D0.B5.D0.B9_.D0.B2_.D0.BB.D0.BE.D0.B3.D0.B0.D1.85"><span class="tocnumber">8.5</span> <span class="toctext">По-видимому, процессы с кратким сроком жизни не оставляют записей в логах</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#.D0.9E.D1.82.D0.BA.D0.BB.D1.8E.D1.87.D0.B5.D0.BD.D0.B8.D0.B5_.D0.B6.D1.83.D1.80.D0.BD.D0.B0.D0.BB.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D1.8F_.D0.B0.D0.B2.D0.B0.D1.80.D0.B8.D0.B9.D0.BD.D1.8B.D1.85_.D0.B4.D0.B0.D0.BC.D0.BF.D0.BE.D0.B2_.D0.BF.D0.B0.D0.BC.D1.8F.D1.82.D0.B8_.D0.BF.D1.80.D0.B8.D0.BB.D0.BE.D0.B6.D0.B5.D0.BD.D0.B8.D0.B9"><span class="tocnumber">8.6</span> <span class="toctext">Отключение журналирования аварийных дампов памяти приложений</span></a></li>
+<li class="toclevel-2 tocsection-39"><a href="#.D0.A1.D0.BE.D0.BE.D0.B1.D1.89.D0.B5.D0.BD.D0.B8.D0.B5_.D0.BE.D0.B1_.D0.BE.D1.88.D0.B8.D0.B1.D0.BA.D0.B5_.D0.BF.D1.80.D0.B8_.D0.BF.D0.B5.D1.80.D0.B5.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B5_.D0.B8.D0.BB.D0.B8_.D0.B2.D1.8B.D0.BA.D0.BB.D1.8E.D1.87.D0.B5.D0.BD.D0.B8.D0.B8"><span class="tocnumber">8.7</span> <span class="toctext">Сообщение об ошибке при перезагрузке или выключении</span></a>
+<ul>
+<li class="toclevel-3 tocsection-40"><a href="#cgroup_:_option_or_name_mismatch.2C_new:_0x0_.22.22.2C_old:_0x4_.22systemd.22"><span class="tocnumber">8.7.1</span> <span class="toctext">cgroup&#160;: option or name mismatch, new: 0x0 "", old: 0x4 "systemd"</span></a></li>
+<li class="toclevel-3 tocsection-41"><a href="#watchdog_watchdog0:_watchdog_did_not_stop.21"><span class="tocnumber">8.7.2</span> <span class="toctext">watchdog watchdog0: watchdog did not stop!</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-42"><a href="#.D0.92.D1.80.D0.B5.D0.BC.D1.8F_.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B8_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D1.8B_.D1.83.D0.B2.D0.B5.D0.BB.D0.B8.D1.87.D0.B8.D0.B2.D0.B0.D0.B5.D1.82.D1.81.D1.8F_.D1.81_.D1.82.D0.B5.D1.87.D0.B5.D0.BD.D0.B8.D0.B5.D0.BC_.D0.B2.D1.80.D0.B5.D0.BC.D0.B5.D0.BD.D0.B8"><span class="tocnumber">8.8</span> <span class="toctext">Время загрузки системы увеличивается с течением времени</span></a></li>
+<li class="toclevel-2 tocsection-43"><a href="#systemd-tmpfiles-setup.service_fails_to_start_at_boot"><span class="tocnumber">8.9</span> <span class="toctext">systemd-tmpfiles-setup.service fails to start at boot</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-44"><a href="#.D0.A1.D0.BC.D0.BE.D1.82.D1.80.D0.B8.D1.82.D0.B5_.D1.82.D0.B0.D0.BA.D0.B6.D0.B5"><span class="tocnumber">9</span> <span class="toctext">Смотрите также</span></a></li>
+</ul>
+</div>
+
+<h2><span class="mw-headline" id=".D0.9E.D1.81.D0.BD.D0.BE.D0.B2.D1.8B_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D1.8F_systemctl">Основы использования systemctl</span></h2>
+<p>Главная команда для отслеживания и контроля состояния <i>systemd</i> - команда <i>systemctl</i>. Некоторые из вариантов ее использования связаны с изучением состояния системы и управлением системой и службами. Обратитесь к странце руководства  <span class="plainlinks archwiki-template-man" title="$ man 1 systemctl"><a rel="nofollow" class="external text" href="http://jlk.fjfi.cvut.cz/arch/manpages/man/systemctl.1">systemctl(1)</a></span> для получения более детальной информации.
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Совет: </strong>
+<ul><li> Вы можете использовать все приведенные ниже команды <i>systemctl</i> с ключом <code>-H <i>пользователь</i>@<i>хост</i></code> для того, чтобы контролировать <i>systemd</i> на удаленной машине.  В этом случае для соединения с удаленным процессом <i>systemd</i> будет использоваться <a href="/index.php/Secure_Shell_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Secure Shell (Русский)">SSH</a></div></li></ul>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Совет: </strong>
+<ul><li> <i>systemadm</i> - официальная графическая оболочка для <i>systemctl</i>. Она доступна в пакетах <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=systemd-ui">systemd-ui</a></span> и <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/systemd-ui-git/">systemd-ui-git</a></span><sup><small>AUR</small></sup><sup>[<a href="/index.php/ArchWiki:Requests#Broken_package_links" title="ArchWiki:Requests">ссылка недействительна</a>: сохранено в <a rel="nofollow" class="external text" href="http://pkgbuild.com/git/aur-mirror.git/tree/systemd-ui-git">aur-mirror</a>]</sup></div></li></ul>
+<h3><span class="mw-headline" id=".D0.90.D0.BD.D0.B0.D0.BB.D0.B8.D0.B7_.D1.81.D0.BE.D1.81.D1.82.D0.BE.D1.8F.D0.BD.D0.B8.D1.8F_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D1.8B">Анализ состояния системы</span></h3>
+<p><b>Список запущенных</b> юнитов:
+</p>
+<pre>$ systemctl
+</pre>
+<p>или:
+</p>
+<pre>$ systemctl list-units
+</pre>
+<p><b>Список неудач</b>, - список юнитов, попытка запуска которых не удалась:
+</p>
+<pre>$ systemctl --failed
+</pre>
+<p>Доступные файлы юнитов можно посмотреть в директориях <code>/usr/lib/systemd/system/</code> и <code>/etc/systemd/system/</code> (второй каталог имеет приоритет). Вы можете увидеть список установленных файлов юнитов командой:
+</p>
+<pre>$ systemctl list-unit-files
+</pre>
+<h3><span class="mw-headline" id=".D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2">Использование юнитов</span></h3>
+<p>Юнитами могут быть, например, службы (<i>.service</i>), точки монтирования (<i>.mount</i>), устройства (<i>.device</i>) или сокеты (<i>.socket</i>).
+</p><p>При использовании <i>systemctl</i> обычно всегда необходимо указывать полное имя файла юнита, включая суффикс, например, <code>sshd.socket</code>. Однако, есть несколько сокращений для указания юнита в следующих командах <i>systemctl</i>:
+</p>
+<ul><li> Ели вы не указали суффикс, systemctl предполагает, что это <i>.service</i>. Например, <code>netctl</code>  и <code>netctl.service</code> будут трактоваться одинаково</li>
+<li> Точки монтирования будут автоматически преобразованы в соответствующий юнит <i>.mount</i>. Например, указание <code>/home</code> равнозначно <code>home.mount</code></li>
+<li> Так же, как и точки монтирования, имена устройств автоматически преобразуются в соответствующий юнит <i>.device</i>, поэтому указание <code>/dev/sda2</code> полностью соответствует юниту <code>dev-sda2.device</code></li></ul>
+<p>Для получения дополнительной информации смотрите страницу справочного руководства <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.unit"><a rel="nofollow" class="external text" href="http://jlk.fjfi.cvut.cz/arch/manpages/man/systemd.unit.5">systemd.unit(5)</a></span>.
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Примечание: </strong>В некоторых именах юнитов содержится знак <code>@</code> (например, <code>имя@<i>строка</i>.service</code>). Это означает, что они являются <a rel="nofollow" class="external text" href="http://0pointer.de/blog/projects/instances.html">экземплярами</a> юнита-<i>шаблона</i>, в имени которого нет части <code><i>строка</i></code> (например, <code>имя@.service</code>). Часть <code><i>строка</i></code> называется <i>идентификатором экземпляра</i> и является аргументом, передаваемым юниту-шаблону при вызове команды <i>systemctl</i>: в файле юнита он заменит указание (specifier) <code>%i</code>.
+<p>Для большей точности работы <i>systemd</i> будет сперва искать юнит по полному имени файла <code>имя@строка.суффикс</code>, и <i>лишь затем</i> пытаться использовать экземпляр юнита-шаблона <code>имя@.суффикс</code>, даже несмотря на то, что подобные "конфликты" довольно редки, так как большинство файлов юнитов, содержащих знак <code>@</code>, подразумевают использование шаблонов. Также помните, что если вызвать юнит-шаблон без идентификатора экземпляра, ничего не получится, поскольку в этом случае не будет возможности передать указание <code>%i</code>
+</p>
+</div>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Совет: </strong>
+<ul><li> Большинство указанных ниже команд также работают, если указать несколько юнитов. Для получения дополнительной информации смотрите страницу справочного руководства <span class="plainlinks archwiki-template-man" title="$ man 1 systemctl"><a rel="nofollow" class="external text" href="http://jlk.fjfi.cvut.cz/arch/manpages/man/systemctl.1">systemctl(1)</a></span></li>
+<li> Начиная с версии <a rel="nofollow" class="external text" href="https://github.com/systemd/systemd/blob/master/NEWS#L323-L326">systemd 220</a>, переключатель <code>--now</code> может быть использован в сочетании с <code>enable</code>, <code>disable</code> и <code>mask</code> чтобы соответственно запустить или остановить все юниты сразу.</li>
+<li> Пакет может предложить юнитов для различных целей. Если вы только что установили пакет, воспользуйтесь командой <code>pacman -Qql <i>package</i> | grep -Fe .service -e .socket</code> для проверки и нахождения юнитов. </li></ul>
+</div>
+<p>Незамедлительно <b>запустить</b> юнит:
+</p>
+<pre># systemctl start <i>юнит</i>
+</pre>
+<p>Незамедлительно <b>остановить</b> юнит:
+</p>
+<pre># systemctl stop <i>юнит</i>
+</pre>
+<p><b>Перезапустить</b> юнит:
+</p>
+<pre># systemctl restart <i>юнит</i>
+</pre>
+<p>Запросить у юнита <b>перезагрузку</b> его настроек:
+</p>
+<pre># systemctl reload <i>юнит</i>
+</pre>
+<p>Показать <b>статус</b> юнита, а также запущен он или нет:
+</p>
+<pre>$ systemctl status <i>юнит</i>
+</pre>
+<p><b>Проверить</b>, включен ли юнит в автозапуск при загрузке системы:
+</p>
+<pre>$ systemctl is-enabled <i>юнит</i>
+</pre>
+<p><b>Включить</b> юнит в автозапуск при загрузке системы:
+</p>
+<pre># systemctl enable <i>юнит</i>
+</pre>
+<p><b>Убрать</b> юнит из автозапуска при загрузке системы:
+</p>
+<pre># systemctl disable <i>юнит</i>
+</pre>
+<p><b>Маскировать</b> юнит, чтобы сделать невозможным его запуск: 
+</p>
+<pre># systemctl mask <i>юнит</i> 
+</pre>
+<p><b>Снять маску</b> юнита: 
+</p>
+<pre># systemctl unmask <i>юнит</i> 
+</pre>
+<p><b>Показать страницу справочного руководства</b>, связанного с юнитом (необходима поддержка этой функции в указанном файле юнита):
+</p>
+<pre>$ systemctl help <i>юнит</i>
+</pre>
+<p>Перезагрузить <i>systemd</i> для поиска <b>новых или измененных юнитов</b>:
+</p>
+<pre># systemctl daemon-reload
+</pre>
+<h3><span class="mw-headline" id=".D0.A3.D0.BF.D1.80.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D0.B5_.D0.BF.D0.B8.D1.82.D0.B0.D0.BD.D0.B8.D0.B5.D0.BC">Управление питанием</span></h3>
+<p>Для управления питанием от имени непривилегированного пользователя необходим <a href="/index.php/Polkit" title="Polkit">polkit</a>. Если вы находитесь в локальной пользовательской сессии <i>systemd-logind</i>, и нет других активных сессий, приведенные ниже команды сработают и без привилегий суперпользователя. В противном случае (например, вследствие того, что другой пользователь вошел в систему в tty), <i>systemd</i> автоматически запросит у вас пароль суперпользователя.
+</p><p>Завершить работу и перезагрузить систему:
+</p>
+<pre>$ systemctl reboot
+</pre>
+<p>Завершить работу и выключить компьютер (с отключением питания):
+</p>
+<pre>$ systemctl poweroff
+</pre>
+<p>Перевести систему в ждущий режим:
+</p>
+<pre>$ systemctl suspend
+</pre>
+<p>Перевести систему в спящий режим:
+</p>
+<pre>$ systemctl hibernate
+</pre>
+<p>Перевести систему в режим гибридного сна (или suspend-to-both):
+</p>
+<pre>$ systemctl hybrid-sleep
+</pre>
+<h2><span class="mw-headline" id=".D0.9D.D0.B0.D0.BF.D0.B8.D1.81.D0.B0.D0.BD.D0.B8.D0.B5_.D1.84.D0.B0.D0.B9.D0.BB.D0.BE.D0.B2_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2">Написание файлов юнитов</span></h2>
+<p>Синтаксис <a rel="nofollow" class="external text" href="http://www.freedesktop.org/software/systemd/man/systemd.unit.html">файлов юнитов</a> <i>systemd</i> вдохновлен файлами <i>.desktop</i> XDG Desktop Entry Specification, а они, в свою очередь -  файлами <i>.ini</i> Microsoft Windows. Файлы юнитов загружаются из двух мест. Вот они по приоритету от низшего к высшему:
+</p>
+<ul><li> <code>/usr/lib/systemd/system/</code>: юниты, предоставляемые пакетами при их установке</li>
+<li> <code>/etc/systemd/system/</code>: юниты, устанавливаемые системным администратором</li></ul>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Примечание: </strong>При запуске <i>systemd</i> в <a href="/index.php/Systemd/%D0%9F%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C#.D0.9A.D0.B0.D0.BA_.D1.8D.D1.82.D0.BE_.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.B0.D0.B5.D1.82" class="mw-redirect" title="Systemd/Пользователь">пользовательском режиме</a> используются совершенно другие пути загрузки</div>
+<p>В качестве примера, посмотрите установленные юниты вашими пакетами, а также <a rel="nofollow" class="external text" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html#Examples">секцию примеров</a> из <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.service"><a rel="nofollow" class="external text" href="http://jlk.fjfi.cvut.cz/arch/manpages/man/systemd.service.5">systemd.service(5)</a></span>. 
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Совет: </strong>Как и обычно, вы можете добавлять комментарии, предваряемые символом <code>#</code>, но только на новых строках. Не используйте комментарии в конце строки, после параметров <i>systemd</i>, иначе юнит не будет запущен</div>
+<h3><span class="mw-headline" id=".D0.9E.D0.B1.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.BA.D0.B0_.D0.B7.D0.B0.D0.B2.D0.B8.D1.81.D0.B8.D0.BC.D0.BE.D1.81.D1.82.D0.B5.D0.B9">Обработка зависимостей</span></h3>
+<p>В случае использования <i>systemd</i> зависимости могут быть указаны правильным построением файлов юнитов. Наиболее частый случай -- юниту <i>A</i> требуется, чтобы юнит <i>B</i> был запущен перед тем, как запустится сам юнит <i>A</i>. В этом случае добавьте строки <code>Requires=<i>B</i></code> и <code>After=<i>B</i></code> в секцию <code>[Unit]</code> файла службы <i>A</i>. Если подобная зависимость не является обязательной, взамен указанных выше добавьте, соответственно, строки <code>Wants=<i>B</i></code> и <code>After=<i>B</i></code>. Обратите внимание, что <code>Wants=</code> и <code>Requires=</code> не подразумевают <code>After=</code>, что означает, что если <code>After=</code> не определено, два юнита будут запущены параллельно друг другу.
+</p><p>Обычно зависимости указываются в файлах служб, а не в целевых юнитах. Например, <code>network.target</code> потребуется любой службе, которая связана с настройкой ваших сетевых интерфейсов, поэтому в любом случае определите загрузку вашего пользовательского юнита после запуска <code>network.target</code>.
+</p>
+<h3><span class="mw-headline" id=".D0.A2.D0.B8.D0.BF.D1.8B_.D1.81.D0.BB.D1.83.D0.B6.D0.B1">Типы служб</span></h3>
+<p>Существует несколько различных типов запуска служб, которые надо иметь в виду при написании пользовательского файла службы. Тип определяется параметром <code>Type=</code> в секции <code>[Service]</code>:
+</p>
+<ul><li> <code>Type=simple</code> (по умолчанию): <i>systemd</i> предполагает, что служба будет запущена незамедлительно. Процесс при этом не должен разветвляться. Не используйте этот тип, если другие службы зависят от очередности при запуске данной службы. Исключение - активация сокета</li>
+<li> <code>Type=forking</code>: <i>systemd</i> предполагает, что служба запускается однократно и процесс разветвляется с завершением родительского процесса. Используйте данный тип для запуска классических демонов за исключением тех случаев, когда, как вам известно, в таком поведении процесса нет необходимости. Вам следует также определить <code>PIDFile=</code>, чтобы <i>systemd</i> могла отслеживать основной процесс</li>
+<li> <code>Type=oneshot</code>: полезен для скриптов, которые выполняют одно задание и завершаются. Вам может понадобиться также установить параметр <code>RemainAfterExit=yes</code>, чтобы <i>systemd</i> по-прежнему считала процесс активным, даже после его завершения</li>
+<li> <code>Type=notify</code>: идентичен параметру <code>Type=simple</code>, но с той оговоркой, что демон пошлет <i>systemd</i> сигнал о своей готовности. Эталонная реализация данного уведомления представлена в <i>libsystemd-daemon.so</i></li>
+<li> <code>Type=dbus</code>: сервис считается находящимся в состоянии готовности, когда определенное <code>BusName</code> появляется в системной шине DBus</li>
+<li> <code>Type=idle</code>: <i>systemd</i> will delay execution of the service binary until all jobs are dispatched. Кроме того, поведение очень похоже на <code>Type=simple</code>.</li></ul>
+<p>Смотрите справочную страницу руководства <a rel="nofollow" class="external text" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html#Type=">systemd.service(5)</a> для более детального пояснения значений <code>Type</code>.
+</p><p>Обратитесь к руководству <span class="plainlinks archwiki-template-man" title="$ man 5 systemd.service"><a rel="nofollow" class="external text" href="http://jlk.fjfi.cvut.cz/arch/manpages/man/systemd.service.5">systemd.service(5)</a></span> для получения более детального объяснения.
+</p>
+<h3><span class="mw-headline" id=".D0.A0.D0.B5.D0.B4.D0.B0.D0.BA.D1.82.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D0.BF.D1.80.D0.B5.D0.B4.D0.BE.D1.81.D1.82.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.BD.D1.8B.D1.85_.D0.BF.D0.B0.D0.BA.D0.B5.D1.82.D0.B0.D0.BC.D0.B8_.D1.84.D0.B0.D0.B9.D0.BB.D0.BE.D0.B2_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2">Редактирование предоставленных пакетами файлов юнитов</span></h3>
+<p>Есть два способа редактирования файлов юнита, предоставленного пакетом: заменить весь блок файла на новый или создать фрагмент кода, который применяется в верхней части существующего блока файла. В обоих методах, чтобы применить изменения, нужно перезагрузить юнит. Это может быть сделано либо путем редактирования блока с помощью <code>systemctl edit</code> (которая автоматически загружает модуль) либо при перезагрузке всех юнитов:
+</p>
+<pre># systemctl daemon-reload
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Совет: </strong>
+<ul><li> Вы можете использовать <i>systemd-delta</i>, чтобы увидеть, какие файлы юнитов были переопределены и что конкретно было изменено. Для обслуживания системы в целом важно регулярно проверять предоставляемые файлы юнитов на полученные обновления.</li>
+<li> Используйте <code>systemctl cat <i>юнит</i></code> чтобы посмотреть содержимое файла юнита и все Drop-in snippets кода.</li>
+<li> Подсветку синтаксиса для файлов юнитов <i>systemd</i> в редакторе <a href="/index.php/Vim_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Vim (Русский)">Vim</a> можно включить, установив пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=vim-systemd">vim-systemd</a></span> из <a href="/index.php/Official_repositories_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Official repositories (Русский)">официальных репозиториев</a>.</li></ul>
+</div>
+<h4><span class="mw-headline" id=".D0.97.D0.B0.D0.BC.D0.B5.D0.BD.D0.B0_.D1.84.D0.B0.D0.B9.D0.BB.D0.BE.D0.B2_.D1.8E.D0.BD.D0.B8.D1.82.D0.B0">Замена файлов юнита</span></h4>
+<p>Чтобы заменить файл юнита <code>/usr/lib/systemd/system/<i>юнит</i></code>, создайте файл <code>/etc/systemd/system/<i>юнит</i></code> и перезапустите юнит для обновления символьных ссылок:
+</p>
+<pre># systemctl reenable <i>юнит</i>
+</pre>
+<p>В качестве альтернативы, можно выполнить:
+</p>
+<pre># systemctl edit --full <i>юнит</i>
+</pre>
+<p>Эта команда откроет <code>/etc/systemd/system/<i>юнит</i></code> в вашем текстовом редакторе (копирует установленную версию, если она еще не существует) и автоматически загружает её, когда вы закончите редактирование.
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Примечание: </strong>Pacman не обновит заменённые файлы юнита, в отличие от оригинальных которые обновятся. Так что этот метод может сделать обслуживание системы более сложным. По этой причине рекомендуется следующий подход.</div>
+<h4><span class="mw-headline" id="Drop-in_snippets">Drop-in snippets</span></h4>
+<p>Чтобы создать drop-in snippets для файла юнита <code>/usr/lib/systemd/system/<i>юнит</i></code>, создайте каталог <code>/etc/systemd/system/<i>юнит</i>.d/</code> и поместите файлы <i>.conf</i> там, чтобы отменять или добавлять новые опции. <i>systemd</i> будет анализировать эти файлы <i>.conf</i> и применять их поверх оригинального юнита.
+</p><p>Самый простой способ чтобы выполнить это, сделайте:
+</p>
+<pre># systemctl edit <i>юнит</i>
+</pre>
+<p>Эта команда откроет <code>/etc/systemd/system/<i>юнит</i>.d/override.conf</code> (создаст его если это потребуется) в вашем текстовом редакторе и автоматически перезапустит юнит, когда вы закончите редактирование.
+</p>
+<h4><span class="mw-headline" id=".D0.9F.D1.80.D0.B8.D0.BC.D0.B5.D1.80.D1.8B">Примеры</span></h4>
+<p>Например, если вы просто хотите добавить дополнительную зависимость к юниту, можно создать следующий файл:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/<i>unit</i>.d/customdependency.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Unit]
+Requires=<i>new dependency</i>
+After=<i>new dependency</i></pre>
+<p>В качестве другого примера, для того чтобы заменить направление для юнита <code>ExecStart</code>, что не относится к типу <code>oneshot</code>, создайте следующий файл:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/<i>unit</i>.d/customexec.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
+ExecStart=
+ExecStart=<i>новая комманда</i></pre>
+<p>Обратите внимание <code>ExecStart</code> должна быть очищена, перед новым назначением (<a rel="nofollow" class="external autonumber" href="https://bugzilla.redhat.com/show_bug.cgi?id=756787#c9">[1]</a>).
+</p><p>Еще один пример, чтобы автоматически перезапустить службу:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/system/<i>unit</i>.d/restart.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
+Restart=always
+RestartSec=30</pre>
+<h2><span class="mw-headline" id=".D0.A6.D0.B5.D0.BB.D0.B8">Цели</span></h2>
+<p><i>systemd</i> использует  <i>цели</i> (англ. target), которые выполняют ту же задачу, что и уровни запуска (англ. runlevel), но действуют немного по-другому. Каждая <i>цель</i> поименована (т.е. имеет собственное имя, а не номер) и, как предполагается,  предназначена для конкретных задач; возможно иметь в одно и то же время активными несколько таких целей. Некоторые <i>цели</i> реализованы так, что наследуют все службы других <i>целей</i>, добавляя к ним свои. В <i>systemd</i> имеются также <i>цели</i>, которые имитируют общие уровни запуска SystemVinit, поэтому вы можете переключаться между целевыми юнитами, используя привычную команду <code>telinit RUNLEVEL</code>. 
+</p>
+<h3><span class="mw-headline" id=".D0.9F.D0.BE.D0.BB.D1.83.D1.87.D0.B5.D0.BD.D0.B8.D0.B5_.D0.B8.D0.BD.D1.84.D0.BE.D1.80.D0.BC.D0.B0.D1.86.D0.B8.D0.B8_.D0.BE_.D1.82.D0.B5.D0.BA.D1.83.D1.89.D0.B8.D1.85_.D1.86.D0.B5.D0.BB.D1.8F.D1.85">Получение информации о текущих целях</span></h3>
+<p>При использовании <i>systemd</i> для этого предназначена следующая команда (заменяющая <code>runlevel</code>):
+</p>
+<pre>$ systemctl list-units --type=target
+</pre>
+<h3><span class="mw-headline" id=".D0.A1.D0.BE.D0.B7.D0.B4.D0.B0.D0.BD.D0.B8.D0.B5_.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D1.82.D0.B5.D0.BB.D1.8C.D1.81.D0.BA.D0.BE.D0.B9_.D1.86.D0.B5.D0.BB.D0.B8">Создание пользовательской цели</span></h3>
+<p>Уровни запуска, по которым расписаны конкретные задачи при установке ванильной Fedora по умолчанию - 0, 1, 3, 5 и 6 - имеют соответствие 1:1 с конкретными <i>целями systemd</i>. К сожалению, не существует хорошего способа сделать то же самое для определяемых пользователем уровней, таких как 2 и 4. Их использование предполагает, что вы создаете новый именованный <i> целевой юнит systemd</i> наподобие <code>/etc/systemd/system/<i>ваша цель</i></code>, который берет за основу один из существующих уровней запуска (взгляните, например, на <code>/usr/lib/systemd/system/graphical.target</code>), создаете каталог <code>/etc/systemd/system/<i>ваша цель</i>.wants</code>, а после этого - символические ссылки на дополнительные службы из директории <code>/usr/lib/systemd/system/</code>, которые вы хотите включить при загрузке.
+</p>
+<h3><span class="mw-headline" id=".D0.A2.D0.B0.D0.B1.D0.BB.D0.B8.D1.86.D0.B0_.D1.86.D0.B5.D0.BB.D0.B5.D0.B9">Таблица целей</span></h3>
+<table class="wikitable">
+<tr>
+<th> Уровнень запуска SysV </th>
+<th> Цель systemd </th>
+<th> Примечания
+</th></tr>
+<tr>
+<td> 0 </td>
+<td> runlevel0.target, poweroff.target </td>
+<td> Выключить систему
+</td></tr>
+<tr>
+<td> 1, s, single </td>
+<td> runlevel1.target, rescue.target </td>
+<td> Однопользовательский уровень запуска
+</td></tr>
+<tr>
+<td> 2, 4 </td>
+<td> runlevel2.target, runlevel4.target, multi-user.target </td>
+<td> Уровни запуска, определенные пользователем/специфичные для узла. По умолчанию соответствует уровню запуска 3
+</td></tr>
+<tr>
+<td> 3 </td>
+<td> runlevel3.target, multi-user.target </td>
+<td> Многопользовательский режим без графики. Пользователи, как правило, входят в систему при помощи множества консолей или через сеть
+</td></tr>
+<tr>
+<td> 5 </td>
+<td> runlevel5.target, graphical.target </td>
+<td> Многопользовательский режим с графикой. Обычно эквивалентен запуску всех служб на уровне 3 и графического менеджера входа в систему
+</td></tr>
+<tr>
+<td> 6 </td>
+<td> runlevel6.target, reboot.target </td>
+<td> Перезагрузка
+</td></tr>
+<tr>
+<td> emergency </td>
+<td> emergency.target </td>
+<td> Аварийная оболочка
+</td></tr>
+</table>
+<h3><span class="mw-headline" id=".D0.98.D0.B7.D0.BC.D0.B5.D0.BD.D0.B5.D0.BD.D0.B8.D0.B5_.D1.82.D0.B5.D0.BA.D1.83.D1.89.D0.B5.D0.B9_.D1.86.D0.B5.D0.BB.D0.B8">Изменение текущей цели</span></h3>
+<p>В <i>systemd</i> цели доступны посредством <i>целевых юнитов</i>. Вы можете изменить их командой:
+</p>
+<pre># systemctl isolate graphical.target
+</pre>
+<p>Данная команда изменит только лишь текущую цель и не повлияет на следующую загрузку системы. Она соответствует командам Sysvinit вида <code>telinit 3</code> и <code>telinit 5</code>.
+</p>
+<h3><span class="mw-headline" id=".D0.98.D0.B7.D0.BC.D0.B5.D0.BD.D0.B5.D0.BD.D0.B8.D0.B5_.D1.86.D0.B5.D0.BB.D0.B8_.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B8_.D0.BF.D0.BE_.D1.83.D0.BC.D0.BE.D0.BB.D1.87.D0.B0.D0.BD.D0.B8.D1.8E">Изменение цели загрузки по умолчанию</span></h3>
+<p>Стандартная цель - <code>default.target</code>, которая по умолчанию является псевдонимом <code>graphical.target</code> (примерно соответствующего прежнему уровню запуска 5). Для изменения цели загрузки по умолчанию добавьте один из следующих <a href="/index.php/Kernel_parameters" title="Kernel parameters">параметров ядра</a> в ваш загрузчик:
+</p>
+<ul><li> <code>systemd.unit=multi-user.target</code> (что примерно соответствует прежнему уровню запуска 3)</li>
+<li> <code>systemd.unit=rescue.target</code> (что примерно соответствует прежнему уровню запуска 1)</li></ul>
+<p>Другой способ - оставить загрузчик без изменений, а изменить целевой юнит по умолчанию - <i>default.target</i>. Это делается с использованием <i>systemctl</i>:
+</p>
+<pre># systemctl set-default multi-user.target
+</pre>
+<p>Чтобы иметь возможность перезаписать ранее установленную <code>default.target</code>, используйте опцию force:
+</p>
+<pre># systemctl set-default -f multi-user.target
+</pre>
+<p>Эффект от применения данной команды выводится через <i>systemctl</i>. Символическая ссылка на новый  целевой юнит по умолчанию создается в директории <code>/etc/systemd/system/default.target</code>.
+</p>
+<h2><span class="mw-headline" id=".D0.92.D1.80.D0.B5.D0.BC.D0.B5.D0.BD.D0.BD.D1.8B.D0.B5_.D1.84.D0.B0.D0.B9.D0.BB.D1.8B">Временные файлы</span></h2>
+<p>"<i>systemd-tmpfiles</i> создает, удаляет и очищает непостоянные и временные файлы и каталоги". Он читает конфигурационные файлы из <code>/etc/tmpfiles.d/</code> и <code>/usr/lib/tmpfiles.d/</code>, чтобы понять, что ему следует делать. Конфигурационные файлы в первом каталоге имеют приоритет над теми, что расположены во втором.
+</p><p>Конфигурационные файлы обычно предоставляются вместе с файлами служб и имеют названия вида <code>/usr/lib/tmpfiles.d/<i>программа</i>.conf</code>. Например, демон <a href="/index.php/Samba_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Samba (Русский)">Samba</a> предполагает, что существует каталог <code>/run/samba</code> с корректными правами доступа. Поэтому пакет <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=samba">samba</a></span> поставляется в следующей конфигурации:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/lib/tmpfiles.d/samba.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">D /run/samba 0755 root root</pre>
+<p>Конфигурационные файлы также могут использоваться для записи значений при старте системы. Например, если вы используете <code>/etc/rc.local</code> для отключения пробуждения от устройств USB при помощи <code>echo USBE &gt; /proc/acpi/wakeup</code>, вместо этого вы можете использовать следующий tmpfile:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/tmpfiles.d/disable-usb-wake.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">w /proc/acpi/wakeup - - - - USBE</pre>
+<p>Для получения дополнительной информации смотрите страницы справочного руководства (man) <code>systemd-tmpfiles(8)</code> и <code>tmpfiles.d(5)</code>.
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Примечание: </strong>Этот способ может не сработать для установки опций в <code>/sys</code>, поскольку служба <i>systemd-tmpfiles-setup</i> может запускаться перед тем, как будут загружены соответствующие модули устройств. В этом случае при помощи команды <code>modinfo <i>модуль</i></code> вы можете проверить, имеет ли модуль параметр для установки необходимой вам опции, и установить эту опцию в <a href="/index.php/Kernel_modules_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)#.D0.9D.D0.B0.D1.81.D1.82.D1.80.D0.BE.D0.B9.D0.BA.D0.B0_.D0.BF.D0.B0.D1.80.D0.B0.D0.BC.D0.B5.D1.82.D1.80.D0.BE.D0.B2_.D0.BC.D0.BE.D0.B4.D1.83.D0.BB.D1.8F" title="Kernel modules (Русский)">конфигурационном файле /etc/modprobe.d</a>. В противном случае для установки верных атрибутов сразу, как только устройство появляется, вам придется написать <a href="/index.php/Udev#About_udev_rules" title="Udev">правило udev</a></div>
+<h2><span class="mw-headline" id=".D0.A2.D0.B0.D0.B9.D0.BC.D0.B5.D1.80.D1.8B">Таймеры</span></h2>
+<p>Таймер - это файл конфигурации юнита, имя которого заканчивается на <i>.timer</i>. Он расшифровывает информацию о таймере, контролируемом при помощи <i>systemd</i>, для активации в определенное время. Смотрите статью <a href="/index.php/Systemd/T%D0%B0%D0%B9%D0%BC%D0%B5%D1%80%D1%8B" class="mw-redirect" title="Systemd/Tаймеры">systemd/Tаймеры</a>.
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDDDFF; border: thin solid #BBBBDD; overflow: hidden;"><strong> Примечание: </strong>Таймеры способны в значительной степени заменить функциональность <i>cron</i>. Смотрите раздел <a href="/index.php/Systemd/T%D0%B0%D0%B9%D0%BC%D0%B5%D1%80%D1%8B#.D0.92_.D0.BA.D0.B0.D1.87.D0.B5.D1.81.D1.82.D0.B2.D0.B5_.D0.B7.D0.B0.D0.BC.D0.B5.D0.BD.D1.8B_cron" class="mw-redirect" title="Systemd/Tаймеры">Замена cron</a></div>
+<h2><span class="mw-headline" id=".D0.96.D1.83.D1.80.D0.BD.D0.B0.D0.BB">Журнал</span></h2>
+<p><i>systemd</i> имеет собственную систему ведения логов, названную журналом (journal). В связи с этим больше не требуется запускать демон <code>syslog</code>. Для чтения логов используйте команду:
+</p>
+<pre># journalctl
+</pre>
+<p>В Arch Linux каталог <code>/var/log/journal/</code> является частью пакета <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=systemd">systemd</a></span>, и по умолчанию (когда в конфигурационном файле <code>/etc/systemd/journald.conf</code> параметр <code>Storage&#61;</code> имеет значение <code>auto</code>) журнал записывается именно в <code>/var/log/journal/</code>. Если вы или какая-то программа удалит этот каталог, <i>systemd</i> <b>не</b> пересоздаст его автоматически и вместо этого будет писать свои журналы по непостоянному пути <code>/run/systemd/journal</code>. Однако, папка будет пересоздана, когда вы установите <code>Storage=persistent</code> и выполните <code>systemctl restart systemd-journald</code> (или перезагрузитесь).
+</p>
+<h3><span class="mw-headline" id=".D0.A4.D0.B8.D0.BB.D1.8C.D1.82.D1.80.D0.B0.D1.86.D0.B8.D1.8F_.D0.B2.D1.8B.D0.B2.D0.BE.D0.B4.D0.B0">Фильтрация вывода</span></h3>
+<p><i>journalctl</i> позволяет фильтровать вывод по особым полям. Помните, что, если должно быть отражено большое количество сообщений или необходима фильтрация в большом промежутке времени, вывод этой команды может быть отложен на какое-то время.
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Совет: </strong>Поскольку журнал хранится в двоичном формате, содержимое его сообщений не меняется. Это означает, что их можно просматривать при помощи <i>strings</i>, например, в окружении, в котором не установлен <i>systemd</i>. Пример:
+<pre>$ strings /mnt/arch/var/log/journal/af4967d77fba44c6b093d0e9862f6ddd/system.journal | grep -i <i>сообщение</i></pre>
+</div>
+<p>Примеры:
+</p>
+<ul><li> Показать все сообщения с момента текущей загрузки системы: <pre># journalctl -b</pre> Однако, пользователи часто интересуются сообщениями не для текущей, а для предыдущей загрузки (например, если произошел невосстановимый сбой системы). Это возможно, если задать параметр флагу <code>-b</code>: <code>journalctl -b -0</code> покажет сообщения с момента текущей загрузки, <code>journalctl -b -1</code> - предыдущей загрузки, <code>journalctl -b -2</code> - следующей за предыдущей, и т.д. Для просмотра полного описания смотрите страницу справочного руководства <span class="plainlinks archwiki-template-man" title="$ man 1 journalctl"><a rel="nofollow" class="external text" href="http://jlk.fjfi.cvut.cz/arch/manpages/man/journalctl.1">journalctl(1)</a></span>: имеется гораздо более мощная семантика</li>
+<li> Показать все сообщения, начиная с какой-либо даты (и, если хотите, времени): <pre># journalctl --since="2012-10-30 18:17:16"</pre></li>
+<li> Показать все сообщения за последние 20 минут: <pre># journalctl --since "20 min ago"</pre></li>
+<li> Показывать новые сообщения: <pre># journalctl -f</pre></li>
+<li> Показать все сообщения для конкретного исполняемого файла: <pre># journalctl /usr/lib/systemd/systemd</pre></li>
+<li> Показать все сообщения для конкретного процесса: <pre># journalctl _PID=1</pre></li>
+<li> Показать все сообщения для конкретного юнита: <pre># journalctl -u netcfg</pre></li>
+<li> Показать кольцевой буфер ядра: <pre># journalctl -k</pre></li>
+<li> Показать auth.log эквивалентно фильтрации syslog facility: <pre># journalctl -f -l SYSLOG_FACILITY=10</pre></li></ul>
+<p>Для получения дополнительной информации смотрите страницы справочного руководства <span class="plainlinks archwiki-template-man" title="$ man 1 journalctl"><a rel="nofollow" class="external text" href="http://jlk.fjfi.cvut.cz/arch/manpages/man/journalctl.1">journalctl(1)</a></span> и <span class="plainlinks archwiki-template-man" title="$ man 7 systemd.journal-fields"><a rel="nofollow" class="external text" href="http://jlk.fjfi.cvut.cz/arch/manpages/man/systemd.journal-fields.7">systemd.journal-fields(7)</a></span> или <a rel="nofollow" class="external text" href="http://0pointer.de/blog/projects/journalctl.html">пост в блоге</a> Lennart'а.
+</p>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Совет: </strong>По умолчанию <i>journalctl</i> отсекает части строк, которые не вписываются в экран по ширине, и, в некоторых случаях, возможно, будет лучше использовать специальную программу-обертку. Управление этой возможностью производится посредством  <a href="/index.php/Environment_variables_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Environment variables (Русский)">переменной окружения</a> <code>SYSTEMD_LESS</code>, в которой содержатся опции, передаваемые в <a href="/index.php/%D0%91%D0%B0%D0%B7%D0%BE%D0%B2%D1%8B%D0%B5_%D1%83%D1%82%D0%B8%D0%BB%D0%B8%D1%82%D1%8B#less" class="mw-redirect" title="Базовые утилиты">less</a> (программа постраничного просмотра, используемая по умолчанию). По умолчанию ей присвоены опции <code>FRSXMK</code> (для получения дополнительной информации смотрите <span class="plainlinks archwiki-template-man" title="$ man 1 less"><a rel="nofollow" class="external text" href="http://jlk.fjfi.cvut.cz/arch/manpages/man/less.1">less(1)</a></span> и <span class="plainlinks archwiki-template-man" title="$ man 1 journalctl"><a rel="nofollow" class="external text" href="http://jlk.fjfi.cvut.cz/arch/manpages/man/journalctl.1">journalctl(1)</a></span>).
+<p>Если убрать опцию <code>S</code>, будет достигнут требуемый результат. Например, запустите <i>journalctl</i>, как показано здесь:
+</p>
+<pre>$ SYSTEMD_LESS=FRXMK journalctl
+</pre>
+Если вы хотите, чтобы такое поведение использовалось по умолчанию, <a href="/index.php/Environment_variables_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)#.D0.9D.D0.B0_.D1.83.D1.80.D0.BE.D0.B2.D0.BD.D0.B5_.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D1.82.D0.B5.D0.BB.D1.8F" title="Environment variables (Русский)">экспортируйте</a> переменную из файла <code>~/.bashrc</code> или <code>~/.zshrc</code></div>
+<h3><span class="mw-headline" id=".D0.9E.D0.B3.D1.80.D0.B0.D0.BD.D0.B8.D1.87.D0.B5.D0.BD.D0.B8.D0.B5_.D1.80.D0.B0.D0.B7.D0.BC.D0.B5.D1.80.D0.B0_.D0.B6.D1.83.D1.80.D0.BD.D0.B0.D0.BB.D0.B0">Ограничение размера журнала</span></h3>
+<p>Если журнал сохраняется при перезагрузке, его размер по умолчанию ограничен значением в 10% от объема соответствующей файловой системы. Например, для директории <code>/var/log/journal</code>, расположенной на корневом разделе в 50 Гбайт, максимальный размер журналируемых данных составит 5 Гбайт. Максимальный объем постоянного журнала можно контролировать при помощи значения <code>SystemMaxUse</code> в конфигурационном файле <code>/etc/systemd/journald.conf</code>, поэтому для ограничения его объемом, например, в 50 Mбайт раскомментируйте и отредактируйте соответствующую строку:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/journald.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">SystemMaxUse=50M</pre> 
+<p>Для получения дополнительной информации обратитесь к странице справочного руководства <span class="plainlinks archwiki-template-man" title="$ man 5 journald.conf"><a rel="nofollow" class="external text" href="http://jlk.fjfi.cvut.cz/arch/manpages/man/journald.conf.5">journald.conf(5)</a></span>.
+</p>
+<h3><span class="mw-headline" id=".D0.9E.D1.87.D0.B8.D1.81.D1.82.D0.BA.D0.B0_.D1.84.D0.B0.D0.B9.D0.BB.D0.BE.D0.B2_.D0.B6.D1.83.D1.80.D0.BD.D0.B0.D0.BB.D0.B0_.D0.B2.D1.80.D1.83.D1.87.D0.BD.D1.83.D1.8E">Очистка файлов журнала вручную</span></h3>
+<p>Файлы журнала находятся в <code>/var/log/journal</code>, так что <code>rm</code> будет работать.
+Или используйте <code>journalctl</code>,
+</p><p>Примеры:
+</p>
+<ul><li> Remove archived journal files until the disk space they use falls below 100M: <pre># journalctl --vacuum-size=100M</pre></li>
+<li> Make all journal files contain no data older than 2 weeks. <pre># journalctl --vacuum-time=2weeks</pre></li></ul>
+<p>Для получения дополнительной информации, обратитесь к <span class="plainlinks archwiki-template-man" title="$ man 1 journalctl"><a rel="nofollow" class="external text" href="http://jlk.fjfi.cvut.cz/arch/manpages/man/journalctl.1">journalctl(1)</a></span>.
+</p>
+<h3><span class="mw-headline" id="Journald_.D0.B2_.D1.81.D0.B2.D1.8F.D0.B7.D0.BA.D0.B5_.D1.81_.D0.BA.D0.BB.D0.B0.D1.81.D1.81.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.B8.D0.BC_.D0.B4.D0.B5.D0.BC.D0.BE.D0.BD.D0.BE.D0.BC_syslog">Journald в связке с классическим демоном syslog</span></h3>
+<p>Совместимость с классической реализацией non-journald aware <a href="/index.php/Syslog-ng" title="Syslog-ng">syslog</a> можно обеспечить, заставив <i>systemd</i> направлять все сообщения через сокет <code>/run/systemd/journal/syslog</code>. Чтобы дать возможность демону syslog работать вместе с журналом <i>systemd</i>, следует привязать данный демон к указанному сокету вместо <code>/dev/log</code> (<a rel="nofollow" class="external text" href="http://lwn.net/Articles/474968/">официальное сообщение</a>). Пакетом <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=syslog-ng">syslog-ng</a></span> из репозиториев автоматически предоставляется необходимая конфигурация.
+</p><p>Начиная с версии systemd 216, по умолчанию <code>journald.conf</code> для передачи данных в сокет был изменён на <code>ForwardToSyslog=no</code>, чтобы избежать нагрузки на систему, потому что <a href="/index.php/Rsyslog" title="Rsyslog">rsyslog</a> или <a href="/index.php/Syslog-ng" title="Syslog-ng">syslog-ng</a> (начиная с версии 3.6) тянут сообщения из журнала <a rel="nofollow" class="external text" href="http://lists.freedesktop.org/archives/systemd-devel/2014-August/022295.html#journald">самостоятельно</a>.
+</p><p>Смотрите <a href="/index.php/Syslog-ng#Overview" title="Syslog-ng">Syslog-ng#Overview</a> и <a href="/index.php/Syslog-ng#syslog-ng_and_systemd_journal" title="Syslog-ng">Syslog-ng#syslog-ng and systemd journal</a>, или соответственно <a href="/index.php/Rsyslog" title="Rsyslog">rsyslog</a> для подробной информации о конфигурировании.
+</p><p>Если взамен вы используете <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=rsyslog">rsyslog</a></span>, нет необходимости менять эту настройку, поскольку <a href="/index.php/Rsyslog" title="Rsyslog">rsyslog</a> забирает сообщения из журнала <a rel="nofollow" class="external text" href="http://lists.freedesktop.org/archives/systemd-devel/2014-August/022295.html#journald">самостоятельно</a>.
+</p>
+<h3><span class="mw-headline" id=".D0.9F.D0.B5.D1.80.D0.B5.D0.BD.D0.B0.D0.BF.D1.80.D0.B0.D0.B2.D0.B8.D1.82.D1.8C_.D0.B6.D1.83.D1.80.D0.BD.D0.B0.D0.BB_.D0.BD.D0.B0_.2Fdev.2Ftty12">Перенаправить журнал на /dev/tty12</span></h3>
+<p>Создайте <a href="#.D0.A0.D0.B5.D0.B4.D0.B0.D0.BA.D1.82.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D0.BF.D1.80.D0.B5.D0.B4.D0.BE.D1.81.D1.82.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.BD.D1.8B.D1.85_.D0.BF.D0.B0.D0.BA.D0.B5.D1.82.D0.B0.D0.BC.D0.B8_.D1.84.D0.B0.D0.B9.D0.BB.D0.BE.D0.B2_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2">drop-in каталог</a> <code>/etc/systemd/journald.conf.d</code> и создайте файл <code>fw-tty12.conf</code> с содержимым:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/systemd/journald.conf.d/fw-tty12.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Journal]
+ForwardToConsole=yes
+TTYPath=/dev/tty12
+MaxLevelConsole=info</pre>
+<p>Затем <a href="#.D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2">перезапустите</a> systemd-journald.
+</p>
+<h3><span class="mw-headline" id=".D0.9A.D0.BE.D0.BC.D0.B0.D0.BD.D0.B4.D0.B0_.D0.BF.D1.80.D0.BE.D1.81.D0.BC.D0.BE.D1.82.D1.80.D0.B0_.D0.B4.D1.80.D1.83.D0.B3.D0.BE.D0.B3.D0.BE_.D0.B6.D1.83.D1.80.D0.BD.D0.B0.D0.BB.D0.B0">Команда просмотра другого журнала</span></h3>
+<p>Если появилась необходимость проверить логи другой системы, которая неисправна, загрузитесь с работоспособной системы, чтобы восстановить неисправную систему.
+Примонтируйте диск неисправной системы, например в <code>/mnt</code> и укажите путь журнала через <code>-D</code>/<code>--directory</code>, например так:
+</p>
+<pre>$ journalctl -D <i>/mnt</i>/var/log/journal -xe
+</pre>
+<h2><span class="mw-headline" id=".D0.9E.D0.BF.D1.82.D0.B8.D0.BC.D0.B8.D0.B7.D0.B0.D1.86.D0.B8.D1.8F">Оптимизация</span></h2>
+<div class="noprint archwiki-template-message">
+<p><a href="/index.php/File:Tango-Merge-arrows-3.png" class="image"><img alt="Tango-Merge-arrows-3.png" src="/images/c/c7/Tango-Merge-arrows-3.png" width="48" height="48" /></a><b>Эта статья или раздел является кандидатом на объединение с <a href="/index.php/%D0%A3%D0%B2%D0%B5%D0%BB%D0%B8%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D0%B8/%D0%9F%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81_%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B8_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B" class="mw-redirect" title="Увеличение производительности/Процесс загрузки системы">Увеличение производительности/Процесс загрузки системы</a>.</b><a href="/index.php/File:Tango-Merge-arrows-3.png" class="image"><img alt="Tango-Merge-arrows-3.png" src="/images/c/c7/Tango-Merge-arrows-3.png" width="48" height="48" /></a></p>
+<div><b>Причина:</b> Данный раздел в оригинальной английской вики перенесен в статью <a href="/index.php/Improving_performance/Boot_process" title="Improving performance/Boot process">Improving performance/Boot process</a> (обсуждение: <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/Talk:Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)">Talk:Systemd (Русский)#</a>)</div>
+</div>
+<h3><span class="mw-headline" id=".D0.90.D0.BD.D0.B0.D0.BB.D0.B8.D0.B7_.D0.BF.D1.80.D0.BE.D1.86.D0.B5.D1.81.D1.81.D0.B0_.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B8">Анализ процесса загрузки</span></h3>
+<h4><span class="mw-headline" id=".D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_systemd-analyze">Использование systemd-analyze</span></h4>
+<p>Systemd предоставляет инструмент под названием <code>systemd-analyze</code>, позволяющий проанализировать процесс загрузки вашей системы, чтобы можно было увидеть, какие файлы юнитов тормозят загрузку. Соответственно, вы можете оптимизировать вашу систему. Для использования данного инструмента вам потребуется установить пакеты <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=python2-cairo">python2-cairo</a></span> и <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://www.archlinux.org/packages/?name=python2-gobject">python2-gobject</a></span>.
+</p><p>Чтобы увидеть, сколько времени было потрачено на подготовку пространства ядра и пространства пользователя во время загрузки, просто выполните команду:
+</p>
+<pre>$ systemd-analyze
+</pre>
+<div style="padding: 5px; margin: 0.50em 0; background-color: #DDFFDD; border: thin solid #BBDDBB; overflow: hidden;"><strong> Tip: </strong>
+<ul><li> Если вы дополните хуком <code>timestamp</code> ваш массивr <code>HOOKS</code> в конфигурационном файле <code>/etc/<a href="/index.php/Mkinitcpio" title="Mkinitcpio">mkinitcpio</a>.conf</code> и пересоберете ваш образ initramfs командой <code>mkinitcpio -p linux</code>, systemd-analyze сколько времени затрачивается на initramfs.</li></ul>
+<ul><li> Если вы загружаетесь при  помощи <a href="/index.php/UEFI" class="mw-redirect" title="UEFI">UEFI</a> и используете загрузчик, в который имплементирова  <a rel="nofollow" class="external text" href="http://www.freedesktop.org/wiki/Software/systemd/BootLoaderInterface">Boot Loader Interface</a> от systemd (что в настоящий момент применено только в <a href="/index.php/Gummiboot_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" class="mw-redirect" title="Gummiboot (Русский)">gummiboot (Русский)</a> ), systemd-analyze дополнительно сможет показать, сколько времени затрачено на прошивку EFI сам загрузчик.</div></li></ul>
+<p>Чтобы увидеть список запускаемых файлов юнитов, отсортированный по потраченному каждым из них на загрузку времени, выполните команду:
+</p>
+<pre>$ systemd-analyze blame
+</pre>
+<p>Вы также можете создать файл SVG, показывающий процесс загрузки в графическом виде, наподобие <a href="/index.php/Bootchart" title="Bootchart">Bootchart</a>:
+</p>
+<pre>$ systemd-analyze plot &gt; plot.svg
+</pre>
+<h4><span class="mw-headline" id=".D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_systemd-bootchart">Использование systemd-bootchart</span></h4>
+<p>Bootchart объединен с systemd с 17 октября 2012 года и вы можете использовать его для загрузки также, как и оригинальный bootchart. Добавьте следующие команду к строке инициализации ядра:
+</p>
+<pre>initcall_debug printk.time=y init=/usr/lib/systemd/systemd-bootchart
+	
+</pre>
+<h4><span class="mw-headline" id=".D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_bootchart2">Использование bootchart2</span></h4>
+<p>Вы также можете использовать версию bootchart для визуализации последовательности при загрузке системы.
+Из-за невозможности использовать стандартные установки bootchart (так как нельзя добавить в командную строку ядра вторую запись init), вам придется воспользоваться пакетом <span class="plainlinks archwiki-template-pkg"><a rel="nofollow" class="external text" href="https://aur.archlinux.org/packages/bootchart2-git/">bootchart2-git</a></span><sup><small>AUR</small></sup>, поставляемым с недокументированной службой <i>systemd</i>. После установки <i>bootchart2</i> <a href="#.D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2">включите</a> службу <i>bootchart</i>.
+</p><p>За дальнейшей и детализированной информацией об использовании данной версии <i>bootchart</i> oбратитесь к <a rel="nofollow" class="external text" href="https://github.com/mmeeks/bootchart">документации (англ.)</a>.
+</p>
+<h2><span class="mw-headline" id=".D0.A0.D0.B5.D1.88.D0.B5.D0.BD.D0.B8.D0.B5_.D0.BF.D1.80.D0.BE.D0.B1.D0.BB.D0.B5.D0.BC">Решение проблем</span></h2>
+<h3><span class="mw-headline" id=".D0.98.D0.B7.D1.83.D1.87.D0.B5.D0.BD.D0.B8.D0.B5_.D0.BE.D1.88.D0.B8.D0.B1.D0.BE.D0.BA_systemd">Изучение ошибок systemd</span></h3>
+<p>В качестве примера мы изучим ошибки службы <code>systemd-modules-load</code>:
+</p><p><b>1.</b> Давайте найдем службы <i>systemd</i>, которые не смогли запуститься:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ systemctl --failed</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">systemd-modules-load.service   loaded <b>failed failed</b>  Load Kernel Modules</pre>
+<p><b>2.</b> Хорошо, мы обнаружили проблему в службе <code>systemd-modules-load</code> и хотим узнать больше:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ systemctl status systemd-modules-load</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">systemd-modules-load.service - Load Kernel Modules
+   Loaded: loaded (/usr/lib/systemd/system/systemd-modules-load.service; static)
+   Active: <b>failed</b> (Result: exit-code) since So 2013-08-25 11:48:13 CEST; 32s ago
+     Docs: man:systemd-modules-load.service(8).
+           man:modules-load.d(5)
+  Process: <b>15630</b> ExecStart=/usr/lib/systemd/systemd-modules-load (<b>code=exited, status=1/FAILURE</b>)</pre>
+<p>Если вы не увидите в списке <code>Process ID</code>, просто перезапустите службу при помощи команды <code>systemctl restart systemd-modules-load</code>
+</p><p><b>3.</b> Теперь у нас есть id процесса (PID) для более детального изучения ошибки. Введите следующую команду с правильным <code>Process ID</code> (в данном примере это 15630):
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ journalctl _PID=15630</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">-- Logs begin at Sa 2013-05-25 10:31:12 CEST, end at So 2013-08-25 11:51:17 CEST. --
+Aug 25 11:48:13 mypc systemd-modules-load[15630]: <b>Failed to find module 'blacklist usblp'</b>
+Aug 25 11:48:13 mypc systemd-modules-load[15630]: <b>Failed to find module 'install usblp /bin/false'</b></pre>
+<p><b>4.</b> Мы видим, что некоторые конфигурационные файлы модулей ядра имеют неверные настройки. В этом случае мы взглянем на эти настройки в каталоге <code>/etc/modules-load.d/</code>:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ ls -Al /etc/modules-load.d/</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">
+...
+-rw-r--r--   1 root root    79  1. Dez 2012  blacklist.conf
+-rw-r--r--   1 root root     1  2. Mär 14:30 encrypt.conf
+-rw-r--r--   1 root root     3  5. Dez 2012  printing.conf
+-rw-r--r--   1 root root     6 14. Jul 11:01 realtek.conf
+-rw-r--r--   1 root root    65  2. Jun 23:01 virtualbox.conf
+...
+</pre>
+<p><b>5.</b> Сообщение об ошибке <code>Failed to find module 'blacklist usblp'</code> должно относиться к неправильной настройке в файле <code>blacklist.conf</code>. Давайте закомментируем настройку, вставив хэш-символ <b>#</b> перед каждой опцией, найденной на шаге 3:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/etc/modules-load.d/blacklist.conf</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">
+<b>#</b> blacklist usblp
+<b>#</b> install usblp /bin/false
+</pre>
+<p><b>6.</b> Теперь попробуйте запустить <code>systemd-modules-load</code>:
+</p>
+<pre>$ systemctl start systemd-modules-load
+</pre>
+<p>Если все прошло успешно, ничего не отобразится. Если же вы видите какие-либо ошибки, вернитесь к шагу 3 и используйте новый PID для устранения оставшихся ошибок.
+</p><p>Если все хорошо, вы можете удостовериться, что служба успешно запустилась, при помощи команды:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">$ systemctl status systemd-modules-load</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">systemd-modules-load.service - Load Kernel Modules
+   Loaded: <b>loaded</b> (/usr/lib/systemd/system/systemd-modules-load.service; static)
+   Active: <b>active (exited)</b> since So 2013-08-25 12:22:31 CEST; 34s ago
+     Docs: man:systemd-modules-load.service(8)
+           man:modules-load.d(5)
+ Process: 19005 ExecStart=/usr/lib/systemd/systemd-modules-load (code=exited, status=0/SUCCESS)
+Aug 25 12:22:31 mypc systemd[1]: <b>Started Load Kernel Modules</b>.</pre>
+<p>Чаще всего подобные проблемы можно решить так, как показано выше. Для дальнейшего изучения этого вопроса взгляните на раздел <a href="#.D0.94.D0.B8.D0.B0.D0.B3.D0.BD.D0.BE.D1.81.D1.82.D0.B8.D0.BA.D0.B0_.D0.BF.D1.80.D0.BE.D0.B1.D0.BB.D0.B5.D0.BC_.D1.81_.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.BE.D0.B9_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D1.8B">#Диагностика проблем с загрузкой системы</a>.
+</p>
+<h3><span class="mw-headline" id=".D0.94.D0.B8.D0.B0.D0.B3.D0.BD.D0.BE.D1.81.D1.82.D0.B8.D0.BA.D0.B0_.D0.BF.D1.80.D0.BE.D0.B1.D0.BB.D0.B5.D0.BC_.D1.81_.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.BE.D0.B9_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D1.8B">Диагностика проблем с загрузкой системы</span></h3>
+<p>Загрузитесь с этими параметрами ядра:
+</p><p><code>systemd.log_level=debug systemd.log_target=kmsg log_buf_len=1M</code>
+</p><p><a rel="nofollow" class="external text" href="http://freedesktop.org/wiki/Software/systemd/Debugging">Дополнительная информация по отладке</a>.
+</p>
+<h3><span class="mw-headline" id=".D0.94.D0.B8.D0.B0.D0.B3.D0.BD.D0.BE.D1.81.D1.82.D0.B8.D0.BA.D0.B0_.D0.BF.D1.80.D0.BE.D0.B1.D0.BB.D0.B5.D0.BC_.D0.B2_.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.B5_.D0.BE.D0.BF.D1.80.D0.B5.D0.B4.D0.B5.D0.BB.D0.B5.D0.BD.D0.BD.D0.BE.D0.B9_.D1.81.D0.BB.D1.83.D0.B6.D0.B1.D1.8B">Диагностика проблем в работе определенной службы</span></h3>
+<div class="noprint archwiki-template-message">
+<p><a href="/index.php/File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="/images/d/d6/Tango-inaccurate.png" width="48" height="48" /></a><b>The factual accuracy of this article or section is disputed.</b><a href="/index.php/File:Tango-inaccurate.png" class="image"><img alt="Tango-inaccurate.png" src="/images/d/d6/Tango-inaccurate.png" width="48" height="48" /></a></p>
+<div><b>Reason:</b> This may not catch all errors such as missing libraries. (Discuss in <a rel="nofollow" class="external text" href="https://wiki.archlinux.org/index.php/User_talk:Alucryd#Plex">User talk:Alucryd#Plex</a>)</div>
+</div> 
+<p>Если какая-либо служба <i>systemd</i> ведет себя не так, как ожидается, и вы хотите получить дополнительную информацию о том, что происходит, присвойте <a href="/index.php/Environment_variables_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Environment variables (Русский)">переменной окружения</a> <code>SYSTEMD_LOG_LEVEL</code> значение <code>debug</code>. Например, чтобы запустить демон <i>systemd-networkd</i> в режиме отладки:
+</p>
+<pre># systemctl stop systemd-networkd
+# SYSTEMD_LOG_LEVEL=debug /lib/systemd/systemd-networkd
+</pre>
+<p>В качестве альтернативы можно временно отредактировать файл службы для получения подробного вывода. Например:
+</p>
+<pre style="margin-bottom: 0; border-bottom:none; padding-bottom:0.8em;">/usr/lib/systemd/system/systemd-networkd.service</pre>
+<pre style="margin-top: 0; border-top-style:dashed; padding-top: 0.8em;">[Service]
+...
+Environment=SYSTEMD_LOG_LEVEL=debug
+....</pre>
+<p>Если вы знаете, что в дальнейшем вам по-прежнему будет нужна эта отладочная информация, добавьте переменную <a href="#.D0.A0.D0.B5.D0.B4.D0.B0.D0.BA.D1.82.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D0.BF.D1.80.D0.B5.D0.B4.D0.BE.D1.81.D1.82.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.BD.D1.8B.D1.85_.D0.BF.D0.B0.D0.BA.D0.B5.D1.82.D0.B0.D0.BC.D0.B8_.D1.84.D0.B0.D0.B9.D0.BB.D0.BE.D0.B2_.D1.8E.D0.BD.D0.B8.D1.82.D0.BE.D0.B2">обычным</a> способом.
+</p>
+<h3><span class="mw-headline" id=".D0.92.D1.8B.D0.BA.D0.BB.D1.8E.D1.87.D0.B5.D0.BD.D0.B8.D0.B5.2F.D0.BF.D0.B5.D1.80.D0.B5.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B0_.D0.BF.D1.80.D0.BE.D0.B8.D1.81.D1.85.D0.BE.D0.B4.D1.8F.D1.82_.D1.83.D0.B6.D0.B0.D1.81.D0.BD.D0.BE_.D0.B4.D0.BE.D0.BB.D0.B3.D0.BE">Выключение/перезагрузка происходят ужасно долго</span></h3>
+<p>Если процесс выключения занимает очень долгое время (или, по-видимому, зависает), то, вероятно, виновата служба, которая не завершает свою работу. <i>systemd</i> ожидает некоторое время, пока каждая служба завершит свою работу самостоятельно, и только потом пытается принудительно завершить (kill) ее. Если вы столкнулись с такой проблемой, обратитесь к <a rel="nofollow" class="external text" href="http://freedesktop.org/wiki/Software/systemd/Debugging/#shutdowncompleteseventually">данной статье (англ.)</a>.
+</p>
+<h3><span class="mw-headline" id=".D0.9F.D0.BE-.D0.B2.D0.B8.D0.B4.D0.B8.D0.BC.D0.BE.D0.BC.D1.83.2C_.D0.BF.D1.80.D0.BE.D1.86.D0.B5.D1.81.D1.81.D1.8B_.D1.81_.D0.BA.D1.80.D0.B0.D1.82.D0.BA.D0.B8.D0.BC_.D1.81.D1.80.D0.BE.D0.BA.D0.BE.D0.BC_.D0.B6.D0.B8.D0.B7.D0.BD.D0.B8_.D0.BD.D0.B5_.D0.BE.D1.81.D1.82.D0.B0.D0.B2.D0.BB.D1.8F.D1.8E.D1.82_.D0.B7.D0.B0.D0.BF.D0.B8.D1.81.D0.B5.D0.B9_.D0.B2_.D0.BB.D0.BE.D0.B3.D0.B0.D1.85">По-видимому, процессы с кратким сроком жизни не оставляют записей в логах</span></h3>
+<p>Если команда <code>journalctl -u foounit</code> не показывает вывода для службы с коротким сроком жизни, вместо нее обратитесь к PID. Например, если загрузка службы <code>systemd-modules-load.service</code> завершилась неудачно и команда <code>systemctl status systemd-modules-load</code> показывает, что она была запущена с PID 123, то вы сможете посмотреть вывод процесса в журнале под данным PID, то есть командой <code>journalctl -b _PID&#61;123</code>. Такие поля метаданных для журнала, как <code>_SYSTEMD_UNIT</code> и <code>_COMM</code>, собираются асинхронно и зависят от директории <code>/proc</code> в случае с действующими процессами. Исправление этой ситуации требует внесения исправлений в ядро для обеспечения предоставления этих данных через сокет, наподобие <code>SCM_CREDENTIALS</code>.
+</p>
+<h3><span class="mw-headline" id=".D0.9E.D1.82.D0.BA.D0.BB.D1.8E.D1.87.D0.B5.D0.BD.D0.B8.D0.B5_.D0.B6.D1.83.D1.80.D0.BD.D0.B0.D0.BB.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D1.8F_.D0.B0.D0.B2.D0.B0.D1.80.D0.B8.D0.B9.D0.BD.D1.8B.D1.85_.D0.B4.D0.B0.D0.BC.D0.BF.D0.BE.D0.B2_.D0.BF.D0.B0.D0.BC.D1.8F.D1.82.D0.B8_.D0.BF.D1.80.D0.B8.D0.BB.D0.BE.D0.B6.D0.B5.D0.BD.D0.B8.D0.B9">Отключение журналирования аварийных дампов памяти приложений</span></h3>
+<p>Добавьте в файл <code>/etc/systemd/coredump.conf</code> такую строку:
+</p>
+<pre>Storage=none
+</pre>
+<p>и выполните:
+</p>
+<pre># systemctl daemon-reload 
+</pre>
+<p>чтобы перезагрузить конфигурацию.
+</p>
+<h3><span class="mw-headline" id=".D0.A1.D0.BE.D0.BE.D0.B1.D1.89.D0.B5.D0.BD.D0.B8.D0.B5_.D0.BE.D0.B1_.D0.BE.D1.88.D0.B8.D0.B1.D0.BA.D0.B5_.D0.BF.D1.80.D0.B8_.D0.BF.D0.B5.D1.80.D0.B5.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B5_.D0.B8.D0.BB.D0.B8_.D0.B2.D1.8B.D0.BA.D0.BB.D1.8E.D1.87.D0.B5.D0.BD.D0.B8.D0.B8">Сообщение об ошибке при перезагрузке или выключении</span></h3>
+<h4><span class="mw-headline" id="cgroup_:_option_or_name_mismatch.2C_new:_0x0_.22.22.2C_old:_0x4_.22systemd.22">cgroup&#160;: option or name mismatch, new: 0x0 "", old: 0x4 "systemd"</span></h4>
+<p>Для получения объяснения смотрите <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=1372562#p1372562">эту ветку</a>.
+</p>
+<h4><span class="mw-headline" id="watchdog_watchdog0:_watchdog_did_not_stop.21">watchdog watchdog0: watchdog did not stop!</span></h4>
+<p>Для получения объяснения смотрите <a rel="nofollow" class="external text" href="https://bbs.archlinux.org/viewtopic.php?pid=1372562#p1372562">эту ветку</a>.
+</p>
+<h3><span class="mw-headline" id=".D0.92.D1.80.D0.B5.D0.BC.D1.8F_.D0.B7.D0.B0.D0.B3.D1.80.D1.83.D0.B7.D0.BA.D0.B8_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D1.8B_.D1.83.D0.B2.D0.B5.D0.BB.D0.B8.D1.87.D0.B8.D0.B2.D0.B0.D0.B5.D1.82.D1.81.D1.8F_.D1.81_.D1.82.D0.B5.D1.87.D0.B5.D0.BD.D0.B8.D0.B5.D0.BC_.D0.B2.D1.80.D0.B5.D0.BC.D0.B5.D0.BD.D0.B8">Время загрузки системы увеличивается с течением времени</span></h3>
+<p>После использования <code>systemd-analyze</code> некоторое количество пользователей заметило, что их время загрузки значительно увеличилось по сравнению с тем, к чему они привыкли. После использования <code>systemd-analyze blame</code> <a href="/index.php/NetworkManager_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="NetworkManager (Русский)">NetworkManager</a> тратил необычно большое количество времени на запуск.
+</p><p>Проблема некоторых пользователей была связана с тем, что <code>/var/log/journal</code> становился слишком большим. При этом также может уменьшаться скорость работы других команд, например, <code>systemctl status</code> или <code>journalctl</code>. Для решения проблемы можно удалить все файлы из каталога журнала (в идеале - сделав где-нибудь резервные копии, хотя бы временно) и затем установить предел размера файла журнала, как описано в разделе <a href="#.D0.9E.D0.B3.D1.80.D0.B0.D0.BD.D0.B8.D1.87.D0.B5.D0.BD.D0.B8.D0.B5_.D1.80.D0.B0.D0.B7.D0.BC.D0.B5.D1.80.D0.B0_.D0.B6.D1.83.D1.80.D0.BD.D0.B0.D0.BB.D0.B0">#Ограничение размера журнала</a>.
+</p>
+<h3><span class="mw-headline" id="systemd-tmpfiles-setup.service_fails_to_start_at_boot">systemd-tmpfiles-setup.service fails to start at boot</span></h3>
+<p>Начиная с версии Systemd 219, <code>/usr/lib/tmpfiles.d/systemd.conf</code> определяет атрибуты для каталогов ACL,  в <code>/var/log/journal</code> и, следовательно, требует чтобы поддержка ACL была включена для файловой системы, где находится журнал.
+</p><p>Смотрите инструкцию <a href="/index.php/Access_Control_Lists_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)#.D0.92.D0.BA.D0.BB.D1.8E.D1.87.D0.B5.D0.BD.D0.B8.D0.B5_ACL" title="Access Control Lists (Русский)">Access Control Lists (Русский)#Включение ACL</a> для включения ACL на файловой системе в которой <code>/var/log/journal</code>.
+</p>
+<h2><span class="mw-headline" id=".D0.A1.D0.BC.D0.BE.D1.82.D1.80.D0.B8.D1.82.D0.B5_.D1.82.D0.B0.D0.BA.D0.B6.D0.B5">Смотрите также</span></h2>
+<ul><li> <a rel="nofollow" class="external text" href="http://wiki.opennet.ru/Systemd">Systemd для администраторов (Рус.)</a></li>
+<li> <a rel="nofollow" class="external text" href="http://www2.kangran.su/%7Ennz/pub/s4a/s4a_latest.pdf">systemd для администраторов (PDF)</a> - перевод <a rel="nofollow" class="external text" href="http://0pointer.de/blog/projects">цикла статей</a> Леннарта Поттеринга (Lennart Poettering)</li>
+<li> <a rel="nofollow" class="external text" href="http://www.freedesktop.org/wiki/Software/systemd">Официальный веб-сайт (англ.)</a></li>
+<li> <a href="https://en.wikipedia.org/wiki/ru:Systemd" class="extiw" title="wikipedia:ru:Systemd">Статья в Википедии</a></li>
+<li> <a rel="nofollow" class="external text" href="http://0pointer.de/public/systemd-man/">Страницы справочных руководств (англ.)</a></li>
+<li> <a rel="nofollow" class="external text" href="http://freedesktop.org/wiki/Software/systemd/Optimizations">Оптимизации systemd (англ.)</a></li>
+<li> <a rel="nofollow" class="external text" href="http://www.freedesktop.org/wiki/Software/systemd/FrequentlyAskedQuestions">FAQ (англ.)</a></li>
+<li> <a rel="nofollow" class="external text" href="http://www.freedesktop.org/wiki/Software/systemd/TipsAndTricks">Советы и трюки (англ.)</a></li>
+<li> <a rel="nofollow" class="external text" href="http://fedoraproject.org/wiki/Systemd">О systemd в Fedora Project (англ.)</a></li>
+<li> <a rel="nofollow" class="external text" href="http://fedoraproject.org/wiki/How_to_debug_Systemd_problems">Отладка проблем systemd (англ.)</a></li>
+<li> <a rel="nofollow" class="external text" href="http://www.h-online.com/open/features/Control-Centre-The-systemd-Linux-init-system-1565543.html">часть 1</a> и <a rel="nofollow" class="external text" href="http://www.h-online.com/open/features/Booting-up-Tools-and-tips-for-systemd-1570630.html">часть 2</a> вводной статьи в журнале <i>The H Open</i> (англ.)</li>
+<li> <a rel="nofollow" class="external text" href="http://0pointer.de/blog/projects/systemd.html">Блог Lennart'а (англ.)</a></li>
+<li> <a rel="nofollow" class="external text" href="http://0pointer.de/blog/projects/systemd-update.html">Status update (англ.)</a></li>
+<li> <a rel="nofollow" class="external text" href="http://0pointer.de/blog/projects/systemd-update-2.html">Status update2 (англ.)</a></li>
+<li> <a rel="nofollow" class="external text" href="http://0pointer.de/blog/projects/systemd-update-3.html">Status update3 (англ.)</a></li>
+<li> <a rel="nofollow" class="external text" href="http://0pointer.de/blog/projects/why.html">Самые последние изменения (англ.)</a></li>
+<li> <a rel="nofollow" class="external text" href="http://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet/ru">Шпаргалка Fedora по переходу с SysVinit на systemd</a></li>
+<li> <a rel="nofollow" class="external text" href="http://wiki.gentoo.org/wiki/Systemd">Статья systemd в Gentoo Wiki (англ.)</a></li>
+<li> <a href="/index.php/Emacs#Syntax_highlighting_for_systemd_Files" title="Emacs">Emacs Syntax highlighting for Systemd files</a></li></ul>
+
+<!-- 
+NewPP limit report
+Cached time: 20170925042112
+Cache expiry: 86400
+Dynamic content: false
+CPU time usage: 0.121 seconds
+Real time usage: 0.122 seconds
+Preprocessor visited node count: 2364/1000000
+Preprocessor generated node count: 5922/1000000
+Post‐expand include size: 60747/2097152 bytes
+Template argument size: 43259/2097152 bytes
+Highest expansion depth: 9/40
+Expensive parser function count: 0/100
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%   70.847      1 -total
+ 24.44%   17.317    155 Template:Ic
+ 21.09%   14.941     15 Template:META_Box
+ 16.77%   11.878      8 Template:META_Box_Green
+ 16.69%   11.827      7 Template:Tip_(Русский)
+  8.53%    6.044     12 Template:Man
+  7.75%    5.488      7 Template:META_Box_Blue
+  7.55%    5.347      6 Template:Note_(Русский)
+  4.70%    3.330     14 Template:Hc
+  3.28%    2.321      1 Template:Merge_(Русский)
+-->
+
+<!-- Saved in parser cache with key archwiki:pcache:idhash:11206-0!*!0!!en!5!* and timestamp 20170925042112 and revision id 489692
+ -->
+</div>					<div class="printfooter">
+						Retrieved from "<a dir="ltr" href="https://wiki.archlinux.org/index.php?title=Systemd_(Русский)&amp;oldid=489692">https://wiki.archlinux.org/index.php?title=Systemd_(Русский)&amp;oldid=489692</a>"					</div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/index.php/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="/index.php/Category:Daemons_and_system_services_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Category:Daemons and system services (Русский)">Daemons and system services (Русский)</a></li><li><a href="/index.php/Category:Boot_process_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="Category:Boot process (Русский)">Boot process (Русский)</a></li><li><a href="/index.php/Category:%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9" title="Category:Русский">Русский</a></li></ul></div><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul><li><a href="/index.php/Category:Pages_with_broken_package_links" title="Category:Pages with broken package links">Pages with broken package links</a></li><li><a href="/index.php/Category:Pages_or_sections_flagged_with_Template:Accuracy" title="Category:Pages or sections flagged with Template:Accuracy">Pages or sections flagged with Template:Accuracy</a></li></ul></div></div>				<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+
+			<div id="mw-head">
+									<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+						<h3 id="p-personal-label">Personal tools</h3>
+						<ul>
+							<li id="pt-createaccount"><a href="/index.php?title=Special:CreateAccount&amp;returnto=Systemd+%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29" title="You are encouraged to create an account and log in; however, it is not mandatory">Create account</a></li><li id="pt-login"><a href="/index.php?title=Special:UserLogin&amp;returnto=Systemd+%28%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>						</ul>
+					</div>
+									<div id="left-navigation">
+										<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+						<h3 id="p-namespaces-label">Namespaces</h3>
+						<ul>
+															<li  id="ca-nstab-main" class="selected"><span><a href="/index.php/Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)"  title="View the content page [c]" accesskey="c">Page</a></span></li>
+															<li  id="ca-talk"><span><a href="/index.php/Talk:Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)"  title="Discussion about the content page [t]" accesskey="t" rel="discussion">Discussion</a></span></li>
+													</ul>
+					</div>
+										<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+												<h3 id="p-variants-label">
+							<span>Variants</span><a href="#"></a>
+						</h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+									</div>
+				<div id="right-navigation">
+										<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+						<h3 id="p-views-label">Views</h3>
+						<ul>
+															<li id="ca-view" class="selected"><span><a href="/index.php/Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" >Read</a></span></li>
+															<li id="ca-viewsource"><span><a href="/index.php?title=Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;action=edit"  title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></span></li>
+															<li id="ca-history" class="collapsible"><span><a href="/index.php?title=Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;action=history"  title="Past revisions of this page [h]" accesskey="h">View history</a></span></li>
+													</ul>
+					</div>
+										<div id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+						<h3 id="p-cactions-label"><span>More</span><a href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+										<div id="p-search" role="search">
+						<h3>
+							<label for="searchInput">Search</label>
+						</h3>
+
+						<form action="/index.php" id="searchform">
+							<div id="simpleSearch">
+							<input type="search" name="search" placeholder="Search ArchWiki" title="Search ArchWiki [f]" accesskey="f" id="searchInput"/><input type="hidden" value="Special:Search" name="title"/><input type="submit" name="fulltext" value="Search" title="Search the pages for this text" id="mw-searchButton" class="searchButton mw-fallbackSearchButton"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" id="searchButton" class="searchButton"/>							</div>
+						</form>
+					</div>
+									</div>
+			</div>
+			<div id="mw-panel">
+				<div id="p-logo" role="banner"><a class="mw-wiki-logo" href="/index.php/Main_page"  title="Visit the main page"></a></div>
+						<div class="portal" role="navigation" id='p-navigation' aria-labelledby='p-navigation-label'>
+			<h3 id='p-navigation-label'>Navigation</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-mainpage-description"><a href="/index.php/Main_page" title="Visit the main page [z]" accesskey="z">Main page</a></li><li id="n-categories"><a href="/index.php/Table_of_contents">Categories</a></li><li id="n-portal"><a href="/index.php/Getting_involved" title="Various ways Archers can contribute to the community">Getting involved</a></li><li id="n-currentevents"><a href="/index.php/ArchWiki:News" title="The latest lowdown on the wiki">Wiki news</a></li><li id="n-randompage"><a href="/index.php/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-interaction' aria-labelledby='p-interaction-label'>
+			<h3 id='p-interaction-label'>interaction</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-help"><a href="/index.php/Category:Help" title="Wiki navigation, reading, and editing help">Help</a></li><li id="n-Contributing"><a href="/index.php/ArchWiki:Contributing">Contributing</a></li><li id="n-recentchanges"><a href="/index.php/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li><li id="n-Recent-talks"><a href="https://wiki.archlinux.org/index.php/Special:RecentChanges?namespace=0&amp;invert=1" rel="nofollow">Recent talks</a></li><li id="n-newpages"><a href="/index.php/Special:NewPages">New pages</a></li><li id="n-Statistics"><a href="/index.php/ArchWiki:Statistics">Statistics</a></li><li id="n-Reports"><a href="/index.php/ArchWiki:Reports">Reports</a></li><li id="n-Requests"><a href="/index.php/ArchWiki:Requests">Requests</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-tb' aria-labelledby='p-tb-label'>
+			<h3 id='p-tb-label'>Tools</h3>
+
+			<div class="body">
+									<ul>
+						<li id="t-whatlinkshere"><a href="/index.php/Special:WhatLinksHere/Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked"><a href="/index.php/Special:RecentChangesLinked/Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)" rel="nofollow" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li><li id="t-specialpages"><a href="/index.php/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li><li id="t-print"><a href="/index.php?title=Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;printable=yes" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li><li id="t-permalink"><a href="/index.php?title=Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;oldid=489692" title="Permanent link to this revision of the page">Permanent link</a></li><li id="t-info"><a href="/index.php?title=Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)&amp;action=info" title="More information about this page">Page information</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id='p-lang' aria-labelledby='p-lang-label'>
+			<h3 id='p-lang-label'>In other languages</h3>
+
+			<div class="body">
+									<ul>
+						<li class="interlanguage-link interwiki-ar"><a href="https://wiki.archlinux.org/index.php/Systemd_(%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9)" title="Systemd – العربية" lang="ar" hreflang="ar" class="interlanguage-link-target">العربية</a></li><li class="interlanguage-link interwiki-de"><a href="https://wiki.archlinux.de/title/Systemd" title="Systemd – Deutsch" lang="de" hreflang="de" class="interlanguage-link-target">Deutsch</a></li><li class="interlanguage-link interwiki-el"><a href="https://wiki.archlinux.org/index.php/Systemd_(%CE%95%CE%BB%CE%BB%CE%B7%CE%BD%CE%B9%CE%BA%CE%AC)" title="Systemd – Ελληνικά" lang="el" hreflang="el" class="interlanguage-link-target">Ελληνικά</a></li><li class="interlanguage-link interwiki-en"><a href="https://wiki.archlinux.org/index.php/Systemd" title="Systemd – English" lang="en" hreflang="en" class="interlanguage-link-target">English</a></li><li class="interlanguage-link interwiki-es"><a href="https://wiki.archlinux.org/index.php/Systemd_(Espa%C3%B1ol)" title="Systemd – español" lang="es" hreflang="es" class="interlanguage-link-target">Español</a></li><li class="interlanguage-link interwiki-fa"><a href="http://wiki.archusers.ir/index.php/Systemd" title="Systemd – فارسی" lang="fa" hreflang="fa" class="interlanguage-link-target">فارسی</a></li><li class="interlanguage-link interwiki-fr"><a href="http://wiki.archlinux.fr/Systemd" title="Systemd – français" lang="fr" hreflang="fr" class="interlanguage-link-target">Français</a></li><li class="interlanguage-link interwiki-it"><a href="https://wiki.archlinux.org/index.php/Systemd_(Italiano)" title="Systemd – italiano" lang="it" hreflang="it" class="interlanguage-link-target">Italiano</a></li><li class="interlanguage-link interwiki-ja"><a href="https://wiki.archlinux.jp/index.php/Systemd" title="Systemd – 日本語" lang="ja" hreflang="ja" class="interlanguage-link-target">日本語</a></li><li class="interlanguage-link interwiki-pt"><a href="https://wiki.archlinux.org/index.php/Systemd_(Portugu%C3%AAs)" title="Systemd – português" lang="pt" hreflang="pt" class="interlanguage-link-target">Português</a></li><li class="interlanguage-link interwiki-zh-hans"><a href="https://wiki.archlinux.org/index.php/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" title="Systemd – 中文（简体）‎" lang="zh-Hans" hreflang="zh-Hans" class="interlanguage-link-target">中文（简体）‎</a></li><li class="interlanguage-link interwiki-zh-hant"><a href="https://wiki.archlinux.org/index.php/Systemd_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87)" title="Systemd – 中文（繁體）‎" lang="zh-Hant" hreflang="zh-Hant" class="interlanguage-link-target">中文（繁體）‎</a></li>					</ul>
+							</div>
+		</div>
+				</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last edited on 9 September 2017, at 19:06.</li>
+											<li id="footer-info-copyright">Content is available under <a class="external" rel="nofollow" href="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.3 or later</a> unless otherwise noted.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="/index.php/ArchWiki:Privacy_policy" class="mw-redirect" title="ArchWiki:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="/index.php/ArchWiki:About" title="ArchWiki:About">About ArchWiki</a></li>
+											<li id="footer-places-disclaimer"><a href="/index.php/ArchWiki:General_disclaimer" title="ArchWiki:General disclaimer">Disclaimers</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+											<li id="footer-copyrightico">
+													</li>
+									</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.121","walltime":"0.122","ppvisitednodes":{"value":2364,"limit":1000000},"ppgeneratednodes":{"value":5922,"limit":1000000},"postexpandincludesize":{"value":60747,"limit":2097152},"templateargumentsize":{"value":43259,"limit":2097152},"expansiondepth":{"value":9,"limit":40},"expensivefunctioncount":{"value":0,"limit":100},"timingprofile":["100.00%   70.847      1 -total"," 24.44%   17.317    155 Template:Ic"," 21.09%   14.941     15 Template:META_Box"," 16.77%   11.878      8 Template:META_Box_Green"," 16.69%   11.827      7 Template:Tip_(Русский)","  8.53%    6.044     12 Template:Man","  7.75%    5.488      7 Template:META_Box_Blue","  7.55%    5.347      6 Template:Note_(Русский)","  4.70%    3.330     14 Template:Hc","  3.28%    2.321      1 Template:Merge_(Русский)"]},"cachereport":{"timestamp":"20170925042112","ttl":86400,"transientcontent":false}}});});</script><script>(window.RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgBackendResponseTime":147});});</script>
+	</body>
+<!-- Cached/compressed 20170925042112 -->
+</html>

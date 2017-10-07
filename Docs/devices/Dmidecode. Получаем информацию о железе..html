@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru-ru" dir="ltr" lang="ru-ru"><head><script type="text/javascript" async="" src="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/ga.js"></script>
+
+  <!-- base href="http://linux-bash.ru/menusistem/106-dmidecode.html" -->
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="линукс, консоль, dmidecode, информация, материнская плата, bios, процессор, everest, linux">
+  <meta name="title" content="Dmidecode. Получаем информацию о железе.">
+  <meta name="description" content="Dmidecode. Получаем информацию о железе из консоли linux: процессоре, материнской плате, модулях оперативной памяти.">
+  <meta name="generator" content="Joomla! 1.5 - Open Source Content Management">
+  <title>Dmidecode. Получаем информацию о железе.</title>
+  <script type="text/javascript" src="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/jcomments-v2.js"></script>
+  <script type="text/javascript" src="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/ajax.js"></script>
+  <script type="text/javascript" src="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/mootools.js"></script>
+  <script type="text/javascript" src="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/caption.js"></script>
+
+
+
+<link rel="stylesheet" href="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/system.css" type="text/css">
+
+<link rel="stylesheet" href="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/general.css" type="text/css">
+
+
+
+<link rel="stylesheet" href="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/template.css" type="text/css">
+
+<!--[if lte IE 6]>
+
+<link href="/templates/boldtemp/css/ie6only.css" rel="stylesheet" type="text/css" />
+
+<![endif]-->
+
+<!--[if lte IE 7]>
+
+<link href="/templates/boldtemp/css/ie7only.css" rel="stylesheet" type="text/css" />
+
+<![endif]-->
+
+
+<!--
+<style type="text/css"> #wrap {width:760px;} </style>
+
+
+
+-->
+
+</head>
+
+<body>
+
+
+<div id="wrap">
+
+  <div id="header">
+
+    <div class="inside">
+<div align="left">
+<table "="" width="780">
+<tbody><tr>
+	<td align="left"><h1><a href="http://linux-bash.ru/" style="color:#FFFFFF">LINUX - Жизнь в консоли ЕСТЬ!!!</a></h1></td>
+	<td align="right"> | <a href="http://vk.com/linuxbash" style="color:#FFFFFF">вконтакте</a> 
+        | <a href="http://twitter.com/linuxbash_ru" style="color:#FFFFFF">твиттер</a>
+        | <a href="http://www.facebook.com/profile.php?id=100003620775048&amp;sk=wall" style="color:#FFFFFF">фэйсбук</a> |
+	</td>
+</tr>
+</tbody></table>
+</div>
+      
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <div id="system-message">
+
+    <div class="error">
+
+      
+
+    </div>
+
+  </div>
+
+
+
+  
+  <div id="sidebar">
+
+    <div class="inside">
+
+      		<div class="moduletable">
+					<form action="index.php" method="post">
+	<div class="search">
+		<input name="searchword" id="mod_search_searchword" maxlength="20" alt="Поиск" class="inputbox" size="10" value="поиск..." onblur="if(this.value=='') this.value='поиск...';" onfocus="if(this.value=='поиск...') this.value='';" type="text"><input value="Поиск" class="button" onclick="this.form.searchword.focus();" type="submit">	</div>
+	<input name="task" value="search" type="hidden">
+	<input name="option" value="com_search" type="hidden">
+	<input name="Itemid" value="6" type="hidden">
+</form>		</div>
+			<div class="moduletable_menu">
+					<h3>Главное меню</h3>
+					<ul class="menu"><li class="item1"><a href="http://linux-bash.ru/"><span>Главная</span></a></li><li class="item2"><a href="http://linux-bash.ru/mcommand.html"><span>Основные команды линукс</span></a></li><li class="item4"><a href="http://linux-bash.ru/mseti.html"><span>Сеть</span></a></li><li class="item5"><a href="http://linux-bash.ru/mtext.html"><span>Текстовые редакторы</span></a></li><li id="current" class="active item6"><a href="http://linux-bash.ru/menusistem.html"><span>Системные утилиты</span></a></li><li class="item7"><a href="http://linux-bash.ru/menumultim.html"><span>Мультимедиа</span></a></li><li class="item8"><a href="http://linux-bash.ru/menudisk.html"><span>CD, DVD, HDD, USB-Flash</span></a></li><li class="item10"><a href="http://linux-bash.ru/mgrafic.html"><span>Графика</span></a></li><li class="item15"><a href="http://linux-bash.ru/console-games.html"><span>Игры</span></a></li><li class="item14"><a href="http://linux-bash.ru/umor.html"><span>Юмор о Linux</span></a></li><li class="item11"><a href="http://linux-bash.ru/zametki.html"><span>Заметки о разном...</span></a></li><li class="item12"><a href="http://linux-bash.ru/links.html"><span>Полезные ссылки</span></a></li><li class="item13"><a href="http://linux-bash.ru/i.html"><span>Коротко о себе...</span></a></li></ul>		</div>
+			<div class="moduletable_avt">
+					<form action="/menusistem.html" method="post" name="login" id="form-login">
+	Для возможности комментирования статей необходима авторизация:	<fieldset class="input">
+	<p id="form-login-username">
+		<label for="modlgn_username">Логин</label><br>
+		<input id="modlgn_username" name="username" class="inputbox" alt="username" size="18" type="text">
+	</p>
+	<p id="form-login-password">
+		<label for="modlgn_passwd">Пароль</label><br>
+		<input id="modlgn_passwd" name="passwd" class="inputbox" size="18" alt="password" type="password">
+	</p>
+		<p id="form-login-remember">
+		<label for="modlgn_remember">Запомнить меня</label>
+		<input id="modlgn_remember" name="remember" class="inputbox" value="yes" alt="Remember Me" type="checkbox">
+	</p>
+		<input name="Submit" class="button" value="Войти" type="submit">
+	</fieldset>
+	<ul>
+		<li>
+			<a href="http://linux-bash.ru/component/user/reset.html">
+			Забыли пароль?</a>
+		</li>
+		<li>
+			<a href="http://linux-bash.ru/component/user/remind.html">
+			Забыли логин?</a>
+		</li>
+				<li>
+			<a href="http://linux-bash.ru/component/user/register.html">
+				Регистрация</a>
+		</li>
+			</ul>
+	
+	<input name="option" value="com_user" type="hidden">
+	<input name="task" value="login" type="hidden">
+	<input name="return" value="L2hvbWUuaHRtbA==" type="hidden">
+	<input name="3ecdb861909d8a991adbdbd0680478af" value="1" type="hidden"></form>
+		</div>
+			<div class="moduletable">
+					<h3>Последние статьи</h3>
+					<ul class="latestnews">
+	<li class="latestnews">
+		<a href="http://linux-bash.ru/menusistem/116-cpuburn.html" class="latestnews">
+			Cpuburn. Стресс-тест ЦПУ.</a>
+	</li>
+	<li class="latestnews">
+		<a href="http://linux-bash.ru/menumultim/115-cvlc.html" class="latestnews">
+			Ретрансляция видео с ip-камер с помощью cvlc</a>
+	</li>
+	<li class="latestnews">
+		<a href="http://linux-bash.ru/menusistem/114-1cpostgreqldebian7.html" class="latestnews">
+			Установка сервера 1с 8.3.5.1068 в связке с postgresql 9.2 на linux debian 7 x64</a>
+	</li>
+	<li class="latestnews">
+		<a href="http://linux-bash.ru/menudisk/113-megacli.html" class="latestnews">
+			MegaCli - программа для администрирования RAID-контроллера</a>
+	</li>
+	<li class="latestnews">
+		<a href="http://linux-bash.ru/menudisk/111-2013-07-12-10-24-53.html" class="latestnews">
+			Увеличиваем скорость записи на флешки</a>
+	</li>
+	<li class="latestnews">
+		<a href="http://linux-bash.ru/menumultim/110-youtube-dl.html" class="latestnews">
+			Загрузка видео с youtube утилитой youtube-dl</a>
+	</li>
+	<li class="latestnews">
+		<a href="http://linux-bash.ru/menusistem/109-fdupes.html" class="latestnews">
+			Поиск и удаление дубликатов файлов программой fdupes.</a>
+	</li>
+	<li class="latestnews">
+		<a href="http://linux-bash.ru/menudisk/108-seeker.html" class="latestnews">
+			Тест скорости диска утилитой seeker</a>
+	</li>
+	<li class="latestnews">
+		<a href="http://linux-bash.ru/menusistem/106-dmidecode.html" class="latestnews">
+			Dmidecode. Получаем информацию о железе.</a>
+	</li>
+	<li class="latestnews">
+		<a href="http://linux-bash.ru/menumultim/105-ffserver.html" class="latestnews">
+			FFServer: Трансляция видео с веб-камеры со звуком через браузер.</a>
+	</li>
+</ul>		</div>
+			<div class="moduletable">
+					<h3>Счетчики</h3>
+					<div class="bannergroup">
+
+<div class="banneritem"><div style="float:left;">
+<!--LiveInternet counter--><script type="text/javascript"><!--
+document.write("<a href='http://www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t29.1;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: показано количество просмотров и"+
+" посетителей' "+
+"border='0' width='70' height='100'><\/a>")
+//--></script><a href="http://www.liveinternet.ru/click" target="_blank"><img src="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/hit.gif" alt="" title="LiveInternet: показано количество просмотров и посетителей" width="70" height="100" border="0"></a><!--/LiveInternet-->
+</div>
+
+<div style="float:left;">
+<!--Rating@Mail.ru counter-->
+<a target="_top" href="http://top.mail.ru/jump?from=1939741">
+<img src="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/counter" alt="Рейтинг@Mail.ru" width="88" height="40" border="0"></a>
+<!--// Rating@Mail.ru counter-->
+
+<!-- Yandex.Metrika -->
+<script src="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/watch.js" type="text/javascript"></script>
+<div style="display:none;"><script type="text/javascript">
+try { var yaCounter1960159 = new Ya.Metrika(1960159);
+yaCounter1960159.clickmap(true);
+} catch(e){}
+</script></div>
+<noscript><div style="position:absolute"><img src="//mc.yandex.ru/watch/1960159" alt="" /></div></noscript>
+<!-- /Yandex.Metrika -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-19793709-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</div>
+
+<div style="float:both;">
+<!-- begin of Top100 code -->
+
+<script id="top100Counter" type="text/javascript" src="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/top100.bin"></script><a href="https://top100.rambler.ru/home?id=2330477" target="_blank"><img src="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/a.gif" title="Rambler's Top100" alt="Rambler's Top100" border="0"></a>
+<noscript>
+<a href="http://top100.rambler.ru/navi/2330477/">
+<img src="http://counter.rambler.ru/top100.cnt?2330477" alt="Rambler's Top100" border="0" />
+</a>
+
+</noscript>
+<!-- end of Top100 code -->
+</div>
+
+<div style="float:both;">
+<a href="http://yandex.ru/cy?base=0&amp;host=linux-bash.ru"><img src="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/cycounter.gif" alt="Яндекс цитирования" width="88" height="31" border="0"></a>
+</div><div class="clr"></div>
+	</div>
+
+</div>		</div>
+	
+
+    </div>
+
+  </div>
+
+  
+  <div id="content80">
+
+    <div class="inside">
+
+      <div id="pathway">
+
+        
+
+      </div>
+
+      <table class="contentpaneopen">
+<tbody><tr>
+						<td class="buttonheading" width="100%" align="right">
+		<a href="http://linux-bash.ru/menusistem/106-dmidecode.pdf" title="PDF" onclick="window.open(this.href,'win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no'); return false;" rel="nofollow"><img src="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/pdf_button.png" alt="PDF"></a>		</td>
+		
+				<td class="buttonheading" width="100%" align="right">
+		<a href="http://linux-bash.ru/menusistem/106-dmidecode.html?tmpl=component&amp;print=1&amp;layout=default&amp;page=" title="Печать" onclick="window.open(this.href,'win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no'); return false;" rel="nofollow"><img src="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/printButton.png" alt="Печать"></a>		</td>
+		
+				<td class="buttonheading" width="100%" align="right">
+		<a href="http://linux-bash.ru/component/mailto/?tmpl=component&amp;link=aHR0cDovL2xpbnV4LWJhc2gucnUvbWVudXNpc3RlbS8xMDYtZG1pZGVjb2RlLmh0bWw%3D" title="E-mail" onclick="window.open(this.href,'win2','width=400,height=350,menubar=yes,resizable=yes'); return false;"><img src="Dmidecode.%20%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B0%D0%B5%D0%BC%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B5._files/emailButton.png" alt="E-mail"></a>		</td>
+					</tr>
+</tbody></table>
+
+<table class="contentpaneopen">
+
+
+
+<tbody><tr>
+<td valign="top">
+<h1 style="text-align: center" mce_style="text-align: center">Dmidecode. Получаем информацию о железе.</h1><p>&nbsp;</p><p><strong>DMI (Desktop Management Interface)</strong> — интерфейс (API), позволяющий программному обеспечению собирать данные о характеристиках компьютера. <br><strong>Dmidecode </strong>- программа для linux, позволяющая работать с DMI. Можно получить информацию о:<br><br>  bios<br>  system<br>  baseboard<br>  chassis<br>  processor<br>  memory<br>  cache<br>  connector<br>  slot<br><br></p><h2>Установка проста, в репозиториях есть:<br></h2><p><br><strong><em>apt-get install dmidecode</em></strong><br><br></p><h2>Далее примеры использования.<br></h2><p>&nbsp;</p>
+
+<p>&nbsp;</p><h3>Информация о BIOS:<br></h3><p>    <br><strong><em>dmidecode --type BIOS</em></strong><br><br><strong># dmidecode 2.9<br>SMBIOS 2.4 present.<br><br>Handle 0x0000, DMI type 0, 24 bytes<br>BIOS Information<br>	Vendor: Award Software International, Inc.<br>	Version: F6<br>	Release Date: 11/04/2009<br>	Address: 0xE0000<br>	Runtime Size: 128 kB<br>	ROM Size: 1024 kB<br>	Characteristics:<br>		PCI is supported<br>		PNP is supported<br>		APM is supported<br>		BIOS is upgradeable<br>		BIOS shadowing is allowed<br>		Boot from CD is supported<br>		Selectable boot is supported<br>		EDD is supported<br>		5.25"/360 KB floppy services are supported (int 13h)<br>		5.25"/1.2 MB floppy services are supported (int 13h)<br>		3.5"/720 KB floppy services are supported (int 13h)<br>		3.5"/2.88 MB floppy services are supported (int 13h)<br>		Print screen service is supported (int 5h)<br>		8042 keyboard services are supported (int 9h)<br>		Serial services are supported (int 14h)<br>		Printer services are supported (int 17h)<br>		CGA/mono video services are supported (int 10h)<br>		ACPI is supported<br>		USB legacy is supported<br>		LS-120 boot is supported<br>		ATAPI Zip drive boot is supported<br>		BIOS boot specification is supported<br>		Targeted content distribution is supported<br><br>Handle 0x0018, DMI type 13, 22 bytes<br>BIOS Language Information<br>	Installable Languages: 3<br>		n|US|iso8859-1<br>		n|US|iso8859-1<br>		r|CA|iso8859-1<br>	Currently Installed Language: n|US|iso8859-1</strong><br><br></p><h3>Информация о материнской плате:<br></h3><p><br><strong><em>dmidecode --type baseboard</em></strong><br><br><strong># dmidecode 2.9<br>SMBIOS 2.4 present.<br><br>Handle 0x0002, DMI type 2, 8 bytes<br>Base Board Information<br>	Manufacturer: Gigabyte Technology Co., Ltd.<br>	Product Name: G41M-ES2L<br>	Version: x.x<br>	Serial Number:  </strong><br><br></p><h3>Информация о процессоре:<br></h3><p><br><strong><em>dmidecode --type processor</em></strong><br><br><strong># dmidecode 2.9<br>SMBIOS 2.4 present.<br><br>Handle 0x0004, DMI type 4, 35 bytes<br>Processor Information<br>	Socket Designation: Socket 775<br>	Type: Central Processor<br>	Family: Other<br>	Manufacturer: Intel<br>	ID: 7A 06 01 00 FF FB EB BF<br>	Version: Pentium(R) Dual-Core CPU E6<br>	Voltage: 1.0 V<br>	External Clock: 266 MHz<br>	Max Speed: 4000 MHz<br>	Current Speed: 2800 MHz<br>	Status: Populated, Enabled<br>	Upgrade: Socket 478<br>	L1 Cache Handle: 0x000A<br>	L2 Cache Handle: 0x000B<br>	L3 Cache Handle: Not Provided<br>	Serial Number:  <br>	Asset Tag:  <br>	Part Number:  </strong><br><br></p><h3>Информация о установленных модулях памяти и колличестве слотов под нее:<br></h3><p><br><strong><em>dmidecode --type memory</em></strong><br><br><strong># dmidecode 2.9<br>SMBIOS 2.4 present.<br><br>Handle 0x0005, DMI type 5, 24 bytes<br>Memory Controller Information<br>	Error Detecting Method: 8-bit Parity<br>	Error Correcting Capabilities:<br>		None<br>	Supported Interleave: One-way Interleave<br>	Current Interleave: One-way Interleave<br>	Maximum Memory Module Size: 1024 MB<br>	Maximum Total Memory Size: 4096 MB<br>	Supported Speeds:<br>		Other<br>	Supported Memory Types:<br>		Other<br>	Memory Module Voltage: 5.0 V<br>	Associated Memory Slots: 4<br>		0x0006<br>		0x0007<br>		0x0008<br>		0x0009<br>	Enabled Error Correcting Capabilities:<br>		None<br><br>Handle 0x0006, DMI type 6, 12 bytes<br>Memory Module Information<br>	Socket Designation: A0<br>	Bank Connections: 1<br>	Current Speed: Unknown<br>	Type: Other<br>	Installed Size: 2048 MB (Single-bank Connection)<br>	Enabled Size: 2048 MB (Single-bank Connection)<br>	Error Status: OK<br><br>Handle 0x0007, DMI type 6, 12 bytes<br>Memory Module Information<br>	Socket Designation: A1<br>	Bank Connections: 2<br>	Current Speed: Unknown<br>	Type: Unknown<br>	Installed Size: Not Installed<br>	Enabled Size: Not Installed<br>	Error Status: OK<br><br>Handle 0x0008, DMI type 6, 12 bytes<br>Memory Module Information<br>	Socket Designation: A2<br>	Bank Connections: 3<br>	Current Speed: Unknown<br>	Type: Other<br>	Installed Size: 2048 MB (Single-bank Connection)<br>	Enabled Size: 2048 MB (Single-bank Connection)<br>	Error Status: OK<br><br>Handle 0x0009, DMI type 6, 12 bytes<br>Memory Module Information<br>	Socket Designation: A3<br>	Bank Connections: 4<br>	Current Speed: Unknown<br>	Type: Unknown<br>	Installed Size: Not Installed<br>	Enabled Size: Not Installed<br>	Error Status: OK<br><br>Handle 0x0019, DMI type 16, 15 bytes<br>Physical Memory Array<br>	Location: System Board Or Motherboard<br>	Use: System Memory<br>	Error Correction Type: None<br>	Maximum Capacity: 4 GB<br>	Error Information Handle: Not Provided<br>	Number Of Devices: 4<br><br>Handle 0x001A, DMI type 17, 27 bytes<br>Memory Device<br>	Array Handle: 0x0019<br>	Error Information Handle: Not Provided<br>	Total Width: 64 bits<br>	Data Width: 64 bits<br>	Size: 2048 MB<br>	Form Factor: DIMM<br>	Set: None<br>	Locator: A0<br>	Bank Locator: Bank0/1<br>	Type: Unknown<br>	Type Detail: None<br>	Speed: 800 MHz (1.2 ns)<br>	Manufacturer:  <br>	Serial Number:  <br>	Asset Tag:  <br>	Part Number:  <br><br>Handle 0x001B, DMI type 17, 27 bytes<br>Memory Device<br>	Array Handle: 0x0019<br>	Error Information Handle: Not Provided<br>	Total Width: Unknown<br>	Data Width: Unknown<br>	Size: No Module Installed<br>	Form Factor: DIMM<br>	Set: None<br>	Locator: A1<br>	Bank Locator: Bank2/3<br>	Type: Unknown<br>	Type Detail: None<br>	Speed: Unknown<br>	Manufacturer:  <br>	Serial Number:  <br>	Asset Tag:  <br>	Part Number:  <br><br>Handle 0x001C, DMI type 17, 27 bytes<br>Memory Device<br>	Array Handle: 0x0019<br>	Error Information Handle: Not Provided<br>	Total Width: 64 bits<br>	Data Width: 64 bits<br>	Size: 2048 MB<br>	Form Factor: DIMM<br>	Set: None<br>	Locator: A2<br>	Bank Locator: Bank4/5<br>	Type: Unknown<br>	Type Detail: None<br>	Speed: 800 MHz (1.2 ns)<br>	Manufacturer:  <br>	Serial Number:  <br>	Asset Tag:  <br>	Part Number:  <br><br>Handle 0x001D, DMI type 17, 27 bytes<br>Memory Device<br>	Array Handle: 0x0019<br>	Error Information Handle: Not Provided<br>	Total Width: Unknown<br>	Data Width: Unknown<br>	Size: No Module Installed<br>	Form Factor: DIMM<br>	Set: None<br>	Locator: A3<br>	Bank Locator: Bank6/7<br>	Type: Unknown<br>	Type Detail: None<br>	Speed: Unknown<br>	Manufacturer:  <br>	Serial Number:  <br>	Asset Tag:  <br>	Part Number:  </strong><br><br></p><h3>Информация о разьемах на материнской плате:<br></h3><p><br><em><strong>dmidecode --type connector</strong></em><br><br><strong># dmidecode 2.9<br>SMBIOS 2.4 present.<br><br>Handle 0x000C, DMI type 8, 9 bytes<br>Port Connector Information<br>	Internal Reference Designator: PRIMARY IDE<br>	Internal Connector Type: On Board IDE<br>	External Reference Designator:  <br>	External Connector Type: None<br>	Port Type: Other<br><br>Handle 0x000D, DMI type 8, 9 bytes<br>Port Connector Information<br>	Internal Reference Designator: SECONDARY IDE<br>	Internal Connector Type: On Board IDE<br>	External Reference Designator:  <br>	External Connector Type: None<br>	Port Type: Other<br><br>Handle 0x000E, DMI type 8, 9 bytes<br>Port Connector Information<br>	Internal Reference Designator: FDD<br>	Internal Connector Type: On Board Floppy<br>	External Reference Designator:  <br>	External Connector Type: None<br>	Port Type: 8251 FIFO Compatible<br><br>Handle 0x000F, DMI type 8, 9 bytes<br>Port Connector Information<br>	Internal Reference Designator: COM1<br>	Internal Connector Type: 9 Pin Dual Inline (pin 10 cut)<br>	External Reference Designator:  <br>	External Connector Type: DB-9 male<br>	Port Type: Serial Port 16450 Compatible<br><br>Handle 0x0010, DMI type 8, 9 bytes<br>Port Connector Information<br>	Internal Reference Designator: COM2<br>	Internal Connector Type: 9 Pin Dual Inline (pin 10 cut)<br>	External Reference Designator:  <br>	External Connector Type: DB-9 male<br>	Port Type: Serial Port 16450 Compatible<br><br>Handle 0x0011, DMI type 8, 9 bytes<br>Port Connector Information<br>	Internal Reference Designator: LPT1<br>	Internal Connector Type: DB-25 female<br>	External Reference Designator:  <br>	External Connector Type: DB-25 female<br>	Port Type: Parallel Port ECP/EPP<br><br>Handle 0x0012, DMI type 8, 9 bytes<br>Port Connector Information<br>	Internal Reference Designator: Keyboard<br>	Internal Connector Type: Other<br>	External Reference Designator:  <br>	External Connector Type: PS/2<br>	Port Type: Keyboard Port<br><br>Handle 0x0013, DMI type 8, 9 bytes<br>Port Connector Information<br>	Internal Reference Designator: PS/2 Mouse<br>	Internal Connector Type: PS/2<br>	External Reference Designator: No Detected<br>	External Connector Type: PS/2<br>	Port Type: Mouse Port<br><br>Handle 0x0014, DMI type 8, 9 bytes<br>Port Connector Information<br>	Internal Reference Designator: USB<br>	Internal Connector Type: None<br>	External Reference Designator:  <br>	External Connector Type: Access Bus (USB)<br>	Port Type: USB<br><br>Handle 0x0015, DMI type 8, 9 bytes<br>Port Connector Information<br>	Internal Reference Designator: USB<br>	Internal Connector Type: None<br>	External Reference Designator:  <br>	External Connector Type: Access Bus (USB)<br>	Port Type: USB</strong><br><br></p></td>
+</tr>
+
+</tbody></table>
+<span class="article_separator">&nbsp;</span>
+
+
+    </div>
+
+  </div>
+
+  
+  
+  <div id="footer">
+
+    <div class="inside">
+
+      <div><a href="http://linux-bash.ru/" style="color:#FFFFFF">LINUX - Жизнь в консоли ЕСТЬ!</a></div>
+<div>(c) by ВиртычЪ</div>
+
+    </div>
+
+  </div>
+
+  
+</div>
+
+<!--end of wrap-->
+
+
+
+</body></html>

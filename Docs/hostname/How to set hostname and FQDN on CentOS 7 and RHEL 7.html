@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#" lang="en-US"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<title>How to set hostname and FQDN on CentOS 7 and RHEL 7</title><meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+<meta name="description" content="The tutorial will explain about how to set hostname and FQDN on CentOS 7 and RHEL 7 (Red Hat Enterprise Linux 7) without system reboot / restart .">
+<script data-rocketsrc="http://rules.quantcount.com/rules-p-aRAyv335QWAKb.js" data-rocketoptimized="true"></script><script data-rocketsrc="http://edge.quantserve.com/quant.js" data-rocketoptimized="true" async="" type="text/javascript"></script><script async="" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/analytics.js"></script><script type="text/javascript" async="" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/ga.js"></script><script type="text/javascript">
+//<![CDATA[
+var _gaq = _gaq || [];_gaq.push(['_setAccount', 'UA-8197358-3']);_gaq.push(['_trackPageview']);(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();(function(b){(function(a){"__CF"in b&&"DJS"in b.__CF?b.__CF.DJS.push(a):"addEventListener"in b?b.addEventListener("load",a,!1):b.attachEvent("onload",a)})(function(){"FB"in b&&"Event"in FB&&"subscribe"in FB.Event&&(FB.Event.subscribe("edge.create",function(a){_gaq.push(["_trackSocial","facebook","like",a])}),FB.Event.subscribe("edge.remove",function(a){_gaq.push(["_trackSocial","facebook","unlike",a])}),FB.Event.subscribe("message.send",function(a){_gaq.push(["_trackSocial","facebook","send",a])}));"twttr"in b&&"events"in twttr&&"bind"in twttr.events&&twttr.events.bind("tweet",function(a){if(a){var b;if(a.target&&a.target.nodeName=="IFRAME")a:{if(a=a.target.src){a=a.split("#")[0].match(/[^?=&]+=([^&]*)?/g);b=0;for(var c;c=a[b];++b)if(c.indexOf("url")===0){b=unescape(c.split("=")[1]);break a}}b=void 0}_gaq.push(["_trackSocial","twitter","tweet",b])}})})})(window);//]]>
+</script><script type="text/javascript">
+//<![CDATA[
+try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag2:1,mirage2:0,oracle:0,paths:{cloudflare:"/cdn-cgi/nexp/dok3v=1613a3a185/"},atok:"b3532c49fd5b48eb38e1853b358bcc5d",petok:"cb0f8ddc57213edd7ea4e9299be5749e252b76ea-1499691877-1800",zone:"sharadchhetri.com",rocket:"a",apps:{"ga_key":{"ua":"UA-8197358-3","ga_bs":"2"}}}];document.write('<script type="text/javascript" src="//ajax.cloudflare.com/cdn-cgi/nexp/dok3v=85b614c0f6/cloudflare.min.js"><'+'\/script>');}}catch(e){};
+//]]>
+</script><script type="text/javascript" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/cloudflare.js"></script><style type="text/css">.cf-hidden { display: none; } .cf-invisible { visibility: hidden; }</style><script data-module="cloudflare/rocket" id="cfjs_block_dfd0631f99" onload="CloudFlare.__cfjs_block_dfd0631f99_load()" onerror="CloudFlare.__cfjs_block_dfd0631f99_error()" onreadystatechange="CloudFlare.__cfjs_block_dfd0631f99_readystatechange()" type="text/javascript" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/rocket.js"></script>
+<link rel="canonical" href="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/">
+<link rel="publisher" href="https://plus.google.com/u/0/b/106113760034458036166/+Sharadchhetridotcom/about">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to set hostname and FQDN on CentOS 7 and RHEL 7">
+<meta property="og:description" content="The tutorial will explain about how to set hostname and FQDN on CentOS 7 and RHEL 7 (Red Hat Enterprise Linux 7) without system reboot / restart .">
+<meta property="og:url" content="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/">
+<meta property="og:site_name" content="sharadchhetri.com">
+<meta property="article:publisher" content="https://www.facebook.com/sharadchhetricom-569760293039674/">
+<meta property="article:tag" content="centos 7">
+<meta property="article:tag" content="hostname">
+<meta property="article:tag" content="Red Hat">
+<meta property="article:tag" content="RHEL 7">
+<meta property="article:section" content="Linux">
+<meta property="article:published_time" content="2014-09-27T12:24:31+00:00">
+<meta property="og:image" content="http://www.sharadchhetri.com/wp-content/uploads/2014/09/hostname1.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="The tutorial will explain about how to set hostname and FQDN on CentOS 7 and RHEL 7 (Red Hat Enterprise Linux 7) without system reboot / restart .">
+<meta name="twitter:title" content="How to set hostname and FQDN on CentOS 7 and RHEL 7">
+<meta name="twitter:site" content="@sharad_chhetri">
+<meta name="twitter:image" content="http://www.sharadchhetri.com/wp-content/uploads/2014/09/hostname1.png">
+<meta name="twitter:creator" content="@sharad_chhetri">
+ 
+<link rel="dns-prefetch" href="http://s0.wp.com/">
+<link rel="dns-prefetch" href="http://s.gravatar.com/">
+<link rel="dns-prefetch" href="http://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="http://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="sharadchhetri.com » Feed" href="http://sharadchhetri.us3.list-manage.com/subscribe/post?u=c0f38051e90d4d9210f6dbe66&amp;id=054da6886e">
+<link rel="alternate" type="application/rss+xml" title="sharadchhetri.com » Comments Feed" href="http://sharadchhetri.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="sharadchhetri.com » How to set hostname and FQDN on CentOS 7 and RHEL 7 Comments Feed" href="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/feed/">
+<script type="text/rocketscript" data-rocketoptimized="true">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/sharadchhetri.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.8"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b===c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+<style type="text/css">img.wp-smiley,img.emoji{display:inline!important;border:none!important;box-shadow:none!important;height:1em!important;width:1em!important;margin:0 .07em!important;vertical-align:-0.1em!important;background:none!important;padding:0!important;}</style>
+<link rel="stylesheet" id="yarppWidgetCss-css" href="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/widget.css" type="text/css" media="all">
+<link rel="stylesheet" id="genesis-simple-share-plugin-css-css" href="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/share.css" type="text/css" media="all">
+<link rel="stylesheet" id="genesis-simple-share-genericons-css-css" href="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/genericons.css" type="text/css" media="all">
+<link rel="stylesheet" id="eleven40-pro-theme-css" href="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="dashicons-css" href="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/dashicons.css" type="text/css" media="all">
+<link rel="stylesheet" id="google-fonts-css" href="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/css.css" type="text/css" media="all">
+<link rel="stylesheet" id="simple-social-icons-font-css" href="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/style_002.css" type="text/css" media="all">
+<link rel="stylesheet" id="jetpack_css-css" href="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/jetpack.css" type="text/css" media="all">
+ 
+<script type="text/javascript" data-cfasync="false">
+	/* Function to detect opted out users */
+	function __gaTrackerIsOptedOut() {
+		return document.cookie.indexOf(disableStr + '=true') > -1;
+	}
+
+	/* Disable tracking if the opt-out cookie exists. */
+	var disableStr = 'ga-disable-UA-8197358-3';
+	if ( __gaTrackerIsOptedOut() ) {
+		window[disableStr] = true;
+	}
+
+	/* Opt-out function */
+	function __gaTrackerOptout() {
+	  document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+	  window[disableStr] = true;
+	}
+
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
+
+	__gaTracker('create', 'UA-8197358-3', 'auto');
+	__gaTracker('set', 'forceSSL', true);
+	__gaTracker('set', 'anonymizeIp', true);
+	__gaTracker('send','pageview');
+</script>
+ 
+<script type="text/rocketscript" data-rocketsrc="http://sharadchhetri.com/wp-includes/js/jquery/jquery.js?ver=1.12.4" data-rocketoptimized="true"></script>
+<script type="text/rocketscript" data-rocketsrc="http://sharadchhetri.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1" data-rocketoptimized="true"></script>
+<script type="text/rocketscript" data-rocketoptimized="true">
+/* <![CDATA[ */
+var related_posts_js_options = {"post_heading":"h4"};
+/* ]]> */
+</script>
+<script type="text/rocketscript" data-rocketsrc="http://sharadchhetri.com/wp-content/plugins/jetpack/modules/related-posts/related-posts.js?ver=20150408" data-rocketoptimized="true"></script>
+<script type="text/rocketscript" data-rocketsrc="//sharadchhetri.com/wp-content/plugins/genesis-simple-share/lib/sharrre/jquery.sharrre.min.js?ver=0.1.0" data-rocketoptimized="true"></script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src='http://sharadchhetri.com/wp-content/themes/genesis/lib/js/html5shiv.js?ver=3.7.3'></script>
+<![endif]-->
+<script type="text/rocketscript" data-rocketsrc="http://sharadchhetri.com/wp-content/themes/eleven40-pro/js/responsive-menu.js?ver=1.0.0" data-rocketoptimized="true"></script>
+<script type="text/rocketscript" data-rocketsrc="http://sharadchhetri.com/wp-content/plugins/simple-social-icons/svgxuse.js?ver=1.1.21" data-rocketoptimized="true"></script>
+<link rel="https://api.w.org/" href="http://sharadchhetri.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://sharadchhetri.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://sharadchhetri.com/wp-includes/wlwmanifest.xml">
+<meta name="generator" content="WordPress 4.8">
+<link rel="shortlink" href="http://wp.me/p3b8mT-1qa">
+<link rel="alternate" type="application/json+oembed" href="http://sharadchhetri.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fsharadchhetri.com%2F2014%2F09%2F27%2Fset-hostname-fqdn-centos-7-rhel-7%2F">
+<link rel="alternate" type="text/xml+oembed" href="http://sharadchhetri.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fsharadchhetri.com%2F2014%2F09%2F27%2Fset-hostname-fqdn-centos-7-rhel-7%2F&amp;format=xml">
+<link rel="stylesheet" type="text/css" href="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/wp-code-highlight.css" media="screen">
+<link rel="dns-prefetch" href="http://v0.wordpress.com/">
+<style type="text/css">img#wpstats{display:none}</style><link rel="icon" href="http://sharadchhetri.com/wp-content/themes/eleven40-pro/images/favicon.png">
+<link rel="pingback" href="http://sharadchhetri.com/xmlrpc.php">
+<style type="text/css">.recentcomments a{display:inline!important;padding:0!important;margin:0!important;}</style>
+<style type="text/css" media="screen">.simple-social-icons ul li a,.simple-social-icons ul li a:hover,.simple-social-icons ul li a:focus{background-color:#eeeeee!important;border-radius:0px;color:#1e73be!important;border:0px #ffffff solid!important;font-size:19px;padding:10px;}.simple-social-icons ul li a:hover,.simple-social-icons ul li a:focus{background-color:#222222!important;border-color:#ffffff!important;color:#ffffff!important;}.simple-social-icons ul li a:focus{outline:1px dotted #222222!important;}</style><link rel="amphtml" href="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/amp/"><script data-rocketsrc="http://sharadchhetri.com/wp-includes/js/wp-emoji-release.min.js?ver=4.8" data-rocketoptimized="true" type="text/javascript" defer="defer"></script><script type="text/javascript" charset="UTF-8" data-rocketsrc="http://resources.infolinks.com/js/1609.003/ice.js" data-rocketoptimized="true" async=""></script><link rel="stylesheet" type="text/css" id="gravatar-card-css" href="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/services.css"><script type="text/javascript" charset="UTF-8" data-rocketsrc="http://router.infolinks.com/gsd?evt=afterGSD&amp;pid=2939614&amp;wsid=0&amp;pdom=sharadchhetri.com&amp;purl=http%3A%2F%2Fsharadchhetri.com%2F2014%2F09%2F27%2Fset-hostname-fqdn-centos-7-rhel-7%2F&amp;jsv=1609.003&amp;ref=www.google.com.ua%2F&amp;_cb=14996921329420" data-rocketoptimized="true"></script><style type="text/css"></style><script type="text/javascript" charset="UTF-8" data-rocketsrc="http://rt3029.infolinks.com/action/dcl.htm?rid=88970031-3398-4793-be50-88dbfc1e386c&amp;jsv=1609.003&amp;capara=%7B%22mode%22%3A%22default%22%2C%22markers%22%3A1%7D" data-rocketoptimized="true"></script><script type="text/javascript" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/dcl.htm"></script><script type="text/javascript" charset="UTF-8" data-rocketsrc="http://rt3029.infolinks.com/action/getads.htm?hks=%5B%7B%22lid%22%3A%22IL_IN_CONTENT0%22%2C%22bdc%22%3A1%2C%22prod_t%22%3A%22c%22%2C%22miw%22%3A6%2C%22maw%22%3A816%2C%22mih%22%3A11%2C%22mah%22%3A2210%2C%22sdata%22%3A%22contact%22%2C%22scs%22%3A%225ny30bLod9%22%7D%2C%7B%22lid%22%3A%22IL_IN_ARTICLE0%22%2C%22bdc%22%3A2%2C%22prod_t%22%3A%22a%22%2C%22miw%22%3A6%2C%22maw%22%3A816%2C%22mih%22%3A11%2C%22mah%22%3A2210%2C%22sdata%22%3A%22leaves%22%2C%22scs%22%3A%22HR2cvGsaJV%22%7D%5D&amp;rid=88970031-3398-4793-be50-88dbfc1e386c&amp;jsv=1609.003&amp;sr=1855X1176&amp;rts=1499692133901&amp;cfv=-1&amp;ref=www.google.com.ua%2F&amp;cb=singleGetAdsResponse&amp;os=Linux&amp;ov=unknown&amp;br=Firefox&amp;bv=54.0&amp;dv=p&amp;ce=t&amp;purl=http%3A%2F%2Fsharadchhetri.com%2F2014%2F09%2F27%2Fset-hostname-fqdn-centos-7-rhel-7%2F&amp;tzo=%2B0300&amp;c=c&amp;strg=true&amp;rsd=kciEx4COuaSI6bAtJ1VgYCatMo0atLXpBYweBfsa_BnNcIiEPKOtKSC4Yw6y5Xgk4hhTlUmb4jGTSR8n0xk3_vJHnPxwjLLBQqwIGW4RRpwsVGlDV0kFvvW1or6kFk62f6ng_D5f-s4eF44xuwzvmtfJl9gs4bI968aLvIQLLLY&amp;rsk=13&amp;rcs=EJdr20RCD8XKvPk47IgMnQ" data-rocketoptimized="true"></script><script type="text/javascript" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/getads.htm"></script><script type="text/javascript" charset="UTF-8" data-rocketsrc="http://rt3029.infolinks.com/action/dcl.htm?rid=88970031-3398-4793-be50-88dbfc1e386c&amp;jsv=1609.003&amp;capara=%7B%22mode%22%3A%22default%22%2C%22markers%22%3A1%7D" data-rocketoptimized="true"></script><script type="text/javascript" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/dcl.htm"></script></head>
+<body class="post-template-default single single-post postid-5466 single-format-standard header-full-width content-sidebar eleven40-pro-blue" itemscope="" itemtype="https://schema.org/WebPage"><div class="site-container"><header class="site-header" itemscope="" itemtype="https://schema.org/WPHeader"><div class="wrap"><div class="title-area" il_cc1="1" il_cc2="1"><p class="site-title" itemprop="headline"><a href="http://sharadchhetri.com/">sharadchhetri.com</a></p></div><nav class="nav-primary" itemscope="" itemtype="https://schema.org/SiteNavigationElement"><div class="wrap"><div class="responsive-menu-icon"></div><ul id="menu-new-navigation" class="menu genesis-nav-menu menu-primary responsive-menu"><li id="menu-item-6787" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-6787"><a href="http://sharadchhetri.com/" itemprop="url"><span itemprop="name">Home</span></a></li>
+<li id="menu-item-6788" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-6788"><a href="http://sharadchhetri.com/category/linux/" itemprop="url"><span itemprop="name">Linux</span></a></li>
+<li id="menu-item-6789" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6789"><a href="http://sharadchhetri.com/category/bsd/" itemprop="url"><span itemprop="name">BSD</span></a></li>
+<li id="menu-item-6792" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-6792"><a href="http://sharadchhetri.com/category/cloudcomputing/" itemprop="url"><span itemprop="name">CloudComputing</span></a>
+<ul class="sub-menu">
+<li id="menu-item-6793" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6793"><a href="http://sharadchhetri.com/introduction-cloud-computing/" itemprop="url"><span itemprop="name">Introduction Cloud Computing</span></a></li>
+<li id="menu-item-6791" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6791"><a href="http://sharadchhetri.com/category/amazon-aws/" itemprop="url"><span itemprop="name">Amazon AWS</span></a></li>
+</ul>
+</li>
+<li id="menu-item-6790" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6790"><a href="http://sharadchhetri.com/category/wordpress/" itemprop="url"><span itemprop="name">wordpress</span></a></li>
+<li id="menu-item-6794" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6794"><a href="http://sharadchhetri.tradepub.com/category/information-technology-servers-and-linux-server-os/806/" itemprop="url"><span itemprop="name">Free E-Books</span></a></li>
+<li id="menu-item-6786" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6786"><a href="http://sharadchhetri.com/aboutme/" itemprop="url"><span itemprop="name">About Me</span></a></li>
+</ul></div></nav></div></header><div class="site-inner"><div class="wrap" il_cc1="1" il_cc2="1"><p class="site-description" itemprop="description">The Tech Blog For All</p><div class="content-sidebar-wrap"><main class="content"><div class="breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList"><span xmlns:v="http://rdf.data-vocabulary.org/#"><span typeof="v:Breadcrumb"><a href="http://sharadchhetri.com/" rel="v:url" property="v:title">Home</a> » <span class="breadcrumb_last">How to set hostname and FQDN on CentOS 7 and RHEL 7</span></span></span></div><article class="post-5466 post type-post status-publish format-standard category-linux tag-centos-7 tag-hostname tag-red-hat tag-rhel-7 entry" itemscope="" itemtype="https://schema.org/CreativeWork"><header class="entry-header" il_cc1="1" il_cc2="1"><h1 class="entry-title" itemprop="headline">How to set hostname and FQDN on CentOS 7 and RHEL 7</h1>
+<p class="entry-meta"><time class="entry-time" itemprop="datePublished" datetime="2014-09-27T12:24:31+00:00">September 27, 2014</time> by <span class="entry-author" itemprop="author" itemscope="" itemtype="https://schema.org/Person"><a href="http://sharadchhetri.com/author/admin/" class="entry-author-link" itemprop="url" rel="author"><span class="entry-author-name" itemprop="name">Sharad Chhetri</span></a></span> <span class="entry-comments-link"><a href="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/#comments">8 Comments</a></span> </p></header><div class="entry-content" itemprop="text" il_cc1="17" il_cc2="17"><div class="share-before share-filled share-medium" id="share-before-5466"><div class="googlePlus sharrre" id="googleplus-before-5466" data-url="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/" data-urlalt="http://wp.me/p3b8mT-1qa" data-text="How to set hostname and FQDN on CentOS 7 and RHEL 7" data-title="Share"><div class="box"><a class="count" href="#">3</a><a class="share" href="#">Share</a></div></div><div class="facebook sharrre" id="facebook-before-5466" data-url="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/" data-urlalt="http://wp.me/p3b8mT-1qa" data-text="How to set hostname and FQDN on CentOS 7 and RHEL 7" data-title="Share"><div class="box"><a class="count" href="#">5</a><a class="share" href="#">Share</a></div></div><div class="twitter sharrre" id="twitter-before-5466" data-url="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/" data-urlalt="http://wp.me/p3b8mT-1qa" data-text="How to set hostname and FQDN on CentOS 7 and RHEL 7" data-title="Tweet"><div class="box no-count"><a class="count" href="#"></a><a class="share" href="#">Tweet</a></div></div><div class="pinterest sharrre" id="pinterest-before-5466" data-url="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/" data-urlalt="http://wp.me/p3b8mT-1qa" data-text="How to set hostname and FQDN on CentOS 7 and RHEL 7" data-title="Pin"><div class="box"><a class="count" href="#">0</a><a class="share" href="#">Pin</a></div></div><div class="linkedin sharrre" id="linkedin-before-5466" data-url="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/" data-urlalt="http://wp.me/p3b8mT-1qa" data-text="How to set hostname and FQDN on CentOS 7 and RHEL 7" data-title="Share"><div class="box"><a class="count" href="#">0</a><a class="share" href="#">Share</a></div></div><div class="stumbleupon sharrre" id="stumbleupon-before-5466" data-url="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/" data-urlalt="http://wp.me/p3b8mT-1qa" data-text="How to set hostname and FQDN on CentOS 7 and RHEL 7" data-title="Share"><div class="box"><a class="count" href="#">0</a><a class="share" href="#">Share</a></div></div></div>
+<script type="text/rocketscript" data-rocketoptimized="true">
+				jQuery(document).ready(function($) {
+					$('#googleplus-before-5466').sharrre({
+										  share: {
+										    googlePlus: true
+										  },
+										  urlCurl: 'http://sharadchhetri.com/wp-content/plugins/genesis-simple-share/lib/sharrre/sharrre.php',
+										  enableHover: false,
+										  enableTracking: true,
+										  buttons: {  },
+										  click: function(api, options){
+										    api.simulateClick();
+										    api.openPopup('googlePlus');
+										  }
+										});
+$('#facebook-before-5466').sharrre({
+										  share: {
+										    facebook: true
+										  },
+										  urlCurl: 'http://sharadchhetri.com/wp-content/plugins/genesis-simple-share/lib/sharrre/sharrre.php',
+										  enableHover: false,
+										  enableTracking: true,
+										  buttons: {  },
+										  click: function(api, options){
+										    api.simulateClick();
+										    api.openPopup('facebook');
+										  }
+										});
+$('#twitter-before-5466').sharrre({
+										  share: {
+										    twitter: true
+										  },
+										  urlCurl: 'http://sharadchhetri.com/wp-content/plugins/genesis-simple-share/lib/sharrre/sharrre.php',
+										  enableHover: false,
+										  enableTracking: true,
+										  buttons: {  twitter: { via: 'sharad_chhetri' } },
+										  click: function(api, options){
+										    api.simulateClick();
+										    api.openPopup('twitter');
+										  }
+										});
+$('#pinterest-before-5466').sharrre({
+										  share: {
+										    pinterest: true
+										  },
+										  urlCurl: 'http://sharadchhetri.com/wp-content/plugins/genesis-simple-share/lib/sharrre/sharrre.php',
+										  enableHover: false,
+										  enableTracking: true,
+										  buttons: {  pinterest: { media: 'http://sharadchhetri.com/wp-content/uploads/2014/09/hostname1.png', description: 'How to set hostname and FQDN on CentOS 7 and RHEL 7' } },
+										  click: function(api, options){
+										    api.simulateClick();
+										    api.openPopup('pinterest');
+										  }
+										});
+$('#linkedin-before-5466').sharrre({
+										  share: {
+										    linkedin: true
+										  },
+										  urlCurl: 'http://sharadchhetri.com/wp-content/plugins/genesis-simple-share/lib/sharrre/sharrre.php',
+										  enableHover: false,
+										  enableTracking: true,
+										  buttons: {  },
+										  click: function(api, options){
+										    api.simulateClick();
+										    api.openPopup('linkedin');
+										  }
+										});
+$('#stumbleupon-before-5466').sharrre({
+										  share: {
+										    stumbleupon: true
+										  },
+										  urlCurl: 'http://sharadchhetri.com/wp-content/plugins/genesis-simple-share/lib/sharrre/sharrre.php',
+										  enableHover: false,
+										  enableTracking: true,
+										  buttons: {  },
+										  click: function(api, options){
+										    api.simulateClick();
+										    api.openPopup('stumbleupon');
+										  }
+										});
+
+				});
+		</script><p>The tutorial will explain about how to set hostname and 
+FQDN on CentOS 7 and RHEL 7 (Red Hat Enterprise Linux 7). In our 
+previous post “<a href="http://sharadchhetri.com/2012/12/23/change-hostname-fqdn-centos-redhat/" title="How to change hostname on CentOS and Red Hat" target="_blank">How to change hostname on CentOS and Red Hat</a>“, we have already define the difference between hostname and FQDN. Hence suggest to read this <a href="http://sharadchhetri.com/2012/12/23/change-hostname-fqdn-centos-redhat/" title="post" target="_blank">post</a>.</p>
+<p>In Red Hat Enterprise Linux 7 or CentOS 7 , we have found slight changes. <input name="IL_IN_ARTICLE" value="1" class="IL_IN_AUTO" type="hidden"><div style="display: none; height: 0px; overflow: hidden; transform-style: preserve-3d; padding: 0px; transition-duration: 1000ms; transition-timing-function: ease-in;"><div style="position: relative; display: block; text-align: center; padding: 0px; margin: 0px auto; font-size: 0px; overflow: hidden; width: 300px; height: 250px;">                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="position: absolute;left:auto;top:auto;bottom:0px;right:0px;max-width:19px;max-height:19px;z-index:1000000" x="0px" y="0px" width="20.033px" height="19.184px" viewBox="0 0 20.033 19.184" xml:space="preserve">                    <g>                                                    <path style="opacity:0.8;fill:#E2E2E2;" d="M20.033,0.015v19.168H0.009C0,19.184,0,19.043,0,18.989                                C0,8.509,8.543,0,19.032,0C19.356,0,20.033-0.003,20.033,0.015z"></path>                                                <g>                            <circle style="fill:#208CE5;" cx="8.515" cy="6.883" r="0.844"></circle>                            <path style="fill:#003366;" d="M14.194,9.237h-0.883c-1.368,0-2.488,1.12-2.488,2.488v2.776c0,0.017,0.001,0.033,0.002,0.049                                v0.414c0,0.456-0.373,0.828-0.828,0.828H9.96c-0.456,0-0.828-0.373-0.828-0.828v-1.832h0.001V9.405c0-0.001,0-0.002,0-0.002                                c0-0.09-0.071-0.162-0.16-0.166H8.055C7.968,9.24,7.9,9.309,7.897,9.396v3.736H7.9c-0.001,0.028-0.003,0.056-0.003,0.085v1.775                                c0,1.12,0.916,2.036,2.036,2.036h0.092c1.12,0,2.036-0.916,2.036-2.036v-0.436v-0.369v-2.305c0.007-0.788,0.651-1.432,1.439-1.432                                h0.508c0.788,0,1.432,0.644,1.44,1.432v2.305v0.369v2.304c0.001,0.002,0.001,0.003,0.001,0.004c0,0.089,0.071,0.16,0.158,0.164                                h0.918c0.086-0.003,0.155-0.071,0.158-0.157v-2.231v-0.452v-2.463C16.682,10.356,15.562,9.237,14.194,9.237z"></path>                        </g>                    </g>                    <g>                        <rect x="8.033" y="7.184" style="opacity:0.6;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="8.033" y="5.184" style="opacity:0.6;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="7.033" y="6.184" style="opacity:0.6;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="9.033" y="6.184" style="opacity:0.6;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="9.033" y="5.184" style="opacity:0.2;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="7.033" y="5.184" style="opacity:0.2;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="7.033" y="7.184" style="opacity:0.2;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="9.033" y="7.184" style="opacity:0.2;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="9.033" y="9.184" style="opacity:0.2;fill:#003366;" width="1" height="1"></rect>                        <rect x="15.033" y="12.184" style="opacity:0.6;fill:#003366;" width="1" height="1"></rect>                        <rect x="15.033" y="13.184" style="opacity:0.6;fill:#003366;" width="1" height="1"></rect>                        <rect x="15.033" y="14.184" style="opacity:0.6;fill:#003366;" width="1" height="1"></rect>                        <rect x="15.033" y="15.184" style="opacity:0.6;fill:#003366;" width="1" height="1"></rect>                        <rect x="15.033" y="16.184" style="opacity:0.6;fill:#003366;" width="1" height="1"></rect>                        <rect x="9.033" y="10.184" style="opacity:0.2;fill:#003366;" width="1" height="1"></rect>                        <rect x="9.033" y="11.184" style="opacity:0.2;fill:#003366;" width="1" height="1"></rect>                        <rect x="9.033" y="12.184" style="opacity:0.2;fill:#003366;" width="1" height="1"></rect>                        <rect x="9.033" y="13.184" style="opacity:0.2;fill:#003366;" width="1" height="1"></rect>                        <rect x="9.033" y="14.184" style="opacity:0.2;fill:#003366;" width="1" height="1"></rect>                        <rect x="7.033" y="9.184" style="opacity:0.3;fill:#E2E2E2;" width="1" height="1"></rect>                        <rect x="7.033" y="10.184" style="opacity:0.3;fill:#E2E2E2;" width="1" height="1"></rect>                        <rect x="7.033" y="11.184" style="opacity:0.3;fill:#E2E2E2;" width="1" height="1"></rect>                        <rect x="7.033" y="12.184" style="opacity:0.3;fill:#E2E2E2;" width="1" height="1"></rect>                        <rect x="7.033" y="13.184" style="opacity:0.3;fill:#E2E2E2;" width="1" height="1"></rect>                        <rect x="7.033" y="14.184" style="opacity:0.3;fill:#E2E2E2;" width="1" height="1"></rect>                        <rect x="7.033" y="15.184" style="opacity:0.3;fill:#E2E2E2;" width="1" height="1"></rect>                    </g>                    </svg>                            <div style="cursor:pointer;-webkit-perspective: 1000; -webkit-transform-origin: 0 0; transform-origin: 0 0; -ms-transform-origin: 0 0; -webkit-transform:scale(1) ; transform:scale(1) ; -ms-transform:scale(1)">            </div><div style="display:block;-webkit-perspective: 1000; -webkit-transform-origin: 0 0; transform-origin: 0 0; -ms-transform-origin: 0 0; -webkit-transform:scale(1) ; transform:scale(1) ; -ms-transform:scale(1);">    <div cls="IL_BASE" style="width:300px; height:250px;">        <iframe src="//resources.infolinks.com/static/blank.html" scrolling="no" width="300" height="250" frameborder="0"></iframe>    </div>    <form method="post" action="http://router.infolinks.com/echo.htm?hookId=IL_IN_ARTICLE0" target="ad_frame_IL_IN_ARTICLE0_0" accept-charset="utf-8" style="display:none;"> <input value="%3Etpircs%2F%3C%3E%22191924%3Ddigatwc%261%3Dtenpwc%26052%3Dthgiehwc%26003%3Dhtdiwwc%26889955%3Ddipwc%26052X003%3Dtamrofdawc%26002%3Dnurwc%26DAWEIV%3Dnoitca%3Fxpsa.sjteg%2FhsilbuPgaT%2Fmoc.bewtxetnoc.gat%2F%2F%3Asptth%22%3Dcrs%20tpircs%3C" type="hidden"> <input value="2939614" type="hidden"> <input value="0" type="hidden"> <input value="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/" type="hidden"> <input value="1609.003" type="hidden"></form>  </div></div></div></p>
+<p>You must have the ip address of system , which you can get by using the command <code>ip addr list</code>. </p>
+<p>The given below is our system information, replace these values as per your system information.</p>
+<p><strong>IP Address :</strong> 192.168.56.101<br>
+<strong>Hostname :</strong> nix (We have selected this hostname, use hostname as per your interest)<br>
+<strong>FQDN (Fully Qualified Domain Name) :</strong> FQDN is combination of <code>hostname+domain-name</code> . Hence , here we are taking domain name as <strong>example.com</strong> .Therefore <strong>FQDN is nix.example.com</strong></p>
+<p>To change the hostname and FQDN on RHEL 7 and CentOS follow the given below steps.</p>
+<h3>Step 1: Edit /etc/hosts file</h3>
+<p>Now edit the /etc/hosts file in system. And add new line as given below</p>
+<pre class="wp-code-highlight prettyprint prettyprinted" style=""><span class="pln">vi </span><span class="pun">/</span><span class="pln">etc</span><span class="pun">/</span><span class="pln">hosts
+
+</span><span class="lit">192.168</span><span class="pun">.</span><span class="lit">56.101</span><span class="pln"> nix</span><span class="pun">.</span><span class="pln">example</span><span class="pun">.</span><span class="pln">com nix</span></pre>
+<p>This is the screenshot from our system.<br>
+<a href="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/hostname1/" rel="attachment wp-att-5467"><img src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/hostname1.png" alt="Hostname CentOS 7" class="aligncenter size-full wp-image-5467" srcset="http://sharadchhetri.com/wp-content/uploads/2014/09/hostname1.png 945w, http://sharadchhetri.com/wp-content/uploads/2014/09/hostname1-300x88.png 300w, http://sharadchhetri.com/wp-content/uploads/2014/09/hostname1-768x224.png 768w" sizes="(max-width: 945px) 100vw, 945px" width="945" height="276"></a></p>
+<h3>Step 2: Edit /etc/hostname</h3>
+<p>Edit the /etc/hostname file and give the hostname you have selected.</p>
+<pre class="wp-code-highlight prettyprint prettyprinted" style=""><span class="pln">vi </span><span class="pun">/</span><span class="pln">etc</span><span class="pun">/</span><span class="pln">hostname
+
+nix</span></pre>
+<p>The below given is reference from our system.</p>
+<blockquote il_cc1="1" il_cc2="1"><p>[root@localhost ~]# cat /etc/hostname<br>
+nix<br>
+[root@localhost ~]#</p></blockquote>
+<p><strong>Alternatively</strong>,you can also use <code>hostnamectl</code> command to set the hostname. It also update the <code>/etc/hostname</code> file which we have edit manually in above steps.</p>
+<p>hostname nix is used in below given command.</p>
+<pre class="wp-code-highlight prettyprint prettyprinted" style=""><span class="pln">hostnamectl </span><span class="pun">--</span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">set</span><span class="pun">-</span><span class="pln">hostname nix</span></pre>
+<h3>Step 3: Print the hostname and FQDN</h3>
+<p>Now you do not require to restart or logout-login from RHEL 7 and 
+CentOS 7 which is the best thing we have found. Hostname and FQDN are 
+set.<br>
+Now print the hostname and FQDN of system. </p>
+<p><strong>To print the hostname ,use the command – </strong></p>
+<pre class="wp-code-highlight prettyprint prettyprinted" style=""><span class="pln">hostname</span></pre>
+<p><strong>To print the FQDN ,use the command – </strong></p>
+<pre class="wp-code-highlight prettyprint prettyprinted" style=""><span class="pln">hostname </span><span class="pun">-</span><span class="pln">f</span></pre>
+<p>Whereas, in case hostname and FQDN is not taking effect. Then run the below command</p>
+<pre class="wp-code-highlight prettyprint prettyprinted" style=""><span class="pln">systemctl restart systemd</span><span class="pun">-</span><span class="pln">hostnamed</span></pre>
+<p style="min-height: 252px;" class=" IL_IC_MIN">Below given is reference from our system<input name="IL_IN_CONTENT" value="2" class="IL_IN_AUTO" type="hidden"><div class="IL_BASE" style="margin: 0px auto; padding: 10px 0px; cursor: pointer; width: 809px;"><div id="IL_IN_CONTENT_CONTAINER_0" class="IL_BASE" style="position: relative; display: block; text-align: center; padding: 0px; margin: 0px auto; font-size: 0px; overflow: hidden; width: 214px; height: 178px;">                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" id="IL_IN_CONTENT_LOGO_0" class="IL_BASE IL_LOGO" style="position: absolute;left:auto;top:auto;bottom:0px;right:0px;max-width:19px;max-height:19px;z-index:1000000" x="0px" y="0px" width="20.033px" height="19.184px" viewBox="0 0 20.033 19.184" xml:space="preserve">                    <g id="Logo_PlaceHolder">                                                    <path id="Circle" style="opacity:0.8;fill:#E2E2E2;" d="M20.033,0.015v19.168H0.009C0,19.184,0,19.043,0,18.989                                C0,8.509,8.543,0,19.032,0C19.356,0,20.033-0.003,20.033,0.015z"></path>                                                <g id="logo">                            <circle style="fill:#208CE5;" cx="8.515" cy="6.883" r="0.844"></circle>                            <path style="fill:#003366;" d="M14.194,9.237h-0.883c-1.368,0-2.488,1.12-2.488,2.488v2.776c0,0.017,0.001,0.033,0.002,0.049                                v0.414c0,0.456-0.373,0.828-0.828,0.828H9.96c-0.456,0-0.828-0.373-0.828-0.828v-1.832h0.001V9.405c0-0.001,0-0.002,0-0.002                                c0-0.09-0.071-0.162-0.16-0.166H8.055C7.968,9.24,7.9,9.309,7.897,9.396v3.736H7.9c-0.001,0.028-0.003,0.056-0.003,0.085v1.775                                c0,1.12,0.916,2.036,2.036,2.036h0.092c1.12,0,2.036-0.916,2.036-2.036v-0.436v-0.369v-2.305c0.007-0.788,0.651-1.432,1.439-1.432                                h0.508c0.788,0,1.432,0.644,1.44,1.432v2.305v0.369v2.304c0.001,0.002,0.001,0.003,0.001,0.004c0,0.089,0.071,0.16,0.158,0.164                                h0.918c0.086-0.003,0.155-0.071,0.158-0.157v-2.231v-0.452v-2.463C16.682,10.356,15.562,9.237,14.194,9.237z"></path>                        </g>                    </g>                    <g id="Layer_2">                        <rect x="8.033" y="7.184" style="opacity:0.6;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="8.033" y="5.184" style="opacity:0.6;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="7.033" y="6.184" style="opacity:0.6;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="9.033" y="6.184" style="opacity:0.6;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="9.033" y="5.184" style="opacity:0.2;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="7.033" y="5.184" style="opacity:0.2;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="7.033" y="7.184" style="opacity:0.2;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="9.033" y="7.184" style="opacity:0.2;fill:#208CE5;" width="1" height="1"></rect>                        <rect x="9.033" y="9.184" style="opacity:0.2;fill:#003366;" width="1" height="1"></rect>                        <rect x="15.033" y="12.184" style="opacity:0.6;fill:#003366;" width="1" height="1"></rect>                        <rect x="15.033" y="13.184" style="opacity:0.6;fill:#003366;" width="1" height="1"></rect>                        <rect x="15.033" y="14.184" style="opacity:0.6;fill:#003366;" width="1" height="1"></rect>                        <rect x="15.033" y="15.184" style="opacity:0.6;fill:#003366;" width="1" height="1"></rect>                        <rect x="15.033" y="16.184" style="opacity:0.6;fill:#003366;" width="1" height="1"></rect>                        <rect x="9.033" y="10.184" style="opacity:0.2;fill:#003366;" width="1" height="1"></rect>                        <rect x="9.033" y="11.184" style="opacity:0.2;fill:#003366;" width="1" height="1"></rect>                        <rect x="9.033" y="12.184" style="opacity:0.2;fill:#003366;" width="1" height="1"></rect>                        <rect x="9.033" y="13.184" style="opacity:0.2;fill:#003366;" width="1" height="1"></rect>                        <rect x="9.033" y="14.184" style="opacity:0.2;fill:#003366;" width="1" height="1"></rect>                        <rect x="7.033" y="9.184" style="opacity:0.3;fill:#E2E2E2;" width="1" height="1"></rect>                        <rect x="7.033" y="10.184" style="opacity:0.3;fill:#E2E2E2;" width="1" height="1"></rect>                        <rect x="7.033" y="11.184" style="opacity:0.3;fill:#E2E2E2;" width="1" height="1"></rect>                        <rect x="7.033" y="12.184" style="opacity:0.3;fill:#E2E2E2;" width="1" height="1"></rect>                        <rect x="7.033" y="13.184" style="opacity:0.3;fill:#E2E2E2;" width="1" height="1"></rect>                        <rect x="7.033" y="14.184" style="opacity:0.3;fill:#E2E2E2;" width="1" height="1"></rect>                        <rect x="7.033" y="15.184" style="opacity:0.3;fill:#E2E2E2;" width="1" height="1"></rect>                    </g>                    </svg>                            <div class="IL_BASE" style="cursor:pointer;-webkit-perspective: 1000; -webkit-transform-origin: 0 0; transform-origin: 0 0; -ms-transform-origin: 0 0; -webkit-transform:scale(1) ; transform:scale(1) ; -ms-transform:scale(1)">            </div><div data-il_in_content0_1_0_njexfm51bgxfmq="" style="display: none"></div><div id="IL_IN_CONTENT_CONTAINER_0" class="IL_BASE" style=";position:relative;display:block;text-align:center; padding:0;margin: 0 auto; font-size:0; overflow:hidden;">            <div class="IL_BASE" style="cursor:pointer;-webkit-perspective: 1000; -webkit-transform-origin: 0 0; transform-origin: 0 0; -ms-transform-origin: 0 0; -webkit-transform:scale(1) ; transform:scale(1) ; -ms-transform:scale(1)">    <img src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/fb_214x178-3.jpg" class="IL_BASE" alt="" style="width: 214px; height: 178px;" width="214" height="178">        </div></div></div></div></p>
+<pre class="wp-code-highlight prettyprint prettyprinted" style=""><span class="pun">[</span><span class="pln">root@nix</span><span class="pln"> </span><span class="pun">~]#</span><span class="pln"> hostname
+nix
+</span><span class="pun">[</span><span class="pln">root@nix</span><span class="pln"> </span><span class="pun">~]#</span><span class="pln"> 
+</span><span class="pun">[</span><span class="pln">root@nix</span><span class="pln"> </span><span class="pun">~]#</span><span class="pln"> hostname </span><span class="pun">-</span><span class="pln">f
+nix</span><span class="pun">.</span><span class="pln">example</span><span class="pun">.</span><span class="pln">com
+</span><span class="pun">[</span><span class="pln">root@nix</span><span class="pln"> </span><span class="pun">~]#</span><span class="pln"> 
+</span><span class="pun">[</span><span class="pln">root@nix</span><span class="pln"> </span><span class="pun">~]#</span></pre>
+<div class="share-after share-filled share-medium" id="share-after-5466"><div class="googlePlus sharrre" id="googleplus-after-5466" data-url="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/" data-urlalt="http://wp.me/p3b8mT-1qa" data-text="How to set hostname and FQDN on CentOS 7 and RHEL 7" data-title="Share"><div class="box"><a class="count" href="#">3</a><a class="share" href="#">Share</a></div></div><div class="facebook sharrre" id="facebook-after-5466" data-url="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/" data-urlalt="http://wp.me/p3b8mT-1qa" data-text="How to set hostname and FQDN on CentOS 7 and RHEL 7" data-title="Share"><div class="box"><a class="count" href="#">5</a><a class="share" href="#">Share</a></div></div><div class="twitter sharrre" id="twitter-after-5466" data-url="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/" data-urlalt="http://wp.me/p3b8mT-1qa" data-text="How to set hostname and FQDN on CentOS 7 and RHEL 7" data-title="Tweet"><div class="box no-count"><a class="count" href="#"></a><a class="share" href="#">Tweet</a></div></div><div class="pinterest sharrre" id="pinterest-after-5466" data-url="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/" data-urlalt="http://wp.me/p3b8mT-1qa" data-text="How to set hostname and FQDN on CentOS 7 and RHEL 7" data-title="Pin"><div class="box"><a class="count" href="#">0</a><a class="share" href="#">Pin</a></div></div><div class="linkedin sharrre" id="linkedin-after-5466" data-url="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/" data-urlalt="http://wp.me/p3b8mT-1qa" data-text="How to set hostname and FQDN on CentOS 7 and RHEL 7" data-title="Share"><div class="box"><a class="count" href="#">0</a><a class="share" href="#">Share</a></div></div><div class="stumbleupon sharrre" id="stumbleupon-after-5466" data-url="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/" data-urlalt="http://wp.me/p3b8mT-1qa" data-text="How to set hostname and FQDN on CentOS 7 and RHEL 7" data-title="Share"><div class="box"><a class="count" href="#">0</a><a class="share" href="#">Share</a></div></div></div>
+<script type="text/rocketscript" data-rocketoptimized="true">
+				jQuery(document).ready(function($) {
+					$('#googleplus-after-5466').sharrre({
+										  share: {
+										    googlePlus: true
+										  },
+										  urlCurl: 'http://sharadchhetri.com/wp-content/plugins/genesis-simple-share/lib/sharrre/sharrre.php',
+										  enableHover: false,
+										  enableTracking: true,
+										  buttons: {  },
+										  click: function(api, options){
+										    api.simulateClick();
+										    api.openPopup('googlePlus');
+										  }
+										});
+$('#facebook-after-5466').sharrre({
+										  share: {
+										    facebook: true
+										  },
+										  urlCurl: 'http://sharadchhetri.com/wp-content/plugins/genesis-simple-share/lib/sharrre/sharrre.php',
+										  enableHover: false,
+										  enableTracking: true,
+										  buttons: {  },
+										  click: function(api, options){
+										    api.simulateClick();
+										    api.openPopup('facebook');
+										  }
+										});
+$('#twitter-after-5466').sharrre({
+										  share: {
+										    twitter: true
+										  },
+										  urlCurl: 'http://sharadchhetri.com/wp-content/plugins/genesis-simple-share/lib/sharrre/sharrre.php',
+										  enableHover: false,
+										  enableTracking: true,
+										  buttons: {  twitter: { via: 'sharad_chhetri' } },
+										  click: function(api, options){
+										    api.simulateClick();
+										    api.openPopup('twitter');
+										  }
+										});
+$('#pinterest-after-5466').sharrre({
+										  share: {
+										    pinterest: true
+										  },
+										  urlCurl: 'http://sharadchhetri.com/wp-content/plugins/genesis-simple-share/lib/sharrre/sharrre.php',
+										  enableHover: false,
+										  enableTracking: true,
+										  buttons: {  pinterest: { media: 'http://sharadchhetri.com/wp-content/uploads/2014/09/hostname1.png', description: 'How to set hostname and FQDN on CentOS 7 and RHEL 7' } },
+										  click: function(api, options){
+										    api.simulateClick();
+										    api.openPopup('pinterest');
+										  }
+										});
+$('#linkedin-after-5466').sharrre({
+										  share: {
+										    linkedin: true
+										  },
+										  urlCurl: 'http://sharadchhetri.com/wp-content/plugins/genesis-simple-share/lib/sharrre/sharrre.php',
+										  enableHover: false,
+										  enableTracking: true,
+										  buttons: {  },
+										  click: function(api, options){
+										    api.simulateClick();
+										    api.openPopup('linkedin');
+										  }
+										});
+$('#stumbleupon-after-5466').sharrre({
+										  share: {
+										    stumbleupon: true
+										  },
+										  urlCurl: 'http://sharadchhetri.com/wp-content/plugins/genesis-simple-share/lib/sharrre/sharrre.php',
+										  enableHover: false,
+										  enableTracking: true,
+										  buttons: {  },
+										  click: function(api, options){
+										    api.simulateClick();
+										    api.openPopup('stumbleupon');
+										  }
+										});
+
+				});
+		</script>
+<div id="jp-relatedposts" class="jp-relatedposts" style="display: block;">
+<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+<div class="jp-relatedposts-items jp-relatedposts-items-visual jp-relatedposts-grid "><div class="jp-relatedposts-post jp-relatedposts-post0 jp-relatedposts-post-thumbs" data-post-id="6704" data-post-format="false" il_cc1="3" il_cc2="3"><a class="jp-relatedposts-post-a" href="http://sharadchhetri.com/2016/03/04/protect-ssl-drown-attack-aws-elb-apache-nginx/" title="Protect from SSL Drown Attack in AWS ELB, Apache and Nginx
+
+DROWN, stands for Decrypting RSA using Obsolete and Weakened eNcryption and is a Man-in-the-Middle (MITM) attack against servers running TLS for secure communications. On 1-March-2016, academic researcher uncover the DROWN vulnerability. The SSL DROWN vulnerability has received the CVE identifier number as cve-2016-0800. For more detail, you can also read…" rel="nofollow" data-origin="5466" data-position="0"><img class="jp-relatedposts-post-img" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/aws-DROWN.png" alt="Protect from SSL Drown Attack in AWS ELB, Apache and Nginx" width="350"></a><h4 class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="http://sharadchhetri.com/2016/03/04/protect-ssl-drown-attack-aws-elb-apache-nginx/" title="Protect from SSL Drown Attack in AWS ELB, Apache and Nginx
+
+DROWN, stands for Decrypting RSA using Obsolete and Weakened eNcryption and is a Man-in-the-Middle (MITM) attack against servers running TLS for secure communications. On 1-March-2016, academic researcher uncover the DROWN vulnerability. The SSL DROWN vulnerability has received the CVE identifier number as cve-2016-0800. For more detail, you can also read…" rel="nofollow" data-origin="5466" data-position="0">Protect from SSL Drown Attack in AWS ELB, Apache and Nginx</a></h4><p class="jp-relatedposts-post-excerpt">DROWN,
+ stands for Decrypting RSA using Obsolete and Weakened eNcryption and is
+ a Man-in-the-Middle (MITM) attack against servers running TLS for 
+secure communications. On 1-March-2016, academic researcher uncover the 
+DROWN vulnerability. The SSL DROWN vulnerability has received the CVE 
+identifier number as cve-2016-0800. For more detail, you can also read…</p><p class="jp-relatedposts-post-date" style="display: block;">March 4, 2016</p><p class="jp-relatedposts-post-context">In "Linux"</p></div><div class="jp-relatedposts-post jp-relatedposts-post1 jp-relatedposts-post-thumbs" data-post-id="5523" data-post-format="false" il_cc1="3" il_cc2="3"><a class="jp-relatedposts-post-a" href="http://sharadchhetri.com/2014/10/09/centos-7-rhel-7-install-and-setup-samba-server-file-sharing/" title="CentOS 7 / RHEL 7 : Install and setup samba server ( file sharing)
+
+In this tutorial we will learn, how to install and setup samba server ( file sharing server ) on CentOS 7 and RHEL 7 (Red Hat Enterprise Linux 7) . Samba server is popularly use for file and printer server and now a days it is also used as domain…" rel="nofollow" data-origin="5466" data-position="1"><img class="jp-relatedposts-post-img" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/dash-home.png" alt="CentOS 7 / RHEL 7 : Install and setup samba server ( file sharing)" width="350"></a><h4 class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="http://sharadchhetri.com/2014/10/09/centos-7-rhel-7-install-and-setup-samba-server-file-sharing/" title="CentOS 7 / RHEL 7 : Install and setup samba server ( file sharing)
+
+In this tutorial we will learn, how to install and setup samba server ( file sharing server ) on CentOS 7 and RHEL 7 (Red Hat Enterprise Linux 7) . Samba server is popularly use for file and printer server and now a days it is also used as domain…" rel="nofollow" data-origin="5466" data-position="1">CentOS 7 / RHEL 7 : Install and setup samba server ( file sharing)</a></h4><p class="jp-relatedposts-post-excerpt">In
+ this tutorial we will learn, how to install and setup samba server ( 
+file sharing server ) on CentOS 7 and RHEL 7 (Red Hat Enterprise Linux 
+7) . Samba server is popularly use for file and printer server and now a
+ days it is also used as domain…</p><p class="jp-relatedposts-post-date" style="display: block;">October 9, 2014</p><p class="jp-relatedposts-post-context">In "samba"</p></div><div class="jp-relatedposts-post jp-relatedposts-post2 jp-relatedposts-post-nothumbs" data-post-id="159" data-post-format="false" il_cc1="3" il_cc2="3"><a class="jp-relatedposts-post-a jp-relatedposts-post-aoverlay" href="http://sharadchhetri.com/2012/07/15/how-to-change-hostname-in-ubuntu-12-04-and-12-10-without-system-restart/" title="How to change hostname in Ubuntu 12.04 and 12.10 without system restart
+
+In this post learn,how to change hostname in Ubuntu 12.04 and 12.10 without system restart. Here, there are few steps through which we can change the hostname of system without reboot. System OS: Ubuntu 12.04 LTS n l Follow steps to change hostname in Ubuntu 12.04 LTS and Ubuntu 12.10…" rel="nofollow" data-origin="5466" data-position="2"></a><h4 class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="http://sharadchhetri.com/2012/07/15/how-to-change-hostname-in-ubuntu-12-04-and-12-10-without-system-restart/" title="How to change hostname in Ubuntu 12.04 and 12.10 without system restart
+
+In this post learn,how to change hostname in Ubuntu 12.04 and 12.10 without system restart. Here, there are few steps through which we can change the hostname of system without reboot. System OS: Ubuntu 12.04 LTS n l Follow steps to change hostname in Ubuntu 12.04 LTS and Ubuntu 12.10…" rel="nofollow" data-origin="5466" data-position="2">How to change hostname in Ubuntu 12.04 and 12.10 without system restart</a></h4><p class="jp-relatedposts-post-excerpt" style="max-height: 7.14286em;">In
+ this post learn,how to change hostname in Ubuntu 12.04 and 12.10 
+without system restart. Here, there are few steps through which we can 
+change the hostname of system without reboot. System OS: Ubuntu 12.04 
+LTS n l Follow steps to change hostname in Ubuntu 12.04 LTS and Ubuntu 
+12.10…</p><p class="jp-relatedposts-post-date" style="display: block;">July 15, 2012</p><p class="jp-relatedposts-post-context">In "Linux"</p></div></div></div> 
+</div><footer class="entry-footer" il_cc1="1" il_cc2="1"><p class="entry-meta"><span class="entry-categories">Filed Under: <a href="http://sharadchhetri.com/category/linux/" rel="category tag">Linux</a></span> <span class="entry-tags">Tagged With: <a href="http://sharadchhetri.com/tag/centos-7/" rel="tag">centos 7</a>, <a href="http://sharadchhetri.com/tag/hostname/" rel="tag">hostname</a>, <a href="http://sharadchhetri.com/tag/red-hat/" rel="tag">Red Hat</a>, <a href="http://sharadchhetri.com/tag/rhel-7/" rel="tag">RHEL 7</a></span></p></footer></article><div class="entry-comments" id="comments"><h3>Comments</h3><ol class="comment-list">
+<li class="comment even thread-even depth-1" id="comment-6752">
+<article itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
+<header class="comment-header" il_cc1="2" il_cc2="2">
+<p class="comment-author" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+<img alt="" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/35b059824dff3bc284bd63b99bd3c52c.png" srcset="http://0.gravatar.com/avatar/35b059824dff3bc284bd63b99bd3c52c?s=192&amp;d=identicon&amp;r=g 2x" class="avatar avatar-96 photo grav-hashed grav-hijack" id="grav-35b059824dff3bc284bd63b99bd3c52c-0" width="96" height="96"><span itemprop="name">Michael McNally</span> <span class="says">says</span> </p>
+<p class="comment-meta"><time class="comment-time" datetime="2017-03-23T18:31:29+00:00" itemprop="datePublished"><a href="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/#comment-6752" class="comment-time-link" itemprop="url">March 23, 2017 at 6:31 pm</a></time></p> </header>
+<div class="comment-content" itemprop="text" il_cc1="1" il_cc2="1">
+<p>Not working for me on RHEL 7. Hostname was already set, edited hosts file, ran “systemctl restart systemd-hostnamed”.<br>
+“hostname” and “hostname -f” both return the same value, hostname only without domain suffix.</p>
+</div>
+<div class="comment-reply"><a rel="nofollow" class="comment-reply-link" href="#comment-6752" onclick='return addComment.moveForm( "comment-6752", "6752", "respond", "5466" )' aria-label="Reply to Michael McNally">Reply</a></div>
+</article>
+<ul class="children">
+<li class="comment byuser comment-author-admin bypostauthor odd alt depth-2" id="comment-6792">
+<article itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
+<header class="comment-header" il_cc1="2" il_cc2="2">
+<p class="comment-author" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+<img alt="" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/8b4931e195b81c90c1f719a798b44f09.jpeg" srcset="http://2.gravatar.com/avatar/8b4931e195b81c90c1f719a798b44f09?s=192&amp;d=identicon&amp;r=g 2x" class="avatar avatar-96 photo grav-hashed grav-hijack" id="grav-8b4931e195b81c90c1f719a798b44f09-0" width="96" height="96"><span itemprop="name"><a href="http://sharadchhetri.com/" class="comment-author-link" rel="external nofollow" itemprop="url">Sharad Chhetri</a></span> <span class="says">says</span> </p>
+<p class="comment-meta"><time class="comment-time" datetime="2017-03-26T15:39:20+00:00" itemprop="datePublished"><a href="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/#comment-6792" class="comment-time-link" itemprop="url">March 26, 2017 at 3:39 pm</a></time></p> </header>
+<div class="comment-content" itemprop="text" il_cc1="4" il_cc2="4">
+<p>Hi Michael,</p>
+<p>Thanks for the feedback. I am still practising these steps in OS 
+installed in Bare metal servers, VPS, Virtual Machines (VMWare, Xen, 
+VirtualBox) and AWS Cloud EC2 instance.</p>
+<p>Would you mind to share some more details about OS version, hosting provider and how OS is installed.</p>
+<p>Regards<br>
+Sharad</p>
+</div>
+<div class="comment-reply"><a rel="nofollow" class="comment-reply-link" href="#comment-6792" onclick='return addComment.moveForm( "comment-6792", "6792", "respond", "5466" )' aria-label="Reply to Sharad Chhetri">Reply</a></div>
+</article>
+<ul class="children">
+<li class="comment even depth-3" id="comment-6814">
+<article itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
+<header class="comment-header" il_cc1="2" il_cc2="2">
+<p class="comment-author" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+<img alt="" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/35b059824dff3bc284bd63b99bd3c52c.png" srcset="http://0.gravatar.com/avatar/35b059824dff3bc284bd63b99bd3c52c?s=192&amp;d=identicon&amp;r=g 2x" class="avatar avatar-96 photo grav-hashed grav-hijack" id="grav-35b059824dff3bc284bd63b99bd3c52c-1" width="96" height="96"><span itemprop="name">Michael McNally</span> <span class="says">says</span> </p>
+<p class="comment-meta"><time class="comment-time" datetime="2017-03-27T14:47:51+00:00" itemprop="datePublished"><a href="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/#comment-6814" class="comment-time-link" itemprop="url">March 27, 2017 at 2:47 pm</a></time></p> </header>
+<div class="comment-content" itemprop="text" il_cc1="4" il_cc2="4">
+<p>Sure. I’m running RHEL 7 under VMWare. It’s the default install, with
+ a few addon apps installed (Oracle JDK, glassfish) and a few ports 
+opened on the firewall.</p>
+<p>I ended up following the advice from <a href="http://unix.stackexchange.com/questions/239920/how-to-set-the-fully-qualified-hostname-on-centos-7-0" rel="nofollow">http://unix.stackexchange.com/questions/239920/how-to-set-the-fully-qualified-hostname-on-centos-7-0</a>, running:</p>
+<p> “hostnamectl set-hostname nodename.domainname”</p>
+<p> I did not undo the host file changes adding the fqdn so it’s hard to
+ say what that command actually does. The explanation given in that 
+stackexchange post seems to agree with your reasoning, so I’m curious 
+why your method was not sufficient. Most likely it is something to do 
+with how systemd operates, which I’ll admit I don’t know much about.</p>
+</div>
+<div class="comment-reply"><a rel="nofollow" class="comment-reply-link" href="#comment-6814" onclick='return addComment.moveForm( "comment-6814", "6814", "respond", "5466" )' aria-label="Reply to Michael McNally">Reply</a></div>
+</article>
+</li> 
+</ul> 
+</li> 
+</ul> 
+</li> 
+<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-5909">
+<article itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
+<header class="comment-header" il_cc1="2" il_cc2="2">
+<p class="comment-author" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+<img alt="" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/af1ae36389a23bf932c9ad01e93d45ee.png" srcset="http://1.gravatar.com/avatar/af1ae36389a23bf932c9ad01e93d45ee?s=192&amp;d=identicon&amp;r=g 2x" class="avatar avatar-96 photo grav-hashed grav-hijack" id="grav-af1ae36389a23bf932c9ad01e93d45ee-0" width="96" height="96"><span itemprop="name">fred</span> <span class="says">says</span> </p>
+<p class="comment-meta"><time class="comment-time" datetime="2017-03-01T15:00:21+00:00" itemprop="datePublished"><a href="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/#comment-5909" class="comment-time-link" itemprop="url">March 1, 2017 at 3:00 pm</a></time></p> </header>
+<div class="comment-content" itemprop="text" il_cc1="2" il_cc2="2">
+<p>I am not sure if this is 100% correct. There is a school of thought 
+that says hostname should return the FQDN as well. Not just hostname -f.
+ In that case /etc/hostname should contain the fqdn and not just the 
+first part.</p>
+<p>If you read the linux literature on the hostname command it eludes to that. I use one software application that requires this.</p>
+</div>
+<div class="comment-reply"><a rel="nofollow" class="comment-reply-link" href="#comment-5909" onclick='return addComment.moveForm( "comment-5909", "5909", "respond", "5466" )' aria-label="Reply to fred">Reply</a></div>
+</article>
+<ul class="children">
+<li class="comment byuser comment-author-admin bypostauthor even depth-2" id="comment-5915">
+<article itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
+<header class="comment-header" il_cc1="2" il_cc2="2">
+<p class="comment-author" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+<img alt="" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/8b4931e195b81c90c1f719a798b44f09.jpeg" srcset="http://2.gravatar.com/avatar/8b4931e195b81c90c1f719a798b44f09?s=192&amp;d=identicon&amp;r=g 2x" class="avatar avatar-96 photo grav-hashed grav-hijack" id="grav-8b4931e195b81c90c1f719a798b44f09-1" width="96" height="96"><span itemprop="name"><a href="http://sharadchhetri.com/" class="comment-author-link" rel="external nofollow" itemprop="url">Sharad Chhetri</a></span> <span class="says">says</span> </p>
+<p class="comment-meta"><time class="comment-time" datetime="2017-03-01T16:18:37+00:00" itemprop="datePublished"><a href="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/#comment-5915" class="comment-time-link" itemprop="url">March 1, 2017 at 4:18 pm</a></time></p> </header>
+<div class="comment-content" itemprop="text" il_cc1="4" il_cc2="4">
+<p>Hi Fred,</p>
+<p>FQDN is combination of Hostname+DNS-Name .<br>
+Reference: <a href="https://en.wikipedia.org/wiki/Fully_qualified_domain_name" rel="nofollow">https://en.wikipedia.org/wiki/Fully_qualified_domain_name</a> </p>
+<p>Run the command <code>man hostname</code> and find this line.</p>
+<blockquote il_cc1="1" il_cc2="1"><p>
+THE FQDN<br>
+The FQDN (Fully Qualified Domain Name) of the system is the name that<br>
+the resolver(3) returns for the host name, such as, ursula.example.com.<br>
+It is usually the hostname followed by the DNS domain name (the part<br>
+after the first dot). You can check the FQDN using hostname –fqdn or<br>
+the domain name using dnsdomainname.
+</p></blockquote>
+<p>Regards<br>
+Sharad</p>
+</div>
+<div class="comment-reply"><a rel="nofollow" class="comment-reply-link" href="#comment-5915" onclick='return addComment.moveForm( "comment-5915", "5915", "respond", "5466" )' aria-label="Reply to Sharad Chhetri">Reply</a></div>
+</article>
+</li> 
+</ul> 
+</li> 
+<li class="comment odd alt thread-even depth-1" id="comment-1218">
+<article itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
+<header class="comment-header" il_cc1="2" il_cc2="2">
+<p class="comment-author" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+<img alt="" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/9e06ce52007e43ce455f8c92b1d2b38f.png" srcset="http://0.gravatar.com/avatar/9e06ce52007e43ce455f8c92b1d2b38f?s=192&amp;d=identicon&amp;r=g 2x" class="avatar avatar-96 photo grav-hashed grav-hijack" id="grav-9e06ce52007e43ce455f8c92b1d2b38f-0" width="96" height="96"><span itemprop="name">azhar</span> <span class="says">says</span> </p>
+<p class="comment-meta"><time class="comment-time" datetime="2015-10-29T12:57:02+00:00" itemprop="datePublished"><a href="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/#comment-1218" class="comment-time-link" itemprop="url">October 29, 2015 at 12:57 pm</a></time></p> </header>
+<div class="comment-content" itemprop="text" il_cc1="1" il_cc2="1">
+<p>i am hopping it will work properly on rhel7</p>
+</div>
+<div class="comment-reply"><a rel="nofollow" class="comment-reply-link" href="#comment-1218" onclick='return addComment.moveForm( "comment-1218", "1218", "respond", "5466" )' aria-label="Reply to azhar">Reply</a></div>
+</article>
+</li> 
+<li class="comment even thread-odd thread-alt depth-1" id="comment-1216">
+<article itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
+<header class="comment-header" il_cc1="2" il_cc2="2">
+<p class="comment-author" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+<img alt="" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/b7d53b9329dd9d3e2435b31f5473afa0.png" srcset="http://2.gravatar.com/avatar/b7d53b9329dd9d3e2435b31f5473afa0?s=192&amp;d=identicon&amp;r=g 2x" class="avatar avatar-96 photo grav-hashed grav-hijack" id="grav-b7d53b9329dd9d3e2435b31f5473afa0-0" width="96" height="96"><span itemprop="name">Kate S.</span> <span class="says">says</span> </p>
+<p class="comment-meta"><time class="comment-time" datetime="2015-08-19T16:55:51+00:00" itemprop="datePublished"><a href="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/#comment-1216" class="comment-time-link" itemprop="url">August 19, 2015 at 4:55 pm</a></time></p> </header>
+<div class="comment-content" itemprop="text" il_cc1="1" il_cc2="1">
+<p>Thanks, very helpful.</p>
+</div>
+<div class="comment-reply"><a rel="nofollow" class="comment-reply-link" href="#comment-1216" onclick='return addComment.moveForm( "comment-1216", "1216", "respond", "5466" )' aria-label="Reply to Kate S.">Reply</a></div>
+</article>
+<ul class="children">
+<li class="comment byuser comment-author-admin bypostauthor odd alt depth-2" id="comment-1217">
+<article itemprop="comment" itemscope="" itemtype="https://schema.org/Comment">
+<header class="comment-header" il_cc1="2" il_cc2="2">
+<p class="comment-author" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+<img alt="" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/8b4931e195b81c90c1f719a798b44f09.jpeg" srcset="http://2.gravatar.com/avatar/8b4931e195b81c90c1f719a798b44f09?s=192&amp;d=identicon&amp;r=g 2x" class="avatar avatar-96 photo grav-hashed grav-hijack" id="grav-8b4931e195b81c90c1f719a798b44f09-2" width="96" height="96"><span itemprop="name"><a href="http://www.sharadchhetri.com/" class="comment-author-link" rel="external nofollow" itemprop="url">sharad chhetri</a></span> <span class="says">says</span> </p>
+<p class="comment-meta"><time class="comment-time" datetime="2015-08-20T13:55:33+00:00" itemprop="datePublished"><a href="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/#comment-1217" class="comment-time-link" itemprop="url">August 20, 2015 at 1:55 pm</a></time></p> </header>
+<div class="comment-content" itemprop="text" il_cc1="2" il_cc2="2">
+<p>You are welcome Kate,</p>
+<p>Best Regards<br>
+Sharad</p>
+</div>
+<div class="comment-reply"><a rel="nofollow" class="comment-reply-link" href="#comment-1217" onclick='return addComment.moveForm( "comment-1217", "1217", "respond", "5466" )' aria-label="Reply to sharad chhetri">Reply</a></div>
+</article>
+</li> 
+</ul> 
+</li> 
+</ol></div> <div id="respond" class="comment-respond">
+<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://sharadchhetri.com/2014/09/27/set-hostname-fqdn-centos-7-rhel-7/#respond" style="display:none;">Cancel reply</a></small></h3> <form action="http://sharadchhetri.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate="" il_cc1="9" il_cc2="9">
+<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" size="30" maxlength="245" aria-required="true" required="required" type="text"></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" size="30" maxlength="100" aria-describedby="email-notes" aria-required="true" required="required" type="email"></p>
+<p class="form-submit"><input name="submit" id="submit" class="submit" value="Post Comment" type="submit"> <input name="comment_post_ID" value="5466" id="comment_post_ID" type="hidden">
+<input name="comment_parent" id="comment_parent" value="0" type="hidden">
+</p><p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" value="6611b72e18" type="hidden"></p><p class="comment-subscription-form"><input name="subscribe_comments" id="subscribe_comments" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;" type="checkbox"> <label class="subscribe-label" id="subscribe-label" for="subscribe_comments">Notify me of follow-up comments by email.</label></p><p class="comment-subscription-form"><input name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;" type="checkbox"> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Notify me of new posts by email.</label></p><p style="display: none;"></p> <input id="ak_js" name="ak_js" value="1499692132664" type="hidden"></form>
+</div> 
+</main><span class="ai-sidebar"></span>
+<aside class="sidebar sidebar-primary widget-area" role="complementary" aria-label="Primary Sidebar" itemscope="" itemtype="https://schema.org/WPSideBar"><section id="search-3" class="widget widget_search"><div class="widget-wrap"><form class="search-form" itemprop="potentialAction" itemscope="" itemtype="https://schema.org/SearchAction" method="get" action="http://sharadchhetri.com/" role="search"><meta itemprop="target" content="http://sharadchhetri.com/?s={s}"><input itemprop="query-input" name="s" placeholder="Search this website …" type="search"><input value="Search" type="submit"></form></div></section>
+<section id="simple-social-icons-2" class="widget simple-social-icons"><div class="widget-wrap"><h4 class="widget-title widgettitle">Follow Us @</h4>
+<ul class="alignleft"><li class="ssi-email"><a href="http://sharadchhetri.us3.list-manage.com/subscribe/post?u=c0f38051e90d4d9210f6dbe66&amp;id=054da6886e" target="_blank"><svg role="img" class="social-email" aria-labelledby="social-email"><title id="social-email">Email</title><use xlink:href="http://sharadchhetri.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-email"></use></svg></a></li><li class="ssi-facebook"><a href="https://www.facebook.com/sharadchhetricom-569760293039674/" target="_blank"><svg role="img" class="social-facebook" aria-labelledby="social-facebook"><title id="social-facebook">Facebook</title><use xlink:href="http://sharadchhetri.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-facebook"></use></svg></a></li><li class="ssi-github"><a href="https://github.com/sharadchhetri" target="_blank"><svg role="img" class="social-github" aria-labelledby="social-github"><title id="social-github">Github</title><use xlink:href="http://sharadchhetri.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-github"></use></svg></a></li><li class="ssi-gplus"><a href="https://plus.google.com/+Sharadchhetridotcom" target="_blank"><svg role="img" class="social-gplus" aria-labelledby="social-gplus"><title id="social-gplus">Google+</title><use xlink:href="http://sharadchhetri.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-gplus"></use></svg></a></li><li class="ssi-twitter"><a href="https://twitter.com/sharad_chhetri" target="_blank"><svg role="img" class="social-twitter" aria-labelledby="social-twitter"><title id="social-twitter">Twitter</title><use xlink:href="http://sharadchhetri.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-twitter"></use></svg></a></li><li class="ssi-youtube"><a href="https://www.youtube.com/user/sharadchhetridotcom" target="_blank"><svg role="img" class="social-youtube" aria-labelledby="social-youtube"><title id="social-youtube">YouTube</title><use xlink:href="http://sharadchhetri.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-youtube"></use></svg></a></li></ul></div></section>
+<section id="yarpp_widget-2" class="widget widget_yarpp_widget"><div class="widget-wrap"><h4 class="widget-title widgettitle">Related Posts</h4>
+<div class="yarpp-related-widget">
+<ol><li><a href="http://sharadchhetri.com/2009/03/29/minimized-application-not-visible-in-panelissue-is-resolved/" rel="bookmark">Minimized Application not visible in panel (Issue is resolved)</a></li><li><a href="http://sharadchhetri.com/2012/07/15/how-to-change-hostname-in-ubuntu-12-04-and-12-10-without-system-restart/" rel="bookmark">How to change hostname in Ubuntu 12.04 and 12.10 without system restart</a></li><li><a href="http://sharadchhetri.com/2012/12/23/change-hostname-fqdn-centos-redhat/" rel="bookmark">How to change hostname or FQDN in CentOS and Redhat</a></li><li><a href="http://sharadchhetri.com/2013/07/23/set-hostname-and-fqdn-in-ubuntu-without-reboot/" rel="bookmark">Set hostname and FQDN in Ubuntu without reboot</a></li><li><a href="http://sharadchhetri.com/2014/07/26/how-to-start-stop-restart-reload-iptables-on-centos-7-rhel-7/" rel="bookmark">How to start / stop / restart / reload iptables on CentOS 7 / RHEL 7</a></li><li><a href="http://sharadchhetri.com/2014/07/28/how-to-backup-and-restore-iptables-on-centos-7-rhel-7/" rel="bookmark">How to backup and restore iptables on CentOS 7 / RHEL 7</a></li><li><a href="http://sharadchhetri.com/2014/08/29/how-to-install-nagios-on-centos-7-rhel-7/" rel="bookmark">How to install Nagios on CentOS 7 / RHEL 7</a></li><li><a href="http://sharadchhetri.com/2016/03/27/create-bootable-usb-key-centos-7-installation/" rel="bookmark">Create bootable usb key for CentOS 7 installation</a></li></ol>
+</div>
+</div></section>
+<section id="top-posts-2" class="widget widget_top-posts"><div class="widget-wrap"><h4 class="widget-title widgettitle">Most Read Posts</h4>
+<ul> <li>
+<a href="http://sharadchhetri.com/2013/12/19/how-to-fix-read-only-usb-pen-drive-in-ubuntu/" class="bump-view" data-bump-view="tp">
+How to fix read only USB pen drive in Ubuntu </a>
+</li>
+<li>
+<a href="http://sharadchhetri.com/2014/05/30/install-pip-centos-rhel-ubuntu-debian/" class="bump-view" data-bump-view="tp">
+How to install pip on CentOS / RHEL / Ubuntu / Debian </a>
+</li>
+<li>
+<a href="http://sharadchhetri.com/2014/07/26/how-to-start-stop-restart-reload-iptables-on-centos-7-rhel-7/" class="bump-view" data-bump-view="tp">
+How to start / stop / restart / reload iptables on CentOS 7 / RHEL 7 </a>
+</li>
+<li>
+<a href="http://sharadchhetri.com/2014/10/04/install-redis-server-centos-7-rhel-7/" class="bump-view" data-bump-view="tp">
+How to install redis server on CentOS 7 / RHEL 7 </a>
+</li>
+<li>
+<a href="http://sharadchhetri.com/2014/10/09/centos-7-rhel-7-install-and-setup-samba-server-file-sharing/" class="bump-view" data-bump-view="tp">
+CentOS 7 / RHEL 7 : Install and setup samba server ( file sharing) </a>
+</li>
+<li>
+<a href="http://sharadchhetri.com/2014/10/07/semanage-command-found-centos-7-rhel-7/" class="bump-view" data-bump-view="tp">
+semanage command not found on CentOS 7 and RHEL 7 </a>
+</li>
+<li>
+<a href="http://sharadchhetri.com/2014/07/31/how-to-install-mysql-server-5-6-on-centos-7-rhel-7/" class="bump-view" data-bump-view="tp">
+How to install MySQL Server 5.6 on CentOS 7 / RHEL 7 </a>
+</li>
+</ul></div></section>
+</aside></div>  
+<script type="text/rocketscript" data-rocketoptimized="true">
+		window.onload = function(){prettyPrint();};
+	</script>
+<script type="text/rocketscript" data-rocketsrc="http://sharadchhetri.com/wp-content/plugins/wp-code-highlight/js/wp-code-highlight.js" data-rocketoptimized="true"></script>
+ 
+</div></div><div class="footer-widgets"><div class="wrap"><div class="widget-area footer-widgets-1 footer-widget-area"><section id="user-profile-2" class="widget user-profile"><div class="widget-wrap" il_cc1="1" il_cc2="1"><p><span class="alignleft"><img alt="" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/8b4931e195b81c90c1f719a798b44f09_002.jpeg" srcset="http://2.gravatar.com/avatar/8b4931e195b81c90c1f719a798b44f09?s=90&amp;d=identicon&amp;r=g 2x" class="avatar avatar-45 photo grav-hashed grav-hijack" id="grav-8b4931e195b81c90c1f719a798b44f09-3" width="45" height="45"></span>Sharad
+ Chhetri is an experienced Linux - Cloud Engineer &amp; freelancer. 
+Working on Open Source Technology since RHEL 4.0 (Red Hat Enterprise 
+Linux). He loves sharing the knowledge which earned from real scenarios.
+ Don't be surprised if you find him in technology seminars and meetup 
+groups. You can contact him on email for freelance projects at admin@sharadchhetri.com. <a class="pagelink" href="http://sharadchhetri.com/aboutme/">Read More…</a></p>
+</div></section>
+<section id="text-4" class="widget widget_text"><div class="widget-wrap"> <div class="textwidget"><center>
+<img src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/Solutions-Architect-Associate.png">
+</center>
+<hr></div>
+</div></section>
+</div><div class="widget-area footer-widgets-2 footer-widget-area"> <section id="recent-posts-4" class="widget widget_recent_entries"><div class="widget-wrap"> <h4 class="widget-title widgettitle">Recent Posts</h4>
+<ul>
+<li>
+<a href="http://sharadchhetri.com/2017/02/26/install-mplayer-ubuntu-desktop/">Install mplayer in Ubuntu Desktop</a>
+</li>
+<li>
+<a href="http://sharadchhetri.com/2017/02/17/how-to-install-kvm-on-ubuntu-16-04-lts-desktop/">How to install KVM on Ubuntu 16.04 LTS Desktop</a>
+</li>
+<li>
+<a href="http://sharadchhetri.com/2017/02/10/create-desktop-launcher-in-unity-desktop-ubuntu-16-04-lts/">Create desktop launcher in Unity Desktop Ubuntu 16.04 LTS</a>
+</li>
+<li>
+<a href="http://sharadchhetri.com/2017/02/08/install-shotcut-on-ubuntu-16-04-lts-desktop/">Install Shotcut on Ubuntu 16.04 LTS desktop</a>
+</li>
+<li>
+<a href="http://sharadchhetri.com/2017/02/07/install-openshot-2-2-ubuntu-16-04-lts-desktop/">Install OpenShot 2.2 on Ubuntu 16.04 LTS Desktop</a>
+</li>
+<li>
+<a href="http://sharadchhetri.com/2017/01/16/upgrade-ubuntu-14-04-lts-to-ubuntu-16-04-lts/">How to Upgrade Ubuntu 14.04 to 16.04 LTS Desktop</a>
+</li>
+<li>
+<a href="http://sharadchhetri.com/2016/11/29/ansible-binsh-1-usrbinpython-not-found/">Ansible /bin/sh: 1: /usr/bin/python: not found</a>
+</li>
+<li>
+<a href="http://sharadchhetri.com/2016/07/24/access-control-by-host-and-ip-address-in-apache-2-4/">Access Control by host and ip address in Apache 2.4</a>
+</li>
+</ul>
+</div></section>
+<section id="text-3" class="widget widget_text"><div class="widget-wrap"> <div class="textwidget"><center><a href="http://www.dmca.com/Protection/Status.aspx?ID=d749ac75-0fb9-42e8-b969-defae7244f33" title="DMCA"> <img src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/DMCA_logo-grn-btn200w.png" alt="DMCA.com"></a></center></div>
+</div></section>
+</div><div class="widget-area footer-widgets-3 footer-widget-area"><section id="recent-comments-3" class="widget widget_recent_comments"><div class="widget-wrap"><h4 class="widget-title widgettitle">Recent Comments</h4>
+<ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link">hariom</span> on <a href="http://sharadchhetri.com/2013/12/13/how-to-lock-and-unlock-user-account-in-linux/#comment-8341">How to lock and unlock user account in linux</a></li><li class="recentcomments"><span class="comment-author-link"><a href="http://sharadchhetri.com/" rel="external nofollow" class="url">Sharad Chhetri</a></span> on <a href="http://sharadchhetri.com/2014/03/01/install-and-configure-rsyslog-on-rhel-6-centos-6/#comment-8334">Install and configure rsyslog Centralized logging server in CentOS 6.5</a></li><li class="recentcomments"><span class="comment-author-link"><a href="http://sharadchhetri.com/" rel="external nofollow" class="url">Sharad Chhetri</a></span> on <a href="http://sharadchhetri.com/2013/12/19/how-to-fix-read-only-usb-pen-drive-in-ubuntu/#comment-8333">How to fix read only USB pen drive in Ubuntu</a></li><li class="recentcomments"><span class="comment-author-link"><a href="http://sharadchhetri.com/" rel="external nofollow" class="url">Sharad Chhetri</a></span> on <a href="http://sharadchhetri.com/2013/12/19/how-to-fix-read-only-usb-pen-drive-in-ubuntu/#comment-8332">How to fix read only USB pen drive in Ubuntu</a></li><li class="recentcomments"><span class="comment-author-link"><a href="http://sharadchhetri.com/" rel="external nofollow" class="url">Sharad Chhetri</a></span> on <a href="http://sharadchhetri.com/2013/10/23/how-to-mount-nas-storage-in-owncloud-to-keep-all-users-data/#comment-8331">how to mount NAS storage in owncloud to keep all users data</a></li><li class="recentcomments"><span class="comment-author-link">Paolo</span> on <a href="http://sharadchhetri.com/2013/10/23/how-to-mount-nas-storage-in-owncloud-to-keep-all-users-data/#comment-8307">how to mount NAS storage in owncloud to keep all users data</a></li><li class="recentcomments"><span class="comment-author-link">NC</span> on <a href="http://sharadchhetri.com/2014/03/01/install-and-configure-rsyslog-on-rhel-6-centos-6/#comment-8303">Install and configure rsyslog Centralized logging server in CentOS 6.5</a></li></ul></div></section>
+</div></div></div><footer class="site-footer" itemscope="" itemtype="https://schema.org/WPFooter"><div class="wrap" il_cc1="1" il_cc2="1"><div class="creds" il_cc1="1" il_cc2="1"><p>Copyright © 2009 - 2017 · All Rights Reserved <a href="http://sharadchhetri.com/">sharadchhetri.com</a> · · <a href="http://sharadchhetri.com/privacy-policy/">Privacy Policy</a> · · <a href="http://www.shareasale.com/r.cfm?b=241369&amp;u=917364&amp;m=28169&amp;urllink=&amp;afftrack=" target="_blank">StudioPress Themes for WordPress</a> ·<br> · <a href="http://sharadchhetri.com/sitemap_index.xml" target="_blank">sitemap.xml</a> · ·The content is copyrighted to <a href="http://sharadchhetri.com/">sharadchhetri.com</a> and may not be reproduced on other websites without our permission. ·</p></div><p></p></div></footer></div> <div style="display:none">
+<div class="grofile-hash-map-35b059824dff3bc284bd63b99bd3c52c">
+</div>
+<div class="grofile-hash-map-8b4931e195b81c90c1f719a798b44f09">
+</div>
+<div class="grofile-hash-map-c0f88f94bff94ce8cd45a80db088f004">
+</div>
+<div class="grofile-hash-map-af1ae36389a23bf932c9ad01e93d45ee">
+</div>
+<div class="grofile-hash-map-9e06ce52007e43ce455f8c92b1d2b38f">
+</div>
+<div class="grofile-hash-map-b7d53b9329dd9d3e2435b31f5473afa0">
+</div>
+</div>
+<script type="text/rocketscript" data-rocketoptimized="true">
+var infolinks_pid = 2939614;
+var infolinks_wsid = 0;
+</script>
+<script type="text/rocketscript" data-rocketsrc="//resources.infolinks.com/js/infolinks_main.js" data-rocketoptimized="true"></script><script type="text/rocketscript" data-rocketsrc="http://sharadchhetri.com/wp-content/plugins/akismet/_inc/form.js?ver=3.3.2" data-rocketoptimized="true"></script>
+<link rel="stylesheet" id="yarppRelatedCss-css" href="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/related.css" type="text/css" media="all">
+<script type="text/rocketscript" data-rocketsrc="https://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201728" data-rocketoptimized="true"></script>
+<script type="text/rocketscript" data-rocketsrc="http://s.gravatar.com/js/gprofiles.js?ver=2017Julaa" data-rocketoptimized="true"></script>
+<script type="text/rocketscript" data-rocketoptimized="true">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/rocketscript" data-rocketsrc="http://sharadchhetri.com/wp-content/plugins/jetpack/modules/wpgroho.js?ver=4.8" data-rocketoptimized="true"></script>
+<script type="text/rocketscript" data-rocketsrc="http://sharadchhetri.com/wp-includes/js/comment-reply.min.js?ver=4.8" data-rocketoptimized="true"></script>
+<script type="text/rocketscript" data-rocketsrc="http://sharadchhetri.com/wp-includes/js/wp-embed.min.js?ver=4.8" data-rocketoptimized="true"></script>
+<script type="text/rocketscript" data-rocketsrc="https://stats.wp.com/e-201728.js" async="" defer="defer" data-rocketoptimized="true"></script>
+<script type="text/rocketscript" data-rocketoptimized="true">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:5.0',blog:'46982787',post:'5466',tz:'0',srv:'sharadchhetri.com'} ]);
+	_stq.push([ 'clickTrackerInit', '46982787', '5466' ]);
+</script>
+
+<iframe style="display: none;" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/user_sync.html" width="1px" height="1px"></iframe><img src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/getuid.asc" style="display: none;" width="0" height="0"><iframe style="display: none;" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/usersyncup-an.html" width="1px" height="1px"></iframe><img src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/g.gif" alt=":)" id="wpstats" width="6" height="5"><script type="text/javascript" data-rocketsrc="http://resources.infolinks.com/static/quantcast/quantcast.js" data-rocketoptimized="true"></script><img style="display: none; width: 1px; height: 1px;" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/adview_003.htm"><img style="display: none; width: 1px; height: 1px;" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/adview_002.htm"><img style="display: none; width: 1px; height: 1px;" src="How%20to%20set%20hostname%20and%20FQDN%20on%20CentOS%207%20and%20RHEL%207_files/adview.htm"></body></html>

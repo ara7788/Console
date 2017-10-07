@@ -1,0 +1,400 @@
+Рейтинг@Mail.ru
+Виртуальная энциклопедия Linux по-русски <http://rus-linux.net/>
+<http://goo.gl/vb6x5y>
+
+  * Новости <http://rus-linux.net/>
+  * Библиотека <http://rus-linux.net/lib.php?name=/MyLDP/index.html>
+  * Е-книги <http://rus-linux.net/lib.php?name=/MyLDP/BOOKS/books.html>
+  * Авторское <http://rus-linux.net/kos.php?name=/inc/site.html#avtory>
+  * Форум <http://seocod.ru/forum/index.php>
+  * Каталог ссылок <http://rus-linux.net/lib.php?name=/txt/kat-full.html>
+  * Каталог ПО <http://rus-linux.net/lib.php?name=/po/linapp.koi>
+  * О сайте <http://rus-linux.net/kos.php?name=/inc/site.html>
+  * Карта сайта <http://rus-linux.net/lib.php?name=/sitemap.html>
+
+/
+
+/
+
+	
+
+
+    Наши друзья и партнеры
+
+*UnixForum* <http://unixforum.org/>
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+<https://s.click.aliexpress.com/e/jiMbAMvfY?dp=ruslinuxnet>
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+*Библиотека сайта rus-linux.net*
+
+
+  Полное руководство по использованию команды "useradd" в Linux - 15
+  практических примеров
+
+Оригинал: The Complete Guide to "useradd" Command in Linux - 15
+Practical Examples <http://www.tecmint.com/add-users-in-linux/>
+Автор: Ravi Saive
+Дата публикации: 28 марта 2014 года
+Перевод: А. Кривошей
+Дата перевода: декабрь 2014 г.
+
+Все мы знаем об очень популярных в мире Linux командах "useradd" и
+"adduser". Время от времени администраторы системы используют их для
+создания пользовательских профилей с какими-либо специфическими
+свойствами или ограничениями.
+
+Команда "useradd" в Linux или других системах на базе Unix - это
+низкоуровневая утилита, которая используется для добавления/создания
+пользовательского аккаунта. Команда "adduser" очень похожа на "useradd",
+поскольку является просто символьной ссылкой на нее.
+
+Версии команды useradd в некоторых дистрибутивах Linux могут иметь
+небольшие отличия. Я полагаю, что вы прочитаете документацию своего
+дистрибутива, перед тем, как начнете экспериментировать.
+
+Когда мы в терминале запускаем команду useradd, происходит следующее:
+
+1. Она редактирует файлы /etc/passwd, /etc/shadow, /etc/group
+и/etc/gshadow, внося в них нового пользователя.
+2. Создается и заполняется домашняя директория для нового пользователя.
+3. Устанавливаются права доступа и владелец домашней директории.
+
+Базовый синтаксис команды:
+
+$ useradd [options] username
+
+В этой статье мы покажем 15 наиболее часто встречающихся примеров
+использования команды useradd в Linux. Мы разделим наше повествование на
+две части:
+
+Часть I: основы с 10 примерами;
+Часть II: продвинутые возможности с 5 примерами.
+
+
+    Часть I - 10 базовых примеров использования команды "useradd"
+
+
+      1. Как добавить нового пользователя в Linux
+
+Для создания/добавления нового пользователя используется команда
+"useradd" с аргументом "username", где username - это имя нового
+пользователя, которое будет использоваться для входа в систему.
+За один раз можно добавить только одного пользователя, и его имя должно
+быть уникальным (то есть отличаться от имен других пользователей, уже
+существующих в системе).
+
+Например, добавляем пользователя "techmint":
+
+[root@tecmint ~]# useradd tecmint
+
+После выполнения данной команды, новый пользователь будет создан в
+заблокированном состоянии. Чтобы разблокировать пользовательский
+аккаунт, необходимо задать его пароль с помощью команды "passwd".
+
+[root@tecmint ~]# passwd tecmint
+Changing password for user tecmint.
+New UNIX password:
+Retype new UNIX password:
+passwd: all authentication tokens updated successfully.
+
+После создания нового пользователя его запись автоматически добавляется
+в пароль "/etc/passwd" и имеет следующий вид:
+
+tecmint:x:504:504:tecmint:/home/tecmint:/bin/bash
+
+Она состоит из семи разделенных двоеточием полей, каждое из которых
+имеет свое назначение:
+
+*Username*: имя пользователя, используемое для входа в систему. Может
+иметь длинц от 1 до 32 символов.
+*Password*: пользовательский пароль (или символ x), который хранится в
+зашифрованном виде в файле /etc/shadow.
+*User ID (UID)*: каждый пользователь должен иметь User ID (UID) -
+идентификатор пользователя. По умолчанию UID 0 зарезервирован для root,
+а UID в диапазоне 1-99 для других предопределенных аккаунтов. UID в
+диапазоне 100-999 предназначены для пользовательских аккаунтов и групп.
+*Group ID (GID)*: идентификатор группы - Group ID (GID), хранится в
+файле /etc/group file.
+*User Info*: это опциональное поле и оно позволяет вам задать
+дополнительную информацию о пользователе, например полное имя. Это поле
+заполняется с помощью команды "finger".
+*Home Directory*: абсолютный путь к домашней директории пользователя.
+*Shell*: абсолютный путь к командной оболочке пользователя, например
+/bin/bash.
+
+
+      2. Создание пользователя с нестандартным размещением домашней
+      директории
+
+По умолчанию команда "useradd" создает домашнюю директорию пользователя
+в /home и называет ее именем пользователя. Поэтому, например, для
+приведенного выше примера, мы увидим домашнюю директорию созданного нами
+пользователя "tecmint" в "/home/tecmint".
+Однако это действие можно изменить с помощью опции "-d", указав после
+нее расположение новой домашней директории. Например, приведенная ниже
+команда создаст пользователя "anusha" с домашней директорией
+"/data/projects".
+
+[root@tecmint ~]# useradd -d /data/projects anusha
+
+Вы можете просмотреть расположение домашней директории пользователя, а
+также другую информацию о нем:
+
+[root@tecmint ~]# cat /etc/passwd | grep anusha
+
+anusha:x:505:505::/data/projects:/bin/bash
+
+
+      3. Создание пользователя с заданным User ID
+
+В Linux каждый пользователь имеет свой собственный UID (Unique
+Identification Number). По умолчанию при создании нового пользователя
+ему присваивается userid 500, 501, 502 и т.д.
+Но мы можем создать пользователя с заданным userid с помощью опции "-u".
+Например, приведенная ниже команда создает пользователя "navin" с userid
+"999".
+
+[root@tecmint ~]# useradd -u 999 navin
+
+Теперь мы можем проверить, что пользователь создан действительно с этим
+идентификатором.
+
+[root@tecmint ~]# cat /etc/passwd | grep tecmint
+
+navin:x:999:999::/home/navin:/bin/bash
+
+Замечание: Обратите внимание, что user ID должен отличаться от user ID
+пользователей, уже существующих в системе.
+
+
+      4. Создание пользователя с заданным Group ID
+
+Аналогично, каждый пользователь имеет свой GID (Group Identification
+Number). Мы можем создавать пользователей с заданным group ID с помощью
+опции -g.
+
+В этом примере мы добавим пользователя "tarunika" с заданными UID и GID:
+
+[root@tecmint ~]# useradd -u 1000 -g 500 tarunika
+
+Проверим, правильно ли сработала команда:
+
+[root@tecmint ~]# cat /etc/passwd | grep tarunika
+
+tarunika:x:1000:500::/home/tarunika:/bin/bash
+
+
+      5. Добавление пользователя в несколько групп
+
+Опция "-G" используется для добавления пользователя в дополнительные
+группы. Названия групп разделяются запятой без пробелов.
+В приведенном ниже примере мы добавляем пользователя "tecmint" в группы
+admins, webadmin и developer.
+
+[root@tecmint ~]# useradd -G admins,webadmin,developers tecmint
+
+Теперь проверим, в каких группах числится пользователь, с помощью
+команды id.
+
+[root@tecmint ~]# id tecmint
+
+uid=1001(tecmint) gid=1001(tecmint)
+groups=1001(tecmint),500(admins),501(webadmin),502(developers)
+context=root:system_r:unconfined_t:SystemLow-SystemHigh
+
+
+      6. Добавление пользователя без домашней директории
+
+В некоторых ситуациях мы не хотим, по соображениям безопасности, давать
+пользователям домашние директории. В таком случае, когда пользователь
+авторизуется в системе сразу после ее запуска, его домашней директорией
+будет root. Если такой пользователь использует команду su, то он
+авторизуется в домашней директории предыдущего пользователя.
+Для создания пользователя без домашней директории используется опция
+"-M". Например, создадим пользователя "shilpi" без домашней директории.
+
+[root@tecmint ~]# useradd -M shilpi
+
+Давайте проверим, что пользователь создан без домашней директории, с
+помощью команды ls:
+
+[root@tecmint ~]# ls -l /home/shilpi
+
+ls: cannot access /home/shilpi: No such file or directory
+
+
+      7. Добавление пользовательского аккаунта с ограниченным сроком
+      действия
+
+По умолчанию, когда мы добавляем пользователя с помощью команды
+"useradd", его аккаунт не имеет сроков действия, то есть дата истечения
+сроков его жизни установена в 0 (никогда не истекает).
+Однако мы можем установить дату истечения с помощью опции "-e", задав
+дату в формате YYYY-MM-DD. Это полезно при создании временных аккаунтов
+для каких-то конкретных задач.
+В приведенном ниже примере мы создаем пользователя "aparna" со сроком
+жизни его аккаунта до 27 апреля 2015 года в формате YYYY-MM-DD.
+
+[root@tecmint ~]# useradd -e 2015-03-27 aparna
+
+Далее, проверяем сроки действия аккаунта и пароля с помощью команды "chage".
+
+[root@tecmint ~]# chage -l aparna
+
+Last password change						: Mar 28, 2014
+Password expires						: never
+Password inactive						: never
+Account expires							: Mar 27, 2015
+Minimum number of days between password change		        : 0
+Maximum number of days between password change		        : 99999
+Number of days of warning before password expires		: 7
+
+
+      8. Создание пользователя с ограниченным временем действия пароля
+
+Аргумент "-f" используется для того, чтобы задать количество дней, через
+которое пароль перестанет действовать. По умолчанию его значение равно
+-1, при этом время действия пароля не ограничивается.
+В примере мы задаем для пользователя "tecmint" время действия пароля 45
+дней с помощью опций "-e" и "-f".
+
+[root@tecmint ~]# useradd -e 2014-04-27 -f 45 tecmint
+
+
+      9. Добавление различных комментариев к учетной записи
+
+Опция "-c" позволяет вам добавлять произвольные комментарии, такие как
+полное имя пользователя или его номер телефона, в файл /etc/passwd.
+Например, следующая команда добавляет пользователя "mansi" и вставляет в
+поле комментария его полное имя Manis Khurana.
+
+[root@tecmint ~]# useradd -c "Manis Khurana" mansi
+
+Вы можете просмотреть комментарии в файле '/etc/passwd' с помощью команды:
+
+[root@tecmint ~]# tail -1 /etc/passwd
+
+mansi:x:1006:1008:Manis Khurana:/home/mansi:/bin/sh
+
+
+      10. Смена командной оболочки пользователя
+
+Иногда мы добавляем пользователей, которые никогда не работают с
+командными оболочкми, или могут использовать другие командные оболочки.
+Мы можем задать отдельную оболочку для любого пользователя с помощью
+опции "-s".
+В примере мы добавляем пользователя "tecmint" без командной оболочки, то
+есть задаем оболочку "/sbin/nologin".
+
+[root@tecmint ~]# useradd -s /sbin/nologin tecmint
+
+Вы можете проверить командную оболочку пользователя с помощью команды:
+
+[root@tecmint ~]# tail -1 /etc/passwd
+
+tecmint:x:1002:1002::/home/tecmint:/sbin/nologin
+
+
+    Часть II: продвинутые возможности команды useradd
+
+
+      11. Добавление пользователя с заданными домашней директорией,
+      командной оболочкой и комментариями
+
+Приведенная ниже команда создает пользователя "ravi" с домашней
+директорией "/var/www/tecmint", командной оболочкой "/bin/bash" и
+дополнительной информацией о пользователе.
+
+[root@tecmint ~]# useradd -m -d /var/www/ravi -s /bin/bash -c "TecMint Owner" -U ravi
+
+В этой команде опция "-m -d" создает пользователя с заданной домашней
+директорией, а опция "-s" задает командную оболочку, т.е. /bin/bash.
+Опция "-c" добавляет дополнительную информацию о пользователе, а опция
+"-U" создает/добавляет группу с тем же именем, что и у пользователя.
+
+
+      12. Добавление пользователя с заданными домашней директорией,
+      командной оболочкой, комментариями и UID/GID.
+
+Эта команда очень похожа на предыдущую, но здесь мы определяем оболочку
+как "/bin/zsh", и задаем UID и GID для пользователя "tarunika". Здесь
+"-u" задает новый UID пользователя (т.е. 1000), а "-g" задает GID (т.е.
+1000).
+
+[root@tecmint ~]# useradd -m -d /var/www/tarunika -s /bin/zsh -c "TecMint Technical Writer" -u 1000 -g 1000 tarunika
+
+
+      13. Добавление пользователя с домашней директорией, без оболочки,
+      с комментариями и User ID
+
+Следующая команда очень похожа на две предыдущие, единственное отличие в
+том, что мы отключаем командную оболочку для пользователя "avishek" с
+заданным User ID (т.е. 1019). Это значит, что пользователь "avishek" не
+сможет авторизоваться в системе из командной оболочки.
+
+[root@tecmint ~]# useradd -m -d /var/www/avishek -s /usr/sbin/nologin -c "TecMint Sr. Technical Writer" -u 1019 avishek
+
+
+      14. Добавление пользователя с домашней директорией, skeleton
+      directory, комментариями и User ID
+
+Единственное, что меняется в этой команде, мы используем опцию "-k",
+чтобы задать skeleton directory, то есть /etc/custom.skel, а не
+умолчательную /etc/skel. Мы также используем опцию "-s", чтобы задать
+отдельную оболочку /bin/tcsh.
+
+[root@tecmint ~]# useradd -m -d /var/www/navin -k /etc/custom.skell -s /bin/tcsh -c "No Active Member of TecMint" -u 1027 navin
+
+
+      15. Добавление пользователя без домашней директории, без оболочки,
+      без групп, и с комментариями
+
+Приведенная ниже команда отличается от показанных ранее. Здесь мы
+используем опцию "-M", чтобы создать пользователя без домашней
+директории, и "-N", чтобы создать только пользователя (без группы).
+Аргумент "-r" используется для создания системного пользователя.
+
+[root@tecmint ~]# useradd -M -N -r -s /bin/false -c "Disabled TecMint Member" clayton
+
+  * Яндекс.Коллекции
+    <https://collections.yandex.ru/share/?url=http%3A%2F%2Frus-linux.net%2FMyLDP%2Fconsol%2F15-primerov-po-useradd.html&image=&description=%D0%A0%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D0%BF%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8E%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B%20%22useradd%22%20%D0%B2%20Linux&utm_source=share2>
+  * ВКонтакте
+    <https://vk.com/share.php?url=http%3A%2F%2Frus-linux.net%2FMyLDP%2Fconsol%2F15-primerov-po-useradd.html&title=%D0%A0%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D0%BF%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8E%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B%20%22useradd%22%20%D0%B2%20Linux&description=&image=&utm_source=share2>
+  * Facebook
+    <https://www.facebook.com/sharer.php?src=sp&u=http%3A%2F%2Frus-linux.net%2FMyLDP%2Fconsol%2F15-primerov-po-useradd.html&title=%D0%A0%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D0%BF%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8E%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B%20%22useradd%22%20%D0%B2%20Linux&description=&picture=&utm_source=share2>
+  * Одноклассники
+    <https://connect.ok.ru/offer?url=http%3A%2F%2Frus-linux.net%2FMyLDP%2Fconsol%2F15-primerov-po-useradd.html&title=%D0%A0%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D0%BF%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8E%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B%20%22useradd%22%20%D0%B2%20Linux&description=&imageUrl=&utm_source=share2>
+  * Мой Мир
+    <https://connect.mail.ru/share?url=http%3A%2F%2Frus-linux.net%2FMyLDP%2Fconsol%2F15-primerov-po-useradd.html&title=%D0%A0%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D0%BF%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8E%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B%20%22useradd%22%20%D0%B2%20Linux&description=&utm_source=share2>
+  * Google+
+    <https://plus.google.com/share?url=http%3A%2F%2Frus-linux.net%2FMyLDP%2Fconsol%2F15-primerov-po-useradd.html&utm_source=share2>
+  * Twitter
+    <https://twitter.com/intent/tweet?text=%D0%A0%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D0%BF%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8E%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B%20%22useradd%22%20%D0%B2%20Linux&url=http%3A%2F%2Frus-linux.net%2FMyLDP%2Fconsol%2F15-primerov-po-useradd.html&hashtags=&utm_source=share2>
+
+
+        Поделиться:
+
+------------------------------------------------------------------------
+
+  * Новости <http://rus-linux.net/>
+  * Библиотека <http://rus-linux.net/lib.php?name=/MyLDP/index.html>
+  * Е-книги <http://rus-linux.net/lib.php?name=/MyLDP/BOOKS/books.html>
+  * Авторское <http://rus-linux.net/kos.php?name=/inc/site.html#avtory>
+  * Форум <http://seocod.ru/forum/index.php>
+  * Каталог ссылок <http://rus-linux.net/lib.php?name=/txt/kat-full.html>
+  * Каталог ПО <http://rus-linux.net/lib.php?name=/po/linapp.koi>
+  * О сайте <http://rus-linux.net/kos.php?name=/inc/site.html>
+  * Карта сайта <http://rus-linux.net/lib.php?name=/sitemap.html>
+
+CISHost - отличный хостинг! <http://www.cishost.ru/>
+(C) В.А.Костромин, 1999 - 2017 г.
+Рейтинг@Mail.ru <http://top.mail.ru/jump?from=55285>
+<http://www.liveinternet.ru/click>
+

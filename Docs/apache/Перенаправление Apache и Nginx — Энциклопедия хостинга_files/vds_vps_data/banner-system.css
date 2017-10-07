@@ -1,0 +1,1004 @@
+/* Common */
+* {
+    box-sizing: border-box;
+}
+html,
+body,
+.BannerSystem,
+.BannerSystem__Title--H1,
+.BannerSystem__Title--H2,
+.BannerSystem__Button {
+    width: 100%;
+    height: 100%;
+}
+body {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 100%;
+}
+a.BannerSystem {
+    text-decoration: none;
+}
+.BannerSystem,
+.BannerSystem__Title--H1,
+.BannerSystem__Title--H2,
+.BannerSystem__IMG {
+    display: block;
+}
+.BannerSystem__Title--H1,
+.BannerSystem__Title--H2,
+.BannerSystem__IMG,
+.BannerSystem__Button {
+    position: absolute;
+}
+.BannerSystem__Title--H1 {
+    font-weight: normal;
+    background-color: #f7f7f7;
+    color: #0d96d6;
+    margin: 0;
+}
+.BannerSystem__Title--H2 {
+    font-weight: normal;
+    background-color: #0d96d6;
+    color: #fff;
+    margin: 0;
+}
+.BannerSystem__IMG {
+    max-width: 100%;
+    height: auto;
+}
+.BannerSystem__Button {
+    background: rgb(255, 133, 2);
+    background: -moz-linear-gradient(90deg, rgb(255, 133, 2) 0%, rgb(255, 90, 0) 100%);
+    background: -webkit-linear-gradient(90deg, rgb(255, 133, 2) 0%, rgb(255, 90, 0) 100%);
+    background: -o-linear-gradient(90deg, rgb(255, 133, 2) 0%, rgb(255, 90, 0) 100%);
+    background: -ms-linear-gradient(90deg, rgb(255, 133, 2) 0%, rgb(255, 90, 0) 100%);
+    background: linear-gradient(180deg, rgb(255, 133, 2) 0%, rgb(255, 90, 0) 100%);
+    -webkit-box-shadow: inset 0 -1px 0 0 rgba(212, 90, 0, 0.75);
+    -moz-box-shadow:    inset 0 -1px 0 0 rgba(212, 90, 0, 0.75);
+    box-shadow:         inset 0 -1px 0 0 rgba(212, 90, 0, 0.75);
+    color: #fff;
+    text-shadow: 0 1px 0 rgba(169, 40, 0, 0.75);
+}
+.BannerSystem__Button:hover {
+    background: rgb(255, 90, 0);
+    background: -moz-linear-gradient(90deg, rgb(255, 90, 0) 0%, rgb(255, 133, 2) 100%);
+    background: -webkit-linear-gradient(90deg, rgb(255, 90, 0) 0%, rgb(255, 133, 2) 100%);
+    background: -o-linear-gradient(90deg, rgb(255, 90, 0) 0%, rgb(255, 133, 2) 100%);
+    background: -ms-linear-gradient(90deg, rgb(255, 90, 0) 0%, rgb(255, 133, 2) 100%);
+    background: linear-gradient(180deg, rgb(255, 90, 0) 0%, rgb(255, 133, 2) 100%);
+}
+.BannerSystem__Button:active {
+    background: rgb(255, 90, 0);
+    background: -moz-linear-gradient(90deg, rgb(255, 90, 0) 0%, rgb(255, 133, 2) 100%);
+    background: -webkit-linear-gradient(90deg, rgb(255, 90, 0) 0%, rgb(255, 133, 2) 100%);
+    background: -o-linear-gradient(90deg, rgb(255, 90, 0) 0%, rgb(255, 133, 2) 100%);
+    background: -ms-linear-gradient(90deg, rgb(255, 90, 0) 0%, rgb(255, 133, 2) 100%);
+    background: linear-gradient(180deg, rgb(255, 90, 0) 0%, rgb(255, 133, 2) 100%);
+    -webkit-box-shadow: inset 0 2px 0 0 rgba(212, 90, 0, 0.75);
+    -moz-box-shadow:    inset 0 2px 0 0 rgba(212, 90, 0, 0.75);
+    box-shadow:         inset 0 2px 0 0 rgba(212, 90, 0, 0.75);
+}
+
+/* Special classes */
+/* .TopGreen */
+.BannerSystem.TopGreen .BannerSystem__Title--H1 {
+    background-color: #d3f300;
+    color: #496125;
+    border-bottom: solid 1px #bce104;
+}
+.BannerSystem.TopGreen .BannerSystem__Title--H2 {
+    background-color: #f8f8f3;
+    color: #404040;
+}
+/* .BottomGreen */
+.BannerSystem.BottomGreen .BannerSystem__Title--H1 {
+    background-color: #f3f3f3;
+    color: #2b2f35;
+}
+.BannerSystem.BottomGreen .BannerSystem__Title--H2 {
+    background-color: #a4cd27;
+    color: #141b0a;
+    border-top: solid 1px #8aad1f;
+}
+/* .BottomViolet */
+.BannerSystem.BottomViolet .BannerSystem__Title--H1 {
+    background-color: #f3f3f3;
+    color: #2b2f35;
+}
+.BannerSystem.BottomViolet .BannerSystem__Title--H2 {
+    background-color: #44426f;
+    color: #ffffff;
+    border-top: solid 1px #cdc9c2;
+}
+/* .TopRed */
+.BannerSystem.TopRed .BannerSystem__Title--H1 {
+    background-color: #a30101;
+    color: #f8f8f8;
+}
+.BannerSystem.TopRed .BannerSystem__Title--H2 {
+    background-color: #f5f6f3;
+    color: #a30101;
+}
+/* .BottomRed */
+.BannerSystem.BottomRed .BannerSystem__Title--H1 {
+    background-color: #f6f7f5;
+    color: #a30101;
+}
+.BannerSystem.BottomRed .BannerSystem__Title--H2 {
+    background-color: #a30101;
+    color: #ffffff;
+}
+/* .BottomPurple */
+.BannerSystem.BottomPurple .BannerSystem__Title--H1 {
+	background: rgb(235, 235, 235);
+	background: -moz-linear-gradient(270deg, rgb(235, 235, 235) 0%, rgb(249, 249, 249) 100%);
+	background: -webkit-linear-gradient(270deg, rgb(235, 235, 235) 0%, rgb(249, 249, 249) 100%);
+	background: -o-linear-gradient(270deg, rgb(235, 235, 235) 0%, rgb(249, 249, 249) 100%);
+	background: -ms-linear-gradient(270deg, rgb(235, 235, 235) 0%, rgb(249, 249, 249) 100%);
+	background: linear-gradient(0deg, rgb(235, 235, 235) 0%, rgb(249, 249, 249) 100%);
+    color: #262525;
+}
+.BannerSystem.BottomPurple .BannerSystem__Title--H2 {
+    background-color: #b020b9;
+    color: #ffffff;
+}
+
+/* Media Query */
+/** 31px high **/
+@media only screen and (height: 31px) {
+    .BannerSystem__Title--H1 {
+        font-size: .7em;
+        line-height: 11px;
+        text-align: center;
+        padding-top: 4px;
+    }
+    .BannerSystem__Title--H1 span {
+        display: block;
+    }
+    .BannerSystem__Title--H2,
+    .BannerSystem__IMG,
+    .BannerSystem__Button {
+        display: none;
+    }
+    .BannerSystem__Title--H2,
+    .BannerSystem__Button {
+        text-align: center;
+    }
+
+    /* Special classes */
+    /* .TopGreen */
+    .BannerSystem.TopGreen .BannerSystem__Title--H1 {
+        border-bottom: none;
+    }
+    /* .BottomGreen */
+    .BannerSystem.BottomGreen .BannerSystem__Title--H2 {
+        border-top: none;
+    }
+}
+@media only screen and (height:31px) and (min-width:234px) {
+    .BannerSystem__Title--H1 {
+        font-size: 1em;
+        padding-top: 9px;
+    }
+    .BannerSystem__Title--H1 span {
+        display: inline;
+    }
+}
+@media only screen and (height:31px) and (min-width:440px) {
+    .BannerSystem__Title--H1,
+    .BannerSystem__Title--H2 {
+        width: 50%;
+    }
+    .BannerSystem__Title--H1 {
+        font-size: .9em;
+        padding-top: 7px;
+    }
+    .BannerSystem__Title--H2 {
+        display: inherit;
+        right: 0;
+        font-size: .6em;
+        padding-top: 8px;
+    }
+}
+@media only screen and (height:31px) and (min-width:560px) {
+    .BannerSystem__Title--H1,
+    .BannerSystem__Title--H2 {
+        width: 39.28571428571429%;
+    }
+    .BannerSystem__Title--H1 {
+        padding-top: 8px;
+    }
+    .BannerSystem__Title--H2 {
+        left: 39.28571428571429%;
+        padding-top: 9px;
+    }
+    .BannerSystem__Button {
+        display: inherit;
+        width: 21.42857142857143%;
+        right: 0;
+        padding-top: 4px;
+    }
+    .BannerSystem__Button span:last-of-type {
+        display: none;
+    }
+}
+@media only screen and (height:31px) and (min-width:700px) {
+    .BannerSystem__Title--H1,
+    .BannerSystem__Title--H2 {
+        width: 35.28571428571429%;
+    }
+    .BannerSystem__Title--H1 {
+        font-size: 1.1em;
+    }
+    .BannerSystem__Title--H2 {
+        left: 35.28571428571429%;
+        font-size: .7em;
+        padding-top: 8px;
+    }
+    .BannerSystem__Button {
+        width: 29.42857142857143%;
+    }
+    .BannerSystem .BannerSystem__Button span {
+        display: inline;
+    }
+}
+/** 60px high **/
+@media only screen and (height:60px) {
+    .BannerSystem__Title--H1,
+    .BannerSystem__Title--H2 {
+        text-align: center;
+    }
+    .BannerSystem__Title--H1 {
+        height: 61.66666666666667%;
+        padding-top: 2px;
+        font-size: .9em;
+        line-height: 15px;
+    }
+    .BannerSystem__Title--H2 {
+        height: 38.33333333333333%;
+        padding-top: 1px;
+        bottom: 0;
+        font-size: .6em;
+        line-height: 9px;
+        -webkit-box-shadow: inset 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+        -moz-box-shadow:    inset 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+        box-shadow:         inset 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+    }
+    .BannerSystem__Title--H1 span,
+    .BannerSystem__Title--H2 span {
+        display: block;
+    }
+    .BannerSystem__IMG,
+    .BannerSystem__Button {
+        display: none;
+    }
+    .BannerSystem__Button {
+        padding: 2px 12px 0;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        margin: 17px 0 0 328px;
+    }
+
+    /* Special classes */
+    /* .TopGreen */
+    .BannerSystem.TopGreen .BannerSystem__Title--H2 {
+        -webkit-box-shadow: none;
+        -moz-box-shadow:    none;
+        box-shadow:         none;
+    }
+    /* .BottomGreen */
+    .BannerSystem.BottomGreen .BannerSystem__Title--H2 {
+        -webkit-box-shadow: none;
+        -moz-box-shadow:    none;
+        box-shadow:         none;
+    }
+	/* .BottomPurple */
+	.BannerSystem.BottomPurple .BannerSystem__Title--H2 {
+        -webkit-box-shadow: none;
+        -moz-box-shadow:    none;
+        box-shadow:         none;
+		border-top: 2px solid #a01ca8;
+    }
+}
+@media only screen and (height:60px) and (min-width:234px) {
+    .BannerSystem__Title--H1,
+    .BannerSystem__Title--H2 {
+        text-align: left;
+        padding-left: 62px;
+    }
+    .BannerSystem__Title--H1 {
+        font-size: .8em;
+        padding-top: 10px;
+    }
+    .BannerSystem__Title--H1 span,
+    .BannerSystem__Title--H2 span {
+        display: inline-block;
+    }
+    .BannerSystem__IMG {
+        display: inherit;
+        width: 54px;
+        margin: 3px 0 0 3px;
+    }
+}
+@media only screen and (height:60px) and (min-width:440px) {
+    .BannerSystem__Title--H1 {
+        font-size: 1.1em;
+        padding-top: 12px;
+    }
+    .BannerSystem__Title--H2 {
+        font-size: .75em;
+        padding-top: 6px;
+    }
+    .BannerSystem__Button {
+        display: inherit;
+        width: auto;
+        height: 27px;
+        text-align: center;
+    }
+    .BannerSystem__Button span:last-of-type {
+        display: none;
+    }
+}
+@media only screen and (height:60px) and (min-width:560px) {
+    .BannerSystem__Button span:last-of-type {
+        display: inline;
+    }
+}
+@media only screen and (height:60px) and (min-width:600px) {
+    .BannerSystem__Title--H1,
+    .BannerSystem__Title--H2 {
+        padding-left: 14%;
+    }
+    .BannerSystem__IMG {
+        left: 2%;
+    }
+    .BannerSystem__Button {
+        width: 40%;
+        right: 2%;
+    }
+}
+/** 90px high **/
+@media only screen and (height:90px) {
+    .BannerSystem__Title--H1,
+    .BannerSystem__Title--H2 {
+        text-align: center;
+    }
+    .BannerSystem__Title--H1 {
+        height: 61.11111111111111%;
+        font-size: 1em;
+        line-height: 18px;
+        padding-top: 9px;
+    }
+    .BannerSystem__Title--H2 {
+        height: 38.88888888888889%;
+        bottom: 0;
+        font-size: .6em;
+        -webkit-box-shadow: inset 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+        -moz-box-shadow:    inset 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+        box-shadow:         inset 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+        border-top: solid 1px #bfd7e2;
+        padding-top: 5px;
+    }
+    .BannerSystem__Title--H1 span,
+    .BannerSystem__Title--H2 span {
+        display: block;
+    }
+    .BannerSystem__IMG,
+    .BannerSystem__Button {
+        display: none;
+    }
+    .BannerSystem__Button {
+        padding: 4px 14px 0;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        margin: 31px 0 0 353px;
+    }
+
+    /* Special classes */
+    /* .TopGreen */
+    .BannerSystem.TopGreen .BannerSystem__Title--H2 {
+        -webkit-box-shadow: none;
+        -moz-box-shadow:    none;
+        box-shadow:         none;
+        border-top: none;
+    }
+    /* .BottomGreen */
+    .BannerSystem.BottomGreen .BannerSystem__Title--H2 {
+        -webkit-box-shadow: none;
+        -moz-box-shadow:    none;
+        box-shadow:         none;
+    }
+	/* .BottomPurple */
+	.BannerSystem.BottomPurple .BannerSystem__Title--H2 {
+        -webkit-box-shadow: none;
+        -moz-box-shadow:    none;
+        box-shadow:         none;
+		border-top: 2px solid #a01ca8;
+    }
+}
+@media only screen and (height:90px) and (min-width:240px) {
+    .BannerSystem__Title--H1,
+    .BannerSystem__Title--H2 {
+        text-align: left;
+        padding-left: 90px;
+    }
+    .BannerSystem__Title--H1 {
+        padding-top: 8px;
+    }
+    .BannerSystem__Title--H2 {
+        padding-top: 4px;
+        border-top: none;
+    }
+    .BannerSystem__IMG {
+        display: inherit;
+        width: 81px;
+        margin: 3px 0 0 1px;
+    }
+}
+@media only screen and (height:90px) and (min-width:300px) {
+
+}
+@media only screen and (height:90px) and (min-width:390px) {
+    .BannerSystem__Title--H1 {
+        font-size: 1.1em;
+        padding-top: 19px;
+    }
+    .BannerSystem__Title--H2 {
+        font-size: .75em;
+        padding-top: 9px;
+    }
+    .BannerSystem__Title--H1 span,
+    .BannerSystem__Title--H2 span {
+        display: inline;
+    }
+}
+@media only screen and (height:90px) and (min-width:480px) {
+    .BannerSystem__Button {
+        display: inherit;
+        width: auto;
+        height: 32px;
+        text-align: center;
+    }
+    .BannerSystem__Button span:last-of-type {
+        display: none;
+    }
+}
+@media only screen and (height:90px) and (min-width:620px) {
+    .BannerSystem__Title--H1,
+    .BannerSystem__Title--H2 {
+        padding-left: 15%;
+    }
+    .BannerSystem__IMG {
+        left: 1%;
+    }
+    .BannerSystem__Button {
+        width: 40%;
+        right: 2%;
+    }
+    .BannerSystem__Button span:last-of-type {
+        display: inline;
+    }
+}
+/** 125px high **/
+@media only screen and (height:125px) {
+    .BannerSystem__Title--H1,
+    .BannerSystem__Title--H2 {
+        text-align: center;
+    }
+    .BannerSystem__Title--H1 {
+        height: 60.8%;
+        padding-top: 18px;
+        font-size: 1em;
+        line-height: 18px;
+    }
+    .BannerSystem__Title--H2 {
+        height: 39.2%;
+        padding-top: 11px;
+        bottom: 0;
+        font-size: .6em;
+        line-height: 12px;
+        -webkit-box-shadow: inset 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+        -moz-box-shadow:    inset 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+        box-shadow:         inset 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+        border-top: solid 1px #bfd7e2;
+    }
+    .BannerSystem__Title--H1 span,
+    .BannerSystem__Title--H2 span {
+        display: block;
+    }
+    .BannerSystem__IMG,
+    .BannerSystem__Button {
+        display: none;
+    }
+    .BannerSystem__Button {
+        padding: 6px 14px 0;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        margin: 31px 0 0 0;
+    }
+
+    /* Special classes */
+    /* .TopGreen */
+    .BannerSystem.TopGreen .BannerSystem__Title--H2 {
+        -webkit-box-shadow: none;
+        -moz-box-shadow:    none;
+        box-shadow:         none;
+    }
+    /* .BottomGreen */
+    .BannerSystem.BottomGreen .BannerSystem__Title--H2 {
+        -webkit-box-shadow: none;
+        -moz-box-shadow:    none;
+        box-shadow:         none;
+    }
+	/* .BottomPurple */
+	.BannerSystem.BottomPurple .BannerSystem__Title--H2 {
+        -webkit-box-shadow: none;
+        -moz-box-shadow:    none;
+        box-shadow:         none;
+		border-top: 2px solid #a01ca8;
+    }
+}
+@media only screen and (height:125px) and (min-width:240px) {
+    .BannerSystem__Title--H1 {
+        padding-top: 17px;
+        font-size: 1.25em;
+        line-height: 24px;
+    }
+    .BannerSystem__Title--H2 {
+        padding-top: 7px;
+        font-size: .9em;
+        line-height: 16px;
+        border-top: none;
+    }
+}
+@media only screen and (height:125px) and (min-width:300px) {
+    .BannerSystem__Title--H1,
+    .BannerSystem__Title--H2 {
+        text-align: left;
+        padding-left: 127px;
+    }
+    .BannerSystem__IMG {
+        display: inherit;
+        width: 100px;
+        margin: 10px 0 0 6px;
+    }
+}
+@media only screen and (height:125px) and (min-width:390px) {
+
+}
+@media only screen and (height:125px) and (min-width:480px) {
+    .BannerSystem__Button {
+        display: inherit;
+        width: 147px;
+        height: 62px;
+        font-size: 1.2em;
+        line-height: 23px;
+        right: 5%;
+    }
+    .BannerSystem__Button span:last-of-type {
+        display: inline;
+    }
+}
+@media only screen and (height:125px) and (min-width:620px) {
+    .BannerSystem__Title--H1 {
+        padding-top: 26px;
+    }
+    .BannerSystem__Title--H2 {
+        padding-top: 15px;
+    }
+    .BannerSystem__Title--H1 span,
+    .BannerSystem__Title--H2 span {
+        display: inline;
+    }
+}
+/** 250px high **/
+@media only screen and (height:250px) {
+    .BannerSystem__Title--H1 {
+        height: 67.6%;
+        font-size: 1em;
+        line-height: 18px;
+        text-align: center;
+        padding-top: 123px;
+    }
+    .BannerSystem__Title--H2 {
+        height: 32.4%;
+        bottom: 0;
+        font-size: .6em;
+        text-align: center;
+        padding-top: 7px;
+    }
+    .BannerSystem__Title--H1 span,
+    .BannerSystem__Title--H2 span {
+        display: block;
+    }
+    .BannerSystem__IMG {
+        width: 89px;
+        margin: 16px auto;
+        left: 0;
+        right: 0;
+    }
+    .BannerSystem__Button {
+        height: 28px;
+        bottom: 13px;
+        border-radius: 5px;
+        padding: 2px 18px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        width: 107px;
+        text-align: center;
+    }
+    .BannerSystem__Button span:last-of-type {
+        display: none;
+    }
+	/* .BottomPurple */
+	.BannerSystem.BottomPurple .BannerSystem__Title--H2 {
+		border-top: 2px solid #a01ca8;
+    }
+}
+@media only screen and (height:250px) and (min-width:125px) {
+
+}
+@media only screen and (height:250px) and (min-width:165px) {
+
+}
+@media only screen and (height:250px) and (min-width:220px) {
+    .BannerSystem__Title--H1 {
+        padding-top: 141px;
+    }
+    .BannerSystem__Title--H2 {
+        padding-top: 12px;
+    }
+    .BannerSystem__Title--H1 span,
+    .BannerSystem__Title--H2 span {
+        display: inline;
+    }
+    .BannerSystem__IMG {
+        width: 137px;
+        margin-top: 9px;
+    }
+}
+@media only screen and (height:250px) and (min-width:300px) {
+    .BannerSystem__Title--H1 {
+        font-size: 1.1em;
+        padding-top: 142px;
+    }
+    .BannerSystem__Title--H2 {
+        padding-top: 10px;
+        font-size: .8em;
+    }
+    .BannerSystem__Button {
+        width: 217px;
+        padding: 2px;
+    }
+    .BannerSystem .BannerSystem__Button span {
+        display: inline;
+    }
+}
+@media only screen and (height:250px) and (min-width:600px) {
+    .BannerSystem__Title--H1 {
+        font-size: 2.25em;
+        line-height: 43px;
+        padding: 42px 9% 0 0;
+        text-align: right;
+    }
+    .BannerSystem__Title--H2 {
+        font-size: .9em;
+        padding: 10px 5.833333333333333% 0 0;
+        text-align: right;
+    }
+    .BannerSystem__Title--H1 span {
+        display: block;
+    }
+    .BannerSystem__IMG {
+        width: 210px;
+        margin: 14px 0 0 2.166666666666667%;
+    }
+    .BannerSystem__Button {
+        height: 33px;
+        left: auto;
+        right: 9.166666666666667%;
+        margin: 0;
+        bottom: 10px;
+        padding-top: 4px;
+    }
+}
+@media only screen and (height:250px) and (min-width:820px) {
+    .BannerSystem__Title--H1,
+    .BannerSystem__Title--H2 {
+        padding-left: 30.48780487804878%;
+        text-align: left;
+    }
+    .BannerSystem__Title--H2 {
+        font-size: 1.4em;
+        line-height: 26px;
+        padding-top: 12px;
+    }
+    .BannerSystem__Title--H2 span {
+        display: block;
+    }
+    .BannerSystem__IMG {
+        padding-top: 1px;
+    }
+    .BannerSystem__Button {
+        width: 27%;
+        height: 103px;
+        bottom: 74px;
+        font-size: 1.85em;
+        line-height: 36px;
+        text-align: left;
+        padding: 13px 2%;
+    }
+}
+/** 400px high **/
+@media only screen and (height:400px) {
+    .BannerSystem__Title--H1 {
+        height: 66.5%;
+        font-size: 1.1em;
+        text-align: center;
+        line-height: 19px;
+        padding: 192px 15px 0;
+    }
+    .BannerSystem__Title--H2 {
+        height: 33.5%;
+        bottom: 0;
+        font-size: .8em;
+        text-align: center;
+        line-height: 14px;
+        padding-top: 5px;
+    }
+    .BannerSystem__IMG {
+        width: 89px;
+        margin: 42px auto;
+        left: 0;
+        right: 0;
+    }
+    .BannerSystem__Button {
+        width: 107px;
+        height: 28px;
+        bottom: 30px;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        border-radius: 5px;
+        text-align: center;
+        padding-top: 2px;
+    }
+    .BannerSystem__Button span:last-of-type {
+        display: none;
+    }
+	/* .BottomPurple */
+	.BannerSystem.BottomPurple .BannerSystem__Title--H2 {
+		border-top: 2px solid #a01ca8;
+    }
+}
+@media only screen and (height:400px) and (min-width:125px) {
+
+}
+@media only screen and (height:400px) and (min-width:180px) {
+    .BannerSystem__Title--H1 {
+        padding-top: 201px;
+        font-size: 1.3em;
+        line-height: 26px;
+    }
+    .BannerSystem__Title--H2 {
+        font-size: .9em;
+        line-height: 16px;
+        padding-top: 11px;
+    }
+    .BannerSystem__IMG {
+        width: 149px;
+        margin-top: 10px;
+    }
+    .BannerSystem__Button {
+        height: 38px;
+        bottom: 25px;
+        font-size: 1.2em;
+        padding-top: 5px;
+    }
+}
+@media only screen and (height:400px) and (min-width:220px) {
+
+}
+@media only screen and (height:400px) and (min-width:300px) {
+    .BannerSystem__Title--H1 {
+        padding: 225px 0 0 0;
+    }
+    .BannerSystem__Title--H2 {
+        padding-top: 18px;
+    }
+    .BannerSystem__IMG {
+        width: 214px;
+        margin-top: 11px;
+    }
+    .BannerSystem__Button {
+        width: 161px;
+        height: 60px;
+        bottom: 15px;
+    }
+    .BannerSystem .BannerSystem__Button span {
+        display: inline;
+    }
+}
+@media only screen and (height:400px) and (min-width:445px) {
+
+}
+@media only screen and (height:400px) and (min-width:650px) {
+
+}
+@media only screen and (height:400px) and (min-width:820px) {
+    .BannerSystem__Title--H1 {
+        font-size: 3.1em;
+        line-height: 60px;
+        padding: 81px 5.609756097560976% 0 0;
+        text-align: right;
+    }
+    .BannerSystem__Title--H1 span {
+        display: block;
+    }
+    .BannerSystem__Title--H2 {
+        padding: 22px 2.439024390243902% 0 0;
+        text-align: right;
+        font-size: 1.2em;
+        border-top: solid 1px #a0d1e8;
+    }
+    .BannerSystem__IMG {
+        width: 253px;
+        margin: 86px 0;
+        left: 7.4%;
+        right: auto;
+    }
+    .BannerSystem__Button {
+        width: 336px;
+        height: 46px;
+        font-size: 1.5em;
+        padding-top: 6px;
+        margin: 0;
+        left: auto;
+        right: 5%;
+    }
+
+    /* Special classes */
+    /* .TopGreen */
+    .BannerSystem.TopGreen .BannerSystem__Title--H2 {
+        border-top: none;
+    }
+}
+/** 600px heigh **/
+@media only screen and (height:600px) {
+    .BannerSystem__Title--H1 {
+        height: 66.5%;
+        font-size: 1.2em;
+        line-height: 23px;
+        text-align: center;
+        padding: 263px 10px 0;
+    }
+    .BannerSystem__Title--H2 {
+        height: 33.5%;
+        bottom: 0;
+        font-size: .8em;
+        line-height: 14px;
+        text-align: center;
+        padding-top: 32px;
+    }
+    .BannerSystem__IMG {
+        width: 89px;
+        margin: 45px auto;
+        left: 0;
+        right: 0;
+    }
+    .BannerSystem__Button {
+        width: 107px;
+        height: 48px;
+        text-align: center;
+        bottom: 23px;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        border-radius: 5px;
+        line-height: 19px;
+        padding-top: 4px;
+    }
+	/* .BottomPurple */
+	.BannerSystem.BottomPurple .BannerSystem__Title--H2 {
+		border-top: 2px solid #a01ca8;
+    }
+}
+@media only screen and (height:600px) and (min-width:180px) {
+    .BannerSystem__Title--H1 {
+        font-size: 1.3em;
+        line-height: 26px;
+        padding-top: 273px;
+    }
+    .BannerSystem__Title--H2 {
+        font-size: .9em;
+        line-height: 16px;
+        padding-top: 37px;
+    }
+    .BannerSystem__IMG {
+        width: 149px;
+        margin-top: 19px;
+    }
+    .BannerSystem__Button {
+        width: 157px;
+        height: 58px;
+        bottom: 18px;
+        font-size: 1.2em;
+        line-height: 23px;
+        padding-top: 2px;
+    }
+}
+@media only screen and (height:600px) and (min-width:220px) {
+    .BannerSystem__Title--H1 {
+        font-size: 1.7em;
+        line-height: 34px;
+        padding-top: 263px;
+    }
+    .BannerSystem__Title--H2 {
+        font-size: 1.1em;
+        line-height: 21px;
+        padding-top: 29px;
+    }
+    .BannerSystem__IMG {
+        width: 203px;
+        margin-top: 8px;
+    }
+    .BannerSystem__Button {
+        width: 190px;
+        height: 70px;
+        bottom: 15px;
+        padding: 4px 10px;
+        font-size: 1.45em;
+        line-height: 29px;
+    }
+}
+@media only screen and (height:600px) and (min-width:280px) {
+    .BannerSystem__Title--H1 {
+        font-size: 2.1em;
+        line-height: 40px;
+        padding-top: 257px;
+    }
+    .BannerSystem__Title--H2 {
+        font-size: 1.3em;
+        line-height: 25px;
+        padding-top: 24px;
+    }
+    .BannerSystem__Button {
+        bottom: 16px;
+    }
+}
+@media only screen and (height:600px) and (min-width:300px) {
+
+}
+@media only screen and (height:600px) and (min-width:350px) {
+
+}
+@media only screen and (height:600px) and (min-width:450px) {
+
+}
+@media only screen and (height:600px) and (min-width:580px) {
+    .BannerSystem__Title--H1 {
+        font-size: 2.7em;
+        padding: 299px 0 0 0;
+    }
+    .BannerSystem__Title--H2 {
+        font-size: 1.6em;
+        padding-top: 35px;
+    }
+    .BannerSystem__IMG {
+        width: 253px;
+        margin-top: 36px;
+    }
+    .BannerSystem__Button {
+        width: 65%;
+        font-size: 1.9em;
+        padding: 17px 0;
+        bottom: 19px;
+    }
+}
+@media only screen and (height:600px) and (min-width:820px) {
+
+}

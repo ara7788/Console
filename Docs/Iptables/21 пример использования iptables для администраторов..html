@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html class=" ya-page_js_yes"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="21 пример использования iptables для администраторов.">
+    <meta http-equiv="Content-Language" content="ru-RU">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" href="http://vasilisc.com/favicon.ico" type="image/x-icon">
+    <link rel="author" href="https://plus.google.com/u/0/103547018836751923408">
+    <title>21 пример использования iptables для администраторов.</title>
+    <link type="text/css" rel="stylesheet" media="all" href="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/vasilisc.css"> 
+    <link rel="canonical" href="http://vasilisc.com/21-examples-iptables">
+    <meta name="yandex-verification" content="cb0d7ece5d5c3775">
+    <meta property="fb:admins" content="100001698217089">
+    <meta property="fb:app_id" content="227538230663504">
+    <meta property="og:url" content="http://vasilisc.com/21-examples-iptables">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="21 пример использования iptables для администраторов.">
+    <meta property="og:description" content="21 пример использования iptables для администраторов.">
+<script src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/host.js" crossorigin="anonymous"></script><script type="text/javascript" async="" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/aci.js"></script><script src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/cbgapi.loaded_3" async=""></script><script type="text/javascript" async="" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/watch.js"></script><script type="text/javascript" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/context.js" async=""></script><script type="text/javascript" async="" charset="utf-8" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/all.js"></script><script src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/cbgapi.loaded_2" async=""></script><script id="//an.yandex.ru/resource/context_static_r_2553.js" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/context_static_r_2553.js"></script><script src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/context.js" type="text/javascript" async=""></script><script id="facebook-jssdk" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/sdk.js"></script><script src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/cbgapi.loaded_1" async=""></script><script src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/cbgapi.loaded_0" async=""></script><script src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/platform.js" async="" defer="defer" gapi_processed="true">
+  {lang: 'ru'}
+</script>
+<style type="text/css">.ya-share2,
+.ya-share2 * {
+  line-height: normal;
+}
+.ya-share2 :link:hover,
+.ya-share2 :visited:hover {
+  color: #000 !important;
+}
+.ya-share2 input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+  line-height: normal;
+}
+.ya-share2__container_size_m {
+  font-size: 13px;
+}
+.ya-share2__container_size_m .ya-share2__icon {
+  height: 24px;
+  width: 24px;
+  background-size: 24px 24px;
+}
+.ya-share2__container_size_m .ya-share2__title {
+  line-height: 24px;
+}
+.ya-share2__container_size_m .ya-share2__item {
+  margin: 5px 4px 5px 0;
+}
+.ya-share2__container_size_m .ya-share2__item:last-child {
+  margin-right: 0;
+}
+.ya-share2__container_size_m .ya-share2__counter {
+  font-size: 12px;
+  line-height: 24px;
+  padding: 0 8px;
+}
+.ya-share2__container_size_m .ya-share2__counter:before {
+  margin-left: -8px;
+}
+.ya-share2__container_size_m .ya-share2__icon_more:before {
+  font-size: 12px;
+  line-height: 24px;
+}
+.ya-share2__container_size_m .ya-share2__popup {
+  padding: 5px 10px;
+}
+.ya-share2__container_size_m .ya-share2__popup_direction_bottom {
+  top: 28px;
+}
+.ya-share2__container_size_m .ya-share2__popup_direction_top {
+  bottom: 28px;
+}
+.ya-share2__container_size_m .ya-share2__input_copy {
+  width: 140px;
+}
+.ya-share2__container_size_m .ya-share2__badge + .ya-share2__title {
+  margin-left: 10px;
+}
+.ya-share2__container_size_s {
+  font-size: 12px;
+}
+.ya-share2__container_size_s .ya-share2__icon {
+  height: 18px;
+  width: 18px;
+  background-size: 18px 18px;
+}
+.ya-share2__container_size_s .ya-share2__title {
+  line-height: 18px;
+}
+.ya-share2__container_size_s .ya-share2__item {
+  margin: 3px 4px 3px 0;
+}
+.ya-share2__container_size_s .ya-share2__item:last-child {
+  margin-right: 0;
+}
+.ya-share2__container_size_s .ya-share2__counter {
+  font-size: 10px;
+  line-height: 18px;
+  padding: 0 6px;
+}
+.ya-share2__container_size_s .ya-share2__counter:before {
+  margin-left: -6px;
+}
+.ya-share2__container_size_s .ya-share2__icon_more:before {
+  font-size: 10px;
+  line-height: 18px;
+}
+.ya-share2__container_size_s .ya-share2__popup {
+  padding: 3px 6px;
+}
+.ya-share2__container_size_s .ya-share2__popup_direction_bottom {
+  top: 21px;
+}
+.ya-share2__container_size_s .ya-share2__popup_direction_top {
+  bottom: 21px;
+}
+.ya-share2__container_size_s .ya-share2__input_copy {
+  width: 110px;
+}
+.ya-share2__container_size_s .ya-share2__badge + .ya-share2__title {
+  margin-left: 6px;
+}
+.ya-share2__list_direction_horizontal > .ya-share2__item {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.ya-share2__list_direction_horizontal > .ya-share2__item > .ya-share2__link > .ya-share2__title {
+  display: none;
+}
+.ya-share2__list_direction_vertical > .ya-share2__item {
+  display: block;
+  margin-right: 0;
+}
+.ya-share2__list_direction_vertical > .ya-share2__item > .ya-share2__link > .ya-share2__badge > .ya-share2__counter {
+  display: none;
+}
+.ya-share2__list {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+.ya-share2__item {
+  font-family: Arial, sans;
+  display: inline-block;
+}
+.ya-share2__item:hover {
+  opacity: 0.9;
+}
+.ya-share2__link {
+  display: inline-block;
+  vertical-align: top;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.ya-share2__badge {
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 2px;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+}
+.ya-share2__icon {
+  display: inline-block;
+  vertical-align: top;
+}
+.ya-share2__icon:active {
+  box-shadow: inset 0 2px 0 0 rgba(0,0,0,0.1);
+}
+.ya-share2__counter {
+  display: none;
+}
+.ya-share2__counter:before {
+  content: "";
+  position: absolute;
+  width: 1px;
+  top: 2px;
+  bottom: 2px;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX///+nxBvIAAAAAXRSTlMz/za5cAAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=") 0 0 repeat-y;
+}
+.ya-share2__counter_visible {
+  display: inline-block;
+}
+.ya-share2__title {
+  display: inline-block;
+  color: #000;
+  vertical-align: bottom;
+}
+.ya-share2__title:hover {
+  color: #f00;
+}
+.ya-share2__item_more {
+  position: relative;
+}
+.ya-share2__item_more:hover {
+  opacity: 1;
+}
+.ya-share2__icon_more {
+  background-color: #fff;
+  border: 1px solid #cdcdcd;
+  box-sizing: border-box;
+  position: relative;
+}
+.ya-share2__icon_more:before {
+  content: '•••';
+  color: #a0a0a0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  text-align: center;
+}
+.ya-share2__popup {
+  position: absolute;
+  display: none;
+  border: 1px solid #e6e6e6;
+  z-index: 9999;
+  background-color: #fff;
+}
+.ya-share2__popup_direction_bottom {
+  box-shadow: 0 10px 20px -5px rgba(0,0,0,0.4);
+}
+.ya-share2__popup_direction_top {
+  box-shadow: 0 0 20px -5px rgba(0,0,0,0.4);
+}
+.ya-share2__popup_list-direction_horizontal {
+  right: 0;
+}
+.ya-share2__popup_list-direction_vertical {
+  left: 0;
+}
+.ya-share2__popup_visible {
+  display: block;
+}
+.ya-share2__popup_clipboard .ya-share2__input_copy,
+.ya-share2__link_copy {
+  display: none;
+}
+.ya-share2__popup_clipboard .ya-share2__link_copy {
+  display: inline-block;
+}
+
+.ya-share2__item_service_blogger .ya-share2__badge
+{
+    background-color: #fb8f3d;
+}
+
+.ya-share2__item_service_blogger .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19.896 14.833A5.167 5.167 0 0 1 14.729 20H9.166A5.167 5.167 0 0 1 4 14.833V9.167A5.166 5.166 0 0 1 9.166 4h2.608a5.167 5.167 0 0 1 5.167 5.167l.002.011c.037.536.484.96 1.03.96l.018-.002h.872c.57 0 1.034.463 1.034 1.034l-.001 3.663zM9.038 10.176h2.926a.993.993 0 0 0 0-1.987H9.038a.994.994 0 0 0 0 1.987zm5.867 3.83H9.032a.94.94 0 0 0 0 1.879h5.873a.94.94 0 1 0 0-1.88z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_collections .ya-share2__badge
+{
+    background-color: #eb1c00;
+}
+
+.ya-share2__item_service_collections .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 18l5-2.71L17 18V6H7v12z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_delicious .ya-share2__badge
+{
+    background-color: #31a9ff;
+}
+
+.ya-share2__item_service_delicious .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 12h8v8H4zm8-8h8v8h-7.984z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_digg .ya-share2__badge
+{
+    background-color: #000;
+}
+
+.ya-share2__item_service_digg .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.555 10.814V14.1h.96s.18.005.18-.222v-3.287h-.96s-.18-.006-.18.222zm8.032 3.065v-3.287h-.96s-.18-.006-.18.222V14.1h.96s.18.006.18-.222zm-5.306 1.32c0 .227-.18.222-.18.222H4V9.497c0-.227.18-.222.18-.222h2.514V7.222c0-.227.18-.222.18-.222h1.408l-.001 8.199zm2.065 0c0 .227-.18.221-.18.221H8.761V9.496c0-.226.18-.221.18-.221h1.406v5.924zm0-7.103c0 .227-.18.222-.18.222H8.76V7.222c0-.227.18-.222.18-.222h1.408l-.001 1.096zm4.827 9.21c0 .228-.18.223-.18.223h-4.1v-1.096c0-.227.18-.222.18-.222h2.513v-.79h-2.694V9.497c0-.227.18-.222.18-.222l4.102.003v8.029zm4.826 0c0 .228-.18.223-.18.223h-4.1v-1.096c0-.227.18-.222.18-.222h2.514v-.79h-2.695V9.497c0-.227.18-.222.18-.222L20 9.279v8.028zm-1.585-3.427v-3.287h-.96s-.18-.006-.18.222V14.1h.96s.18.006.18-.222z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_evernote .ya-share2__badge
+{
+    background-color: #24d666;
+}
+
+.ya-share2__item_service_evernote .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.277 7.109h1.517c.08 0 .16-.08.16-.16V5.313c0-.28.08-.559.159-.758l.04-.12L5.2 7.348l.16-.08c.239-.12.558-.16.917-.16zm11.654-.28c-.12-.638-.479-.917-.838-1.037-.36-.12-.718-.28-1.676-.4-.759-.08-1.557-.12-2.116-.12-.16-.438-.399-.917-1.317-1.156-.638-.16-1.796-.12-2.155-.08-.559.08-.758.319-.918.479-.16.16-.28.598-.28.878v1.556c0 .48-.318.838-.877.838H6.397c-.32 0-.559.04-.758.12-.16.12-.32.28-.4.4-.2.279-.239.598-.239.957 0 0 0 .28.08.798.04.4.479 3.033.878 3.911.16.36.28.48.599.639.718.32 2.354.639 3.152.758.759.08 1.278.32 1.557-.279 0 0 .04-.16.12-.36a6.3 6.3 0 0 0 .28-1.915c0-.04.079-.04.079 0 0 .36-.08 1.557.838 1.876.36.12 1.118.24 1.876.32.678.079 1.197.358 1.197 2.114 0 1.078-.24 1.238-1.397 1.238-.958 0-1.317.04-1.317-.759 0-.598.599-.558 1.078-.558.2 0 .04-.16.04-.52 0-.398.24-.598 0-.598-1.557-.04-2.475 0-2.475 1.956 0 1.796.679 2.115 2.914 2.115 1.756 0 2.354-.04 3.073-2.275.16-.439.479-1.796.678-4.03.16-1.478-.12-5.788-.319-6.866zm-3.033 4.75c-.2 0-.32 0-.519.04h-.08s-.04 0-.04-.04v-.04c.08-.4.28-.878.878-.878.639.04.799.599.799 1.038v.04c0 .04-.04.04-.04.04-.04 0-.04 0-.04-.04-.28-.08-.599-.12-.958-.16z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_facebook .ya-share2__badge
+{
+    background-color: #3b5998;
+}
+
+.ya-share2__item_service_facebook .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.423 20v-7.298h2.464l.369-2.845h-2.832V8.042c0-.824.23-1.385 1.417-1.385h1.515V4.111A20.255 20.255 0 0 0 14.148 4c-2.183 0-3.678 1.326-3.678 3.76v2.097H8v2.845h2.47V20h2.953z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_gplus .ya-share2__badge
+{
+    background-color: #dc4e41;
+}
+
+.ya-share2__item_service_gplus .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.09 11.364v1.745h2.888c-.116.75-.873 2.196-2.887 2.196-1.738 0-3.156-1.44-3.156-3.214 0-1.775 1.418-3.215 3.156-3.215.989 0 1.65.422 2.029.786l1.382-1.331C11.615 7.5 10.465 7 9.09 7A5.087 5.087 0 0 0 4 12.09a5.087 5.087 0 0 0 5.09 5.092c2.94 0 4.888-2.066 4.888-4.975 0-.334-.036-.589-.08-.843H9.091zm10.91 0h-1.455V9.909h-1.454v1.455h-1.455v1.454h1.455v1.455h1.454v-1.455H20' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_linkedin .ya-share2__badge
+{
+    background-color: #0083be;
+}
+
+.ya-share2__item_service_linkedin .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.246 8.954h3.41v10.281h-3.41zm1.725-4.935c-1.167 0-1.929.769-1.929 1.776 0 .987.74 1.777 1.884 1.777h.022c1.19 0 1.93-.79 1.93-1.777-.023-1.007-.74-1.776-1.907-1.776zm10.052 4.715c-1.81 0-2.62.997-3.073 1.698V8.976H9.54c.045.965 0 10.281 0 10.281h3.41v-5.742c0-.307.022-.614.112-.834.246-.613.807-1.25 1.75-1.25 1.233 0 1.727.944 1.727 2.325v5.501h3.41v-5.896c0-3.158-1.683-4.627-3.926-4.627z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_lj .ya-share2__badge
+{
+    background-color: #0d425a;
+}
+
+.ya-share2__item_service_lj .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M17.815 13.3c.438 2.114.868 4.221 1.306 6.336.037.178-.148.385-.334.311-2.025-.741-4.006-1.49-6.01-2.24a.625.625 0 0 1-.318-.23l-7.39-8.903c-.067-.082-.082-.215-.06-.32.312-1.23.72-2.143 1.752-3.019C7.799 4.36 8.779 4.1 10.047 4.004c.156-.015.223.014.312.133 2.418 2.909 4.837 5.817 7.248 8.725a.888.888 0 0 1 .208.438z' fill='%23FFF'/%3E%3Cpath d='M6.175 8.462c.69-1.795 2.3-3.004 3.835-3.301l-.185-.223a4.242 4.242 0 0 0-3.85 3.272l.2.252z' fill='%230D425A'/%3E%3Cpath d='M10.53 5.792c-1.744.326-3.124 1.513-3.851 3.271l.905 1.091c.787-1.78 2.3-2.997 3.836-3.302l-.89-1.06zm2.76 7.827L9.364 8.9a6.119 6.119 0 0 0-1.269 1.87l4.89 5.89c.289-.385.867-2.359.303-3.041zM9.647 8.633l3.947 4.748c.445.542 2.456.327 3.086-.193l-4.756-5.72c-.793.156-1.587.564-2.277 1.165zm7.308 5.045c-.609.46-1.9.735-2.931.527.074.823-.096 1.892-.616 2.745l1.885.712 1.528.564c.223-.378.542-.608.913-.764l-.35-1.692-.43-2.092z' fill='%230D425A'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_moimir .ya-share2__badge
+{
+    background-color: #168de2;
+}
+
+.ya-share2__item_service_moimir .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.889 9.667a1.333 1.333 0 1 0 0-2.667 1.333 1.333 0 0 0 0 2.667zm6.222 0a1.333 1.333 0 1 0 0-2.667 1.333 1.333 0 0 0 0 2.667zm4.77 6.108l-1.802-3.028a.879.879 0 0 0-1.188-.307.843.843 0 0 0-.313 1.166l.214.36a6.71 6.71 0 0 1-4.795 1.996 6.711 6.711 0 0 1-4.792-1.992l.217-.364a.844.844 0 0 0-.313-1.166.878.878 0 0 0-1.189.307l-1.8 3.028a.844.844 0 0 0 .312 1.166.88.88 0 0 0 1.189-.307l.683-1.147a8.466 8.466 0 0 0 5.694 2.18 8.463 8.463 0 0 0 5.698-2.184l.685 1.151a.873.873 0 0 0 1.189.307.844.844 0 0 0 .312-1.166z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_odnoklassniki .ya-share2__badge
+{
+    background-color: #eb722e;
+}
+
+.ya-share2__item_service_odnoklassniki .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23FFF' fill-rule='evenodd'%3E%3Cpath d='M11.674 6.536a1.69 1.69 0 0 0-1.688 1.688c0 .93.757 1.687 1.688 1.687a1.69 1.69 0 0 0 1.688-1.687 1.69 1.69 0 0 0-1.688-1.688zm0 5.763a4.08 4.08 0 0 1-4.076-4.075 4.08 4.08 0 0 1 4.076-4.077 4.08 4.08 0 0 1 4.077 4.077 4.08 4.08 0 0 1-4.077 4.075zM10.025 15.624a7.633 7.633 0 0 1-2.367-.98 1.194 1.194 0 0 1 1.272-2.022 5.175 5.175 0 0 0 5.489 0 1.194 1.194 0 1 1 1.272 2.022 7.647 7.647 0 0 1-2.367.98l2.279 2.28a1.194 1.194 0 0 1-1.69 1.688l-2.238-2.24-2.24 2.24a1.193 1.193 0 1 1-1.689-1.689l2.279-2.279'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_pinterest .ya-share2__badge
+{
+    background-color: #c20724;
+}
+
+.ya-share2__item_service_pinterest .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9.742c0 1.58.599 2.986 1.884 3.51.21.087.4.003.46-.23.043-.16.144-.568.189-.738.06-.23.037-.31-.133-.512-.37-.436-.608-1.001-.608-1.802 0-2.322 1.74-4.402 4.53-4.402 2.471 0 3.829 1.508 3.829 3.522 0 2.65-1.174 4.887-2.917 4.887-.963 0-1.683-.795-1.452-1.77.276-1.165.812-2.421.812-3.262 0-.752-.405-1.38-1.24-1.38-.985 0-1.775 1.017-1.775 2.38 0 .867.293 1.454.293 1.454L8.69 16.406c-.352 1.487-.053 3.309-.028 3.492.015.11.155.136.22.054.09-.119 1.262-1.564 1.66-3.008.113-.409.647-2.526.647-2.526.32.61 1.254 1.145 2.248 1.145 2.957 0 4.964-2.693 4.964-6.298C18.4 6.539 16.089 4 12.576 4 8.204 4 6 7.13 6 9.742z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_pocket .ya-share2__badge
+{
+    background-color: #ee4056;
+}
+
+.ya-share2__item_service_pocket .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M17.9 5c1.159 0 2.1.948 2.1 2.117v5.862c0 .108-.008.215-.024.32.016.156.024.314.024.473 0 3.36-3.582 6.085-8 6.085s-8-2.724-8-6.085c0-.159.008-.317.024-.473a2.148 2.148 0 0 1-.024-.32V7.117C4 5.948 4.94 5 6.1 5h11.8zM8.596 9.392L12 12.795l3.404-3.403a1.063 1.063 0 0 1 1.502 1.502l-4.132 4.131c-.21.21-.486.314-.76.311-.284.01-.571-.094-.788-.31l-4.132-4.132a1.063 1.063 0 0 1 1.502-1.502z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_qzone .ya-share2__badge
+{
+    background-color: #f5b53c;
+}
+
+.ya-share2__item_service_qzone .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M17.367 14.463s-.105.148-.457.299l-.553.222.597 3.273c.062.282.25.983-.082 1.062-.17.04-.307-.067-.395-.121l-.769-.445-2.675-1.545c-.204-.122-.78-.546-1.093-.489-.205.038-.336.127-.483.216l-.77.445-2.39 1.386-.883.508c-.123.06-.301.058-.394-.025-.07-.063-.09-.253-.063-.388l.19-1.004.572-3.02c.047-.2.237-.975.166-1.137-.048-.107-.173-.196-.261-.267l-.61-.565-2.13-1.983c-.189-.153-.345-.345-.533-.496l-.235-.216c-.062-.078-.165-.235-.09-.369.142-.248.974-.218 1.335-.28l2.682-.31.82-.09c.146-.024.299-.004.413-.063.239-.123.51-.809.636-1.087l1.31-2.714c.151-.297.286-.603.431-.896.075-.15.133-.308.305-.356.162-.045.257.105.312.178.177.235.325.685.451.973l1.29 2.853c.104.238.363.964.54 1.074.266.166.858.108 1.227.172l2.841.292c.355.062 1.245.01 1.36.267.076.17-.072.314-.152.394l-.864.814-1.983 1.868c-.185.164-.77.637-.833.858-.04.14.02.414.088.722-.096-.001-.39-.007-1.182-.029-.63-.007-2.616-.17-2.713-.178l-.84-.076c-.14-.023-.326.012-.4-.076v-.02c1.727-1.168 3.407-2.416 5.142-3.578l-.006-.044c-.146-.072-.359-.059-.54-.095-.385-.077-.79-.078-1.208-.147-.75-.124-1.59-.114-2.434-.114-1.172 0-2.329.03-3.35.21-.45.079-.894.095-1.309.197-.172.042-.358.03-.49.108l.007.012c.1.027.253.02.381.02l.928.019.808.025.813.032.591.032c.486.075 1.007.036 1.475.114.404.068.804.065 1.182.14.113.022.245.015.33.064v.006c-.039.094-.336.255-.432.318l-1.055.743-2.256 1.62-1.417.992c.003.048.024.035.045.061 1.15.167 2.52.258 3.77.262 1.298.005 2.465-.094 3.118-.193.561-.086 1.082-.147 1.653-.287.325-.08.521-.148.521-.148z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_reddit .ya-share2__badge
+{
+    background-color: #ff4500;
+}
+
+.ya-share2__item_service_reddit .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.542 10.63c-1.105-.636-2.494-1.033-4.025-1.118l.808-2.393 2.182.637c0 .963.78 1.742 1.743 1.742.964 0 1.758-.779 1.758-1.742C19.008 6.78 18.214 6 17.25 6c-.609 0-1.148.326-1.459.793l-2.65-.764a.482.482 0 0 0-.61.311l-1.063 3.172c-1.516.085-2.905.482-4.01 1.119a1.987 1.987 0 0 0-1.46-.623A1.995 1.995 0 0 0 4 12.004c0 .75.425 1.403 1.035 1.742-.029.17-.043.34-.043.51 0 2.62 3.146 4.744 7.015 4.744 3.855 0 7-2.124 7-4.744 0-.17-.013-.34-.042-.51A1.974 1.974 0 0 0 20 12.004a1.995 1.995 0 0 0-1.998-1.996c-.581 0-1.091.24-1.46.623zM9.499 12.5a1.01 1.01 0 0 1 1.006 1.006.998.998 0 0 1-1.006.991.986.986 0 0 1-.992-.991c0-.553.439-1.006.992-1.006zm5.002 0a.998.998 0 0 0-.992 1.006c0 .552.44.991.992.991a.998.998 0 0 0 1.006-.991 1.01 1.01 0 0 0-1.006-1.006zm-5.3 3.597a.484.484 0 0 1-.085-.694c.156-.226.482-.255.694-.085.567.44 1.474.68 2.197.68.709 0 1.616-.24 2.197-.68a.484.484 0 0 1 .694.085.496.496 0 0 1-.085.694c-.737.58-1.885.907-2.806.907-.935 0-2.07-.326-2.806-.907zm8.05-7.59c-.411 0-.752-.34-.752-.75 0-.426.34-.752.751-.752s.752.326.752.751c0 .41-.34.75-.752.75z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_renren .ya-share2__badge
+{
+    background-color: #1760a7;
+}
+
+.ya-share2__item_service_renren .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.019 15.562l-.001-.003-.018.002a.055.055 0 0 0 .019.001zM7.71 12.398l.146-.68c.048-.205.03-.452.03-.692V9.812L7.88 8c-.139 0-.278.043-.393.076-.358.102-.666.201-.962.352-1.158.59-2.022 1.565-2.387 2.944-.343 1.297-.007 2.652.522 3.507.118.19.269.48.44.61.135-.02.272-.15.375-.217a6.06 6.06 0 0 0 .622-.452l.24-.229c.63-.506 1.075-1.346 1.373-2.193zm4.276 3.164h.02a.382.382 0 0 0-.019-.003v.003zm-3.01-.888l-.258-.575-.088-.264H8.62l-.264.498c-.176.288-.358.574-.557.839a6.5 6.5 0 0 1-.85.944l-.517.422.012.024.287.14c.206.091.43.173.657.235.788.217 1.811.177 2.545-.053.178-.055.643-.194.739-.305v-.017c-.177-.092-.324-.254-.47-.381a5.573 5.573 0 0 1-1.225-1.507zm10.884-3.302c-.365-1.379-1.23-2.354-2.387-2.944-.296-.15-.604-.25-.962-.352-.115-.033-.254-.077-.393-.076l-.005 1.812v1.214c0 .24-.019.487.029.692l.147.68c.297.847.741 1.687 1.372 2.193l.24.23c.196.164.402.309.622.45.103.067.24.198.375.218.171-.13.322-.42.44-.61.529-.855.865-2.21.522-3.507zm-3.66 3.8c-.2-.265-.381-.55-.557-.839l-.264-.498h-.011l-.088.264-.258.575a5.576 5.576 0 0 1-1.226 1.507c-.145.127-.292.29-.469.38v.018c.096.111.561.25.739.305.734.23 1.757.27 2.545.053a4.85 4.85 0 0 0 .657-.234l.287-.141a1.31 1.31 0 0 0 .012-.024l-.516-.422a6.5 6.5 0 0 1-.85-.944zm-1.653-2.727c.068-.192.097-.402.146-.61.05-.21.024-.484.024-.727V9.753l-.006-1.741c-.015-.008-.02-.01-.047-.012-.197.047-.326.05-.592.14-.357.102-.685.275-.985.44-.289.16-.53.388-.78.587-.097.077-.199.19-.308.312l.01.01a1.19 1.19 0 0 0-.01.012l.36.47c.232.359.445.763.581 1.213.326 1.079.182 2.411-.235 3.273a4.9 4.9 0 0 1-.445.75l-.258.323a.018.018 0 0 1-.003.007c.004.007.01.016.012.022h.008c.395-.215.686-.574 1.027-.844.189-.15.354-.35.504-.54.404-.514.755-1.046.997-1.73zm-2.55 3.085l-.259-.323a4.903 4.903 0 0 1-.445-.75c-.417-.862-.561-2.194-.235-3.273.136-.45.35-.854.58-1.214L12 9.501l-.01-.011.01-.01a2.791 2.791 0 0 0-.308-.313c-.25-.2-.491-.427-.78-.586-.3-.166-.628-.339-.985-.44-.266-.09-.395-.094-.592-.141-.026.001-.032.004-.047.012l-.006 1.741v1.355c0 .243-.026.517.024.727.049.208.078.418.146.61.242.684.593 1.216.997 1.73.15.19.315.39.505.54.34.27.63.629 1.026.844h.008c.001-.006.008-.015.012-.022a.019.019 0 0 1-.003-.007z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_sinaWeibo .ya-share2__badge
+{
+    background-color: #c53220;
+}
+
+.ya-share2__item_service_sinaWeibo .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EsinaWeibo%3C/title%3E%3Cpath d='M10.266 14.696c-.103.421.55.447.64.063.037-.191-.103-.332-.282-.332-.167 0-.333.128-.358.269zm-.128.945c.102-.498-.307-.869-.793-.843-.46.038-.843.358-.92.754-.115.511.307.882.793.844.46-.026.843-.345.92-.755zm3.797-3.157c-1.586-.997-3.707-1.01-5.42-.447-.857.28-1.764.818-2.301 1.495-.627.793-.882 1.815-.23 2.8.958 1.431 3.413 2.033 5.675 1.508 1.33-.307 2.749-1.048 3.35-2.326.562-1.177-.052-2.378-1.074-3.03zm-3.17.498c.945.167 1.7.755 1.827 1.739.243 1.854-2.173 3.336-4.026 2.327a1.933 1.933 0 0 1-.742-2.723c.435-.767 1.266-1.266 2.148-1.355a2.75 2.75 0 0 1 .793.012zm6.11-.37c-.268-.18-.538-.281-.856-.383-.308-.103-.359-.154-.243-.46.076-.218.14-.41.166-.666.14-1.15-.793-1.495-1.854-1.406-.498.039-.92.167-1.355.307-.281.09-.806.384-.92.205-.064-.09.013-.23.038-.32.166-.626.23-1.496-.384-1.88-.447-.28-1.227-.204-1.7-.038-2.556.87-6.455 4.552-5.663 7.479.18.664.55 1.163.908 1.521 1.061 1.061 2.71 1.65 4.231 1.866 1.112.154 2.263.14 3.375-.064 1.815-.332 3.554-1.15 4.679-2.607.754-.972.997-2.352 0-3.235a3.334 3.334 0 0 0-.422-.319zm1.623-3.682c.652 1.483-.064 2.148.166 2.66.192.421.767.46 1.023.14.191-.243.294-.959.307-1.278a4.193 4.193 0 0 0-1.125-3.12c-.984-1.073-2.276-1.444-3.694-1.303-.256.025-.46.064-.601.217-.332.358-.166.882.294.959.384.063 1.342-.23 2.416.396.498.307.971.792 1.214 1.33zm-3.45-.562c-.282.345-.078.87.408.856.294-.012.358-.05.677.051.307.103.626.448.64.857.025.268-.282.895.32 1.061a.523.523 0 0 0 .536-.166c.115-.128.166-.371.192-.575.089-.857-.333-1.598-1.01-2.02-.384-.23-1.445-.46-1.764-.064z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_skype .ya-share2__badge
+{
+    background-color: #00aff0;
+}
+
+.ya-share2__item_service_skype .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19.537 13.698c.115-.52.176-1.06.176-1.614 0-4.155-3.415-7.524-7.63-7.524-.444 0-.88.038-1.304.11A4.444 4.444 0 0 0 8.425 4C5.981 4 4 5.954 4 8.364c0 .805.222 1.56.608 2.207a7.428 7.428 0 0 0-.155 1.513c0 4.156 3.416 7.4 7.63 7.4.477 0 .944-.044 1.397-.126.623.33 1.335.642 2.092.642 2.444 0 4.425-1.953 4.425-4.364 0-.695-.166-1.354-.46-1.938zm-3.974 1.457c-.294.418-.725.747-1.293.984-.567.238-1.239.356-2.016.356-.933 0-1.702-.162-2.308-.486a2.986 2.986 0 0 1-1.047-.934c-.268-.39-.403-.768-.403-1.137 0-.213.08-.395.242-.547a.855.855 0 0 1 .615-.229c.202 0 .373.059.512.178.14.119.26.294.358.527.12.278.25.51.39.695.139.185.336.34.589.46.254.12.587.18 1 .18.566 0 1.027-.12 1.382-.364.354-.243.532-.547.532-.91a.919.919 0 0 0-.287-.702 1.88 1.88 0 0 0-.741-.412 13.21 13.21 0 0 0-1.216-.303c-.678-.146-1.247-.318-1.703-.513-.458-.196-.822-.463-1.09-.8-.269-.34-.403-.759-.403-1.26 0-.48.142-.904.426-1.275.283-.372.693-.658 1.23-.858.537-.2 1.17-.299 1.895-.299.58 0 1.082.066 1.505.198.423.133.774.309 1.053.528.28.22.484.45.612.691.13.24.194.477.194.705 0 .21-.08.4-.241.567a.8.8 0 0 1-.603.252c-.22 0-.386-.05-.5-.151-.114-.101-.237-.266-.37-.495a2.27 2.27 0 0 0-.618-.768c-.241-.184-.627-.276-1.16-.276-.494 0-.893.1-1.196.3-.303.199-.455.44-.455.72 0 .173.053.324.155.45.103.128.245.235.426.326.18.091.363.162.547.214.185.052.49.126.916.225a15.47 15.47 0 0 1 1.446.38c.432.138.8.307 1.103.503.302.198.54.45.709.752.17.302.255.673.255 1.111 0 .525-.148.998-.442 1.417z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_surfingbird .ya-share2__badge
+{
+    background-color: #30baff;
+}
+
+.ya-share2__item_service_surfingbird .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M17.315 8.49l-.214 1.987-3.436 3.382h-1.826l-.698 1.826v2.523l-2.47-.698 2.846-5.1L4 8.167l5.638.752L6.899 5l7.463 4.027 2.202-2.47h1.02L20 7.631z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_telegram .ya-share2__badge
+{
+    background-color: #64a9dc;
+}
+
+.ya-share2__item_service_telegram .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18.92 6.089L4.747 11.555c-.967.388-.962.928-.176 1.168l3.534 1.104 1.353 4.146c.164.454.083.634.56.634.368 0 .53-.168.736-.368.13-.127.903-.88 1.767-1.719l3.677 2.717c.676.373 1.165.18 1.333-.628l2.414-11.374c.247-.99-.378-1.44-1.025-1.146zM8.66 13.573l7.967-5.026c.398-.242.763-.112.463.154l-6.822 6.155-.265 2.833-1.343-4.116z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_tencentWeibo .ya-share2__badge
+{
+    background-color: #53a9d7;
+}
+
+.ya-share2__item_service_tencentWeibo .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.813 6.01a4.397 4.397 0 0 0-4.326 6.121c.087.199.312.29.511.2a.382.382 0 0 0 .206-.51 3.566 3.566 0 0 1-.286-1.668A3.616 3.616 0 0 1 8.76 6.79a3.615 3.615 0 0 1 3.366 3.84 3.615 3.615 0 0 1-4.65 3.218.39.39 0 0 0-.486.263.394.394 0 0 0 .262.485c.315.093.647.152.977.174a4.397 4.397 0 0 0 4.677-4.087A4.398 4.398 0 0 0 8.813 6.01zm-1.348 5.658a1.67 1.67 0 1 0-.46-.655c-.274.27-.565.59-.854.966-1.022 1.315-2.224 3.694-2.148 7.007.006.204.157.484.355.497l.04.002c.213.015.394-.301.391-.516-.064-2.458.6-4.662 1.955-6.423.242-.316.488-.626.72-.878zm12.388 4.106c-1.307-.48-2.302-1.27-2.95-2.352a4.873 4.873 0 0 1-.354-.71.819.819 0 0 0 .337-.36.829.829 0 0 0-.395-1.098.822.822 0 0 0-1.098.392.822.822 0 0 0 .724 1.177c.091.237.218.516.39.81.483.812 1.431 1.912 3.196 2.558a.226.226 0 0 0 .278-.113c0-.006.005-.01.007-.022a.224.224 0 0 0-.135-.282zm-3.767-1.676a2.04 2.04 0 0 1-1.707-3.042 2.039 2.039 0 0 1 2.784-.787 2.04 2.04 0 0 1 .786 2.783 1.92 1.92 0 0 1-.268.378.223.223 0 0 0 .014.314c.09.082.234.074.313-.016a2.489 2.489 0 1 0-4.017-2.89 2.493 2.493 0 0 0 2.08 3.708.224.224 0 0 0 .015-.448z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_tumblr .ya-share2__badge
+{
+    background-color: #547093;
+}
+
+.ya-share2__item_service_tumblr .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.72 7.7h3.699v2.857h-3.7v4.102c0 .928-.01 1.463.087 1.726.098.262.343.534.61.69.355.213.758.32 1.214.32.81 0 1.616-.264 2.417-.79v2.522c-.683.322-1.302.55-1.857.678a7.94 7.94 0 0 1-1.798.195 4.905 4.905 0 0 1-1.724-.276 4.215 4.215 0 0 1-1.438-.79c-.399-.343-.673-.706-.826-1.09-.154-.386-.23-.945-.23-1.676v-5.611H7V8.29c.628-.203 1.357-.496 1.804-.877.45-.382.809-.84 1.08-1.374.272-.534.459-1.214.56-2.039h2.276v3.7z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_twitter .ya-share2__badge
+{
+    background-color: #00aced;
+}
+
+.ya-share2__item_service_twitter .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 7.539a6.56 6.56 0 0 1-1.885.517 3.294 3.294 0 0 0 1.443-1.816 6.575 6.575 0 0 1-2.085.796 3.283 3.283 0 0 0-5.593 2.994A9.32 9.32 0 0 1 5.114 6.6a3.28 3.28 0 0 0 1.016 4.382 3.274 3.274 0 0 1-1.487-.41v.041a3.285 3.285 0 0 0 2.633 3.218 3.305 3.305 0 0 1-1.482.056 3.286 3.286 0 0 0 3.066 2.28A6.585 6.585 0 0 1 4 17.524 9.291 9.291 0 0 0 9.032 19c6.038 0 9.34-5 9.34-9.337 0-.143-.004-.285-.01-.425A6.672 6.672 0 0 0 20 7.538z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_viber .ya-share2__badge
+{
+    background-color: #7b519d;
+}
+
+.ya-share2__item_service_viber .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23FFF' fill-rule='evenodd'%3E%3Cpath d='M18.434 15.574c-.484-.391-1.002-.743-1.511-1.102-1.016-.718-1.945-.773-2.703.38-.426.648-1.021.677-1.644.392-1.718-.782-3.044-1.989-3.821-3.743-.344-.777-.34-1.473.465-2.022.425-.29.854-.634.82-1.268-.045-.828-2.043-3.593-2.832-3.885a1.429 1.429 0 0 0-.984 0C4.373 4.95 3.606 6.48 4.34 8.292c2.19 5.405 6.043 9.167 11.349 11.463.302.13.638.183.808.23 1.208.012 2.623-1.158 3.032-2.318.393-1.117-.438-1.56-1.096-2.093zM12.485 4.88c3.879.6 5.668 2.454 6.162 6.38.045.363-.09.909.426.919.538.01.408-.528.413-.89.045-3.699-3.163-7.127-6.888-7.253-.281.04-.863-.195-.9.438-.024.427.466.357.787.406z'/%3E%3Cpath d='M13.244 5.957c-.373-.045-.865-.222-.953.299-.09.546.458.49.811.57 2.395.538 3.23 1.414 3.624 3.802.057.349-.057.89.532.8.436-.066.278-.53.315-.802.02-2.293-1.936-4.38-4.329-4.669z'/%3E%3Cpath d='M13.464 7.832c-.249.006-.493.033-.585.3-.137.4.152.496.446.544.983.158 1.5.74 1.598 1.725.027.268.195.484.452.454.356-.043.389-.361.378-.664.017-1.106-1.227-2.385-2.289-2.359z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_vkontakte .ya-share2__badge
+{
+    background-color: #48729e;
+}
+
+.ya-share2__item_service_vkontakte .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.576-1.496c.588-.19 1.341 1.26 2.14 1.818.605.422 1.064.33 1.064.33l2.137-.03s1.117-.071.587-.964c-.043-.073-.308-.661-1.588-1.87-1.34-1.264-1.16-1.059.453-3.246.983-1.332 1.376-2.145 1.253-2.493-.117-.332-.84-.244-.84-.244l-2.406.015s-.178-.025-.31.056c-.13.079-.212.262-.212.262s-.382 1.03-.89 1.907c-1.07 1.85-1.499 1.948-1.674 1.832-.407-.267-.305-1.075-.305-1.648 0-1.793.267-2.54-.521-2.733-.262-.065-.454-.107-1.123-.114-.858-.009-1.585.003-1.996.208-.274.136-.485.44-.356.457.159.022.519.099.71.363.246.341.237 1.107.237 1.107s.142 2.11-.33 2.371c-.325.18-.77-.187-1.725-1.865-.489-.859-.859-1.81-.859-1.81s-.07-.176-.198-.272c-.154-.115-.37-.151-.37-.151l-2.286.015s-.343.01-.469.161C3.94 7.721 4.043 8 4.043 8s1.79 4.258 3.817 6.403c1.858 1.967 3.968 1.838 3.968 1.838h.957z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_whatsapp .ya-share2__badge
+{
+    background-color: #65bc54;
+}
+
+.ya-share2__item_service_whatsapp .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 11.794c0 4.304-3.517 7.794-7.855 7.794a7.87 7.87 0 0 1-3.796-.97L4 20l1.418-4.182a7.714 7.714 0 0 1-1.127-4.024C4.29 7.489 7.807 4 12.145 4S20 7.49 20 11.794zm-7.855-6.553c-3.641 0-6.603 2.94-6.603 6.553 0 1.434.467 2.762 1.258 3.842l-.825 2.433 2.537-.806a6.6 6.6 0 0 0 3.633 1.084c3.642 0 6.604-2.94 6.604-6.553s-2.962-6.553-6.604-6.553zm3.967 8.348c-.049-.08-.177-.128-.37-.223-.192-.095-1.139-.558-1.315-.621-.177-.064-.305-.096-.434.095a10.92 10.92 0 0 1-.61.749c-.112.128-.224.143-.416.048-.193-.096-.813-.297-1.549-.948a5.76 5.76 0 0 1-1.07-1.323c-.113-.191-.013-.295.084-.39.086-.086.192-.223.289-.334.096-.112.128-.191.192-.319s.032-.239-.016-.335c-.048-.095-.433-1.035-.594-1.418-.16-.382-.32-.318-.433-.318-.112 0-.24-.016-.369-.016a.71.71 0 0 0-.513.239c-.177.19-.674.653-.674 1.593s.69 1.848.786 1.976c.096.127 1.332 2.119 3.289 2.884 1.958.764 1.958.51 2.31.477.353-.031 1.14-.461 1.3-.908.16-.446.16-.829.113-.908z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+</style><style type="text/css">.fwgsvafdw,.fwgsvafdw yatag{display:block!important;box-sizing:content-box!important}.fwgsvafdw,.fwgsvafdw a,.fwgsvafdw b,.fwgsvafdw em,.fwgsvafdw iframe,.fwgsvafdw img,.fwgsvafdw table,.fwgsvafdw tbody,.fwgsvafdw td,.fwgsvafdw tr{font-size:inherit!important;background:none!important;border:none!important;border-radius:0!important;border-spacing:0!important;border-collapse:collapse!important;box-sizing:content-box!important;clear:none!important;float:none!important;font-variant:normal!important;font-weight:400!important;letter-spacing:normal!important;line-height:normal!important;margin:0!important;max-height:none!important;max-width:none!important;min-height:0!important;min-width:0!important;outline:none!important;padding:0!important;position:static!important;text-align:left!important;text-decoration:none!important;text-indent:0!important;text-transform:none!important;vertical-align:baseline!important;visibility:visible!important;word-spacing:normal!important}.fwgsvafdw,.fwgsvafdw a,.fwgsvafdw b,.fwgsvafdw em,.fwgsvafdw img,.fwgsvafdw table,.fwgsvafdw tbody,.fwgsvafdw td,.fwgsvafdw tr{height:auto!important}.fwgsvafdw table{display:table!important;empty-cells:hide!important;table-layout:fixed!important}.fwgsvafdw table,.fwgsvafdw td{font-size:100%!important}.fwgsvafdw td{display:table-cell!important;vertical-align:middle!important}.fwgsvafdw{position:relative!important;z-index:1!important;-webkit-font-smoothing:antialiased!important;-webkit-text-size-adjust:none!important}.fwgsvafdw .hrsifhph,.fwgsvafdw .hrsifhph:hover,.fwgsvafdw .hrsifhph:hover b,.fwgsvafdw .hrsifhph b{display:inline!important;color:#006600!important;text-decoration:none!important;border-bottom-color:rgba(0,102,0,0.4)!important;border-bottom-width:0px!important;border-bottom-style:solid!important}.fwgsvafdw .hrsifhph:hover,.fwgsvafdw .hrsifhph:hover b{color:#0066FF!important;border-bottom-color:rgba(0,102,255,0.4)!important}.fwgsvafdw .joamsaf{display:none!important}.fwgsvafdw .dzymieagjp{position:relative!important;display:block!important;overflow:hidden!important}.fwgsvafdw .fxrwwcxba{position:absolute!important;left:50%!important;tap-highlight-color:none!important;-webkit-user-select:none!important;-moz-user-select:none!important;-ms-user-select:none!important;user-select:none!important}.fwgsvafdw .hwwboycd{display:block!important;transition:opacity .2s ease!important;-webkit-backface-visibility:hidden!important;backface-visibility:hidden!important}.fwgsvafdw .aytncadse .hwwboycd:hover{opacity:.8!important}.fwgsvafdw .jrgfmfp{position:relative!important;top:0!important;left:0!important;margin:0 auto!important;display:block!important;width:100%!important;overflow:hidden!important;background-color:#fff!important;-webkit-transform:translateZ(0)!important;transform:translateZ(0)!important}.fwgsvafdw .dyuhwidyn,.fwgsvafdw .kuoeodfsb{position:absolute!important;top:0!important;left:0!important;width:100%!important;height:100%!important;opacity:.3!important}.fwgsvafdw .kuoeodfsb svg{position:absolute!important;width:200%!important;height:200%!important;left:-50%!important;top:-50%!important}.fwgsvafdw .dyuhwidyn{background-position:50% 50%!important;background-size:cover!important;background-repeat:no-repeat!important;-webkit-transform:scale(2)!important;-ms-transform:scale(2)!important;transform:scale(2)!important;-webkit-transform-origin:center 30%!important;-ms-transform-origin:center 30%!important;transform-origin:center 30%!important;-webkit-filter:blur(10px)!important;filter:blur(10px)!important}.fwgsvafdw .ltgpydtlkb{position:absolute!important;top:-30%!important;left:-50%!important;opacity:.3!important;filter:alpha(opacity=30)!important;width:200%!important;height:200%!important;text-align:center!important}.fwgsvafdw .gqzmvlym{height:100%!important;display:inline-block!important;opacity:.3!important;filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius="10")!important}.fwgsvafdw .gocrpsave{z-index:1!important;top:0!important;left:0!important;width:100%!important;overflow:hidden!important;text-align:center!important}.fwgsvafdw .gocrpsave,.fwgsvafdw .iqhjdao{position:relative!important;margin:0 auto!important;display:block!important}.fwgsvafdw .iqhjdao{z-index:3!important}.fwgsvafdw .gocrpsave .hwwboycd{box-shadow:0 0 3px rgba(0,0,0,.1)!important}.fwgsvafdw .aythizzcq{display:inline-block!important}.fwgsvafdw .mqvgtwb{position:absolute!important;z-index:3!important;top:0!important;left:0!important;width:200px!important;height:200px!important;overflow:hidden!important;text-indent:-4000px!important}.fwgsvafdw .kpgvfvsnaf,.fwgsvafdw .kpgvfvsnaf b{line-height:inherit!important;text-decoration:none!important;word-break:break-word!important;color:#0000CC!important;border-bottom-color:rgba(0,0,204,0.4)!important;border-bottom-width:0px!important;border-bottom-style:solid!important}.fwgsvafdw .kpgvfvsnaf b{border-bottom:none!important;font-weight:700!important}.fwgsvafdw .dwvoblpvu{display:inline!important}.fwgsvafdw .bvhrjcq{display:inline!important}.fwgsvafdw .jxerhx{padding:2px 5px!important;margin:0!important;border-radius:2px!important;background-color:rgba(0, 0, 0, 0.7)!important;color:#fff!important;text-align:center!important;line-height:1.3em!important}.fwgsvafdw .dnofygsku{position:relative!important;top:-1px!important;display:inline!important;color:rgba(0,0,0,0.3)!important;font-weight:700!important;text-transform:uppercase!important;vertical-align:middle!important}.fwgsvafdw .ivqotw{font-size:.9em!important}.fwgsvafdw .evzjohah{display:inline!important}.fwgsvafdw .hzukvqzf{display:block!important;overflow:hidden!important}.fwgsvafdw .dsgkjsw{position:relative!important}.fwgsvafdw .lxqedba{position:absolute!important;top:0!important;left:0!important}.fwgsvafdw .kwaamyaec{position:relative!important;z-index:1!important}.fwgsvafdw .axnwqa{display:inline!important;-webkit-box-decoration-break:clone!important;box-decoration-break:clone!important}.fwgsvafdw .mtidvdz{display:inline!important;opacity:0!important}.fwgsvafdw .knfxxfrbu,.fwgsvafdw .kxsggw b{font-weight:700!important}.fwgsvafdw .knfxxfrbu{white-space:nowrap!important;max-width:100%!important;display:inline-block!important}.fwgsvafdw .jsxwkhmcqm{color:#0000CC!important;text-decoration:none!important;border-bottom-color:rgba(0,0,204,0.4)!important;border-bottom-width:0px!important;border-bottom-style:solid!important}.fwgsvafdw .cnlujt{cursor:pointer!important}.fwgsvafdw .kyjkaita{z-index:-1!important;transition:z-index 0s linear .4s!important}.fwgsvafdw .kyjkaita,.fwgsvafdw .bruogjts{position:absolute!important;top:0!important;left:0!important;width:100%!important;height:100%!important;overflow:hidden!important}.fwgsvafdw .bruogjts{margin-left:100%!important;transition:margin-left .4s ease-out!important}.fwgsvafdw .dszclegg,.fwgsvafdw .dtmgnzif{position:absolute!important;margin-left:0!important;width:100%!important;height:100%!important;transition:margin-left .4s ease-out!important}.fwgsvafdw .dszclegg{background:#FFFFFF!important;background:rgba(255, 255, 255, 0.98)!important}.fwgsvafdw .dtmgnzif{margin-left:-100%!important;background:#FFFFFF!important}.fwgsvafdw .mnqmtxswv{z-index:10!important;transition:z-index 0s!important}.fwgsvafdw .mnqmtxswv .bruogjts{margin-left:0!important}.fwgsvafdw .exmhogqwlz .dszclegg{margin-left:100%!important}.fwgsvafdw .exmhogqwlz .dtmgnzif{margin-left:0!important}.fwgsvafdw .kyjkaita .jvqavy{left:0!important}.fwgsvafdw .ipxrdqhtbn{position:relative!important;padding:4px!important}.fwgsvafdw .mvrdtr svg{display:block!important}.fwgsvafdw .mvrdtr polygon{fill:#000000!important}.fwgsvafdw .fwtfjwj{margin:-3px!important;width:1em!important;height:1em!important;line-height:1em!important;text-align:center!important;font-size:18px!important}.fwgsvafdw .czoycizn{position:absolute!important;top:50%!important;right:100%!important;margin-top:-9px!important;margin-right:6px!important;padding:0 4px!important;max-width:120px!important;height:18px!important;line-height:18px!important;color:#fff!important;background:#333!important;background-color:rgba(0,0,0,.8)!important;border-radius:1px!important;visibility:hidden!important;font-size:11px!important;white-space:nowrap!important}.fwgsvafdw .gnmozoxzj{position:absolute!important;top:3px!important;right:-6px!important;display:block!important;overflow:hidden!important;width:0!important;height:0!important;border-style:solid!important;border-width:6px 0 6px 6px!important;border-color:transparent transparent transparent #333!important;border-color:transparent transparent transparent rgba(0,0,0,.8)!important}.fwgsvafdw .dnkicolbz{position:relative!important;color:#fff!important;letter-spacing:.04em!important}.fwgsvafdw .kpwzkllq:hover .czoycizn{visibility:visible!important}.fwgsvafdw .awnrnlarlw:hover .czoycizn{display:none!important}.fwgsvafdw .iubatyz{visibility:visible!important}.fwgsvafdw .iubatyz .czoycizn{display:none!important}.fwgsvafdw .mrlvvpvpf .czoycizn{height:19px!important;line-height:19px!important}.fwgsvafdw .mrlvvpvpf .gnmozoxzj{top:2px!important}.fwgsvafdw .dqgikfnkd .ipxrdqhtbn{padding:5px!important}.fwgsvafdw .dqgikfnkd .fwtfjwj{margin:-5px!important;font-size:25px!important}.fwgsvafdw .dqgikfnkd .czoycizn{margin-right:9px!important;margin-top:-12px!important;max-width:160px!important;height:22px!important;line-height:22px!important;font-size:13px!important}.fwgsvafdw .dqgikfnkd .gnmozoxzj{right:-7px!important;top:4px!important;border-width:7px 0 7px 7px!important}.fwgsvafdw .bnvebmuhf{padding:5px!important}.fwgsvafdw .bnvebmuhf .ipxrdqhtbn{border-radius:50%!important;background:#fff!important;box-shadow:0 1px 0 0 rgba(0,0,0,.2)!important}.fwgsvafdw .bnvebmuhf.dqgikfnkd{padding:5px!important}.fwgsvafdw .hvbrbln .ipxrdqhtbn{border-radius:50%!important;background:rgba(255,255,255,0.8)!important}.fwgsvafdw .kpwzkllq.awnrnlarlw .czoycizn{display:none!important}.fwgsvafdw .jrwsvwx{position:absolute!important;left:0!important;top:0!important;z-index:6!important}.fwgsvafdw .jrwsvwx,.fwgsvafdw .dxnpsbly,.fwgsvafdw .gpryjy{width:100%!important;height:100%!important}.fwgsvafdw .exqvfdqqbh{vertical-align:middle!important;display:inline-block!important}.fwgsvafdw .gpryjy{vertical-align:middle!important;text-align:center!important;font-size:13px!important;color:#000!important}.fwgsvafdw .dootpjmr .gpryjy{font-size:15px!important}.fwgsvafdw .jvqavy{position:absolute!important;top:0!important;bottom:0!important;margin-left:0!important;display:-webkit-flex!important;display:-ms-flexbox!important;display:flex!important;-webkit-align-items:center!important;-ms-flex-align:center!important;align-items:center!important;left:-101%!important;z-index:4!important;width:100%!important;opacity:.98!important;border:none!important;box-sizing:border-box!important;padding:5px!important;transition:margin-left 0s ease-out .4s,left .4s ease-out!important}.fwgsvafdw .jvqavy.huuwsmcg{margin-left:201%!important;left:-201%!important;transition:margin-left 0s,left .4s ease-out!important}.fwgsvafdw .joisbcnrl{display:block!important;margin:auto!important;padding:0!important;border-radius:3px!important;z-index:11!important;font-size:1em!important}.fwgsvafdw .gorxaz{color:#000!important;font-weight:700!important}.fwgsvafdw .joisbcnrl .kulqoiib{display:inline-block!important;margin:0 10px 0 0!important}.fwgsvafdw .joisbcnrl .buibndyh{text-decoration:none!important;color:#00c!important;cursor:pointer!important;border-bottom:none!important}.fwgsvafdw .joisbcnrl .buibndyh:hover{color:#c00!important}.fwgsvafdw .joisbcnrl.cxwgexthl{padding-top:0!important}.fwgsvafdw .joisbcnrl.cxwgexthl .gorxaz{display:inline-block!important;margin-right:10px!important}.fwgsvafdw .joisbcnrl.cxwgexthl .eyldtnof{top:3px!important}.fwgsvafdw .joisbcnrl.hqhxobcwwn{padding:.2em .5em!important}.fwgsvafdw .joisbcnrl.hqhxobcwwn .kulqoiib,.fwgsvafdw .joisbcnrl.hqhxobcwwn .gorxaz{display:block!important;font-size:.9em!important;margin:0 0 .4em!important}.fwgsvafdw .joisbcnrl.hqhxobcwwn .cwtnclxkkp{right:1px!important;top:1px!important}.fwgsvafdw .joisbcnrl.cnsynvc{padding:.5em 1.3em!important}.fwgsvafdw .joisbcnrl.cnsynvc .gorxaz{font-size:1.2em!important;display:block!important;margin:0 .6em 1em 0!important}.fwgsvafdw .joisbcnrl.cnsynvc .kulqoiib{display:block!important;margin:.75em .6em 0 0!important}.fwgsvafdw .joisbcnrl.cnsynvc .buibndyh{line-height:1.4em!important}.fwgsvafdw .joisbcnrl.bwndjc{margin:.25em auto!important;padding:0 1em!important}.fwgsvafdw .joisbcnrl.bwndjc .gorxaz{display:block!important;margin:0 .6em 0 0!important}.fwgsvafdw .joisbcnrl.bwndjc .kulqoiib{display:block!important;margin:.5em .5em 0 0!important}.fwgsvafdw .joisbcnrl.bwndjc .buibndyh{line-height:1.4em!important}.fwgsvafdw .buxytlujgo .jvqavy{padding:0!important}.fwgsvafdw .crunsbam .jvqavy{border:1px solid #FEEBC8!important;border-radius:0!important}.fwgsvafdw .cyebvxbl .jvqavy,.fwgsvafdw .goetekyrja .jvqavy{bottom:1px!important}.fwgsvafdw .apxqdmrfm.cyebvxbl .jvqavy,.fwgsvafdw .crskrky.cyebvxbl .jvqavy,.fwgsvafdw .inzyayqq.cyebvxbl .jvqavy,.fwgsvafdw .bvekfk.goetekyrja .jvqavy{bottom:0!important}.fwgsvafdw .aqvevumxo{position:absolute!important;z-index:11!important;right:0!important;top:0!important}.fwgsvafdw .mnutdbwyg{position:absolute!important;left:-101%!important;top:0!important;width:100%!important;height:100%!important;display:block!important}#fwgsvafdw .fxxtqh .iothcpnm,#fwgsvafdw .fxxtqh .arqdavzcaf{display:none!important}#fwgsvafdw .fxxtqh .mnutdbwyg{left:0!important;transition:left .4s ease-out!important}.fwgsvafdw .dueabfr{position:relative!important;z-index:1!important;padding:.7em 1em .7em .7em!important;width:auto!important;min-height:100%!important;overflow:hidden!important;font-size:14px!important}.fwgsvafdw .dueabfr .cthmatb{display:-webkit-flex!important;display:-ms-flexbox!important;display:flex!important;-webkit-flex-direction:row!important;-ms-flex-direction:row!important;flex-direction:row!important;overflow:hidden!important}.fwgsvafdw .dueabfr .bxouhma{position:relative!important;margin-right:.9em!important;float:left!important;overflow:hidden!important;-webkit-flex-shrink:0!important;-ms-flex-negative:0!important;flex-shrink:0!important}.fwgsvafdw .dueabfr .fnbhhy{padding-bottom:1px!important;overflow:hidden!important;-webkit-align-self:flex-start!important;-ms-flex-item-align:flex-start!important;-ms-grid-row-align:flex-start!important;align-self:flex-start!important;-webkit-flex-grow:1!important;-ms-flex-positive:1!important;flex-grow:1!important;-webkit-flex-shrink:1!important;-ms-flex-negative:1!important;flex-shrink:1!important}.fwgsvafdw .dueabfr .btkiovsqss{font-size:13.995000000000001px!important}.fwgsvafdw .dueabfr .etdopa{line-height:1.2em!important;font-size:1.15em!important}.fwgsvafdw .dueabfr .etdopa .kpgvfvsnaf,.fwgsvafdw .dueabfr .etdopa .kpgvfvsnaf b{color:#000000!important;font-weight:700!important;letter-spacing:.01em!important;border-bottom-width:0!important}.fwgsvafdw .dueabfr .etdopa .hrsifhph:hover,.fwgsvafdw .dueabfr .etdopa .hrsifhph:hover b{color:#0066FF!important;border-bottom-color:rgba(0,102,255,0.4)!important}.fwgsvafdw .dueabfr .loyrvg{margin-top:.6em!important;line-height:1.5em!important;pointer-events:auto!important;font-size:13.995000000000001px!important}.fwgsvafdw .dueabfr .loyrvg .dsnolfiiqt{background:#0000CC!important}.fwgsvafdw .dueabfr .loyrvg .axnwqa{padding:2px 7px!important}.fwgsvafdw .dueabfr .loyrvg .hrsifhph,.fwgsvafdw .dueabfr .loyrvg .hrsifhph:hover,.fwgsvafdw .dueabfr .loyrvg .hrsifhph:hover b,.fwgsvafdw .dueabfr .loyrvg .hrsifhph b{color:#fff!important;border-bottom-width:0!important}.fwgsvafdw .dueabfr .kqmdkq{margin-top:.9em!important;line-height:1.3em!important}.fwgsvafdw .dueabfr .jvucssetfo{margin-top:.9em!important}.fwgsvafdw .dueabfr .jvucssetfo .iwmtbwa{margin-right:1em!important;margin-bottom:.25em!important;display:inline-block!important;vertical-align:middle!important}.fwgsvafdw .dueabfr .kzpmvx{margin-top:.9em!important}.fwgsvafdw .dueabfr .cybvak .hsqsfmlyl{border-radius:5px!important;margin-right:.5em!important;vertical-align:bottom!important}.fwgsvafdw .dueabfr .cybvak .jqfmue{display:inline-block!important;vertical-align:bottom!important}.fwgsvafdw .dueabfr .asjljalek{margin-top:1em!important}.fwgsvafdw .kutzzj .bxouhma,.fwgsvafdw .kutzzj .asjljalek{width:150px!important}.fwgsvafdw .gpiwrnbk .bxouhma{width:225px!important;min-height:127px!important}.fwgsvafdw .gpiwrnbk .asjljalek{width:225px!important}.fwgsvafdw .bpnpydkj{display:inline-block!important;overflow:hidden!important;text-align:center!important;font-size:11px!important;opacity:.7!important;filter:alpha(opacity=70)!important;cursor:pointer!important}.fwgsvafdw .hnoqqfsb{display:inline-block!important;line-height:14px!important;color:#000000!important;vertical-align:top!important;border-bottom-color:transparent!important;border-bottom-width:0px!important;border-bottom-style:solid!important}.fwgsvafdw .hnoqqfsb em{font-style:normal!important}.fwgsvafdw .bpnpydkj:hover{opacity:1!important;filter:alpha(opacity=100)!important}.fwgsvafdw .bpnpydkj:hover .hnoqqfsb{text-decoration:none!important;border-bottom-color:rgba(0,0,0,0.4)!important;border-bottom-width:0px!important;border-bottom-style:solid!important}.fwgsvafdw .gwusucdv{overflow:hidden!important;position:relative!important}.fwgsvafdw .avkbxzzcz{position:relative!important;margin:0!important;margin-left:10px!important;padding:0!important;font-size:10px!important;margin-top:4px!important;height:14px!important;line-height:14px!important;display:inline-block!important}.fwgsvafdw .bunwmfth{position:relative!important;top:0px!important;left:0px!important;right:0px!important;bottom:0px!important;margin-right:0px!important;margin-bottom:0px!important;overflow:hidden!important;border:0px solid transparent!important;border-radius:0px!important;background:transparent!important}.fwgsvafdw .gzrufio{margin-left:0!important;height:100%!important;width:100%!important;table-layout:fixed!important;border-spacing:0px!important;border-collapse:separate!important}.fwgsvafdw .hvktcw{margin:0!important;padding:0!important;height:100%!important;overflow:hidden!important;border:0px solid transparent!important;border-radius:0px!important;border-right-width:0px!important;border-bottom-width:0px!important;background:transparent!important;vertical-align:top!important}.fwgsvafdw .gngvkiyqzd{margin:0 auto!important;height:100%!important;box-sizing:border-box!important}.fwgsvafdw .avfwhqx .hvktcw{border-bottom-width:0px!important}.fwgsvafdw .innrumpxy{border-right-width:0px!important}</style><style type="text/css">#ya-site-form0,#ya-site-form0 .ya-site-form__form,#ya-site-form0 .ya-site-form__input,#ya-site-form0 .ya-site-form__input-text,#ya-site-form0 .ya-site-form__submit,#ya-site-form0 .ya-site-form__search-precise{font-size:12px!important;color:#000!important}#ya-site-form0 .ya-site-form__form-form{display:block}#ya-site-form0 .ya-site-form__form-form,#ya-site-form0 .ya-site-form__input,#ya-site-form0 .ya-site-form__search-precise,#ya-site-form0 .ya-site-form__search-precise__radio,#ya-site-form0 .ya-site-form__gap,#ya-site-form0 .ya-site-form__gap-i,#ya-site-form0 .ya-site-form__logo-img{margin:0;padding:0}#ya-site-form0{margin:0!important;padding:0!important}#ya-site-form0 .ya-site-form__logo-wrap{width:65px;vertical-align:top;border-collapse:collapse}#ya-site-form0 .ya-site-form__logo{display:block;width:52px;margin:0;padding:0 6px 0 0;text-decoration:none}#ya-site-form0 .ya-site-form__logo-img{width:52px;height:21px;border:0!important}#ya-site-form0 .ya-site-form__search-wrap{border-collapse:collapse}#ya-site-form0 .ya-site-form__search{font-size:12px!important;width:100%}#ya-site-form0 .ya-site-form__search-input,#ya-site-form0 .ya-site-form__search-precise,{border:0}#ya-site-form0 .ya-site-form__search-input{padding:6px}#ya-site-form0 .ya-site-form__search-input-layout,#ya-site-form0 .ya-site-form__search-input-layout-l,#ya-site-form0 .ya-site-form__search-input-layout-r{font-size:12px!important;padding:0;vertical-align:middle;border:0;border-collapse:collapse}#ya-site-form0 .ya-site-form__search-input-layout,#ya-site-form0 .ya-site-form__search-input-layout-l{width:100%}#ya-site-form0 .ya-site-form__search-precise{padding:0 18px 5px 6px;text-align:left;vertical-align:top}#ya-site-form0 .ya-site-form__search-precise-i{white-space:nowrap}#ya-site-form0 .ya-site-form__search-precise__radio{width:auto;margin:0 .3em 0 0;vertical-align:middle;background:none}#ya-site-form0 .ya-site-form__search-precise__label{margin:0 .4em 0 0;padding:0;vertical-align:middle}#ya-site-form0 .ya-site-form__input-text{width:100%;margin:0!important;cursor:text;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;background-color:#fff;border:1px solid #7f9db9;outline-style:none;-webkit-appearance:textfield}#ya-site-form0 .ya-site-form__input-text_type_hint{background-repeat:no-repeat;background-position:.2em 50%}#ya-site-form0 .ya-site-form__submit{display:block;width:auto;margin:0 0 0 5px}#ya-site-form0 .ya-site-form__arrow-wrap{overflow:hidden;width:30px;padding:0;vertical-align:middle}#ya-site-form0 .ya-site-form__arrow{position:relative}#ya-site-form0 .ya-site-form__arrow-a{position:absolute;top:50%;right:0;width:0;height:0;margin-top:-59px;border:solid transparent;border-width:59px 0 59px 30px;-moz-border-end-style:dotted}#ya-site-form0 .ya-site-form__wrap{width:100%;table-layout:fixed;border-collapse:collapse}#ya-site-form0 .ya-site-form__gap{border:0}#ya-site-form0 .ya-site-form__gap-i{width:9em}#ya-site-form0.ya-site-form_arrow_yes .ya-site-form__search-input{padding-right:0}#ya-site-form0.ya-site-form_logo_left .ya-site-form__logo{margin-top:4px;margin-left:5px}#ya-site-form0.ya-site-form_logo_top .ya-site-form__logo{display:block;margin:6px 0 0 6px}#ya-site-form0 .ya-site-form__submit_type_image{width:19px;height:15px;outline:none;cursor:pointer;border:0}#ya-site-form0 .ya-site-form__submit_type_image { background: url(https://site.yandex.net/v2.0/i/search.png) no-repeat }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text::-webkit-input-placeholder{color:#999999;}#ya-site-form0 .ya-site-form__form .ya-site-form__input-text:-moz-placeholder{color:#999999;}#ya-site-form0 .ya-site-form__form .ya-site-form__input-text::-moz-placeholder{color:#999999;}#ya-site-form0 .ya-site-form__form .ya-site-form__input-text:-ms-input-placeholder{color:#999999;}#ya-site-form0 .ya-site-form__form * { font-size: 12px !important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { font-style: normal!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { font-weight: normal!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { color: #000000!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { border-color: #999999!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text:focus { border-color: #999999!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { background-color: #ffffff!important }#ya-site-form0 .ya-site-form__search, #ya-site-form0 .ya-site-form__search td, #ya-site-form0 .yaform__precise-i { background-color: transparent !important }#ya-site-form0 .ya-site-form__search-precise__label { color:#000000 !important }#ya-site-form0 .ya-site-form__arrow-a { border-left-color: transparent }</style><style type="text/css">.ya_partner_R-A-89644-2,.ya_partner_R-A-89644-2 yatag{display:block!important;box-sizing:content-box!important}.ya_partner_R-A-89644-2,.ya_partner_R-A-89644-2 a,.ya_partner_R-A-89644-2 b,.ya_partner_R-A-89644-2 em,.ya_partner_R-A-89644-2 iframe,.ya_partner_R-A-89644-2 img,.ya_partner_R-A-89644-2 table,.ya_partner_R-A-89644-2 tbody,.ya_partner_R-A-89644-2 td,.ya_partner_R-A-89644-2 tr{font-size:inherit!important;background:none!important;border:none!important;border-radius:0!important;border-spacing:0!important;border-collapse:collapse!important;box-sizing:content-box!important;clear:none!important;float:none!important;font-variant:normal!important;font-weight:400!important;letter-spacing:normal!important;line-height:normal!important;margin:0!important;max-height:none!important;max-width:none!important;min-height:0!important;min-width:0!important;outline:none!important;padding:0!important;position:static!important;text-align:left!important;text-decoration:none!important;text-indent:0!important;text-transform:none!important;vertical-align:baseline!important;visibility:visible!important;word-spacing:normal!important}.ya_partner_R-A-89644-2,.ya_partner_R-A-89644-2 a,.ya_partner_R-A-89644-2 b,.ya_partner_R-A-89644-2 em,.ya_partner_R-A-89644-2 img,.ya_partner_R-A-89644-2 table,.ya_partner_R-A-89644-2 tbody,.ya_partner_R-A-89644-2 td,.ya_partner_R-A-89644-2 tr{height:auto!important}.ya_partner_R-A-89644-2 table{display:table!important;empty-cells:hide!important;table-layout:fixed!important}.ya_partner_R-A-89644-2 table,.ya_partner_R-A-89644-2 td{font-size:100%!important}.ya_partner_R-A-89644-2 td{display:table-cell!important;vertical-align:middle!important}.ya_partner_R-A-89644-2 .yap-rtb__wrapper{overflow:hidden!important;font:normal 13px Arial,sans-serif!important}.ya_partner_R-A-89644-2 .yap-rtb__iframe,.ya_partner_R-A-89644-2 .yap-rtb__wrapper{position:relative!important;width:240px!important;height:400px!important;margin:0!important}.ya_partner_R-A-89644-2 .yap-rtb__iframe{z-index:2!important}.ya_partner_R-A-89644-2 .yap-rtb__adtune-button{position:absolute!important;z-index:11!important;right:0!important;top:0!important}.ya_partner_R-A-89644-2 .yap-rtb__feedback{border:1px solid #ccc!important;box-sizing:border-box!important}.ya_partner_R-A-89644-2 .yap-adtune{cursor:pointer!important}.ya_partner_R-A-89644-2 .yap-feedback-menu{z-index:-1!important;transition:z-index 0s linear .4s!important}.ya_partner_R-A-89644-2 .yap-feedback-menu,.ya_partner_R-A-89644-2 .yap-feedback-menu__slide{position:absolute!important;top:0!important;left:0!important;width:100%!important;height:100%!important;overflow:hidden!important}.ya_partner_R-A-89644-2 .yap-feedback-menu__slide{margin-left:100%!important;transition:margin-left .4s ease-out!important}.ya_partner_R-A-89644-2 .yap-feedback-menu__form,.ya_partner_R-A-89644-2 .yap-feedback-menu__recieved{position:absolute!important;margin-left:0!important;width:100%!important;height:100%!important;transition:margin-left .4s ease-out!important}.ya_partner_R-A-89644-2 .yap-feedback-menu__form{background:#fff!important;background:rgba(255, 255, 255, 0.98)!important}.ya_partner_R-A-89644-2 .yap-feedback-menu__recieved{margin-left:-100%!important;background:#fff!important}.ya_partner_R-A-89644-2 .yap-feedback-menu_visible{z-index:10!important;transition:z-index 0s!important}.ya_partner_R-A-89644-2 .yap-feedback-menu_visible .yap-feedback-menu__slide{margin-left:0!important}.ya_partner_R-A-89644-2 .yap-feedback-menu_recieved .yap-feedback-menu__form{margin-left:100%!important}.ya_partner_R-A-89644-2 .yap-feedback-menu_recieved .yap-feedback-menu__recieved{margin-left:0!important}.ya_partner_R-A-89644-2 .yap-feedback-menu .yap-abuse-message{left:0!important}.ya_partner_R-A-89644-2 .yap-adtune-icon__container{position:relative!important;padding:4px!important}.ya_partner_R-A-89644-2 .yap-adtune-icon__image svg{display:block!important}.ya_partner_R-A-89644-2 .yap-adtune-icon__image polygon{fill:#000!important}.ya_partner_R-A-89644-2 .yap-adtune-icon__image-fallback{margin:-3px!important;width:1em!important;height:1em!important;line-height:1em!important;text-align:center!important;font-size:18px!important}.ya_partner_R-A-89644-2 .yap-adtune-icon__tooltip{position:absolute!important;top:50%!important;right:100%!important;margin-top:-9px!important;margin-right:6px!important;padding:0 4px!important;max-width:120px!important;height:18px!important;line-height:18px!important;color:#fff!important;background:#333!important;background-color:rgba(0,0,0,.8)!important;border-radius:1px!important;visibility:hidden!important;font-size:11px!important;white-space:nowrap!important}.ya_partner_R-A-89644-2 .yap-adtune-icon__tooltip-arrow{position:absolute!important;top:3px!important;right:-6px!important;display:block!important;overflow:hidden!important;width:0!important;height:0!important;border-style:solid!important;border-width:6px 0 6px 6px!important;border-color:transparent transparent transparent #333!important;border-color:transparent transparent transparent rgba(0,0,0,.8)!important}.ya_partner_R-A-89644-2 .yap-adtune-icon__tooltip-text{position:relative!important;color:#fff!important;letter-spacing:.04em!important}.ya_partner_R-A-89644-2 .yap-adtune-icon:hover .yap-adtune-icon__tooltip{visibility:visible!important}.ya_partner_R-A-89644-2 .yap-adtune-icon_open:hover .yap-adtune-icon__tooltip{display:none!important}.ya_partner_R-A-89644-2 .yap-adtune-icon_touch_true{visibility:visible!important}.ya_partner_R-A-89644-2 .yap-adtune-icon_touch_true .yap-adtune-icon__tooltip{display:none!important}.ya_partner_R-A-89644-2 .yap-adtune-icon_oldie_true .yap-adtune-icon__tooltip{height:19px!important;line-height:19px!important}.ya_partner_R-A-89644-2 .yap-adtune-icon_oldie_true .yap-adtune-icon__tooltip-arrow{top:2px!important}.ya_partner_R-A-89644-2 .yap-adtune-icon_size_l .yap-adtune-icon__container{padding:5px!important}.ya_partner_R-A-89644-2 .yap-adtune-icon_size_l .yap-adtune-icon__image-fallback{margin:-5px!important;font-size:25px!important}.ya_partner_R-A-89644-2 .yap-adtune-icon_size_l .yap-adtune-icon__tooltip{margin-right:9px!important;margin-top:-12px!important;max-width:160px!important;height:22px!important;line-height:22px!important;font-size:13px!important}.ya_partner_R-A-89644-2 .yap-adtune-icon_size_l .yap-adtune-icon__tooltip-arrow{right:-7px!important;top:4px!important;border-width:7px 0 7px 7px!important}.ya_partner_R-A-89644-2 .yap-adtune-icon_round{padding:5px!important}.ya_partner_R-A-89644-2 .yap-adtune-icon_round .yap-adtune-icon__container{border-radius:50%!important;background:#fff!important;box-shadow:0 1px 0 0 rgba(0,0,0,.2)!important}.ya_partner_R-A-89644-2 .yap-adtune-icon_round.yap-adtune-icon_size_l{padding:5px!important}.ya_partner_R-A-89644-2 .yap-adtune-icon_round-flat .yap-adtune-icon__container{border-radius:50%!important;background:rgba(255,255,255,0.8)!important}.ya_partner_R-A-89644-2 .yap-adtune-icon.yap-adtune-icon_open .yap-adtune-icon__tooltip{display:none!important}.ya_partner_R-A-89644-2 .yap-adtune-message{position:absolute!important;left:0!important;top:0!important;z-index:6!important}.ya_partner_R-A-89644-2 .yap-adtune-message,.ya_partner_R-A-89644-2 .yap-adtune-message__table,.ya_partner_R-A-89644-2 .yap-adtune-message__text{width:100%!important;height:100%!important}.ya_partner_R-A-89644-2 .yap-adtune-message__check{vertical-align:middle!important;display:inline-block!important}.ya_partner_R-A-89644-2 .yap-adtune-message__text{vertical-align:middle!important;text-align:center!important;font-size:13px!important;color:#000!important}.ya_partner_R-A-89644-2 .yap-adtune-message_big_true .yap-adtune-message__text{font-size:15px!important}.ya_partner_R-A-89644-2 .yap-abuse-message{position:absolute!important;top:0!important;bottom:0!important;margin-left:0!important;display:-webkit-flex!important;display:-ms-flexbox!important;display:flex!important;-webkit-align-items:center!important;-ms-flex-align:center!important;align-items:center!important;left:-101%!important;z-index:4!important;width:100%!important;opacity:.98!important;border:none!important;box-sizing:border-box!important;padding:5px!important;transition:margin-left 0s ease-out .4s,left .4s ease-out!important}.ya_partner_R-A-89644-2 .yap-abuse-message.yap-abuse-message_visible{margin-left:201%!important;left:-201%!important;transition:margin-left 0s,left .4s ease-out!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint{display:block!important;margin:auto!important;padding:0!important;border-radius:3px!important;z-index:11!important;font-size:1em!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint__title{color:#000!important;font-weight:700!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint .yap-abuse-complaint__item{display:inline-block!important;margin:0 10px 0 0!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint .yap-abuse-complaint__link{text-decoration:none!important;color:#00c!important;cursor:pointer!important;border-bottom:none!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint .yap-abuse-complaint__link:hover{color:#c00!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_small-size{padding-top:0!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_small-size .yap-abuse-complaint__title{display:inline-block!important;margin-right:10px!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_small-size .adtune_cross{top:3px!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_middle-size{padding:.2em .5em!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_middle-size .yap-abuse-complaint__item,.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_middle-size .yap-abuse-complaint__title{display:block!important;font-size:.9em!important;margin:0 0 .4em!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_middle-size .complain_cross{right:1px!important;top:1px!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_max-size{padding:.5em 1.3em!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_max-size .yap-abuse-complaint__title{font-size:1.2em!important;display:block!important;margin:0 .6em 1em 0!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_max-size .yap-abuse-complaint__item{display:block!important;margin:.75em .6em 0 0!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_max-size .yap-abuse-complaint__link{line-height:1.4em!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_large-size{margin:.25em auto!important;padding:0 1em!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_large-size .yap-abuse-complaint__title{display:block!important;margin:0 .6em 0 0!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_large-size .yap-abuse-complaint__item{display:block!important;margin:.5em .5em 0 0!important}.ya_partner_R-A-89644-2 .yap-abuse-complaint.yap-abuse-complaint_large-size .yap-abuse-complaint__link{line-height:1.4em!important}.ya_partner_R-A-89644-2 .yap-layout_block_row .yap-abuse-message{padding:0!important}.ya_partner_R-A-89644-2 .yap-layout_block_0x50 .yap-abuse-message{border:1px solid #FEEBC8!important;border-radius:0!important}.ya_partner_R-A-89644-2 .yap-layout_block_horizontal .yap-abuse-message,.ya_partner_R-A-89644-2 .yap-layout_block_vertical .yap-abuse-message{bottom:1px!important}.ya_partner_R-A-89644-2 .yap-layout_block_320x50.yap-layout_block_horizontal .yap-abuse-message,.ya_partner_R-A-89644-2 .yap-layout_block_320x100.yap-layout_block_horizontal .yap-abuse-message,.ya_partner_R-A-89644-2 .yap-layout_block_poster-horizontal.yap-layout_block_horizontal .yap-abuse-message,.ya_partner_R-A-89644-2 .yap-layout_block_poster-vertical.yap-layout_block_vertical .yap-abuse-message{bottom:0!important}</style><script type="text/javascript" async="" crossorigin="anonymous" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/loader.js"></script><link title="vasilisc.com" rel="search" type="application/opensearchdescription+xml" href="https://yandex.ru/search/site/opensearch.xml?ShortName=vasilisc.com&amp;InputEncoding=utf-8&amp;Image=&amp;Url-results=https%3A%2F%2Fyandex.ru%2Fsearch%2Fsite%2F%3Fsearchid%3D1313692%26web%3D0%26text%3D%7BsearchTerms%7D&amp;Url-suggest=https%3A%2F%2Fsitesearch-suggest.yandex.ru%2Fv1%2Fsuggest%3F%26site%3D1313692%26lang%3Dru%26part%3D%7BsearchTerms%7D&amp;Url-opensearchdescr=https%3A%2F%2Fyandex.ru%2Fsearch%2Fsite%2Fopensearch.xml%3FShortName%3Dvasilisc.com%26InputEncoding%3Dutf-8%26Image%3D%26Url-results%3Dhttps%253A%252F%252Fyandex.ru%252Fsearch%252Fsite%252F%253Fsearchid%253D1313692%2526web%253D0%2526text%253D%257BsearchTerms%257D%26Url-suggest%3Dhttps%253A%252F%252Fsitesearch-suggest.yandex.ru%252Fv1%252Fsuggest%253F%2526site%253D1313692%2526lang%253Dru%2526part%253D%257BsearchTerms%257D"><style type="text/css">#ya-site-form0 .ya-site-suggest{position:relative;margin:0}#ya-site-form0 .ya-site-suggest-popup{position:absolute;width:100%}#ya-site-form0 .ya-site-suggest__opera-gap{position:absolute;height:25em;border:1px solid transparent}#ya-site-form0 .ya-site-suggest-list{position:absolute;z-index:9999;overflow:hidden;min-width:25em;width:100%;margin-top:-1px;border-collapse:separate;-webkit-box-shadow:0 1px 7px #9a9a9a;-moz-box-shadow:0 1px 7px #9a9a9a;box-shadow:0 1px 7px #9a9a9a;border:1px solid #dedede;border-color:rgba(154,154,154,0.5);border-top-color:rgba(154,154,154,0.4);border-bottom-color:rgba(154,154,154,0.6)}#ya-site-form0 .ya-site-suggest-list{box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}#ya-site-form0 .ya-site-suggest__iframe{position:absolute;z-index:-1;min-width:25em;width:100%;height:100%;background:#fff}#ya-site-form0 .ya-site-suggest-items{font-size:16px;min-width:25em;width:100%;margin:0;padding:0 1px 0 0;list-style:none}#ya-site-form0 .ya-site-suggest-items li{margin:0;padding:0;line-height:normal}#ya-site-form0 .ya-site-suggest-elem{display:block;padding:.25em .3em;cursor:pointer;background:url()}#ya-site-form0 a.ya-site-suggest-elem:link,#ya-site-form0 a.ya-site-suggest-elem:visited{text-decoration:none}html body #ya-site-form0 .ya-site-suggest-elem:link,html body #ya-site-form0 .ya-site-suggest-elem-link{color:#000!important}#ya-site-form0 .ya-site-suggest-elem:hover,html body #ya-site-form0 .ya-site-suggest-elem_state_hover{background:#fef6d7}#ya-site-form0 .ya-site-suggest-elem_nav:hover,#ya-site-form0 .ya-site-suggest-elem_translate:hover{text-decoration:none;color:#000!important}#ya-site-form0 .ya-site-suggest-elem_nav .ya-site-suggest__link{text-decoration:underline;color:#1a3dc1}#ya-site-form0 .ya-site-suggest-elem_translate .ya-site-suggest__link{text-decoration:underline;color:#000}#ya-site-form0 .ya-site-suggest-elem .ya-site-suggest__info{white-space:nowrap;color:#666}#ya-site-form0 .ya-site-suggest-elem_selected{background:#fdedaf}#ya-site-form0 .ya-site-suggest__fact{color:#555}#ya-site-form0 .ya-site-suggest__highlight{font-weight:bold}</style><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_loader{background-color:#f6f7f9;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{width:auto;height:auto;min-height:initial;min-width:initial;background:none}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{color:#fff;display:block;padding-top:20px;clear:both;font-size:18px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;bottom:0;left:0;right:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #29487d;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f6f7f9;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(http://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-repeat:no-repeat;background-position:50% 50%;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(http://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}</style></head>
+<body>
+<div class="header"><a href="http://vasilisc.com/">Авторские статьи об OpenSource</a></div>
+
+<div class="row">
+    <div class="col-9">
+	<div class="row">
+	        <div class="col-12"><!-- тело статьи -->
+		<h1>21 пример использования iptables для администраторов.</h1><br>
+		<p>
+		</p><p>Файрвол в системе linux контролируется программой iptables (для
+ ipv4) и ip6tables (для ipv6). В данной шпаргалке рассмотрены самые 
+распространённые способы использования iptables для тех, кто хочет 
+защитить свою систему от взломщиков или просто разобраться в настройке.
+</p>
+<!--break--><!--break--><p>
+Знак # означает, что команда выполняется от root. Откройте заранее консоль с рутовыми правами - <code>sudo -i</code> в Debian-based системах или <code>su</code> в остальных.
+</p>
+<h2>1. Показать статус.</h2>
+<p><code># iptables -L -n -v</code>
+</p>
+<p>Примерный вывод команды для неактивного файрвола:
+</p>
+<pre>Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination</pre><p>Для активного файрвола:
+</p>
+<pre>Chain INPUT (policy DROP 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           state INVALID
+  394 43586 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
+   93 17292 ACCEPT     all  --  br0    *       0.0.0.0/0            0.0.0.0/0
+    1   142 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+    0     0 ACCEPT     all  --  br0    br0     0.0.0.0/0            0.0.0.0/0
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           state INVALID
+    0     0 TCPMSS     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0           tcp flags:0x06/0x02 TCPMSS clamp to PMTU
+    0     0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
+    0     0 wanin      all  --  vlan2  *       0.0.0.0/0            0.0.0.0/0
+    0     0 wanout     all  --  *      vlan2   0.0.0.0/0            0.0.0.0/0
+    0     0 ACCEPT     all  --  br0    *       0.0.0.0/0            0.0.0.0/0
+Chain OUTPUT (policy ACCEPT 425 packets, 113K bytes)
+ pkts bytes target     prot opt in     out     source               destination
+Chain wanin (1 references)
+ pkts bytes target     prot opt in     out     source               destination
+Chain wanout (1 references)
+ pkts bytes target     prot opt in     out     source               destination</pre><p>Где:<br>
+-L : Показать список правил.<br>
+-v : Отображать дополнительную информацию. Эта опция показывает имя 
+интерфейса, опции, TOS маски. Также отображает суффиксы 'K', 'M' or 'G'.<br>
+-n : Отображать IP адрес и порт числами (не используя DNS сервера для определения имен. Это ускорит отображение).
+</p>
+<h2>2. Отобразить список правил с номерами строк.</h2>
+<p><code># iptables -n -L -v --line-numbers</code>
+</p>
+<p>Примерный вывод:
+</p>
+<pre>Chain INPUT (policy DROP)
+num  target     prot opt source               destination
+1    DROP       all  --  0.0.0.0/0            0.0.0.0/0           state INVALID
+2    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
+3    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
+4    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
+Chain FORWARD (policy DROP)
+num  target     prot opt source               destination
+1    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
+2    DROP       all  --  0.0.0.0/0            0.0.0.0/0           state INVALID
+3    TCPMSS     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp flags:0x06/0x02 TCPMSS clamp to PMTU
+4    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
+5    wanin      all  --  0.0.0.0/0            0.0.0.0/0
+6    wanout     all  --  0.0.0.0/0            0.0.0.0/0
+7    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
+Chain OUTPUT (policy ACCEPT)
+num  target     prot opt source               destination
+Chain wanin (1 references)
+num  target     prot opt source               destination
+Chain wanout (1 references)
+num  target     prot opt source               destination</pre><p>Вы можете использовать номера строк для того, чтобы добавлять новые правила.
+</p>
+<h2>3. Отобразить INPUT или OUTPUT цепочки правил.</h2>
+<p><code># iptables -L INPUT -n -v<br>
+# iptables -L OUTPUT -n -v --line-numbers<br>
+</code>
+</p>
+<h2>4. Остановить, запустить, перезапустить файрвол.</h2>
+<p>Силами самой системы:<br>
+<code># service ufw stop<br>
+# service ufw start</code>
+</p>
+<p>Можно также использовать команды iptables для того, чтобы остановить файрвол и удалить все правила:<br>
+<code># iptables -F<br>
+# iptables -X<br>
+# iptables -t nat -F<br>
+# iptables -t nat -X<br>
+# iptables -t mangle -F<br>
+# iptables -t mangle -X<br>
+# iptables -P INPUT ACCEPT<br>
+# iptables -P OUTPUT ACCEPT<br>
+# iptables -P FORWARD ACCEPT</code>
+</p>
+<p>Где:<br>
+-F : Удалить (flush) все правила.<br>
+-X : Удалить цепочку.<br>
+-t table_name : Выбрать таблицу (nat или mangle) и удалить все правила.<br>
+-P : Выбрать действия по умолчанию (такие, как DROP, REJECT, или ACCEPT).
+</p>
+<h2>5. Удалить правила файрвола.</h2>
+<p>Чтобы отобразить номер строки с существующими правилами:<br>
+<code># iptables -L INPUT -n --line-numbers<br>
+# iptables -L OUTPUT -n --line-numbers<br>
+# iptables -L OUTPUT -n --line-numbers | less<br>
+# iptables -L OUTPUT -n --line-numbers | grep 202.54.1.1</code>
+</p>
+<p>Получим список IP адресов. Просто посмотрим на номер слева и удалим соответствующую строку. К примеру для номера 3:<br>
+<code># iptables -D INPUT 3</code>
+</p>
+<p>Или найдем IP адрес источника (202.54.1.1) и удалим из правила:<br>
+<code># iptables -D INPUT -s 202.54.1.1 -j DROP</code>
+</p>
+<p>Где:<br>
+-D : Удалить одно или несколько правил из цепочки.
+</p>
+<h2>6. Добавить правило в файрвол.</h2>
+<p>Чтобы добавить одно или несколько правил в цепочку, для начала отобразим список с использованием номеров строк:<br>
+<code># iptables -L INPUT -n --line-numbers</code>
+</p>
+<p>Примерный вывод:
+</p>
+<pre>Chain INPUT (policy DROP)
+num  target     prot opt source               destination
+1    DROP       all  --  202.54.1.1           0.0.0.0/0
+2    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state NEW,ESTABLISHED </pre><p>Чтобы вставить правило между 1 и 2 строкой:<br>
+<code># iptables -I INPUT 2 -s 202.54.1.2 -j DROP</code>
+</p>
+<p>Проверим, обновилось ли правило:<br>
+<code># iptables -L INPUT -n --line-numbers</code>
+</p>
+<p>Вывод станет таким:
+</p>
+<pre>Chain INPUT (policy DROP)
+num  target     prot opt source               destination
+1    DROP       all  --  202.54.1.1           0.0.0.0/0
+2    DROP       all  --  202.54.1.2           0.0.0.0/0
+3    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state NEW,ESTABLISHED</pre><h2>7. Сохраняем правила файрвола.</h2>
+<p>Через iptables-save:<br>
+<code># iptables-save &gt; /etc/iptables.rules</code>
+</p>
+<h2>8. Восстанавливаем правила.</h2>
+<p>Через iptables-restore<br>
+<code># iptables-restore &lt; /etc/iptables.rules</code>
+</p>
+<h2>9. Устанавливаем политики по умолчанию.</h2>
+<p>Чтобы сбрасывать весь трафик:<br>
+<code># iptables -P INPUT DROP<br>
+# iptables -P OUTPUT DROP<br>
+# iptables -P FORWARD DROP<br>
+# iptables -L -v -n</code>
+</p>
+<p>После вышеперечисленных команд ни один пакет не покинет данный хост.<br>
+<code># ping google.com</code>
+</p>
+<h2>10. Блокировать только входящие соединения.</h2>
+<p>Чтобы сбрасывать все не инициированные вами входящие пакеты, но разрешить исходящий трафик:<br>
+<code># iptables -P INPUT DROP<br>
+# iptables -P FORWARD DROP<br>
+# iptables -P OUTPUT ACCEPT<br>
+# iptables -A INPUT -m state --state NEW,ESTABLISHED -j ACCEPT<br>
+# iptables -L -v -n</code>
+</p>
+<p>Пакеты исходящие и те, которые были запомнены в рамках установленных сессий - разрешены.<br>
+<code># ping google.com</code>
+</p>
+<h2>11. Сбрасывать адреса изолированных сетей в публичной сети.</h2>
+<p><code># iptables -A INPUT -i eth1 -s 192.168.0.0/24 -j DROP<br>
+# iptables -A INPUT -i eth1 -s 10.0.0.0/8 -j DROP</code>
+</p>
+<p>Список IP адресов для изолированных сетей:<br>
+10.0.0.0/8 -j (A)<br>
+172.16.0.0/12 (B)<br>
+192.168.0.0/16 (C)<br>
+224.0.0.0/4 (MULTICAST D)<br>
+240.0.0.0/5 (E)<br>
+127.0.0.0/8 (LOOPBACK)
+</p>
+<h2>12. Блокировка определенного IP адреса.</h2>
+<p>Чтобы заблокировать адрес взломщика 1.2.3.4:<br>
+<code># iptables -A INPUT -s 1.2.3.4 -j DROP<br>
+# iptables -A INPUT -s 192.168.0.0/24 -j DROP</code>
+</p>
+<h2>13. Заблокировать входящие запросы порта.</h2>
+<p>Чтобы заблокировать все входящие запросы порта 80:<br>
+<code># iptables -A INPUT -p tcp --dport 80 -j DROP<br>
+# iptables -A INPUT -i eth1 -p tcp --dport 80 -j DROP</code>
+</p>
+<p>Чтобы заблокировать запрос порта 80 с адреса 1.2.3.4:<br>
+<code># iptables -A INPUT -p tcp -s 1.2.3.4 --dport 80 -j DROP<br>
+# iptables -A INPUT -i eth1 -p tcp -s 192.168.1.0/24 --dport 80 -j DROP</code>
+</p>
+<h2>14. Заблокировать запросы на исходящий IP адрес.</h2>
+<p>Чтобы заблокировать определенный домен, узнаем его адрес:<br>
+<code># host -t a facebook.com</code>
+</p>
+<p>Вывод: facebook.com has address 69.171.228.40
+</p>
+<p>Найдем CIDR для 69.171.228.40:<br>
+<code># whois 69.171.228.40 | grep CIDR</code>
+</p>
+<p>Вывод:<br>
+CIDR:           69.171.224.0/19
+</p>
+<p>Заблокируем доступ на 69.171.224.0/19:<br>
+<code># iptables -A OUTPUT -p tcp -d 69.171.224.0/19 -j DROP</code>
+</p>
+<p>Также можно использовать домен для блокировки:<br>
+<code># iptables -A OUTPUT -p tcp -d www.fаcebook.com -j DROP<br>
+# iptables -A OUTPUT -p tcp -d fаcebook.com -j DROP</code>
+</p>
+<h2>15. Записать событие и сбросить.</h2>
+<p>Чтобы записать в журнал движение пакетов перед сбросом, добавим правило:
+</p>
+<p><code># iptables -A INPUT -i eth1 -s 10.0.0.0/8 -j LOG --log-prefix "IP_SPOOF A: "<br>
+# iptables -A INPUT -i eth1 -s 10.0.0.0/8 -j DROP</code>
+</p>
+<p>Проверим журнал (по умолчанию /var/log/messages):<br>
+<code># tail -f /var/log/messages<br>
+# grep -i --color 'IP SPOOF' /var/log/messages</code>
+</p>
+<h2>16. Записать событие и сбросить (с ограничением на количество записей).</h2>
+<p>Чтобы не переполнить раздел раздутым журналом, ограничим количество 
+записей с помощью -m. К примеру, чтобы записывать каждые 5 минут 
+максимум 7 строк:<br>
+<code># iptables -A INPUT -i eth1 -s 10.0.0.0/8 -m limit --limit 5/m --limit-burst 7 -j LOG --log-prefix "IP_SPOOF A: "<br>
+# iptables -A INPUT -i eth1 -s 10.0.0.0/8 -j DROP</code>
+</p>
+<h2>16. Сбрасывать или разрешить трафик с определенных MAC адресов.</h2>
+<p><code># iptables -A INPUT -m mac --mac-source 00:0F:EA:91:04:08 -j DROP<br>
+## *разрешить только для TCP port # 8080 с mac адреса 00:0F:EA:91:04:07 * ##<br>
+# iptables -A INPUT -p tcp --destination-port 22 -m mac --mac-source 00:0F:EA:91:04:07 -j ACCEPT</code>
+</p>
+<h2>17. Разрешить или запретить ICMP Ping запросы.</h2>
+<p>Чтобы запретить ping:<br>
+<code># iptables -A INPUT -p icmp --icmp-type echo-request -j DROP<br>
+# iptables -A INPUT -i eth1 -p icmp --icmp-type echo-request -j DROP</code>
+</p>
+<p>Разрешить для определенных сетей / хостов:<br>
+<code># iptables -A INPUT -s 192.168.1.0/24 -p icmp --icmp-type echo-request -j ACCEPT</code>
+</p>
+<p>Разрешить только часть ICMP запросов:<br>
+<code>### ** предполагается, что политики по умолчанию для входящих установлены в DROP ** ###<br>
+# iptables -A INPUT -p icmp --icmp-type echo-reply -j ACCEPT<br>
+# iptables -A INPUT -p icmp --icmp-type destination-unreachable -j ACCEPT<br>
+# iptables -A INPUT -p icmp --icmp-type time-exceeded -j ACCEPT<br>
+## ** разрешим отвечать на запрос ** ##<br>
+# iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT</code>
+</p>
+<h2>18. Открыть диапазон портов.</h2>
+<p><code># iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 7000:7010 -j ACCEPT</code>
+</p>
+<h2>19. Открыть диапазон адресов.</h2>
+<p><code>## разрешить подключение к порту 80 (Apache)  если адрес в диапазоне от 192.168.1.100 до 192.168.1.200 ##<br>
+# iptables -A INPUT -p tcp --destination-port 80 -m iprange --src-range 192.168.1.100-192.168.1.200 -j ACCEPT<br>
+</code>
+</p>
+<p><code>## пример для nat ##<br>
+# iptables -t nat -A POSTROUTING -j SNAT --to-source 192.168.1.20-192.168.1.25</code>
+</p>
+<h2>20. Закрыть или открыть стандартные порты.</h2>
+<p>Заменить ACCEPT на DROP, чтобы заблокировать порт.
+</p>
+<p><code>## ssh tcp port 22 ##<br>
+iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT<br>
+iptables -A INPUT -s 192.168.1.0/24 -m state --state NEW -p tcp --dport 22 -j ACCEPT</code>
+</p>
+<p><code>## cups (printing service) udp/tcp port 631 для локальной сети ##<br>
+iptables -A INPUT -s 192.168.1.0/24 -p udp -m udp --dport 631 -j ACCEPT<br>
+iptables -A INPUT -s 192.168.1.0/24 -p tcp -m tcp --dport 631 -j ACCEPT</code>
+</p>
+<p><code>## time sync via NTP для локальной сети (udp port 123) ##<br>
+iptables -A INPUT -s 192.168.1.0/24 -m state --state NEW -p udp --dport 123 -j ACCEPT</code>
+</p>
+<p><code>## tcp port 25 (smtp) ##<br>
+iptables -A INPUT -m state --state NEW -p tcp --dport 25 -j ACCEPT</code>
+</p>
+<p><code># dns server ports ##<br>
+iptables -A INPUT -m state --state NEW -p udp --dport 53 -j ACCEPT<br>
+iptables -A INPUT -m state --state NEW -p tcp --dport 53 -j ACCEPT</code>
+</p>
+<p><code>## http/https www server port ##<br>
+iptables -A INPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT<br>
+iptables -A INPUT -m state --state NEW -p tcp --dport 443 -j ACCEPT</code>
+</p>
+<p><code>## tcp port 110 (pop3) ##<br>
+iptables -A INPUT -m state --state NEW -p tcp --dport 110 -j ACCEPT</code>
+</p>
+<p><code>## tcp port 143 (imap) ##<br>
+iptables -A INPUT -m state --state NEW -p tcp --dport 143 -j ACCEPT</code>
+</p>
+<p><code>## Samba file server для локальной сети ##<br>
+iptables -A INPUT -s 192.168.1.0/24 -m state --state NEW -p tcp --dport 137 -j ACCEPT<br>
+iptables -A INPUT -s 192.168.1.0/24 -m state --state NEW -p tcp --dport 138 -j ACCEPT<br>
+iptables -A INPUT -s 192.168.1.0/24 -m state --state NEW -p tcp --dport 139 -j ACCEPT<br>
+iptables -A INPUT -s 192.168.1.0/24 -m state --state NEW -p tcp --dport 445 -j ACCEPT</code>
+</p>
+<p><code>## proxy server для локальной сети ##<br>
+iptables -A INPUT -s 192.168.1.0/24 -m state --state NEW -p tcp --dport 3128 -j ACCEPT</code>
+</p>
+<p><code>## mysql server для локальной сети ##<br>
+iptables -I INPUT -p tcp --dport 3306 -j ACCEPT</code>
+</p>
+<h2>21. Ограничить количество параллельных соединений к серверу для одного адреса.</h2>
+<p>Для ограничений используется connlimit модуль. Чтобы разрешить только 3 ssh соединения на одного клиента:<br>
+<code># iptables -A INPUT -p tcp --syn --dport 22 -m connlimit --connlimit-above 3 -j REJECT</code>
+</p>
+<p>Установить количество запросов HTTP до 20:<br>
+<code># iptables -p tcp --syn --dport 80 -m connlimit --connlimit-above 20 --connlimit-mask 24 -j DROP</code>
+</p>
+<p>Где:<br>
+--connlimit-above 3 : Указывает, что правило действует только если количество соединений превышает 3.<br>
+--connlimit-mask 24 : Указывает маску сети.
+</p>
+<h2>Помощь по iptables.</h2>
+<p>Для поиска помощи по iptables, воспользуемся man:<br>
+<code>$ man iptables</code>
+</p>
+<p>Чтобы посмотреть помощь по определенным командам и целям:<br>
+<code># iptables -j DROP -h</code>
+</p>
+<h2>Проверка правила iptables.</h2>
+<p>Проверяем открытость / закрытость портов:<br>
+<code># netstat -tulpn</code>
+</p>
+<p>Проверяем открытость / закрытость определенного порта:<br>
+<code># netstat -tulpn | grep :80</code>
+</p>
+<p>Проверим, что iptables разрешает соединение с 80 портом:<br>
+<code># iptables -L INPUT -v -n | grep 80</code>
+</p>
+<p>В противном случае откроем его для всех:<br>
+<code># iptables -A INPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT</code>
+</p>
+<p>Проверяем с помощью telnet<br>
+<code>$ telnet ya.ru 80</code>
+</p>
+<p>Можно использовать nmap для проверки:<br>
+<code>$ nmap -sS -p 80 ya.ru</code>
+</p>
+<!--noindex--><!--noindex--><p><i>Автор статьи Platon Puhlechev aka iFalkorr разрешает печатать данный текст.</i></p>
+<!--/noindex--><!--/noindex--><p>Iptables отличный инструмент в руках 
+администратора. Если нужно легко и просто защититься в десктопной 
+Ubuntu, то стоит знать, что есть удобная консольная надстройка над 
+iptables под названием UFW, а к ней есть графическая программа GUFW. 
+Сделать свою Ubuntu ещё более защищённой поможет видеоматериал.
+</p>
+<p></p><center><iframe src="//www.youtube.com/embed/zp0tg6popQ0" allowfullscreen="" width="640" height="360" frameborder="0"></iframe></center>
+<p></p>
+<p><b>Дополнительные материалы:</b><br>
+<a href="http://vasilisc.com/gufw-firewall-13-10">Графический GUI для файрвола iptables - Gufw.</a><br>
+<a href="http://vasilisc.com/deny-app-net">Запрещаем приложению доступ в сеть.</a><br>
+<a href="http://vasilisc.com/safe-internet">Безопасный сёрфинг в Интернете.</a></p>
+		<p></p>
+		</div><!-- конец тело статьи -->
+	</div>
+	<div class="row">
+	        <div class="col-12">
+		    	<div class="aside3">
+				<!-- share button -->
+				<div class="sharediv">
+				    <a href="http://vasilisc.com/rss.xml" title="RSS vasilisc.com"><img src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/feed_rss.png" width="32px" height="32px"></a>&nbsp;&nbsp;&nbsp;
+				    <a href="http://vasilisc.com/go.php?url=https://twitter.com/vasilisc777" title="Twitter" target="_blank"><img src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/twitter.png" alt="Twitter" width="32px" height="32px"></a>&nbsp;&nbsp;&nbsp;
+				    <a href="http://vasilisc.com/go.php?url=http://feedburner.google.com/fb/a/mailverify?uri=vasilisccom&amp;loc=ru_RU" target="_blank" title="E-mail RSS vasilisc.com"><img src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/email.png" width="32px" height="32px"></a>
+				</div>
+				<div class="sharediv">
+				    <!-- <g:plusone size="standard"></g:plusone>  -->
+				    <div style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent none repeat scroll 0% 0%; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 38px; height: 24px;" id="___plusone_0"><iframe ng-non-bindable="" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 38px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 24px;" tabindex="0" vspace="0" id="I0_1502723998021" name="I0_1502723998021" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/fastbutton.html" data-gapiattached="true" title="G+" width="100%" frameborder="0"></iframe></div>
+				</div>
+				<div class="sharediv">
+				    <script type="text/javascript" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/openapi.js"></script>
+				    <script type="text/javascript">VK.init({apiId: 2769620, onlyWidgets: true}); adblock = true;</script>
+				    <div id="vk_like" style="width: 115px; height: 22px; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%; position: relative; clear: both;"><iframe name="fXDd14f8" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/widget_like.html" scrolling="no" id="vkwidget1" style="overflow: hidden; height: 22px; width: 115px; z-index: 150;" width="100%" height="22" frameborder="0"></iframe></div>
+				    <script type="text/javascript">VK.Widgets.Like("vk_like", {type: "mini"});</script>
+				</div>
+				<div class="sharediv">
+				    <div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_http" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_http" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" style="border: medium none;" src="http://staticxx.facebook.com/connect/xd_arbiter/r/XBwzv5Yrm_1.js?version=42#channel=fe68dfa4abe44&amp;origin=http%3A%2F%2Fvasilisc.com" frameborder="0"></iframe><iframe name="fb_xdm_frame_https" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" style="border: medium none;" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/XBwzv5Yrm_1_002.html" frameborder="0"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div></div>
+					<script>(function(d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0]; 	if (d.getElementById(id)) return;
+					js = d.createElement(s); js.id = id;  js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.6&appId=227538230663504";
+					fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'script', 'facebook-jssdk'));
+					</script>
+				    <div class="fb-like fb_iframe_widget" data-send="false" data-layout="button_count" data-width="28" data-show-faces="false" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=227538230663504&amp;container_width=0&amp;href=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;layout=button_count&amp;locale=ru_RU&amp;sdk=joey&amp;send=false&amp;show_faces=false&amp;width=28"><span style="vertical-align: bottom; width: 96px; height: 20px;"><iframe name="f1e21f72b26cfdc" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:like Facebook Social Plugin" style="border: medium none; visibility: visible; width: 96px; height: 20px;" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/like.html" class="" width="28px" height="1000px" frameborder="0"></iframe></span></div>
+				</div>
+				<div class="sharediv">
+				    <div class="fb-follow fb_iframe_widget" data-href="https://www.facebook.com/vasilisc777" data-layout="button_count" data-show-faces="false" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=227538230663504&amp;container_width=0&amp;href=https%3A%2F%2Fwww.facebook.com%2Fvasilisc777&amp;layout=button_count&amp;locale=ru_RU&amp;sdk=joey&amp;show_faces=false"><span style="vertical-align: bottom; width: 117px; height: 20px;"><iframe name="f3540b4107f8e32" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:follow Facebook Social Plugin" style="border: medium none; visibility: visible; width: 117px; height: 20px;" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/follow.html" class="" width="1000px" height="1000px" frameborder="0"></iframe></span></div>
+				</div>
+				<div class="sharediv">
+					<script type="text/javascript" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/es5-shims.js" charset="utf-8" async="async"></script>
+					<script type="text/javascript" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/share.js" charset="utf-8" async="async"></script>
+					<div class="ya-share2 ya-share2_inited" data-services="vkontakte,facebook,twitter,odnoklassniki,moimir,gplus,blogger,delicious,digg,reddit,evernote,linkedin,lj,pocket,qzone,renren,sinaWeibo,surfingbird,tencentWeibo,tumblr,viber,whatsapp" data-limit="3" data-description="Файрвол в системе linux контролируется программой iptables (для ipv4) и ip6tables (для ipv6). В данной шпаргалке рассмотрены самые распространённые способы использования iptables для тех, кто хочет защитить свою систему от взломщиков или просто разобраться в настройке.
+"><div class="ya-share2__container ya-share2__container_size_m"><ul class="ya-share2__list ya-share2__list_direction_horizontal"><li class="ya-share2__item ya-share2__item_service_vkontakte"><a class="ya-share2__link" href="https://vk.com/share.php?url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;description=%D0%A4%D0%B0%D0%B9%D1%80%D0%B2%D0%BE%D0%BB%20%D0%B2%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5%20linux%20%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D0%B8%D1%80%D1%83%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BE%D0%B9%20iptables%20%28%D0%B4%D0%BB%D1%8F%20ipv4%29%20%D0%B8%20ip6tables%20%28%D0%B4%D0%BB%D1%8F%20ipv6%29.%20%D0%92%20%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%88%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B5%20%D1%80%D0%B0%D1%81%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BD%D1%8B%20%D1%81%D0%B0%D0%BC%D1%8B%D0%B5%20%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D1%8B%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D1%82%D0%B5%D1%85%2C%20%D0%BA%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D0%B7%D0%B0%D1%89%D0%B8%D1%82%D0%B8%D1%82%D1%8C%20%D1%81%D0%B2%D0%BE%D1%8E%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83%20%D0%BE%D1%82%20%D0%B2%D0%B7%D0%BB%D0%BE%D0%BC%D1%89%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%B8%D0%BB%D0%B8%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%20%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%B2%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B5.%0A&amp;image=&amp;utm_source=share2" rel="nofollow" target="_blank" title="ВКонтакте"><span class="ya-share2__badge"><span class="ya-share2__icon"></span><span class="ya-share2__counter"></span></span><span class="ya-share2__title">ВКонтакте</span></a></li><li class="ya-share2__item ya-share2__item_service_facebook"><a class="ya-share2__link" href="https://www.facebook.com/sharer.php?src=sp&amp;u=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;description=%D0%A4%D0%B0%D0%B9%D1%80%D0%B2%D0%BE%D0%BB%20%D0%B2%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5%20linux%20%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D0%B8%D1%80%D1%83%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BE%D0%B9%20iptables%20%28%D0%B4%D0%BB%D1%8F%20ipv4%29%20%D0%B8%20ip6tables%20%28%D0%B4%D0%BB%D1%8F%20ipv6%29.%20%D0%92%20%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%88%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B5%20%D1%80%D0%B0%D1%81%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BD%D1%8B%20%D1%81%D0%B0%D0%BC%D1%8B%D0%B5%20%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D1%8B%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D1%82%D0%B5%D1%85%2C%20%D0%BA%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D0%B7%D0%B0%D1%89%D0%B8%D1%82%D0%B8%D1%82%D1%8C%20%D1%81%D0%B2%D0%BE%D1%8E%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83%20%D0%BE%D1%82%20%D0%B2%D0%B7%D0%BB%D0%BE%D0%BC%D1%89%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%B8%D0%BB%D0%B8%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%20%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%B2%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B5.%0A&amp;picture=&amp;utm_source=share2" rel="nofollow" target="_blank" title="Facebook"><span class="ya-share2__badge"><span class="ya-share2__icon"></span><span class="ya-share2__counter"></span></span><span class="ya-share2__title">Facebook</span></a></li><li class="ya-share2__item ya-share2__item_service_twitter"><a class="ya-share2__link" href="https://twitter.com/intent/tweet?text=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;hashtags=&amp;utm_source=share2" rel="nofollow" target="_blank" title="Twitter"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Twitter</span></a></li><li class="ya-share2__item ya-share2__item_more"><a class="ya-share2__link ya-share2__link_more" href="#"><span class="ya-share2__badge ya-share2__badge_more"><span class="ya-share2__icon ya-share2__icon_more"></span></span></a><div class="ya-share2__popup ya-share2__popup_direction_bottom ya-share2__popup_list-direction_horizontal"><ul class="ya-share2__list ya-share2__list_direction_vertical"><li class="ya-share2__item ya-share2__item_service_odnoklassniki"><a class="ya-share2__link" href="https://connect.ok.ru/offer?url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;description=%D0%A4%D0%B0%D0%B9%D1%80%D0%B2%D0%BE%D0%BB%20%D0%B2%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5%20linux%20%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D0%B8%D1%80%D1%83%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BE%D0%B9%20iptables%20%28%D0%B4%D0%BB%D1%8F%20ipv4%29%20%D0%B8%20ip6tables%20%28%D0%B4%D0%BB%D1%8F%20ipv6%29.%20%D0%92%20%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%88%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B5%20%D1%80%D0%B0%D1%81%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BD%D1%8B%20%D1%81%D0%B0%D0%BC%D1%8B%D0%B5%20%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D1%8B%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D1%82%D0%B5%D1%85%2C%20%D0%BA%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D0%B7%D0%B0%D1%89%D0%B8%D1%82%D0%B8%D1%82%D1%8C%20%D1%81%D0%B2%D0%BE%D1%8E%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83%20%D0%BE%D1%82%20%D0%B2%D0%B7%D0%BB%D0%BE%D0%BC%D1%89%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%B8%D0%BB%D0%B8%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%20%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%B2%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B5.%0A&amp;imageUrl=&amp;utm_source=share2" rel="nofollow" target="_blank" title="Одноклассники"><span class="ya-share2__badge"><span class="ya-share2__icon"></span><span class="ya-share2__counter"></span></span><span class="ya-share2__title">Одноклассники</span></a></li><li class="ya-share2__item ya-share2__item_service_moimir"><a class="ya-share2__link" href="https://connect.mail.ru/share?url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;description=%D0%A4%D0%B0%D0%B9%D1%80%D0%B2%D0%BE%D0%BB%20%D0%B2%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5%20linux%20%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D0%B8%D1%80%D1%83%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BE%D0%B9%20iptables%20%28%D0%B4%D0%BB%D1%8F%20ipv4%29%20%D0%B8%20ip6tables%20%28%D0%B4%D0%BB%D1%8F%20ipv6%29.%20%D0%92%20%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%88%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B5%20%D1%80%D0%B0%D1%81%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BD%D1%8B%20%D1%81%D0%B0%D0%BC%D1%8B%D0%B5%20%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D1%8B%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D1%82%D0%B5%D1%85%2C%20%D0%BA%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D0%B7%D0%B0%D1%89%D0%B8%D1%82%D0%B8%D1%82%D1%8C%20%D1%81%D0%B2%D0%BE%D1%8E%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83%20%D0%BE%D1%82%20%D0%B2%D0%B7%D0%BB%D0%BE%D0%BC%D1%89%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%B8%D0%BB%D0%B8%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%20%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%B2%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B5.%0A&amp;utm_source=share2" rel="nofollow" target="_blank" title="Мой Мир"><span class="ya-share2__badge"><span class="ya-share2__icon"></span><span class="ya-share2__counter"></span></span><span class="ya-share2__title">Мой Мир</span></a></li><li class="ya-share2__item ya-share2__item_service_gplus"><a class="ya-share2__link" href="https://plus.google.com/share?url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;utm_source=share2" rel="nofollow" target="_blank" title="Google+"><span class="ya-share2__badge"><span class="ya-share2__icon"></span><span class="ya-share2__counter"></span></span><span class="ya-share2__title">Google+</span></a></li><li class="ya-share2__item ya-share2__item_service_blogger"><a class="ya-share2__link" href="https://www.blogger.com/blog-this.g?t=%D0%A4%D0%B0%D0%B9%D1%80%D0%B2%D0%BE%D0%BB%20%D0%B2%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5%20linux%20%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D0%B8%D1%80%D1%83%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BE%D0%B9%20iptables%20%28%D0%B4%D0%BB%D1%8F%20ipv4%29%20%D0%B8%20ip6tables%20%28%D0%B4%D0%BB%D1%8F%20ipv6%29.%20%D0%92%20%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%88%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B5%20%D1%80%D0%B0%D1%81%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BD%D1%8B%20%D1%81%D0%B0%D0%BC%D1%8B%D0%B5%20%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D1%8B%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D1%82%D0%B5%D1%85%2C%20%D0%BA%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D0%B7%D0%B0%D1%89%D0%B8%D1%82%D0%B8%D1%82%D1%8C%20%D1%81%D0%B2%D0%BE%D1%8E%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83%20%D0%BE%D1%82%20%D0%B2%D0%B7%D0%BB%D0%BE%D0%BC%D1%89%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%B8%D0%BB%D0%B8%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%20%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%B2%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B5.%0A&amp;u=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;n=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;utm_source=share2" rel="nofollow" target="_blank" title="Blogger"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Blogger</span></a></li><li class="ya-share2__item ya-share2__item_service_delicious"><a class="ya-share2__link" href="https://www.delicious.com/save?v=5&amp;noui&amp;jump=close&amp;url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;utm_source=share2" rel="nofollow" target="_blank" title="Delicious"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Delicious</span></a></li><li class="ya-share2__item ya-share2__item_service_digg"><a class="ya-share2__link" href="https://digg.com/submit?url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;bodytext=%D0%A4%D0%B0%D0%B9%D1%80%D0%B2%D0%BE%D0%BB%20%D0%B2%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5%20linux%20%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D0%B8%D1%80%D1%83%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BE%D0%B9%20iptables%20%28%D0%B4%D0%BB%D1%8F%20ipv4%29%20%D0%B8%20ip6tables%20%28%D0%B4%D0%BB%D1%8F%20ipv6%29.%20%D0%92%20%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%88%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B5%20%D1%80%D0%B0%D1%81%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BD%D1%8B%20%D1%81%D0%B0%D0%BC%D1%8B%D0%B5%20%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D1%8B%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D1%82%D0%B5%D1%85%2C%20%D0%BA%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D0%B7%D0%B0%D1%89%D0%B8%D1%82%D0%B8%D1%82%D1%8C%20%D1%81%D0%B2%D0%BE%D1%8E%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83%20%D0%BE%D1%82%20%D0%B2%D0%B7%D0%BB%D0%BE%D0%BC%D1%89%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%B8%D0%BB%D0%B8%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%20%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%B2%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B5.%0A&amp;utm_source=share2" rel="nofollow" target="_blank" title="Digg"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Digg</span></a></li><li class="ya-share2__item ya-share2__item_service_reddit"><a class="ya-share2__link" href="https://www.reddit.com/submit?url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;utm_source=share2" rel="nofollow" target="_blank" title="reddit"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">reddit</span></a></li><li class="ya-share2__item ya-share2__item_service_evernote"><a class="ya-share2__link" href="https://www.evernote.com/clip.action?title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;body=%D0%A4%D0%B0%D0%B9%D1%80%D0%B2%D0%BE%D0%BB%20%D0%B2%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5%20linux%20%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D0%B8%D1%80%D1%83%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BE%D0%B9%20iptables%20%28%D0%B4%D0%BB%D1%8F%20ipv4%29%20%D0%B8%20ip6tables%20%28%D0%B4%D0%BB%D1%8F%20ipv6%29.%20%D0%92%20%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%88%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B5%20%D1%80%D0%B0%D1%81%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BD%D1%8B%20%D1%81%D0%B0%D0%BC%D1%8B%D0%B5%20%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D1%8B%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D1%82%D0%B5%D1%85%2C%20%D0%BA%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D0%B7%D0%B0%D1%89%D0%B8%D1%82%D0%B8%D1%82%D1%8C%20%D1%81%D0%B2%D0%BE%D1%8E%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83%20%D0%BE%D1%82%20%D0%B2%D0%B7%D0%BB%D0%BE%D0%BC%D1%89%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%B8%D0%BB%D0%B8%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%20%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%B2%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B5.%0A&amp;url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;utm_source=share2" rel="nofollow" target="_blank" title="Evernote"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Evernote</span></a></li><li class="ya-share2__item ya-share2__item_service_linkedin"><a class="ya-share2__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;summary=%D0%A4%D0%B0%D0%B9%D1%80%D0%B2%D0%BE%D0%BB%20%D0%B2%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5%20linux%20%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D0%B8%D1%80%D1%83%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BE%D0%B9%20iptables%20%28%D0%B4%D0%BB%D1%8F%20ipv4%29%20%D0%B8%20ip6tables%20%28%D0%B4%D0%BB%D1%8F%20ipv6%29.%20%D0%92%20%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%88%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B5%20%D1%80%D0%B0%D1%81%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BD%D1%8B%20%D1%81%D0%B0%D0%BC%D1%8B%D0%B5%20%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D1%8B%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D1%82%D0%B5%D1%85%2C%20%D0%BA%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D0%B7%D0%B0%D1%89%D0%B8%D1%82%D0%B8%D1%82%D1%8C%20%D1%81%D0%B2%D0%BE%D1%8E%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83%20%D0%BE%D1%82%20%D0%B2%D0%B7%D0%BB%D0%BE%D0%BC%D1%89%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%B8%D0%BB%D0%B8%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%20%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%B2%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B5.%0A&amp;utm_source=share2" rel="nofollow" target="_blank" title="LinkedIn"><span class="ya-share2__badge"><span class="ya-share2__icon"></span><span class="ya-share2__counter"></span></span><span class="ya-share2__title">LinkedIn</span></a></li><li class="ya-share2__item ya-share2__item_service_lj"><a class="ya-share2__link" href="https://www.livejournal.com/update.bml?subject=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;event=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables%0A%D0%A4%D0%B0%D0%B9%D1%80%D0%B2%D0%BE%D0%BB%20%D0%B2%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5%20linux%20%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D0%B8%D1%80%D1%83%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BE%D0%B9%20iptables%20%28%D0%B4%D0%BB%D1%8F%20ipv4%29%20%D0%B8%20ip6tables%20%28%D0%B4%D0%BB%D1%8F%20ipv6%29.%20%D0%92%20%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%88%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B5%20%D1%80%D0%B0%D1%81%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BD%D1%8B%20%D1%81%D0%B0%D0%BC%D1%8B%D0%B5%20%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D1%8B%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D1%82%D0%B5%D1%85%2C%20%D0%BA%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D0%B7%D0%B0%D1%89%D0%B8%D1%82%D0%B8%D1%82%D1%8C%20%D1%81%D0%B2%D0%BE%D1%8E%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83%20%D0%BE%D1%82%20%D0%B2%D0%B7%D0%BB%D0%BE%D0%BC%D1%89%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%B8%D0%BB%D0%B8%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%20%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%B2%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B5.%0A&amp;utm_source=share2" rel="nofollow" target="_blank" title="LiveJournal"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">LiveJournal</span></a></li><li class="ya-share2__item ya-share2__item_service_pocket"><a class="ya-share2__link" href="https://getpocket.com/save?url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;utm_source=share2" rel="nofollow" target="_blank" title="Pocket"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Pocket</span></a></li><li class="ya-share2__item ya-share2__item_service_qzone"><a class="ya-share2__link" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;pics=&amp;utm_source=share2" rel="nofollow" target="_blank" title="Qzone"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Qzone</span></a></li><li class="ya-share2__item ya-share2__item_service_renren"><a class="ya-share2__link" href="http://widget.renren.com/dialog/share?resourceUrl=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;srcUrl=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;pic=&amp;description=%D0%A4%D0%B0%D0%B9%D1%80%D0%B2%D0%BE%D0%BB%20%D0%B2%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5%20linux%20%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D0%B8%D1%80%D1%83%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BE%D0%B9%20iptables%20%28%D0%B4%D0%BB%D1%8F%20ipv4%29%20%D0%B8%20ip6tables%20%28%D0%B4%D0%BB%D1%8F%20ipv6%29.%20%D0%92%20%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%88%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B5%20%D1%80%D0%B0%D1%81%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BD%D1%8B%20%D1%81%D0%B0%D0%BC%D1%8B%D0%B5%20%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D1%8B%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D1%82%D0%B5%D1%85%2C%20%D0%BA%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D0%B7%D0%B0%D1%89%D0%B8%D1%82%D0%B8%D1%82%D1%8C%20%D1%81%D0%B2%D0%BE%D1%8E%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83%20%D0%BE%D1%82%20%D0%B2%D0%B7%D0%BB%D0%BE%D0%BC%D1%89%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%B8%D0%BB%D0%B8%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%20%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%B2%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B5.%0A&amp;utm_source=share2" rel="nofollow" target="_blank" title="Renren"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Renren</span></a></li><li class="ya-share2__item ya-share2__item_service_sinaWeibo"><a class="ya-share2__link" href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;type=3&amp;pic=&amp;title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;utm_source=share2" rel="nofollow" target="_blank" title="Sina Weibo"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Sina Weibo</span></a></li><li class="ya-share2__item ya-share2__item_service_surfingbird"><a class="ya-share2__link" href="https://surfingbird.ru/share?url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;desc=%D0%A4%D0%B0%D0%B9%D1%80%D0%B2%D0%BE%D0%BB%20%D0%B2%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5%20linux%20%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D0%B8%D1%80%D1%83%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BE%D0%B9%20iptables%20%28%D0%B4%D0%BB%D1%8F%20ipv4%29%20%D0%B8%20ip6tables%20%28%D0%B4%D0%BB%D1%8F%20ipv6%29.%20%D0%92%20%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%88%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B5%20%D1%80%D0%B0%D1%81%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BD%D1%8B%20%D1%81%D0%B0%D0%BC%D1%8B%D0%B5%20%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D1%8B%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D1%82%D0%B5%D1%85%2C%20%D0%BA%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D0%B7%D0%B0%D1%89%D0%B8%D1%82%D0%B8%D1%82%D1%8C%20%D1%81%D0%B2%D0%BE%D1%8E%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83%20%D0%BE%D1%82%20%D0%B2%D0%B7%D0%BB%D0%BE%D0%BC%D1%89%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%B8%D0%BB%D0%B8%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%20%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%B2%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B5.%0A&amp;utm_source=share2" rel="nofollow" target="_blank" title="Surfingbird"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Surfingbird</span></a></li><li class="ya-share2__item ya-share2__item_service_tencentWeibo"><a class="ya-share2__link" href="http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;title=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.&amp;pic=&amp;utm_source=share2" rel="nofollow" target="_blank" title="Tencent Weibo"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Tencent Weibo</span></a></li><li class="ya-share2__item ya-share2__item_service_tumblr"><a class="ya-share2__link" href="https://www.tumblr.com/share/link?url=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;description=%D0%A4%D0%B0%D0%B9%D1%80%D0%B2%D0%BE%D0%BB%20%D0%B2%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5%20linux%20%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D0%B8%D1%80%D1%83%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BE%D0%B9%20iptables%20%28%D0%B4%D0%BB%D1%8F%20ipv4%29%20%D0%B8%20ip6tables%20%28%D0%B4%D0%BB%D1%8F%20ipv6%29.%20%D0%92%20%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%88%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B5%20%D1%80%D0%B0%D1%81%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BD%D1%8B%20%D1%81%D0%B0%D0%BC%D1%8B%D0%B5%20%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D1%8B%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D1%82%D0%B5%D1%85%2C%20%D0%BA%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D0%B7%D0%B0%D1%89%D0%B8%D1%82%D0%B8%D1%82%D1%8C%20%D1%81%D0%B2%D0%BE%D1%8E%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83%20%D0%BE%D1%82%20%D0%B2%D0%B7%D0%BB%D0%BE%D0%BC%D1%89%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%B8%D0%BB%D0%B8%20%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%20%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%B2%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B5.%0A&amp;utm_source=share2" rel="nofollow" target="_blank" title="Tumblr"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Tumblr</span></a></li><li class="ya-share2__item ya-share2__item_service_viber"><a class="ya-share2__link" href="viber://forward?text=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.%20http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;utm_source=share2" rel="nofollow" target="_blank" title="Viber"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Viber</span></a></li><li class="ya-share2__item ya-share2__item_service_whatsapp"><a class="ya-share2__link" href="whatsapp://send?text=21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2.%20http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;utm_source=share2" rel="nofollow" target="_blank" title="WhatsApp"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">WhatsApp</span></a></li><li class="ya-share2__item ya-share2__item_copy"><a class="ya-share2__link ya-share2__link_copy" href="#"><span class="ya-share2__title">Скопировать ссылку</span></a><input class="ya-share2__input_copy" value="http://vasilisc.com/21-examples-iptables"></li></ul></div></li></ul></div></div>
+				</div>
+<!--
+				<div class="sharediv">
+				    <form style="vertical-align: middle;" accept-charset="UTF-8" action="https://advisor.wmtransfer.com/Spasibo.aspx" method="post" target="_blank" title="Передать $пасибо! vasilisc.com">
+					    <input type="hidden" name="url" value="vasilisc.com"/>
+					    <input type="image" src="/images/Spasibo!.png" border="0" name="submit"/>
+				    </form>
+				</div>
+				<div class="sharediv">
+				    <iframe frameborder="0" allowtransparency="true" scrolling="no" src="https://money.yandex.ru/embed/small.xml?account=410011283760185&quickpay=small&yamoney-payment-type=on&button-text=06&button-size=s&button-color=white&targets=%D0%9D%D0%B0+%D1%80%D0%B0%D0%B7%D0%B2%D0%B8%D1%82%D0%B8%D0%B5+vasilisc.com&default-sum=50&successURL=" width="145" height="31"></iframe>
+				</div>
+-->
+				<!-- end share button -->
+			</div>
+			<br><div style="clear:both"></div> 
+		    	<div class="aside3"><!-- Яндекс.Директ -->
+				<div id="yandex_ad"><yatag class="fwgsvafdw hqmqcpum" id="fwgsvafdw"><yatag class="gwusucdv arxoyrei crtpdkijkj"><yatag class="joamsaf"></yatag><yatag class="bunwmfth"><table class="gzrufio"><tbody><tr class="ewcqcfqm dqjzzw avfwhqx"><td class="hvktcw cviqptdc"><yatag class="gngvkiyqzd dueabfr gpiwrnbk azvqisvfig ktleubbik" data-id="4469872290" data-uniq-id="1502724006929"><yatag class="cthmatb"><yatag class="dzjnsosb bxouhma"><a class="ivfawhjsi gocrpsave" style="width: auto !important; height: 170px !important;" href="https://an.yandex.ru/count/Aoy6Q6bhmAa40000Zhxv6va5XPpY5PK2cm5kGxS2Am68lqK1OGA9kGHJlGIOgh6ylfwq000019shl3y4kkcCHibpwRqifYMAichDfX3Sleu3wn2zlv-sXmgg0QMky8yFlAlgAmFT0TwG9FIHjZe7uGUNqGe001Z83u-y-sJv3v-uN4lV3fEB2vbNGeoJ2NYsd08ajPY47g2GXOIlambuiv2n8RIOX1xPa8M4sf2n8PIMCWkdX76ei41PSmUai0000Akk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgh6ylhchl3y4k_uu-Ry1PG7B0y7__________m_5Zm_DjFMGfX3EjyFnwX3I__________yFq___________3-u1s_vuKZC9PG7B0z-B2_2W041ex0JbaF8hxOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vC9U7yg?test-tag=277634212694177&amp;stat-id=1073741828&amp;" target="_blank"><yatag class="fxpdzqtooz jrgfmfp"><yatag class="dyuhwidyn" style="background-image: url(&quot;//avatars.mds.yandex.net/get-direct/168197/SZcdC3hLWvJLvNLFNnjqng/x180&quot;) !important;"></yatag><yatag class="iqhjdao drlwulsgw dzymieagjp aytncadse" style="margin-top: 0px !important; margin-bottom: 0px !important; width: 100% !important; height: 170px !important;"><yatag class="fxrwwcxba" style="width: 170px !important; height: 170px !important; margin-left: -85px !important;"><img class="hwwboycd" alt="" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/x180.jpeg" style="width: 170px !important; height: 170px !important; max-width: 170px !important;"></yatag></yatag></yatag></a></yatag><yatag class="fnbhhy"><yatag class="btkiovsqss"><yatag class="etdopa eqqxpziq dwvoblpvu"><a class="kpgvfvsnaf hrsifhph" href="https://an.yandex.ru/count/Aoy6Q6bhmAa40000Zhxv6va5XPpY5PK2cm5kGxS2Am68lqK1OGA9kGHJlGIOgh6ylfwq000019shl3y4kkcCHibpwRqifYMAichDfX3Sleu3wn2zlv-sXmgg0QMky8yFlAlgAmFT0TwG9FIHjZe7uGUNqGe001Z83u-y-sJv3v-uN4lV3fEB2vbNGeoJ2NYsd08ajPY47g2GXOIlambuiv2n8RIOX1xPa8M4sf2n8PIMCWkdX76ei41PSmUai0000Akk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgh6ylhchl3y4k_uu-Ry1PG7B0y7__________m_5Zm_DjFMGfX3EjyFnwX3I__________yFq___________3-u1s_vuKZC9PG7B0z-B2_2W041ex0JbaF8hxOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vC9U7yg?test-tag=277633138952353&amp;stat-id=1073741828&amp;" target="_blank">Надёжные <b>VPS</b> на&nbsp;быстрых SSD<yatag class="dwvoblpvu dpyhgjloc"></yatag></a></yatag>&nbsp;</yatag><yatag class="hzukvqzf loyrvg"><yatag class="dsgkjsw"><yatag class="lxqedba"><yatag class="axnwqa dsnolfiiqt" style="opacity: 1 !important;"><yatag class="mtidvdz"><yatag class="ftozrovokd evzjohah"><a class="gsgfmevsoq hrsifhph" href="https://an.yandex.ru/count/Aoy6Q6bhmAa40000Zhxv6va5XPpY5PK2cm5kGxS2Am68lqK1OGA9kGHJlGIOgh6ylfwq000019shl3y4kkcCHibpwRqifYMAichDfX3Sleu3wn2zlv-sXmgg0QMky8yFlAlgAmFT0TwG9FIHjZe7uGUNqGe001Z83u-y-sJv3v-uN4lV3fEB2vbNGeoJ2NYsd08ajPY47g2GXOIlambuiv2n8RIOX1xPa8M4sf2n8PIMCWkdX76ei41PSmUai0000Akk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgh6ylhchl3y4k_uu-Ry1PG7B0y7__________m_5Zm_DjFMGfX3EjyFnwX3I__________yFq___________3-u1s_vuKZC9PG7B0z-B2_2W041ex0JbaF8hxOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vC9U7yg?test-tag=277633138952353&amp;stat-id=1073741828&amp;" target="_blank">ihc.ru</a></yatag></yatag></yatag></yatag><yatag class="axnwqa kwaamyaec"><yatag class="ftozrovokd evzjohah"><a class="gsgfmevsoq hrsifhph" href="https://an.yandex.ru/count/Aoy6Q6bhmAa40000Zhxv6va5XPpY5PK2cm5kGxS2Am68lqK1OGA9kGHJlGIOgh6ylfwq000019shl3y4kkcCHibpwRqifYMAichDfX3Sleu3wn2zlv-sXmgg0QMky8yFlAlgAmFT0TwG9FIHjZe7uGUNqGe001Z83u-y-sJv3v-uN4lV3fEB2vbNGeoJ2NYsd08ajPY47g2GXOIlambuiv2n8RIOX1xPa8M4sf2n8PIMCWkdX76ei41PSmUai0000Akk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgh6ylhchl3y4k_uu-Ry1PG7B0y7__________m_5Zm_DjFMGfX3EjyFnwX3I__________yFq___________3-u1s_vuKZC9PG7B0z-B2_2W041ex0JbaF8hxOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vC9U7yg?test-tag=277633138952353&amp;stat-id=1073741828&amp;" target="_blank">ihc.ru</a></yatag></yatag></yatag></yatag><yatag class="kqmdkq kxsggw">Гибкие тарифы. Uptime выше 99,9% Круглосуточная поддержка.</yatag><yatag class="jvucssetfo lyhdmqh"><yatag class="iwmtbwa irlvekha"><a class="jsxwkhmcqm hrsifhph" target="_blank" href="https://an.yandex.ru/count/Aoy6QDtrCvq40000Zhxv6va5XPpY5PK2cm5kGxS2Am68lqK1OGA9kGHJlGIOgh6ylfwq000019shl3y4kkcCHibpwRqifYMAichDfX3Sleu3wn2zlv-sXmgg7wMky8yFlAlgAmFT0TwG9FIHjZe7uGUNqGe001Z83u-y-sJv3v-uN4lV3fEB2vbNGeoJ2NYsd08ajPY47g2GXOIlambuiv2n8RIOX1xPa8M4sf2n8PIMCWkdX76ei41PSmUai0000Akk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgh6ylhchl3y4k_uu-Ry1PG7B0y7__________m_5Zm_DjFMGfX3EjyFnwX3I__________yFq___________3-u1s_vuKZC9PG7B0z-B2_2W041ex0JbaF8hxOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vC9U7yg?test-tag=277633138952353&amp;stat-id=1073741828&amp;">Безлимитный трафик</a></yatag><yatag class="iwmtbwa jttzcyonm"><a class="jsxwkhmcqm hrsifhph" target="_blank" href="https://an.yandex.ru/count/Aoy6QAZ2ym840000Zhxv6va5XPpY5PK2cm5kGxS2Am68lqK1OGA9kGHJlGIOgh6ylfwq000019shl3y4kkcCHibpwRqifYMAichDfX3Sleu3wn2zlv-sXmgg8QMky8yFlAlgAmFT0TwG9FIHjZe7uGUNqGe001Z83u-y-sJv3v-uN4lV3fEB2vbNGeoJ2NYsd08ajPY47g2GXOIlambuiv2n8RIOX1xPa8M4sf2n8PIMCWkdX76ei41PSmUai0000Akk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgh6ylhchl3y4k_uu-Ry1PG7B0y7__________m_5Zm_DjFMGfX3EjyFnwX3I__________yFq___________3-u1s_vuKZC9PG7B0z-B2_2W041ex0JbaF8hxOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vC9U7yg?test-tag=277633138952353&amp;stat-id=1073741828&amp;">Любая ОС</a></yatag><yatag class="iwmtbwa kzhlwbtsml"><a class="jsxwkhmcqm hrsifhph" target="_blank" href="https://an.yandex.ru/count/Aoy6Q6-vqxG40000Zhxv6va5XPpY5PK2cm5kGxS2Am68lqK1OGA9kGHJlGIOgh6ylfwq000019shl3y4kkcCHibpwRqifYMAichDfX3Sleu3wn2zlv-sXmgg8wMky8yFlAlgAmFT0TwG9FIHjZe7uGUNqGe001Z83u-y-sJv3v-uN4lV3fEB2vbNGeoJ2NYsd08ajPY47g2GXOIlambuiv2n8RIOX1xPa8M4sf2n8PIMCWkdX76ei41PSmUai0000Akk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgh6ylhchl3y4k_uu-Ry1PG7B0y7__________m_5Zm_DjFMGfX3EjyFnwX3I__________yFq___________3-u1s_vuKZC9PG7B0z-B2_2W041ex0JbaF8hxOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vC9U7yg?test-tag=277633138952353&amp;stat-id=1073741828&amp;">Отзывы о&nbsp;нас</a></yatag></yatag></yatag></yatag><yatag class="kyjkaita ioblvfd"><yatag class="bruogjts"><yatag class="dszclegg"><yatag class="jvqavy"><yatag class="joisbcnrl cnsynvc"><yatag class="gorxaz">Скрыть рекламу:</yatag><yatag class="kulqoiib"><a class="buibndyh" data-option-id="3-2">Не интересуюсь этой темой / Уже купил</a></yatag><yatag class="kulqoiib"><a class="buibndyh" data-option-id="1-3">Навязчивое и надоело</a></yatag><yatag class="kulqoiib"><a class="buibndyh" data-option-id="5-3">Сомнительного содержания или спам</a></yatag><yatag class="kulqoiib"><a class="buibndyh" data-option-id="9-0">Мешает просмотру контента</a></yatag></yatag></yatag></yatag><yatag class="dtmgnzif"><yatag class="jrwsvwx jwhrfity"><table class="dxnpsbly"><tbody><tr><td class="gpryjy"><yatag class="exqvfdqqbh"><svg width="18" height="18"><path d="M5.485 11.07L2.45 8.037 1.036 9.45l3.035 3.035-.034.036 1.414 1.415 8.485-8.485-1.414-1.414-7.035 7.035z" fill="#000" fill-rule="evenodd"></path></svg></yatag>Спасибо, объявление скрыто.</td></tr></tbody></table></yatag></yatag></yatag></yatag><yatag class="aqvevumxo cnlujt bnzjfmwjc bvzawwzr"><yatag class="hxjhdrtyg"><yatag class="kpwzkllq gqybqozrqy jrxffgqykr kxdacmtiv"><yatag class="ipxrdqhtbn"><yatag class="mvrdtr" style="width: 8px !important; height: 8px !important;"><svg width="8px" height="8px" viewBox="0 0 14 14" version="1.1"><polygon points="14,0.7 13.3,0 7,6.299 0.7,0 0,0.7 6.3,7 0,13.299 0.7,14 7,7.7 13.3,14 14,13.299 7.7,7"></polygon></svg></yatag><yatag class="czoycizn"><yatag class="gnmozoxzj"></yatag><yatag class="dnkicolbz">Скрыть&nbsp;объявление</yatag></yatag></yatag></yatag></yatag></yatag></yatag></td><td class="hvktcw gnsbtexuu innrumpxy"><yatag class="gngvkiyqzd dueabfr gpiwrnbk cukkfpw ktleubbik" data-id="4175324925" data-uniq-id="1502724008872"><yatag class="cthmatb"><yatag class="dzjnsosb bxouhma"><a class="ivfawhjsi gocrpsave" style="width: auto !important; height: 170px !important;" href="https://an.yandex.ru/count/Aoy6Q39QJd440000Zhxv6va5XPpY5PK2cm5kGxS2Am4oYAOCYiA9fWFY7vZ__________m-Uj00000ITfPCz5hhfZ4R9S-czBAOBYhrlveqFtBf_FGqGlRyaM2GAgW6beBZf3hobtziEtG7Ua2JqaROw1-47bz4A000Oo0-Fk3OUNGsViyKrVmEJYmkPOaACcB0VjfWE2BMO3WYWdOighvYm7xEHqGgqc0u8sPtGDDgORGsKaTG6fvis0QYi-5P4fB00002hh1wk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgB-ylhcbapqMk_uu-Ry1PG7B0y7__________m_40SMF3ym5pRnlveqFphT_FGqGql__________3zF__________m_k0Tl-U58p2MK1omFVYmlme010QEm4xOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vYm7tqh?test-tag=277634212694177&amp;stat-id=1073741828&amp;" target="_blank"><yatag class="fxpdzqtooz jrgfmfp"><yatag class="dyuhwidyn" style="background-image: url(&quot;//avatars.mds.yandex.net/get-direct/238679/NZbhAV6oHtcNtQcQ4_rDVw/y180&quot;) !important;"></yatag><yatag class="iqhjdao drlwulsgw dzymieagjp aytncadse" style="margin-top: 0px !important; margin-bottom: 0px !important; width: 100% !important; height: 170px !important;"><yatag class="fxrwwcxba" style="width: 169px !important; height: 170px !important; margin-left: -84.5px !important;"><img class="hwwboycd" alt="" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/y180.jpeg" style="width: 169px !important; height: 170px !important; max-width: 169px !important;"></yatag></yatag></yatag></a></yatag><yatag class="fnbhhy"><yatag class="btkiovsqss"><yatag class="etdopa eqqxpziq dwvoblpvu"><a class="kpgvfvsnaf hrsifhph" href="https://an.yandex.ru/count/Aoy6Q39QJd440000Zhxv6va5XPpY5PK2cm5kGxS2Am4oYAOCYiA9fWFY7vZ__________m-Uj00000ITfPCz5hhfZ4R9S-czBAOBYhrlveqFtBf_FGqGlRyaM2GAgW6beBZf3hobtziEtG7Ua2JqaROw1-47bz4A000Oo0-Fk3OUNGsViyKrVmEJYmkPOaACcB0VjfWE2BMO3WYWdOighvYm7xEHqGgqc0u8sPtGDDgORGsKaTG6fvis0QYi-5P4fB00002hh1wk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgB-ylhcbapqMk_uu-Ry1PG7B0y7__________m_40SMF3ym5pRnlveqFphT_FGqGql__________3zF__________m_k0Tl-U58p2MK1omFVYmlme010QEm4xOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vYm7tqh?test-tag=277633138952353&amp;stat-id=1073741828&amp;" target="_blank">Женские <b>сумки</b> MICHAEL KORS!<yatag class="dwvoblpvu dpyhgjloc"></yatag></a></yatag>&nbsp;</yatag><yatag class="hzukvqzf loyrvg"><yatag class="dsgkjsw"><yatag class="lxqedba"><yatag class="axnwqa dsnolfiiqt" style="opacity: 1 !important;"><yatag class="mtidvdz"><yatag class="ftozrovokd evzjohah"><a class="gsgfmevsoq hrsifhph" href="https://an.yandex.ru/count/Aoy6Q39QJd440000Zhxv6va5XPpY5PK2cm5kGxS2Am4oYAOCYiA9fWFY7vZ__________m-Uj00000ITfPCz5hhfZ4R9S-czBAOBYhrlveqFtBf_FGqGlRyaM2GAgW6beBZf3hobtziEtG7Ua2JqaROw1-47bz4A000Oo0-Fk3OUNGsViyKrVmEJYmkPOaACcB0VjfWE2BMO3WYWdOighvYm7xEHqGgqc0u8sPtGDDgORGsKaTG6fvis0QYi-5P4fB00002hh1wk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgB-ylhcbapqMk_uu-Ry1PG7B0y7__________m_40SMF3ym5pRnlveqFphT_FGqGql__________3zF__________m_k0Tl-U58p2MK1omFVYmlme010QEm4xOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vYm7tqh?test-tag=277633138952353&amp;stat-id=1073741828&amp;" target="_blank">lux-bags.com.ua</a></yatag></yatag></yatag></yatag><yatag class="axnwqa kwaamyaec"><yatag class="ftozrovokd evzjohah"><a class="gsgfmevsoq hrsifhph" href="https://an.yandex.ru/count/Aoy6Q39QJd440000Zhxv6va5XPpY5PK2cm5kGxS2Am4oYAOCYiA9fWFY7vZ__________m-Uj00000ITfPCz5hhfZ4R9S-czBAOBYhrlveqFtBf_FGqGlRyaM2GAgW6beBZf3hobtziEtG7Ua2JqaROw1-47bz4A000Oo0-Fk3OUNGsViyKrVmEJYmkPOaACcB0VjfWE2BMO3WYWdOighvYm7xEHqGgqc0u8sPtGDDgORGsKaTG6fvis0QYi-5P4fB00002hh1wk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgB-ylhcbapqMk_uu-Ry1PG7B0y7__________m_40SMF3ym5pRnlveqFphT_FGqGql__________3zF__________m_k0Tl-U58p2MK1omFVYmlme010QEm4xOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vYm7tqh?test-tag=277633138952353&amp;stat-id=1073741828&amp;" target="_blank">lux-bags.com.ua</a></yatag></yatag></yatag></yatag><yatag class="kqmdkq kxsggw">Внимание! Распродажа до −70%! Выбирай! Только 2 дня! Спеши!</yatag><yatag class="jvucssetfo lyhdmqh"><yatag class="iwmtbwa irlvekha"><a class="jsxwkhmcqm hrsifhph" target="_blank" href="https://an.yandex.ru/count/Aoy6QAt4ghu40000Zhxv6va5XPpY5PK2cm5kGxS2Am4oYAOCYiA9fWFY7vZ__________m-Uj00000ITfPCz5hhfZ4R9S-czBAOBYhrlveqFtBf_FGqGlRyaM2GAgX-beBZf3hobtziEtG7Ua2JqaROw1-47bz4A000Oo0-Fk3OUNGsViyKrVmEJYmkPOaACcB0VjfWE2BMO3WYWdOighvYm7xEHqGgqc0u8sPtGDDgORGsKaTG6fvis0QYi-5P4fB00002hh1wk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgB-ylhcbapqMk_uu-Ry1PG7B0y7__________m_40SMF3ym5pRnlveqFphT_FGqGql__________3zF__________m_k0Tl-U58p2MK1omFVYmlme010QEm4xOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vYm7tqh?test-tag=277633138952353&amp;stat-id=1073741828&amp;">Каталог</a></yatag><yatag class="iwmtbwa jttzcyonm"><a class="jsxwkhmcqm hrsifhph" target="_blank" href="https://an.yandex.ru/count/Aoy6QC1vY-m40000Zhxv6va5XPpY5PK2cm5kGxS2Am4oYAOCYiA9fWFY7vZ__________m-Uj00000ITfPCz5hhfZ4R9S-czBAOBYhrlveqFtBf_FGqGlRyaM2GAgY6beBZf3hobtziEtG7Ua2JqaROw1-47bz4A000Oo0-Fk3OUNGsViyKrVmEJYmkPOaACcB0VjfWE2BMO3WYWdOighvYm7xEHqGgqc0u8sPtGDDgORGsKaTG6fvis0QYi-5P4fB00002hh1wk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgB-ylhcbapqMk_uu-Ry1PG7B0y7__________m_40SMF3ym5pRnlveqFphT_FGqGql__________3zF__________m_k0Tl-U58p2MK1omFVYmlme010QEm4xOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vYm7tqh?test-tag=277633138952353&amp;stat-id=1073741828&amp;">Распродажи −70%</a></yatag><yatag class="iwmtbwa kzhlwbtsml"><a class="jsxwkhmcqm hrsifhph" target="_blank" href="https://an.yandex.ru/count/Aoy6Q4c8PM440000Zhxv6va5XPpY5PK2cm5kGxS2Am4oYAOCYiA9fWFY7vZ__________m-Uj00000ITfPCz5hhfZ4R9S-czBAOBYhrlveqFtBf_FGqGlRyaM2GAgYEbeBZf3hobtziEtG7Ua2JqaROw1-47bz4A000Oo0-Fk3OUNGsViyKrVmEJYmkPOaACcB0VjfWE2BMO3WYWdOighvYm7xEHqGgqc0u8sPtGDDgORGsKaTG6fvis0QYi-5P4fB00002hh1wk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgB-ylhcbapqMk_uu-Ry1PG7B0y7__________m_40SMF3ym5pRnlveqFphT_FGqGql__________3zF__________m_k0Tl-U58p2MK1omFVYmlme010QEm4xOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vYm7tqh?test-tag=277633138952353&amp;stat-id=1073741828&amp;">Предоплата 0 грн</a></yatag><yatag class="iwmtbwa avsffwokv"><a class="jsxwkhmcqm hrsifhph" target="_blank" href="https://an.yandex.ru/count/Aoy6Q0FSrPO40000Zhxv6va5XPpY5PK2cm5kGxS2Am4oYAOCYiA9fWFY7vZ__________m-Uj00000ITfPCz5hhfZ4R9S-czBAOBYhrlveqFtBf_FGqGlRyaM2GAgYkbeBZf3hobtziEtG7Ua2JqaROw1-47bz4A000Oo0-Fk3OUNGsViyKrVmEJYmkPOaACcB0VjfWE2BMO3WYWdOighvYm7xEHqGgqc0u8sPtGDDgORGsKaTG6fvis0QYi-5P4fB00002hh1wk-UQ0VqjQDmy4iBHiwLO3iG6om5800a08-VdcW7zBMZSF1Fe4_0hzgB-ylhcbapqMk_uu-Ry1PG7B0y7__________m_40SMF3ym5pRnlveqFphT_FGqGql__________3zF__________m_k0Tl-U58p2MK1omFVYmlme010QEm4xOCezSGiX6sHvlRIoZuYWsjLzv0O5VYWe4u2-vYm7tqh?test-tag=277633138952353&amp;stat-id=1073741828&amp;">Доставка 1-2 дня</a></yatag></yatag></yatag></yatag><yatag class="kyjkaita ioblvfd"><yatag class="bruogjts"><yatag class="dszclegg"><yatag class="jvqavy"><yatag class="joisbcnrl cnsynvc"><yatag class="gorxaz">Скрыть рекламу:</yatag><yatag class="kulqoiib"><a class="buibndyh" data-option-id="3-2">Не интересуюсь этой темой / Уже купил</a></yatag><yatag class="kulqoiib"><a class="buibndyh" data-option-id="1-3">Навязчивое и надоело</a></yatag><yatag class="kulqoiib"><a class="buibndyh" data-option-id="5-3">Сомнительного содержания или спам</a></yatag><yatag class="kulqoiib"><a class="buibndyh" data-option-id="9-0">Мешает просмотру контента</a></yatag></yatag></yatag></yatag><yatag class="dtmgnzif"><yatag class="jrwsvwx jwhrfity"><table class="dxnpsbly"><tbody><tr><td class="gpryjy"><yatag class="exqvfdqqbh"><svg width="18" height="18"><path d="M5.485 11.07L2.45 8.037 1.036 9.45l3.035 3.035-.034.036 1.414 1.415 8.485-8.485-1.414-1.414-7.035 7.035z" fill="#000" fill-rule="evenodd"></path></svg></yatag>Спасибо, объявление скрыто.</td></tr></tbody></table></yatag></yatag></yatag></yatag><yatag class="aqvevumxo cnlujt bnzjfmwjc bvzawwzr"><yatag class="hxjhdrtyg"><yatag class="kpwzkllq gqybqozrqy jrxffgqykr kxdacmtiv"><yatag class="ipxrdqhtbn"><yatag class="mvrdtr" style="width: 8px !important; height: 8px !important;"><svg width="8px" height="8px" viewBox="0 0 14 14" version="1.1"><polygon points="14,0.7 13.3,0 7,6.299 0.7,0 0,0.7 6.3,7 0,13.299 0.7,14 7,7.7 13.3,14 14,13.299 7.7,7"></polygon></svg></yatag><yatag class="czoycizn"><yatag class="gnmozoxzj"></yatag><yatag class="dnkicolbz">Скрыть&nbsp;объявление</yatag></yatag></yatag></yatag></yatag></yatag></yatag></td></tr></tbody></table></yatag><yatag class="avkbxzzcz bpnpydkj"><a class="hnoqqfsb" href="https://direct.yandex.ru/?partner" target="_blank">Яндекс.Директ</a></yatag></yatag></yatag></div>
+				<script src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/ad_img.js" type="text/javascript"></script>
+				<script type="text/javascript">
+				if(adblock) {
+					    document.write('<font color="red"><noindex>Добавьте сайт в белый список AdBlock.</noindex></font>');
+					    var i, link_tag ;
+					    for (i = 0, link_tag = document.getElementsByTagName("img") ;  i < link_tag.length ; i++ ) {
+							link_tag[i].style="-webkit-filter: sepia(100%); filter: sepia(100%);";
+						}
+					    document.body.style.backgroundImage = "url('retina_dust_sepia2.png')";
+					    }
+				else
+				{ 
+				(function(w, d, n, s, t) {
+				    var ww = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+				    var lb=2; if(ww<1024) { lb=1; }
+				    w[n] = w[n] || [];  w[n].push(function() {
+				        Ya.Direct.insertInto(89644, "yandex_ad", {
+				            stat_id: 4,  ad_format: "direct",   font_size: 1,  type: "horizontal",     limit: lb,            title_font_size: 3,
+				            links_underline: false,           site_bg_color: "FFFFFF",           title_color: "0000CC",            url_color: "006600",
+				            text_color: "000000",           hover_color: "0066FF",      sitelinks_color: "0000CC",         favicon: true,       no_sitelinks: false
+				        });  });
+				    t = d.getElementsByTagName("script")[0];
+				    s = d.createElement("script");    s.src = "//an.yandex.ru/system/context.js";
+				    s.type = "text/javascript";	    s.async = true;   t.parentNode.insertBefore(s, t);
+				})(window, document, "yandex_context_callbacks");
+				}
+				</script>
+			</div>
+			<br><div style="clear:both"></div>
+		    	<div class="aside3"><!-- comment -->
+						    <script src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/tabcontent.js" type="text/javascript"></script>
+			    <div style="margin: 0 auto; padding: 0 0 0 0;">
+			        <ul class="tabs" data-persist="true">
+			            <li class="selected"><a href="#view1">ВКонтакте</a></li>
+			            <li class=""><a href="#view2">Google</a></li>
+				    <li class=""><a href="#view3">Facebook</a></li>
+			        </ul>
+			        <div class="tabcontents">
+			            <div id="view1" style="display: block;">
+					<div id="vk_comments" style="width: 665px; height: 1146.98px; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;"><iframe name="fXDb67ad" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/widget_comments.html" scrolling="no" id="vkwidget2" style="overflow: hidden; height: 1146.98px;" width="665" height="133" frameborder="0"></iframe></div>
+						<script type="text/javascript">
+						    VK.Widgets.Comments("vk_comments", {limit: 5, width: "665", attach: "*"});
+						</script>
+			                </div>
+			            <div id="view2" style="display: none;">
+					<script src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/plusone.js" gapi_processed="true"></script>
+					<div id="g-comments" style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent none repeat scroll 0% 0%; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 1px; height: 24px;"><iframe ng-non-bindable="" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 1px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 24px;" tabindex="0" vspace="0" id="I1_1502723998359" name="I1_1502723998359" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/comments.html" data-gapiattached="true" title="Добавьте комментарий" width="100%" frameborder="0"></iframe></div>
+				    	    <script>gapi.comments.render('g-comments', {  href: window.location, width: '660',  first_party_property: 'BLOGGER',   view_type: 'FILTERED_POSTMOD'  }); </script>
+					<!--
+					<div class="g-comments"
+						data-href="http://vasilisc.com/21-examples-iptables"
+						data-width="660"
+						data-first_party_property="BLOGGER"
+						data-view_type="FILTERED_POSTMOD">
+					</div>
+					-->    
+				    </div>
+			            <div id="view3" style="display: none;">
+					<div class="fb-comments fb_iframe_widget" data-href="http://vasilisc.com/21-examples-iptables" data-num-posts="5" data-width="400" fb-xfbml-state="rendered"><span style="height: 0px; width: 400px;"><iframe id="f1bda90c9efc324" name="f3dae36915147a4" scrolling="no" style="border: medium none; overflow: hidden; height: 0px; width: 400px;" title="Facebook Social Plugin" class="fb_ltr" src="https://www.facebook.com/plugins/comments.php?api_key=227538230663504&amp;channel_url=http%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter%2Fr%2FXBwzv5Yrm_1.js%3Fversion%3D42%23cb%3Df22d485dc84deb4%26domain%3Dvasilisc.com%26origin%3Dhttp%253A%252F%252Fvasilisc.com%252Ffe68dfa4abe44%26relation%3Dparent.parent&amp;href=http%3A%2F%2Fvasilisc.com%2F21-examples-iptables&amp;locale=ru_RU&amp;numposts=5&amp;sdk=joey&amp;version=v2.6&amp;width=400"></iframe></span></div>
+			            </div>
+			        </div>
+			    </div>
+						</div>
+		</div>
+	</div>
+    </div>
+    <div class="col-3 right">
+	<div class="aside2">
+		<div class="headraz">Разделы</div>
+				<script type="text/javascript">
+				if(adblock) {    document.write('<font color="red"><noindex>Добавьте в белый список AdBlock =(</noindex></font>'); }
+				</script>
+		<p class="best">
+		<a href="http://vasilisc.com/" title="Вернуться на главную vasilisc.com">Главная</a><br>
+		<a href="http://vasilisc.com/news_os" title="Новости OS">Новости</a><br>
+		<a href="http://vasilisc.com/disorder_articles" title="Творческий беспорядок в статьях">Ворох бумаг</a><br>
+		<a href="http://vasilisc.com/video_linux" title="Видеоматериалы об операционной системе Linux">Видео Linux</a><br>
+		<a href="http://vasilisc.com/games-linux" title="Материалы об играх в Линукс">Игры в Linux</a><br>
+		<a href="http://vasilisc.com/security_articles" title="Безопасность">Безопасность</a><br>
+		<a href="http://vasilisc.com/freebsd" title="Материалы о FreeBSD">Статьи о FreeBSD</a><br>
+		<a href="http://vasilisc.com/ubuntu_articles" title="Авторские статьи об Ubuntu">Статьи об Ubuntu</a><br>
+		<a href="http://vasilisc.com/snappy_articles" title="Статьи об Ubuntu Snappy">Статьи о Snappy</a><br>
+		<a href="http://vasilisc.com/phone_articles" title="Статьи об Ubuntu Phone (проект Touch)">Статьи об Ubuntu Phone</a><br>
+		<a href="http://vasilisc.com/kubuntu_articles" title="Материалы о Kubuntu или KDE">Статьи о Kubuntu</a><br>
+		<a href="http://vasilisc.com/xubuntu_articles" title="Материалы о Xubuntu или Xfce">Статьи о Xubuntu</a><br>
+		<a href="http://vasilisc.com/lubuntu_articles" title="Материалы о Lubuntu или LXDE">Статьи о Lubuntu</a><br>
+		<a href="http://vasilisc.com/opensource_articles" title="Авторские статьи об Open Source">Статьи об Open Source</a><br>
+		<a href="http://vasilisc.com/html-mapsite" title="Карта сайта vasilisc.com">Карта сайта</a><br>
+		</p><div class="ya-site-form ya-site-form_bg_transparent ya-site-form_inited_yes" id="ya-site-form0"><div class="ya-site-form__form"><table class="ya-site-form__wrap" cellspacing="0" cellpadding="0"><tbody><tr><td class="ya-site-form__search-wrap"><table class="ya-site-form__search" cellspacing="0" cellpadding="0"><tbody><tr><td class="ya-site-form__search-input"><table class="ya-site-form__search-input-layout"><tbody><tr><td class="ya-site-form__search-input-layout-l"><div class="ya-site-form__input"><input name="text" class="ya-site-form__input-text" placeholder="Найти на vasilisc.com" autocomplete="off" type="search"><div class="ya-site-suggest"><div class="ya-site-suggest-popup" style="display: none;"><i class="ya-site-suggest__opera-gap"></i><div class="ya-site-suggest-list"><div class="ya-site-suggest__iframe"></div><ul class="ya-site-suggest-items"></ul></div></div></div></div></td><td class="ya-site-form__search-input-layout-r"><input class="ya-site-form__submit ya-site-form__submit_type_image" value="" type="button"></td></tr></tbody></table></td></tr><tr><td class="ya-site-form__gap"><div class="ya-site-form__gap-i"></div></td></tr></tbody></table></td></tr></tbody></table></div></div><style type="text/css">.ya-page_js_yes .ya-site-form_inited_no { display: none; }</style><script type="text/javascript">(function(w,d,c){var
+ 
+s=d.createElement('script'),h=d.getElementsByTagName('script')[0],e=d.documentElement;if(('
+ '+e.className+' ').indexOf(' ya-page_js_yes ')===-1){e.className+=' 
+ya-page_js_yes';}s.type='text/javascript';s.async=true;s.charset='utf-8';s.src=(d.location.protocol==='https:'?'https:':'http:')+'//site.yandex.net/v2.0/js/all.js';h.parentNode.insertBefore(s,h);(w[c]||(w[c]=[])).push(function(){Ya.Site.Form.init()})})(window,document,'yandex_site_callbacks');</script>
+		<p></p>
+	</div>
+	<div class="aside">
+		<div class="headraz">Лучшее на сайте:</div>
+		<p class="best">
+	        <a href="http://vasilisc.com/1c_linux">1С под Linux.</a>&nbsp;&nbsp;
+	        <a href="http://vasilisc.com/speedup_ubuntu">Ускорение Ubuntu.</a>&nbsp;&nbsp;
+	        <a href="http://vasilisc.com/21-examples-iptables">21 пример iptables.</a>&nbsp;&nbsp;
+	        <a href="http://vasilisc.com/ceph">Цикл статей о Ceph.</a>&nbsp;&nbsp;
+	        <a href="http://vasilisc.com/ubuntu-in-wild">Убунту в дикой среде.</a>&nbsp;&nbsp;
+	        <a href="http://vasilisc.com/ssd_ubuntu">Ubuntu Linux на SSD.</a>&nbsp;&nbsp;
+	        <a href="http://vasilisc.com/ubuntu_woman">Ubuntu для блондинок.</a>&nbsp;&nbsp;
+	        <a href="http://vasilisc.com/hcl/detect.php">Поддержка железа в Linux.</a>&nbsp;&nbsp;
+	        <a href="http://vasilisc.com/btsync">BTSync на службе у админа.</a>&nbsp;&nbsp;
+	        <a href="http://vasilisc.com/android-ubuntu">Андроид программы в Ubuntu.</a>&nbsp;&nbsp;
+	        <a href="http://vasilisc.com/mts-p2p-hub-local">Прокидывание портов для p2p.</a>&nbsp;&nbsp;
+	        <a href="http://vasilisc.com/spam-postfix">Анти СПАМ в Postfix.</a>&nbsp;&nbsp;
+<!-- SAPE RTB JS -->
+<script async="async" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/1724.js" type="text/javascript">
+</script>
+<!-- SAPE RTB END -->		</p>
+<div class="headraz"><!-- YA RTB -->
+<center><!-- Yandex.RTB R-A-89644-2 -->
+<div id="yandex_rtb_R-A-89644-2"><yatag class="yap-reset ya_partner_R-A-89644-2"><yatag class="yap-rtb__wrapper"><yatag class="yap-rtb__iframe" id="ya_partner_R-A-89644-2" style="width: 240px; height: 400px; position: relative;"><iframe scrolling="no" allowtransparency="true" hidefocus="true" tabindex="-1" marginwidth="0" marginheight="0" name="%7B%22id%22%3A%22ya_partner_R-A-89644-2%22%2C%22html%22%3A%22%3Cbase%20href%3D%5C%22https%3A%2F%2Fvasilisc.com%5C%22%20%2F%3E%3C!DOCTYPE%20html%3E%5Cn%20%20%3Chtml%20lang%3D%5C%22en%5C%22%3E%5Cn%20%20%3Chead%3E%5Cn%20%20%20%20%20%20%3Cmeta%20charset%3D%5C%22UTF-8%5C%22%3E%5Cn%20%20%20%20%20%20%3Ctitle%3E%3C%2Ftitle%3E%5Cn%20%20%3C%2Fhead%3E%5Cn%20%20%3Cbody%20style%3D%5C%22margin%3A0%5C%22%3E%5Cn%20%20%3Cscript%20src%3D%5C%22https%3A%2F%2Fyastatic.net%2Fpcode%2Fmedia%2Floader.js%5C%22%3E%3C%2Fscript%3E%5Cn%20%20%3Cscript%3E%5Cn%20%20%20%20%20%20window.Ya.mediaCode.create('media-banner'%2C%20%7B%5Cn%20%20%20%20%20%20%20%20%20%20AUCTION_DC_PARAMS%3A%20%7B%5Cn%20%20%20%5C%22creative_params%5C%22%3A%5Cn%20%20%20%20%20%20%7B%5Cn%20%20%20%20%20%20%20%20%20%5C%22crypta_user_age%5C%22%3A%5C%222%5C%22%2C%5Cn%20%20%20%20%20%20%20%20%20%5C%22crypta_user_gender%5C%22%3A%5C%220%5C%22%5Cn%20%20%20%20%20%20%7D%2C%5Cn%20%20%20%5C%22data_params%5C%22%3A%5Cn%20%20%20%20%20%20%7B%5Cn%20%20%20%20%20%20%20%20%20%5C%22misc%5C%22%3A%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%7B%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22object_id%5C%22%3A%5C%22C1%5C%22%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22target_url%5C%22%3A%5C%22http%3A%5C%5C%2F%5C%5C%2Fru.yandex.media-image%5C%22%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22click_url%5C%22%3A%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22abuse%5C%22%3A%5C%22%5C%5C%2F%5C%5C%2Fan.yandex.ru%5C%5C%2Fabuse%5C%5C%2FLjpeNKa0hvy40000Zh_v6va5XPpY5OYwkplu1fsl-1KJfe09Yh95GaqCtBquq44DfQbyNGYk_Tu0HpLSDmy4iG6oi00000Ax_ZZvlm5b0Si3vfUrT_NE5fALsjxsrEsu8eDhLNWB%5C%22%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%5Cn%20%20%20%20%20%20%20%20%20%5C%223302237266%5C%22%3A%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%7B%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22object_id%5C%22%3A%5C%22C1%5C%22%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22target_url%5C%22%3A%5C%22http%3A%5C%5C%2F%5C%5C%2Fru.yandex.media-image%5C%22%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22image%5C%22%3A%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22orig%5C%22%3A%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22url%5C%22%3A%5C%22%5C%5C%2F%5C%5C%2Favatars.mds.yandex.net%5C%5C%2Fget-direct-picture%5C%5C%2F117537%5C%5C%2FL3NVQu0evnkyzucfQKUpZQ%5C%5C%2Forig%5C%22%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22width%5C%22%3A240%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22height%5C%22%3A400%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22text%5C%22%3A%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22domain%5C%22%3A%5C%22sendpulse.com%5C%22%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22client_id%5C%22%3A%5C%229125099%5C%22%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22count%5C%22%3A%5C%22https%3A%5C%5C%2F%5C%5C%2Fan.yandex.ru%5C%5C%2Fresource%5C%5C%2Fspacer.gif%3F%5C%22%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22click_url%5C%22%3A%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5C%22image_orig%5C%22%3A%5C%22https%3A%5C%5C%2F%5C%5C%2Fan.yandex.ru%5C%5C%2Fcount%5C%5C%2FLjpeNUUm1t040000Zh_v6va5XPpY5PK4cm5kGxS2A7s8khix-0Q9kcVcZGMOfqcylfu2dQ_u5HEwwOn6oNFflIocW0cAiaL2JGpSlJZGGGszi8erBmMg0QMfV5q8lA_EGWZT0TwG9FIHlAjo4GsJYmkPFKACcABwjfmmIxMOk3-We26m0Q-OelgpaDrjj9YuFzcW8R01sf3TRQUDTAYmG5bp1wIm0000gwxztW17DLmt3mImj6pfLWEn0RBAKm02GWZv_Tu0HpLSDmy4-WJy2lsdIRo-kQ_u5HEx_ZZvlm5b0Si3mV__________3yMF3zC2rW7eW0_fW1dk0zl-U58p2MK1omFVYmlme010QEe2vP3oA-QNjNVjWoZnbqGUzSuMafNQtlRKxRWYWsjLzv0O5VYWe4u2-w0Xi05v9W00%5C%22%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%7D%5Cn%20%20%20%20%20%20%7D%5Cn%7D%5Cn%20%20%20%20%20%20%7D%2C%20'body')%3B%5Cn%20%20%3C%2Fscript%3E%5Cn%20%20%3C%2Fbody%3E%5Cn%20%20%3C%2Fhtml%3E%22%2C%22pmGuid%22%3A%22_1502724001131_31_2%22%2C%22geom%22%3A%7B%22win%22%3A%7B%22t%22%3A24%2C%22l%22%3A65%2C%22w%22%3A1855%2C%22h%22%3A1103%2C%22b%22%3A1127%2C%22r%22%3A1920%7D%2C%22self%22%3A%7B%22t%22%3A597%2C%22l%22%3A1278%2C%22b%22%3A997%2C%22r%22%3A1518%2C%22w%22%3A240%2C%22h%22%3A400%2C%22xiv%22%3A1%2C%22yiv%22%3A1%2C%22iv%22%3A1%2C%22z%22%3A2%7D%2C%22exp%22%3A%7B%22t%22%3A597%2C%22l%22%3A1278%2C%22r%22%3A337%2C%22b%22%3A106%2C%22xs%22%3A0%2C%22ys%22%3A0%7D%7D%2C%22hasFocus%22%3Atrue%2C%22supports%22%3A%7B%22exp-ovr%22%3Atrue%2C%22exp-push%22%3Afalse%2C%22read-cookie%22%3Afalse%2C%22write-cookie%22%3Afalse%7D%2C%22css%22%3A%22%22%2C%22bg%22%3A%22transparent%22%2C%22posMeta%22%3A%7B%22sharedData%22%3A%7B%22sf_ver%22%3A%221-1-0%22%2C%22ck_o%22%3A1%2C%22flash_ver%22%3A0%7D%2C%22ownerKey%22%3A%22%22%2C%22privateData%22%3A%7B%7D%7D%2C%22target%22%3A%22_blank%22%7D" src="//yastatic.net/safeframe-bundles/0.17/1-1-0/render.html" style="width: 240px; height: 400px; top: 0px; left: 0px; position: absolute;" width="240" height="400" frameborder="no"></iframe></yatag><yatag class="yap-rtb__adtune-button"><yatag class="yap-rtb__adtune yap-adtune yap-adtune_round yap-adtune_touch_false yap-adtune_oldie_false"><yatag class="yap-adtune__button"><yatag class="yap-adtune-icon yap-adtune-icon_round yap-adtune-icon_touch_false yap-adtune-icon_size_l yap-adtune-icon_fallback_false"><yatag class="yap-adtune-icon__container"><yatag class="yap-adtune-icon__image" style="width: 9px !important; height: 9px !important;"><svg width="9px" height="9px" viewBox="0 0 14 14" version="1.1"><polygon points="14,0.7 13.3,0 7,6.299 0.7,0 0,0.7 6.3,7 0,13.299 0.7,14 7,7.7 13.3,14 14,13.299 7.7,7"></polygon></svg></yatag><yatag class="yap-adtune-icon__tooltip"><yatag class="yap-adtune-icon__tooltip-arrow"></yatag><yatag class="yap-adtune-icon__tooltip-text">Скрыть&nbsp;объявление</yatag></yatag></yatag></yatag></yatag></yatag></yatag></yatag></yatag></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-89644-2",
+                renderTo: "yandex_rtb_R-A-89644-2",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script></center>
+</div>
+        <br><br><div class="headraz">Круги Гугл Ада.</div>
+	    <center><div style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent none repeat scroll 0% 0%; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 260px; height: 325px;" id="___person_0"><iframe ng-non-bindable="" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 260px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 325px;" tabindex="0" vspace="0" id="I2_1502723998448" name="I2_1502723998448" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/person.html" data-gapiattached="true" title="+Badge" width="100%" frameborder="0"></iframe></div></center>
+	<br><br><div class="headraz">Группа поддержки</div>
+	    <!-- vk  -->
+	    <center><div id="vk_groups" style="width: 260px; height: 400px; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;"><iframe name="fXD81a18" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/widget_community.html" scrolling="no" id="vkwidget3" style="overflow: hidden; height: 400px;" width="260" height="400" frameborder="0"></iframe></div>
+	    <script type="text/javascript">
+		    VK.Widgets.Group("vk_groups", {mode: 0, width: "260", height: 
+"400", color1: 'FFFFFF', color2: '2B587A', color3: '5B7FA6'}, 65403676);
+	    </script></center>
+	    <!-- end vk -->
+	</div> <!-- end aside -->
+    </div> <!-- end col right -->
+</div><iframe name="oauth2relay303464940" id="oauth2relay303464940" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/postmessageRelay.html" style="width: 1px; height: 1px; position: absolute; top: -100px;" tabindex="-1" aria-hidden="true"></iframe>
+<div class="footer">
+<p>Любое копирование с сайта разрешено при наличии индексируемой ссылки 
+на оригинал, без nofollow и noindex. Страница создана за 0.013 сек.</p>
+</div>
+<!-- Yandex.Metrika counter --> 
+<script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || 
+[]).push(function() { try { w.yaCounter3178669 = new Ya.Metrika({ 
+id:3178669, clickmap:true, trackLinks:true, accurateTrackBounce:true, 
+webvisor:true }); } catch(e) { } }); var n = 
+d.getElementsByTagName("script")[0], s = d.createElement("script"), f = 
+function () { n.parentNode.insertBefore(s, n); }; s.type = 
+"text/javascript"; s.async = true; s.src = 
+"https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object 
+Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { 
+f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/3178669" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+<!-- /Yandex.Metrika counter -->
+
+<iframe src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/a.html" style="width:1px;height:1px;display:none;" width="0" height="0" frameborder="0"></iframe><yatag style="overflow: hidden !important; position: absolute !important; left: -9999px !important; top: -9999px !important; width: 1px !important; height: 1px !important;"><iframe id="" sandbox="allow-same-origin allow-scripts" scrolling="no" marginwidth="0" marginheight="0" vspace="0" hspace="0" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/match_r_2553.html" width="1" height="1" frameborder="0"></iframe></yatag><yatag style="overflow: hidden !important; position: absolute !important; left: -9999px !important; top: -9999px !important; width: 1px !important; height: 1px !important;"><iframe id="" sandbox="allow-same-origin allow-scripts" scrolling="no" marginwidth="0" marginheight="0" vspace="0" hspace="0" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/match_r_2553_002.html" width="1" height="1" frameborder="0"></iframe></yatag><yatag style="overflow: hidden !important; position: absolute !important; left: -9999px !important; top: -9999px !important; width: 1px !important; height: 1px !important;"><iframe id="" sandbox="allow-same-origin allow-scripts" scrolling="no" marginwidth="0" marginheight="0" vspace="0" hspace="0" src="21%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20iptables%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2._files/confirm_r_2553.html" width="1" height="1" frameborder="0"></iframe></yatag></body></html>

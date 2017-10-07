@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html class=" js" lang="en-US"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="”yandex-verification”" content="”e01351dd4ffeff21″">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://rtfm.co.ua/xmlrpc.php">
+<!--[if lt IE 9]>
+<script src="https://rtfm.co.ua/wp-content/themes/iconic-one/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
+<link rel="stylesheet" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/terminal.css" type="text/css" media="screen">
+<title>Apache: MPM – worker, prefork или event? | RTFM: Linux, DevOps и системное администрирование</title>
+
+<!-- All in One SEO Pack 2.3.15.3 by Michael Torbert of Semper Fi Web Design[770,881] -->
+<meta name="description" content="MPM - Multi-Processing Module, можно перевести как &quot;Модуль мультипроцессовой обработки&quot; (не путайте с мультипроцессорной!). Если быть совсем кратким - MPM">
+
+<meta name="keywords" content="apache http server,event,mpm,mpm-itk,prefork,worker,howto\'s,web-services">
+
+<link rel="canonical" href="https://rtfm.co.ua/apache-mpm-worker-prefork-ili-event/">
+					
+			<script async="" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/a_003.html"></script><script async="" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/async-ads.js" style="color: rgba(3, 7, 17, 0.5);"></script><script type="text/javascript" async="" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/external.js"></script><script type="text/javascript" async="" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/watch.js"></script><script type="text/javascript" async="" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/cse.js"></script><script async="" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/analytics.js"></script><script type="text/javascript">
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-27245806-1', 'auto');
+			
+			ga('send', 'pageview');
+			</script>
+<!-- /all in one seo pack -->
+<link rel="dns-prefetch" href="https://rtfm.co.ua/">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://secure.rating-widget.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="RTFM: Linux, DevOps и системное администрирование » Feed" href="https://rtfm.co.ua/feed/">
+<link rel="alternate" type="application/rss+xml" title="RTFM: Linux, DevOps и системное администрирование » Comments Feed" href="https://rtfm.co.ua/comments/feed/">
+
+<script>
+var MP3jPLAYLISTS = [];
+var MP3jPLAYERS = [];
+</script>
+<link rel="alternate" type="application/rss+xml" title="RTFM: Linux, DevOps и системное администрирование » Apache: MPM – worker, prefork или event? Comments Feed" href="https://rtfm.co.ua/apache-mpm-worker-prefork-ili-event/feed/">
+<meta property="og:image" content="https://rtfm.co.ua/wp-content/plugins/share-me//assets/css/images/logo_big.png">		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/rtfm.co.ua\/wp-includes\/js\/wp-emoji-release.min.js?ver=2bb2816abbf657652685a0ccb1eb5db0"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b===c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/wp-emoji-release.js" type="text/javascript" defer="defer"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="crazyplayer-main-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/crazyplayer.css" type="text/css" media="all">
+<link rel="stylesheet" id="ez-icomoon-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/style_004.css" type="text/css" media="all">
+<link rel="stylesheet" id="ez-toc-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/screen.css" type="text/css" media="all">
+<style id="ez-toc-inline-css" type="text/css">
+div#ez-toc-container ul li {font-size: 95%;}div#ez-toc-container {background: #fff;border: 1px solid #ddd;width: 400px;}div#ez-toc-container p.ez-toc-title {color: #333399;}div#ez-toc-container ul.ez-toc-list a:hover {color: #2a6496;}div#ez-toc-container ul.ez-toc-list a:hover {color: #2a6496;}div#ez-toc-container ul.ez-toc-list a:visited {color: #428bca;}
+</style>
+<link rel="stylesheet" id="rw-site-rating-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/site-rating.css" type="text/css" media="all">
+<link rel="stylesheet" id="SearchAutocomplete-theme-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/jquery-ui-aristo.css" type="text/css" media="all">
+<link rel="stylesheet" id="sm_style-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/style_003.css" type="text/css" media="all">
+<link rel="stylesheet" id="accordioncssfree-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/jquery.css" type="text/css" media="all">
+<link rel="stylesheet" id="ewd-ufaq-style-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/ewd-ufaq-styles.css" type="text/css" media="all">
+<link rel="stylesheet" id="ewd-ufaq-rrssb-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/rrssb-min.css" type="text/css" media="all">
+<link rel="stylesheet" id="wp-polls-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/polls-css.css" type="text/css" media="all">
+<style id="wp-polls-inline-css" type="text/css">
+.wp-polls .pollbar {
+	margin: 1px;
+	font-size: 6px;
+	line-height: 8px;
+	height: 8px;
+	background-image: url('https://rtfm.co.ua/wp-content/plugins/wp-polls/images/default/pollbg.gif');
+	border: 1px solid #c8c8c8;
+}
+
+</style>
+<link rel="stylesheet" id="wpt-twitter-feed-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/twitter-feed.css" type="text/css" media="all">
+<link rel="stylesheet" id="themonic-fonts-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/css.css" type="text/css" media="all">
+<link rel="stylesheet" id="themonic-style-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="custom-style-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/custom.css" type="text/css" media="all">
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='themonic-ie-css'  href='https://rtfm.co.ua/wp-content/themes/iconic-one/css/ie.css?ver=20130305' type='text/css' media='all' />
+<![endif]-->
+<link rel="stylesheet" id="rw_toprated-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/toprated.css" type="text/css" media="all">
+<link rel="stylesheet" id="rw_recommendations-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/recommendations.css" type="text/css" media="all">
+<link rel="stylesheet" id="sccss_style-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/a.css" type="text/css" media="all">
+<link rel="stylesheet" id="mp3-jplayer-css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/light.css" type="text/css" media="all">
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/crazyplayer.js"></script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/jquery_002.js"></script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/jquery-migrate.js"></script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/scripts.js"></script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/jquery_003.js"></script>
+<link rel="https://api.w.org/" href="https://rtfm.co.ua/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://rtfm.co.ua/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://rtfm.co.ua/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Apache: [alert] (EAI 8)hostname nor servname provided, or not known" href="https://rtfm.co.ua/apache-alert-eai-8hostname-nor-servname-provided-or-not-known/">
+<link rel="next" title="FreeBSD: adduser: ERROR: There was an error adding user" href="https://rtfm.co.ua/freebsd-adduser-error-there-was-an-error-adding-user/">
+
+<link rel="shortlink" href="https://rtfm.co.ua/?p=1319">
+<link rel="alternate" type="application/json+oembed" href="https://rtfm.co.ua/wp-json/oembed/1.0/embed?url=https%3A%2F%2Frtfm.co.ua%2Fapache-mpm-worker-prefork-ili-event%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://rtfm.co.ua/wp-json/oembed/1.0/embed?url=https%3A%2F%2Frtfm.co.ua%2Fapache-mpm-worker-prefork-ili-event%2F&amp;format=xml">
+	<link type="text/css" rel="stylesheet" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/shCoreDefault.css">
+        <script type="text/javascript">
+        var ajaxurl = 'https://rtfm.co.ua/wp-admin/admin-ajax.php';
+    </script>
+<script type="text/javascript">
+(function(url){
+	if(/(?:Chrome\/26\.0\.1410\.63 Safari\/537\.31|WordfenceTestMonBot)/.test(navigator.userAgent)){ return; }
+	var addEvent = function(evt, handler) {
+		if (window.addEventListener) {
+			document.addEventListener(evt, handler, false);
+		} else if (window.attachEvent) {
+			document.attachEvent('on' + evt, handler);
+		}
+	};
+	var removeEvent = function(evt, handler) {
+		if (window.removeEventListener) {
+			document.removeEventListener(evt, handler, false);
+		} else if (window.detachEvent) {
+			document.detachEvent('on' + evt, handler);
+		}
+	};
+	var evts = 'contextmenu dblclick drag dragend dragenter dragleave dragover dragstart drop keydown keypress keyup mousedown mousemove mouseout mouseover mouseup mousewheel scroll'.split(' ');
+	var logHuman = function() {
+		var wfscr = document.createElement('script');
+		wfscr.type = 'text/javascript';
+		wfscr.async = true;
+		wfscr.src = url + '&r=' + Math.random();
+		(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(wfscr);
+		for (var i = 0; i < evts.length; i++) {
+			removeEvent(evts[i], logHuman);
+		}
+	};
+	for (var i = 0; i < evts.length; i++) {
+		addEvent(evts[i], logHuman);
+	}
+})('//rtfm.co.ua/?wordfence_logHuman=1&hid=7121BF2124421DE8CEF1DEEE7A8CDED5');
+</script><script type="text/javascript">
+	window._wp_rp_static_base_url = 'https://wprp.zemanta.com/static/';
+	window._wp_rp_wp_ajax_url = "https://rtfm.co.ua/wp-admin/admin-ajax.php";
+	window._wp_rp_plugin_version = '3.6.4';
+	window._wp_rp_post_id = '1319';
+	window._wp_rp_num_rel_posts = '5';
+	window._wp_rp_thumbnails = false;
+	window._wp_rp_post_title = 'Apache%3A+MPM+-+worker%2C+prefork+%D0%B8%D0%BB%D0%B8+event%3F';
+	window._wp_rp_post_tags = ['apache+http+server', 'worker', 'mpm-itk', 'event', 'prefork', 'mpm', 'web-services', 'apache+http+server', 'howto%27s', 'apach', 'worker', 'alt', 'em', 'span', 'courier', '2', 'event', '1'];
+	window._wp_rp_promoted_content = true;
+</script>
+		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		<style type="text/css" media="screen">body{position:relative}#dynamic-to-top{display:none;overflow:hidden;width:auto;z-index:90;position:fixed;bottom:20px;left:20px;top:auto;right:auto;font-family:sans-serif;font-size:1em;color:#fff;text-decoration:none;text-shadow:0 1px 0 #333;font-weight:bold;padding:17px 40px;border:1px solid #a39d9d;background:#16A1E7;-webkit-background-origin:border;-moz-background-origin:border;-icab-background-origin:border;-khtml-background-origin:border;-o-background-origin:border;background-origin:border;-webkit-background-clip:padding-box;-moz-background-clip:padding-box;-icab-background-clip:padding-box;-khtml-background-clip:padding-box;-o-background-clip:padding-box;background-clip:padding-box;-webkit-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-ms-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-moz-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-o-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-khtml-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-icab-box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );box-shadow:0 1px 3px rgba( 0, 0, 0, 0.4 ), inset 0 0 0 1px rgba( 0, 0, 0, 0.2 ), inset 0 1px 0 rgba( 255, 255, 255, .4 ), inset 0 10px 10px rgba( 255, 255, 255, .1 );-webkit-border-radius:30px;-moz-border-radius:30px;-icab-border-radius:30px;-khtml-border-radius:30px;border-radius:30px}#dynamic-to-top:hover{background:#4d9762;background:#16A1E7 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 255, 255, 255, .2 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#16A1E7 -webkit-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#16A1E7 -khtml-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#16A1E7 -moz-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#16A1E7 -o-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#16A1E7 -ms-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#16A1E7 -icab-linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );background:#16A1E7 linear-gradient( top, rgba( 255, 255, 255, .2 ), rgba( 0, 0, 0, 0 ) );cursor:pointer}#dynamic-to-top:active{background:#16A1E7;background:#16A1E7 -webkit-gradient( linear, 0% 0%, 0% 100%, from( rgba( 0, 0, 0, .3 ) ), to( rgba( 0, 0, 0, 0 ) ) );background:#16A1E7 -webkit-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#16A1E7 -moz-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#16A1E7 -khtml-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#16A1E7 -o-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#16A1E7 -ms-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#16A1E7 -icab-linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) );background:#16A1E7 linear-gradient( top, rgba( 0, 0, 0, .1 ), rgba( 0, 0, 0, 0 ) )}#dynamic-to-top,#dynamic-to-top:active,#dynamic-to-top:focus,#dynamic-to-top:hover{outline:none}#dynamic-to-top span{display:block;overflow:hidden;width:14px;height:12px;background:url( https://rtfm.co.ua/wp-content/plugins/dynamic-to-top/css/images/up.png )no-repeat center center}</style><script type="text/javascript" async="" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/a"></script><script type="text/javascript" async="" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/embed.js"></script><script async="" type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/count.js"></script><link type="text/css" rel="stylesheet" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/style_002.css" media="screen"><script src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/jsapi" type="text/javascript"></script><script src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/count-data.js"></script><link type="text/css" rel="stylesheet" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/theme.css" media="screen"><link type="text/css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/defaultru.css" rel="stylesheet"><link type="text/css" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/default.css" rel="stylesheet"><script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/defaultru.js"></script><link rel="prefetch" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/a_data/lounge.css"><link rel="prefetch" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/a_data/common.js"><link rel="prefetch" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/a_data/lounge.js"><link rel="prefetch" href="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/a_data/config.js"><style type="text/css">
+.gsc-control-cse {
+font-family: Arial, sans-serif;
+border-color: #FFFFFF;
+background-color: #FFFFFF;
+}
+.gsc-control-cse .gsc-table-result {
+font-family: Arial, sans-serif;
+}
+input.gsc-input, .gsc-input-box, .gsc-input-box-hover, .gsc-input-box-focus {
+border-color: #D9D9D9;
+}
+input.gsc-search-button, input.gsc-search-button:hover, input.gsc-search-button:focus {
+border-color: #16A1E7;
+background-color: #16A1E7;
+background-image: none;
+filter: none;
+}
+.gsc-tabHeader.gsc-tabhInactive {
+border-color: #CCCCCC;
+background-color: #FFFFFF;
+}
+.gsc-tabHeader.gsc-tabhActive {
+border-color: #CCCCCC;
+border-bottom-color: #FFFFFF;
+background-color: #FFFFFF;
+}
+.gsc-tabsArea {
+border-color: #CCCCCC;
+}
+.gsc-webResult.gsc-result,
+.gsc-results .gsc-imageResult {
+border-color: #FFFFFF;
+background-color: #FFFFFF;
+}
+.gsc-webResult.gsc-result:hover,
+.gsc-imageResult:hover {
+border-color: #FFFFFF;
+background-color: #FFFFFF;
+}
+.gs-webResult.gs-result a.gs-title:link,
+.gs-webResult.gs-result a.gs-title:link b,
+.gs-imageResult a.gs-title:link,
+.gs-imageResult a.gs-title:link b {
+color: #1155CC;
+}
+.gs-webResult.gs-result a.gs-title:visited,
+.gs-webResult.gs-result a.gs-title:visited b,
+.gs-imageResult a.gs-title:visited,
+.gs-imageResult a.gs-title:visited b {
+color: #1155CC;
+}
+.gs-webResult.gs-result a.gs-title:hover,
+.gs-webResult.gs-result a.gs-title:hover b,
+.gs-imageResult a.gs-title:hover,
+.gs-imageResult a.gs-title:hover b {
+color: #1155CC;
+}
+.gs-webResult.gs-result a.gs-title:active,
+.gs-webResult.gs-result a.gs-title:active b,
+.gs-imageResult a.gs-title:active,
+.gs-imageResult a.gs-title:active b {
+color: #1155CC;
+}
+.gsc-cursor-page {
+color: #1155CC;
+}
+a.gsc-trailing-more-results:link {
+color: #1155CC;
+}
+.gs-webResult .gs-snippet,
+.gs-imageResult .gs-snippet,
+.gs-fileFormatType {
+color: #333333;
+}
+.gs-webResult div.gs-visibleUrl,
+.gs-imageResult div.gs-visibleUrl {
+color: #009933;
+}
+.gs-webResult div.gs-visibleUrl-short {
+color: #009933;
+}
+.gs-webResult div.gs-visibleUrl-short {
+display: none;
+}
+.gs-webResult div.gs-visibleUrl-long {
+display: block;
+}
+.gs-promotion div.gs-visibleUrl-short {
+display: none;
+}
+.gs-promotion div.gs-visibleUrl-long {
+display: block;
+}
+.gsc-cursor-box {
+border-color: #FFFFFF;
+}
+.gsc-results .gsc-cursor-box .gsc-cursor-page {
+border-color: #CCCCCC;
+background-color: #FFFFFF;
+color: #1155CC;
+}
+.gsc-results .gsc-cursor-box .gsc-cursor-current-page {
+border-color: #CCCCCC;
+background-color: #FFFFFF;
+color: #1155CC;
+}
+.gsc-webResult.gsc-result.gsc-promotion {
+border-color: #F6F6F6;
+background-color: #F6F6F6;
+}
+.gsc-completion-title {
+color: #1155CC;
+}
+.gsc-completion-snippet {
+color: #333333;
+}
+.gs-promotion a.gs-title:link,
+.gs-promotion a.gs-title:link *,
+.gs-promotion .gs-snippet a:link {
+color: #1155CC;
+}
+.gs-promotion a.gs-title:visited,
+.gs-promotion a.gs-title:visited *,
+.gs-promotion .gs-snippet a:visited {
+color: #1155CC;
+}
+.gs-promotion a.gs-title:hover,
+.gs-promotion a.gs-title:hover *,
+.gs-promotion .gs-snippet a:hover {
+color: #1155CC;
+}
+.gs-promotion a.gs-title:active,
+.gs-promotion a.gs-title:active *,
+.gs-promotion .gs-snippet a:active {
+color: #1155CC;
+}
+.gs-promotion .gs-snippet,
+.gs-promotion .gs-title .gs-promotion-title-right,
+.gs-promotion .gs-title .gs-promotion-title-right * {
+color: #333333;
+}
+.gs-promotion .gs-visibleUrl,
+.gs-promotion .gs-visibleUrl-short {
+color: #009933;
+}</style><style type="text/css">.gscb_a{display:inline-block;font:27px/13px arial,sans-serif}.gsst_a .gscb_a{color:#a1b9ed;cursor:pointer}.gsst_a:hover .gscb_a,.gsst_a:focus .gscb_a{color:#36c}.gsst_a{display:inline-block}.gsst_a{cursor:pointer;padding:0 4px}.gsst_a:hover{text-decoration:none!important}.gsst_b{font-size:16px;padding:0 2px;position:relative;user-select:none;-moz-user-select:none;white-space:nowrap}.gsst_e{opacity:0.55;}.gsst_a:hover .gsst_e,.gsst_a:focus .gsst_e{opacity:0.72;}.gsst_a:active .gsst_e{opacity:1;}.gsst_f{background:white;text-align:left}.gsst_g{background-color:white;border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-moz-box-shadow:0 2px 4px rgba(0,0,0,0.2);margin:-1px -3px;padding:0 6px}.gsst_h{background-color:white;height:1px;margin-bottom:-1px;position:relative;top:-1px}.gsib_a{width:100%;padding:4px 6px 0}.gsib_a,.gsib_b{vertical-align:top}.gssb_c{border:0;position:absolute;z-index:989}.gssb_e{border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-moz-box-shadow:0 2px 4px rgba(0,0,0,0.2);cursor:default}.gssb_f{visibility:hidden;white-space:nowrap}.gssb_k{border:0;display:block;position:absolute;top:0;z-index:988}.gsdd_a{border:none!important}.gsq_a{padding:0}.gscsep_a{display:none}.gssb_a{padding:0 7px}.gssb_a,.gssb_a td{white-space:nowrap;overflow:hidden;line-height:22px}#gssb_b{font-size:11px;color:#36c;text-decoration:none}#gssb_b:hover{font-size:11px;color:#36c;text-decoration:underline}.gssb_g{text-align:center;padding:8px 0 7px;position:relative}.gssb_h{font-size:15px;height:28px;margin:0.2em}.gssb_i{background:#eee}.gss_ifl{visibility:hidden;padding-left:5px}.gssb_i .gss_ifl{visibility:visible}a.gssb_j{font-size:13px;color:#36c;text-decoration:none;line-height:100%}a.gssb_j:hover{text-decoration:underline}.gssb_l{height:1px;background-color:#e5e5e5}.gssb_m{color:#000;background:#fff}.gsfe_a{border:1px solid #b9b9b9;border-top-color:#a0a0a0;box-shadow:inset 0px 1px 2px rgba(0,0,0,0.1);-moz-box-shadow:inset 0px 1px 2px rgba(0,0,0,0.1);-webkit-box-shadow:inset 0px 1px 2px rgba(0,0,0,0.1);}.gsfe_b{border:1px solid #4d90fe;outline:none;box-shadow:inset 0px 1px 2px rgba(0,0,0,0.3);-moz-box-shadow:inset 0px 1px 2px rgba(0,0,0,0.3);-webkit-box-shadow:inset 0px 1px 2px rgba(0,0,0,0.3);}.gssb_a{padding:0 9px}.gsib_a{padding-right:8px;padding-left:8px}.gsst_a{padding-top:3px}.gssb_e{border:0}.gssb_l{margin:5px 0}#gsc-i-id1::-webkit-input-placeholder{font-size:14px}#gsc-i-id1:-moz-placeholder{font-size:14px}#gsc-i-id1::-moz-placeholder{font-size:14px}#gsc-i-id1:-ms-input-placeholder{font-size:14px}#gsc-i-id1:focus::-webkit-input-placeholder{color:transparent}#gsc-i-id1:focus:-moz-placeholder{color:transparent}#gsc-i-id1:focus::-moz-placeholder{color:transparent}#gsc-i-id1:focus:-ms-input-placeholder{color:transparent}.gssb_c .gsc-completion-container{position:static}.gssb_c{z-index:5000}.gsc-completion-container table{background:transparent;font-size:inherit;font-family:inherit}.gssb_c > tbody > tr,.gssb_c > tbody > tr > td,.gssb_d,.gssb_d > tbody > tr,.gssb_d > tbody > tr > td,.gssb_e,.gssb_e > tbody > tr,.gssb_e > tbody > tr > td{padding:0;margin:0;border:0}.gssb_a table,.gssb_a table tr,.gssb_a table tr td{padding:0;margin:0;border:0}</style><style type="text/css" id="rw_class_blog-post_custom_style">.rw-class-blog-post.rw-ui-star.rw-ui-container.rw-style-custom .rw-ui-stars li { background-image: url(''); }
+.rw-class-blog-post.rw-rtl.rw-ui-star.rw-ui-container.rw-style-custom .rw-ui-stars li { background-image: url(''); }
+</style></head>
+<body class="post-template-default single single-post postid-1319 single-format-standard custom-font-enabled single-author">
+<div id="page" class="site">
+	<header id="masthead" class="site-header" role="banner">
+					<div class="io-title-description">
+			<a href="https://rtfm.co.ua/" title="RTFM: Linux, DevOps и системное администрирование" rel="home">RTFM: Linux, DevOps и системное администрирование</a>
+				<br ...=""> 
+								 <a class="site-description">DevOps-инжиниринг и системное администрирование. Случаи из практики.</a>
+						</div>
+		
+		
+		<nav id="site-navigation" class="themonic-nav" role="navigation">
+			<a class="assistive-text" href="#main" title="Skip to content">Skip to content</a>
+			<ul id="menu-top" class="nav-menu"><li><a href="https://rtfm.co.ua/">Home</a></li><li class="page_item page-item-9916 page_item_has_children"><a href="https://rtfm.co.ua/books-translations/">Переводы</a>
+<ul class="children">
+	<li class="page_item page-item-13047 page_item_has_children"><a href="https://rtfm.co.ua/books-translations/groovy-s-nulya/">Groovy с нуля</a>
+	<ul class="children">
+		<li class="page_item page-item-13046"><a href="https://rtfm.co.ua/books-translations/groovy-s-nulya/groovy-chast-1-ustanovka-na-linux/">Groovy: часть 1 – установка на Linux</a></li>
+		<li class="page_item page-item-13056"><a href="https://rtfm.co.ua/books-translations/groovy-s-nulya/groovy-chast-2-hello-world-i-bazovyj-sintaksis/">Groovy: часть 2 – Hello World и базовый синтаксис</a></li>
+		<li class="page_item page-item-13074"><a href="https://rtfm.co.ua/books-translations/groovy-s-nulya/groovy-chast-3-tipy-dannyx/">Groovy: часть 3 – типы данных</a></li>
+		<li class="page_item page-item-13086"><a href="https://rtfm.co.ua/books-translations/groovy-s-nulya/groovy-chast-4-peremennye/">Groovy: часть 4 – переменные</a></li>
+		<li class="page_item page-item-13103"><a href="https://rtfm.co.ua/books-translations/groovy-s-nulya/groovy-chast-5-operatory/">Groovy: часть 5 – операторы</a></li>
+		<li class="page_item page-item-13123"><a href="https://rtfm.co.ua/books-translations/groovy-s-nulya/groovy-chast-6-cikly/">Groovy: часть 6 – циклы</a></li>
+		<li class="page_item page-item-13243"><a href="https://rtfm.co.ua/books-translations/groovy-s-nulya/groovy-chast-7-operatory-vetvleniya-ifelseswitch/">Groovy: часть 7 – операторы ветвления if/else/switch</a></li>
+	</ul>
+</li>
+	<li class="page_item page-item-4564 page_item_has_children"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/">Python с нуля</a>
+	<ul class="children">
+		<li class="page_item page-item-4617"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-10-slovari/">Python с нуля – часть 10: словари</a></li>
+		<li class="page_item page-item-4611"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-9-kortezhi/">Python с нуля – часть 9: кортежи</a></li>
+		<li class="page_item page-item-4488"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-6-chisla/">Python с нуля — часть 6: числа</a></li>
+		<li class="page_item page-item-4490"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-7-stroki/">Python с нуля — часть 7: строки</a></li>
+		<li class="page_item page-item-4607"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-8-spiski/">Python с нуля — часть 8: списки</a></li>
+		<li class="page_item page-item-4310"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-1-bazovyj-sintaksis/">Python с нуля – часть 1: базовый синтаксис</a></li>
+		<li class="page_item page-item-4324"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-2-tipy-peremennyx/">Python с нуля – часть 2: типы переменных</a></li>
+		<li class="page_item page-item-4342"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-3-bazovye-operatory/">Python с нуля – часть 3: базовые операторы</a></li>
+		<li class="page_item page-item-4452"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-4-upravlyayushhie-konstrukcii-operatory-if-elif-else/">Python с нуля – часть 4: управляющие конструкции – операторы IF…ELIF…ELSE</a></li>
+		<li class="page_item page-item-4460 page_item_has_children"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-5-cikly/">Python с нуля — часть 5: циклы</a>
+		<ul class="children">
+			<li class="page_item page-item-4473"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-5-cikly/python-s-nulya-chast-5-vlozhennye-cikly/">Python с нуля — часть 5: циклы – вложенные циклы</a></li>
+			<li class="page_item page-item-4477"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-5-cikly/python-s-nulya-chast-5-cikly-operator-break/">Python с нуля — часть 5: циклы – оператор break</a></li>
+			<li class="page_item page-item-4480"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-5-cikly/python-s-nulya-chast-5-cikly-operator-continue/">Python с нуля — часть 5: циклы – оператор continue</a></li>
+			<li class="page_item page-item-4485"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-5-cikly/python-s-nulya-chast-5-cikly-operator-pass/">Python с нуля — часть 5: циклы – оператор pass</a></li>
+			<li class="page_item page-item-4468"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-5-cikly/python-s-nulya-chast-5-cikl-for/">Python с нуля — часть 5: циклы – цикл for</a></li>
+			<li class="page_item page-item-4465"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-5-cikly/python-s-nulya-chast-5-cikly-cikl-while/">Python с нуля — часть 5: циклы – цикл while</a></li>
+		</ul>
+</li>
+		<li class="page_item page-item-4652"><a href="https://rtfm.co.ua/books-translations/python_s_nulya/python-%d1%81-%d0%bd%d1%83%d0%bb%d1%8f-%d1%87%d0%b0%d1%81%d1%82%d1%8c-11-%d0%b2%d1%80%d0%b5%d0%bc%d1%8f-%d0%b8-%d0%b4%d0%b0%d1%82%d0%b0/">Python с нуля – часть 11: время и дата</a></li>
+	</ul>
+</li>
+	<li class="page_item page-item-6331"><a href="https://rtfm.co.ua/books-translations/django-book/">Django Book – русский перевод</a></li>
+	<li class="page_item page-item-9490 page_item_has_children"><a href="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/">Курс Ruby с нуля</a>
+	<ul class="children">
+		<li class="page_item page-item-9497"><a href="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-1-sintaksis/">Ruby: с нуля – часть 1: синтаксис</a></li>
+		<li class="page_item page-item-9494"><a href="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-2-klassy-i-obekty/">Ruby: с нуля – часть 2: классы и объекты</a></li>
+		<li class="page_item page-item-9492"><a href="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-3-peremennye-konstanty-i-literaly/">Ruby: с нуля – часть 3: переменные, константы и литералы</a></li>
+		<li class="page_item page-item-10103"><a href="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-4-operatory/">Ruby: с нуля – часть 4: операторы</a></li>
+		<li class="page_item page-item-10150"><a href="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-5-kommentarii/">Ruby: с нуля – часть 5: комментарии</a></li>
+		<li class="page_item page-item-10195"><a href="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-6-uslovnye-operatory-if-else-case-unless/">Ruby: с нуля – часть 6: условные операторы if…else, case, unless</a></li>
+		<li class="page_item page-item-10224"><a href="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-7-cikly-while-for-until-break-redo-i-retry/">Ruby: с нуля – часть 7: циклы while, for, until, break, redo и retry</a></li>
+		<li class="page_item page-item-10281"><a href="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-8-metody/">Ruby: с нуля – часть 8: методы</a></li>
+		<li class="page_item page-item-10353"><a href="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-9-bloki/">Ruby: с нуля – часть 9: блоки</a></li>
+	</ul>
+</li>
+	<li class="page_item page-item-5838 page_item_has_children"><a href="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/">Программирование на C шаг за шагом</a>
+	<ul class="children">
+		<li class="page_item page-item-5766"><a href="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-1-hello-world/">Программирование на C шаг за шагом: шаг 1 – Hello, World!</a></li>
+		<li class="page_item page-item-5768"><a href="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-2-peremennye-i-tipy-dannyx/">Программирование на C шаг за шагом: шаг 2 – переменные и типы данных</a></li>
+		<li class="page_item page-item-5770"><a href="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-3-massivy/">Программирование на C шаг за шагом: шаг 3 – массивы</a></li>
+		<li class="page_item page-item-5774"><a href="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-4-stroki/">Программирование на C шаг за шагом: шаг 4 – строки</a></li>
+		<li class="page_item page-item-5779"><a href="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-5-cikl-for/">Программирование на C шаг за шагом: шаг 5 – цикл FOR</a></li>
+		<li class="page_item page-item-5782"><a href="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-6-cikl-while/">Программирование на C шаг за шагом: шаг 6 – цикл WHILE</a></li>
+		<li class="page_item page-item-5836"><a href="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-7-funkcii/">Программирование на C шаг за шагом: шаг 7 – функции</a></li>
+		<li class="page_item page-item-6206"><a href="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-9-struktury-structures/">Программирование на C шаг за шагом: шаг 9 – структуры (structures)</a></li>
+	</ul>
+</li>
+	<li class="page_item page-item-5643 page_item_has_children"><a href="https://rtfm.co.ua/books-translations/kurs-c-s-nulya/">Курс программирования на С с нуля</a>
+	<ul class="children">
+		<li class="page_item page-item-9441"><a href="https://rtfm.co.ua/books-translations/kurs-c-s-nulya/kurs-c-s-nulya-chast-1-bazovyj-sintaksis/">Курс C с нуля: часть 1 – базовый синтаксис</a></li>
+		<li class="page_item page-item-9447"><a href="https://rtfm.co.ua/books-translations/kurs-c-s-nulya/kurs-c-s-nulya-chast-2-printf-i-scanf/">Курс C с нуля: часть 2 – printf и scanf</a></li>
+		<li class="page_item page-item-9451"><a href="https://rtfm.co.ua/books-translations/kurs-c-s-nulya/kurs-c-s-nulya-chast-3-tipy-dannyx/">Курс C с нуля: часть 3 – типы данных</a></li>
+		<li class="page_item page-item-9456"><a href="https://rtfm.co.ua/books-translations/kurs-c-s-nulya/kurs-c-s-nulya-chast-4-tokeny-i-klyuchevye-slova/">Курс C с нуля: часть 4 – токены и ключевые слова</a></li>
+		<li class="page_item page-item-9461"><a href="https://rtfm.co.ua/books-translations/kurs-c-s-nulya/kurs-c-s-nulya-chast-5-konstanty/">Курс C с нуля: часть 5 – константы</a></li>
+		<li class="page_item page-item-9465"><a href="https://rtfm.co.ua/books-translations/kurs-c-s-nulya/kurs-c-s-nulya-chast-6-peremennye/">Курс C с нуля: часть 6 – переменные</a></li>
+	</ul>
+</li>
+	<li class="page_item page-item-14284 page_item_has_children"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/">C programming для начинающих</a>
+	<ul class="children">
+		<li class="page_item page-item-14230"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-1-hello-world/">C programming для начинающих: часть 1 – Hello, World</a></li>
+		<li class="page_item page-item-14232"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-2-argumenty-i-vozvrashhaemye-znacheniya/">C programming для начинающих: часть 2 – аргументы и возвращаемые значения</a></li>
+		<li class="page_item page-item-14234"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-3-peredacha-argumentov-programme/">C programming для начинающих: часть 3 – передача аргументов программе</a></li>
+		<li class="page_item page-item-14238"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-4-printf/">C programming для начинающих: часть 4 – printf</a></li>
+		<li class="page_item page-item-14253"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-5-kommentarii/">C programming для начинающих: часть 5 – комментарии</a></li>
+		<li class="page_item page-item-14264"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-6-peremennye-i-tipy-dannyx/">C programming для начинающих: часть 6 – переменные и типы данных</a></li>
+		<li class="page_item page-item-14267"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-7-celye-chisla-i-drobi/">C programming для начинающих: часть 7 – целые числа и дроби</a></li>
+		<li class="page_item page-item-14303"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-8-konstanty/">C programming для начинающих: часть 8 – константы</a></li>
+		<li class="page_item page-item-14319"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-9-naming-convention/">C programming для начинающих: часть 9 – naming convention</a></li>
+		<li class="page_item page-item-14358"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-10-operatory-ravenstva-i-prisvaivaniya/">C programming для начинающих: часть 10 – операторы равенства и присваивания</a></li>
+		<li class="page_item page-item-14366"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-11-ifelse-i-proverka-ravenstva/">C programming для начинающих: часть 11 – if/else и проверка равенства</a></li>
+		<li class="page_item page-item-14377"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-12-sostavnye-operatory/">C programming для начинающих: часть 12 – составные операторы</a></li>
+		<li class="page_item page-item-14382"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-13-operatory-inkrementa-i-dekrementa/">C programming для начинающих: часть 13 – операторы инкремента и декремента</a></li>
+		<li class="page_item page-item-14436"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-14-operatory-vetvleniya-ifelse/">C programming для начинающих: часть 14 – операторы ветвления if/else</a></li>
+		<li class="page_item page-item-14455"><a href="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-15-problemy-gets-i-fgets/">C programming для начинающих: часть 15 – проблемы gets() и fgets()</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li class="page_item page-item-642"><a href="https://rtfm.co.ua/ssylki/">Ссылки</a></li>
+<li class="page_item page-item-12473"><a href="https://rtfm.co.ua/f-a-q/">FAQ</a></li>
+<li class="page_item page-item-14402"><a href="https://rtfm.co.ua/about/">About</a></li>
+<li class="page_item page-item-174"><a href="https://rtfm.co.ua/karta-sajta/">Карта сайта</a></li>
+</ul><select class="selectnav" id="selectnav1"><option value="" selected="selected">Menu</option><option value="https://rtfm.co.ua/">HOME</option><option value="https://rtfm.co.ua/books-translations/">ПЕРЕВОДЫ</option><option value="https://rtfm.co.ua/books-translations/groovy-s-nulya/">- Groovy с нуля</option><option value="https://rtfm.co.ua/books-translations/groovy-s-nulya/groovy-chast-1-ustanovka-na-linux/">-- Groovy: часть 1 – установка на Linux</option><option value="https://rtfm.co.ua/books-translations/groovy-s-nulya/groovy-chast-2-hello-world-i-bazovyj-sintaksis/">-- Groovy: часть 2 – Hello World и базовый синтаксис</option><option value="https://rtfm.co.ua/books-translations/groovy-s-nulya/groovy-chast-3-tipy-dannyx/">-- Groovy: часть 3 – типы данных</option><option value="https://rtfm.co.ua/books-translations/groovy-s-nulya/groovy-chast-4-peremennye/">-- Groovy: часть 4 – переменные</option><option value="https://rtfm.co.ua/books-translations/groovy-s-nulya/groovy-chast-5-operatory/">-- Groovy: часть 5 – операторы</option><option value="https://rtfm.co.ua/books-translations/groovy-s-nulya/groovy-chast-6-cikly/">-- Groovy: часть 6 – циклы</option><option value="https://rtfm.co.ua/books-translations/groovy-s-nulya/groovy-chast-7-operatory-vetvleniya-ifelseswitch/">-- Groovy: часть 7 – операторы ветвления if/else/switch</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/">- Python с нуля</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-10-slovari/">-- Python с нуля – часть 10: словари</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-9-kortezhi/">-- Python с нуля – часть 9: кортежи</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-6-chisla/">-- Python с нуля — часть 6: числа</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-7-stroki/">-- Python с нуля — часть 7: строки</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-8-spiski/">-- Python с нуля — часть 8: списки</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-1-bazovyj-sintaksis/">-- Python с нуля – часть 1: базовый синтаксис</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-2-tipy-peremennyx/">-- Python с нуля – часть 2: типы переменных</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-3-bazovye-operatory/">-- Python с нуля – часть 3: базовые операторы</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-4-upravlyayushhie-konstrukcii-operatory-if-elif-else/">-- Python с нуля – часть 4: управляющие конструкции – операторы IF…ELIF…ELSE</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-5-cikly/">-- Python с нуля — часть 5: циклы</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-5-cikly/python-s-nulya-chast-5-vlozhennye-cikly/">--- Python с нуля — часть 5: циклы – вложенные циклы</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-5-cikly/python-s-nulya-chast-5-cikly-operator-break/">--- Python с нуля — часть 5: циклы – оператор break</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-5-cikly/python-s-nulya-chast-5-cikly-operator-continue/">--- Python с нуля — часть 5: циклы – оператор continue</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-5-cikly/python-s-nulya-chast-5-cikly-operator-pass/">--- Python с нуля — часть 5: циклы – оператор pass</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-5-cikly/python-s-nulya-chast-5-cikl-for/">--- Python с нуля — часть 5: циклы – цикл for</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-s-nulya-chast-5-cikly/python-s-nulya-chast-5-cikly-cikl-while/">--- Python с нуля — часть 5: циклы – цикл while</option><option value="https://rtfm.co.ua/books-translations/python_s_nulya/python-%d1%81-%d0%bd%d1%83%d0%bb%d1%8f-%d1%87%d0%b0%d1%81%d1%82%d1%8c-11-%d0%b2%d1%80%d0%b5%d0%bc%d1%8f-%d0%b8-%d0%b4%d0%b0%d1%82%d0%b0/">-- Python с нуля – часть 11: время и дата</option><option value="https://rtfm.co.ua/books-translations/django-book/">- Django Book – русский перевод</option><option value="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/">- Курс Ruby с нуля</option><option value="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-1-sintaksis/">-- Ruby: с нуля – часть 1: синтаксис</option><option value="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-2-klassy-i-obekty/">-- Ruby: с нуля – часть 2: классы и объекты</option><option value="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-3-peremennye-konstanty-i-literaly/">-- Ruby: с нуля – часть 3: переменные, константы и литералы</option><option value="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-4-operatory/">-- Ruby: с нуля – часть 4: операторы</option><option value="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-5-kommentarii/">-- Ruby: с нуля – часть 5: комментарии</option><option value="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-6-uslovnye-operatory-if-else-case-unless/">-- Ruby: с нуля – часть 6: условные операторы if…else, case, unless</option><option value="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-7-cikly-while-for-until-break-redo-i-retry/">-- Ruby: с нуля – часть 7: циклы while, for, until, break, redo и retry</option><option value="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-8-metody/">-- Ruby: с нуля – часть 8: методы</option><option value="https://rtfm.co.ua/books-translations/kus-ruby-s-nulya/ruby-s-nulya-chast-9-bloki/">-- Ruby: с нуля – часть 9: блоки</option><option value="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/">- Программирование на C шаг за шагом</option><option value="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-1-hello-world/">-- Программирование на C шаг за шагом: шаг 1 – Hello, World!</option><option value="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-2-peremennye-i-tipy-dannyx/">-- Программирование на C шаг за шагом: шаг 2 – переменные и типы данных</option><option value="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-3-massivy/">-- Программирование на C шаг за шагом: шаг 3 – массивы</option><option value="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-4-stroki/">-- Программирование на C шаг за шагом: шаг 4 – строки</option><option value="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-5-cikl-for/">-- Программирование на C шаг за шагом: шаг 5 – цикл FOR</option><option value="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-6-cikl-while/">-- Программирование на C шаг за шагом: шаг 6 – цикл WHILE</option><option value="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-7-funkcii/">-- Программирование на C шаг за шагом: шаг 7 – функции</option><option value="https://rtfm.co.ua/books-translations/programmirovanie-na-c-shag-za-shagom/programmirovanie-na-c-shag-za-shagom-shag-9-struktury-structures/">-- Программирование на C шаг за шагом: шаг 9 – структуры (structures)</option><option value="https://rtfm.co.ua/books-translations/kurs-c-s-nulya/">- Курс программирования на С с нуля</option><option value="https://rtfm.co.ua/books-translations/kurs-c-s-nulya/kurs-c-s-nulya-chast-1-bazovyj-sintaksis/">-- Курс C с нуля: часть 1 – базовый синтаксис</option><option value="https://rtfm.co.ua/books-translations/kurs-c-s-nulya/kurs-c-s-nulya-chast-2-printf-i-scanf/">-- Курс C с нуля: часть 2 – printf и scanf</option><option value="https://rtfm.co.ua/books-translations/kurs-c-s-nulya/kurs-c-s-nulya-chast-3-tipy-dannyx/">-- Курс C с нуля: часть 3 – типы данных</option><option value="https://rtfm.co.ua/books-translations/kurs-c-s-nulya/kurs-c-s-nulya-chast-4-tokeny-i-klyuchevye-slova/">-- Курс C с нуля: часть 4 – токены и ключевые слова</option><option value="https://rtfm.co.ua/books-translations/kurs-c-s-nulya/kurs-c-s-nulya-chast-5-konstanty/">-- Курс C с нуля: часть 5 – константы</option><option value="https://rtfm.co.ua/books-translations/kurs-c-s-nulya/kurs-c-s-nulya-chast-6-peremennye/">-- Курс C с нуля: часть 6 – переменные</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/">- C programming для начинающих</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-1-hello-world/">-- C programming для начинающих: часть 1 – Hello, World</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-2-argumenty-i-vozvrashhaemye-znacheniya/">-- C programming для начинающих: часть 2 – аргументы и возвращаемые значения</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-3-peredacha-argumentov-programme/">-- C programming для начинающих: часть 3 – передача аргументов программе</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-4-printf/">-- C programming для начинающих: часть 4 – printf</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-5-kommentarii/">-- C programming для начинающих: часть 5 – комментарии</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-6-peremennye-i-tipy-dannyx/">-- C programming для начинающих: часть 6 – переменные и типы данных</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-7-celye-chisla-i-drobi/">-- C programming для начинающих: часть 7 – целые числа и дроби</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-8-konstanty/">-- C programming для начинающих: часть 8 – константы</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-9-naming-convention/">-- C programming для начинающих: часть 9 – naming convention</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-10-operatory-ravenstva-i-prisvaivaniya/">-- C programming для начинающих: часть 10 – операторы равенства и присваивания</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-11-ifelse-i-proverka-ravenstva/">-- C programming для начинающих: часть 11 – if/else и проверка равенства</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-12-sostavnye-operatory/">-- C programming для начинающих: часть 12 – составные операторы</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-13-operatory-inkrementa-i-dekrementa/">-- C programming для начинающих: часть 13 – операторы инкремента и декремента</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-14-operatory-vetvleniya-ifelse/">-- C programming для начинающих: часть 14 – операторы ветвления if/else</option><option value="https://rtfm.co.ua/books-translations/c-programming-dlya-nachinayushhix/c-programming-dlya-nachinayushhix-chast-15-problemy-gets-i-fgets/">-- C programming для начинающих: часть 15 – проблемы gets() и fgets()</option><option value="https://rtfm.co.ua/ssylki/">ССЫЛКИ</option><option value="https://rtfm.co.ua/f-a-q/">FAQ</option><option value="https://rtfm.co.ua/about/">ABOUT</option><option value="https://rtfm.co.ua/karta-sajta/">КАРТА САЙТА</option></select>
+		</nav><!-- #site-navigation -->
+		<div class="clear"></div>
+	</header><!-- #masthead -->
+
+	<div id="main" class="wrapper">
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+				
+	<article id="post-1319" class="post-1319 post type-post status-publish format-standard hentry category-apache-http-server category-howtos category-web-services tag-apache-http-server tag-event tag-mpm tag-mpm-itk tag-prefork tag-worker">
+				<header class="entry-header">
+						<h1 class="entry-title">Apache: MPM – worker, prefork или event?</h1>
+									
+		<div class="below-title-meta">
+		<div class="adt">
+		By        <span class="vcard author">
+			<span class="fn"><a href="https://rtfm.co.ua/author/setevoy/" title="Posts by мережевий хробачок™" rel="author">мережевий хробачок™</a></span>
+        </span>
+        <span class="meta-sep">|</span> 
+			<span class="date updated">08/29/2012</span>		 
+        </div>
+		<div class="adt-comment">
+		<a class="link-comments" href="https://rtfm.co.ua/apache-mpm-worker-prefork-ili-event/#disqus_thread" data-disqus-identifier="1319 http://rtfm.co.ua/?p=1319">0 Comments</a> 
+        </div>       
+		</div><!-- below title meta end -->
+			
+						
+		</header><!-- .entry-header -->
+
+							<div class="entry-content">
+						<table class="rw-rating-table rw-ltr rw-left rw-no-labels"><tbody><tr><td><nobr>&nbsp;</nobr></td><td><div class="rw-left"><div class="rw-ui-container rw-urid-13200 rw-ui-star rw-size-small rw-dir-ltr rw-halign-right rw-valign-middle rw-style-crystal_penguin rw-theme-star_crystal_penguin rw-active rw-class-blog-post" data-img="http://rtfm.co.ua/wp-content/uploads/2011/12/apache_logo.jpg" data-urid="13200" style=""><div class="rw-action-area"><ul class="rw-ui-stars"><li class="rw-ui-star-0 rw-ui-star-selected"></li><li class="rw-ui-star-1 rw-ui-star-selected"></li><li class="rw-ui-star-2 rw-ui-star-selected"></li><li class="rw-ui-star-3 rw-ui-star-selected"></li><li class="rw-ui-star-4 rw-ui-star-selected"></li></ul><a class="rw-report-link" target="_blank" href="https://rating-widget.com/my-rating-report/star/crystal-penguin/rating-103201227-5/" rel="nofollow"></a></div><span class="rw-ui-info-container" style="background-color: rgb(255, 255, 255);"><i aria-hidden="true" class="rw-ui-info-nub rw-ui-info-outer-nub" style="border-right-color: rgba(0, 0, 0, 0.5);"></i><i aria-hidden="true" class="rw-ui-info-nub rw-ui-info-inner-nub" style="border-right-color: rgb(255, 255, 255);"></i><span class="rw-ui-info-inner-container" style="border-color: rgba(0, 0, 0, 0.5);"><span class="rw-ui-info" style="color: rgb(0, 0, 0);">Rate this (4 Votes)</span></span></span></div></div></td></tr></tbody></table><p><strong><img class="alignleft size-full wp-image-372" title="apache_logo" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/apache_logo.jpg" alt="" width="125" height="106">MPM</strong> – <span style="font-family: Courier New;">Multi-Processing Module</span>, можно перевести как “<em>Модуль мультипроцессовой обработки</em>” (не путайте с мультипроцессорной!).</p>
+<p>Если быть совсем кратким – <strong>MPM</strong> используется сервером <strong>Apache</strong> для обработки нескольких запросов несколькими процессами одновременно.</p>
+<p>В настоящее время используется 2 основных варианта <strong>MPM</strong> – это <span style="font-family: Courier New;"><strong><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://httpd.apache.org/docs/2.2/mod/worker.html">Worker</a></noindex><!--/noindex--></strong></span> и <span style="font-family: Courier New;"><strong><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://httpd.apache.org/docs/2.2/mod/prefork.html">PreFork</a></noindex><!--/noindex--></strong></span>. Также, имеется сравнительно новый модуль – <span style="font-family: Courier New;"><strong><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://httpd.apache.org/docs/2.2/mod/event.html">Event</a></noindex><!--/noindex--></strong></span>, который только недавно перешел из стадии <span style="font-family: Courier New;">‘<em>experimental</em></span>‘ в <span style="font-family: Courier New;">‘<em>stable</em>‘</span>.</p>
+<p>В этой статье постараемся разобраться – в чем разница между этими тремя <span style="font-family: Courier New;"><strong>MPM- Worker, PreFork</strong></span> и <span style="font-family: Courier New;"><strong>Event</strong></span>.<span id="more-1319"></span></p>
+<p>Итак, начнем с модуля <span style="font-family: Courier New;"><strong>PreFork</strong></span> – на данный момент он является наиболее распространенным модулем, и по умолчанию <strong>Apache</strong> устанавливается именно с ним.</p>
+<p><span style="font-family: Courier New;"><strong>Apache MPM PreFork</strong></span> запускает по отдельному процессу на каждый запрос. Иначе говоря, каждый процесс одновременно обрабатывает только 1 поток (<span style="font-family: Courier New;"><em>thread</em></span>) на одно соединение. Т.к. <span style="font-family: Courier New;"><strong>PreFork</strong></span>
+ заранее создает определенное количество процессов, которые не требуют 
+времени на отдельный вызов при поступлении запроса к серверу и не 
+нуждаются в выполнении <em>маршалинга</em> (в технологии <span style="font-family: Courier New;"><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://ru.wikipedia.org/wiki/Component_Object_Model">ORPC</a></noindex><!--/noindex--></span>
+ – процесс упаковки запроса, включая параметры, в стандартный формат, 
+пригодный для передачи по сети) во время его обработки, то такой вариант
+ является наиболее быстродействующим, по сравнению с другими <strong>MPM</strong>.
+ Однако, такой прирост производительности имеется только в случае, когда
+ одновременно поступает некоторое ограниченное количество одновременных 
+запросов, т.к. каждый из них должен ждать, пока процессор сможет их 
+обработать. Кроме того, попытки увеличить количество одновременно 
+запускаемых процессов способно серьезно повлиять на используемую 
+сервером память.</p>
+<p>Одним из важнейших преимуществ такого <strong>MPM</strong> является 
+его большая безопасность, в силу того, что каждый процесс фактически 
+изолирован от других. Его использование оправдано в тех случаях, когда 
+используются модули, которые не поддерживают или плохо поддерживают, 
+например – <span style="font-family: Courier New;"><em>mod_php</em></span>.</p>
+<p><span style="font-family: Courier New;"><strong>Apache MPM worker</strong></span> – использует многопоточную систему обработки запросов, что улучшает обработку большого количества соединений. <span style="font-family: Courier New;"><strong>MPM Worker</strong></span> запускает несколько процессов, которые, в свою очередь, запускают несколько потоков (<span style="font-family: Courier New;"><em>threads</em></span>). Эти “дочерние потоки”, по аналогии с процессами <span style="font-family: Courier New;"><strong>MPM PreFork</strong></span>,
+ ожидают входящих клиентских запросов. Такой подход является менее 
+ресурсоёмким в плане потребления оперативной памяти сервера, в отличии 
+от процессов <span style="font-family: Courier New;"><strong>PreFork</strong></span>. Так же, улучшается обработка большого количества одновременных запросов, т.к. в отличии от&nbsp; <span style="font-family: Courier New;"><strong>PreFork</strong></span> запросу необходимо только получить свободный поток, который как правило есть, что позволяет сэкономить ресурсы сервера.</p>
+<p>К недостаткам <span style="font-family: Courier New;"><strong>MPM Worker</strong></span> относится его относительная нестабильность, по сравнению с <span style="font-family: Courier New;"><strong>PreFork</strong></span>, т.к. проблемы в одном процессе могут затронуть другие соединения.Кроме того, имейте ввиду, что <span style="font-family: Courier New;"><strong>Worker</strong></span> связывает каждое <span style="font-family: Courier New;"><em>keep-alive</em></span>
+ соединение с потоком, а не с запросом, и в таком случае каждый поток 
+может выполнятся значительное время, пока соединение не будет 
+окончательно разорвано.</p>
+<p>И последний – <span style="font-family: Courier New;"><strong>Apache MPM Event</strong></span>. По принципу работы он очень похож на <span style="font-family: Courier New;"><strong>MPM Worker</strong></span>.&nbsp; Главное отличие <span style="font-family: Courier New;"><strong>Event</strong></span> от <strong>Worker</strong>
+ в том, что он поддерживает выделенный поток для каждого установленного 
+соединения, и передает дочерним потокам запрос только после того, как он
+ был непосредственно сделан. И сразу же после обработки этого запроса – 
+поток освобождается для выполнения следующего запроса. Такой вариант 
+отлично подходит для клиентов, которые делают не частые запросы, но 
+поддерживают долгие <span style="font-family: Courier New;"><em>keep-alive</em></span> соединения с сервером.</p>
+<p>Исключением является обработка <strong>SSL</strong>-соединений, в таких случаях <span style="font-family: Courier New;"><strong><code>Event</code></strong></span> ведет себя аналогично <span style="font-family: Courier New;"><strong>Worker</strong></span>-у.</p>
+<p>Что касается сравнения работы <span style="font-family: Courier New;"><strong>Worker</strong></span> и <span style="font-family: Courier New;"><strong>PreFork</strong></span> – то можно увидеть сравнения например <!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://www.thrull.com/corner/webserver/prefork-vs-worker/">тут&gt;&gt;&gt;</a></noindex><!--/noindex-->.
+ Как видно, разница между ними всего несколько процентов, однако – все 
+зависит от специфики каждого сервера и обрабатываемых им запросов.</p>
+<p>Кроме того, многие из сравнительно старых модулей <strong>Apache</strong> требуют наличия именно <span style="font-family: Courier New;"><strong>MPM PreFork</strong></span>, что следует учитывать при выборе <span style="font-family: Courier New;"><strong>Multi-Processing Module</strong></span> для вашего сервера.</p>
+<p>Так же, существуют ещё несколько вариантов <strong>MPM</strong> – <span style="font-family: Courier New;"><strong>mpm-itk, mpm-peruser</strong></span> и <!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://ru.wikipedia.org/wiki/Apache#.D0.9C.D1.83.D0.BB.D1.8C.D1.82.D0.B8.D0.BF.D1.80.D0.BE.D1.86.D0.B5.D1.81.D1.81.D0.BE.D1.80.D0.BD.D1.8B.D0.B5_.D0.BC.D0.BE.D0.B4.D0.B5.D0.BB.D0.B8_.28MPM.29" title="Мультипроцессорные модели (MPM)">другие&gt;&gt;&gt;</a></noindex><!--/noindex-->.</p>
+<p>Напоследок – несколько полезных команд.</p>
+<p>Узнать, какой тип <strong>MPM</strong> используется в установленном <strong>Apache</strong> можно любой из команд:</p>
+<p><span style="font-family: Courier New;"># apachectl -t -D DUMP_MODULES | grep mpm<br>
+mpm_prefork_module (static)</span></p>
+<p>или</p>
+<p><span style="font-family: Courier New;"># httpd -V | grep mpm<br>
+-D APACHE_MPM_DIR=”server/mpm/prefork”</span></p>
+<p>Установить <strong>Apache</strong> с выбранным <strong>MPM</strong> можно из соответствующего порта:</p>
+<p><span style="font-family: Courier New;">/usr/ports/www # ls | grep apache<br>
+…<br>
+apache22<br>
+apache22-event-mpm<br>
+apache22-itk-mpm<br>
+apache22-peruser-mpm<br>
+apache22-worker-mpm<br>
+…</span></p>
+<p>Порт <span style="font-family: Courier New;"><em>apache22</em></span> – установит <strong>Apache</strong> с <span style="font-family: Courier New;">mpm_prefork</span>.</p>
+<p>Ссылки по теме.</p>
+<p><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://httpd.apache.org/docs/2.2/mod/">http://httpd.apache.org</a></noindex><!--/noindex--></p>
+<p><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://serverfault.com/questions/383526/how-do-i-select-which-apache-mpm-to-use">http://serverfault.com</a></noindex><!--/noindex--></p>
+<p><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://www.hostcms.ru/documentation/server/apache/">http://www.hostcms.ru</a></noindex><!--/noindex--></p>
+<p><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://phpsuxx.blogspot.com/2008/01/apache2-prefork-vs-worker.html">http://phpsuxx.blogspot.com</a></noindex><!--/noindex--></p>
+<p><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://www.salex.ru/book/book.php?httpd_prefork">http://www.salex.ru</a></noindex><!--/noindex--></p>
+<p><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://algolist.manual.ru/web/servers.php">http://algolist.manual.ru</a></noindex><!--/noindex--></p>
+<p>&nbsp;</p>
+<div id="share-me"><ul class="share-right"><li><a href="http://www.facebook.com/sharer.php?u=https://rtfm.co.ua/apache-mpm-worker-prefork-ili-event/&amp;t=Apache%3A+MPM+%26%238211%3B+worker%2C+prefork+%D0%B8%D0%BB%D0%B8+event%3F" alt="Share on Facebook" title="Share on Facebook" onclick="return smWindowpop(this.href,545,433)"><img alt="" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/facebook.png" width="32px" height="32px"></a></li><li><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://twitter.com/share?text=Apache%3A+MPM+%26%238211%3B+worker%2C+prefork+%D0%B8%D0%BB%D0%B8+event%3F-&amp;url=https://rtfm.co.ua/apache-mpm-worker-prefork-ili-event/&amp;via=RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5" alt="Tweet This Post" title="Tweet This Post" onclick="return smWindowpop(this.href,545,433)"><img alt="" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/twitter.png" width="32px" height="32px"></a></noindex><!--/noindex--></li><li><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/https://plusone.google.com/_/+1/confirm?hl=fr-FR&amp;url=https://rtfm.co.ua/apache-mpm-worker-prefork-ili-event/" alt="Share on Google+" title="Share on Google+" onclick="return smWindowpop(this.href,545,433)"><img alt="" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/googleplus.png" width="32px" height="32px"></a></noindex><!--/noindex--></li><li><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://www.tumblr.com/share/photo?source=&amp;caption=Apache%3A+MPM+%26%238211%3B+worker%2C+prefork+%D0%B8%D0%BB%D0%B8+event%3F&amp;clickthru=https%3A%2F%2Frtfm.co.ua%2Fapache-mpm-worker-prefork-ili-event%2F" title="Share on Tumblr" onclick="return smWindowpop(this.href,545,433)"> <img alt="" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/tumblr.png" width="32px" height="32px"></a></noindex><!--/noindex--></li><li><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/http://www.linkedin.com/shareArticle?mini=true&amp;url=https://rtfm.co.ua/apache-mpm-worker-prefork-ili-event/&amp;title=Apache%3A+MPM+%26%238211%3B+worker%2C+prefork+%D0%B8%D0%BB%D0%B8+event%3F&amp;source=RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5" onclick="return smWindowpop(this.href, 545,433)"><img alt="" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/linkedin.png" width="32px" height="32px"></a></noindex><!--/noindex--></li></ul></div><br>
+<div class="wp_rp_wrap  wp_rp_plain" id="wp_rp_first"><div class="wp_rp_content"><h3 class="related_post_title">Similar posts</h3><ul class="related_post wp_rp"><li data-position="0" data-poid="in-1419" data-post-type="none"><small class="wp_rp_publish_date">09/16/2012</small> <a href="https://rtfm.co.ua/apache_mod_php_mpm_prefork_vs_mod_fcgid_mpm_worker/" class="wp_rp_title">Apache: сравнение работы с различными модулями + NGINX</a><small class="wp_rp_comments_count"> (0)</small><br></li><li data-position="1" data-poid="in-1312" data-post-type="none"><small class="wp_rp_publish_date">09/11/2012</small> <a href="https://rtfm.co.ua/freebsd-apache-mpm_worker-php-mod_fcgid/" class="wp_rp_title">FreeBSD: Apache + mpm_worker + PHP + mod_fcgid</a><small class="wp_rp_comments_count"> (0)</small><br></li><li data-position="2" data-poid="in-75" data-post-type="none"><small class="wp_rp_publish_date">08/16/2011</small> <a href="https://rtfm.co.ua/freebsd-apachemysqlphp-lamp-phpmyadmin/" class="wp_rp_title">FreeBSD: Apache+MySQL+PHP (LAMP) + phpMyAdmin</a><small class="wp_rp_comments_count"> (0)</small><br></li><li data-position="3" data-poid="in-1303" data-post-type="none"><small class="wp_rp_publish_date">08/27/2012</small> <a href="https://rtfm.co.ua/apache-vklyuchenie-server-status/" class="wp_rp_title">Apache: включение server-status</a><small class="wp_rp_comments_count"> (0)</small><br></li><li data-position="4" data-poid="in-357" data-post-type="none"><small class="wp_rp_publish_date">12/20/2011</small> <a href="https://rtfm.co.ua/apache-primery-sozdaniya-virtualhost/" class="wp_rp_title">Apache: примеры создания VirtualHost</a><small class="wp_rp_comments_count"> (0)</small><br></li></ul></div></div>
+											</div><!-- .entry-content -->
+		
+	<footer class="entry-meta">
+					<span>Category: <a href="https://rtfm.co.ua/category/http_servers/apache-http-server/" rel="category tag">Apache HTTP Server</a> <a href="https://rtfm.co.ua/category/howtos/" rel="category tag">HOWTO's</a> <a href="https://rtfm.co.ua/category/web-services/" rel="category tag">Web-services</a></span>
+								<span>Tags: <a href="https://rtfm.co.ua/tag/apache-http-server/" rel="tag">Apache HTTP Server</a>, <a href="https://rtfm.co.ua/tag/event/" rel="tag">event</a>, <a href="https://rtfm.co.ua/tag/mpm/" rel="tag">MPM</a>, <a href="https://rtfm.co.ua/tag/mpm-itk/" rel="tag">mpm-itk</a>, <a href="https://rtfm.co.ua/tag/prefork/" rel="tag">PreFork</a>, <a href="https://rtfm.co.ua/tag/worker/" rel="tag">worker</a></span>
+			
+           						</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+				<nav class="nav-single">
+
+<div class="postmeta">Tags: <a href="https://rtfm.co.ua/tag/apache-http-server/" rel="tag">Apache HTTP Server</a>, <a href="https://rtfm.co.ua/tag/event/" rel="tag">event</a>, <a href="https://rtfm.co.ua/tag/mpm/" rel="tag">MPM</a>, <a href="https://rtfm.co.ua/tag/mpm-itk/" rel="tag">mpm-itk</a>, <a href="https://rtfm.co.ua/tag/prefork/" rel="tag">PreFork</a>, <a href="https://rtfm.co.ua/tag/worker/" rel="tag">worker</a><br><img src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/ye.jpg">24,188 views</div>
+
+					<div class="assistive-text">Post navigation</div>
+					<span class="nav-previous"><a href="https://rtfm.co.ua/apache-alert-eai-8hostname-nor-servname-provided-or-not-known/" rel="prev"><span class="meta-nav">←</span> Apache: [alert] (EAI 8)hostname nor servname provided, or not known</a></span>
+					<span class="nav-next"><a href="https://rtfm.co.ua/freebsd-adduser-error-there-was-an-error-adding-user/" rel="next">FreeBSD: adduser: ERROR: There was an error adding user <span class="meta-nav">→</span></a></span>
+				</nav><!-- .nav-single -->
+
+				
+<div id="disqus_thread"><iframe id="dsq-app5462" name="dsq-app5462" allowtransparency="true" scrolling="no" tabindex="0" title="Disqus" style="width: 1px !important; min-width: 100% !important; border: medium none !important; overflow: hidden !important; height: 401px !important;" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/a.html" horizontalscrolling="no" verticalscrolling="no" width="100%" frameborder="0"></iframe></div>
+
+
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+			<div id="secondary" class="widget-area" role="complementary">
+			<aside id="search-2" class="widget widget_search"><form role="search" method="get" id="searchform" class="searchform" action="https://rtfm.co.ua/">
+				<div>
+					<label class="screen-reader-text" for="s">Search for:</label>
+					<input name="s" id="s" class="ui-autocomplete-input" autocomplete="off" type="text">
+					<input id="searchsubmit" value="Search" type="submit">
+				</div>
+			</form></aside><aside id="text-2" class="widget widget_text">			<div class="textwidget"><script>
+  (function() {
+    var cx = '002649963230055469602:qe1halekq5u';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<div id="___gcse_0"><div class="gsc-control-cse gsc-control-cse-ru"><div class="gsc-control-wrapper-cse" dir="ltr"><form class="gsc-search-box gsc-search-box-tools" accept-charset="utf-8"><table class="gsc-search-box" cellspacing="0" cellpadding="0"><tbody><tr><td class="gsc-input"><div class="gsc-input-box" id="gsc-iw-id1"><table style="width: 100%; padding: 0px;" id="gs_id50" class="gstl_50 " cellspacing="0" cellpadding="0"><tbody><tr><td id="gs_tti50" class="gsib_a"><input autocomplete="off" size="10" class="gsc-input" name="search" title="поиск" style="width: 100%; padding: 0px; border: medium none; margin: 0px; height: auto; outline: medium none; background: rgb(255, 255, 255) url(&quot;https://www.google.com/cse/static/images/1x/googlelogo_lightgrey_46x16dp.png&quot;) no-repeat scroll left center; text-indent: 48px;" id="gsc-i-id1" dir="ltr" spellcheck="false" placeholder="Пользовательский поиск" type="text"></td><td class="gsib_b"><div class="gsst_b" id="gs_st50" dir="ltr"><a class="gsst_a" href="javascript:void(0)" style="display: none;"><span class="gscb_a" id="gs_cb50">×</span></a></div></td></tr></tbody></table></div><input name="bgresponse" id="bgresponse" type="hidden"></td><td class="gsc-search-button"><input src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/search_box_icon.png" class="gsc-search-button gsc-search-button-v2" title="поиск" type="image"></td><td class="gsc-clear-button"><div class="gsc-clear-button" title="удалить результаты">&nbsp;</div></td></tr></tbody></table><table class="gsc-branding" cellspacing="0" cellpadding="0"><tbody><tr><td class="gsc-branding-user-defined"></td><td class="gsc-branding-text"><div class="gsc-branding-text">технология</div></td><td class="gsc-branding-img"><img src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/googlelogo_grey_46x15dp.png" class="gsc-branding-img" srcset="https://www.google.com/cse/static/images/2x/googlelogo_grey_46x15dp.png 2x"></td></tr></tbody></table></form><div class="gsc-results-wrapper-overlay"><div class="gsc-results-close-btn" tabindex="0"></div><div class="gsc-tabsAreaInvisible"><div class="gsc-tabHeader gsc-inline-block gsc-tabhActive">Интернет</div><span class="gs-spacer"> </span><div tabindex="0" class=" gsc-tabHeader gsc-tabhInactive gsc-inline-block">Картинка</div><span class="gs-spacer"> </span></div><div class="gsc-refinementsAreaInvisible"></div><div class="gsc-above-wrapper-area-invisible"><table class="gsc-above-wrapper-area-container" cellspacing="0" cellpadding="0"><tbody><tr><td class="gsc-result-info-container"><div class="gsc-result-info-invisible"></div></td><td class="gsc-orderby-container"><div class="gsc-orderby-invisible"><div class="gsc-orderby-label gsc-inline-block">Упорядочить:</div><div class="gsc-option-menu-container gsc-inline-block"><div class="gsc-selected-option-container gsc-inline-block"><div class="gsc-selected-option">Relevance</div><div class="gsc-option-selector"></div></div><div class="gsc-option-menu-invisible"><div class="gsc-option-menu-item gsc-option-menu-item-highlighted"><div class="gsc-option">Relevance</div></div><div class="gsc-option-menu-item"><div class="gsc-option">Date</div></div></div></div></div></td></tr></tbody></table></div><div class="gsc-adBlockInvisible"></div><div class="gsc-wrapper"><div class="gsc-adBlockInvisible"></div><div class="gsc-resultsbox-invisible"><div class="gsc-resultsRoot gsc-tabData gsc-tabdActive"><table class="gsc-resultsHeader" cellspacing="0" cellpadding="0"><tbody><tr><td class="gsc-twiddleRegionCell"><div class="gsc-twiddle"><div class="gsc-title">Интернет</div></div><div class="gsc-stats"></div><div class="gsc-results-selector gsc-all-results-active"><div class="gsc-result-selector gsc-one-result" title="показать один результат">&nbsp;</div><div class="gsc-result-selector gsc-more-results" title="показать другие результаты">&nbsp;</div><div class="gsc-result-selector gsc-all-results" title="показать все результаты">&nbsp;</div></div></td><td class="gsc-configLabelCell"></td></tr></tbody></table><div><div class="gsc-expansionArea"></div></div></div><div class="gsc-resultsRoot gsc-tabData gsc-tabdInactive"><table class="gsc-resultsHeader" cellspacing="0" cellpadding="0"><tbody><tr><td class="gsc-twiddleRegionCell"><div class="gsc-twiddle"><div class="gsc-title">Картинка</div></div><div class="gsc-stats"></div><div class="gsc-results-selector gsc-all-results-active"><div class="gsc-result-selector gsc-one-result" title="показать один результат">&nbsp;</div><div class="gsc-result-selector gsc-more-results" title="показать другие результаты">&nbsp;</div><div class="gsc-result-selector gsc-all-results" title="показать все результаты">&nbsp;</div></div></td><td class="gsc-configLabelCell"></td></tr></tbody></table><div><div class="gsc-expansionArea"></div></div></div></div></div></div><div class="gsc-modal-background-image" tabindex="0"></div></div></div></div>
+
+<div align="center">
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/orphus.js"></script>
+<a href="http://orphus.ru/" id="orphus" target="_blank" title="Система Orphus"><img alt="Система Orphus" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/orphus.gif" width="240" height="80" border="0" align="middle"></a>
+</div>
+</div>
+		</aside><aside id="wp_related_posts_widget" class="widget widget_wp_related_posts">
+<div class="wp_rp_wrap  wp_rp_plain"><div class="wp_rp_content"><p class="widget-title">Similar posts</p><ul class="related_post wp_rp"><li data-position="0" data-poid="in-1419" data-post-type="none"><small class="wp_rp_publish_date">09/16/2012</small> <a href="https://rtfm.co.ua/apache_mod_php_mpm_prefork_vs_mod_fcgid_mpm_worker/" class="wp_rp_title">Apache: сравнение работы с различными модулями + NGINX</a><small class="wp_rp_comments_count"> (0)</small><br></li><li data-position="1" data-poid="in-1312" data-post-type="none"><small class="wp_rp_publish_date">09/11/2012</small> <a href="https://rtfm.co.ua/freebsd-apache-mpm_worker-php-mod_fcgid/" class="wp_rp_title">FreeBSD: Apache + mpm_worker + PHP + mod_fcgid</a><small class="wp_rp_comments_count"> (0)</small><br></li><li data-position="2" data-poid="in-75" data-post-type="none"><small class="wp_rp_publish_date">08/16/2011</small> <a href="https://rtfm.co.ua/freebsd-apachemysqlphp-lamp-phpmyadmin/" class="wp_rp_title">FreeBSD: Apache+MySQL+PHP (LAMP) + phpMyAdmin</a><small class="wp_rp_comments_count"> (0)</small><br></li><li data-position="3" data-poid="in-1303" data-post-type="none"><small class="wp_rp_publish_date">08/27/2012</small> <a href="https://rtfm.co.ua/apache-vklyuchenie-server-status/" class="wp_rp_title">Apache: включение server-status</a><small class="wp_rp_comments_count"> (0)</small><br></li><li data-position="4" data-poid="in-357" data-post-type="none"><small class="wp_rp_publish_date">12/20/2011</small> <a href="https://rtfm.co.ua/apache-primery-sozdaniya-virtualhost/" class="wp_rp_title">Apache: примеры создания VirtualHost</a><small class="wp_rp_comments_count"> (0)</small><br></li></ul></div></div>
+</aside><aside id="nav_menu-2" class="widget widget_nav_menu"><p class="widget-title">DevOops</p><div class="menu-devoops-container"><ul id="menu-devoops" class="menu"><li id="menu-item-9600" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-9600"><a title="Continuous Integration tools — Atlassian Bamboo, Teamcity, Jenkins etc." href="https://rtfm.co.ua/category/teamcity/">CI/CD</a>
+<ul class="sub-menu">
+	<li id="menu-item-9670" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9670"><a title="Continuous Integration сервер Jenkins" href="https://rtfm.co.ua/category/teamcity/jenkins/">Jenkins</a></li>
+	<li id="menu-item-9603" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9603"><a title="Continuous Integration сервер Atlassian Bamboo" href="https://rtfm.co.ua/category/teamcity/bamboo/">Bamboo</a></li>
+	<li id="menu-item-9606" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9606"><a title="Continuous Integration сервер TeamCity" href="https://rtfm.co.ua/category/teamcity/teamcity-2/">TeamCity</a></li>
+	<li id="menu-item-11595" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11595"><a href="https://rtfm.co.ua/category/teamcity/travis/">Travis</a></li>
+	<li id="menu-item-9612" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9612"><a title="Система непрерывной доставки и развёртывания Go CD" href="https://rtfm.co.ua/category/continuous-delivery/go_cd/">Go CD</a></li>
+</ul>
+</li>
+<li id="menu-item-9703" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-9703"><a title="Вопросы, касающиеся работы с CMS (Configuration Manament System – система управления конфигурациями) – Puppet, Ansible, Chef" href="https://rtfm.co.ua/category/puppet/">Configuration management</a>
+<ul class="sub-menu">
+	<li id="menu-item-9706" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9706"><a title="Configuration Management System Ansible — описание, настройка, примеры" href="https://rtfm.co.ua/category/puppet/ansible/">Ansible</a></li>
+	<li id="menu-item-9709" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9709"><a title="Configuration Management System Chef — описание, настройка, примеры" href="https://rtfm.co.ua/category/puppet/chef/">Chef</a></li>
+	<li id="menu-item-9710" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9710"><a title="Configuration Management System Puppet — описание, настройка, примеры" href="https://rtfm.co.ua/category/puppet/puppet-puppet/">Puppet</a></li>
+	<li id="menu-item-9702" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9702"><a title="Система непрерывной доставки и развёртывания Terraform" href="https://rtfm.co.ua/category/continuous-delivery/terraform/">Terraform</a></li>
+</ul>
+</li>
+<li id="menu-item-9899" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-9899"><a title="Примеры работы с Version Control System – Системами Контроля Версиями, такими как SVN, Git, Mercurial и другие." href="https://rtfm.co.ua/category/vcs-svn-git/">Version Control System</a>
+<ul class="sub-menu">
+	<li id="menu-item-9898" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9898"><a title="Примеры работы с Version Control System – Системой Контроля Версиями Git" href="https://rtfm.co.ua/category/vcs-svn-git/git/">Git</a></li>
+	<li id="menu-item-9900" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9900"><a title="Примеры работы с Version Control System – Системой Контроля Версиями SVN" href="https://rtfm.co.ua/category/vcs-svn-git/svn/">SVN</a></li>
+</ul>
+</li>
+<li id="menu-item-9699" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-9699"><a title="Инструменты для сборки и компиляции проектов на различных языках программирования" href="https://rtfm.co.ua/category/build_tools/">Build tools</a>
+<ul class="sub-menu">
+	<li id="menu-item-12852" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-12852"><a href="https://rtfm.co.ua/category/build_tools/packer/">Packer</a></li>
+	<li id="menu-item-9701" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9701"><a title="Платформа сборки проекта Apache Maven" href="https://rtfm.co.ua/category/build_tools/apache-maven/">Apache Maven</a></li>
+	<li id="menu-item-9704" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9704"><a title="Платформа сборки проекта Apache Maven" href="https://rtfm.co.ua/category/build_tools/msbuild/">MSBuild</a></li>
+</ul>
+</li>
+<li id="menu-item-9541" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9541"><a title="Установка и использвание системы управления проектами Jira и вики Confluence" href="https://rtfm.co.ua/category/jira/">Jira/Confluence</a></li>
+<li id="menu-item-11875" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11875"><a href="https://rtfm.co.ua/category/setups/">Setups</a></li>
+</ul></div></aside><aside id="nav_menu-3" class="widget widget_nav_menu"><p class="widget-title">Operating systems</p><div class="menu-operacionnye-sistemy-container"><ul id="menu-operacionnye-sistemy" class="menu"><li id="menu-item-9582" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-9582"><a title="Вопросы, касающиеся работы операционных систем GNU/Linux" href="https://rtfm.co.ua/category/operation_systems/linux/">Linux</a>
+<ul class="sub-menu">
+	<li id="menu-item-11687" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11687"><a href="https://rtfm.co.ua/category/operation_systems/linux/arch_linux/">Arch Linux</a></li>
+	<li id="menu-item-9592" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9592"><a title="Вопросы, касающиеся работы операционной системы Debian" href="https://rtfm.co.ua/category/operation_systems/linux/debian/">Debian</a></li>
+	<li id="menu-item-9855" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9855"><a title="Вопросы, касающиеся работы операционной системы CentOS" href="https://rtfm.co.ua/category/operation_systems/linux/centos/">CentOS</a></li>
+	<li id="menu-item-9585" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9585"><a title="Вопросы, касающиеся работы операционной системы Ubuntu" href="https://rtfm.co.ua/category/operation_systems/linux/ubuntu/">Ubuntu</a></li>
+	<li id="menu-item-11881" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11881"><a href="https://rtfm.co.ua/category/operation_systems/linux/suse/">SUSE</a></li>
+</ul>
+</li>
+<li id="menu-item-9856" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9856"><a title="Вопросы, касающиеся работы операционной системы FreeBSD" href="https://rtfm.co.ua/category/operation_systems/linux/freebsd/">*BSD</a></li>
+<li id="menu-item-9540" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9540"><a title="Вопросы, касающиеся работы операционной системы OS X" href="https://rtfm.co.ua/category/operation_systems/linux/osx/">OS X</a></li>
+<li id="menu-item-9538" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9538"><a title="Вопросы, касающиеся работы операционной системы Windows" href="https://rtfm.co.ua/category/operation_systems/windows/">Windows</a></li>
+</ul></div></aside><aside id="nav_menu-4" class="widget widget_nav_menu"><p class="widget-title">main()</p><div class="menu-osnovnoe-container"><ul id="menu-osnovnoe" class="menu"><li id="menu-item-9572" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-9572"><a title="Вопросы, касаюшиеся установки и настройки различных приложений." href="https://rtfm.co.ua/category/howtos/">HOWTO’s</a></li>
+<li id="menu-item-10489" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10489"><a href="https://rtfm.co.ua/category/waht_is/">What is?</a></li>
+<li id="menu-item-9587" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9587"><a title="Описания различных проблем и способы их решения" href="https://rtfm.co.ua/category/problems_and_solutions/">Проблемы и решения</a></li>
+<li id="menu-item-9848" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-9848"><a title="Всё, связанное с виртуализацией – VMware, VCloud, ESX(i), VirtualBox и другие системы" href="https://rtfm.co.ua/category/virtualization/">Virtualization</a>
+<ul class="sub-menu">
+	<li id="menu-item-9864" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9864"><a title="Работа с Amazon Web Services – EC2, Route53, S3, VPC etc." href="https://rtfm.co.ua/category/virtualization/amazon_web_service/">AWS</a></li>
+	<li id="menu-item-9908" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9908"><a title="Azure — облачные решения от Microsoft" href="https://rtfm.co.ua/category/virtualization/azure/">Azure</a></li>
+	<li id="menu-item-9865" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9865"><a title="Вопросы, касающиеся установки, настройки и работы Docker" href="https://rtfm.co.ua/category/virtualization/docker/">Docker</a></li>
+	<li id="menu-item-9866" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9866"><a title="Вопросы, касающиеся установки, настройки и работы Vagrant" href="https://rtfm.co.ua/category/virtualization/vagrant/">Vagrant</a></li>
+	<li id="menu-item-9907" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9907"><a title="Настройка и управление системой виртуализации VirtualBox" href="https://rtfm.co.ua/category/virtualization/virtualbox/">VirtualBox</a></li>
+	<li id="menu-item-9880" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9880"><a title="VMware vCloud Suite и vSphere ESXi Hypervisor" href="https://rtfm.co.ua/category/virtualization/vmware_vcloud_vsphere/">VMware</a></li>
+</ul>
+</li>
+<li id="menu-item-9640" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor menu-item-has-children menu-item-9640"><a title="Настройка, администрирвание HTTP/S серверов и сервлетов" href="https://rtfm.co.ua/category/http_servers/">HTTP/S servers</a>
+<ul class="sub-menu">
+	<li id="menu-item-9649" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9649"><a title="Установка и настройка web-сервера NGINX" href="https://rtfm.co.ua/category/http_servers/nginx-3/">NGINX</a></li>
+	<li id="menu-item-9643" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-9643"><a title="Установка и настройка web-сервера Apache" href="https://rtfm.co.ua/category/http_servers/apache-http-server/">Apache HTTP Server</a></li>
+	<li id="menu-item-9646" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9646"><a title="Установка и настройка контейнера сервлетов Apache Tomcat" href="https://rtfm.co.ua/category/http_servers/apache-tomcat/">Apache Tomcat</a></li>
+	<li id="menu-item-9721" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9721"><a title="Установка и настройка контейнера сервлетов Jetty" href="https://rtfm.co.ua/category/http_servers/jetty/">Jetty</a></li>
+	<li id="menu-item-9726" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9726"><a title="Установка и настройка Java EE-сервера JBoss" href="https://rtfm.co.ua/category/http_servers/jboss/">JBoss</a></li>
+</ul>
+</li>
+<li id="menu-item-9624" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-9624"><a title="RDBMS/NoSQL сервера" href="https://rtfm.co.ua/category/rdbms_nosql/">RDBMS/NoSQL etc</a>
+<ul class="sub-menu">
+	<li id="menu-item-9629" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9629"><a title="Установка и настройка серверов баз данных MySQL и MariaDB" href="https://rtfm.co.ua/category/rdbms_nosql/mysql-mariadb/">MySQL/MariaDB</a></li>
+	<li id="menu-item-9626" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9626"><a title="Установка, настройка, управление NoSQL сервера баз данных Apache Cassandra" href="https://rtfm.co.ua/category/rdbms_nosql/apache_cassandra/">Apache Cassandra</a></li>
+	<li id="menu-item-9632" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9632"><a title="Установка, настройка, управление NoSQL сервера MongoDB" href="https://rtfm.co.ua/category/rdbms_nosql/mongodb/">MongoDB</a></li>
+	<li id="menu-item-12223" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-12223"><a href="https://rtfm.co.ua/category/rdbms_nosql/mssql/">MSSQL</a></li>
+</ul>
+</li>
+<li id="menu-item-9663" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-9663"><a title="Вопросы, касающиеся работы почтовых серверов Dovecot, Postfix, Exim, Sendmail etc" href="https://rtfm.co.ua/category/mail-servers/">POP3/IMAP/SMTP</a>
+<ul class="sub-menu">
+	<li id="menu-item-9669" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9669"><a title="SMTP сервер Exim" href="https://rtfm.co.ua/category/mail-servers/exim/">Exim</a></li>
+	<li id="menu-item-9667" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9667"><a title="POP3/IMAP сервер Dovecot" href="https://rtfm.co.ua/category/mail-servers/dovecot/">Dovecot</a></li>
+	<li id="menu-item-9672" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9672"><a title="SMTP сервер Postfix" href="https://rtfm.co.ua/category/mail-servers/postfix/">Postfix</a></li>
+	<li id="menu-item-9674" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9674"><a title="SpamAssassin – анти-спам система" href="https://rtfm.co.ua/category/mail-servers/antispam/">SpamAssassin</a></li>
+</ul>
+</li>
+<li id="menu-item-9678" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-9678"><a title="Мониторинг серверов, сетей и оборудования" href="https://rtfm.co.ua/category/monitoring/">Monitoring</a>
+<ul class="sub-menu">
+	<li id="menu-item-9680" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9680"><a title="Вопросы, касающиеся настройки и работы системы мониторинга Nagios" href="https://rtfm.co.ua/category/monitoring/nagios/">Nagios</a></li>
+	<li id="menu-item-9682" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9682"><a title="Вопросы, касающиеся настройки и работы системы мониторинга Zabbix" href="https://rtfm.co.ua/category/monitoring/zabbix/">Zabbix</a></li>
+</ul>
+</li>
+<li id="menu-item-9722" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9722"><a title="Lightweight Directory Access Protocol – легковесный протокол для доступа к службе каталога" href="https://rtfm.co.ua/category/rdbms_nosql/ldap/">LDAP/OpenLDAP</a></li>
+<li id="menu-item-9887" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-9887"><a title="Безопасность ОС и стеевая безопасность" href="https://rtfm.co.ua/category/security/">Security</a>
+<ul class="sub-menu">
+	<li id="menu-item-9846" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9846"><a title="Вопросы, касающиеся шифрования SSH/SSl/TLS" href="https://rtfm.co.ua/category/security/sshssltls/">SSH/SSL/TLS</a></li>
+</ul>
+</li>
+<li id="menu-item-9427" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-9427"><a title="Вопросы, касающиеся работы сетей, интернета, различного программного обеспечения и устройств, связанных с сетями." href="https://rtfm.co.ua/category/networking/">Networking</a>
+<ul class="sub-menu">
+	<li id="menu-item-10313" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10313"><a href="https://rtfm.co.ua/category/networking/bind/">DNS/BIND</a></li>
+	<li id="menu-item-9542" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9542"><a href="https://rtfm.co.ua/category/networking/openvpn/">OpenVPN</a></li>
+</ul>
+</li>
+<li id="menu-item-9684" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-9684"><a title="CMS (Content Managment System) и web-фреймворки" href="https://rtfm.co.ua/category/cmsweb-frameworks/">CMS/web-frameworks</a>
+<ul class="sub-menu">
+	<li id="menu-item-9686" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9686"><a title="Вопросы, касающиеся разработки веб-приложений с использованием фреймворка Django" href="https://rtfm.co.ua/category/cmsweb-frameworks/django/">Django</a></li>
+	<li id="menu-item-9723" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9723"><a title="AEM: Adobe Experience Manager — настройка, управление." href="https://rtfm.co.ua/category/cmsweb-frameworks/aem/">AEM</a></li>
+	<li id="menu-item-9688" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9688"><a title="Вопросы, касающиеся работы и настройки CMS WordPress" href="https://rtfm.co.ua/category/cmsweb-frameworks/wordpress/">WordPress</a></li>
+</ul>
+</li>
+<li id="menu-item-9429" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9429"><a title="Вопросы, касающиеся использования различных системных утилит и прочего программного обеспечения – описания, их использование." href="https://rtfm.co.ua/category/utilities/">GNU/Linux utils</a></li>
+<li id="menu-item-9568" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9568"><a title="Вопросы, касающиеся аппаратного обеспечения серверов и рабочих станций" href="https://rtfm.co.ua/category/hardware/">Hardware</a></li>
+<li id="menu-item-14404" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-14404"><a href="https://rtfm.co.ua/category/others/">Разное</a></li>
+</ul></div></aside><aside id="nav_menu-5" class="widget widget_nav_menu"><p class="widget-title">Scripting/coding</p><div class="menu-%d1%81%d0%ba%d1%80%d0%b8%d0%bf%d1%82%d1%8b%d0%bf%d1%80%d0%be%d0%b3%d1%80%d0%b0%d0%bc%d0%bc%d0%b8%d1%80%d0%be%d0%b2%d0%b0%d0%bd%d0%b8%d0%b5-container"><ul id="menu-%d1%81%d0%ba%d1%80%d0%b8%d0%bf%d1%82%d1%8b%d0%bf%d1%80%d0%be%d0%b3%d1%80%d0%b0%d0%bc%d0%bc%d0%b8%d1%80%d0%be%d0%b2%d0%b0%d0%bd%d0%b8%d0%b5" class="menu"><li id="menu-item-9590" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9590"><a title="Написание скриптов на shell/BASH " href="https://rtfm.co.ua/category/scripting_and_coding/bash_scripts/">BASH scripts</a></li>
+<li id="menu-item-9602" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9602"><a title="Программирование и другие вопросы по Python" href="https://rtfm.co.ua/category/scripting_and_coding/python/">Python</a></li>
+<li id="menu-item-9564" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9564"><a title="Программирование на C/C++" href="https://rtfm.co.ua/category/scripting_and_coding/cc/">C/C++</a></li>
+<li id="menu-item-9567" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9567"><a title="Программирование и другие вопросы по Java" href="https://rtfm.co.ua/category/scripting_and_coding/java/">Java</a></li>
+<li id="menu-item-9599" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9599"><a title="Программирование и другие вопросы по PHP" href="https://rtfm.co.ua/category/scripting_and_coding/php/">PHP</a></li>
+</ul></div></aside>					<aside id="ratingwidgetplugin_topratedwidget-2" class="widget rw_top_rated"><div class="rw-ui-content-recommendations rw-ui-control rw-dir-ltr" style="">    <div class="rw-ui-header"><div class="rw-ui-header"><p class="widget-title">Top Rated</p></div></div>    <div class="rw-ui-content-recommendation-groups"><div class="rw-ui-group rw-style-compact_thumbs" data-type="posts">        <ul class="rw-ui-group-items"><li class="rw-ui-group-item"><div class="rw-ui-content-recommendation"><a class="rw-ui-thumb-link" href="https://rtfm.co.ua/mysql-commands/" title="Наиболее используемые команды..." onclick="RW.Trc.linkClick(this, {category: 'toprated', label: 'posts', cell: 0, elementType: 'thumb'}); return false;"><div class="rw-ui-thumb" style="width: 50px; height: 40px;"><img src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/a.gif" style="width: 50px; height: 40px;" alt=""></div></a><div style="margin-left: 70px; min-height: 48px; display: inline-block; vertical-align: middle;"><a class="rw-ui-title" href="https://rtfm.co.ua/mysql-commands/" title="Наиболее используемые команды..." onclick="RW.Trc.linkClick(this, {category: 'toprated', label: 'posts', cell: 0, elementType: 'text'}); return false;">Наиболее используемые команды...</a><div class="rw-ui-container rw-urid-9730 rw-ui-star rw-size-small rw-dir-ltr rw-halign-right rw-valign-middle rw-style-crystal_penguin rw-theme-star_crystal_penguin rw-class-blog-post" data-read-only="true" data-sync="false" data-size="small" data-show-loader="false" data-urid="9730" style=""><div class="rw-action-area"><ul class="rw-ui-stars"><li class="rw-ui-star-0 rw-ui-star-selected"></li><li class="rw-ui-star-1 rw-ui-star-selected"></li><li class="rw-ui-star-2 rw-ui-star-selected"></li><li class="rw-ui-star-3 rw-ui-star-selected"></li><li class="rw-ui-star-4 rw-ui-star-half-selected"></li></ul><a class="rw-report-link" target="_blank" href="https://rating-widget.com/my-rating-report/star/crystal-penguin/rating-103201316-5/" rel="nofollow"></a></div></div></div></div></li><li class="rw-ui-group-item"><div class="rw-ui-content-recommendation"><a class="rw-ui-thumb-link" href="https://rtfm.co.ua/python-izuchenie-s-nulya-sintaksis/" title="Python: изучение с нуля # 1. С..." onclick="RW.Trc.linkClick(this, {category: 'toprated', label: 'posts', cell: 1, elementType: 'thumb'}); return false;"><div class="rw-ui-thumb" style="width: 50px; height: 40px;"><img src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/a.jpeg" style="width: 50px; height: 40px;" alt=""></div></a><div style="margin-left: 70px; min-height: 48px; display: inline-block; vertical-align: middle;"><a class="rw-ui-title" href="https://rtfm.co.ua/python-izuchenie-s-nulya-sintaksis/" title="Python: изучение с нуля # 1. С..." onclick="RW.Trc.linkClick(this, {category: 'toprated', label: 'posts', cell: 1, elementType: 'text'}); return false;">Python: изучение с нуля # 1. С...</a><div class="rw-ui-container rw-urid-24570 rw-ui-star rw-size-small rw-dir-ltr rw-halign-right rw-valign-middle rw-style-crystal_penguin rw-theme-star_crystal_penguin rw-class-blog-post" data-read-only="true" data-sync="false" data-size="small" data-show-loader="false" data-urid="24570" style=""><div class="rw-action-area"><ul class="rw-ui-stars"><li class="rw-ui-star-0 rw-ui-star-selected"></li><li class="rw-ui-star-1 rw-ui-star-selected"></li><li class="rw-ui-star-2 rw-ui-star-selected"></li><li class="rw-ui-star-3 rw-ui-star-selected"></li><li class="rw-ui-star-4 rw-ui-star-half-selected"></li></ul><a class="rw-report-link" target="_blank" href="https://rating-widget.com/my-rating-report/star/crystal-penguin/rating-103208220-5/" rel="nofollow"></a></div></div></div></div></li><li class="rw-ui-group-item"><div class="rw-ui-content-recommendation"><a class="rw-ui-thumb-link" href="https://rtfm.co.ua/python-zachem-nuzhen-if-__name__-__main__/" title="Python: зачем нужен if __name_..." onclick="RW.Trc.linkClick(this, {category: 'toprated', label: 'posts', cell: 2, elementType: 'thumb'}); return false;"><div class="rw-ui-thumb" style="width: 50px; height: 40px;"><img src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/a_002.jpeg" style="width: 50px; height: 40px;" alt=""></div></a><div style="margin-left: 70px; min-height: 48px; display: inline-block; vertical-align: middle;"><a class="rw-ui-title" href="https://rtfm.co.ua/python-zachem-nuzhen-if-__name__-__main__/" title="Python: зачем нужен if __name_..." onclick="RW.Trc.linkClick(this, {category: 'toprated', label: 'posts', cell: 2, elementType: 'text'}); return false;">Python: зачем нужен if __name_...</a><div class="rw-ui-container rw-urid-52810 rw-ui-star rw-size-small rw-dir-ltr rw-halign-right rw-valign-middle rw-style-crystal_penguin rw-theme-star_crystal_penguin rw-class-blog-post" data-read-only="true" data-sync="false" data-size="small" data-show-loader="false" data-urid="52810" style=""><div class="rw-action-area"><ul class="rw-ui-stars"><li class="rw-ui-star-0 rw-ui-star-selected"></li><li class="rw-ui-star-1 rw-ui-star-selected"></li><li class="rw-ui-star-2 rw-ui-star-selected"></li><li class="rw-ui-star-3 rw-ui-star-selected"></li><li class="rw-ui-star-4 rw-ui-star-selected"></li></ul><a class="rw-report-link" target="_blank" href="https://rating-widget.com/my-rating-report/star/crystal-penguin/rating-103232962-5/" rel="nofollow"></a></div></div></div></div></li><li class="rw-ui-group-item"><div class="rw-ui-content-recommendation"><a class="rw-ui-thumb-link" href="https://rtfm.co.ua/mysql-otlichiya-mezhdu-myisam-i-innodb/" title="MySQL: отличия между MyISAM и..." onclick="RW.Trc.linkClick(this, {category: 'toprated', label: 'posts', cell: 3, elementType: 'thumb'}); return false;"><div class="rw-ui-thumb" style="width: 50px; height: 40px;"><img src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/a.gif" style="width: 50px; height: 40px;" alt=""></div></a><div style="margin-left: 70px; min-height: 48px; display: inline-block; vertical-align: middle;"><a class="rw-ui-title" href="https://rtfm.co.ua/mysql-otlichiya-mezhdu-myisam-i-innodb/" title="MySQL: отличия между MyISAM и..." onclick="RW.Trc.linkClick(this, {category: 'toprated', label: 'posts', cell: 3, elementType: 'text'}); return false;">MySQL: отличия между MyISAM и...</a><div class="rw-ui-container rw-urid-39880 rw-ui-star rw-size-small rw-dir-ltr rw-halign-right rw-valign-middle rw-style-crystal_penguin rw-theme-star_crystal_penguin rw-class-blog-post" data-read-only="true" data-sync="false" data-size="small" data-show-loader="false" data-urid="39880" style=""><div class="rw-action-area"><ul class="rw-ui-stars"><li class="rw-ui-star-0 rw-ui-star-selected"></li><li class="rw-ui-star-1 rw-ui-star-selected"></li><li class="rw-ui-star-2 rw-ui-star-selected"></li><li class="rw-ui-star-3 rw-ui-star-selected"></li><li class="rw-ui-star-4 rw-ui-star-selected"></li></ul><a class="rw-report-link" target="_blank" href="https://rating-widget.com/my-rating-report/star/crystal-penguin/rating-103235381-5/" rel="nofollow"></a></div></div></div></div></li><li class="rw-ui-group-item"><div class="rw-ui-content-recommendation"><a class="rw-ui-thumb-link" href="https://rtfm.co.ua/linux-izmenit-poryadok-zagruzki-v-grub/" title="Linux: изменить порядок загруз..." onclick="RW.Trc.linkClick(this, {category: 'toprated', label: 'posts', cell: 4, elementType: 'thumb'}); return false;"><div class="rw-ui-thumb" style="width: 50px; height: 40px;"><img src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/a.png" style="width: 50px; height: 40px;" alt=""></div></a><div style="margin-left: 70px; min-height: 48px; display: inline-block; vertical-align: middle;"><a class="rw-ui-title" href="https://rtfm.co.ua/linux-izmenit-poryadok-zagruzki-v-grub/" title="Linux: изменить порядок загруз..." onclick="RW.Trc.linkClick(this, {category: 'toprated', label: 'posts', cell: 4, elementType: 'text'}); return false;">Linux: изменить порядок загруз...</a><div class="rw-ui-container rw-urid-48410 rw-ui-star rw-size-small rw-dir-ltr rw-halign-right rw-valign-middle rw-style-crystal_penguin rw-theme-star_crystal_penguin rw-class-blog-post" data-read-only="true" data-sync="false" data-size="small" data-show-loader="false" data-urid="48410" style=""><div class="rw-action-area"><ul class="rw-ui-stars"><li class="rw-ui-star-0 rw-ui-star-selected"></li><li class="rw-ui-star-1 rw-ui-star-selected"></li><li class="rw-ui-star-2 rw-ui-star-selected"></li><li class="rw-ui-star-3 rw-ui-star-selected"></li><li class="rw-ui-star-4 rw-ui-star-half-selected"></li></ul><a class="rw-report-link" target="_blank" href="https://rating-widget.com/my-rating-report/star/crystal-penguin/rating-103212064-5/" rel="nofollow"></a></div></div></div></div></li>    </ul>    </div>    </div>    <div class="rw-ui-footer"><div class="rw-ui-poweredby">    Powered by <a href="http://rating-widget.com/?s=wordpress&amp;w=toprated" target="_blank" rel="nofollow"><em></em> <b>Rating</b><i>Widget</i></a></div></div></div></aside>
+					<script type="text/javascript">
+						var _rwq = _rwq || [];
+						_rwq.push(['_setRecommendations', {"id":31,"title":{"label":"Top 
+Rated","show":true,"before":"<p 
+class=\"widget-title\">","after":"<\/p>"},"options":{"align":"vertical","direction":"ltr","html":{"before":"<aside
+ id=\"ratingwidgetplugin_topratedwidget-2\" class=\"widget 
+rw_top_rated\">","after":"<\/aside>"}},"site":{"id":"216072","domain":"rtfm.co.ua","type":"WordPress"},"itemGroups":[{"type":"posts","title":null,"showTitle":false,"style":"compact_thumbs","options":{"title":{"maxLen":30},"thumb":{"width":50,"height":40}},"items":[{"site":{"id":"216072","domain":"rtfm.co.ua"},"page":{"externalID":972,"url":"https:\/\/rtfm.co.ua\/mysql-commands\/","title":"\u041d\u0430\u0438\u0431\u043e\u043b\u0435\u0435
+ 
+\u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0435\u043c\u044b\u0435
+ 
+\u043a\u043e\u043c\u0430\u043d\u0434\u044b...","img":"https:\/\/secure.rating-widget.com\/apps\/thumb\/?src=http%3A%2F%2Frtfm.co.ua%2Fwp-content%2Fuploads%2F2012%2F01%2Fmysqllogo.gif&w=50&h=40&zc=1"},"rating":{"localID":"9730","options":{"rclass":"blog-post"}}},{"site":{"id":"216072","domain":"rtfm.co.ua"},"page":{"externalID":2456,"url":"https:\/\/rtfm.co.ua\/python-izuchenie-s-nulya-sintaksis\/","title":"Python:
+ \u0438\u0437\u0443\u0447\u0435\u043d\u0438\u0435 \u0441 
+\u043d\u0443\u043b\u044f # 1. 
+\u0421...","img":"https:\/\/secure.rating-widget.com\/apps\/thumb\/?src=http%3A%2F%2Frtfm.co.ua%2Fwp-content%2Fuploads%2F2013%2F02%2Fpython_logo.jpg&w=50&h=40&zc=1"},"rating":{"localID":"24570","options":{"rclass":"blog-post"}}},{"site":{"id":"216072","domain":"rtfm.co.ua"},"page":{"externalID":5280,"url":"https:\/\/rtfm.co.ua\/python-zachem-nuzhen-if-__name__-__main__\/","title":"Python:
+ \u0437\u0430\u0447\u0435\u043c \u043d\u0443\u0436\u0435\u043d if 
+__name_...","img":"https:\/\/secure.rating-widget.com\/apps\/thumb\/?src=https%3A%2F%2Frtfm.co.ua%2Fwp-content%2Fuploads%2F2013%2F02%2Fpython_logo.jpg&w=50&h=40&zc=1"},"rating":{"localID":"52810","options":{"rclass":"blog-post"}}},{"site":{"id":"216072","domain":"rtfm.co.ua"},"page":{"externalID":3987,"url":"https:\/\/rtfm.co.ua\/mysql-otlichiya-mezhdu-myisam-i-innodb\/","title":"MySQL:
+ \u043e\u0442\u043b\u0438\u0447\u0438\u044f 
+\u043c\u0435\u0436\u0434\u0443 MyISAM 
+\u0438...","img":"https:\/\/secure.rating-widget.com\/apps\/thumb\/?src=http%3A%2F%2Frtfm.co.ua%2Fwp-content%2Fuploads%2F2012%2F01%2Fmysqllogo.gif&w=50&h=40&zc=1"},"rating":{"localID":"39880","options":{"rclass":"blog-post"}}},{"site":{"id":"216072","domain":"rtfm.co.ua"},"page":{"externalID":4840,"url":"https:\/\/rtfm.co.ua\/linux-izmenit-poryadok-zagruzki-v-grub\/","title":"Linux:
+ \u0438\u0437\u043c\u0435\u043d\u0438\u0442\u044c 
+\u043f\u043e\u0440\u044f\u0434\u043e\u043a 
+\u0437\u0430\u0433\u0440\u0443\u0437...","img":"https:\/\/secure.rating-widget.com\/apps\/thumb\/?src=https%3A%2F%2Frtfm.co.ua%2Fwp-content%2Fuploads%2F2011%2F08%2Flinux-logo.png&w=50&h=40&zc=1"},"rating":{"localID":"48410","options":{"rclass":"blog-post"}}}]}]}]);
+
+					</script>
+				<aside id="views-2" class="widget widget_views"><p class="widget-title">Самое читаемое</p><ul>
+<li><a href="https://rtfm.co.ua/mysql-commands/" title="Наиболее используемые команды MySQL">Наиболее используемые команды MySQL</a> - 153,061 views</li><li><a href="https://rtfm.co.ua/books-translations/python_s_nulya/" title="Python с нуля">Python с нуля</a> - 80,437 views</li><li><a href="https://rtfm.co.ua/centos-ispolzovanie-yum-i-nemnogo-o-poleznyx-vozmozhnostyax-rpm/" title="CentOS: использование YUM и немного о полезных возможностях RPM">CentOS: использование YUM и немного о полезных возможностях RPM</a> - 53,434 views</li><li><a href="https://rtfm.co.ua/centos-ustanovka-apache-http-nginx/" title="CentOS: установка Apache HTTP + NGINX">CentOS: установка Apache HTTP + NGINX</a> - 53,334 views</li><li><a href="https://rtfm.co.ua/ispolzovanie-git-cherez-http-proxy/" title="Использование Git через HTTP-proxy">Использование Git через HTTP-proxy</a> - 52,485 views</li></ul>
+</aside><aside id="recent-comments-2" class="widget widget_recent_comments"><p class="widget-title">Recent Comments</p><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link"><!--noindex--><noindex><a target="_blank" rel="nofollow" href="https://rtfm.co.ua/goto/https://kamaok.org.ua/?p=2340" class="url">Jenkins: Сборка проекта по коммиту в SVN | Записки системного администратора</a></noindex><!--/noindex--></span> on <a href="https://rtfm.co.ua/jenkins-pipeline-plagin-i-trigger-bilda-cherez-github-webhook/#comment-647">Jenkins: pipeline плагин и триггер билда через Github webhook</a></li><li class="recentcomments"><span class="comment-author-link">Иван</span> on <a href="https://rtfm.co.ua/tomcat-ogranichenie-dostupa-s-pomoshhyu-fajla-web-xml/#comment-646">Tomcat: ограничение доступа с помощью файла web.xml</a></li><li class="recentcomments"><span class="comment-author-link">Дмитрий Власов</span> on <a href="https://rtfm.co.ua/nastrojka-raid1-na-raid-kontrollere-lsi-megaraid/#comment-645">Настройка RAID1 на RAID-контроллере LSI MegaRAID</a></li><li class="recentcomments"><span class="comment-author-link"><a href="https://rtfm.co.ua/" rel="external nofollow" class="url">мережевий хробачок™</a></span> on <a href="https://rtfm.co.ua/exim-podklyuchaem-spamassassin-na-centos/#comment-644">Spamassassin: подключаем к Exim на CentOS</a></li><li class="recentcomments"><span class="comment-author-link">xfiles</span> on <a href="https://rtfm.co.ua/exim-podklyuchaem-spamassassin-na-centos/#comment-643">Spamassassin: подключаем к Exim на CentOS</a></li></ul></aside><aside id="calendar-2" class="widget widget_calendar"><p class="widget-title">Архив</p><div id="calendar_wrap" class="calendar_wrap"><table id="wp-calendar">
+	<caption>August 2017</caption>
+	<thead>
+	<tr>
+		<th scope="col" title="Monday">M</th>
+		<th scope="col" title="Tuesday">T</th>
+		<th scope="col" title="Wednesday">W</th>
+		<th scope="col" title="Thursday">T</th>
+		<th scope="col" title="Friday">F</th>
+		<th scope="col" title="Saturday">S</th>
+		<th scope="col" title="Sunday">S</th>
+	</tr>
+	</thead>
+
+	<tfoot>
+	<tr>
+		<td colspan="3" id="prev"><a href="https://rtfm.co.ua/2017/07/">« Jul</a></td>
+		<td class="pad">&nbsp;</td>
+		<td colspan="3" id="next" class="pad">&nbsp;</td>
+	</tr>
+	</tfoot>
+
+	<tbody>
+	<tr>
+		<td colspan="1" class="pad">&nbsp;</td><td><a href="https://rtfm.co.ua/2017/08/01/" aria-label="Posts published on August 1, 2017">1</a></td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td>
+	</tr>
+	<tr>
+		<td><a href="https://rtfm.co.ua/2017/08/07/" aria-label="Posts published on August 7, 2017">7</a></td><td><a href="https://rtfm.co.ua/2017/08/08/" aria-label="Posts published on August 8, 2017">8</a></td><td><a href="https://rtfm.co.ua/2017/08/09/" aria-label="Posts published on August 9, 2017">9</a></td><td>10</td><td id="today"><a href="https://rtfm.co.ua/2017/08/11/" aria-label="Posts published on August 11, 2017">11</a></td><td>12</td><td>13</td>
+	</tr>
+	<tr>
+		<td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td>
+	</tr>
+	<tr>
+		<td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td>
+	</tr>
+	<tr>
+		<td>28</td><td>29</td><td>30</td><td>31</td>
+		<td class="pad" colspan="3">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table></div></aside><aside id="archives-2" class="widget widget_archive"><p class="widget-title">Archives</p>		<label class="screen-reader-text" for="archives-dropdown-2">Archives</label>
+		<select id="archives-dropdown-2" name="archive-dropdown" onchange="document.location.href=this.options[this.selectedIndex].value;">
+			
+			<option value="" selected="selected">Select Month</option>
+				<option value="https://rtfm.co.ua/2017/08/"> August 2017 &nbsp;(5)</option>
+	<option value="https://rtfm.co.ua/2017/07/"> July 2017 &nbsp;(11)</option>
+	<option value="https://rtfm.co.ua/2017/06/"> June 2017 &nbsp;(11)</option>
+	<option value="https://rtfm.co.ua/2017/05/"> May 2017 &nbsp;(11)</option>
+	<option value="https://rtfm.co.ua/2017/04/"> April 2017 &nbsp;(7)</option>
+	<option value="https://rtfm.co.ua/2017/03/"> March 2017 &nbsp;(18)</option>
+	<option value="https://rtfm.co.ua/2017/02/"> February 2017 &nbsp;(13)</option>
+	<option value="https://rtfm.co.ua/2017/01/"> January 2017 &nbsp;(14)</option>
+	<option value="https://rtfm.co.ua/2016/12/"> December 2016 &nbsp;(12)</option>
+	<option value="https://rtfm.co.ua/2016/11/"> November 2016 &nbsp;(15)</option>
+	<option value="https://rtfm.co.ua/2016/10/"> October 2016 &nbsp;(13)</option>
+	<option value="https://rtfm.co.ua/2016/09/"> September 2016 &nbsp;(21)</option>
+	<option value="https://rtfm.co.ua/2016/08/"> August 2016 &nbsp;(19)</option>
+	<option value="https://rtfm.co.ua/2016/07/"> July 2016 &nbsp;(14)</option>
+	<option value="https://rtfm.co.ua/2016/06/"> June 2016 &nbsp;(8)</option>
+	<option value="https://rtfm.co.ua/2016/05/"> May 2016 &nbsp;(24)</option>
+	<option value="https://rtfm.co.ua/2016/04/"> April 2016 &nbsp;(15)</option>
+	<option value="https://rtfm.co.ua/2016/03/"> March 2016 &nbsp;(19)</option>
+	<option value="https://rtfm.co.ua/2016/02/"> February 2016 &nbsp;(21)</option>
+	<option value="https://rtfm.co.ua/2016/01/"> January 2016 &nbsp;(19)</option>
+	<option value="https://rtfm.co.ua/2015/12/"> December 2015 &nbsp;(17)</option>
+	<option value="https://rtfm.co.ua/2015/11/"> November 2015 &nbsp;(17)</option>
+	<option value="https://rtfm.co.ua/2015/10/"> October 2015 &nbsp;(14)</option>
+	<option value="https://rtfm.co.ua/2015/09/"> September 2015 &nbsp;(13)</option>
+	<option value="https://rtfm.co.ua/2015/08/"> August 2015 &nbsp;(1)</option>
+	<option value="https://rtfm.co.ua/2015/07/"> July 2015 &nbsp;(20)</option>
+	<option value="https://rtfm.co.ua/2015/06/"> June 2015 &nbsp;(23)</option>
+	<option value="https://rtfm.co.ua/2015/05/"> May 2015 &nbsp;(26)</option>
+	<option value="https://rtfm.co.ua/2015/04/"> April 2015 &nbsp;(28)</option>
+	<option value="https://rtfm.co.ua/2015/03/"> March 2015 &nbsp;(30)</option>
+	<option value="https://rtfm.co.ua/2015/02/"> February 2015 &nbsp;(26)</option>
+	<option value="https://rtfm.co.ua/2015/01/"> January 2015 &nbsp;(24)</option>
+	<option value="https://rtfm.co.ua/2014/12/"> December 2014 &nbsp;(31)</option>
+	<option value="https://rtfm.co.ua/2014/11/"> November 2014 &nbsp;(21)</option>
+	<option value="https://rtfm.co.ua/2014/10/"> October 2014 &nbsp;(28)</option>
+	<option value="https://rtfm.co.ua/2014/09/"> September 2014 &nbsp;(23)</option>
+	<option value="https://rtfm.co.ua/2014/08/"> August 2014 &nbsp;(31)</option>
+	<option value="https://rtfm.co.ua/2014/07/"> July 2014 &nbsp;(23)</option>
+	<option value="https://rtfm.co.ua/2014/06/"> June 2014 &nbsp;(11)</option>
+	<option value="https://rtfm.co.ua/2014/05/"> May 2014 &nbsp;(14)</option>
+	<option value="https://rtfm.co.ua/2014/04/"> April 2014 &nbsp;(8)</option>
+	<option value="https://rtfm.co.ua/2014/03/"> March 2014 &nbsp;(11)</option>
+	<option value="https://rtfm.co.ua/2014/02/"> February 2014 &nbsp;(11)</option>
+	<option value="https://rtfm.co.ua/2014/01/"> January 2014 &nbsp;(11)</option>
+	<option value="https://rtfm.co.ua/2013/12/"> December 2013 &nbsp;(12)</option>
+	<option value="https://rtfm.co.ua/2013/11/"> November 2013 &nbsp;(23)</option>
+	<option value="https://rtfm.co.ua/2013/10/"> October 2013 &nbsp;(20)</option>
+	<option value="https://rtfm.co.ua/2013/09/"> September 2013 &nbsp;(30)</option>
+	<option value="https://rtfm.co.ua/2013/08/"> August 2013 &nbsp;(20)</option>
+	<option value="https://rtfm.co.ua/2013/07/"> July 2013 &nbsp;(6)</option>
+	<option value="https://rtfm.co.ua/2013/06/"> June 2013 &nbsp;(9)</option>
+	<option value="https://rtfm.co.ua/2013/05/"> May 2013 &nbsp;(5)</option>
+	<option value="https://rtfm.co.ua/2013/04/"> April 2013 &nbsp;(13)</option>
+	<option value="https://rtfm.co.ua/2013/03/"> March 2013 &nbsp;(22)</option>
+	<option value="https://rtfm.co.ua/2013/02/"> February 2013 &nbsp;(36)</option>
+	<option value="https://rtfm.co.ua/2013/01/"> January 2013 &nbsp;(10)</option>
+	<option value="https://rtfm.co.ua/2012/12/"> December 2012 &nbsp;(4)</option>
+	<option value="https://rtfm.co.ua/2012/11/"> November 2012 &nbsp;(8)</option>
+	<option value="https://rtfm.co.ua/2012/10/"> October 2012 &nbsp;(13)</option>
+	<option value="https://rtfm.co.ua/2012/09/"> September 2012 &nbsp;(29)</option>
+	<option value="https://rtfm.co.ua/2012/08/"> August 2012 &nbsp;(24)</option>
+	<option value="https://rtfm.co.ua/2012/07/"> July 2012 &nbsp;(18)</option>
+	<option value="https://rtfm.co.ua/2012/06/"> June 2012 &nbsp;(2)</option>
+	<option value="https://rtfm.co.ua/2012/05/"> May 2012 &nbsp;(4)</option>
+	<option value="https://rtfm.co.ua/2012/03/"> March 2012 &nbsp;(5)</option>
+	<option value="https://rtfm.co.ua/2012/02/"> February 2012 &nbsp;(5)</option>
+	<option value="https://rtfm.co.ua/2012/01/"> January 2012 &nbsp;(25)</option>
+	<option value="https://rtfm.co.ua/2011/12/"> December 2011 &nbsp;(15)</option>
+	<option value="https://rtfm.co.ua/2011/11/"> November 2011 &nbsp;(6)</option>
+	<option value="https://rtfm.co.ua/2011/08/"> August 2011 &nbsp;(13)</option>
+
+		</select>
+		</aside>		</div><!-- #secondary -->
+		</div><!-- #main .wrapper -->
+	<footer id="colophon" role="contentinfo">
+		<div class="site-info">
+		<div class="footercopy"><a href="https://www.debian.org/" target="_blank" rel="nofollow"><img src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/powered_by_debian.png" align="middle"></a></div>
+		<div class="footercredit"></div>
+		<div class="clear">
+
+<div align="right">                                                     
+                                                                        
+                        
+
+<!-- Yandex.Metrika informer -->                                        
+                                                                        
+                        
+<a href="https://metrika.yandex.ru/stat/?id=9396328&amp;from=informer" target="_blank" rel="nofollow"><img src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/3_0_CCE5FFFF_CCE5FFFF_0_pageviews.png" style="width:88px; height:31px; border:0;" alt="Яндек�~A.�~\е�~B�~@ика" title="Яндек�~A.�~\е�~B�~@ика: данн�~Kе за �~Aегодн�~O (п�~@о�~Aмо�~B�~@�~K, визи�~B�~K и �~Cникал�~Lн�~Kе по�~Aе�~Bи�~Bели)" onclick="try{Ya.Metrika.informer({i:this,id:9396328,lang:'ru'});return false}catch(e){}"></a>                                           
+<!-- /Yandex.Metrika informer -->                                       
+                                                                        
+                        
+
+<!-- Yandex.Metrika counter -->                                         
+                                                                        
+                        
+<script type="text/javascript">                                         
+                                                                        
+                        
+    (function (d, w, c) {                                               
+                                                                        
+                        
+        (w[c] = w[c] || []).push(function() {                           
+                                                                        
+                        
+            try {                                                       
+                                                                        
+                        
+                w.yaCounter9396328 = new Ya.Metrika({                   
+                                                                        
+                        
+                    id:9396328,                                         
+                                                                        
+                        
+                    clickmap:true,                                      
+                                                                        
+                        
+                    trackLinks:true,                                    
+                                                                        
+                        
+                    accurateTrackBounce:true                            
+                                                                        
+                        
+                });                                                     
+                                                                        
+                        
+            } catch(e) { }                                              
+                                                                        
+                        
+        });                                                             
+                                                                        
+                        
+
+        var n = d.getElementsByTagName("script")[0],                    
+                                                                        
+                        
+            s = d.createElement("script"),                              
+                                                                        
+                        
+            f = function () { n.parentNode.insertBefore(s, n); };       
+                                                                        
+                        
+        s.type = "text/javascript";                                     
+                                                                        
+                        
+        s.async = true;                                                 
+                                                                        
+                        
+        s.src = "https://mc.yandex.ru/metrika/watch.js";                
+                                                                        
+                        
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/9396328" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- HotLog -->
+<span id="hotlog_counter"></span>
+<span id="hotlog_dyn"><script type="text/javascript" async="" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/2192054.js"></script></span>
+<script type="text/javascript">
+var hot_s = document.createElement('script');
+hot_s.type = 'text/javascript'; hot_s.async = true;
+hot_s.src = 'http://js.hotlog.ru/dcounter/2192054.js';
+hot_d = document.getElementById('hotlog_dyn');
+hot_d.appendChild(hot_s);
+</script>
+<a href="http://click.hotlog.ru/?2192054" target="_blank"><img src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/count.gif" alt="HotLog" border="0"></a>
+<!-- /HotLog -->
+
+</div>
+</div>
+
+		</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+		<div class="site-wordpress">
+				<a href="http://themonic.com/iconic-one/">Iconic One</a> Theme | Powered by <a href="http://wordpress.org/">Wordpress</a>
+				</div><!-- .site-info -->
+				<div class="clear"></div>
+</div><!-- #page -->
+
+					<!-- This site's ratings are powered by RatingWidget plugin v2.8.7.1 (Free version) - https://rating-widget.com/wordpress-plugin/ -->
+					<div class="rw-js-container"></div>
+					<!-- / RatingWidget plugin -->
+					    <script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/shCore.js"></script>
+    <script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/shAutoloader.js"></script>
+    <script type="text/javascript">
+    function path()
+    {
+      var args = arguments,
+          result = []
+          ;
+      for(var i = 0; i < args.length; i++)
+          result.push(args[i].replace('@', 
+'https://rtfm.co.ua/wp-content/plugins/syntax-highlighter-with-add-button-in-editor/scripts/'));
+
+      return result
+    };
+    SyntaxHighlighter.autoloader.apply(null, path(
+      'applescript            @shBrushAppleScript.js',
+      'actionscript3 as3      @shBrushAS3.js',
+      'bash shell             @shBrushBash.js',
+      'coldfusion cf          @shBrushColdFusion.js',
+      'cpp c                  @shBrushCpp.js',
+      'c# c-sharp csharp      @shBrushCSharp.js',
+      'css                    @shBrushCss.js',
+      'delphi pascal          @shBrushDelphi.js',
+      'diff patch pas         @shBrushDiff.js',
+      'erl erlang             @shBrushErlang.js',
+      'groovy                 @shBrushGroovy.js',
+      'java                   @shBrushJava.js',
+      'jfx javafx             @shBrushJavaFX.js',
+      'js jscript javascript  @shBrushJScript.js',
+      'perl pl                @shBrushPerl.js',
+      'php                    @shBrushPhp.js',
+      'text plain             @shBrushPlain.js',
+      'ps                     @shBrushPowerShell.js',
+      'py python              @shBrushPython.js',
+      'ruby rails ror rb      @shBrushRuby.js',
+      'sass scss              @shBrushSass.js',
+      'scala                  @shBrushScala.js',
+      'sql                    @shBrushSql.js',
+      'vb vbnet               @shBrushVb.js',
+      'xml xhtml xslt html    @shBrushXml.js',
+      'other                  @shBrushOther.js'
+    ));
+    SyntaxHighlighter.defaults['auto-links'] = true;
+    SyntaxHighlighter.defaults['collapse'] = false;
+    SyntaxHighlighter.defaults['first-line'] = 1;
+    SyntaxHighlighter.defaults['gutter'] = true;
+    SyntaxHighlighter.defaults['smart-tabs'] = true;
+    SyntaxHighlighter.defaults['tab-size'] = 4;
+    SyntaxHighlighter.defaults['toolbar'] = true;
+    SyntaxHighlighter.config.tagName = "pre";
+	SyntaxHighlighter.config.clipboardSwf = 
+'https://rtfm.co.ua/wp-content/plugins/syntax-highlighter-with-add-button-in-editor/scripts/clipboard.swf';
+
+    SyntaxHighlighter.all();
+    </script>
+    <script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/core.js"></script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/widget.js"></script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/position.js"></script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/menu.js"></script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/wp-a11y.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var uiAutocompleteL10n = {"noResults":"No results found.","oneResult":"1
+ result found. Use up and down arrow keys to 
+navigate.","manyResults":"%d results found. Use up and down arrow keys 
+to navigate.","itemSelected":"Item selected."};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/autocomplete.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var SearchAutocomplete = 
+{"ajaxurl":"https:\/\/rtfm.co.ua\/wp-admin\/admin-ajax.php","fieldName":"[name=\"s\"]","minLength":"1","delay":"500","autoFocus":"false"};
+/*
+ ]]> */
+</script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/search-autocomplete.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var pollsL10n = 
+{"ajax_url":"https:\/\/rtfm.co.ua\/wp-admin\/admin-ajax.php","text_wait":"Your
+ last request is still being processed. Please wait a while 
+...","text_valid":"Please choose a valid poll 
+answer.","text_multiple":"Maximum number of choices allowed: 
+","show_loading":"1","show_fading":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/polls-js.js"></script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/comment-reply.js"></script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/selectnav.js"></script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/jquery.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var mv_dynamic_to_top = {"text":"To Top","version":"0","min":"300","speed":"500","easing":"easeInExpo","margin":"20"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/dynamic.js"></script><a href="#" id="dynamic-to-top" style="display: block;"><span>&nbsp;</span></a>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/wp-embed.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var embedVars = 
+{"disqusConfig":{"platform":"wordpress@4.8.1","language":""},"disqusIdentifier":"1319
+ 
+http:\/\/rtfm.co.ua\/?p=1319","disqusShortname":"rtfm-ua","disqusTitle":"Apache:
+ MPM \u2013 worker, prefork \u0438\u043b\u0438 
+event?","disqusUrl":"https:\/\/rtfm.co.ua\/apache-mpm-worker-prefork-ili-event\/","options":{"manualSync":false},"postId":"1319"};
+/*
+ ]]> */
+</script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/disqus.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var countVars = {"disqusShortname":"rtfm-ua"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Apache:%20MPM%20%E2%80%93%20worker,%20prefork%20%D0%B8%D0%BB%D0%B8%20event%3F%20%7C%20RTFM:%20Linux,%20DevOps%20%D0%B8%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D0%BE%D0%B5%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_files/count_002.js"></script>
+
+
+<span style="display: none;" class="rw-ui-tooltip"></span><div style="display: none;" class="rw-ui-report"></div><div><i class="rw-action-loader" style="position: fixed; top: -1000px;"></i></div><div id="wp-a11y-speak-polite" aria-live="polite" aria-relevant="additions text" aria-atomic="true" class="screen-reader-text wp-a11y-speak-region"></div><div id="wp-a11y-speak-assertive" aria-live="assertive" aria-relevant="additions text" aria-atomic="true" class="screen-reader-text wp-a11y-speak-region"></div><ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0" style="display: none;"></ul><span role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></span><div><i class="rw-action-loader" style="position: fixed; top: -1000px;"></i></div><iframe style="display: none;"></iframe><table style="width: 189px; display: none; top: 352px; position: absolute; left: 875px;" class="gstl_50 gssb_c" cellspacing="0" cellpadding="0"><tbody><tr><td class="gssb_f"></td><td class="gssb_e" style="width: 100%;"></td></tr></tbody></table></body></html>

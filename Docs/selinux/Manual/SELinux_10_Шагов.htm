@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html class="v2" dir="ltr"><head>
+<link href="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/521441841-css_bundle_v2.css" rel="stylesheet" type="text/css">
+<meta content="width=1100" name="viewport">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="blogger" name="generator">
+<link href="http://sapunidze.blogspot.com/favicon.ico" rel="icon" type="image/x-icon">
+<link href="http://sapunidze.blogspot.com/" rel="canonical">
+<link rel="alternate" type="application/atom+xml" title="... - Atom" href="http://sapunidze.blogspot.com/feeds/posts/default">
+<link rel="alternate" type="application/rss+xml" title="... - RSS" href="http://sapunidze.blogspot.com/feeds/posts/default?alt=rss">
+<link rel="service.post" type="application/atom+xml" title="... - Atom" href="https://www.blogger.com/feeds/12119233/posts/default">
+<link rel="openid.server" href="https://www.blogger.com/openid-server.g">
+<link rel="openid.delegate" href="http://sapunidze.blogspot.com/">
+<!--[if IE]><script type="text/javascript" src="https://www.blogger.com/static/v1/jsbin/35781802-ieretrofit.js"></script>
+<![endif]-->
+<meta content="http://sapunidze.blogspot.com/" property="og:url">
+<meta content="..." property="og:title">
+<meta content="про fedora linux, безопасность и selinux" property="og:description">
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } try { document.execCommand('BackgroundImageCache', false, true); } catch(e) {} })(); </script> <![endif]-->
+<title>...</title>
+<style id="page-skin-1" type="text/css"><!--
+/*
+-----------------------------------------------
+Blogger Template Style
+Name:     Awesome Inc.
+Designer: Tina Chen
+URL:      tinachen.org
+----------------------------------------------- */
+
+/* Content
+----------------------------------------------- */
+body {
+font: normal normal 13px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #ffffff;
+background: #000000 url(http://www.blogblog.com/1kt/awesomeinc/body_background_dark.png) repeat scroll top left;
+}
+html body .content-outer {
+min-width: 0;
+max-width: 100%;
+width: 100%;
+}
+a:link {
+text-decoration: none;
+color: #888888;
+}
+a:visited {
+text-decoration: none;
+color: #444444;
+}
+a:hover {
+text-decoration: underline;
+color: #cccccc;
+}
+.body-fauxcolumn-outer .cap-top {
+position: absolute;
+z-index: 1;
+height: 276px;
+width: 100%;
+background: transparent url(http://www.blogblog.com/1kt/awesomeinc/body_gradient_dark.png) repeat-x scroll top left;
+_background-image: none;
+}
+/* Columns
+----------------------------------------------- */
+.content-inner {
+padding: 0;
+}
+.header-inner .section {
+margin: 0 16px;
+}
+.tabs-inner .section {
+margin: 0 16px;
+}
+.main-inner {
+padding-top: 30px;
+}
+.main-inner .column-center-inner,
+.main-inner .column-left-inner,
+.main-inner .column-right-inner {
+padding: 0 5px;
+}
+*+html body .main-inner .column-center-inner {
+margin-top: -30px;
+}
+#layout .main-inner .column-center-inner {
+margin-top: 0;
+}
+/* Header
+----------------------------------------------- */
+.header-outer {
+margin: 0 0 0 0;
+background: transparent none repeat scroll 0 0;
+}
+.Header h1 {
+font: normal bold 40px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #ffffff;
+text-shadow: 0 0 -1px #000000;
+}
+.Header h1 a {
+color: #ffffff;
+}
+.Header .description {
+font: normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #ffffff;
+}
+.header-inner .Header .titlewrapper,
+.header-inner .Header .descriptionwrapper {
+padding-left: 0;
+padding-right: 0;
+margin-bottom: 0;
+}
+.header-inner .Header .titlewrapper {
+padding-top: 22px;
+}
+/* Tabs
+----------------------------------------------- */
+.tabs-outer {
+overflow: hidden;
+position: relative;
+background: #141414 none repeat scroll 0 0;
+}
+#layout .tabs-outer {
+overflow: visible;
+}
+.tabs-cap-top, .tabs-cap-bottom {
+position: absolute;
+width: 100%;
+border-top: 1px solid #222222;
+}
+.tabs-cap-bottom {
+bottom: 0;
+}
+.tabs-inner .widget li a {
+display: inline-block;
+margin: 0;
+padding: .6em 1.5em;
+font: normal bold 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #ffffff;
+border-top: 1px solid #222222;
+border-bottom: 1px solid #222222;
+border-left: 1px solid #222222;
+height: 16px;
+line-height: 16px;
+}
+.tabs-inner .widget li:last-child a {
+border-right: 1px solid #222222;
+}
+.tabs-inner .widget li.selected a, .tabs-inner .widget li a:hover {
+background: #444444 none repeat-x scroll 0 -100px;
+color: #ffffff;
+}
+/* Headings
+----------------------------------------------- */
+h2 {
+font: normal bold 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #ffffff;
+}
+/* Widgets
+----------------------------------------------- */
+.main-inner .section {
+margin: 0 27px;
+padding: 0;
+}
+.main-inner .column-left-outer,
+.main-inner .column-right-outer {
+margin-top: 0;
+}
+#layout .main-inner .column-left-outer,
+#layout .main-inner .column-right-outer {
+margin-top: 0;
+}
+.main-inner .column-left-inner,
+.main-inner .column-right-inner {
+background: transparent none repeat 0 0;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-moz-border-radius: 0;
+-webkit-border-radius: 0;
+-goog-ms-border-radius: 0;
+border-radius: 0;
+}
+#layout .main-inner .column-left-inner,
+#layout .main-inner .column-right-inner {
+margin-top: 0;
+}
+.sidebar .widget {
+font: normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #ffffff;
+}
+.sidebar .widget a:link {
+color: #888888;
+}
+.sidebar .widget a:visited {
+color: #444444;
+}
+.sidebar .widget a:hover {
+color: #cccccc;
+}
+.sidebar .widget h2 {
+text-shadow: 0 0 -1px #000000;
+}
+.main-inner .widget {
+background-color: #141414;
+border: 1px solid #222222;
+padding: 0 15px 15px;
+margin: 20px -16px;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-moz-border-radius: 0;
+-webkit-border-radius: 0;
+-goog-ms-border-radius: 0;
+border-radius: 0;
+}
+.main-inner .widget h2 {
+margin: 0 -15px;
+padding: .6em 15px .5em;
+border-bottom: 1px solid #000000;
+}
+.footer-inner .widget h2 {
+padding: 0 0 .4em;
+border-bottom: 1px solid #000000;
+}
+.main-inner .widget h2 + div, .footer-inner .widget h2 + div {
+border-top: 1px solid #222222;
+padding-top: 8px;
+}
+.main-inner .widget .widget-content {
+margin: 0 -15px;
+padding: 7px 15px 0;
+}
+.main-inner .widget ul, .main-inner .widget #ArchiveList ul.flat {
+margin: -8px -15px 0;
+padding: 0;
+list-style: none;
+}
+.main-inner .widget #ArchiveList {
+margin: -8px 0 0;
+}
+.main-inner .widget ul li, .main-inner .widget #ArchiveList ul.flat li {
+padding: .5em 15px;
+text-indent: 0;
+color: #666666;
+border-top: 1px solid #222222;
+border-bottom: 1px solid #000000;
+}
+.main-inner .widget #ArchiveList ul li {
+padding-top: .25em;
+padding-bottom: .25em;
+}
+.main-inner .widget ul li:first-child, .main-inner .widget #ArchiveList ul.flat li:first-child {
+border-top: none;
+}
+.main-inner .widget ul li:last-child, .main-inner .widget #ArchiveList ul.flat li:last-child {
+border-bottom: none;
+}
+.post-body {
+position: relative;
+}
+.main-inner .widget .post-body ul {
+padding: 0 2.5em;
+margin: .5em 0;
+list-style: disc;
+}
+.main-inner .widget .post-body ul li {
+padding: 0.25em 0;
+margin-bottom: .25em;
+color: #ffffff;
+border: none;
+}
+.footer-inner .widget ul {
+padding: 0;
+list-style: none;
+}
+.widget .zippy {
+color: #666666;
+}
+/* Posts
+----------------------------------------------- */
+body .main-inner .Blog {
+padding: 0;
+margin-bottom: 1em;
+background-color: transparent;
+border: none;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+.main-inner .section:last-child .Blog:last-child {
+padding: 0;
+margin-bottom: 1em;
+}
+.main-inner .widget h2.date-header {
+margin: 0 -15px 1px;
+padding: 0 0 0 0;
+font: normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #666666;
+background: transparent none no-repeat scroll top left;
+border-top: 0 solid #222222;
+border-bottom: 1px solid #000000;
+-moz-border-radius-topleft: 0;
+-moz-border-radius-topright: 0;
+-webkit-border-top-left-radius: 0;
+-webkit-border-top-right-radius: 0;
+border-top-left-radius: 0;
+border-top-right-radius: 0;
+position: static;
+bottom: 100%;
+right: 15px;
+text-shadow: 0 0 -1px #000000;
+}
+.main-inner .widget h2.date-header span {
+font: normal normal 14px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+display: block;
+padding: .5em 15px;
+border-left: 0 solid #222222;
+border-right: 0 solid #222222;
+}
+.date-outer {
+position: relative;
+margin: 30px 0 20px;
+padding: 0 15px;
+background-color: #141414;
+border: 1px solid #222222;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-moz-border-radius: 0;
+-webkit-border-radius: 0;
+-goog-ms-border-radius: 0;
+border-radius: 0;
+}
+.date-outer:first-child {
+margin-top: 0;
+}
+.date-outer:last-child {
+margin-bottom: 20px;
+-moz-border-radius-bottomleft: 0;
+-moz-border-radius-bottomright: 0;
+-webkit-border-bottom-left-radius: 0;
+-webkit-border-bottom-right-radius: 0;
+-goog-ms-border-bottom-left-radius: 0;
+-goog-ms-border-bottom-right-radius: 0;
+border-bottom-left-radius: 0;
+border-bottom-right-radius: 0;
+}
+.date-posts {
+margin: 0 -15px;
+padding: 0 15px;
+clear: both;
+}
+.post-outer, .inline-ad {
+border-top: 1px solid #222222;
+margin: 0 -15px;
+padding: 15px 15px;
+}
+.post-outer {
+padding-bottom: 10px;
+}
+.post-outer:first-child {
+padding-top: 0;
+border-top: none;
+}
+.post-outer:last-child, .inline-ad:last-child {
+border-bottom: none;
+}
+.post-body {
+position: relative;
+}
+.post-body img {
+padding: 8px;
+background: #222222;
+border: 1px solid transparent;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-moz-border-radius: 0;
+-webkit-border-radius: 0;
+border-radius: 0;
+}
+h3.post-title, h4 {
+font: normal bold 22px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #ffffff;
+}
+h3.post-title a {
+font: normal bold 22px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #ffffff;
+}
+h3.post-title a:hover {
+color: #cccccc;
+text-decoration: underline;
+}
+.post-header {
+margin: 0 0 1em;
+}
+.post-body {
+line-height: 1.4;
+}
+.post-outer h2 {
+color: #ffffff;
+}
+.post-footer {
+margin: 1.5em 0 0;
+}
+#blog-pager {
+padding: 15px;
+font-size: 120%;
+background-color: #141414;
+border: 1px solid #222222;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-moz-border-radius: 0;
+-webkit-border-radius: 0;
+-goog-ms-border-radius: 0;
+border-radius: 0;
+-moz-border-radius-topleft: 0;
+-moz-border-radius-topright: 0;
+-webkit-border-top-left-radius: 0;
+-webkit-border-top-right-radius: 0;
+-goog-ms-border-top-left-radius: 0;
+-goog-ms-border-top-right-radius: 0;
+border-top-left-radius: 0;
+border-top-right-radius-topright: 0;
+margin-top: 1em;
+}
+.blog-feeds, .post-feeds {
+margin: 1em 0;
+text-align: center;
+color: #ffffff;
+}
+.blog-feeds a, .post-feeds a {
+color: #888888;
+}
+.blog-feeds a:visited, .post-feeds a:visited {
+color: #444444;
+}
+.blog-feeds a:hover, .post-feeds a:hover {
+color: #cccccc;
+}
+.post-outer .comments {
+margin-top: 2em;
+}
+/* Comments
+----------------------------------------------- */
+.comments .comments-content .icon.blog-author {
+background-repeat: no-repeat;
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB9sLFwMeCjjhcOMAAAD+SURBVDjLtZSvTgNBEIe/WRRnm3U8RC1neQdsm1zSBIU9VVF1FkUguQQsD9ITmD7ECZIJSE4OZo9stoVjC/zc7ky+zH9hXwVwDpTAWWLrgS3QAe8AZgaAJI5zYAmc8r0G4AHYHQKVwII8PZrZFsBFkeRCABYiMh9BRUhnSkPTNCtVXYXURi1FpBDgArj8QU1eVXUzfnjv7yP7kwu1mYrkWlU33vs1QNu2qU8pwN0UpKoqokjWwCztrMuBhEhmh8bD5UDqur75asbcX0BGUB9/HAMB+r32hznJgXy2v0sGLBcyAJ1EK3LFcbo1s91JeLwAbwGYu7TP/3ZGfnXYPgAVNngtqatUNgAAAABJRU5ErkJggg==);
+}
+.comments .comments-content .loadmore a {
+border-top: 1px solid #222222;
+border-bottom: 1px solid #222222;
+}
+.comments .continue {
+border-top: 2px solid #222222;
+}
+/* Footer
+----------------------------------------------- */
+.footer-outer {
+margin: -0 0 -1px;
+padding: 0 0 0;
+color: #ffffff;
+overflow: hidden;
+}
+.footer-fauxborder-left {
+border-top: 1px solid #222222;
+background: #141414 none repeat scroll 0 0;
+-moz-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+-goog-ms-box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+margin: 0 -0;
+}
+/* Mobile
+----------------------------------------------- */
+body.mobile {
+background-size: auto;
+}
+.mobile .body-fauxcolumn-outer {
+background: transparent none repeat scroll top left;
+}
+*+html body.mobile .main-inner .column-center-inner {
+margin-top: 0;
+}
+.mobile .main-inner .widget {
+padding: 0 0 15px;
+}
+.mobile .main-inner .widget h2 + div,
+.mobile .footer-inner .widget h2 + div {
+border-top: none;
+padding-top: 0;
+}
+.mobile .footer-inner .widget h2 {
+padding: 0.5em 0;
+border-bottom: none;
+}
+.mobile .main-inner .widget .widget-content {
+margin: 0;
+padding: 7px 0 0;
+}
+.mobile .main-inner .widget ul,
+.mobile .main-inner .widget #ArchiveList ul.flat {
+margin: 0 -15px 0;
+}
+.mobile .main-inner .widget h2.date-header {
+right: 0;
+}
+.mobile .date-header span {
+padding: 0.4em 0;
+}
+.mobile .date-outer:first-child {
+margin-bottom: 0;
+border: 1px solid #222222;
+-moz-border-radius-topleft: 0;
+-moz-border-radius-topright: 0;
+-webkit-border-top-left-radius: 0;
+-webkit-border-top-right-radius: 0;
+-goog-ms-border-top-left-radius: 0;
+-goog-ms-border-top-right-radius: 0;
+border-top-left-radius: 0;
+border-top-right-radius: 0;
+}
+.mobile .date-outer {
+border-color: #222222;
+border-width: 0 1px 1px;
+}
+.mobile .date-outer:last-child {
+margin-bottom: 0;
+}
+.mobile .main-inner {
+padding: 0;
+}
+.mobile .header-inner .section {
+margin: 0;
+}
+.mobile .post-outer, .mobile .inline-ad {
+padding: 5px 0;
+}
+.mobile .tabs-inner .section {
+margin: 0 10px;
+}
+.mobile .main-inner .widget h2 {
+margin: 0;
+padding: 0;
+}
+.mobile .main-inner .widget h2.date-header span {
+padding: 0;
+}
+.mobile .main-inner .widget .widget-content {
+margin: 0;
+padding: 7px 0 0;
+}
+.mobile #blog-pager {
+border: 1px solid transparent;
+background: #141414 none repeat scroll 0 0;
+}
+.mobile .main-inner .column-left-inner,
+.mobile .main-inner .column-right-inner {
+background: transparent none repeat 0 0;
+-moz-box-shadow: none;
+-webkit-box-shadow: none;
+-goog-ms-box-shadow: none;
+box-shadow: none;
+}
+.mobile .date-posts {
+margin: 0;
+padding: 0;
+}
+.mobile .footer-fauxborder-left {
+margin: 0;
+border-top: inherit;
+}
+.mobile .main-inner .section:last-child .Blog:last-child {
+margin-bottom: 0;
+}
+.mobile-index-contents {
+color: #ffffff;
+}
+.mobile .mobile-link-button {
+background: #888888 none repeat scroll 0 0;
+}
+.mobile-link-button a:link, .mobile-link-button a:visited {
+color: #ffffff;
+}
+.mobile .tabs-inner .PageList .widget-content {
+background: transparent;
+border-top: 1px solid;
+border-color: #222222;
+color: #ffffff;
+}
+.mobile .tabs-inner .PageList .widget-content .pagelist-arrow {
+border-left: 1px solid #222222;
+}
+
+--></style>
+<style id="template-skin-1" type="text/css"><!--
+body {
+min-width: 960px;
+}
+.content-outer, .content-fauxcolumn-outer, .region-inner {
+min-width: 960px;
+max-width: 960px;
+_width: 960px;
+}
+.main-inner .columns {
+padding-left: 0;
+padding-right: 310px;
+}
+.main-inner .fauxcolumn-center-outer {
+left: 0;
+right: 310px;
+/* IE6 does not respect left and right together */
+_width: expression(this.parentNode.offsetWidth -
+parseInt("0") -
+parseInt("310px") + 'px');
+}
+.main-inner .fauxcolumn-left-outer {
+width: 0;
+}
+.main-inner .fauxcolumn-right-outer {
+width: 310px;
+}
+.main-inner .column-left-outer {
+width: 0;
+right: 100%;
+margin-left: -0;
+}
+.main-inner .column-right-outer {
+width: 310px;
+margin-right: -310px;
+}
+#layout {
+min-width: 0;
+}
+#layout .content-outer {
+min-width: 0;
+width: 800px;
+}
+#layout .region-inner {
+min-width: 0;
+width: auto;
+}
+body#layout div.add_widget {
+padding: 8px;
+}
+body#layout div.add_widget a {
+margin-left: 32px;
+}
+--></style>
+<link href="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/authorization.css" media="all" onload="if(media!='all')media='all'" rel="stylesheet"><noscript><link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=12119233&amp;zx=18315671-25f7-4952-a4dd-f1336fd0fa3f' rel='stylesheet'/></noscript>
+<script src="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/google_top_exp.js" type="text/javascript"></script><style>.gc-bubbleDefault{background-color:transparent !important;text-align:left;padding:0 !important;margin:0 !important;border:0 !important;table-layout:auto !important}.gc-reset{background-color:transparent !important;border:0 !important;padding:0 !important;margin:0 !important;text-align:left}.pls-bubbleTop{border-bottom:1px solid #ccc !important}.pls-topTail,.pls-vertShimLeft,.pls-contentLeft{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/border_3.gif) !important}.pls-topTail{background-repeat:repeat-x !important;background-position:bottom !important}.pls-vertShim{background-color:#fff !important;text-align:right}.tbl-grey .pls-vertShim{background-color:#f5f5f5 !important}.pls-vertShimLeft{background-repeat:repeat-y !important;background-position:right !important;height:4px}.pls-vertShimRight{height:4px}.pls-confirm-container .pls-vertShim{background-color:#fff3c2 !important}.pls-contentWrap{background-color:#fff !important;position:relative !important;vertical-align:top}.pls-contentLeft{background-repeat:repeat-y;background-position:right;vertical-align:top}.pls-dropRight{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleDropR_3.png) !important;background-repeat:repeat-y !important;vertical-align:top}.pls-vert,.pls-tailleft,.pls-dropTR .pls-dropBR,.pls-dropBL,.pls-vert img{vertical-align:top}.pls-dropBottom{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleDropB_3.png) !important;background-repeat:repeat-x !important;width:100%;vertical-align:top}.pls-topLeft{background:inherit !important;text-align:right;vertical-align:bottom}.pls-topRight{background:inherit !important;text-align:left;vertical-align:bottom}.pls-bottomLeft{background:inherit !important;text-align:right}.pls-bottomRight{background:inherit !important;text-align:left;vertical-align:top}.pls-tailtop,.pls-tailright,.pls-tailbottom,.pls-tailleft{display:none;position:relative}.pls-tailbottom,.pls-tailtop,.pls-tailright,.pls-tailleft,.pls-dropTR,.pls-dropBR,.pls-dropBL{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleSprite_3.png) !important;background-repeat:no-repeat}.tbl-grey .pls-tailbottom,.tbl-grey .pls-tailtop,.tbl-grey .pls-tailright,.tbl-grey .pls-tailleft,.tbl-grey .pls-dropTR,.tbl-grey .pls-dropBR,.tbl-grey .pls-dropBL{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleSprite-grey.png) !important}.pls-tailbottom{background-position:-23px 0}.pls-confirm-container .pls-tailbottom{background-position:-23px -10px}.pls-tailtop{background-position:-19px -20px}.pls-tailright{background-position:0 0}.pls-tailleft{background-position:-10px 0}.pls-tailtop{vertical-align:top}.gc-bubbleDefault td{line-height:0;font-size:0}.pls-topLeft img,.pls-topRight img,.pls-tailbottom{vertical-align:bottom}.pls-bottomLeft img,.bubbleDropTR,.pls-dropBottomL img,.pls-dropBottom img,.pls-dropBottomR img,.pls-bottomLeft{vertical-align:top}.pls-dropTR{background-position:0 -22px}.pls-dropBR{background-position:0 -27px}.pls-dropBL{background-position:0 -16px}.pls-spacertop,.pls-spacerright,.pls-spacerbottom,.pls-spacerleft{position:static !important}.pls-spinner{bottom:0;position:absolute;left:0;margin:auto;right:0;top:0} </style></head>
+<body class=" variant-dark">
+<div class="navbar section" id="navbar" name="Панель навигации"><div class="widget Navbar" data-version="1" id="Navbar1"><script async="" src="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/cbgapi.loaded_1"></script><script async="" src="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/cbgapi.loaded_0"></script><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener('load',
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<div id="navbar-iframe-container"><iframe src="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/navbar.htm" name="navbar-iframe" id="navbar-iframe" vspace="0" tabindex="0" style="" scrolling="no" marginwidth="0" marginheight="0" hspace="0" ng-non-bindable="" frameborder="0" width="100%"></iframe></div>
+<script gapi_processed="true" type="text/javascript" src="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/plusone.js"></script>
+<script type="text/javascript">
+      gapi.load("gapi.iframes:gapi.iframes.style.bubble", function() {
+        if (gapi.iframes && gapi.iframes.getContext) {
+          gapi.iframes.getContext().openChild({
+              url: 'https://www.blogger.com/navbar.g?targetBlogID\x3d12119233\x26blogName\x3d...\x26publishMode\x3dPUBLISH_MODE_BLOGSPOT\x26navbarType\x3dLIGHT\x26layoutType\x3dLAYOUTS\x26searchRoot\x3dhttp://sapunidze.blogspot.com/search\x26blogLocale\x3dru_RU\x26v\x3d2\x26homepageUrl\x3dhttp://sapunidze.blogspot.com/\x26vt\x3d4960348788795357165',
+              where: document.getElementById("navbar-iframe-container"),
+              id: "navbar-iframe"
+          });
+        }
+      });
+    </script><script type="text/javascript">
+(function() {
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = '//pagead2.googlesyndication.com/pagead/js/google_top_exp.js';
+var head = document.getElementsByTagName('head')[0];
+if (head) {
+head.appendChild(script);
+}})();
+</script>
+</div></div>
+<div itemscope="itemscope" itemtype="http://schema.org/Blog" style="display: none;">
+<meta content="..." itemprop="name">
+</div>
+<div class="body-fauxcolumns">
+<div class="fauxcolumn-outer body-fauxcolumn-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<div class="content">
+<div class="content-fauxcolumns">
+<div class="fauxcolumn-outer content-fauxcolumn-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<div class="content-outer">
+<div class="content-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left content-fauxborder-left">
+<div class="fauxborder-right content-fauxborder-right"></div>
+<div class="content-inner">
+<header>
+<div class="header-outer">
+<div class="header-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left header-fauxborder-left">
+<div class="fauxborder-right header-fauxborder-right"></div>
+<div class="region-inner header-inner">
+<div class="header section" id="header" name="Заголовок"><div class="widget Header" data-version="1" id="Header1">
+<div id="header-inner">
+<div class="titlewrapper">
+<h1 class="title">
+...
+</h1>
+</div>
+<div class="descriptionwrapper">
+<p class="description"><span>про fedora linux, безопасность и selinux</span></p>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="header-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</header>
+<div class="tabs-outer">
+<div class="tabs-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left tabs-fauxborder-left">
+<div class="fauxborder-right tabs-fauxborder-right"></div>
+<div class="region-inner tabs-inner">
+<div class="tabs no-items section" id="crosscol" name="Поперечный столбец"></div>
+<div class="tabs no-items section" id="crosscol-overflow" name="Cross-Column 2"></div>
+</div>
+</div>
+<div class="tabs-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="main-outer">
+<div class="main-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left main-fauxborder-left">
+<div class="fauxborder-right main-fauxborder-right"></div>
+<div class="region-inner main-inner">
+<div class="columns fauxcolumns">
+<div class="fauxcolumn-outer fauxcolumn-center-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="fauxcolumn-outer fauxcolumn-left-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<div class="fauxcolumn-outer fauxcolumn-right-outer">
+<div class="cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left">
+<div class="fauxborder-right"></div>
+<div class="fauxcolumn-inner">
+</div>
+</div>
+<div class="cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<!-- corrects IE6 width calculation -->
+<div class="columns-inner">
+<div class="column-center-outer">
+<div class="column-center-inner">
+<div class="main section" id="main" name="Основной"><div class="widget Blog" data-version="1" id="Blog1">
+<div class="blog-posts hfeed">
+
+          <div class="date-outer">
+        
+<h2 class="date-header"><span>понедельник, июля 20, 2009</span></h2>
+
+          <div class="date-posts">
+        
+<div class="post-outer">
+<div class="post hentry uncustomized-post-template" itemprop="blogPost" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+<meta content="http://3.bp.blogspot.com/_0yMSfSBLLUA/SmQIzeYT2-I/AAAAAAAAAAY/t3PBJl9e1NI/s320/00001.small.jpg" itemprop="image_url">
+<meta content="12119233" itemprop="blogId">
+<meta content="644479098982083303" itemprop="postId">
+<a name="644479098982083303"></a>
+<h3 class="post-title entry-title" itemprop="name">
+<a href="http://sapunidze.blogspot.com/2009/07/russian-fedora-summit.html">russian fedora summit</a>
+</h3>
+<div class="post-header">
+<div class="post-header-line-1"></div>
+</div>
+<div class="post-body entry-content" id="post-body-644479098982083303" itemprop="description articleBody">
+<a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://3.bp.blogspot.com/_0yMSfSBLLUA/SmQIzeYT2-I/AAAAAAAAAAY/t3PBJl9e1NI/s1600-h/00001.small.jpg"><img alt="" id="BLOGGER_PHOTO_ID_5360419136899111906" src="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/00001.jpg" style="float:right; margin:0 0 10px 10px;cursor:pointer; cursor:hand;width: 320px; height: 240px;" border="0"></a><br>...иными словами своеобразный конгресс русских общин<br><br>в
+ пятницу 17.07.09 в неформальной обстановке состоялась московская 
+встреча активистов продвижения Fedora в русскоязычном мире. публичные 
+заявления по итогам встречи и её последствия как я понимаю в скором 
+времени будут заметны на <a href="http://www.russianfedora.ru/">сайте проекта</a>.<br><br>фотоаппарата
+ как водится в таких случаях ни у кого не оказалось, но не запечатлить 
+момент для истории было нельзя. на фото слева направо (если я ничего не 
+напутал) - Alexander Tiurin, Peter Lemenkov, Alexey Torkhov, Alexey 
+Vasyukov, Inna Kabanova, Viacheslav Kaloshin. я - с другой стороны 
+телефона (этим и определяется качество и размер)
+<div style="clear: both;"></div>
+</div>
+<div class="post-footer">
+<div class="post-footer-line post-footer-line-1">
+<span class="post-author vcard">
+</span>
+<span class="post-timestamp">
+на часах было
+<meta content="http://sapunidze.blogspot.com/2009/07/russian-fedora-summit.html" itemprop="url">
+<a class="timestamp-link" href="http://sapunidze.blogspot.com/2009/07/russian-fedora-summit.html" rel="bookmark" title="permanent link"><abbr class="published" itemprop="datePublished" title="2009-07-20T09:55:00+04:00">9:55:00</abbr></a>
+</span>
+<span class="reaction-buttons">
+</span>
+<span class="post-comment-link">
+<a class="comment-link" href="https://www.blogger.com/comment.g?blogID=12119233&amp;postID=644479098982083303" onclick="">
+1 комментарий:
+    </a>
+</span>
+<span class="post-backlinks post-comment-link">
+<a class="comment-link" href="http://sapunidze.blogspot.com/2009/07/russian-fedora-summit.html#links">Ссылки на это сообщение</a>
+</span>
+<span class="post-icons">
+</span>
+<div class="post-share-buttons goog-inline-block">
+</div>
+</div>
+<div class="post-footer-line post-footer-line-2">
+<span class="post-labels">
+Ярлыки:
+<a href="http://sapunidze.blogspot.com/search/label/%D0%B6%D0%B8%D0%B7%D0%BD%D1%8C" rel="tag">жизнь</a>,
+<a href="http://sapunidze.blogspot.com/search/label/fedora" rel="tag">fedora</a>
+</span>
+</div>
+<div class="post-footer-line post-footer-line-3">
+<span class="post-location">
+</span>
+</div>
+</div>
+</div>
+</div>
+
+          </div></div>
+        
+
+          <div class="date-outer">
+        
+<h2 class="date-header"><span>вторник, июля 14, 2009</span></h2>
+
+          <div class="date-posts">
+        
+<div class="post-outer">
+<div class="post hentry uncustomized-post-template" itemprop="blogPost" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+<meta content="12119233" itemprop="blogId">
+<meta content="1642164882039805835" itemprop="postId">
+<a name="1642164882039805835"></a>
+<h3 class="post-title entry-title" itemprop="name">
+<a href="http://sapunidze.blogspot.com/2009/07/selinux-10.html">SELinux Lockdown, 10: Заключение</a>
+</h3>
+<div class="post-header">
+<div class="post-header-line-1"></div>
+</div>
+<div class="post-body entry-content" id="post-body-1642164882039805835" itemprop="description articleBody">
+<span style="font-style:italic;">оригинал - <a href="http://selinux-mac.blogspot.com/2009/06/selinux-lockdown-part-10-conclusion.html">SELinux Lockdown Part Ten: Conclusion</a><br><br>Завершение цикла статей по использованию SELinux. Оригинал на английском языке опубликован в <a href="http://selinux-mac.blogspot.com/">блоге Доминика Грифта</a> (Dominick Grift).</span><br><br>В
+ предыдущих девяти частях было обсуждено много чего. Это последняя 
+статья в серии, в которой вкратце повторно перечисляются шаги, 
+позволяющие увеличить безопасность, обеспечиваемую SELinux. Подробности 
+по данным шагам доступны в предыдущих статьях.<br><br><span style="font-weight:bold;">1.</span> Пользователь SELinux.<br><br>По
+ умолчанию сопоставляйте пользователей Linux ограниченному пользователю 
+SELinux. Помните про принцип минимума полномочий. Например, используйте 
+пользователя <span style="font-style:italic;">guest_u</span>: <code>sudo semanage login -m -s guest_u -r s0-s0 __default__</code><br><br>Если необходимо переопределить для новых Linux пользователей пользователя SELinux по умолчанию можно воспользоваться командой <code>useradd</code> и опцией <code>-Z</code>.<br><br>Не сопоставляйте пользователей Linux пользователю SELinux <span style="font-style:italic;">unconfined_u</span>. Исключением из этого правила может быть пользователь <span style="font-style:italic;">root</span>. Пользователю <span style="font-style:italic;">root</span> должно разрешаться входить в систему только в экстренных случаях и только через TTY.<br><br><span style="font-weight:bold;">2.</span> PAM SEPermit.<br><br>Добавьте соответствующие записи для всех ваших ограниченных SELinux пользователях в <code>/etc/security/sepermit.conf</code>, чтобы при работе SELinux в разрешающем (permissive) режиме блокировать их попытки входа в систему .<br><br>Вы можете принять решение о создании уникального SELinux пользователя для себя, освобожденного от ограничения SEPermit.<br><br><span style="font-weight:bold;">3.</span> Permissive mode против Permissive Domains.<br><br>Всегда
+ отдавайте предпочтение использованию разрешающих доменов (Permissive 
+Domains) вместо разрешающего режима (Permissive Mode).<br><br><span style="font-weight:bold;">4.</span>
+ Не изменяйте предустановленных по умолчанию пользователей SELinux. Если
+ вам требуется особенный пользователь SELinux и/или пользовательский 
+домен SELinux создайте новый, взяв за основу существующий.<br><br><span style="font-weight:bold;">5.</span>
+ Используйте управление доступом на основе ролей (Role based Access 
+control) для ограничения привилегий пользователей, в том числе 
+пользователя <span style="font-style:italic;">root</span>.<br><br><span style="font-weight:bold;">6.</span> Не изменяйте существующие роли / домены пользователей.<br><br>Если
+ требуется специальная роль, создайте на основе существующей новую и 
+сопоставьте её новому пользователю SELinux. Вместе с тем вы можете 
+сопоставлять существующим ролям новых пользователей SELinux.<br><br><span style="font-weight:bold;">7.</span> Используйте команду <code>sudo</code>, вместо <code>su</code> и <code>newrole</code>.<br><br><span style="font-weight:bold;">8.</span> Удалите домен(ы) <span style="font-style:italic;">unconfined</span> (неограниченный).<br><br>Обязательно сделайте <code>sudo semodule -r unconfined</code>, чтобы отключить системные службы, не имеющие определенных политик. Используйте команду  <code>sudo semodule -r unconfineduser</code>, чтобы полностью отключить неограниченную среду пользователя (не рекомендуется). Если вы решили удалить <span style="font-style:italic;">unconfineduser</span>,
+ не забудьте соответствующим образом перенастроить сопоставления 
+пользователей SELinux, чтобы учесть это изменение. Используйте вместо <span style="font-style:italic;">unconfined</span> домен <span style="font-style:italic;">sysadm</span>. <br><br>однако, автор отдаёт предпочтение домену <span style="font-style:italic;">unconfined</span> против домена <span style="font-style:italic;">sysadm</span> в качестве дополнительного на все случаи привилегированного пользовательского домена, потому что:<br><br>a. для запрета входа неограниченным (unconfined) пользователям можно установить переключатель <span style="font-style:italic;">unconfined_login</span>.<br>b. не работают переключатели <span style="font-style:italic;">ssh_sysadm_login</span> и <span style="font-style:italic;">xdm_sysadm_login</span>.<br>c. <span style="font-style:italic;">sysadm</span> - это напившийся (кривой) <span style="font-style:italic;">unconfined</span>.<br>d. вход пользователю <span style="font-style:italic;">root</span> отключен.<br>e. домен <span style="font-style:italic;">unconfined</span> используется только как дополнительный привилегированный домен, доступный только при использовании <code>sudo</code><br>e.1. за исключением пользователя <span style="font-style:italic;">root</span>, который может входить только в экстренном случае через TTY.<br><br><span style="font-weight:bold;">9.</span> Удалите как можно больше политик включением и выключением соответствующих переключателей.<br><br>установите <span style="font-style:italic;">unconfined_login</span> в значение <span style="font-style:italic;">off</span><br>установите <span style="font-style:italic;">xserver_object_manager</span> в значение <span style="font-style:italic;">on</span><br>установите <span style="font-style:italic;">*_exec_content</span> в значение <span style="font-style:italic;">off</span><br>рассмотрите применение переключателей <span style="font-style:italic;">secure_mode_*</span>
+<div style="clear: both;"></div>
+</div>
+<div class="post-footer">
+<div class="post-footer-line post-footer-line-1">
+<span class="post-author vcard">
+</span>
+<span class="post-timestamp">
+на часах было
+<meta content="http://sapunidze.blogspot.com/2009/07/selinux-10.html" itemprop="url">
+<a class="timestamp-link" href="http://sapunidze.blogspot.com/2009/07/selinux-10.html" rel="bookmark" title="permanent link"><abbr class="published" itemprop="datePublished" title="2009-07-14T17:06:00+04:00">17:06:00</abbr></a>
+</span>
+<span class="reaction-buttons">
+</span>
+<span class="post-comment-link">
+<a class="comment-link" href="https://www.blogger.com/comment.g?blogID=12119233&amp;postID=1642164882039805835" onclick="">
+Комментариев нет:
+    </a>
+</span>
+<span class="post-backlinks post-comment-link">
+<a class="comment-link" href="http://sapunidze.blogspot.com/2009/07/selinux-10.html#links">Ссылки на это сообщение</a>
+</span>
+<span class="post-icons">
+</span>
+<div class="post-share-buttons goog-inline-block">
+</div>
+</div>
+<div class="post-footer-line post-footer-line-2">
+<span class="post-labels">
+Ярлыки:
+<a href="http://sapunidze.blogspot.com/search/label/%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4" rel="tag">перевод</a>,
+<a href="http://sapunidze.blogspot.com/search/label/fedora" rel="tag">fedora</a>,
+<a href="http://sapunidze.blogspot.com/search/label/security" rel="tag">security</a>,
+<a href="http://sapunidze.blogspot.com/search/label/selinux" rel="tag">selinux</a>
+</span>
+</div>
+<div class="post-footer-line post-footer-line-3">
+<span class="post-location">
+</span>
+</div>
+</div>
+</div>
+</div>
+<div class="post-outer">
+<div class="post hentry uncustomized-post-template" itemprop="blogPost" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+<meta content="12119233" itemprop="blogId">
+<meta content="5343215925629464117" itemprop="postId">
+<a name="5343215925629464117"></a>
+<h3 class="post-title entry-title" itemprop="name">
+<a href="http://sapunidze.blogspot.com/2009/07/selinux-9.html">SELinux Lockdown, 9: Переключатели</a>
+</h3>
+<div class="post-header">
+<div class="post-header-line-1"></div>
+</div>
+<div class="post-body entry-content" id="post-body-5343215925629464117" itemprop="description articleBody">
+<span style="font-style:italic;">оригинал - <a href="http://selinux-mac.blogspot.com/2009/06/selinux-lockdown-part-nine-booleans.html">SELinux Lockdown Part Nine: Booleans</a><br><br>Продолжаю выкладывать перевод цикла статей по использованию SELinux. Оригинал на английском языке опубликован в <a href="http://selinux-mac.blogspot.com/">блоге Доминика Грифта</a> (Dominick Grift).</span><br><br>Переключатели
+ (booleans) это блоки политики, которые можно добавлять или удалять на 
+лету, переключая их значение. Старая примерная политика АНБ (NSA) 
+основывалась на модели минимальных привилегий. Это значит, что 
+разрешалось насколько возможно мало для успешного совершения задания. 
+Почти каждое правило, добавляемое в политику SELinux, добавляет новые 
+привилегии. Для максимального повышения безопасности, обеспечиваемой 
+SELinux, число активных правил следует минимизировать.<br><br>В Fedora 
+версии 11 переключателями включены некоторые политики, которые возможно в
+ вашем случае не нужны. Рекомендуется удалять такие политики и добавлять
+ их только при необходимости.<br><br>Какие-то переключатели во 
+включенном состоянии добавляют политики, другие добавляют политики в 
+выключенном состоянии. Простое описание функциональности переключателя 
+можно просмотреть командой: <code>sudo semanage boolean -l</code>. Этих описаний обычно достаточно для понимания назначения переключателя, хотя описания короткие. Если пропустить сообщение <span style="font-style:italic;">AVC: denied</span> (Access Vector Cache) через команду <span style="font-style:italic;">audit2why</span>,
+ можно узнать, какой переключатель позволяет устранить эту проблему 
+(если данная проблема может быть решена установкой значения 
+переключателя).<br><br>Иногда для понимания того, что разрешает 
+переключатель, лучше посмотреть его описание в исходном тексте политики,
+ в которой он определен. Вам необходимо иметь доступ к исходному тексту 
+политики, а также знать, как найти блоки политики, содержащие описание 
+переключателя.<br><br>Существует три относительно старые утилиты, позволяющие просмотреть, установить и переключить значение SELinux-переключателей: <span style="font-style:italic;">getsebool</span>, <span style="font-style:italic;">setsebool</span> и <span style="font-style:italic;">togglesebool</span>. В Fedora 11 функциональность этих утилит была встроена в команду <span style="font-style:italic;">semanage</span>: <code>semanage boolean</code>. <br><br>Имена
+ переключателей должны указывать на модули с исходными текстами, в 
+которых определяются переключатели. К сожалению, часто бывает не так 
+просто найти определение переключателя в исходном тексте политики. В 
+лучшем случае  название переключателя начинается с модуля, в котором он 
+определен. <br><br><span style="font-style:italic;">Пример:</span><br>Как найти объявление и содержимое переключателя <span style="font-style:italic;">gpg_agent_env_file</span> boolean<br><br><code># semanage boolean -l | grep gpg<br>gpg_agent_env_file
+ -&gt; off Allow usage of the gpg-agent --write-env-file option. This 
+also allows gpg-agent to manage user files</code><br><br>Как следует из названия переключателя, он определяется где-то в модуле <a href="http://oss.tresys.com/projects/refpolicy/browser/trunk/policy/modules/apps/gpg.te">gpg.te</a> (в данном случае это строки с 196 по 203).<br><br>Данный переключатель, будучи включенным, позволяет программам, работающим в SELinux-домене <span style="font-style:italic;">gpg_agent_t</span>, записывать файлы в домашней директории пользователя с обычным типом <span style="font-style:italic;">user_home_t</span>.<br><br>Автор предполагает, что в блоке политики имеется ошибка, так как <span style="font-style:italic;">gpg_agent_t</span> может осуществить переход типа (type transition) только для файлов <span style="font-style:italic;">user_home_t</span> и не может для директорий.<br><br>Объявление этого переключателя, содержащее краткое описание функциональности, можно найти на строках с 9 по 15. <br><br>Описать
+ в рамках данной статьи все переключатели не представляется возможным, 
+поэтому было показано, как в общем случае найти объявление и актуальное 
+описание переключателя. При необходимости ограничения переключателей, 
+можно посмотреть добавляет он или удаляет политику при включении и что 
+фактически он делает. Кроме того, можно включить или выключить 
+переключатель, чтобы определить, нужна ли вам, реализованная им 
+политика. Также при необходимости можно «скормить» имеющиеся сообщения <span style="font-style:italic;">AVC: denie</span>d утилите <span style="font-style:italic;">audit2why</span> и посмотреть существуют ли переключатели, позволяющие решить существующую проблему.<br><br>Далее рассматриваются некоторые переключатели.<br><br><span style="font-weight:bold;">unconfined_login</span><br><br><code>unconfined_login -&gt; off Allow a user to login as an unconfined domain</code><br><br>Переключатель обсуждался в <a href="http://sapunidze.blogspot.com/2009/07/selinux-8-unconfined.html">восьмой части</a> этой серии. Если он установлен в положение on (включен), тогда пользователи могут входить в систему в домене <span style="font-style:italic;">unconfined_t</span>.
+ Можно сильно повысить безопасность установкой его в значение off 
+(выключено). Содержимое переключателя доступно в исходном файле политики
+ unconfineduser.te.<br><br><span style="font-weight:bold;">ssh_sysadm_login и xdm_sysadm_login</span><br><br><code>ssh_sysadm_login -&gt; off Allow ssh logins as sysadm_r:sysadm_t<br>xdm_sysadm_login -&gt; off Allow xdm logins as sysadm</code><br><br>Переключатель похож на <span style="font-style:italic;">unconfined_login</span>, только имеет дело с доменом <span style="font-style:italic;">sysadm_t</span>. В настоящее время он НЕ работает. Поэтому пока не рекомендуется сопоставлять любых пользователей SELinux роли <span style="font-style:italic;">sysadm_r</span>. Пользователи, имеющие доступ к этой роли, могут сразу входить в систему в привилегированный домен.<br><br><span style="font-weight:bold;">*_allow_exec_content_t</span><br><br><code>allow_sysadm_exec_content -&gt; off allow_sysadm_exec_content<br>allow_xguest_exec_content -&gt; off allow_xguest_exec_content<br>allow_user_exec_content -&gt; off allow_user_exec_content<br>allow_staff_exec_content -&gt; off allow_staff_exec_content<br>allow_guest_exec_content -&gt; off allow_guest_exec_content</code><br><br>Как
+ видно описание этого переключателя не сильно полезно. Когда 
+переключатель включен пользователям, в соответствующем домене, 
+разрешается запускать их пользовательское содержимое в их собственном 
+окружении. Имеются в виду файлы с типами <span style="font-style:italic;">user_home_t</span>, <span style="font-style:italic;">user_tmp_t</span> или если включены домашние директории nfs или samba типы <span style="font-style:italic;">nfs_t</span> и <span style="font-style:italic;">cifs_t</span>, соответственно. Данные переключатели являются особенностью Fedora, их содержимое можно найти в файле <span style="font-style:italic;">userdomain.if</span>. <br><br><span style="font-weight:bold;">secure_module</span><br><br><code>secure_mode -&gt; off Enabling secure mode disallows programs,<br>such as newrole, from transitioning to administrative user domains</code><br><br>Переключатель <span style="font-style:italic;">secure_mode</span> можно включить для запрета переходов пользовательских доменов в привилегированные домены. Переключатель определяется в файле <a href="http://oss.tresys.com/projects/refpolicy/browser/trunk/policy/modules/system/selinuxutil.te">selinuxutil.te</a> (строки с 289 по 295). <br><br>Пока переключатель работает только для команды <span style="font-style:italic;">newrole</span> и НЕ работает для команды <span style="font-style:italic;">sudo</span>. Поэтому не поощряется рассчитывать на данный переключатель.<br><br><span style="font-weight:bold;">secure_mode_insmod</span><br><br><code>secure_mode_insmod -&gt; off Disable transitions to insmod</code><br><br>При
+ включении данного переключателя для замкнутых (confined) пользователей 
+не разрешается осуществлять доменный переход к домену <span style="font-style:italic;">insmod</span>. Ограниченным пользовательским доменам будет запрещено загружать модули ядра Linux. Переключатель определен в исходном файле <a href="http://oss.tresys.com/projects/refpolicy/browser/trunk/policy/modules/system/modutils.te">modutils.te</a> (политика – строки 120-122, объявление переключателя – строки 4-6).<br><br><span style="font-weight:bold;">secure_mode_policyload</span><br><br><code>secure_mode_policyload -&gt; off boolean to determine whether the system<br>permits loading policy, setting enforcing mode, and changing boolean values.<br>Set this to true and you have to reboot to set it back</code><br><br>Описание
+ в принципе понятно. При включении переключателя  исключается политика, 
+разрешающая загрузку других политик, изменять режим работы SELinux и 
+изменять значения переключателей. Политика описывается в исходном файле <a href="http://oss.tresys.com/projects/refpolicy/browser/trunk/policy/modules/kernel/selinux.te">selinux.te</a> (строки с 44 по 52).<br><br><span style="font-weight:bold;">xserver_object_manager</span><br><br><code>xserver_object_manager -&gt; off Support X userspace object manager</code><br><br>Данный
+ переключатель оказывает достаточно сильный эффект. При его включении 
+становится доступным контроль доступа на уровне X сервера. XACE (X 
+Access Control Extension) позволяет оператору настраивать взаимодействие
+ процессов с X сервером. Политика по умолчанию всё ещё имеет 
+определенные шероховатости. XACE реализован для политики безопасности 
+SELinux, реализующей модель Multi Level Security, ориентированной на 
+обеспечение конфиденциальности. В целевой политике (SELinux Targeted 
+Policy) по умолчанию он выключен. Если вам хватает смелости, включите 
+его и опробуйте силу XACE.<br>После включения переключателя необходимо перезапустить X сервер.<br><br>Переключатель описан в файле с исходным текстом политики <a href="http://oss.tresys.com/projects/refpolicy/browser/trunk/policy/modules/services/xserver.te">xserver.te</a> (строки с 749 по 766).<br><br>К
+ сожалению, не всегда бывает легко найти, где определяются 
+переключатели. Есть куда стремиться в части именования переключателей.<br><br><span style="font-style:italic;">Вывод:</span><br>Для большей безопасности минимизируйте объем политики.<br>Иногда включением переключателя политика добавляется, иногда политика добавляется выключением переключателя.<br>Описание переключателя можно просмотреть в исходном тексте политики.<br><br><span style="font-style:italic;">Справка: man getsebool, man setsebool, man togglesebool, man audit2why, man semanage</span>
+<div style="clear: both;"></div>
+</div>
+<div class="post-footer">
+<div class="post-footer-line post-footer-line-1">
+<span class="post-author vcard">
+</span>
+<span class="post-timestamp">
+на часах было
+<meta content="http://sapunidze.blogspot.com/2009/07/selinux-9.html" itemprop="url">
+<a class="timestamp-link" href="http://sapunidze.blogspot.com/2009/07/selinux-9.html" rel="bookmark" title="permanent link"><abbr class="published" itemprop="datePublished" title="2009-07-14T15:45:00+04:00">15:45:00</abbr></a>
+</span>
+<span class="reaction-buttons">
+</span>
+<span class="post-comment-link">
+<a class="comment-link" href="https://www.blogger.com/comment.g?blogID=12119233&amp;postID=5343215925629464117" onclick="">
+Комментариев нет:
+    </a>
+</span>
+<span class="post-backlinks post-comment-link">
+<a class="comment-link" href="http://sapunidze.blogspot.com/2009/07/selinux-9.html#links">Ссылки на это сообщение</a>
+</span>
+<span class="post-icons">
+</span>
+<div class="post-share-buttons goog-inline-block">
+</div>
+</div>
+<div class="post-footer-line post-footer-line-2">
+<span class="post-labels">
+Ярлыки:
+<a href="http://sapunidze.blogspot.com/search/label/%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4" rel="tag">перевод</a>,
+<a href="http://sapunidze.blogspot.com/search/label/fedora" rel="tag">fedora</a>,
+<a href="http://sapunidze.blogspot.com/search/label/security" rel="tag">security</a>,
+<a href="http://sapunidze.blogspot.com/search/label/selinux" rel="tag">selinux</a>
+</span>
+</div>
+<div class="post-footer-line post-footer-line-3">
+<span class="post-location">
+</span>
+</div>
+</div>
+</div>
+</div>
+
+          </div></div>
+        
+
+          <div class="date-outer">
+        
+<h2 class="date-header"><span>среда, июля 08, 2009</span></h2>
+
+          <div class="date-posts">
+        
+<div class="post-outer">
+<div class="post hentry uncustomized-post-template" itemprop="blogPost" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+<meta content="12119233" itemprop="blogId">
+<meta content="8540158619738630449" itemprop="postId">
+<a name="8540158619738630449"></a>
+<h3 class="post-title entry-title" itemprop="name">
+<a href="http://sapunidze.blogspot.com/2009/07/selinux-8-unconfined.html">SELinux Lockdown, 8: Unconfined</a>
+</h3>
+<div class="post-header">
+<div class="post-header-line-1"></div>
+</div>
+<div class="post-body entry-content" id="post-body-8540158619738630449" itemprop="description articleBody">
+<span style="font-style: italic;">оригинал - <a href="http://selinux-mac.blogspot.com/2009/06/selinux-lockdown-part-eight-unconfined.html">SELinux Lockdown Part Eight: Unconfined</a><br><br>Продолжаю выкладывать перевод цикла статей по использованию SELinux. Оригинал на английском языке опубликован в <a href="http://selinux-mac.blogspot.com/">блоге Доминика Грифта</a> (Dominick Grift).</span><br><br>Незакрытая
+ (unconfined) область для процессов, которым требуется практически 
+неограниченный (unrestricted) доступ. Почти, потому что не разрешается 
+исполнение (execution) в перезаписываемых областях памяти (writable 
+memory). Для процессов, выполняющихся в незакрытой области, если 
+обратное не определено, ограничены следующие полномочия: <span style="font-style:italic;">Execmem Execstack Execheap Execmod</span>.<br><br><span style="font-style:italic;">прим. перев.:</span> в предыдущих частях термин «<span style="font-style:italic;">unconfined</span>» переводился как «<span style="font-style:italic;">неограниченный</span>», тогда это было не столь принципиально, в этой части близкие термины «<span style="font-style:italic;">(un)confined</span>» и «<span style="font-style:italic;">(un)restricted</span>» встречаются чаще, дабы не превратить всё в масло масленое, для первого термина здесь использую дословное значение.<br><br>В
+ установленной по умолчанию Fedora 11 в незакрытом домене (Unconfined 
+Domain) выполняются следующие процессы: ядро Linux, RPM (пакетный 
+менеджер), init scripts (скрипты инициализации) и незакрытые 
+пользователи (unconfined users).<br>Если иное не определено, незакрытые 
+процессы обычно запускают также незакрытые программы. Предполагается, 
+что незакрытые процессы неограниченны и что потомки наследует это 
+незакрытое окружение. Исключения из этого правила, как было сказано, 
+должны быть определены путём создания политики, определяющей переходы из
+ незакрытого домена в ограниченные области при запуске программ 
+незакрытым процессом.<br><br>Можно существенно повысить безопасность, 
+удалив незакрытую область. В результате все процессы будут ограниченны 
+SELinux. В Fedora 11 незакрытую область разделили на две части. Первая 
+часть – незакрытая область для программ, вторая часть – незакрытая 
+область для пользователей. Вторую часть переименовали в «<span style="font-style:italic;">unconfineduser domain</span>». <br><br>Результат этого разделения позволяет удалить одно из двух или оба окружения сразу. При удалении домена <span style="font-style:italic;">unconfined</span>,
+ являющегося доменом для незакрытых программ, будут ограничены 
+init-скрипты. В итоге системные службы, для которых не определена 
+политика SELinux, будут запускаться в ограниченном окружении 
+init-скрипта и не будут работать неограниченными. Это отличный способ 
+обеспечить отсутствие в системе неограниченных системных служб. Процессы
+ ядра и RPM останутся незакрытыми (unconfined), потому что этим 
+процессам для нормальной работы требуется слишком много полномочий.<br><br>Для обеспечения работы всех операторов в ограниченном окружении можно удалить домен <span style="font-style:italic;">unconfineduser</span>. В случае принятия решения об удалении домена <span style="font-style:italic;">unconfineduser</span> необходимо соответствующим образом изменить конфигурацию сопоставлений SELinux (SELinux mappings).<br><br>Если оператор уверенно владеет SELinux (feels comfortable with) не должно быть причин, чтобы не удалить домен <span style="font-style:italic;">unconfined</span>. При необходимости он сможет реализовать политику SELinux для любого системного процесса, не имеющего пока ещё своей политики.<br><br>Домен <span style="font-style:italic;">unconfineduser</span>
+ обычно удобнее сохранить, так как оператор имеет возможность вручную 
+определить, каким конкретно пользователям Linux сопоставить этот домен. 
+Настройками SELinux можно не разрешать незакрытые входы в систему через 
+OpenSSH или графический интерфейс пользователя. Это означает, что 
+пользователи имеющие доступ к домену <span style="font-style:italic;">unconfineduser</span> могут входить, используя это окружение, только на TTY (терминал) или получать доступ к незакрытой области посредством команд <code>sudo</code> или <code>su</code> вместе с <code>newrole</code>.<br><br>Использование
+ незакрытого пользовательского домена в качестве дополнительного домена 
+повышает безопасность, только если не допускается незакрытый вход в 
+систему.<br><br><span style="font-style:italic;">Пример:</span><br>Удалим домен <span style="font-style:italic;">unconfined</span>, запретим вход незакрытых пользователей, сопоставим роль <span style="font-style:italic;">unconfined_r</span> существующему пользователю SELinux <span style="font-style:italic;">staff_u</span>, удалим пользователю SELinux <span style="font-style:italic;">staff_u</span> роль <span style="font-style:italic;">sysadm_r</span>. Добавим Linux-пользователя John, сопоставим его SELinux-пользователю <span style="font-style:italic;">staff_u</span> и добавим для него запись в файл <code>/etc/sudoers</code>.<br><br><code>sudo setsebool -P unconfined_login off<br>sudo semanage user -m -L s0 -r s0-s0:c0.c1023 -R "staff_r system_r unconfined_r" -P user staff_u<br>sudo semodule -r unconfined<br>sudo useradd -Z staff_u john<br>sudo visudo (john ALL=(ALL) TYPE=unconfined_t ROLE=unconfined_r ALL)</code><br><br>John входит в систему как ограниченный SELinux-пользователь <span style="font-style:italic;">staff_u</span>. Когда John хочет получить привилегии пользователя <span style="font-style:italic;">root</span> он просто выполняет команду <code>sudo</code>. John может открыть оболочку пользователя <span style="font-style:italic;">root</span> (root shell) в незакрытой области, запустив команду <code>sudo</code> с опцией <code>-s</code>.<br><br>Такая
+ конфигурация не должна сильно изменить ваши привычки (ways of doing 
+things), потому что не поощряется вход от имени пользователя <span style="font-style:italic;">root</span>, а ограниченный домен <span style="font-style:italic;">staff_t</span>
+ имеет все необходимые полномочия, требуемые непривилегированному 
+пользователю. Также можно создать собственный домен пользователя, 
+специально под ваши персональные требования и сопоставить его роль 
+специально созданным пользователям SELinux вместе с ролями <span style="font-style:italic;">system_r</span> и <span style="font-style:italic;">unconfined_r</span>. Так вы сможете сохранить в оригинальном виде SELinux-пользователя <span style="font-style:italic;">staff_u</span> и изменять под ваши требования созданные домен и пользователя SELinux.<br><br><span style="font-style:italic;">Вывод:</span><br>Обдумайте удаление доменов Unconfined и Unconfineduser для повышения безопасности.<br><br><span style="font-style:italic;">Справка: man semanage, man semodule, man visudo, man setsebool, man sudo</span>
+<div style="clear: both;"></div>
+</div>
+<div class="post-footer">
+<div class="post-footer-line post-footer-line-1">
+<span class="post-author vcard">
+</span>
+<span class="post-timestamp">
+на часах было
+<meta content="http://sapunidze.blogspot.com/2009/07/selinux-8-unconfined.html" itemprop="url">
+<a class="timestamp-link" href="http://sapunidze.blogspot.com/2009/07/selinux-8-unconfined.html" rel="bookmark" title="permanent link"><abbr class="published" itemprop="datePublished" title="2009-07-08T23:23:00+04:00">23:23:00</abbr></a>
+</span>
+<span class="reaction-buttons">
+</span>
+<span class="post-comment-link">
+<a class="comment-link" href="https://www.blogger.com/comment.g?blogID=12119233&amp;postID=8540158619738630449" onclick="">
+Комментариев нет:
+    </a>
+</span>
+<span class="post-backlinks post-comment-link">
+<a class="comment-link" href="http://sapunidze.blogspot.com/2009/07/selinux-8-unconfined.html#links">Ссылки на это сообщение</a>
+</span>
+<span class="post-icons">
+</span>
+<div class="post-share-buttons goog-inline-block">
+</div>
+</div>
+<div class="post-footer-line post-footer-line-2">
+<span class="post-labels">
+Ярлыки:
+<a href="http://sapunidze.blogspot.com/search/label/%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4" rel="tag">перевод</a>,
+<a href="http://sapunidze.blogspot.com/search/label/fedora" rel="tag">fedora</a>,
+<a href="http://sapunidze.blogspot.com/search/label/security" rel="tag">security</a>,
+<a href="http://sapunidze.blogspot.com/search/label/selinux" rel="tag">selinux</a>
+</span>
+</div>
+<div class="post-footer-line post-footer-line-3">
+<span class="post-location">
+</span>
+</div>
+</div>
+</div>
+</div>
+<div class="post-outer">
+<div class="post hentry uncustomized-post-template" itemprop="blogPost" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+<meta content="12119233" itemprop="blogId">
+<meta content="282471169582643242" itemprop="postId">
+<a name="282471169582643242"></a>
+<h3 class="post-title entry-title" itemprop="name">
+<a href="http://sapunidze.blogspot.com/2009/07/selinux-7-su-newrole-sudo-runinit.html">SELinux Lockdown, 7: su, newrole, sudo и run_init</a>
+</h3>
+<div class="post-header">
+<div class="post-header-line-1"></div>
+</div>
+<div class="post-body entry-content" id="post-body-282471169582643242" itemprop="description articleBody">
+<span style="font-style:italic;">оригинал - <a href="http://selinux-mac.blogspot.com/2009/06/selinux-lockdown-part-seven-su-newrole.html">SELinux Lockdown Part Seven: su, newrole, sudo and run_init</a><br><br>Продолжаю выкладывать перевод цикла статей по использованию SELinux. Оригинал на английском языке опубликован в <a href="http://selinux-mac.blogspot.com/">блоге Доминика Грифта</a> (Dominick Grift).</span><br><br>До
+ выхода Fedora версии 9 пользователям, имеющим доступ к ролям, для смены
+ домена (Domain Transition) нужно было использовать команду <code>newrole</code>. Команду можно установить с пакетом <span style="font-style:italic;">policycoreutils-newrole</span>. Например, пользователь запускал: <code>newrole -r</code>, и получал приглашение на ввод его пароля. После чего команда <code>newrole</code>
+ проверяла, что у пользователя имеются все необходимые права доступа для
+ осуществления запрашиваемого доменного перехода, и разрешала или 
+запрещала его.<br><br>При переходе в привилегированный пользовательский 
+домен и желании выполнить какое-то привилегированное задание 
+пользователь выполнял команду <code>su</code>, чтобы выполнить требования дискреционного контроля доступа (Discretionary Access Control). Команда <code>su</code> запрашивает пароль пользователя <span style="font-style:italic;">root</span>.<br><br>В
+ строгом окружении, чтобы получить права привилегированного 
+пользователя, придется запустить две программы и ввести два разных 
+пароля. При таком подходе для запуска любого привилегированного задания 
+пользователю потребуется доступ к паролю пользователя <span style="font-style:italic;">root</span>.<br><br>Такому пользователю для запуска системной службы имеется другая команда. Команда <code>run_init</code>
+ осуществляет переход к домену сценариев инициализации (Init Script), в 
+котором, в свою очередь, в соответствующем ей домене запускается 
+системная служба. Эта программа также запрашивает пароль.<br><br>Таким образом получается много команд и паролей всего лишь, например, для перезапуска Apache.<br><br>В Fedora версии 9 для поддержки доменных переходов модифицировали команду <code>sudo</code>. Рекомендуется вместо команд <code>su</code> и <code>newrole</code> использовать <code>sudo</code>.<br>Два основных преимущества команды <code>sudo</code>
+ заключаются в том, что данная команда позволяет за одно действие 
+сменить идентификатор (uid) пользователя Linux и сменить домен SElinux, а
+ также не требуется вводить пароль пользователя <span style="font-style:italic;">root</span> при условии, что ваш пользователь добавлен в конфигурационный файл <code>/etc/sudoers</code>.<br><br>Целевой домен может быть указан опцией <code>-t</code>, целевая роль может быт указана опцией <code>-r</code>. Также в файле конфигурации <code>/etc/sudoers</code> можно настроить автоматическое переключение на определенные роль и домен по умолчанию.<br><br>Пример:<br>Linux пользователь <span style="font-style:italic;">joe</span> входит в систему как SELinux пользователь <span style="font-style:italic;">joe_u</span>. SELinux пользователь <span style="font-style:italic;">joe_u</span> имеет доступ к роли <span style="font-style:italic;">joe_r</span>, а также к ролям <span style="font-style:italic;">webadm_r</span> и <span style="font-style:italic;">system_r</span>. Роль <span style="font-style:italic;">joe_r</span> сопоставлена домену <span style="font-style:italic;">joe_t</span>, который обладает всеми необходимыми полномочиями для входа в систему ограниченного пользователя. Пользовательский домен <span style="font-style:italic;">joe_t</span> в соответствии с политикой имеет доступ к ролям <span style="font-style:italic;">system_r</span> и <span style="font-style:italic;">webadm_r</span>. В файле <code>/etc/sudoers</code> о пользователе <span style="font-style:italic;">joe</span> имеется следующая запись:<br><br><code>joe ALL=(ALL) TYPE=webadm_t ROLE=webadm_r ALL</code><br><br>Эта запись разрешает при запуске команды <code>sudo</code> пользователем <span style="font-style:italic;">joe</span> осуществлять автоматическую смену значений параметров его контекста SELinux, соответственно роли на <span style="font-style:italic;">webadm_r</span> и типа на <span style="font-style:italic;">webadm_t</span>.<br><br>При входе пользователя <span style="font-style:italic;">joe</span> в систему он оказывается в домене <span style="font-style:italic;">joe_t</span>. Когда у Джо появляется необходимость запустить службу Apache он просто запускает команду:<br><br><code>sudo service httpd start</code><br><br>Команда <code>sudo</code> изменяет идентификатор (uid) Джо на 0 и автоматически осуществляет смену домена и роли Джо на определенные роль и домен - <span style="font-style:italic;">webadm_r</span> и <span style="font-style:italic;">webadm_t</span>.<br><br>Джо также имеет доступ к роли <span style="font-style:italic;">system_r</span>, необходимой для смены пользовательского домена на домен сценария инициализации (Init Script), который запускает <span style="font-style:italic;">httpd</span> в правильном домене. Команда <code>run_init</code> больше не требуется.<br><br>Если Джо доступно несколько ролей, он может переопределить роль и домен, указанные в конфигурационном файле <code>sudo</code>, указав опции <code>-r</code> и <code>-t</code> с требуемыми значениями роли и домена в качестве параметров.<br><br><span style="font-style:italic;">Вывод:</span><br>Отдавайте предпочтение использованию команды <code>sudo</code> вместо команд <code>su</code> и <code>newrole</code>.<br>Отдавайте предпочтение предоставлению доступа к роли <span style="font-style:italic;">system_r</span> вместо использования команды <code>run_init</code>.<br><br><span style="font-style:italic;">Справка: man su, man sudo, man newrole, man run_init</span>
+<div style="clear: both;"></div>
+</div>
+<div class="post-footer">
+<div class="post-footer-line post-footer-line-1">
+<span class="post-author vcard">
+</span>
+<span class="post-timestamp">
+на часах было
+<meta content="http://sapunidze.blogspot.com/2009/07/selinux-7-su-newrole-sudo-runinit.html" itemprop="url">
+<a class="timestamp-link" href="http://sapunidze.blogspot.com/2009/07/selinux-7-su-newrole-sudo-runinit.html" rel="bookmark" title="permanent link"><abbr class="published" itemprop="datePublished" title="2009-07-08T16:31:00+04:00">16:31:00</abbr></a>
+</span>
+<span class="reaction-buttons">
+</span>
+<span class="post-comment-link">
+<a class="comment-link" href="https://www.blogger.com/comment.g?blogID=12119233&amp;postID=282471169582643242" onclick="">
+Комментариев нет:
+    </a>
+</span>
+<span class="post-backlinks post-comment-link">
+<a class="comment-link" href="http://sapunidze.blogspot.com/2009/07/selinux-7-su-newrole-sudo-runinit.html#links">Ссылки на это сообщение</a>
+</span>
+<span class="post-icons">
+</span>
+<div class="post-share-buttons goog-inline-block">
+</div>
+</div>
+<div class="post-footer-line post-footer-line-2">
+<span class="post-labels">
+Ярлыки:
+<a href="http://sapunidze.blogspot.com/search/label/%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4" rel="tag">перевод</a>,
+<a href="http://sapunidze.blogspot.com/search/label/fedora" rel="tag">fedora</a>,
+<a href="http://sapunidze.blogspot.com/search/label/security" rel="tag">security</a>,
+<a href="http://sapunidze.blogspot.com/search/label/selinux" rel="tag">selinux</a>
+</span>
+</div>
+<div class="post-footer-line post-footer-line-3">
+<span class="post-location">
+</span>
+</div>
+</div>
+</div>
+</div>
+
+          </div></div>
+        
+
+          <div class="date-outer">
+        
+<h2 class="date-header"><span>вторник, июля 07, 2009</span></h2>
+
+          <div class="date-posts">
+        
+<div class="post-outer">
+<div class="post hentry uncustomized-post-template" itemprop="blogPost" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+<meta content="12119233" itemprop="blogId">
+<meta content="8190150437036167422" itemprop="postId">
+<a name="8190150437036167422"></a>
+<h3 class="post-title entry-title" itemprop="name">
+<a href="http://sapunidze.blogspot.com/2009/07/selinux-6-selinux.html">SELinux Lockdown, 6: Создание ролей SELinux</a>
+</h3>
+<div class="post-header">
+<div class="post-header-line-1"></div>
+</div>
+<div class="post-body entry-content" id="post-body-8190150437036167422" itemprop="description articleBody">
+<span style="font-style:italic;">оригинал - <a href="http://selinux-mac.blogspot.com/2009/06/selinux-lockdown-part-six-customized.html">SELinux Lockdown Part Six: Customized SELinux Roles<br></a><br>Продолжаю выкладывать перевод цикла статей по использованию SELinux. Оригинал на английском языке опубликован в <a href="http://selinux-mac.blogspot.com/">блоге Доминика Грифта</a> (Dominick Grift).</span><br><br>В <a href="http://sapunidze.blogspot.com/2009/07/selinux-4-selinux.html">четвёртой части</a>
+ серии описывался процесс создания пользовательских доменов SELinux. 
+Создание ролей осуществляется очень похожим способом. Как уже отмечалось
+ в предыдущей статье про RBAC: роли это сопоставления к пользовательским
+ доменам (<span style="font-style:italic;">прим. перев.:</span> в 
+оригинале - Roles are mappings to User Domains, в отличии от автора я не
+ живу в Голландии, поэтому более удачного перевода пока не предумал). 
+Какие-то домены пользователей могут использоваться пользователями для 
+входа в систему, потому что эти домены, например, имеют полномочия по 
+доступу к домашней директории пользователя. Такие домены в предыдущей 
+части назывались основными (primary) пользовательскими доменами. Другие 
+домены созданы в качестве дополнительных. Пользователи, используя 
+команды <code>sudo</code> или <code>su</code> вместе с <code>newrole</code>,
+ могут осуществить доменный переход (Domain Transition) к этим 
+дополнительным доменам. Дополнительные домены не могут использоваться 
+для входа в систему.<br><br>В этой части будет продемонстрировано как 
+создается такой дополнительный пользовательский домен. Целью является 
+реализовать привилегированную роль SELinux, которой предоставлены 
+полномочия по управлению DNS службой Bind. За основу будет взят 
+пользовательский домен <span style="font-style:italic;">webadm_t</span>,
+ обсуждавшийся ранее. Также будет пересмотрен некоторый материал 
+четвёртой части: Создание пользовательского домена SELinux - чтобы 
+разрешить доступ к новой роли <span style="font-style:italic;">bindadm_r</span>, потребуется изменить основной домен пользователя.<br><br>Начнём с создания нового дополнительного домена пользователя с названием <span style="font-style:italic;">bindadm</span>, основанного на предустановленном домене SELinux <span style="font-style:italic;">webadm_t</span>. Новый домен пользователя основан на двух файлах с исходным текстом политики SELinux (SELinux Source Policy): <a href="http://oss.tresys.com/projects/refpolicy/browser/trunk/policy/modules/roles/webadm.te">webadm.te</a> и <a href="http://oss.tresys.com/projects/refpolicy/browser/trunk/policy/modules/roles/webadm.if">webadm.if</a><br><br>Файлы исходных текстов политики SELinux с расширением "<span style="font-style:italic;">.te</span>" называются Type Enforcement файлы. Файлы с расширением "<span style="font-style:italic;">.if</span>"
+ называются интерфейсными (Interface files). Файлы Type Enforcement 
+содержат описания (Declarations) и политику (Policy), персональные или 
+локальные для данного домена (Domain). Интерфейсные файлы содержат 
+описания и политики, общие для этого домена и других доменов, желающими 
+взаимодействовать с данным доменом.<br><br><code>mkdir ~/bindadm; cd ~/bindadm;<br>echo "policy_module(bindadm, 0.0.1)" &gt; bindadm.te;<br>echo "role bindadm_r;" &gt;&gt; bindadm.te;<br>echo "userdom_base_user_template(bindadm)" &gt;&gt; bindadm.te;<br>echo "allow bindadm_t self:capability { dac_override dac_read_search kill sys_ptrace sys_nice };" &gt;&gt; bindadm.te;<br>echo "files_dontaudit_search_all_dirs(bindadm_t)" &gt;&gt; bindadm.te;<br>echo "files_manage_generic_locks(bindadm_t) &gt;&gt; bindadm.te;<br>echo "files_list_var(bindadm_t)" &gt;&gt; bindadm.te;<br>echo "selinux_get_enforce_mode(bindadm_t)" &gt;&gt; bindadm.te;<br>echo "seutil_domtrans_setfiles(bindadm_t)" &gt;&gt; bindadm.te;<br>echo "logging_send_syslog_msg(bindadm_t)" &gt;&gt; bindadm.te;<br>echo "userdom_dontaudit_search_user_home_dirs(bindadm_t)" &gt;&gt; bindadm.te;</code><br><br>Это
+ основное содержимое для привилегированного дополнительного домена 
+пользователя. Исключена политика, специфичная для управления службой 
+Apache.<br>Теперь добавим политику, специфичную для управления службой 
+Bind. Можно позаимствовать эту политику из исходных текстов политики для
+ Bind. Как уже отмечалось, общая политика располагается в интерфейсных 
+файлах. Это значит, что если мы хотим включить общую политику, 
+относящуюся к Bind, можно посмотреть в соответствующем файле политики <a href="http://oss.tresys.com/projects/refpolicy/browser/trunk/policy/modules/services/bind.if">bind.if</a> если он доступен:<br><br>Начиная
+ со строки 252 в bind.if и заканчивая строкой 305 описывается общая 
+политика, разделяемая модулем Bind для управления службой bind. Для 
+включения этой политики в наш Type Enforcement файл требуется всего лишь
+ добавить вызов этого интерфейса:<br><br><code>echo "bind_admin(bindadm_t, bindadm_r)" &gt;&gt; bindadm.te;</code><br><br>На
+ этом Type Enforcement файл bindadm заканчивается. Далее необходимо 
+обеспечить другим доменам возможность взаимодействия с нашим доменом <span style="font-style:italic;">bindadm_t</span>. Реализуем эту часть политики, взяв за основу файл <span style="font-style:italic;">webadm.if</span>.<br><br><code>echo "## Bind administrator role" &gt; bindadm.if;<br><br>echo "########################################" &gt;&gt; bindadm.if;<br>echo "## " &gt;&gt; bindadm.if;<br>echo "## Change to the bind administrator role." &gt;&gt; bindadm.if;<br>echo "## " &gt;&gt; bindadm.if;<br>echo '## ' &gt;&gt; bindadm.if;<br>echo "## " &gt;&gt; bindadm.if;<br>echo "## Role allowed access." &gt;&gt; bindadm.if;<br>echo "## " &gt;&gt; bindadm.if;<br>echo "## " &gt;&gt; bindadm.if;<br>echo "## " &gt;&gt; bindadm.if;<br>echo "#" &gt;&gt; bindadm.if;<br>echo "interface(\`bindadm_role_change',\`" &gt;&gt; bindadm.if;<br>echo " gen_require(\`" &gt;&gt; bindadm.if;<br>echo " role bindadm_r;" &gt;&gt; bindadm.if;<br>echo " ')" &gt;&gt; bindadm.if;<br>echo " allow \$1 bindadm_r;" &gt;&gt; bindadm.if;<br>echo "')" &gt;&gt; bindadm.if;</code><br><br>Позже
+ общая политика администратора Bind (Bind Administrator Shared policy) 
+будет использоваться в нашем основном специально созданном 
+пользовательском домене SELinux.<br><br>Следующим шагом будет создание 
+специализированного пользовательского домена SELinux для обслуживания 
+Bind, разрешающего данному домену осуществлять переход к роли <span style="font-style:italic;">bindadm_r</span> вызовом интерфейса <span style="font-style:italic;">bindadm_role_change</span>. Создаваемый домен SELinux будет основан на пользовательском домене <span style="font-style:italic;">staff_t</span>, описание политики смотрим в файле <a href="http://oss.tresys.com/projects/refpolicy/browser/trunk/policy/modules/roles/staff.te">staff.te</a><br><br><code>echo "policy_module(bindguy, 0.0.1)" &gt; bindguy.te;<br>echo "role bindguy_r;" &gt;&gt; bindguy.te;<br>echo "userdom_unpriv_user_template(bindguy)" &gt;&gt; bindguy.te;<br>echo "sudo_role_template(bindguy, bindguy_r, bindguy_t)" &gt;&gt; bindguy.te;<br>echo "ssh_role_template(bindguy, bindguy_r, bindguy_t)" &gt;&gt; bindguy.te;<br>echo "kernel_read_ring_buffer(bindguy_t)" &gt;&gt; bindguy.te;<br>echo "kernel_getattr_core_if(bindguy_t)" &gt;&gt; bindguy.te;<br>echo "kernel_getattr_message_if(bindguy_t)" &gt;&gt; bindguy.te;<br>echo "kernel_read_software_raid_state(bindguy_t)" &gt;&gt; bindguy.te;<br>echo "auth_domtrans_pam_console(bindguy_t)" &gt;&gt; bindguy.te;<br>echo "libs_manage_shared_libs(bindguy_t)" &gt;&gt; bindguy.te;<br>echo "seutil_run_newrole(bindguy_t, bindguy_r)" &gt;&gt; bindguy.te;<br>echo "netutils_run_ping(bindguy_t, bindguy_r)" &gt;&gt; bindguy.te;<br>echo "domain_read_all_domains_state(bindguy_t)" &gt;&gt; bindguy.te;<br>echo "domain_getattr_all_domains(bindguy_t)" &gt;&gt; bindguy.te;<br>echo "domain_obj_id_change_exemption(bindguy_t)" &gt;&gt; bindguy.te;<br>echo "files_read_kernel_modules(bindguy_t)" &gt;&gt; bindguy.te;<br>echo "kernel_read_fs_sysctls(bindguy_t)" &gt;&gt; bindguy.te;<br>echo "modutils_read_module_config(bindguy_t)" &gt;&gt; bindguy.te;<br>echo "modutils_read_module_deps(bindguy_t)" &gt;&gt; bindguy.te;<br>echo "miscfiles_read_hwdata(bindguy_t)" &gt;&gt; bindguy.te;<br>echo "term_use_unallocated_ttys(bindguy_t)" &gt;&gt; bindguy.te;</code><br><br>Чтобы разрешенить домену <span style="font-style:italic;">bindguy_t</span> осуществлять переход в ограниченное окружение SELinux <span style="font-style:italic;">bindadm_t</span>, добавим вызов интерфейса <span style="font-style:italic;">bindadm_role_change</span>, определенного в нашем интерфейсном файле <span style="font-style:italic;">bindadm.if</span>:<br><br><code>echo "bindadm_role_change(bindguy_r)" &gt;&gt; bindguy.te;</code><br><br>Можно также автоматически создать сопоставление пользователя SELinux с именем <span style="font-style:italic;">bindguy_u</span> ролям <span style="font-style:italic;">bindguy_r</span>, <span style="font-style:italic;">bindadm_r</span> и <span style="font-style:italic;">system_r</span>. Роль <span style="font-style:italic;">system_r</span> включается, чтобы <span style="font-style:italic;">bindadm_t</span> мог останавить, запустить и перезапустить системную службу bind.<br><br><code>echo "gen_user(bindguy_u, user, bindguy_r system_r bindadm_r, s0, s0 - mls_systemhigh, mcs_allcats)" &gt;&gt; bindguy.te;</code><br><br>Чтобы программы входа знали, что <span style="font-style:italic;">bindguy</span>
+ допустимый пользователь, добавим контексты по умолчанию для этого 
+пользователя, взяв за основу контексты по умолчанию пользователя <span style="font-style:italic;">staff_u</span>:<br><br><code>cp /etc/selinux/targeted/contexts/users/staff_u /etc/selinux/targeted/contexts/users/bindguy_u<br>sed -i 's/staff/bindguy/g' /etc/selinux/targeted/contexts/users/bindguy_u</code><br><br>Теперь можно собрать и установить обе политики <span style="font-style:italic;">bindguy</span> и <span style="font-style:italic;">bindadm</span>:<br><br><code>make -f /usr/share/selinux/devel/Makefile<br>sudo semodule -i bindguy.pp bindadm.pp</code><br><br>Далее командой <code>useradd</code>, опцией <code>-Z</code> и параметром <span style="font-style:italic;">bindguy_u</span> можно создать нового пользователя Linux:<br><br><code>sudo useradd -Z bindguy_u bindguy</code><br><br>Для того, чтобы разрешить пользователю <span style="font-style:italic;">bindguy</span> использовать команду <code>sudo</code> для автоматического перехода к Linux пользователю <span style="font-style:italic;">root</span> и SELinux домену <span style="font-style:italic;">bindadm_t</span>, добавим в <code>/etc/sudoers</code>:<br><br><code>echo "bindguy ALL=(ALL) ROLE=bindadm_r TYPE=bindadm_t ALL" &gt;&gt; /etc/sudoers;</code><br><br>При входе пользователя <span style="font-style:italic;">bindguy</span> в систему он оказывается в пользовательском домене <span style="font-style:italic;">bindguy_t</span>, основанном на домене <span style="font-style:italic;">staff_t</span>. Домен <span style="font-style:italic;">bindguy_t</span> может осуществлять переход в домен <span style="font-style:italic;">bindadm_t</span>, используемый с правами <span style="font-style:italic;">root</span> и позволяющий управлять службой Bind.<br><br>Например, выполнив следующую команду, пользователь <span style="font-style:italic;">bindguy</span> сможет перезапустить службу bind:<br><br><code>sudo service named restart</code><br><br>Также пользователю <span style="font-style:italic;">bindguy</span> разрешается редактировать различные конфигурационные и файлы информационного наполнения Bind. При этом, например, пользователь <span style="font-style:italic;">bindguy</span> не имеет прав изменить пароль пользователя <span style="font-style:italic;">root</span>.<br><br><span style="font-style:italic;">Примечание:
+ Если вы нашли какие-то ошибки в этом упражнении или у вас есть какие-то
+ вопросы или комментарии, пожалуйста свяжитесь с автором. Спасибо!</span><br><br><span style="font-style:italic;">Справка: man bind, man semodule, man sudo, man useradd</span>
+<div style="clear: both;"></div>
+</div>
+<div class="post-footer">
+<div class="post-footer-line post-footer-line-1">
+<span class="post-author vcard">
+</span>
+<span class="post-timestamp">
+на часах было
+<meta content="http://sapunidze.blogspot.com/2009/07/selinux-6-selinux.html" itemprop="url">
+<a class="timestamp-link" href="http://sapunidze.blogspot.com/2009/07/selinux-6-selinux.html" rel="bookmark" title="permanent link"><abbr class="published" itemprop="datePublished" title="2009-07-07T16:52:00+04:00">16:52:00</abbr></a>
+</span>
+<span class="reaction-buttons">
+</span>
+<span class="post-comment-link">
+<a class="comment-link" href="https://www.blogger.com/comment.g?blogID=12119233&amp;postID=8190150437036167422" onclick="">
+Комментариев нет:
+    </a>
+</span>
+<span class="post-backlinks post-comment-link">
+<a class="comment-link" href="http://sapunidze.blogspot.com/2009/07/selinux-6-selinux.html#links">Ссылки на это сообщение</a>
+</span>
+<span class="post-icons">
+</span>
+<div class="post-share-buttons goog-inline-block">
+</div>
+</div>
+<div class="post-footer-line post-footer-line-2">
+<span class="post-labels">
+Ярлыки:
+<a href="http://sapunidze.blogspot.com/search/label/%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4" rel="tag">перевод</a>,
+<a href="http://sapunidze.blogspot.com/search/label/fedora" rel="tag">fedora</a>,
+<a href="http://sapunidze.blogspot.com/search/label/security" rel="tag">security</a>,
+<a href="http://sapunidze.blogspot.com/search/label/selinux" rel="tag">selinux</a>
+</span>
+</div>
+<div class="post-footer-line post-footer-line-3">
+<span class="post-location">
+</span>
+</div>
+</div>
+</div>
+</div>
+<div class="post-outer">
+<div class="post hentry uncustomized-post-template" itemprop="blogPost" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+<meta content="12119233" itemprop="blogId">
+<meta content="5908605307310922722" itemprop="postId">
+<a name="5908605307310922722"></a>
+<h3 class="post-title entry-title" itemprop="name">
+<a href="http://sapunidze.blogspot.com/2009/07/selinux-5-selinux-rbac.html">SELinux Lockdown, 5: SELinux RBAC</a>
+</h3>
+<div class="post-header">
+<div class="post-header-line-1"></div>
+</div>
+<div class="post-body entry-content" id="post-body-5908605307310922722" itemprop="description articleBody">
+<span style="font-style:italic;">оригинал - <a href="http://selinux-mac.blogspot.com/2009/06/selinux-lockdown-part-five-selinux-rbac.html">SELinux Lockdown Part Five: SELinux RBAC</a><br><br>Продолжаю выкладывать перевод цикла статей по использованию SELinux. Оригинал на английском языке опубликован в <a href="http://selinux-mac.blogspot.com/">блоге Доминика Грифта</a> (Dominick Grift).</span><br><br>В <a href="http://sapunidze.blogspot.com/2009/06/selinux-1-selinux.html">первой главе</a>
+ этой серии рассказывалось, что пользователи SELinux сопоставляются 
+пользовательским доменам и компонентам мультикатегорийной безопасности 
+(Multi Category Security - MCS). Эти сопоставления могут настраиваться 
+запуском команды <code>semanage</code> с опцией <code>user</code>. Также сопоставления пользователя SELinux могут автоматически настраиваться вызовом интерфейса <span style="font-style:italic;">gen_user()</span> в файле с исходным текстом модуля Type Enforcement (Type Enforcement Source Module) для вашего домена пользователя.<br><br>SELinux
+ RBAC используется для обеспечения возможности назначения нескольких 
+ограниченных окружений SELinux одному SELinux пользователю.<br><br>В 
+SELinux роли пользователя (User Roles) - это домены пользователя или 
+пользовательские домены (User Domains). Когда упоминаются роли часто 
+имеется в виду дополнительный (secondary) пользовательский домен 
+пользователя SELinux. Часто роли, предназначенные для использования в 
+качестве дополнительных доменов пользователя, отличаются от основных 
+(primary) доменов. Это объясняется тем, что пользователи Linux 
+фактически не используют для входа в систему роли, созданные как 
+дополнительные домены пользователя, .<br><br>Вместо этого пользователи Linux, используя команду <code>sudo</code> или комбинацию команд <code>su</code> и <code>newrole</code>, осуществляют переключение домена или доменный переход (Domain Transition) к их дополнительной роли.<br><br>Имейте
+ в виду, что некоторые роли разрабатывались как основные домены 
+пользователей, тогда как другие поддерживают только функциональность 
+дополнительного домена пользователя. Первичные пользовательские домены 
+позволяют пользователю войти в систему, второстепенные домены 
+пользователей могут быть использованы только с командами <code>sudo</code> и <code>su</code> вместе с <code>newrole</code>.<br><br><span style="font-weight:bold;">Роль Sysadm</span><br><span style="font-style:italic;">Пример роли, предназначенной для использования в качестве основного домена пользователя</span><br><br>SELinux пользователь <span style="font-style:italic;">sysadm_u</span> сопоставлен роли <span style="font-style:italic;">sysadm_r</span>. Это сопоставление можно увидеть, выполнив команду:<br><br><code>sudo semanage user -l | grep sysadm_u</code><br><br>По умолчанию пользователи Linux, сопоставленные пользователю SELinux <span style="font-style:italic;">sysadm_u</span>, работают с ролью <span style="font-style:italic;">sysadm_r</span>. В этом случае <span style="font-style:italic;">sysadm_r</span> - это основной домен пользователя.<br><br>SELinux пользователь <span style="font-style:italic;">staff_u</span> также сопоставлен роли <span style="font-style:italic;">sysadm_r</span>. Основным пользовательским доменом пользователя SELinux <span style="font-style:italic;">staff_u</span>  является (роль) <span style="font-style:italic;">staff_r</span>. Контексты по умолчанию, определенные в <code>/etc/selinux/targeted/contexts/users/staff_u</code>,
+ определяют с какими пользовательскими доменами пользователи будут 
+подключаться по умолчанию и с какими пользовательскими доменами 
+пользователи могут войти, указав домен пользователя при входе.<br><br>По умолчанию SELinux пользователь <span style="font-style:italic;">staff_u</span> входит в систему в домен пользователя <span style="font-style:italic;">staff_t</span>. Роль <span style="font-style:italic;">sysadm_r</span>,
+ предназначенная для использования в качестве основного домена 
+пользователя, может быть использована при входе, например, следующим 
+образом:<br><br><code>ssh joe/sysadm_r@localhost.localdomain.tld</code><br><br>Также роль <span style="font-style:italic;">sysadm_r</span> может быть использована при переходе домена выполнением команд <code>sudo</code> и <code>su</code> вместе с <code>newrole</code>, как это предусмотрено для дополнительных доменов пользователей.<br><br>Пользовательский домен <span style="font-style:italic;">sysadm_t</span> является окружением по умолчанию для SELinux пользователя <span style="font-style:italic;">sysadm_u</span> и предназначен для использования в качестве дополнительного окружения для SELinux пользователя <span style="font-style:italic;">staff_u</span>, хотя даже SElinux пользователь <span style="font-style:italic;">staff_u</span> может настроить подключаемый модуль аутентификации (Pluggable Authentication Module) <span style="font-style:italic;">pam_selinux</span> для использования <span style="font-style:italic;">sysadm_t</span> в качестве его основного домена пользователя.<br><br><span style="font-weight:bold;">Роль Webadm</span><br><span style="font-style:italic;">Пример роли, предназначенной для использования в качестве дополнительного домена</span><br><br>В отличии от роли <span style="font-style:italic;">sysadm_r</span>, пользовательский домен <span style="font-style:italic;">webadm_t</span>
+ не может быть использован для непосредственного входа в систему. Вместо
+ этого его необходимо использовать из другого домена пользователя через 
+команды <code>sudo</code> или <code>su</code> вместе с <code>newrole</code>. Пользовательский домен <span style="font-style:italic;">webadm_t</span> не имеет разрешений, необходимых для запуск полноценного окружения пользователя.<br><br>Для использования роли <span style="font-style:italic;">webadm_r</span>, её следует сопоставить, например, SELinux пользователю <span style="font-style:italic;">staff_u</span>:<br><br><code>sudo semanage user -m -L s0 -r s0-s0:c0-c1023 -R "staff_r system_r webadm_r" -P user staff_u</code><br><br>Пожалуйста
+ имейте в виду, что модификация существующих SELinux пользователей не 
+поощряется. Предпочтительно оставлять предустановленных по умолчанию 
+SELinux пользователей в их неизменном виде. Вместо этого добавляйте 
+новых созданных и настроенных под ваши потребности SELinux 
+пользователей:<br><br><code>sudo semanage user -a -L s0 -r s0-s0:c0-c1023 -R "staff_r system_r webadm_r" -P user webadm_u<br>cp /etc/selinux/targeted/contexts/users/staff_u /etc/selinux/targeted/contexts/users/webadm_u</code><br><br>В этом примере роль <span style="font-style:italic;">webadm_r</span> может быть использована только как дополнительный пользовательский домен по двум причинам. Во-первых, пользовательский домен <span style="font-style:italic;">webadm_t</span> не имеет достаточных полномочий для поддержки полноценного окружения входа в систему. Во-вторых, для нашего пользователя <span style="font-style:italic;">webadm_u</span> за основу файла контекста по умолчанию в <code>/etc/selinux/targeted/contexts/users</code> мы взяли файл контекста по умолчанию пользователя <span style="font-style:italic;">staff_u</span>. В этом файле пользовательский домен <span style="font-style:italic;">webadm_t</span> не является допустимым контекстом, используемым для входа в систему.<br><br><span style="font-weight:bold;">Использование ролей для ограничения пользователя Root</span><br><br>Управление
+ доступом на основе ролей (Role Based Access Control) может 
+использоваться для создания разных доменов пользователей с разными 
+правами и назначения этих ролей пользователям SELinux. Хотя RBAC может 
+использоваться как для непривилегированных так и для привилегированных 
+пользователей, чаще его используют для ограничения привилегированного 
+пользователя <span style="font-style:italic;">root</span>.<br><br>Например, SElinux пользователь <span style="font-style:italic;">webadm_u</span>, созданный выше, может быть использован для ограничения Linux пользователя <span style="font-style:italic;">root</span> до возможности только управлять окружением Apache. Домен пользователя <span style="font-style:italic;">staff_t</span> - непривилегированный. Это означает, что при работе пользователя <span style="font-style:italic;">root</span> в пользовательском домене <span style="font-style:italic;">staff_t</span> ему не доступны все полномочия <span style="font-style:italic;">root</span>. Пользовательский домен <span style="font-style:italic;">webadm_t</span> - ограниченно привилегированный. При работе пользователя <span style="font-style:italic;">root</span> в пользовательском домене <span style="font-style:italic;">webadm_t</span> ему доступны некоторые ресурсы <span style="font-style:italic;">root</span>, доступ к которым разрешен ограниченным окружением <span style="font-style:italic;">webadm_t</span>.<br><br>Например, некоторый пользователь сопоставлен SELinux пользователю <span style="font-style:italic;">webadm_u</span>. Ему также разрешены все полномочия пользователя <span style="font-style:italic;">root</span> в конфигурационном файле <code>/etc/sudoers</code>. При входе этого пользователя в систему по умолчанию ему будет определен пользовательский домен <span style="font-style:italic;">staff_t</span>. Если он выполнит команду <code>sudo</code> как <span style="font-style:italic;">staff_t</span>, то ему, например, не будет разрешено перезапустить службу Apache.<br><br>Если он до перезапуска службы, используя команду <code>sudo</code>, совершит переход в домен <span style="font-style:italic;">webadm_t</span>, то у него всё получится:<br><br><code>sudo -r webadm_r -t webadm_t service httpd restart</code><br><br>Если же он попытается, используя команду <code>sudo</code>, изменить пароль пользователя <span style="font-style:italic;">root</span>, то он получит отказ, потому что ни <span style="font-style:italic;">staff_t</span>, ни <span style="font-style:italic;">webam_t</span> не имеют таких привилегий.<br><br>Это
+ мощная возможность, означающая, что теперь можно делегировать 
+ограниченные явно заданные привилегии без необходимости раздавать пароль
+ пользователя <span style="font-style:italic;">root</span>.<br>(<span style="font-style:italic;">прим. перев.:</span> в оригинале у автора написано - It means that it is not possible ("<span style="font-style:italic;">не возможно</span>")
+ to delegate limited specified root privileges without having to share 
+roots password - считаю, что тут явно опечатка, комментарий оставлю до 
+получения ответа автора)<br><br>Далее рассказывается о некоторых предустановленных ролях.<br><br><span style="font-weight:bold;">Роль guest_r</span><br>Пользовательский домен, используемый только в качестве основного. Описание пользователя SELinux <span style="font-style:italic;">guest_u</span> приводится в первой части.<br><br><span style="font-weight:bold;">Роль xguest_r</span><br>Пользовательский домен, используемый только в качестве основного. Описание пользователя SELinux <span style="font-style:italic;">xguest_u</span> приводится в первой части.<br><br><span style="font-weight:bold;">Роль user_r</span><br>Пользовательский домен, используемый только в качестве основного. Описание пользователя SELinux <span style="font-style:italic;">user_u</span> приводится в первой части.<br><br><span style="font-weight:bold;">Роль staff_r</span><br>Пользовательский домен, используемый только в качестве основного. Описание пользователя SELinux <span style="font-style:italic;">staff_u</span> приводится в первой части.<br><br><span style="font-weight:bold;">Роль sysadm_r</span><br>Этот домен пользователя может быть использован и как основной, и как дополнительный домен. Пользователь SELinux <span style="font-style:italic;">sysadm_u</span> использует <span style="font-style:italic;">sysadm_r</span> в качестве роли по умолчанию, а SELinux пользователь <span style="font-style:italic;">staff_u</span> использует <span style="font-style:italic;">sysadm_r</span> как дополнительную роль. Роль <span style="font-style:italic;">sysadm_r</span> обладает достаточными правами для обеспечения входа пользователей в систему. Пользователь <span style="font-style:italic;">sysadm_u</span> описывается в первой части.<br><br><span style="font-weight:bold;">Роль system_r</span><br>Эта роль используется системой в качестве основной. Пользователи могут использовать роль <span style="font-style:italic;">system_r</span> как дополнительную для перезапуска системных служб в их надлежащем контексте.<br><br><span style="font-weight:bold;">Роль unconfined_r</span><br>Этот пользовательский домен может быть использован и как основной, и как дополнительный домен. Пользователь <span style="font-style:italic;">unconfined_u</span> описывается в первой части.<br><br><span style="font-weight:bold;">Роль webadm_r</span><br>Этот
+ пользовательский домен может быть использован только в качестве 
+дополнительного домена. Эта роль не имеет доступа к домашним директориям
+ пользователей и многие другие привилегии, необходимые для обеспечения 
+входа пользователей в систему. Данный домен пользователя обладает 
+необходимыми правами для управления окружением Apache.<br><br><span style="font-weight:bold;">Роль logadm_r</span><br>Этот
+ пользовательский домен может быть использован только в качестве 
+дополнительного домена. Эта роль не имеет доступа к домашним директориям
+ пользователей и многие другие привилегии, необходимые для обеспечения 
+входа пользователей в систему. Данный домен пользователя обладает 
+необходимыми правами для управления окружением регистрации событий 
+(logging).<br><br><span style="font-style:italic;">Справка: man newrole, man su, man sudo, man semanage</span>
+<div style="clear: both;"></div>
+</div>
+<div class="post-footer">
+<div class="post-footer-line post-footer-line-1">
+<span class="post-author vcard">
+</span>
+<span class="post-timestamp">
+на часах было
+<meta content="http://sapunidze.blogspot.com/2009/07/selinux-5-selinux-rbac.html" itemprop="url">
+<a class="timestamp-link" href="http://sapunidze.blogspot.com/2009/07/selinux-5-selinux-rbac.html" rel="bookmark" title="permanent link"><abbr class="published" itemprop="datePublished" title="2009-07-07T10:35:00+04:00">10:35:00</abbr></a>
+</span>
+<span class="reaction-buttons">
+</span>
+<span class="post-comment-link">
+<a class="comment-link" href="https://www.blogger.com/comment.g?blogID=12119233&amp;postID=5908605307310922722" onclick="">
+Комментариев нет:
+    </a>
+</span>
+<span class="post-backlinks post-comment-link">
+<a class="comment-link" href="http://sapunidze.blogspot.com/2009/07/selinux-5-selinux-rbac.html#links">Ссылки на это сообщение</a>
+</span>
+<span class="post-icons">
+</span>
+<div class="post-share-buttons goog-inline-block">
+</div>
+</div>
+<div class="post-footer-line post-footer-line-2">
+<span class="post-labels">
+Ярлыки:
+<a href="http://sapunidze.blogspot.com/search/label/%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4" rel="tag">перевод</a>,
+<a href="http://sapunidze.blogspot.com/search/label/fedora" rel="tag">fedora</a>,
+<a href="http://sapunidze.blogspot.com/search/label/security" rel="tag">security</a>,
+<a href="http://sapunidze.blogspot.com/search/label/selinux" rel="tag">selinux</a>
+</span>
+</div>
+<div class="post-footer-line post-footer-line-3">
+<span class="post-location">
+</span>
+</div>
+</div>
+</div>
+</div>
+
+        </div></div>
+      
+</div>
+<div class="blog-pager" id="blog-pager">
+<span id="blog-pager-older-link">
+<a class="blog-pager-older-link" href="http://sapunidze.blogspot.com/search?updated-max=2009-07-07T10:35:00%2B04:00&amp;max-results=7" id="Blog1_blog-pager-older-link" title="Предыдущие">Предыдущие</a>
+</span>
+<a class="home-link" href="http://sapunidze.blogspot.com/">Главная страница</a>
+</div>
+<div class="clear"></div>
+<div class="blog-feeds">
+<div class="feed-links">
+Подписаться на:
+<a class="feed-link" href="http://sapunidze.blogspot.com/feeds/posts/default" target="_blank" type="application/atom+xml">Сообщения (Atom)</a>
+</div>
+</div>
+<script type="text/javascript">
+    window.___gcfg = { 'lang': 'ru-RU' };
+  </script>
+</div></div>
+</div>
+</div>
+<div class="column-left-outer">
+<div class="column-left-inner">
+<aside>
+</aside>
+</div>
+</div>
+<div class="column-right-outer">
+<div class="column-right-inner">
+<aside>
+<div class="sidebar section" id="sidebar-right-1">
+<div class="widget BlogArchive" data-version="1" id="BlogArchive1">
+<h2>указатель</h2>
+<div class="widget-content">
+<div id="ArchiveList">
+<div id="BlogArchive1_ArchiveList">
+<ul class="hierarchy">
+<li class="archivedate expanded">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy toggle-open">
+
+        ▼&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2009/">
+2009
+</a>
+<span class="post-count" dir="ltr">(16)</span>
+<ul class="hierarchy">
+<li class="archivedate expanded">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy toggle-open">
+
+        ▼&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2009/07/">
+июля
+</a>
+<span class="post-count" dir="ltr">(8)</span>
+<ul class="posts">
+<li><a href="http://sapunidze.blogspot.com/2009/07/russian-fedora-summit.html">russian fedora summit</a></li>
+<li><a href="http://sapunidze.blogspot.com/2009/07/selinux-10.html">SELinux Lockdown, 10: Заключение</a></li>
+<li><a href="http://sapunidze.blogspot.com/2009/07/selinux-9.html">SELinux Lockdown, 9: Переключатели</a></li>
+<li><a href="http://sapunidze.blogspot.com/2009/07/selinux-8-unconfined.html">SELinux Lockdown, 8: Unconfined</a></li>
+<li><a href="http://sapunidze.blogspot.com/2009/07/selinux-7-su-newrole-sudo-runinit.html">SELinux Lockdown, 7: su, newrole, sudo и run_init</a></li>
+<li><a href="http://sapunidze.blogspot.com/2009/07/selinux-6-selinux.html">SELinux Lockdown, 6: Создание ролей SELinux</a></li>
+<li><a href="http://sapunidze.blogspot.com/2009/07/selinux-5-selinux-rbac.html">SELinux Lockdown, 5: SELinux RBAC</a></li>
+<li><a href="http://sapunidze.blogspot.com/2009/07/selinux-4-selinux.html">SELinux Lockdown, 4: Создание домена пользователя ...</a></li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate expanded">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy toggle-open">▼&nbsp;</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2009/06/">
+июня
+</a>
+<span class="post-count" dir="ltr">(8)</span>
+<ul class="posts"><li><a href="http://sapunidze.blogspot.com/2009/06/selinux-3-permissive-mode-vs-permissive.html">SELinux Lockdown, 3: Permissive Mode Vs. Permissiv...</a></li><li><a href="http://sapunidze.blogspot.com/2009/06/selinux-2-pam-sepermit.html">SELinux Lockdown, 2: PAM SEPermit</a></li><li><a href="http://sapunidze.blogspot.com/2009/06/selinux-1-selinux.html">SELinux Lockdown, 1: пользователи SELinux</a></li><li><a href="http://sapunidze.blogspot.com/2009/06/rezlooks-pastelblue.html">rezlooks-pastelblue</a></li><li><a href="http://sapunidze.blogspot.com/2009/06/blog-post_15.html">про приватность...</a></li><li><a href="http://sapunidze.blogspot.com/2009/06/blog-post.html">план непутина</a></li><li><a href="http://sapunidze.blogspot.com/2009/06/how-pulseaudio-works.html">How PulseAudio works</a></li><li><a href="http://sapunidze.blogspot.com/2009/06/decibel-monkeys.html">Decibel &amp; Monkeys</a></li></ul></li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2008/">
+2008
+</a>
+<span class="post-count" dir="ltr">(22)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2008/09/">
+сентября
+</a>
+<span class="post-count" dir="ltr">(4)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2008/08/">
+августа
+</a>
+<span class="post-count" dir="ltr">(8)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2008/07/">
+июля
+</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2008/03/">
+марта
+</a>
+<span class="post-count" dir="ltr">(2)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2008/02/">
+февраля
+</a>
+<span class="post-count" dir="ltr">(5)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2008/01/">
+января
+</a>
+<span class="post-count" dir="ltr">(2)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2007/">
+2007
+</a>
+<span class="post-count" dir="ltr">(2)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2007/11/">
+ноября
+</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2007/09/">
+сентября
+</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2006/">
+2006
+</a>
+<span class="post-count" dir="ltr">(11)</span>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2006/12/">
+декабря
+</a>
+<span class="post-count" dir="ltr">(1)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2006/11/">
+ноября
+</a>
+<span class="post-count" dir="ltr">(6)</span>
+</li>
+</ul>
+<ul class="hierarchy">
+<li class="archivedate collapsed">
+<a class="toggle" href="javascript:void(0)">
+<span class="zippy">
+
+        ►&nbsp;
+      
+</span>
+</a>
+<a class="post-count-link" href="http://sapunidze.blogspot.com/2006/10/">
+октября
+</a>
+<span class="post-count" dir="ltr">(4)</span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=12119233&amp;widgetType=BlogArchive&amp;widgetId=BlogArchive1&amp;action=editWidget&amp;sectionId=sidebar-right-1" onclick='return _WidgetManager._PopupConfig(document.getElementById("BlogArchive1"));' target="configBlogArchive1" title="Изменить">
+<img alt="" src="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/icon18_wrench_allbkg.png" height="18" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div></div>
+<table class="section-columns columns-2" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td class="first columns-cell">
+<div class="sidebar no-items section" id="sidebar-right-2-1"></div>
+</td>
+<td class="columns-cell">
+<div class="sidebar no-items section" id="sidebar-right-2-2"></div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sidebar section" id="sidebar-right-3"><div class="widget HTML" data-version="1" id="HTML1">
+<div class="widget-content">
+<div align="center">
+<a id="clustrMapsLink" href="http://www3.clustrmaps.com/counter/maps.php?url=http://sapunidze.blogspot.com"><img id="clustrMapsImg" style="border:0px;" alt="Кто откуда к нам приходит" src="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/index2.png" onerror="this.onError=null; this.src='http://www2.clustrmaps.com/images/clustrmaps-back-soon.jpg'; document.getElementById('clustrMapsLink').href='http://www2.clustrmaps.com'" title="Кто откуда к нам приходит">
+</a>
+</div>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=12119233&amp;widgetType=HTML&amp;widgetId=HTML1&amp;action=editWidget&amp;sectionId=sidebar-right-3" onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML1"));' target="configHTML1" title="Изменить">
+<img alt="" src="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/icon18_wrench_allbkg.png" height="18" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget Label" data-version="1" id="Label1">
+<h2>метки</h2>
+<div class="widget-content list-label-widget-content">
+<ul>
+<li>
+<a dir="ltr" href="http://sapunidze.blogspot.com/search/label/%D0%B6%D0%B8%D0%B7%D0%BD%D1%8C">жизнь</a>
+<span dir="ltr">(10)</span>
+</li>
+<li>
+<a dir="ltr" href="http://sapunidze.blogspot.com/search/label/%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0">книга</a>
+<span dir="ltr">(1)</span>
+</li>
+<li>
+<a dir="ltr" href="http://sapunidze.blogspot.com/search/label/%D0%BA%D1%80%D0%B8%D0%BF%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%8F">криптография</a>
+<span dir="ltr">(1)</span>
+</li>
+<li>
+<a dir="ltr" href="http://sapunidze.blogspot.com/search/label/%D0%BA%D1%83%D0%BB%D1%8C%D1%82%D1%83%D1%80%D0%B0">культура</a>
+<span dir="ltr">(1)</span>
+</li>
+<li>
+<a dir="ltr" href="http://sapunidze.blogspot.com/search/label/%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4">перевод</a>
+<span dir="ltr">(14)</span>
+</li>
+<li>
+<a dir="ltr" href="http://sapunidze.blogspot.com/search/label/decibel">decibel</a>
+<span dir="ltr">(3)</span>
+</li>
+<li>
+<a dir="ltr" href="http://sapunidze.blogspot.com/search/label/fedora">fedora</a>
+<span dir="ltr">(31)</span>
+</li>
+<li>
+<a dir="ltr" href="http://sapunidze.blogspot.com/search/label/fluxbox">fluxbox</a>
+<span dir="ltr">(1)</span>
+</li>
+<li>
+<a dir="ltr" href="http://sapunidze.blogspot.com/search/label/openbox">openbox</a>
+<span dir="ltr">(3)</span>
+</li>
+<li>
+<a dir="ltr" href="http://sapunidze.blogspot.com/search/label/release%20notes">release notes</a>
+<span dir="ltr">(1)</span>
+</li>
+<li>
+<a dir="ltr" href="http://sapunidze.blogspot.com/search/label/sectool">sectool</a>
+<span dir="ltr">(1)</span>
+</li>
+<li>
+<a dir="ltr" href="http://sapunidze.blogspot.com/search/label/security">security</a>
+<span dir="ltr">(14)</span>
+</li>
+<li>
+<a dir="ltr" href="http://sapunidze.blogspot.com/search/label/selinux">selinux</a>
+<span dir="ltr">(10)</span>
+</li>
+</ul>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=12119233&amp;widgetType=Label&amp;widgetId=Label1&amp;action=editWidget&amp;sectionId=sidebar-right-3" onclick='return _WidgetManager._PopupConfig(document.getElementById("Label1"));' target="configLabel1" title="Изменить">
+<img alt="" src="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/icon18_wrench_allbkg.png" height="18" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div></div>
+</aside>
+</div>
+</div>
+</div>
+<div style="clear: both"></div>
+<!-- columns -->
+</div>
+<!-- main -->
+</div>
+</div>
+<div class="main-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+<footer>
+<div class="footer-outer">
+<div class="footer-cap-top cap-top">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+<div class="fauxborder-left footer-fauxborder-left">
+<div class="fauxborder-right footer-fauxborder-right"></div>
+<div class="region-inner footer-inner">
+<div class="foot no-items section" id="footer-1"></div>
+<table class="section-columns columns-2" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td class="first columns-cell">
+<div class="foot no-items section" id="footer-2-1"></div>
+</td>
+<td class="columns-cell">
+<div class="foot no-items section" id="footer-2-2"></div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- outside of the include in order to lock Attribution widget -->
+<div class="foot section" id="footer-3" name="Нижний колонтитул"><div class="widget Attribution" data-version="1" id="Attribution1">
+<div class="widget-content" style="text-align: center;">
+Тема "Корпорация "Чудеса"". Технологии <a href="https://www.blogger.com/" target="_blank">Blogger</a>.
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=12119233&amp;widgetType=Attribution&amp;widgetId=Attribution1&amp;action=editWidget&amp;sectionId=footer-3" onclick='return _WidgetManager._PopupConfig(document.getElementById("Attribution1"));' target="configAttribution1" title="Изменить">
+<img alt="" src="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/icon18_wrench_allbkg.png" height="18" width="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div></div>
+</div>
+</div>
+<div class="footer-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</footer>
+<!-- content -->
+</div>
+</div>
+<div class="content-cap-bottom cap-bottom">
+<div class="cap-left"></div>
+<div class="cap-right"></div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+    window.setTimeout(function() {
+        document.body.className = document.body.className.replace('loading', '');
+      }, 10);
+  </script>
+<script gapi_processed="true" src="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/plusone.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/2115856256-widgets.js"></script>
+<script type="text/javascript">
+window['__wavt'] = 'AOuZoY7RCL6CzJM14xApa3UQVALT5po8PQ:1506870275947';_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d12119233','//sapunidze.blogspot.com/','12119233');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '12119233', 'title': '...', 'url': 'http://sapunidze.blogspot.com/', 'canonicalUrl': 'http://sapunidze.blogspot.com/', 'homepageUrl': 'http://sapunidze.blogspot.com/', 'searchUrl': 'http://sapunidze.blogspot.com/search', 'canonicalHomepageUrl': 'http://sapunidze.blogspot.com/', 'blogspotFaviconUrl': 'http://sapunidze.blogspot.com/favicon.ico', 'bloggerUrl': 'https://www.blogger.com', 'hasCustomDomain': false, 'httpsEnabled': true, 'enabledCommentProfileImages': false, 'gPlusViewType': 'FILTERED_POSTMOD', 'adultContent': false, 'analyticsAccountNumber': '', 'encoding': 'UTF-8', 'locale': 'ru-RU', 'localeUnderscoreDelimited': 'ru', 'languageDirection': 'ltr', 'isPrivate': false, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'feedLinks': '\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22... - Atom\x22 href\x3d\x22http://sapunidze.blogspot.com/feeds/posts/default\x22 /\x3e\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/rss+xml\x22 title\x3d\x22... - RSS\x22 href\x3d\x22http://sapunidze.blogspot.com/feeds/posts/default?alt\x3drss\x22 /\x3e\n\x3clink rel\x3d\x22service.post\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22... - Atom\x22 href\x3d\x22https://www.blogger.com/feeds/12119233/posts/default\x22 /\x3e\n', 'meTag': '', 'openIdOpTag': '\x3clink rel\x3d\x22openid.server\x22 href\x3d\x22https://www.blogger.com/openid-server.g\x22 /\x3e\n\x3clink rel\x3d\x22openid.delegate\x22 href\x3d\x22http://sapunidze.blogspot.com/\x22 /\x3e\n', 'adsenseHostId': 'ca-host-pub-1556223355139109', 'adsenseHasAds': false, 'ieCssRetrofitLinks': '\x3c!--[if IE]\x3e\x3cscript type\x3d\x22text/javascript\x22 src\x3d\x22https://www.blogger.com/static/v1/jsbin/35781802-ieretrofit.js\x22\x3e\x3c/script\x3e\n\x3c![endif]--\x3e', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/97e2ab1c57854d2e', 'plusOneApiSrc': 'https://apis.google.com/js/plusone.js', 'sharing': {'platforms': [{'name': 'Получить ссылку', 'key': 'link', 'shareMessage': 'Получить ссылку', 'target': ''}, {'name': 'Facebook', 'key': 'facebook', 'shareMessage': 'Поделиться в Facebook', 'target': 'facebook'}, {'name': 'Написать об этом в блоге', 'key': 'blogThis', 'shareMessage': 'Написать об этом в блоге', 'target': 'blog'}, {'name': 'Twitter', 'key': 'twitter', 'shareMessage': 'Поделиться в Twitter', 'target': 'twitter'}, {'name': 'Pinterest', 'key': 'pinterest', 'shareMessage': 'Поделиться в Pinterest', 'target': 'pinterest'}, {'name': 'Google+', 'key': 'googlePlus', 'shareMessage': 'Поделиться в Google+', 'target': 'googleplus'}, {'name': 'Электронная почта', 'key': 'email', 'shareMessage': 'Электронная почта', 'target': 'email'}], 'googlePlusShareButtonWidth': 300, 'googlePlusBootstrap': '\x3cscript type\x3d\x22text/javascript\x22\x3ewindow.___gcfg \x3d {\x27lang\x27: \x27ru\x27};\x3c/script\x3e'}, 'hasCustomJumpLinkMessage': false, 'jumpLinkMessage': 'Далее...', 'pageType': 'index', 'pageName': '', 'pageTitle': '...'}}, {'name': 'features', 'data': {'lazy_images': 'false', 'unsupported_browser_message': 'false', 'lightbox_img_parsing': 'false', 'video_theatre_support': 'false', 'sharing_get_link_dialog': 'false', 'sharing_native': 'false'}}, {'name': 'messages', 'data': {'edit': 'Изменить', 'linkCopiedToClipboard': 'Ссылка скопирована в буфер обмена!', 'ok': 'ОК', 'postLink': 'Ссылка на сообщение'}}, {'name': 'template', 'data': {'name': 'Awesome Inc.', 'localizedName': 'Корпорация \x22Чудеса\x22', 'isResponsive': false, 'isAlternateRendering': false, 'isCustom': false, 'variant': 'dark', 'variantId': 'dark', 'variantName': 'Dark', 'localizedVariantName': 'Dark'}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '?view\x3dclassic'}, 'flipcard': {'name': 'flipcard', 'url': '?view\x3dflipcard'}, 'magazine': {'name': 'magazine', 'url': '?view\x3dmagazine'}, 'mosaic': {'name': 'mosaic', 'url': '?view\x3dmosaic'}, 'sidebar': {'name': 'sidebar', 'url': '?view\x3dsidebar'}, 'snapshot': {'name': 'snapshot', 'url': '?view\x3dsnapshot'}, 'timeslide': {'name': 'timeslide', 'url': '?view\x3dtimeslide'}, 'isMobile': false, 'title': '...', 'description': 'про fedora linux, безопасность и selinux', 'url': 'http://sapunidze.blogspot.com/', 'type': 'feed', 'isSingleItem': false, 'isMultipleItems': true, 'isError': false, 'isPage': false, 'isPost': false, 'isHomepage': true, 'isArchive': false, 'isLabelSearch': false}}]);
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar', null, document.getElementById('Navbar1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header', null, document.getElementById('Header1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', null, document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'lightboxEnabled': true, 'lightboxModuleUrl': 'https://www.blogger.com/static/v1/jsbin/154111634-lbx__ru.js', 'lightboxCssUrl': 'https://www.blogger.com/static/v1/v-css/368954415-lightbox_bundle.css'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar-right-1', null, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr', 'loadingMessage': 'Загрузка\x26hellip;'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'sidebar-right-3', null, document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LabelView', new _WidgetInfo('Label1', 'sidebar-right-3', null, document.getElementById('Label1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AttributionView', new _WidgetInfo('Attribution1', 'footer-3', null, document.getElementById('Attribution1'), {}, 'displayModeFull'));
+</script>
+
+<link href="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/368954415-lightbox_bundle.css" rel="stylesheet" type="text/css"><script src="SELinux_10_%D0%A8%D0%B0%D0%B3%D0%BE%D0%B2_files/154111634-lbx__ru.js" type="text/javascript"></script></body><div data="{&quot;a&quot;:&quot;show_Div&quot;,&quot;url&quot;:&quot;http://sapunidze.blogspot.com/2009/07/selinux-10.html&quot;,&quot;host&quot;:&quot;sapunidze.blogspot.com&quot;,&quot;safe&quot;:true,&quot;preview&quot;:true,&quot;live&quot;:true}" style="display:none" id="sp_console_event"></div></html>

@@ -1,0 +1,1 @@
+/**/__twttr.setFollowersCountAndFollowing([{"following":false,"id":"78522680","screen_name":"morikoff","name":"Igor A. Morikoff","protected":false,"followers_count":88,"formatted_followers_count":"88 \u0447\u0438\u0442\u0430\u0442\u0435\u043B\u0435\u0439 ","age_gated":false}]);

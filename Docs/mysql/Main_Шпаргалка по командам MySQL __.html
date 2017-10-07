@@ -1,0 +1,489 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content="Реальные отзывы клиентов интернет-компаний с форумов. Рейтинг лучших хостинг-компаний, смс-биллингов, партнерских программ, тизерных сетей, VPN и многого другого. Актуальные акции и скидки для вебмастеров.">
+<meta name="keywords" content="Отзывы, выбор хостинга, VPS, VDS, серверы, домены, СМС биллинг, тизерки, партнерки, партнерские программы, электронные платежные системы, VPN">
+<meta property="og:image" content="http://zapili.net/media/images/fb_logo.png">
+<meta name="yandex-verification" content="7fd5e72ef702f3d4">
+<title>Шпаргалка по командам MySQL :: </title>
+<link href="Main_%D0%A8%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B0%20%D0%BF%D0%BE%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%D0%BC%20MySQL%20::_files/style.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="http://zapili.net/media/images/favicon.png" type="image/x-icon">
+
+    <script type="text/javascript" async="" src="Main_%D0%A8%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B0%20%D0%BF%D0%BE%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%D0%BC%20MySQL%20::_files/ga.js"></script><script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-31041115-1']);
+       _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+<script type="text/javascript" async="" src="Main_%D0%A8%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B0%20%D0%BF%D0%BE%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%D0%BC%20MySQL%20::_files/reformal.js"></script><style type="text/css" media="screen">        #reformal_tab {position:fixed; top:170px; left:0; z-index:100001;}         #reformal_tab a {display:block; padding: 2px; background:#00b8f0;}         #reformal_tab img {border: none;} </style></head>
+
+
+<body><div id="reformal_tab">           <a href="http://zapili.reformal.ru/" onclick="Reformal.widgetOpen();return false;" onmouseover="Reformal.widgetPreload();">                 <img src="Main_%D0%A8%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B0%20%D0%BF%D0%BE%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%D0%BC%20MySQL%20::_files/6c4056045230afed852228576ab290c7.png" alt="">             </a></div>
+<div class="b-main">
+    
+
+    
+    <div class="b-header">
+        <div class="b-header-searchf">
+            <input id="js-searchf-text" type="text">
+            <label for="js-searchf-text" class="deflabel" id="js-searchf-deflabel">Поиск компании...</label>
+            <span class="hint">Введите имя компании</span>
+            <a href="#" id="searchf-find" class="go-link">Поиск</a>
+            <a href="#" id="searchf-find2" class="go-link"> </a>
+            <div class="list" id="js-searchf-list"></div>
+        </div>
+        <div class="b-header-counter">
+            <div>
+                <span>Компании:</span> <a href="http://zapili.net/add_firm/"><img src="Main_%D0%A8%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B0%20%D0%BF%D0%BE%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%D0%BC%20MySQL%20::_files/add_btn2.png"></a>
+                <img src="Main_%D0%A8%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B0%20%D0%BF%D0%BE%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%D0%BC%20MySQL%20::_files/bluerect.png" alt=""><em>679</em>
+            </div>
+            <div>
+                <span>Отзывы: </span> <a href="http://zapili.net/add_feedback/"><img src="Main_%D0%A8%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B0%20%D0%BF%D0%BE%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%D0%BC%20MySQL%20::_files/add_btn2.png"></a>
+                <img src="Main_%D0%A8%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B0%20%D0%BF%D0%BE%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%D0%BC%20MySQL%20::_files/bluerect.png" alt=""><em>5185</em>
+            </div>
+            <div>
+                <span>Скидки: </span><a href="http://zapili.net/add_skidka/"><img src="Main_%D0%A8%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B0%20%D0%BF%D0%BE%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%D0%BC%20MySQL%20::_files/add_btn2.png"></a>
+                <img src="Main_%D0%A8%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B0%20%D0%BF%D0%BE%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%D0%BC%20MySQL%20::_files/bluerect.png" alt=""><em></em>
+            </div>
+        </div>
+        <h3><b>База поисковых запросов Рунета</b><br>
+            <a href="http://zapili.net/query/">(10.07.2017) за сутки</a> — Бесплатно<br>
+            <a href="http://zapili.net/query/#month">(июнь) за месяц</a> — $10
+        </h3>
+    </div>
+    
+    <div class="b-topmenu">
+        <ul>
+            <li><a href="http://zapili.net/vps/"><small>VPS/Dedic</small> Хостинг</a></li>
+            <li><a href="http://zapili.net/domains/"><span class="line2">Регистраторы<br>&nbsp;&nbsp;&nbsp;&nbsp;доменов</span></a></li>
+            <li><a href="http://zapili.net/smsbilling/">СМС-биллинги</a></li>
+            <li><a href="http://zapili.net/pharm/">Фарма</a></li>
+            <li><a href="http://zapili.net/ppc/">PPC</a></li>
+            <li><a href="http://zapili.net/cpa/">CPA</a></li>
+            <li><a href="http://zapili.net/tizer/">Тизерки</a></li>
+            <li><a href="http://zapili.net/partner/">Партнерки</a></li>
+            <li><a href="http://zapili.net/paysystem/"><span class="line2">Платежные<br> &nbsp; системы</span></a></li>
+            <li><a href="http://zapili.net/vpn/">VPN</a></li>
+            <li><a href="http://zapili.net/skidki/">Скидки</a></li>
+        </ul>
+        <div class="b-topmenu-shadow"></div>
+    </div>
+    <div class="b-content">
+        
+    
+    
+    
+
+    <div class="b-content-lines">
+        <div class="b-articles">
+            <h2>другие<br> статьи</h2>
+            
+                <a href="http://zapili.net/vps/articles/ustanovka-lamp-na-debian-linux/">Установка LAMP на Debian Linux</a>
+            
+                <a href="http://zapili.net/vps/articles/ssh-vhod-po-klyuchu-v-putty/">ssh вход по ключу в Putty</a>
+            
+                <a href="http://zapili.net/vps/articles/ustanovka-i-nastrojka-proksi-servera/">Установка и настройка прокси сервера</a>
+            
+                <a href="http://zapili.net/vps/articles/otlichie-xen-ot-openvz/">Отличие XEN от OpenVZ</a>
+            
+        </div>
+        <div class="b-backlink">
+            <a href="http://zapili.net/vps/">← Назад к общему разделу</a>
+        </div>
+        <div class="b-about">
+            <h1>Шпаргалка по командам MySQL</h1>
+            <b>Управление пользователями</b><br>
+<br>
+Список пользователей<br>
+<div class="b-console">#mysql&gt; SELECT User,Host FROM mysql.user;<br>
+</div>Список прав у пользователя root@localhost<br>
+<div class="b-console">#mysql&gt; SHOW GRANTS FOR root@localhost;<br>
+</div>Создание нового пользователя<br>
+<div class="b-console">#mysql&gt; CREATE USER 'user'@'localhost' IDENTIFIED BY 'secret';<br>
+</div>Добавим выбранные привилегии для всех таблиц БД dbname пользователю 'user'@'localhost'<br>
+<div class="b-console">#mysql&gt; GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER,INDEX ON dbname.* TO 'user'@'localhost';<br>
+</div>Добавить все привилегии для всех таблиц БД dbname пользователю 'user'@'localhost'<br>
+<div class="b-console">#mysql&gt; GRANT ALL PRIVILEGES ON dbname.* TO 'user'@'localhost';<br>
+</div>Удаление прав пользователя 'user'@'localhost' для БД dbname:<br>
+<div class="b-console">#mysql&gt; REVOKE ALL ON dbname.* FROM 'user'@'localhost';<br>
+</div>Перезагрузка привилегий<br>
+<div class="b-console">#mysql&gt; FLUSH PRIVILEGES;<br>
+</div>Новый пароль для root<br>
+<div class="b-console">#mysqladmin -uroot password 'secret'<br>
+</div>.<br>
+<b>Управление базой данных</b><br>
+<br>
+Создание базы данных<br>
+<div class="b-console">#mysql&gt; CREATE DATABASE dbname COLLATE utf8_general_ci;<br>
+</div>Создание базы данных из консоли<br>
+<div class="b-console">#mysqladmin -u root -p create dbname<br>
+</div>Удаления базы данных из консоли<br>
+<div class="b-console">#mysqladmin -u root -p drop dbname<br>
+</div>.<br>
+<b>Cтатистика</b><br>
+<br>
+Список всех баз данных<br>
+<div class="b-console">#mysql&gt; SHOW DATABASES;<br>
+</div>Список всех таблиц в выбранной базе данных<br>
+<div class="b-console">#mysql&gt; SHOW TABLES;<br>
+</div>Статистика по работе сервера<br>
+<div class="b-console">#mysql&gt; SHOW GLOBAL STATUS;<br>
+</div>.<br>
+<b>Оптимизация</b><br>
+При помощи команды mysqlcheck можно выполнять проверку, оптимизацию и исправление ошибок.<br>
+<br>
+Поверка на ошибки БД dbname<br>
+<div class="b-console">#mysqlcheck -p dbname<br>
+</div>Восстановление и оптимизация всех БД<br>
+<div class="b-console">#mysqlcheck -Aor -p<br>
+</div>аргументы:<br>
+-p – использовать пароль<br>
+-A – проверять все базы данных<br>
+-r – ремонтировать БД<br>
+-o – оптимизировать БД<br>
+<br>
+Скрипт простой оптимизации БД, можно добавить в крон для выполнение раз в сутки<br>
+<div class="b-console">#mysqlcheck --repair --analyze --optimize --all-databases --auto-repair -u root -pSECRET<br>
+</div>Установим mysqltuner, который показывает статистику по работающему mysql-серверу и дает полезные советы по оптимизации.<br>
+<div class="b-console">#cd /usr/local/bin<br>
+#wget http://mysqltuner.pl/mysqltuner.pl<br>
+#chmod +x mysqltuner.pl<br>
+</div>Запустим <br>
+<div class="b-console">#/usr/local/bin/mysqltuner.pl<br>
+</div>При запуске скрипт спросит логин и пароль для root'a. После 
+корректной авторизации будет выведена статистика и разные советы по 
+правке конфигурационного файла MySQL.<br>
+<br>
+<b>Дамп (резервная копия)</b><br>
+<br>
+Дамп базы данных<br>
+<div class="b-console">#mysqldump -u root -p dbname &gt; dump.sql<br>
+</div>Дамп выбранных баз<br>
+<div class="b-console">#mysqldump -u root -p -B dbname1 dbname2 &gt; dump.sql<br>
+</div>Дамп всех баз<br>
+<div class="b-console">#mysqldump -u root -p -A &gt; dump.sql<br>
+</div>Дамп только структуры, без данных<br>
+<div class="b-console">#mysqldump -u root -p --no-data dbname &gt; database.sql<br>
+</div>Другие опции<br>
+--add-drop-table - добавляет команду DROP TABLE перед каждой командой CREATE TABLE<br>
+--add-locks - добавляет команду LOCK TABLES перед выполнением и UNLOCK TABLE после выполнения каждого дампа таблицы<br>
+--no-create-db, -n - не добавлять команду CREATE DATABASE, которая 
+добавляется при использовании параметров --databases и --all-databases<br>
+--no-data, -d - дампить только структуру таблиц<br>
+--no-create-info, -t - не создавать команду CREATE TABLE<br>
+--skip-comments - не выводить комментарии.<br>
+--compact - использовать компактный формат<br>
+--create-options - добавляет дополнительную информацию о таблице в 
+команду CREATE TABLE: тип, значение AUTO_INCREMENT и т.д. Не нужные 
+опции можно вырезать с помощью sed.<br>
+--extended-insert, -e - применение команды INSERT с многострочным 
+синтаксисом (повышает компактность и быстродействие операторов ввода)<br>
+--tables - дампить только таблицы из списка, следующего за этим параметром, разделитель - пробел<br>
+<br>
+<b>Применение дампа (импорт)</b><br>
+<div class="b-console">#mysql -uroot -p dbname1 &lt; dump.sql<br>
+</div>Определение кодировки файла<br>
+file --mime-encoding dump.sql<br>
+Конвертирование из кодировки latin1 в utf8<br>
+mysqldump --add-drop-table -uroot -p dbname | replace CHARSET=latin1 
+CHARSET=utf8 | iconv -f latin1 -t utf8 | mysql -uroot -p dbname<br>
+<br>
+<b>Восстановление root-пароля</b><br>
+<div class="b-console">#service mysqld stop<br>
+#mysqld_safe --skip-grant-tables &amp;<br>
+#mysql<br>
+<br>
+#mysql&gt; UPDATE mysql.user SET Password=PASSWORD('secret') WHERE User='root';<br>
+#mysql&gt; FLUSH PRIVILEGES;<br>
+#mysql&gt; \q<br>
+<br>
+#service mysqld restart<br>
+<br>
+</div>Спонсор: <a href="https://hostiman.ru/hosting" target="_blank">Хостинг</a> HostiMan
+        </div>
+    </div>
+
+    </div>
+    <div style="clear:both"></div>
+    <div class="b-footer">
+        <b>© 2011-2012, <a href="http://zapili.net/">Zapili.Net</a> — Рейтинг SEO-компаний<br>Вопросы и предложения по работе сайта – <a href="mailto:%20support@zapili.net">support@zapili.net</a></b>
+        <i><a href="http://zapili.net/add_feedback/">Добавить отзыв</a></i>
+        <i><a href="http://zapili.net/add_firm/">Добавить компанию</a></i>
+        <i><a href="http://zapili.net/about/">О проекте</a></i>
+        <i><a href="http://zapili.net/adv/">Реклама на сайте</a></i><br>
+    </div>
+</div>
+<script src="Main_%D0%A8%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B0%20%D0%BF%D0%BE%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%D0%BC%20MySQL%20::_files/scripts.js"></script>
+<script src="Main_%D0%A8%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B0%20%D0%BF%D0%BE%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%D0%BC%20MySQL%20::_files/jquery_002.js" type="text/javascript"></script>
+<script type="text/javascript" src="Main_%D0%A8%D0%BF%D0%B0%D1%80%D0%B3%D0%B0%D0%BB%D0%BA%D0%B0%20%D0%BF%D0%BE%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%D0%BC%20MySQL%20::_files/jquery.js"></script>
+
+<script>
+$(document).ready(function(){
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function ajax_csrf(){
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                    //xhr.setRequestHeader("X-CSRFToken", "");
+                }
+            }
+        });
+    }
+    ajax_csrf();
+    var pt=[];
+    var sn=new Date().getTime();
+    var ab="";
+
+    $(document).mousemove(function(e){
+      n=new Date().getTime();
+      pt.push([e.pageX,e.pageY,n-sn]);
+      sn=n;
+      if (pt.length>1000){
+        pt=pt.slice(-1000);
+      }
+      ab=pt.toString();
+    });
+
+    $(".b-starrating a").live({
+            mouseover:
+               function()
+               {
+                   x=$(this);
+                   if (!x.prev("a").text()){
+                       x.addClass("def");
+                   }else{
+                       x.prevAll("a").addClass("sel");
+                       x.addClass("sel");
+                   }
+               },
+            mouseout:
+               function()
+               {
+                   $(this).parent(".b-starrating").find("a").removeClass("sel").removeClass("def");
+               }
+           }
+        );
+
+    $(".b-starrating a").live("click",function(){
+        $(this).parent(".b-starrating").find("a").removeClass("sel2").removeClass("def2");
+        x=$(this);
+        if (!x.prev("a").text()){
+            x.addClass("def2");
+        }else{
+            x.prevAll("a").addClass("sel2");
+            x.addClass("sel2");
+        }
+        prefa=$(this).attr("id").split("-");
+        $.post("/stats/starrating/",{"prefix":"fi","id":prefa[2],"mark":prefa[3],"ab":ab});
+        return false;
+    });
+    $(".b-content-srblock_header .b-starrating a").hover(function(e){return false;}).click(function(e){return false;}).css('cursor','default');
+
+    function label_off(){
+        $("#js-searchf-deflabel").hide();
+    }
+    function label_on(){
+        $("#js-searchf-list").hide();
+        if ($("#js-searchf-text").val().length>0){return}
+        $("#js-searchf-deflabel").show();
+    }
+    function searchf_clear(){
+        $("#js-searchf-list").html("");
+    }
+    function searchf_add(list){
+        function make_stars(n){
+            var s="<div class=\"b-stars-90\">";
+            for (var i=1;i<=5;i++){
+                s=s+"<span "+(i<=n?"class=\"sel\"":"")+">"+i+"</span>";
+            }
+            s=s+"</div>";
+            return s;
+        }
+        searchf_clear();
+        var box=$("#js-searchf-list");
+        var s="";
+        for (var i in list){
+            var stars=make_stars(list[i][2]);
+            s=s+"<a href=\""+list[i][0]+"\"><b>"+list[i][1]+"</b>"+stars+"</a>";
+        }
+        box.html(s);
+    }
+    function searchf_go(){
+        var q=$("#js-searchf-text").val();
+        if (q){
+            window.location="/search/?q="+q;
+        }
+    }
+
+    $("#js-searchf-text").val("");
+    $("#js-searchf-text").focusin(function(){label_off()}).focusout(function(){label_on()});
+    $("#js-searchf-text").keyup(function(event){
+        var s=$(this).val();
+        if (event.which == 13){searchf_go();return}
+        if (s.length>1){
+            $.ajax("/livesearch/",{
+                "data":{"q":s},
+                "dataType":"json",
+                "type":"POST",
+                "success":function(data){
+                    searchf_add(data);
+                }
+            });
+            $("#js-searchf-list").show();
+        }else{
+            $("#js-searchf-list").hide();
+        }
+    });
+    $(".b-header-searchf .list a").live("mousedown",function(){
+        window.location=$(this).attr("href");
+    });
+
+    $(".txt .subs input[type=text]").click(function(){
+        var txt=$(this).val();
+        if (txt.indexOf("Введите")==0){
+            $(this).val("");
+        }
+    });
+    $(".b-skidki-social .subs input[type=text]").click(function(){
+            var txt=$(this).val();
+            if (txt.indexOf("Введите")==0){
+                $(this).val("");
+            }
+        });
+
+    $(".go-link").click(function(){searchf_go()});
+    $("img.lazy").show().lazyload();
+
+    var _items_success=false;
+    var hrblock_obj;
+    var update_func;
+    function change_srblock(aobj){
+        var srblock=$(aobj).parents(".b-content-srblock_header").next("div.b-content-srblock");
+        var link=$(aobj).parents(".b-content-srblock_header").children(".exp_link").children("a");
+        if (srblock.is(".hidden") && !_items_success){
+            hrblock_obj=aobj;
+            var loads_label=$(aobj).parents(".b-content-srblock_header").children(".loads");
+            loads_label.show();
+            load_items();
+            return false;
+        }
+        srblock.toggleClass("hidden");
+        if (srblock.css("display")!="none"){
+            link.text("Свернуть список");
+        }else{
+            link.text("Раскрыть список");
+        }
+    }
+    function set_items_success(){
+        _items_success=true;
+        $(".loads").hide();
+        if (hrblock_obj)change_srblock(hrblock_obj);
+    }
+    $(".firm_num a").click(function(){
+        change_srblock(this);
+        return false;
+    });
+    $(".exp_link a").click(function(){
+        change_srblock(this);
+        return false;
+    });
+
+    function load_items(){
+        $.ajax({
+            data:{"items":"1"},
+            url:"/vps/item/",
+            success:function(data){
+                $("#_items").append(data);
+                $("#_items .tmpid").each(function(ind,obj){
+                    var id=$(obj).attr("id").split("-")[1];
+                    $("#js-firmid-"+id).after($(obj)).remove();
+                    $(obj).removeClass("tmpid").attr("id","js-firmid-"+id).removeClass("hidden").show();
+                });
+                set_items_success();
+                recalc_firm_word();
+                $("img.lazy").show().lazyload();
+                ajax_csrf();
+                if (update_func)update_func();
+            }
+        });
+    }
+    function move_4_top(){
+        $("#topspons1").parents(".b-firminfo").appendTo("#topselblock");
+        $("#topspons2").parents(".b-firminfo").appendTo("#topselblock");
+        $(".b-firminfo .topsel").each(function(ind,obj){
+            var x=$(obj).parents(".b-firminfo").appendTo("#topselblock");
+        });
+        var b=$("#js-ad2");
+        b.insertAfter(b.next());
+        if ($("#topspons2").length){b.insertAfter(b.next())};
+    }
+    function get_word_for_num(n){
+        var sn=n+"";
+        if (sn == "0") return "компаний";
+        if (sn.charAt(sn.length-2) == "1") return "компаний";
+        var t=sn.charAt(sn.length-1);
+        if (t == "1") return "компания";
+        if (t=="2"||t=="3"||t=="4")return "компании";
+        if (t=="5"||t=="6"||t=="7"||t=="8"||t=="9")return "компаний";
+        return "компаний";
+    }
+
+    function recalc_firm_word(){
+        $(".b-content-srblock_header").each(function(ind,obj){
+            var a=$(obj).next(".b-content-srblock").find("div._visib");
+            var n=a.length;
+            if (n==0){$(obj).hide()}else{$(obj).show()}
+            $(obj).children(".firm_num").children("a").text(n+" "+get_word_for_num(n));
+        });
+    }
+    move_4_top();
+    //load_items();
+    
+});
+</script>
+    <script type="text/javascript">
+        var reformalOptions = {
+            project_id: 54114,
+            project_host: "zapili.reformal.ru",
+            force_new_window: false,
+            tab_alignment: "left",
+            tab_top: "170",
+            tab_bg_color: "#00b8f0",
+            tab_image_url: "http://tab.reformal.ru/0KPQu9GD0YfRiNC40YLRjCBaYXBpbGk=/FFFFFF/6c4056045230afed852228576ab290c7"
+        };
+
+        (function() {
+            var script = document.createElement('script');
+            script.type = 'text/javascript'; script.async = true;
+            script.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'media.reformal.ru/widgets/v1/reformal.js?1';
+            document.getElementsByTagName('head')[0].appendChild(script);
+        })();
+    </script>
+
+
+<div style="display: none;" id="_items"></div>
+
+</body></html>

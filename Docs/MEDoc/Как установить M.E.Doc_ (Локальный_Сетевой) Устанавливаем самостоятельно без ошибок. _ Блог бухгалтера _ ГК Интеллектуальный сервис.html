@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ru"><!--[if lt IE 7]><html lang="ru" class="lt-ie9 lt-ie8 lt-ie7"><![endif]--><!--[if IE 7]><html lang="ru" class="lt-ie9 lt-ie8"><![endif]--><!--[if IE 8]><html lang="ru" class="lt-ie9"><![endif]--><!--[if gt IE 8]><!--><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><link rel="manifest" href="https://intelserv.net.ua/sp-push-manifest.json">
+
+        <meta charset="utf-8">
+
+            <!-- Basic Page Needs
+         ================================================== -->
+
+        <meta name="description" content="Сегодня я хочу поднять тему, с которой рано или поздно столкнутся, или уже сталкивались большинство бухгалтеров - Как установить M.E.Doc?">
+        <meta name="keywords" content="M.E.Doc,MEDoc,M E Doc,Локальная версия,Lokalynaya versiya,Сетевая версия,Setevaya_versiya,Установить,Ustanovity,Обновить,Obnovity">
+        <meta name="author" content="Интеллектуальный Сервис">
+
+
+          <meta property="og:url" content="https://intelserv.net.ua/blog/material/id/35">
+          <meta property="og:type" content="website">
+          <meta property="og:title" content="Как установить M.E.Doc? (Локальный/Сетевой)
+Устанавливаем самостоятельно без ошибок. | Блог бухгалтера | ГК Интеллектуальный сервис">
+          <meta property="og:description" content="Сегодня я хочу поднять тему, с которой рано или поздно столкнутся, или уже сталкивались большинство бухгалтеров - Как установить M.E.Doc?">
+          <meta property="og:image" content="https://intelserv.net.ua/upload/blog/preview_image/1/install_medoc.jpg">
+
+
+        <!--================================================-->
+        <meta name="google-site-verification" content="fBJ1UL6e9mO_93y0FRc_yWBKiXK4NGXxkzCZKaBh_64">
+        <meta name="yandex-verification" content="7aace84e88b97ce6">
+
+        <title>Как установить M.E.Doc? (Локальный/Сетевой)
+Устанавливаем самостоятельно без ошибок. | Блог бухгалтера | ГК Интеллектуальный сервис</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="https://intelserv.net.ua/upload/favicon.ico">
+        <link rel="stylesheet" href="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/bootstrap-grid-3.css">
+                <link rel="stylesheet" href="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/bootstrap.css">
+        <link rel="stylesheet" href="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/font-awesome.css">
+        <link rel="stylesheet" href="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/animate.css">
+        <link rel="stylesheet" href="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/simplebox.css">
+        <link rel="stylesheet" href="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/blogMain.css">
+        <link rel="stylesheet" href="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/blogMedia.css">
+
+
+        <script async="" src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/analytics.js"></script><script id="facebook-jssdk" src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/sdk.js"></script><script src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/jquery_002.js"></script>
+                <script type="text/javascript" src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/bootstrap.js"></script>
+        <script type="text/javascript" src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/scriptsSite.js"></script>
+                 <script charset="UTF-8" src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/8fc803241f1f63f9d2fab4a23f2b9097_1.js" async=""></script>
+
+
+                  
+
+<link rel="stylesheet" href="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/simplebox.css"><script type="text/javascript" src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/simplebox.js"></script><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_loader{background-color:#f6f7f9;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{width:auto;height:auto;min-height:initial;min-width:initial;background:none}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{color:#fff;display:block;padding-top:20px;clear:both;font-size:18px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;bottom:0;left:0;right:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #29487d;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f6f7f9;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-repeat:no-repeat;background-position:50% 50%;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}</style><link rel="stylesheet" type="text/css" href="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/sendpulse-prompt.css" media="all"></head>
+<body>
+
+<div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_https" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" style="border: medium none;" src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/XBwzv5Yrm_1.html" frameborder="0"></iframe></div></div></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.9&appId=856611681107082";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, "script", "facebook-jssdk"));</script>
+
+
+
+
+
+
+
+<header>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="container">
+	   	<div class="imgBlogHeader">
+	  		<a href="https://intelserv.net.ua/"><img src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/logoBlog.png" class="img-responsive img-rounded" title="На главную" alt="Блог Бухгалтера"></a>
+	  	</div>
+
+	  	<div class="SearchBlog">
+		  <div class="col-lg-12">
+		  <form action="/blog/searchBlog" method="GET">
+		    <div class="input-group">
+		      <input class="form-control" name="searchblog" placeholder="Найти статью" type="text">
+		      <span class="input-group-btn">
+		        <button class="btn btn-success"><i class="fa fa-search" aria-hidden="true"></i></button>
+		      </span>
+		    </div><!-- /input-group -->
+		   </form>
+		  </div><!-- /.col-lg-6 -->
+		</div>
+
+
+
+
+			<div class="authForms"><div data-toggle="modal" data-target="#autorizateForm"><i class="fa fa-bars fa-2x" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Войти"></i></div></div>
+
+
+
+
+
+	  </div>
+	</nav>
+</header>
+
+
+<main>
+
+
+
+
+
+<div class="">
+
+  <div class="container">
+      <div class="col-lg-12">
+        <div class="row">
+
+        <ol class="breadcrumb">
+		  <li><a href="https://intelserv.net.ua/">Главная</a></li>
+		  <li><a href="https://intelserv.net.ua/blog">Блог</a></li>
+		  <li class="active">Как установить M.E.Doc <small>(Локальный/Сетевой). Устанавливаем самостоятельно без ошибок.</small></li>
+		</ol>
+
+
+        	<div class="col-lg-8">
+
+<h1>Как установить M.E.Doc? <small>(Локальный/Сетевой)</small><br> <small>Устанавливаем самостоятельно без ошибок.</small></h1>
+
+<div><i class="fa fa-eye" aria-hidden="true"></i> 4395 | <i class="fa fa-calendar" aria-hidden="true"></i> 2016-07-14</div>
+		<div class="col-lg-4">
+			<img data-src="holder.js/300x200" src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/install_medoc.jpg" alt="Как установить M.E.Doc &lt;small&gt;(Локальный/Сетевой). Устанавливаем самостоятельно без ошибок.&lt;/small&gt;" class="img-thumbnail">
+		</div>
+		<div class="col-lg-8">
+			<h4>Доброго всем утречка!!!</h4>
+
+<p class="lead">Уже подходит к середине первый месяц лета, но погода нас
+ особо не радует летней жарой. Наверняка у большинства от постоянных 
+дождей скребутся кошки на душе, но тем не менее, сейчас мы все на 
+работе.</p>
+
+
+		</div>
+
+<div style="clear:both"></div>
+<hr>
+			<div><p>Сегодня я хочу поднять тему, с которой рано или поздно столкнутся, или уже сталкивались большинство бухгалтеров - <b>Как установить M.E.Doc?</b></p>
+
+<h3>Когда же может возникнуть данный вопрос:</h3>
+
+<p>С ним сталкиваются все, кто решил связать свою работу с данной 
+системой и только начинает освоение такой программы. Данных 
+пользователей я отнесу, если можно так сказать, к <b>счастливчикам</b>. У
+ них есть запас времени, чтобы разобраться, попробовать установить 
+несколько вариантов, решить что лучше, набраться опыта в этом деле, и с 
+высоко поднятой головой и энтузиазмом бороздить просторы бухгалтерского 
+учета.</p>
+
+<p>Вторую категорию, с Вашего позволения, я назову <b>матёрыми бухгалтерами</b>, которые изучили программу вдоль и поперек, и могут сами обучать других работе в ней.</p>
+
+<p>В третью категорию, попадают пользователи с основательным опытом 
+работы с системой M.E.Doc, но используют около 50% потенциала программы,
+ так как это удовлетворяет все возникающие потребности.</p>
+
+<p><b>Но</b>, к сожалению, ни один пользователь любого программного 
+обеспечения не застрахован от того, что в один прекрасный день программа
+ даст сбой.</p>
+
+<p>Поэтому, в данной статье я расскажу, какие профилактические меры 
+необходимо делать, чтобы ваш M.E.Doc работал долго и без сбоев, а если 
+они и возникнут, как быстро восстановить работу Вашего предприятия. Ведь
+ все уже освоили прописные истины <b>"Время - не восстанавливаемый ресурс" и "Время - деньги"</b></p>
+
+<h3>Теперь перейдем от слов к действиям.</h3>
+
+<p>Для корректной работы программы, необходимо определить на какой 
+компьютер она должна быть установлена, и поверьте, не каждый первый 
+компьютер под это подойдет.</p>
+
+<p>В зависимости, какую версию вы будете использовать (локальную или 
+сетевую), требуемая мощность компьютера будет отличатся. Минимальные 
+технические требования можно прочитать <a href="https://systemnye-trebovaniya-medoc/" target="_blank">тут</a></p>
+
+<p>Определив какую конфигурацию вы хотите, и зная ее требования, можно 
+теперь выбирать соответствующий компьютер. Для того чтобы посмотреть 
+технические характеристики компьютера необходимо зайти:</p>
+<ol>
+<li>Меню ПУСК</li>
+<li>По ярлыку Мой компьютер/Компьютер нажать правой клавишей мыши и выбрать пункт Свойства</li>
+<li>В представленном окне будет описаны характеристики вашего ПК</li>
+</ol>
+
+
+<img src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/install_medoc1.jpg" alt="Свойства компьютера" title="Свойства компьютера" class="img-responsive img-thumbnail">
+
+
+<p>После выбора ПК приступаем к скачиванию дистрибутива системы M.E.Doc. Актуальный дистрибутив можно найти на нашем сайте <a href="https://intelserv.net.ua/skachat-medoc-distributiv" target="_blank">по ссылке</a>
+
+</p><p>После скачивания дистрибутива, извлекаем его из архива и запускаем на установку.</p>
+
+<h4>Самый простой вариант установки Локальной версии предоставлен на данном видео</h4>
+
+<iframe src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/wJrRyCC_mcw.html" allowfullscreen="" width="100%" height="370" frameborder="0"></iframe>
+
+
+<h3>Установка сетевой версии несколько отличается от локальной. </h3>
+<ol>
+<li>Перед установкой сетевой версии нужно определится с компьютером, 
+который будет сервером. Обычно это компьютер главного бухгалтера, в 
+случае наличия терминального сервера M.E.Doc устанавливается на него 
+(если у Вас есть такой сервер, наверняка у Вас работает и системный 
+администратор, передайте ему дистрибутив и остальное он сделает САМ</li>. 
+<li>На сервере системы M.E.Doc будет установлена база данных, служба для
+ работы сервера и будет выполнятся отправка и прием почты, поэтому, для 
+корректной работы всех установленных станций, данный компьютер должен 
+иметь прямой доступ к интернету и быть включенным.</li>
+</ol>
+
+<h4>Как установить сетевой медок можно посмотреть на видео ниже</h4>
+
+<iframe src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/3GdUURgHajc.html" allowfullscreen="" width="100%" height="370" frameborder="0"></iframe>
+
+
+<p>Теперь мы научились устанавливать разные версии системы M.E.Doc, но 
+это только начало. Как я и писал в начале статьи, теперь перейдем к 
+нюансам их решением и профилактикой.</p>
+
+<h3>Самые популярные ошибки и недочеты:</h3>
+<ol>
+<li>После скачивания дистрибутива "ОШИБКА РАСПАКОВКИ АРХИВА" - файл был 
+скачан не полностью или поврежден. Возникает в случае перебоев с 
+интернетом.</li>
+<p><b>РЕШЕНИЕ</b>: Повторно скачать дистрибутив, попробовать скачать на 
+другом ПК, попросить диск дистрибутивом у обслуживающей компании, 
+заказать выезд специалиста для установки и настройки вот <a href="https://intelserv.net.ua/kupit-m-e-doc" target="_blank">тут</a></p>
+
+<li>Из открытой сетевой версии недоступна кнопка установить обновления</li>
+
+<img src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/install_medoc2.jpg" alt="Обновить медок" title="Обновить медок" class="img-responsive img-thumbnail">
+
+<p><b>РЕШЕНИЕ</b>: Сетевая версия обновляется через отдельный файл 
+"Монитор пользователей" - прочитать статью по обновлению системы M.E.Doc
+ и какие могут быть ошибки и варианты их решения можно <a href="https://intelserv.net.ua/blog/material/id/28" target="_blank">тут</a></p>
+
+<li>на компьютере где будет стоять M.E.Doc нет интернета, как обновлять и как подавать отчеты</li>
+
+<p><b>РЕШЕНИЕ</b>: Для работы в системе наличие выхода в интернет крайне необходимо (для удобства работы), но не обязательно. 
+Выход из ситуации - обновлять программу вручную - <a href="https://intelserv.net.ua/obnovlenie-m-e-doc" target="_blank">скачать обновления тут</a></p>
+После скачивания файлов, перенести их на ПК с системой M.E.Doc и поочередно запускать на выполнение. 
+</ol>
+
+<p>Что же касается отчетов, после формирования отчета и его подписания 
+во вкладке "Наступні дії" выбрать пункт "Зашифрувати та зберегти", отчет
+ будет зашифрован на соответствующий контролирующий орган 
+(налоговая/статистика) и сохранен в указанном каталоге на вашем 
+компьютере.</p>
+
+<p>После чего этот файл перебрасывается на компьютер, где есть доступ к 
+интернету, заходим в почтовый ящик (личный или предприятия), создаем 
+письмо, где получателем является соответствующий контролирующий орган, 
+прикрепляем файл к письму и отсылаем:</p>
+
+<img src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/install_medoc3.jpg" alt="Обновить медок" title="Обновить медок" class="img-responsive img-thumbnail">
+
+
+<p>В ответ на ваше письмо будут приходить ответы от ДФС или Держстата с сообщениями и квитанциями.</p><p>
+</p><p>Полученные во вложениях файлы необходимо скачать, сбросить на 
+носитель (флешку), перенести на компьютер где установлен M.E.Doc, 
+сбросить на рабочий стол(или любой другой каталог), запустить программу и
+ сделать следующие действия: "ФАЙЛ - ИМПОРТ - ИМПОРТ КВИТАНЦИЙ "</p>
+<p>Потом указываете файл со скаченными файлами, программа запросит у Вас
+ пароль шифрования, вводите его, после чего квитанции автоматически 
+будут подтянуты к нужным отчетам, и будут доступны для прочтения.</p>
+
+<p>И главное, что спасет Вас практически от всех сбоев с системой M.E.Doc, это <b>создавайте резервные копии при завершении работы</b>.</p>
+
+<p>Надеюсь данная статья будет полезна в Вашей непростой работе.</p>
+<p>В случае возникновения вопросов, оставляйте их в комментариях к 
+статье, обращайтесь в наш онлайн чат и на линию консультации 096 
+2259834, 050 3073020, 093 3268180.</p>
+<p>Также рекомендую подписываться и посетить наш канал на <a href="https://www.youtube.com/channel/UCFcOfZT3SNu1UcTJ6CLHlfw" target="_blank">YouTube</a></p>
+
+<h4>Всего Вам Доброго!!!</h4>
+</div>
+
+			<hr>
+<div class="btn btn-primary btn-lg" data-toggle="modal" data-target="#subscriptionForms">Следить за новостями блога</div>
+<br>
+<br>
+
+<ul class="list-inline"><p class="lead">Поделиться статьей с друзьями!</p>
+
+
+	<li>
+<div class="fb-share-button fb_iframe_widget" data-href="https://intelserv.net.ua/blog/material/id/35" data-layout="button_count" data-size="large" data-mobile-iframe="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=856611681107082&amp;container_width=94&amp;href=https%3A%2F%2Fintelserv.net.ua%2Fblog%2Fmaterial%2Fid%2F35&amp;layout=button_count&amp;locale=ru_RU&amp;mobile_iframe=true&amp;sdk=joey&amp;size=large"><span style="vertical-align: bottom; width: 125px; height: 28px;"><iframe name="f9773f78f84fc" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:share_button Facebook Social Plugin" style="border: medium none; visibility: visible; width: 125px; height: 28px;" src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/share_button.html" class="" width="1000px" height="1000px" frameborder="0"></iframe></span></div>
+	</li>
+</ul> <p class="lead">Задать вопрос или предложить тему Вы можете в комментариях к статье.</p><form action="/blog/material/id/35" method="post">
+<div class="form-group">
+		<div class="input-group col-md-8">
+          <span class="input-group-addon" id="spanInput1"><span class="spanInput"><i class="fa fa-user" aria-hidden="true"></i></span></span>
+          <input class="form-control" required="" name="added" placeholder="Ваше Имя *" type="text">
+        </div>
+        <div class="input-group col-md-8">
+          <span class="input-group-addon" id="spanInput2"><span class="spanInput"><i class="fa fa-commenting-o" aria-hidden="true"></i></span></span>
+          <textarea class="form-control" required="" name="comment_text" placeholder="Ваш комментарий" rows="5"></textarea>
+        </div>
+        <input name="steps" value="1" type="hidden">
+</div>
+        <button class="btn btn-success">Отправить</button>
+
+
+      </form>
+      
+<h3>Комментарии:</h3>					</div>
+								<div class="col-lg-4">
+
+
+
+						<div class="subscForm">
+
+							<h3>Получать уведомления<br><small> 
+							о новых постах в Блоге</small></h3>
+							<form action="/actionSubscription" method="POST" class="form-inline">
+
+
+			                                <div class="form-group">
+			                                    <div class="input-group">
+			                                      <span class="input-group-addon" id="spanInput1">@</span>
+			                                      <input name="email" class="form-control" required="" title="Ваш email" placeholder=" info@intelserv.net.ua *" type="text">
+			                                    </div>
+			                               </div>
+
+
+			                              <div class="form-group">
+			                                    <div class="input-group">
+			                                      <span class="input-group-addon" id="spanInput2"><i class="fa fa-user" aria-hidden="true"></i></span>
+			                                      <input name="fio" class="form-control" required="" title="Ваше имя" placeholder=" Ваше имя *" maxlength="100" type="text">
+			                                    </div>
+			                              </div>
+			              
+			                                  <input name="step" value="1" type="hidden">
+			                    			<br>
+			                    			<br>
+			                                <div><button class="btn btn-success">Подписаться</button></div>
+
+			                  </form>
+						</div>
+
+
+
+
+
+						<div>
+							<h3>Популярные статьи:</h3>
+
+								<div class="list-group">
+							  <a href="https://intelserv.net.ua/blog/material/id/34" class="list-group-item list-group-item-success"> <i class="fa fa-eye" aria-hidden="true"></i> 10049 | Бухгалтерия ОСМД  или какие отчеты необходимо сдавать </a>  <a href="https://intelserv.net.ua/blog/material/id/35" class="list-group-item list-group-item-success"> <i class="fa fa-eye" aria-hidden="true"></i> 4395 | Как установить M.E.Doc <small>(Локальный/Сетевой). Устанавливаем самостоятельно без ошибок.</small> </a>  <a href="https://intelserv.net.ua/blog/material/id/36" class="list-group-item list-group-item-success"> <i class="fa fa-eye" aria-hidden="true"></i> 3465 | Как загрузить лицензию и сертификаты ЭЦП в систему M.E.Doc.<small> Ошибки и варианты их устранения</small> </a>  <a href="https://intelserv.net.ua/blog/material/id/42" class="list-group-item list-group-item-success"> <i class="fa fa-eye" aria-hidden="true"></i> 3218 | Изменения НДС в 2017 году <small>(заполнение и регистрация НН и РК)</small> </a>  <a href="https://intelserv.net.ua/blog/material/id/54" class="list-group-item list-group-item-success"> <i class="fa fa-eye" aria-hidden="true"></i> 2993 | Блокирование НН/РК.  Что делать налогоплательщику? </a>  <a href="https://intelserv.net.ua/blog/material/id/49" class="list-group-item list-group-item-success"> <i class="fa fa-eye" aria-hidden="true"></i> 2976 | Блокирование «Подозрительных» НН с 1 июля </a>  <a href="https://intelserv.net.ua/blog/material/id/30" class="list-group-item list-group-item-success"> <i class="fa fa-eye" aria-hidden="true"></i> 2917 | Как сформировать декларацию по НДС с помощью M.E.Doc </a>								</div>
+
+						</div>
+
+						<h3>Рекомендуем:</h3>
+
+						<div>
+							<div class="list-group">
+							  <a href="https://intelserv.net.ua/medoc" class="list-group-item list-group-item-info">M.E.Doc</a>
+							  <a href="https://intelserv.net.ua/cota" class="list-group-item list-group-item-info">СОТА</a>
+							  <a href="https://intelserv.net.ua/blog/material/id/acsk-ukraina-ecp" class="list-group-item list-group-item-info">АЦСК "Украина"</a>
+							  <a href="https://intelserv.net.ua/is-pro" class="list-group-item list-group-item-info">IS-PRO</a>
+							  <a href="https://intelserv.net.ua/liga-zakon" class="list-group-item list-group-item-info">LIGA:ZAKON</a>
+							  <a href="https://intelserv.net.ua/kupit-antivirus-eset-kaspersky" class="list-group-item list-group-item-info">Eset &amp; Kaspersky</a>
+							</div>
+						</div>
+
+
+
+
+
+						<div class="fb-page fb_iframe_widget" data-href="https://www.facebook.com/intelserv.net.ua/" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="adapt_container_width=true&amp;app_id=856611681107082&amp;container_width=350&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2Fintelserv.net.ua%2F&amp;locale=ru_RU&amp;sdk=joey&amp;show_facepile=true&amp;small_header=false"><span style="vertical-align: bottom; width: 340px; height: 214px;"><iframe name="f31f5e0e18d75" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:page Facebook Social Plugin" style="border: medium none; visibility: visible; width: 340px; height: 214px;" src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/page.html" class="" width="1000px" height="1000px" frameborder="0"></iframe></span></div>
+
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+<footer>
+	<div class="container">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<h3><small>Магазины электронных услуг</small></h3>
+			<ul class="list-unstyled">
+				<li><p><a href="https://intelserv.net.ua/tviy-chas-kharkov" target="_blank">Магазин в Харькове</a></p></li>
+				<li><p><a href="https://intelserv.net.ua/tviy-chas-poltava" target="_blank">Магазин в Полтаве</a></p></li>
+				<li><p><a href="https://intelserv.net.ua/tviy-chas-sumy" target="_blank">Магазин в Сумах</a></p></li>
+				<li><p><a href="https://intelserv.net.ua/tviy-chas-odessa" target="_blank">Магазин в Одессе</a></p></li>
+				<li><p><a href="https://intelserv.net.ua/tviy-chas-kremenchug" target="_blank">Магазин в Кременчуге</a></p></li>
+			</ul>
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<h3><small>Работай эффективно</small></h3>
+				<ul class="list-unstyled">
+					<li><p><a href="https://intelserv.net.ua/medoc">M.E.Doc</a></p></li>
+					<li><p><a href="https://intelserv.net.ua/cota">COTA</a></p></li>
+					<li><p><a href="https://intelserv.net.ua/acsk-ukraina-ecp">АЦСК "Украина"</a></p></li>
+					<li><p><a href="https://intelserv.net.ua/is-pro">IS-PRO</a></p></li>
+					<li><p><a href="https://intelserv.net.ua/liga-zakon">LIGA:ZAKON</a></p></li>
+					<li><p><a href="https://intelserv.net.ua/kupit-antivirus-eset-kaspersky">ESET &amp; KASPERSKY</a></p></li>
+				</ul>
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<h3><small>Актуально сейчас</small></h3>
+				<ul class="list-unstyled">
+					<li><p><a href="https://intelserv.net.ua/events" target="_blank">Бухгалтерские мероприятия</a></p></li>
+					<li><p><a href="https://intelserv.net.ua/grobatko-aleksey-cifrovie-resheniya-budushego" target="_blank">Цифровые решения будущего</a></p></li>
+					<li><p><a href="https://intelserv.net.ua/blog" target="_blank">Блог Бухгалтера</a></p></li>
+					<li><p><a href="https://intelserv.net.ua/news" target="_blank">Новости</a></p></li>
+				</ul>
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<h3><small>Присоединиться</small></h3>
+				<ul class="list-unstyled">
+					<li><p>
+						<a href="https://vk.com/intelserv_net_ua" target="_blank"><i class="fa fa-vk fa-3x" aria-hidden="true" title="Мы в VK"></i></a>
+						<a href="https://www.facebook.com/intelserv.net.ua" target="_blank"><i class="fa fa-facebook fa-3x" aria-hidden="true" title="Мы в facebook"></i></a>
+						<a href="http://ok.ru/group/53660868018426" target="_blank"><i class="fa fa-odnoklassniki fa-3x" aria-hidden="true" title="Мы в Однокласниках"></i></a>
+						<a href="https://www.youtube.com/channel/UCFcOfZT3SNu1UcTJ6CLHlfw" target="_blank"><i class="fa fa-youtube fa-3x" aria-hidden="true" title="Мы на YouTube"></i></a>
+						</p>
+					</li>
+					<li><p>info@intelserv.net.ua</p></li>
+					<li><p data-toggle="modal" data-target="#writeToUs">Напишите нам</p></li>
+					<li><p data-toggle="modal" data-target="#subscriptionForms">Подписаться на новости</p></li>
+					<li><p><a href="https://intelserv.net.ua/otzivi-o-nas">Оставить отзыв</a></p></li>
+				</ul>
+		</div>
+	<div class="clear"></div>
+
+	<div class="textBottomFooter text-center">Группа IT Компаний "Интеллектуальный сервис" Все права защищены © 1995-2017</div>
+	</div>
+</footer>
+
+<script type="text/javascript">
+	authForm();
+	toolipCRM();
+</script>
+
+
+
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="writeToUs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel56" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h2 class="modal-title" id="myModalLabel56">Написать директору</h2>
+      </div>
+      <div class="modal-body">
+                  <form action="/actionWriteToAs" method="POST">
+                              <div class="formModal">
+                                    <div class="input-group col-xs-8">
+                                      <span class="input-group-addon "><span class="spanInput">+38</span></span>
+                                      <input name="phone" class="form-control" required="" title="Ваш телефон" pattern="[0-9]{10}" placeholder=" 0961234567 *" maxlength="10" type="text">
+                                    </div>
+
+                                    <div class="input-group col-xs-8">
+                                      <span class="input-group-addon "><span class="spanInput">@</span></span>
+                                      <input name="email" class="form-control" required="" title="Ваш email" placeholder=" info@intelserv.net.ua *" type="text">
+                                    </div>
+
+
+                                    <div class="input-group col-xs-8">
+                                      <span class="input-group-addon "><span class="spanInput"><i class="fa fa-user" aria-hidden="true"></i></span></span>
+                                      <input name="fio" class="form-control" required="" title="Ваше имя" placeholder=" Ваше имя *" maxlength="100" type="text">
+                                    </div>
+                                        
+                                    <div class="input-group col-xs-8">
+                                      <span class="input-group-addon "><span class="spanInput"><i class="fa fa-barcode" aria-hidden="true"></i></span></span>
+                                      <input name="edrpou" class="form-control" title="ЕГРПОУ" placeholder=" ЕГРПОУ " type="text">
+                                    </div>
+
+                                    <div class="input-group col-xs-8">
+                                      <span class="input-group-addon "><span class="spanInput"><i class="fa fa-building" aria-hidden="true"></i></span></span>
+                                      <input name="firm_name" class="form-control" title="Название организации" placeholder=" Название организации " maxlength="100" type="text">
+                                    </div>
+
+                                    <div class="input-group col-xs-8">
+                                      <span class="input-group-addon "><span class="spanInput"><i class="fa fa-question" aria-hidden="true"></i></span></span>
+                                      <textarea name="pojel" class="form-control" rows="5" title="Ваши пожелания" placeholder=" Ваши пожелания"></textarea>
+                                    </div>
+                                 <input name="step" value="1" type="hidden">
+                                 <br>
+                                 <br>
+                                 <button class="btn btn-success btn-lg">Отправить</button>
+                          </div>
+               </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+        
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="subscriptionForms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel55" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h2 class="modal-title" id="myModalLabel55">Подписаться на новостную рассылку</h2>
+      </div>
+      <div class="modal-body">
+
+
+                  <form action="/actionSubscription" method="POST" class="form-inline">
+
+
+                               <div class="form-group">
+                                    <div class="input-group">
+                                      <span class="input-group-addon"><span class="spanInput">@</span></span>
+                                      <input name="email" class="form-control" required="" title="Ваш email" placeholder=" info@intelserv.net.ua *" type="text">
+                                    </div>
+                               </div>
+
+
+                              <div class="form-group">
+                                    <div class="input-group">
+                                      <span class="input-group-addon"><span class="spanInput"><i class="fa fa-user" aria-hidden="true"></i></span></span>
+                                      <input name="fio" class="form-control" required="" title="Ваше имя" placeholder=" Ваше имя *" maxlength="100" type="text">
+                                    </div>
+                              </div>
+              
+                                  <input name="step" value="1" type="hidden">
+                    
+                                <button class="btn btn-success">Подписаться</button>
+
+                  </form>
+  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="autorizateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel587" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h2 class="modal-title" id="myModalLabel587">Форма авторизации</h2>
+      </div>
+      <div class="modal-body">
+
+
+
+
+
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#home" data-toggle="tab">Авторизация</a></li>
+                  <li><a href="#profile" data-toggle="tab">Восстановить</a></li>
+                  <li><a href="https://intelserv.net.ua/register">Регистрация</a></li>
+                </ul>
+
+                <div class="tab-content">
+                  <div class="tab-pane fade in active" id="home">
+
+                  <br>
+
+                      <form class="form-horizontal" method="POST" action="/account/login">
+                        <div class="form-group">
+                          <label for="login" class="col-sm-2 control-label">Логин</label>
+                          <div class="col-sm-10">
+                            <input class="form-control" id="login" placeholder="Login" name="login" required="" pattern="[A-z0-9]{3,20}" data-toggle="tooltip" data-placement="top" title="Логин может сожержать только латинские буквы и цифры, длинной от 3 симоволов" type="text">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="Password" class="col-sm-2 control-label">Пароль</label>
+                          <div class="col-sm-10">
+                            <input class="form-control" id="Password" placeholder="Password" name="password" required="" data-toggle="tooltip" data-placement="top" title="Пароль может сожержать только латинские буквы и цифры" type="password">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="captcha" class="col-sm-2 control-label">Каптча</label>
+                          <div class="col-sm-10">
+                            <input class="form-control" id="captcha" name="captcha" placeholder="Капча" required="" data-toggle="tooltip" data-placement="top" title="Капча может сожержать только цифры, длинной 5 символов" autocomplete="off" type="text"> <img src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/captcha.gif" class="captcha" alt="каптча">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox">
+                              <label>
+                                <input name="remember" type="checkbox"> Запомнить меня
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-success btn-lg">Войти</button>
+                          </div>
+                        </div>
+                      </form>
+
+                  </div>
+                  <div class="tab-pane fade" id="profile">
+<br>
+                      <form class="form-horizontal" method="POST" action="/account/restore">
+                        <div class="form-group">
+                          <label for="login" class="col-sm-2 control-label">Логин</label>
+                          <div class="col-sm-10">
+                            <input class="form-control" id="login" placeholder="Login" name="login" required="" pattern="[A-z0-9]{3,20}" data-toggle="tooltip" data-placement="top" title="Логин может сожержать только латинские буквы и цифры, длинной от 3симоволов" type="text">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="captcha" class="col-sm-2 control-label">Каптча</label>
+                          <div class="col-sm-10">
+                            <input class="form-control" id="captcha" name="captcha" placeholder="Капча" required="" data-toggle="tooltip" data-placement="top" title="Капча может сожержать только цифры, длинной 5 символов" autocomplete="off" type="text"> <img src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/captcha.gif" class="captcha" alt="каптча">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-success btn-lg">Отправить</button>
+                          </div>
+                        </div>
+                        </form>
+
+
+                </div>
+
+
+
+
+
+  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+    
+
+
+<div id="scroller" style="display: block;"><i class="fa fa-angle-up" aria-hidden="true" title="Вверх"></i></div>
+
+<div id="writeToUsClick" class="btn btn-danger hidden-print" data-toggle="modal" data-target="#writeToUs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Написать Директору</div>
+                    
+        <!--[if lt IE 9]>
+        <script src="libs/html5shiv/es5-shim.min.js"></script>
+        <script src="libs/html5shiv/html5shiv.min.js"></script>
+        <script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+        <script src="libs/respond/respond.min.js"></script>
+        <![endif]-->
+
+
+
+
+
+        <script type="text/javascript" src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/my_javascript.js"></script>
+        <script src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/jQueryRotateCompressed.js"></script>
+
+
+        <script src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/simplebox_util.js"></script>
+        <script src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/simplebox.js"></script>
+          <script src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/viewportchecker.js"></script>
+          <script src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/jQueryRotateCompressed.js"></script>
+        
+
+
+
+
+
+<script src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/masonry.js"></script>
+<script src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/jquery.js"></script>
+<script src="%D0%9A%D0%B0%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%82%D1%8C%20M.E.Doc%3F%20%28%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B9%29%20%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%B0%D0%B2%D0%BB%D0%B8%D0%B2%D0%B0%D0%B5%D0%BC%20%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%B1%D0%B5%D0%B7%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA.%20%7C%20%D0%91%D0%BB%D0%BE%D0%B3%20%D0%B1%D1%83%D1%85%D0%B3%D0%B0%D0%BB%D1%82%D0%B5%D1%80%D0%B0%20%7C%20%D0%93%D0%9A%20%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81_files/main.js"></script> 
+
+
+
+        
+      <script type="text/javascript">
+
+  $('.popover-dismissible').popover({
+    placement : 'bottom'
+  });
+$('body').scrollspy({ target: '.navbar-example' })
+
+       $(window).scroll(function () {
+              if ($(this).scrollTop() > 0) {
+                  $("#scroller").fadeIn();
+              } else {
+                  $("#scroller").fadeOut();
+              }
+          });
+          $("#scroller").click(function () {
+              $("body,html").animate({
+                  scrollTop: 0
+              }, 400);
+              return false;
+          });
+
+
+
+       $(window).scroll(function () {
+              if ($(this).scrollTop() > 50) {
+                  $("#headerShow").css({"background":"#FFF"});
+              } else {
+                  $("#headerShow").css({"background":"url(/upload/newSite/indexFile/var1.png) 50% 50%"});
+              }
+          });
+
+
+
+
+      (function(){
+      var boxes=[],els,i,l;
+      if(document.querySelectorAll){
+      els=document.querySelectorAll('a[rel=simplebox]');  
+      Box.getStyles('simplebox_css','/themes/libs/events_lib/libs/simplebox/simplebox.css');
+      Box.getScripts('simplebox_js','/themes/libs/events_lib/libs/simplebox/simplebox.js',function(){
+      simplebox.init();
+      for(i=0,l=els.length;i<l;++i)
+      simplebox.start(els[i]);
+      simplebox.start('a[rel=simplebox_group]');      
+      });
+      }
+      })();
+
+
+
+      </script><div id="simplebox"><div id="simple-tmp"></div><div id="simple-loading"><div></div></div><div id="simple-overlay"></div><div id="simple-outer"><div id="simple-inner"></div><a id="simple-close"></a><a id="simple-left"><span id="simple-left-ico" class="simple-ico"></span></a><a id="simple-right"><span id="simple-right-ico" class="simple-ico"></span></a></div></div>
+
+
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,"script","//www.google-analytics.com/analytics.js","ga");
+
+  ga("create", "UA-68166454-1", "auto");
+  ga("send", "pageview");
+
+</script>
+
+
+      
+      
+			
+
+</body></html>

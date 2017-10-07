@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<!-- base href="https://h2o.examp1e.net/" -->
+
+<!-- oktavia -->
+<link rel="stylesheet" href="Syntax%20and%20Structure%20-%20Configure%20-%20H2O%20-%20the%20optimized%20HTTP_2%20server_files/searchstyle.css" type="text/css">
+<script async="" src="Syntax%20and%20Structure%20-%20Configure%20-%20H2O%20-%20the%20optimized%20HTTP_2%20server_files/analytics.js"></script><script src="Syntax%20and%20Structure%20-%20Configure%20-%20H2O%20-%20the%20optimized%20HTTP_2%20server_files/jquery-1.js"></script>
+<script src="Syntax%20and%20Structure%20-%20Configure%20-%20H2O%20-%20the%20optimized%20HTTP_2%20server_files/oktavia-jquery-ui.js"></script>
+<script src="Syntax%20and%20Structure%20-%20Configure%20-%20H2O%20-%20the%20optimized%20HTTP_2%20server_files/oktavia-english-search.js"></script>
+<!-- /oktavia -->
+
+<link rel="stylesheet" href="Syntax%20and%20Structure%20-%20Configure%20-%20H2O%20-%20the%20optimized%20HTTP_2%20server_files/style.css" type="text/css">
+
+<title>Syntax and Structure - Configure - H2O - the optimized HTTP/2 server</title>
+</head>
+<body>
+<div id="body">
+<div id="top">
+
+<h1>
+<a href="https://h2o.examp1e.net/index.html">H2O</a>
+<iframe valign="baseline" src="Syntax%20and%20Structure%20-%20Configure%20-%20H2O%20-%20the%20optimized%20HTTP_2%20server_files/github-btn.html" scrolling="0" style="padding-top: 30px" width="100px" height="30px" frameborder="0" align="right"></iframe>
+</h1>
+<p class="description">the optimized HTTP/1.x, HTTP/2 server</p>
+
+<!-- oktavia -->
+<form id="searchform">
+<input class="search" name="search" id="search" results="5" placeholder="Search" type="search">
+<div id="searchresult_box">
+<div id="close_search_box">×</div>
+<div id="searchresult_summary"></div>
+<div id="searchresult"></div>
+<div id="searchresult_nav"></div>
+<span class="pr">Powered by <a href="https://github.com/shibukawa/oktavia">Oktavia</a></span>
+</div>
+</form>
+<!-- /oktavia -->
+
+</div>
+
+<table id="menu">
+<tbody><tr>
+<td><a href="https://h2o.examp1e.net/index.html">Top</a></td>
+<td><a href="https://h2o.examp1e.net/install.html">Install</a></td>
+<td class="selected">Configure</td>
+<td><a href="https://h2o.examp1e.net/faq.html">FAQ</a></td>
+<td><a href="http://blog.kazuhooku.com/search/label/H2O" target="_blank">Blog</a></td>
+<td><a href="http://github.com/h2o/h2o/" target="_blank">Source</a></td>
+</tr>
+</tbody></table>
+
+<div id="main">
+
+<h2>
+<a href="https://h2o.examp1e.net/configure.html">Configure</a> &gt;
+Syntax and Structure
+</h2>
+
+
+<h3>Syntax</h3>
+
+<p>
+H2O uses <a href="http://www.yaml.org/">YAML</a> 1.1 as the syntax of its configuration file.
+</p>
+
+<h3 id="config_levels">Levels of Configuration</h3>
+
+<p>
+When using the configuration directives of H2O, it is important to 
+understand that there are four configuration levels: global, host, path,
+ extension.
+</p>
+
+<p>
+Global-level configurations affect the entire server.
+Host-level configurations affect the configuration for the specific hostname (i.e. corresponds to the <a href="http://httpd.apache.org/docs/2.4/vhosts/">&lt;VirtualHost&gt;</a> directive of the Apache HTTP Server).
+Path-level configurations only affect the behavior of resources specific to the path.
+</p>
+
+<p>
+Extension-level configuration affect how files with certain extensions are being served.
+For example, it is possible to map files with <code>.php</code> extension to the FastCGI handler running the <code>php-cgi</code> command.
+</p>
+
+<p>
+Consider the following example.
+</p>
+
+<pre><code>hosts:
+  "example.com":
+    listen:
+      port: 443
+      ssl:
+        certificate-file: etc/site1.crt
+        key-file: etc/site1.key
+    paths:
+      "/":
+        file.dir: htdocs/site1
+      "/icons":
+        file.dir: icons
+        expires: 1 day
+  "example.com:80":
+    listen:
+      port: 80
+    paths:
+      "/":
+        redirect: "https://example.com/"
+</code></pre>
+
+<p>
+In the example, two host-level configurations exist (under the <code>hosts</code> mapping), each of them listening to different ports.
+The first host listens to port 443 using TLS (i.e. HTTPS) using the specified server certificate and key.
+It has two path-level configurations, one for <code>/</code> and the other for <code>/icons</code>, each of them pointing to different local directories containing the files to be served.
+The latter also has the <code>expires</code> directive set, so that <code>Cache-Control: max-age=86400</code><sup><a href="#note_1" id="#cite_1" title="1 day is equivalent to 86400 seconds">1</a></sup>
+ header would be sent.
+The second host accepts connections on port 80 (via the plain-text HTTP 
+protocol), and redirects all the requests to the first host using HTTPS.
+</p>
+
+<p>
+Certain configuration directives can be used in more than one levels.  For example, the <a href="https://h2o.examp1e.net/configure/base_directives.html#listen"><code>listen</code></a> can be used either at the global level or at the host level.
+<a href="https://h2o.examp1e.net/configure/expires_directives.html#expires"><code>Expires</code></a> can be used at all levels.
+On the other hand <a href="https://h2o.examp1e.net/configure/file_directives.html#file.dir"><code>file.dir</code></a> can only be used at the path level.
+</p>
+
+<h3 id="path-level">Path-level configuration</h3>
+
+<p>
+Values of the path-level configuration define the action(s) to be taken 
+when the server processes a request that prefix-matches to the 
+configured paths.
+Each entry of the mapping associated to the paths is evaluated in the 
+order they appear.
+</p>
+
+<p>
+Consider the following example.
+When receiving a request for <code>https://example.com/foo</code>, <a href="https://h2o.examp1e.net/configure/file_directives.html">the file handler</a> is first executed trying to serve a file named <code>/path/to/doc-root/foo</code> as the response.
+In case the file does not exist, then <a href="https://h2o.examp1e.net/configure/fastcgi_directives.html">the FastCGI handler</a> is invoked.
+</p>
+
+<pre><code>hosts:
+  "example.com":
+    listen:
+      port: 443
+      ssl:
+        certificate-file: etc/site1.crt
+        key-file: etc/site1.key
+    paths:
+      "/":
+        file.dir: /path/to/doc-root
+        fastcgi.connect:
+          port: /path/to/fcgi.sock
+          type: unix
+</code></pre>
+
+<p>
+Starting from version 2.1, it is also possible to define the path-level 
+configuration as a sequence of mappings instead of a single mapping.
+The following example is identical to the previous one.
+Notice the dashes placed before the handler directives.
+</p>
+
+<pre><code>hosts:
+  "example.com":
+    listen:
+      port: 443
+      ssl:
+        certificate-file: etc/site1.crt
+        key-file: etc/site1.key
+    paths:
+      "/":
+        - file.dir: /path/to/doc-root
+        - fastcgi.connect:
+            port: /path/to/fcgi.sock
+            type: unix
+</code></pre>
+
+<h3 id="yaml_alias">Using YAML Alias</h3>
+
+<p>
+H2O resolves <a href="http://yaml.org/YAML_for_ruby.html#aliases_and_anchors">YAML aliases</a> before processing the configuration file.
+Therefore, it is possible to use an alias to reduce the redundancy of the configuration file.
+For example, the following configuration reuses the first <code>paths</code> element (that is given an anchor named <code>default_paths</code>) in the following definitions.
+
+</p><pre><code>hosts:
+  "example.com":
+    listen:
+      port: 443
+      ssl:
+        certificate-file: /path/to/example.com.crt
+        key-file:         /path/to/example.com.crt
+    paths: &amp;default_paths
+      "/":
+        file.dir: /path/to/doc-root
+  "example.org":
+    listen:
+      port: 443
+      ssl:
+        certificate-file: /path/to/example.org.crt
+        key-file:         /path/to/example.org.crt
+    paths: *default_paths
+</code></pre>
+
+<h3 id="yaml_merge">Using YAML Merge</h3>
+
+<p>
+Since version 2.0, H2O recognizes <a href="http://yaml.org/type/merge.html">Merge Key Language-Independent Type for YAML™ Version 1.1</a>.
+Users can use the feature to merge an existing mapping against another.
+The following example reuses the TLS configuration of <code>example.com</code> in <code>example.org</code>.
+</p>
+
+<pre><code>hosts:
+  "example.com":
+    listen:
+      port: 443
+      ssl: &amp;default_ssl
+        minimum-version: TLSv1.2
+        cipher-suite: ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
+        certificate-file: /path/to/example.com.crt
+        key-file:         /path/to/example.com.crt
+    paths:
+      ...
+  "example.org":
+    listen:
+      port: 443
+      ssl:
+        &lt;&lt;: *default_ssl
+        certificate-file: /path/to/example.org.crt
+        key-file:         /path/to/example.org.crt
+    paths:
+      ...
+</code></pre>
+
+<h3 id="including_files">Including Files</h3>
+
+<p>
+Starting from version 2.1, it is possible to include a YAML file from the configuration file using <code>!file</code> custom YAML tag.
+The following example extracts the TLS configuration into <code>default_ssl.conf</code> and include it multiple times in <code>h2o.conf</code>.
+</p>
+
+<div class="example">
+<div class="caption">Example. default_ssl.conf</div>
+<pre><code>minimum-version: TLSv1.2
+cipher-suite: ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
+certificate-file: /path/to/example.com.crt
+key-file:         /path/to/example.com.crt
+</code></pre>
+</div>
+
+
+<div class="example">
+<div class="caption">Example. h2o.conf</div>
+<pre><code>hosts:
+  "example.com":
+    listen:
+      port: 443
+      ssl: !file default_ssl.conf
+    paths:
+      ...
+  "example.org":
+    listen:
+      port: 443
+      ssl:
+        &lt;&lt;: !file default_ssl.conf
+        certificate-file: /path/to/example.org.crt
+        key-file:         /path/to/example.org.crt
+    paths:
+      ...
+</code></pre>
+</div>
+
+
+
+
+<div class="notes">
+<h3>Notes:</h3>
+<ol>
+<li id="note_1">1 day is equivalent to 86400 seconds</li>
+</ol>
+</div>
+
+</div>
+<div id="footer">
+<p>
+Copyright © 2015 <a href="http://dena.com/intl/">DeNA Co., Ltd.</a> et al.
+</p>
+</div>
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-19422636-3', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+</div><script type="text/javascript" src="Syntax%20and%20Structure%20-%20Configure%20-%20H2O%20-%20the%20optimized%20HTTP_2%20server_files/searchindex.js"></script></body></html>

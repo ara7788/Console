@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<!--[if !IE]>
+	<html class="no-js non-ie" lang="ru-RU" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if IE 7 ]>
+	<html class="no-js ie7" lang="ru-RU" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if IE 8 ]>
+	<html class="no-js ie8" lang="ru-RU" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if IE 9 ]>
+	<html class="no-js ie9" lang="ru-RU" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" prefix="og: http://ogp.me/ns#" style="" lang="ru-RU"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://www.shellhacks.com/xmlrpc.php">
+<title>Изменить Имя Сетевого Интерфейса: eth0,eth1,eth2+ - ShellHacks</title>
+<!-- This site is optimized with the Yoast SEO plugin v4.9 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/a_004.htm">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Изменить Имя Сетевого Интерфейса: eth0,eth1,eth2+ - ShellHacks">
+<meta property="og:description" content="Сетевые интерфейсы лучше всего переименовывать через udev. Откройте файл /etc/udev/rules.d/70-persistent-net.rules для изменения имени интерфейса сетевого устройства. Описание каждого сетевого устройства, в этом файле, выглядит следующим образом: # PCI device 0x11ab:0x4363 (sky2) SUBSYSTEM==&quot;net&quot;, ACTION==&quot;add&quot;, DRIVERS==&quot;?*&quot;, ATTR{address}==&quot;00:00:00:00:00:00&quot;,ATTR{dev_id}==&quot;0x0&quot;, ATTR{type}==&quot;1&quot;, KERNEL==&quot;eth*&quot;, NAME=&quot;eth0&quot; Переименовать сетевой интерфейс с eth0 на wan0 Чтобы переименовать интерфейс с eth0 на wan0, отредактируйте файл /etc/udev/rules.d/70-persistent-net.rules …">
+<meta property="og:url" content="https://www.shellhacks.com/ru/change-network-interface-name-eth0-eth1-eth2/">
+<meta property="og:site_name" content="ShellHacks">
+<meta property="article:tag" content="network">
+<meta property="article:section" content="Блог">
+<meta property="article:published_time" content="2016-12-27T14:05:19+00:00">
+<meta property="article:modified_time" content="2017-02-24T10:53:00+00:00">
+<meta property="og:updated_time" content="2017-02-24T10:53:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="Сетевые интерфейсы лучше всего переименовывать через udev. Откройте файл /etc/udev/rules.d/70-persistent-net.rules для изменения имени интерфейса сетевого устройства. Описание каждого сетевого устройства, в этом файле, выглядит следующим образом: # PCI device 0x11ab:0x4363 (sky2) SUBSYSTEM==&quot;net&quot;, ACTION==&quot;add&quot;, DRIVERS==&quot;?*&quot;, ATTR{address}==&quot;00:00:00:00:00:00&quot;,ATTR{dev_id}==&quot;0x0&quot;, ATTR{type}==&quot;1&quot;, KERNEL==&quot;eth*&quot;, NAME=&quot;eth0&quot; Переименовать сетевой интерфейс с eth0 на wan0 Чтобы переименовать интерфейс с eth0 на wan0, отредактируйте файл /etc/udev/rules.d/70-persistent-net.rules […]">
+<meta name="twitter:title" content="Изменить Имя Сетевого Интерфейса: eth0,eth1,eth2+ - ShellHacks">
+<meta name="twitter:site" content="@shellhacks">
+<meta name="twitter:creator" content="@shellhacks">
+<!-- / Yoast SEO plugin. -->
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="ShellHacks » Лента" href="https://www.shellhacks.com/ru/feed/">
+<link rel="alternate" type="application/rss+xml" title="ShellHacks » Лента комментариев" href="https://www.shellhacks.com/ru/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="ShellHacks » Лента комментариев к «Изменить Имя Сетевого Интерфейса: eth0,eth1,eth2+»" href="https://www.shellhacks.com/ru/change-network-interface-name-eth0-eth1-eth2/feed/">
+<style type="text/css">img.wp-smiley,img.emoji{display:inline!important;border:none!important;box-shadow:none!important;height:1em!important;width:1em!important;margin:0 .07em!important;vertical-align:-.1em!important;background:none!important;padding:0!important}</style><link rel="stylesheet" id="activello-bootstrap-css" href="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/A.css" type="text/css" media="all"><link rel="stylesheet" id="activello-icons-css" href="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/A_003.css" type="text/css" media="all"><link rel="stylesheet" id="activello-fonts-css" href="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/css.css" type="text/css" media="all"><link rel="stylesheet" id="activello-style-css" href="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/A_002.css" type="text/css" media="all"><style type="text/css">.qtranxs_flag_en{background-image:url(https://www.shellhacks.com/wp-content/plugins/qtranslate-x/flags/gb.png.pagespeed.ce.w314CMjBd6.png);background-repeat:no-repeat}.qtranxs_flag_ru{background-image:url(https://www.shellhacks.com/wp-content/plugins/qtranslate-x/flags/ru.png.pagespeed.ce.b3qXQnZPvO.png);background-repeat:no-repeat}</style><style type="text/css"></style><style type="text/css">#social li{display:inline-block}#social li,#social ul{border:0!important;list-style:none;padding-left:0;text-align:center}#social li a[href*="twitter.com"] .fa:before,.fa-twitter:before{content:"\f099"}#social li a[href*="facebook.com"] .fa:before,.fa-facebook-f:before,.fa-facebook:before{content:"\f09a"}#social li a[href*="github.com"] .fa:before,.fa-github:before{content:"\f09b"}#social li a[href*="/feed"] .fa:before,.fa-rss:before{content:"\f09e"}#social li a[href*="pinterest.com"] .fa:before,.fa-pinterest:before{content:"\f0d2"}#social li a[href*="plus.google.com"] .fa:before,.fa-google-plus:before{content:"\f0d5"}#social li a[href*="linkedin.com"] .fa:before,.fa-linkedin:before{content:"\f0e1"}#social li a[href*="youtube.com"] .fa:before,.fa-youtube:before{content:"\f167"}#social li a[href*="instagram.com"] .fa:before,.fa-instagram:before{content:"\f16d"}#social li a[href*="flickr.com"] .fa:before,.fa-flickr:before{content:"\f16e"}#social li a[href*="tumblr.com"] .fa:before,.fa-tumblr:before{content:"\f173"}#social li a[href*="dribbble.com"] .fa:before,.fa-dribbble:before{content:"\f17d"}#social li a[href*="skype.com"] .fa:before,.fa-skype:before{content:"\f17e"}#social li a[href*="foursquare.com"] .fa:before,.fa-foursquare:before{content:"\f180"}#social li a[href*="vimeo.com"] .fa:before,.fa-vimeo-square:before{content:"\f194"}#social li a[href*="weheartit.com"] .fa:before,.fa-heart:before{content:"\f004"}#social li a[href*="spotify.com"] .fa:before,.fa-spotify:before{content:"\f1bc"}#social li a[href*="soundcloud.com"] .fa:before,.fa-soundcloud:before{content:"\f1be"}</style><style>@media (max-width:500px){.top-blk-float-right{display:none}}@media (min-width:500px){.top-blk-float-right{width:336px;height:280px}}</style><style>.bottom-blk-float-left{width:336px;height:280px}</style><style>@media (min-width:500px){.bottom-blk-float-right{width:336px;height:280px}}@media (max-width:500px){.bottom-blk-float-right{display:none}}</style><script src="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/ca-pub-9082572314087695.js"></script><script async="" src="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/analytics.js"></script><script type="text/javascript">window._wpemojiSettings={"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.shellhacks.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.7.5"}};!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),!(j.toDataURL().length<3e3)&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,65039,8205,55356,57096),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,55356,57096),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55357,56425,55356,57341,8205,55357,56507),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55357,56425,55356,57341,55357,56507),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);</script><script src="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/wp-emoji-release.js" type="text/javascript" defer="defer"></script>
+<script type="text/javascript" src="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/jquery.js"></script>
+<script src="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/wp-includes_js_jquery_jquery-migrate.js"></script><script>eval(mod_pagespeed_mUhmJEi5Tr);</script>
+<script>eval(mod_pagespeed_Y7yrqbtbtV);</script>
+<script>eval(mod_pagespeed_HEk8YlIVoP);</script>
+<script>eval(mod_pagespeed_t$S04M5rfm);</script>
+<link rel="https://api.w.org/" href="https://www.shellhacks.com/ru/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.shellhacks.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.shellhacks.com/wp-includes/wlwmanifest.xml">
+<meta name="generator" content="WordPress 4.7.5">
+<link rel="shortlink" href="https://www.shellhacks.com/ru/?p=279">
+<link rel="alternate" type="application/json+oembed" href="https://www.shellhacks.com/ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.shellhacks.com%2Fru%2Fchange-network-interface-name-eth0-eth1-eth2%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://www.shellhacks.com/ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.shellhacks.com%2Fru%2Fchange-network-interface-name-eth0-eth1-eth2%2F&amp;format=xml">
+<link hreflang="en" href="https://www.shellhacks.com/en/change-network-interface-name-eth0-eth1-eth2/" rel="alternate">
+<link hreflang="ru" href="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/a_004.htm" rel="alternate">
+<link hreflang="x-default" href="https://www.shellhacks.com/change-network-interface-name-eth0-eth1-eth2/" rel="alternate">
+<meta name="generator" content="qTranslate-X 3.4.6.8">
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create','UA-91470100-1','auto');ga('send','pageview');</script>
+<link rel="icon" href="https://www.shellhacks.com/wp-content/uploads/cropped-site-icon-32x32.png.pagespeed.ce.4Mjo3JAwal.png" sizes="32x32">
+<link rel="icon" href="https://www.shellhacks.com/wp-content/uploads/cropped-site-icon-192x192.png.pagespeed.ce.QSnLHEu-UC.png" sizes="192x192">
+<link rel="apple-touch-icon-precomposed" href="https://www.shellhacks.com/wp-content/uploads/cropped-site-icon-180x180.png.pagespeed.ce.WP6sotTzbZ.png">
+<meta name="msapplication-TileImage" content="https://www.shellhacks.com/wp-content/uploads/cropped-site-icon-270x270.png">
+<link rel="dns-prefetch" href="https://pagead2.googlesyndication.com/"></head>
+<body class="post-template-default single single-post postid-279 single-format-standard wp-custom-logo has-sidebar-right">
+<div id="page" class="hfeed site">
+<header id="masthead" class="site-header" role="banner">
+<nav class="navbar navbar-default" role="navigation">
+<div class="container">
+<div class="row">
+<div class="site-navigation-inner col-sm-12">
+<div class="navbar-header">
+<button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+</div>
+<div class="collapse navbar-collapse navbar-ex1-collapse"><ul id="menu-primary-menu" class="nav navbar-nav"><li id="menu-item-1093" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1093"><a title="Главная" href="https://www.shellhacks.com/ru/">Главная</a></li>
+<li id="menu-item-1090" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1090"><a title="Контакты" href="https://www.shellhacks.com/ru/contact/">Контакты</a></li>
+<li id="menu-item-934" class="qtranxs-lang-menu qtranxs-lang-menu-en menu-item menu-item-type-custom menu-item-object-custom menu-item-934"><a title="en" href="https://www.shellhacks.com/en/change-network-interface-name-eth0-eth1-eth2/"><span class="glyphicon en"></span>&nbsp;en</a></li>
+</ul></div>
+<div class="nav-search"><form action="https://www.shellhacks.com/ru/" method="get"><input name="s" placeholder="Search" type="text"><button type="submit" class="header-search-icon" name="submit" id="searchsubmit" value="Search"><i class="fa fa-search"></i></button></form>
+</div>
+</div>
+</div>
+</div>
+</nav><!-- .site-navigation -->
+<div class="container">
+<div id="logo">
+<span class="site-name">
+<a class="navbar-brand" href="https://www.shellhacks.com/ru/" title="ShellHacks" rel="home">ShellHacks</a>
+</span><!-- end of .site-name -->
+<div class="tagline">Linux Hacks and Guides</div>
+</div><!-- end of #logo -->
+<div id="line"></div>
+</div>
+</header><!-- #masthead -->
+<div id="content" class="site-content">
+<div class="top-section">
+</div>
+<div class="container main-content-area">
+<div class="cat-title">
+<ul class="post-categories">
+<li><a href="https://www.shellhacks.com/ru/blog/" rel="category tag">Блог</a></li></ul>	</div>
+<div class="row">
+<div class="main-content-inner col-sm-12 col-md-8 side-right">
+<div id="primary" class="content-area">
+<main id="main" class="site-main" role="main">
+<article id="post-279" class="post-279 post type-post status-publish format-standard hentry category-blog tag-network">
+<div class="blog-item-wrap">
+<div class="post-inner-content">
+<header class="entry-header page-header">
+<h1 class="entry-title">Изменить Имя Сетевого Интерфейса: eth0,eth1,eth2+</h1>
+<div class="entry-meta">
+<span class="posted-on">Posted on <a href="https://www.shellhacks.com/ru/change-network-interface-name-eth0-eth1-eth2/" rel="bookmark"><time class="entry-date published" datetime="2016-12-27T14:05:19+00:00">Вторник Декабрь 27th, 2016</time><time class="updated" datetime="2017-02-24T10:53:00+00:00">Пятница Февраль 24th, 2017</time></a></span>
+</div><!-- .entry-meta -->
+</header><!-- .entry-header -->
+<a href="https://www.shellhacks.com/ru/change-network-interface-name-eth0-eth1-eth2/" title="Изменить Имя Сетевого Интерфейса: eth0,eth1,eth2+">
+</a>
+<div class="entry-content">
+<!--Ad Injection:top--><div style="float: right; margin-bottom: -0.5em; margin-left: 1em; margin-top: 1.5em;">
+<script async="" src="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/adsbygoogle.js"></script>
+<!-- top-blk-float-right -->
+<ins class="adsbygoogle top-blk-float-right" style="display: inline-block; height: 280px;" data-ad-client="ca-pub-9082572314087695" data-ad-slot="7626634163" data-ad-format="auto" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;width:336px;height:280px;" width="336" height="280" frameborder="0"></iframe></ins></ins></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div><p>Сетевые интерфейсы лучше всего переименовывать через <code>udev</code>.</p>
+<p>Откройте файл <code>/etc/udev/rules.d/70-persistent-net.rules</code> для изменения имени интерфейса сетевого устройства.</p>
+<p>Описание каждого сетевого устройства, в этом файле, выглядит следующим образом:</p>
+<pre># PCI device 0x11ab:0x4363 (sky2)
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*",
+ATTR{address}=="00:00:00:00:00:00",ATTR{dev_id}=="0x0", ATTR{type}=="1",
+KERNEL=="eth*", <strong>NAME="eth0"</strong></pre>
+<h2>Переименовать сетевой интерфейс с eth0 на wan0</h2>
+<p>Чтобы переименовать интерфейс с <code>eth0</code> на <code>wan0</code>, отредактируйте файл <code>/etc/udev/rules.d/70-persistent-net.rules</code> и измените <strong>NAME=»eth0″</strong> на <strong>NAME=»wan0″</strong>.</p>
+<pre># PCI device 0x11ab:0x4363 (sky2)
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*",
+ATTR{address}=="00:00:00:00:00:00",ATTR{dev_id}=="0x0", ATTR{type}=="1",
+KERNEL=="eth*", <strong>NAME="wan0"</strong></pre>
+<h3>Для Centos/RHEL и т. п.</h3>
+<p>Переименуйте файл настроек интерфейса:</p>
+<pre># cd etc/sysconfig/network-scripts/
+# mv ifcfg-eth0 ifcfg-wan0</pre>
+<p>Откройте файл настроек и замените все упоминания старого имени <code>eth0</code> на новое <code>wan0</code>:</p>
+<pre># vi /etc/sysconfig/network-scripts/ifcfg-wan0</pre>
+<h3>Для Ubuntu и т. п.</h3>
+<p>Откройте файл <code>/etc/network/interfaces</code> и замените все упоминания старого имени <code>eth0</code> на новое <code>wan0</code>:</p>
+<pre># sudo nano /etc/network/interfaces</pre>
+<h3>Проверка</h3>
+<p>Перезагрузите систему для проверки изменений:</p>
+<pre># reboot</pre>
+<p>Проверьте новые настройки:</p>
+<pre># ifconfig -a</pre>
+<h2>Вернуть имя сетевого интерфейса с eth1 на eth0</h2>
+<p class="note-blue"><strong>Q</strong>: Почему изменяется имя сетевого интерфейса?<br>
+<strong>A</strong>: Имя интерфейса сетевого устройства увеличивается каждый раз, когда меняется MAC адрес сетевой карты.
+</p><p>Откройте файл <code>/etc/udev/rules.d/70-persistent-net.rules</code>.</p>
+<p>Скопируйте новый MAC адрес с <code>eth1</code> в строку с настройками <code>eth0</code>.</p>
+<p>Удалите строку с настройками для <code>eth1</code>. Сохраните и закройте файл.</p>
+<h3>Для Centos/RHEL и т. п.</h3>
+<p>Проверьте правильность настроек сетевого интерфейса:</p>
+<pre># vi /etc/sysconfig/network-scripts/ifcfg-eth0</pre>
+<p>Не забудьте поменять старый MAC адрес на новый.</p>
+<h3>Для Ubuntu и т. п.</h3>
+<p>Убедитесь что файл <code>/etc/network/interfaces</code> содержит правильные настройки:</p>
+<pre># sudo nano /etc/network/interfaces</pre>
+<h3>Проверка</h3>
+<p>Перезагрузите систему для проверки изменений:</p>
+<pre># reboot</pre>
+<p>Проверьте новые настройки:</p>
+<pre># ifconfig -a</pre>
+<!--Ad Injection:bottom--><div style="float: left; margin: 20px auto auto;">
+<script async="" src="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/adsbygoogle.js"></script>
+<!-- bottom-blk-float-left -->
+<ins class="adsbygoogle bottom-blk-float-left" style="display: inline-block; height: 280px;" data-ad-client="ca-pub-9082572314087695" data-ad-slot="2278104566" data-ad-format="auto" data-adsbygoogle-status="done"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;width:336px;height:280px;" width="336" height="280" frameborder="0"></iframe></ins></ins></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+<div style="float: right; margin: 20px auto auto;">
+<script async="" src="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/adsbygoogle.js"></script>
+<!-- bottom-blk-float-right -->
+<ins class="adsbygoogle bottom-blk-float-right" style="display: inline-block; height: 280px;" data-ad-client="ca-pub-9082572314087695" data-ad-slot="5231570966" data-ad-format="auto" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><ins id="aswift_2_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;width:336px;height:280px;" width="336" height="280" frameborder="0"></iframe></ins></ins></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+</div><!-- .entry-content -->
+<div class="entry-footer">
+<span class="comments-link"><a href="https://www.shellhacks.com/ru/change-network-interface-name-eth0-eth1-eth2/#respond">No comments yet</a></span>
+<!-- tags -->
+<div class="tagcloud">
+<a href="https://www.shellhacks.com/ru/tag/network/">network</a>
+</div>
+<!-- end tags -->
+</div><!-- .entry-footer -->
+</div>
+</div>
+</article><!-- #post-## -->
+<div id="comments" class="comments-area">
+<div id="respond" class="comment-respond">
+<h3 id="reply-title" class="comment-reply-title">Добавить комментарий <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://www.shellhacks.com/ru/change-network-interface-name-eth0-eth1-eth2/#respond" style="display:none;">Отменить ответ</a></small></h3>	<form action="https://www.shellhacks.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate="">
+<textarea id="comment" name="comment" cols="45" rows="8" aria-required="true" placeholder="Comment"></textarea><div class="row"><div class="col-sm-4"><input id="author" name="author" size="30" aria-required="true" placeholder="Name" type="text"></div>
+<div class="col-sm-4"><input id="email" name="email" size="30" aria-required="true" placeholder="Email" type="text"></div>
+<p class="form-submit"><input name="submit" id="submit" class="submit" value="Post Reply" type="submit"> <input name="comment_post_ID" value="279" id="comment_post_ID" type="hidden">
+<input name="comment_parent" id="comment_parent" value="0" type="hidden">
+</p><p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" value="7e74768e52" type="hidden"></p><p style="display: none;"></p>	
+</div><input id="ak_js" name="ak_js" value="1497776514898" type="hidden"></form><!-- #respond -->
+</div><!-- #comments -->
+<nav class="navigation post-navigation" role="navigation">
+<h1 class="screen-reader-text">Навигация записей</h1>
+<div class="nav-links">
+<div class="nav-previous"><a href="https://www.shellhacks.com/ru/mysql-run-query-bash-script-linux-command-line/" rel="prev"><i class="fa fa-chevron-left"></i> MySQL: Выполнить Запрос из Bash-скрипта или Командной Строки в Linux</a></div><div class="nav-next"><a href="https://www.shellhacks.com/ru/tune-command-line-history-bash/" rel="next">7 Советов — Настройка Истории Команд в Bash <i class="fa fa-chevron-right"></i></a></div>	</div><!-- .nav-links -->
+</nav><!-- .navigation -->
+</div></main><!-- #main -->
+</div><!-- #primary -->
+</div>
+<div id="secondary" class="widget-area col-sm-12 col-md-4" role="complementary">
+<div class="inner">
+<aside id="adinj-7" class="widget adinjwidget"><!--Ad Injection:widget_7--><div style="text-align: left;">
+<script async="" src="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/adsbygoogle.js"></script>
+<!-- sidebar-blk-300-600-1 -->
+<ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-9082572314087695" data-ad-slot="5401208963" data-adsbygoogle-status="done"><ins id="aswift_3_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_3_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;width:300px;height:600px;" width="300" height="600" frameborder="0"></iframe></ins></ins></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div></aside><aside id="categories-4" class="widget widget_categories"><h3 class="widget-title">Рубрики</h3>	<ul>
+<li class="cat-item cat-item-1"><a href="https://www.shellhacks.com/ru/blog/">Блог</a>
+</li>
+<li class="cat-item cat-item-260"><a href="https://www.shellhacks.com/ru/databases/">Базы данных</a>
+</li>
+<li class="cat-item cat-item-261"><a href="https://www.shellhacks.com/ru/version-control/">Version control</a>
+</li>
+</ul>
+</aside><aside id="tag_cloud-2" class="widget widget_tag_cloud"><h3 class="widget-title">Метки</h3><div class="tagcloud"><a href="https://www.shellhacks.com/ru/tag/access-control/" class="tag-link-129 tag-link-position-1" title="4 записи" style="font-size: 14.588235294118pt;">access-control</a>
+<a href="https://www.shellhacks.com/ru/tag/aircrack-ng/" class="tag-link-66 tag-link-position-2" title="2 записи" style="font-size: 10.964705882353pt;">aircrack-ng</a>
+<a href="https://www.shellhacks.com/ru/tag/anonymity/" class="tag-link-52 tag-link-position-3" title="8 записей" style="font-size: 18.705882352941pt;">anonymity</a>
+<a href="https://www.shellhacks.com/ru/tag/apache/" class="tag-link-36 tag-link-position-4" title="8 записей" style="font-size: 18.705882352941pt;">apache</a>
+<a href="https://www.shellhacks.com/ru/tag/archive/" class="tag-link-100 tag-link-position-5" title="4 записи" style="font-size: 14.588235294118pt;">archive</a>
+<a href="https://www.shellhacks.com/ru/tag/bash/" class="tag-link-55 tag-link-position-6" title="12 записей" style="font-size: 21.341176470588pt;">bash</a>
+<a href="https://www.shellhacks.com/ru/tag/boot/" class="tag-link-232 tag-link-position-7" title="3 записи" style="font-size: 12.941176470588pt;">boot</a>
+<a href="https://www.shellhacks.com/ru/tag/cisco/" class="tag-link-136 tag-link-position-8" title="3 записи" style="font-size: 12.941176470588pt;">cisco</a>
+<a href="https://www.shellhacks.com/ru/tag/command-line/" class="tag-link-252 tag-link-position-9" title="4 записи" style="font-size: 14.588235294118pt;">command-line</a>
+<a href="https://www.shellhacks.com/ru/tag/curl/" class="tag-link-157 tag-link-position-10" title="2 записи" style="font-size: 10.964705882353pt;">curl</a>
+<a href="https://www.shellhacks.com/ru/tag/dns/" class="tag-link-134 tag-link-position-11" title="7 записей" style="font-size: 17.882352941176pt;">dns</a>
+<a href="https://www.shellhacks.com/ru/tag/encoding/" class="tag-link-59 tag-link-position-12" title="2 записи" style="font-size: 10.964705882353pt;">encoding</a>
+<a href="https://www.shellhacks.com/ru/tag/encryption/" class="tag-link-28 tag-link-position-13" title="3 записи" style="font-size: 12.941176470588pt;">encryption</a>
+<a href="https://www.shellhacks.com/ru/tag/ftp/" class="tag-link-170 tag-link-position-14" title="3 записи" style="font-size: 12.941176470588pt;">ftp</a>
+<a href="https://www.shellhacks.com/ru/tag/git/" class="tag-link-30 tag-link-position-15" title="4 записи" style="font-size: 14.588235294118pt;">git</a>
+<a href="https://www.shellhacks.com/ru/tag/hash/" class="tag-link-238 tag-link-position-16" title="2 записи" style="font-size: 10.964705882353pt;">hash</a>
+<a href="https://www.shellhacks.com/ru/tag/history/" class="tag-link-244 tag-link-position-17" title="3 записи" style="font-size: 12.941176470588pt;">history</a>
+<a href="https://www.shellhacks.com/ru/tag/iso/" class="tag-link-109 tag-link-position-18" title="2 записи" style="font-size: 10.964705882353pt;">iso</a>
+<a href="https://www.shellhacks.com/ru/tag/john-the-ripper/" class="tag-link-68 tag-link-position-19" title="2 записи" style="font-size: 10.964705882353pt;">john-the-ripper</a>
+<a href="https://www.shellhacks.com/ru/tag/mail/" class="tag-link-85 tag-link-position-20" title="4 записи" style="font-size: 14.588235294118pt;">mail</a>
+<a href="https://www.shellhacks.com/ru/tag/message/" class="tag-link-253 tag-link-position-21" title="2 записи" style="font-size: 10.964705882353pt;">message</a>
+<a href="https://www.shellhacks.com/ru/tag/mod-wsgi/" class="tag-link-37 tag-link-position-22" title="2 записи" style="font-size: 10.964705882353pt;">mod-wsgi</a>
+<a href="https://www.shellhacks.com/ru/tag/monitoring/" class="tag-link-123 tag-link-position-23" title="3 записи" style="font-size: 12.941176470588pt;">monitoring</a>
+<a href="https://www.shellhacks.com/ru/tag/mount/" class="tag-link-110 tag-link-position-24" title="3 записи" style="font-size: 12.941176470588pt;">mount</a>
+<a href="https://www.shellhacks.com/ru/tag/mysql/" class="tag-link-164 tag-link-position-25" title="13 записей" style="font-size: 22pt;">mysql</a>
+<a href="https://www.shellhacks.com/ru/tag/network/" class="tag-link-39 tag-link-position-26" title="5 записей" style="font-size: 15.905882352941pt;">network</a>
+<a href="https://www.shellhacks.com/ru/tag/nmap/" class="tag-link-64 tag-link-position-27" title="3 записи" style="font-size: 12.941176470588pt;">nmap</a>
+<a href="https://www.shellhacks.com/ru/tag/openssl/" class="tag-link-61 tag-link-position-28" title="9 записей" style="font-size: 19.529411764706pt;">openssl</a>
+<a href="https://www.shellhacks.com/ru/tag/password/" class="tag-link-25 tag-link-position-29" title="3 записи" style="font-size: 12.941176470588pt;">password</a>
+<a href="https://www.shellhacks.com/ru/tag/pdf/" class="tag-link-32 tag-link-position-30" title="1 запись" style="font-size: 8pt;">pdf</a>
+<a href="https://www.shellhacks.com/ru/tag/performance/" class="tag-link-70 tag-link-position-31" title="3 записи" style="font-size: 12.941176470588pt;">performance</a>
+<a href="https://www.shellhacks.com/ru/tag/proxy/" class="tag-link-103 tag-link-position-32" title="3 записи" style="font-size: 12.941176470588pt;">proxy</a>
+<a href="https://www.shellhacks.com/ru/tag/python/" class="tag-link-24 tag-link-position-33" title="2 записи" style="font-size: 10.964705882353pt;">python</a>
+<a href="https://www.shellhacks.com/ru/tag/regex/" class="tag-link-91 tag-link-position-34" title="2 записи" style="font-size: 10.964705882353pt;">regex</a>
+<a href="https://www.shellhacks.com/ru/tag/repository/" class="tag-link-180 tag-link-position-35" title="3 записи" style="font-size: 12.941176470588pt;">repository</a>
+<a href="https://www.shellhacks.com/ru/tag/salt-stack/" class="tag-link-29 tag-link-position-36" title="2 записи" style="font-size: 10.964705882353pt;">salt-stack</a>
+<a href="https://www.shellhacks.com/ru/tag/ssh/" class="tag-link-45 tag-link-position-37" title="11 записей" style="font-size: 20.847058823529pt;">ssh</a>
+<a href="https://www.shellhacks.com/ru/tag/telnet/" class="tag-link-38 tag-link-position-38" title="4 записи" style="font-size: 14.588235294118pt;">telnet</a>
+<a href="https://www.shellhacks.com/ru/tag/text-processing/" class="tag-link-242 tag-link-position-39" title="9 записей" style="font-size: 19.529411764706pt;">text-processing</a>
+<a href="https://www.shellhacks.com/ru/tag/tor/" class="tag-link-102 tag-link-position-40" title="3 записи" style="font-size: 12.941176470588pt;">tor</a>
+<a href="https://www.shellhacks.com/ru/tag/tsm/" class="tag-link-176 tag-link-position-41" title="5 записей" style="font-size: 15.905882352941pt;">tsm</a>
+<a href="https://www.shellhacks.com/ru/tag/vsftpd/" class="tag-link-196 tag-link-position-42" title="2 записи" style="font-size: 10.964705882353pt;">vsftpd</a>
+<a href="https://www.shellhacks.com/ru/tag/wget/" class="tag-link-156 tag-link-position-43" title="2 записи" style="font-size: 10.964705882353pt;">wget</a>
+<a href="https://www.shellhacks.com/ru/tag/windows/" class="tag-link-173 tag-link-position-44" title="2 записи" style="font-size: 10.964705882353pt;">windows</a>
+<a href="https://www.shellhacks.com/ru/tag/yum/" class="tag-link-154 tag-link-position-45" title="3 записи" style="font-size: 12.941176470588pt;">yum</a></div>
+</aside>	</div>
+</div><!-- #secondary -->
+</div><!-- close .*-inner (main-content or sidebar, depending if sidebar is used) -->
+</div><!-- close .row -->
+</div><!-- close .container -->
+</div><!-- close .site-content -->
+<div id="footer-area">
+<footer id="colophon" class="site-footer" role="contentinfo">
+<div class="site-info container">
+<div class="row">
+<div class="copyright col-md-12">
+© 2011-2017 ShellHacks. All rights reserved.	Тема от <a href="http://colorlib.com/" target="_blank">Colorlib</a>. Работает на <a href="http://wordpress.org/" target="_blank">WordPress</a>	</div>
+</div>
+</div><!-- .site-info -->
+<div class="scroll-to-top" style="display: block;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+</footer><!-- #colophon -->
+</div>
+<!-- #page -->
+<script type="text/javascript">jQuery(document).ready(function($){if($(window).width()>=767){$('.navbar-nav
+ > li.menu-item > 
+a').click(function(){if($(this).attr('target')!=='_blank'){window.location=$(this).attr('href');}else{var
+ win=window.open($(this).attr('href'),'_blank');win.focus();}});}});</script>
+<script src="%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%98%D0%BC%D1%8F%20%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0%20%20eth0,eth1,eth2+%20-%20ShellHacks_files/wp-content_plugins_akismet__inc_form.js"></script><script>eval(mod_pagespeed_$OU7QnvWl7);</script>
+<script>eval(mod_pagespeed_gtrZXvTZle);</script>
+<script>eval(mod_pagespeed_unZ75z$66T);</script>
+<script>eval(mod_pagespeed__GkAy_pfi9);</script>
+
+</body></html>

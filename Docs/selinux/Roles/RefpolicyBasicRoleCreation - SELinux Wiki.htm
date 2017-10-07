@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html dir="ltr" class="client-js" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script src="RefpolicyBasicRoleCreation%20-%20SELinux%20Wiki_files/load_002.php" async=""></script>
+<meta charset="UTF-8">
+<title>RefpolicyBasicRoleCreation - SELinux Wiki</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+<meta name="generator" content="MediaWiki 1.23.13">
+<link rel="shortcut icon" href="https://selinuxproject.org/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="https://selinuxproject.org/w/opensearch_desc.php" title="SELinux Wiki (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://selinuxproject.org/w/api.php?action=rsd">
+<link rel="alternate" type="application/atom+xml" title="SELinux Wiki Atom feed" href="https://selinuxproject.org/w/?title=Special:RecentChanges&amp;feed=atom">
+<link rel="stylesheet" href="RefpolicyBasicRoleCreation%20-%20SELinux%20Wiki_files/load.css">
+<!--[if IE 6]><link rel="stylesheet" href="/w/skins/monobook/IE60Fixes.css?303" media="screen" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" href="/w/skins/monobook/IE70Fixes.css?303" media="screen" /><![endif]--><style>
+.mw-collapsible-toggle{float:right;-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none} caption .mw-collapsible-toggle{float:none} li .mw-collapsible-toggle{float:none} .mw-collapsible-toggle-li{list-style:none}
+/* cache key: wikidb:resourceloader:filter:minify-css:7:6c1d24e90626cec584f0869483f983e7 */
+.suggestions{overflow:hidden;position:absolute;top:0;left:0;width:0;border:none;z-index:1099;padding:0;margin:-1px -1px 0 0} html > body .suggestions{margin:-1px 0 0 0}.suggestions-special{position:relative;background-color:white;cursor:pointer;border:solid 1px #aaaaaa;padding:0;margin:0;margin-top:-2px;display:none;padding:0.25em 0.25em;line-height:1.25em}.suggestions-results{background-color:white;cursor:pointer;border:solid 1px #aaaaaa;padding:0;margin:0}.suggestions-result{color:black;margin:0;line-height:1.5em;padding:0.01em 0.25em;text-align:left; overflow:hidden;-o-text-overflow:ellipsis; text-overflow:ellipsis;white-space:nowrap}.suggestions-result-current{background-color:#4C59A6;color:white}.suggestions-special .special-label{color:gray;text-align:left}.suggestions-special .special-query{color:black;font-style:italic;text-align:left}.suggestions-special .special-hover{background-color:silver}.suggestions-result-current .special-label,.suggestions-result-current .special-query{color:white}.highlight{font-weight:bold}
+/* cache key: wikidb:resourceloader:filter:minify-css:7:9f9511aa4ef920d34591113e825e6a1e */
+.postedit-container{margin:0 auto;position:fixed;top:0;height:0;left:50%;z-index:1000;font-size:13px}.postedit-container:hover{cursor:pointer}.postedit{position:relative;top:0.6em;left:-50%;padding:.6em 3.6em .6em 1.1em;line-height:1.5625em;color:#626465;background-color:#f4f4f4;border:1px solid #dcd9d9;text-shadow:0 0.0625em 0 rgba(255,255,255,0.5);border-radius:5px;-webkit-box-shadow:0 2px 5px 0 #ccc;box-shadow:0 2px 5px 0 #ccc;-webkit-transition:all 0.25s ease-in-out;-moz-transition:all 0.25s ease-in-out;-ms-transition:all 0.25s ease-in-out;-o-transition:all 0.25s ease-in-out;transition:all 0.25s ease-in-out}.skin-monobook .postedit{top:6em !important}.postedit-faded{opacity:0}.postedit-icon{padding-left:41px;  line-height:25px;background-repeat:no-repeat;background-position:8px 50%}.postedit-icon-checkmark{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABblBMVEUAAAD///////9PfTf///80aRdTgjn///9Feij///////////9Rfzf///////////9PfjZRgDh1o1xOfTb///////+bwYqLtnj///////9PfTa82K////9WhT6YxIL///9QgDdTgzr////////j7uDl7eLq8efi693k7OH///////9UhjuBr2rp9uRUhjr///9YljVKgir///9WiTlYjT3////9/v57vFlbkT5PjC9dlD/5/fhuq09stUTs9uhxuElctCpfnT1huDFloEZloUZmpENmvDZpvDxpvTxqvjxrvT5rvT9rwTxsqktswD5uwkBvuUdxw0NztFBztU9ztVBzwkp0tlJ1xkd2t1R3uVR4w1F4xk54x014yE15uVZ5v1R5xVB6v1R7yFJ8wVh9xVl9yFR9yVd9ylN+xVh+yFd/x1l/yFeAylmEx1+Ny2uY0Hqe04Wj1Ymv3Ze33qLD47TJ5L3O6cPU7Mrq9eb2+/Q4j37OAAAAQHRSTlMAAQIEBAUFBQwPFB4fJCUoKiosQEhJS01RUlZZXmdydXaChYuSlJSWmJmoq6uur8LExcvM19fg5ejt8fX2+Pr7SljgewAAAKpJREFUGBkFwQNCAwAAAMDLtl3LtrG4rWXbtvX77gAgZ6grFwC0bhwNVgKgdPZx8b0dgLi+s7Wn0VoAqpfOI9+BNADZI7fLrz2pSEwGHZuH+78lSK8ZLkLezF3ooyUG3VPXq2USei9WngeyoG195yBYWDF3E/2pAhl1e9Gr8bGT+bfOFCC2fnvh4X7rcqIAQNNu+HT6sxkAjceTL/2ZAIhv+PorBwBJxfkA//dFHSCBy/UTAAAAAElFTkSuQmCC);background-image:url(https://selinuxproject.org/w/resources/src/mediawiki.action/images/green-checkmark.png?2015-12-21T01:31:40Z)!ie;background-position:left}.postedit-close{position:absolute;padding:0 .8em;right:0;top:0;font-size:1.25em;font-weight:bold;line-height:2.3em;color:black;text-shadow:0 0.0625em 0 white;text-decoration:none;opacity:0.2;filter:alpha(opacity=20)}.postedit-close:hover{color:black;text-decoration:none;opacity:0.4;filter:alpha(opacity=40)}
+/* cache key: wikidb:resourceloader:filter:minify-css:7:359b4823ac39109a58410e7715f4e92e */</style><style>
+.suggestions a.mw-searchSuggest-link,.suggestions a.mw-searchSuggest-link:hover,.suggestions a.mw-searchSuggest-link:active,.suggestions a.mw-searchSuggest-link:focus{color:black;text-decoration:none}.suggestions-result-current a.mw-searchSuggest-link,.suggestions-result-current a.mw-searchSuggest-link:hover,.suggestions-result-current a.mw-searchSuggest-link:active,.suggestions-result-current a.mw-searchSuggest-link:focus{color:white}.suggestions a.mw-searchSuggest-link .special-query{ overflow:hidden;-o-text-overflow:ellipsis; text-overflow:ellipsis;white-space:nowrap}
+/* cache key: wikidb:resourceloader:filter:minify-css:7:ae3fa4570b5ac0c6cf7b3776c8ae4d6f */</style><meta name="ResourceLoaderDynamicStyles" content="">
+<style>a:lang(ar),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}
+/* cache key: wikidb:resourceloader:filter:minify-css:7:b36fd1c042133c9c9b60260f7c29b237 */</style>
+<script src="RefpolicyBasicRoleCreation%20-%20SELinux%20Wiki_files/load_004.php"></script><script src="RefpolicyBasicRoleCreation%20-%20SELinux%20Wiki_files/load_003.php"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"RefpolicyBasicRoleCreation","wgTitle":"RefpolicyBasicRoleCreation","wgCurRevisionId":803,"wgRevisionId":803,"wgArticleId":85,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"RefpolicyBasicRoleCreation","wgIsProbablyEditable":false,"wgRestrictionEdit":[],"wgRestrictionMove":[]});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($,jQuery){mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"editfont":"default","editondblclick":0,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":1,"extendwatchlist":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"imagesize":2,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nickname":"","norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"rcdays":7,"rclimit":50,"rows":25,"showhiddencats":0,"shownumberswatching":1,"showtoolbar":1,"skin":"monobook","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":1,"watchdefault":1,"watchdeletion":0,"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,
+"useeditwarning":1,"prefershttps":1,"language":"en","variant-gan":"gan","variant-iu":"iu","variant-kk":"kk","variant-ku":"ku","variant-shi":"shi","variant-sr":"sr","variant-tg":"tg","variant-uz":"uz","variant-zh":"zh","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false,"variant":"en"});},{},{});mw.loader.implement("user.tokens",function($,jQuery){mw.user.tokens.set({"editToken":"+\\","patrolToken":false,"watchToken":false});},{},{});
+/* cache key: wikidb:resourceloader:filter:minify-js:7:9f426b327d5b26fdba4b6c7f571e2def */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax"]);
+}</script><script src="RefpolicyBasicRoleCreation%20-%20SELinux%20Wiki_files/load.php"></script>
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-RefpolicyBasicRoleCreation skin-monobook action-view">
+<div id="globalWrapper">
+<div id="column-content"><div id="content" class="mw-body-primary" role="main">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading" lang="en"><span dir="auto">RefpolicyBasicRoleCreation</span></h1>
+	<div id="bodyContent" class="mw-body">
+		<div id="siteSub">From SELinux Wiki</div>
+		<div id="contentSub"></div>
+		<div id="jump-to-nav" class="mw-jump">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>
+
+		<!-- start content -->
+<div id="mw-content-text" dir="ltr" class="mw-content-ltr" lang="en"><div id="toc" class="toc"><div id="toctitle"><h2>Contents</h2><span class="toctoggle">&nbsp;[<a href="#" class="internal" id="togglelink">hide</a>]&nbsp;</span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Roles_in_Reference_Policy"><span class="tocnumber">1</span> <span class="toctext">Roles in Reference Policy</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Creating_the_Policy_for_the_New_Role"><span class="tocnumber">2</span> <span class="toctext">Creating the Policy for the New Role</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="#Roles_Similar_to_Existing_Roles"><span class="tocnumber">2.1</span> <span class="toctext">Roles Similar to Existing Roles</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-4"><a href="#Configuring_Userland_Programs_for_the_New_Role"><span class="tocnumber">3</span> <span class="toctext">Configuring Userland Programs for the New Role</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#Default_Type"><span class="tocnumber">3.1</span> <span class="toctext">Default Type</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Default_Contexts"><span class="tocnumber">3.2</span> <span class="toctext">Default Contexts</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h1><span class="mw-headline" id="Roles_in_Reference_Policy">Roles in Reference Policy</span></h1>
+<p>Reference policy consists of several user roles for typical system 
+operation.  Rules for each role are contained in individual Reference 
+Policy modules, which allow flexibility in role separation.
+</p>
+<table border="1">
+<tbody><tr>
+<th> Role
+</th>
+<th> Module
+</th>
+<th>Description
+</th></tr>
+<tr>
+<td>user_r</td>
+<td>unprivuser</td>
+<td>Basic user role.  This role can do most things a non UID 0 linux user can do.
+</td></tr>
+<tr>
+<td>staff_r</td>
+<td>staff</td>
+<td>Administrator's unprivileged user role.  This role is basically the same as user_r, but is meant for administrators.
+</td></tr>
+<tr>
+<td>sysadm_r</td>
+<td>sysadm</td>
+<td>General system administration role.
+</td></tr>
+<tr>
+<td>secadm_r</td>
+<td>secadm</td>
+<td>Security administrator role.  Administrates security policy.
+</td></tr>
+<tr>
+<td>auditadm_r</td>
+<td>auditadm</td>
+<td>Audit system and audit log administration role.  Configures the auditing policy and manages audit logs.
+</td></tr>
+<tr>
+<td>logadm_r</td>
+<td>logadm</td>
+<td>Syslog administration role.  Configures syslog and manages system logs.
+</td></tr>
+<tr>
+<td>webadm_r</td>
+<td>webadm</td>
+<td>Web server administration role.  Configures Apache and can optionally manage user web content.
+</td></tr>
+<tr>
+<td>guest_r</td>
+<td>guest</td>
+<td>Highly confined user.  No X windows support.
+</td></tr>
+<tr>
+<td>xguest_r</td>
+<td>xguest</td>
+<td>Highly confined X windows user.
+</td></tr>
+<tr>
+<td>unconfined_r</td>
+<td>unconfined</td>
+<td>This role is not confined by SELinux except by memory protections (for example executable memory protections).
+</td></tr></tbody></table>
+<p>This guide will discuss creation of new roles when these roles do not meet needs.
+</p>
+<h1><span class="mw-headline" id="Creating_the_Policy_for_the_New_Role">Creating the Policy for the New Role</span></h1>
+<p>This section of the guide discusses the creation of the policy for 
+the roles.  These statements should be added to a policy module.  See 
+GettingStarted for more information on creating policy modules.
+</p><p>There are several methods for creating roles in Reference Policy.
+  It is best to use Reference Policy templates, as there are several 
+requirements for a user to log in, but they are beyond the scope of this
+ guide.
+</p>
+<h2><span class="mw-headline" id="Roles_Similar_to_Existing_Roles">Roles Similar to Existing Roles</span></h2>
+<p>If the role's user domain should be similar to <i>user_r</i> or <i>staff_r</i>, the <i>userdom_unpriv_user_template()</i> template should be used.
+</p>
+<pre>userdom_unpriv_user_template(myrole)
+</pre>
+<p>If the role's user domain should be similar to <i>sysadm_r</i>, the <i>userdom_admin_user_template()</i> template should be used.
+</p>
+<pre>userdom_admin_user_template(myrole)
+</pre>
+<p>These both will create role <i>myrole_r</i> and user domain <i>myrole_t</i>.  Then rules can subsequently be added to <i>myrole_t</i> to customize it.
+</p>
+<h1><span class="mw-headline" id="Configuring_Userland_Programs_for_the_New_Role">Configuring Userland Programs for the New Role</span></h1>
+<h2><span class="mw-headline" id="Default_Type">Default Type</span></h2>
+<p>The default_type file configure SELinux-aware programs behavior when 
+constructing a context.  When the program only is provided with a role, 
+the domain for the new context is selected based on this file.  
+Typically this file is only used by the newrole program.  Add the new 
+role:domain combination to the end of this file.
+</p>
+<pre>sysadm_r:sysadm_t
+staff_r:staff_t
+unconfined_r:unconfined_t
+user_r:user_t
+<b>myrole_r:myrole_t</b>
+</pre>
+<h2><span class="mw-headline" id="Default_Contexts">Default Contexts</span></h2>
+<p>The <i>default_contexts</i> files configure SELinux-aware programs 
+behavior when selecting a context for a user.  Typically this is used 
+when logging in, but there are a few other uses.
+</p><p>Add the new role and user domain to services where login is desired.  For example, the <i>local_login_t</i> is for local logins, whereas <i>xdm_t</i> is for logins via a X display manager, such as GDM or KDM.
+</p>
+<pre>system_r:local_login_t	user_r:user_t <b>myrole_r:myrole_t</b> staff_r:staff_t sysadm_r:sysadm_t unconfined_r:unconfined_t
+system_r:remote_login_t	user_r:user_t staff_r:staff_t unconfined_r:unconfined_t
+system_r:sshd_t		user_r:user_t staff_r:staff_t sysadm_r:sysadm_t unconfined_r:unconfined_t
+system_r:xdm_t		user_r:user_t <b>myrole_r:myrole_t</b> staff_r:staff_t sysadm_r:sysadm_t unconfined_r:unconfined_t
+</pre>
+<p>For each service, the order matters.  The service will test to see 
+which role:domain combination is valid for the user logging in, and use 
+the first available choice (left to right).  So if the SELinux user is 
+allowed <i>user_r</i> and <i>myrole_r</i>, the default will be <i>user_r:user_t</i> when logging in.
+</p><p>You should notice that <i>myrole_r:myrole_t</i> was not added to the <i>remote_login_t</i> or <i>sshd_t</i> lines. This means that if a user with only <i>myrole_t</i> tries to log in via login apps running as <i>remote_login_t</i> or <i>sshd_t</i> it will fail.
+</p>
+<!-- 
+NewPP limit report
+CPU time usage: 0.013 seconds
+Real time usage: 0.013 seconds
+Preprocessor visited node count: 22/1000000
+Preprocessor generated node count: 28/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/40
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key wikidb:pcache:idhash:85-0!*!*!!en!*!* and timestamp 20171002170443 and revision id 803
+ -->
+</div><div class="printfooter">
+Retrieved from "<a href="https://selinuxproject.org/w/?title=RefpolicyBasicRoleCreation&amp;oldid=803">https://selinuxproject.org/w/?title=RefpolicyBasicRoleCreation&amp;oldid=803</a>"</div>
+		<div id="catlinks" class="catlinks catlinks-allhidden"></div>		<!-- end content -->
+				<div class="visualClear"></div>
+	</div>
+</div></div>
+<div id="column-one">
+	<h2>Navigation menu</h2>
+	<div id="p-cactions" class="portlet" role="navigation">
+		<h3>Views</h3>
+		<div class="pBody">
+			<ul>
+				<li id="ca-nstab-main" class="selected"><a href="https://selinuxproject.org/page/RefpolicyBasicRoleCreation" title="View the content page [alt-shift-c]" accesskey="c">Page</a></li>
+				<li id="ca-talk" class="new"><a href="https://selinuxproject.org/w/?title=Talk:RefpolicyBasicRoleCreation&amp;action=edit&amp;redlink=1" title="Discussion about the content page [alt-shift-t]" accesskey="t">Discussion</a></li>
+				<li id="ca-viewsource"><a href="https://selinuxproject.org/w/?title=RefpolicyBasicRoleCreation&amp;action=edit" title="This page is protected.
+You can view its source [alt-shift-e]" accesskey="e">View source</a></li>
+				<li id="ca-history"><a href="https://selinuxproject.org/w/?title=RefpolicyBasicRoleCreation&amp;action=history" rel="archives" title="Past revisions of this page [alt-shift-h]" accesskey="h">History</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal" role="navigation">
+		<h3>Personal tools</h3>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="https://selinuxproject.org/w/?title=Special:UserLogin&amp;returnto=RefpolicyBasicRoleCreation" title="You are encouraged to log in; however, it is not mandatory [alt-shift-o]" accesskey="o">Log in</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo" role="banner">
+<a href="https://selinuxproject.org/page/Main_Page" style="background-image: url(/images/selinux-penguin-125.png);" title="Visit the main page"></a>
+	</div>
+	<div class="generated-sidebar portlet" id="p-navigation" role="navigation">
+		<h3>Navigation</h3>
+		<div class="pBody">
+			<ul>
+				<li id="n-mainpage"><a href="https://selinuxproject.org/page/Main_Page" title="Visit the main page [alt-shift-z]" accesskey="z">Main Page</a></li>
+				<li id="n-recentchanges"><a href="https://selinuxproject.org/page/Special:RecentChanges" title="A list of recent changes in the wiki [alt-shift-r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="https://selinuxproject.org/page/Special:Random" title="Load a random page [alt-shift-x]" accesskey="x">Random page</a></li>
+				<li id="n-Credits"><a href="https://selinuxproject.org/page/Credits">Credits</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet" role="search">
+		<h3><label for="searchInput">Search</label></h3>
+		<div id="searchBody" class="pBody">
+			<form action="/w/" id="searchform">
+				<input name="title" value="Special:Search" type="hidden">
+				<input autocomplete="off" name="search" placeholder="Search" title="Search SELinux Wiki [alt-shift-f]" accesskey="f" id="searchInput" type="search">
+				<input name="go" value="Go" title="Go to a page with this exact name if exists" id="searchGoButton" class="searchButton" type="submit">&nbsp;
+				<input name="fulltext" value="Search" title="Search the pages for this text" id="mw-searchButton" class="searchButton" type="submit">
+			</form>
+
+					</div>
+	</div>
+	<div class="portlet" id="p-tb" role="navigation">
+		<h3>Tools</h3>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="https://selinuxproject.org/page/Special:WhatLinksHere/RefpolicyBasicRoleCreation" title="A list of all wiki pages that link here [alt-shift-j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="https://selinuxproject.org/page/Special:RecentChangesLinked/RefpolicyBasicRoleCreation" title="Recent changes in pages linked from this page [alt-shift-k]" accesskey="k">Related changes</a></li>
+				<li id="t-specialpages"><a href="https://selinuxproject.org/page/Special:SpecialPages" title="A list of all special pages [alt-shift-q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="https://selinuxproject.org/w/?title=RefpolicyBasicRoleCreation&amp;printable=yes" rel="alternate" title="Printable version of this page [alt-shift-p]" accesskey="p">Printable version</a></li>
+				<li id="t-permalink"><a href="https://selinuxproject.org/w/?title=RefpolicyBasicRoleCreation&amp;oldid=803" title="Permanent link to this revision of the page">Permanent link</a></li>
+				<li id="t-info"><a href="https://selinuxproject.org/w/?title=RefpolicyBasicRoleCreation&amp;action=info">Page information</a></li>
+<li id="t-cite"><a href="https://selinuxproject.org/w/?title=Special:Cite&amp;page=RefpolicyBasicRoleCreation&amp;id=803" title="Information on how to cite this page">Cite this page</a></li>			</ul>
+		</div>
+	</div>
+</div><!-- end of the left (by default at least) column -->
+<div class="visualClear"></div>
+<div id="footer" role="contentinfo">
+	<div id="f-poweredbyico">
+		<a href="https://www.mediawiki.org/"><img src="RefpolicyBasicRoleCreation%20-%20SELinux%20Wiki_files/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" height="31" width="88"></a>
+	</div>
+	<ul id="f-list">
+		<li id="lastmod"> This page was last modified on 19 November 2009, at 16:12.</li>
+		<li id="viewcount">This page has been accessed 40,962 times.</li>
+		<li id="privacy"><a href="https://selinuxproject.org/page/SELinux_Wiki:Privacy_policy" title="SELinux Wiki:Privacy policy">Privacy policy</a></li>
+		<li id="about"><a href="https://selinuxproject.org/page/SELinux_Wiki:About" title="SELinux Wiki:About">About SELinux Wiki</a></li>
+		<li id="disclaimer"><a href="https://selinuxproject.org/page/SELinux_Wiki:General_disclaimer" title="SELinux Wiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+</div>
+</div>
+<script>/*<![CDATA[*/window.jQuery && jQuery.ready();/*]]>*/</script><script>if(window.mw){
+mw.loader.state({"site":"ready","user":"ready","user.groups":"ready"});
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.action.view.postEdit","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest"],null,true);
+}</script>
+<script>if(window.mw){
+mw.config.set({"wgBackendResponseTime":207});
+}</script><div class="suggestions" style="display: none; font-size: 11.4667px;"><div class="suggestions-results"></div><div class="suggestions-special"></div></div></body><div style="display:none" id="sp_console_event"></div></html>

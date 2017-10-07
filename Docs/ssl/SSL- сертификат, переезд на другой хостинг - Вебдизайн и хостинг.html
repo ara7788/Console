@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>SSL- сертификат, переезд на другой хостинг - Вебдизайн и хостинг</title>
+        <meta charset="utf-8">
+
+<meta name="description" content="Создание и размещение веб-страниц, веб-дизайн - HTML, PHP , базы данных , хостинг , администрирование и другое. Для начинающих и профессионалов.">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="yandex-verification" content="7f0d266d810e0dbc">
+	<meta name="msvalidate.01" content="7128D8D961EBF92CE15451EB85EA19A8">
+	<link rel="SHORTCUT ICON" href="https://tt.germany.ru/favicon.ico">
+
+	<link href="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/germany_ru_common_002.css" rel="stylesheet" type="text/css">
+                <!-- skin -->
+
+			<link href="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/germany_ru_skin_sunny.css" rel="stylesheet" type="text/css">
+			<link rel="stylesheet" href="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/basic.css">
+			<link rel="stylesheet" href="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/sunny.css">
+		
+        <link href="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/germany_ru_common.css" rel="stylesheet" type="text/css">
+
+	<script async="" src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/analytics.js"></script><script defer="defer" type="text/javascript" src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/interactivetable.js"></script>
+	<script src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/jquery-latest.js" type="text/javascript"></script>
+	<script src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/jquery-ui.js" type="text/javascript"></script>
+	<script defer="defer" type="text/javascript" src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/b.js"></script>
+
+                <!-- load PT Sans font -->
+        <link href="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/css.css" rel="stylesheet" type="text/css">
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-859178-1', 'auto');
+  ga('send', 'pageview');
+
+</script> 
+
+    <style type="text/css"></style><script type="text/javascript" src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/lib.js"></script><link rel="stylesheet" type="text/css" href="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/redactor.css"><script type="text/javascript" src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/redactor.js"></script></head>
+    <body>
+
+		<!-- 
+		//////////////
+		//  AD  //
+		//////////////
+		 -->
+
+        <div class="adblock-container">
+                <div class="adblock">
+			<script type="text/javascript" src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/publishertag.js"></script>
+			<div id="crt-803769" class="ds-none" style="display: block;"><iframe id="cto_iframe_4e2409944c" allowtransparency="true" hspace="0" marginwidth="0" marginheight="0" scrolling="no" vspace="0" width="970px" height="90px" frameborder="0"></iframe></div>
+			<div id="crt-284821" class="ds-none"></div> 
+
+			<script type="text/javascript">
+                                var width = $(document).width();
+                                if(width >= 478) {
+					Criteo.DisplayAd({
+						"zoneid": 803769,
+						"containerid": "crt-803769"});
+					$('#crt-803769').show();
+                                }
+                                else {
+					Criteo.DisplayAd({
+						"zoneid": 284821,
+						"containerid": "crt-284821"}); 
+					$('#crt-284821').show(); 
+                                }
+                        </script>
+                </div>
+        </div>
+			
+		<!-- 
+		//////////////
+		//  HEADER  //
+		//////////////
+		 -->
+
+		<div id="header-top">
+			<div class="wrap">
+				<div id="header-user-info">
+
+
+               		<a href="#modal-header" class="bold" rel="modal:open">Войти</a>
+               		&nbsp;&nbsp;
+               		<a href="https://www.germany.ru/cgi-bin/portal/register.cgi">Регистрация нового пользователя</a>
+			<img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/x-track.gif" width="1" height="1">
+    		
+				</div>
+
+				<div id="header-top-ads">
+				</div>
+				<div class="clear"></div>
+			</div><!-- /wrap -->
+		</div><!-- /header-top -->
+
+
+		<div id="header">
+			<div class="wrap">
+
+				<a href="#mobile-menu" id="header_hamburger" rel="modal:open">↓</a>
+
+				
+                                <form id="header-search-form" action="https://foren.germany.ru/dosearch.pl">
+                                        <input name="Forum" value="All_Forums" type="hidden">
+                                        <input name="Old" value="allposts" type="hidden">
+                                        <input name="Sort" value="time" type="hidden">
+                                        <input placeholder="Что ищем?" size="20" name="Words" type="search">
+                                        <input class="btn" value="Найти" type="submit">
+					<div id="header-search-form-extended">
+						<a href="http://foren.germany.ru/search.pl?Cat=">Расширенный поиск</a>
+					</div>
+                                </form><!-- /header-search-form -->
+  
+
+				<div id="header-logo"><a href="https://www.germany.ru/"></a></div>
+<div id="header-title"><a href="https://foren.germany.ru/">Форумы</a></div>
+				<div id="header-type">Germany.ru</div>
+				<div class="clear"></div>
+
+			</div><!-- /wrap -->
+		</div><!-- /header -->
+
+		<div id="header_nav">
+			<div class="wrap">
+				<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;lang=german" id="header_lang"><i class="header_flag_de"></i>Deutsch</a>
+				<ul>
+<li><a href="https://events.germany.ru/">Афиша</a></li>
+<li><a href="https://love.germany.ru/">Знакомства</a></li>
+<li><a href="https://foto.germany.ru/">Фото</a></li>
+<li><a href="https://foren.germany.ru/" class="active">Форумы</a></li>
+<li><a href="https://groups.germany.ru/">Группы</a></li>
+<li><a href="https://blogs.germany.ru/">Дневники</a></li>
+<li><a href="https://chat.germany.ru/">Чат</a></li>
+<li><a href="https://shop.germany.ru/">Магазин</a></li>
+<li><a href="https://katalog.germany.ru/">Фирмы и услуги</a></li>
+<li><a href="https://annonce.germany.ru/">Объявления <span class="badge">NEW</span></a></li>
+				</ul>
+			</div><!-- /wrap -->
+		</div><!-- /header_nav -->
+
+
+
+
+
+
+
+
+
+
+
+		<main>
+		<div class="wrap">
+
+				<!--<a href="#mobile-menu" id="" rel="modal:open">&darr;</a>-->
+
+<div class="modal" id="modal-header">
+	<div class="modal-header">
+        	Вход на сайт
+	</div>
+
+	<div class="pad">
+
+        		<form action="https://www.germany.ru/cgi-bin/portal/loginssl.cgi" method="POST">
+                		<div>Имя или Email:</div>
+                		<div>
+                        		<input name="Username" maxlength="80" class="full" type="text">
+                		</div>
+                		<br>
+		
+                		<div>Пароль:</div>
+                		<div><input name="Password" maxlength="20" class="full" type="password"></div>
+                		<br>
+
+                		<div>
+                        		<label for="remember_me">
+                        		<input name="remember_me" type="checkbox">
+                        		Запомнить меня на этом компьютере
+                        		</label>
+                		</div>
+                		<br>
+
+        		<input class="btn btn-primary" name="Login" value="Войти" type="submit">
+        		<hr>
+        		<div class="center">
+                		<a href="https://www.germany.ru/cgi-bin/portal/register.cgi" class="btn btn-shy">Регистрация нового пользователя</a>
+                		<a href="https://www.germany.ru/cgi-bin/portal/loginssl.cgi" class="btn btn-shy">Забыли пароль?</a>
+        		</div>
+        		</form>
+			<img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/x-track.gif" width="1" height="1">
+    			</div>
+</div>
+
+<div class="modal" id="mobile-menu">
+	<div class="full">
+
+        		<div class="modal-header">
+                		<a href="#modal-header" class="bold" rel="modal:open">Войти</a>
+                		&nbsp;&nbsp;
+				<a href="https://www.germany.ru/cgi-bin/portal/register.cgi">Регистр.</a>
+                		&nbsp;&nbsp;
+				<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;lang=german"><i class="header_flag_de"></i>Deutsch</a>
+        		</div>
+    		        	<ul class="mobile-menu">
+<li><a href="https://events.germany.ru/">Афиша</a></li>
+<li><a href="https://love.germany.ru/">Знакомства</a></li>
+<li><a href="https://foto.germany.ru/">Фото</a></li>
+<li><a href="https://foren.germany.ru/" class="active">Форумы</a></li>
+<li><a href="https://groups.germany.ru/">Группы</a></li>
+<li><a href="https://blogs.germany.ru/">Дневники</a></li>
+<li><a href="https://katalog.germany.ru/">Фирмы и услуги</a></li>
+<li><a href="https://annonce.germany.ru/">Объявления</a></li>
+        	</ul>
+
+        	<div class="well-alt center">
+			
+                                <form action="https://foren.germany.ru/dosearch.pl">
+                                        <input name="Forum" value="All_Forums" type="hidden">
+                                        <input name="Old" value="allposts" type="hidden">
+                                        <input name="Sort" value="time" type="hidden">
+                                        <input placeholder="Что ищем?" size="20" name="Words" type="search">
+                                        <input class="btn" value="Найти" type="submit">
+					<br><a href="http://foren.germany.ru/search.pl?Cat=">Расширенный поиск</a>
+                                </form><!-- /header-search-form -->
+  
+		</div>
+	</div>
+</div>
+
+<!--foren wwwthreads-->
+
+                        
+                        <div class="float-right">
+                                
+      <a href="http://foren.germany.ru/webmaster.html">Покинуть архив</a>
+      <a href="http://foren.germany.ru/search.pl?Cat="><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/germany_ru_16x16_search.gif" vspace="0" hspace="0" border="0" align="absmiddle"> Расширенный поиск</a>
+    
+                        </div>
+                        <div class="small light float-left">
+                                <a href="http://www.germany.ru/">Germany.ru</a> → <a href="http://foren.germany.ru/">Форумы</a> → Архив Досок → <b><a href="https://foren.germany.ru/arch/postlist.pl?Cat=&amp;Board=webmaster">Вебдизайн и хостинг</a></b>
+                        </div>
+                        <div class="clear"></div>
+                
+<h3>SSL- сертификат, переезд на другой хостинг</h3>
+  
+        <div class="td-50">
+                <div class="">
+                        <i class="iconlarge-views"></i><span class="disabled">119</span> &nbsp;
+                </div>
+        </div>
+        <div class="td-50">
+                <div class="listing right">
+                        
+                        
+                        
+                </div>
+        </div>
+        <div class="clear"></div>
+  <div class="showflat">
+<div class="list_cell1">
+        <div class="td-200px">
+                <div><a name="Post26598607"></a><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/germany_ru_16x16_status_female.gif" width="16" height="16" border="0"> <a href="https://my.germany.ru/173153" target="germany_profile">Guliston</a> <span class="no-mobile-phone"><small>посетитель</small></span><span class="only-mobile-phone">06.07.14 09:12</span></div>
+
+
+                <div class="pad2 no-mobile-phone float-left" align="center">
+                <span class="no-mobile"></span>
+		</div>
+        </div>
+        <div class="td-margin-200px">
+			<span class="no-mobile-phone">06.07.14 09:12&nbsp;</span> <b>SSL- сертификат, переезд на другой хостинг</b>
+
+                        <div class="">
+                                
+                        </div>
+      
+                        <div class="foren-body">Есть сайт с SSL. 
+Сертификат покупал и устанавливал хостер, a не я.  Сейчас надо переехать
+ к другому хостеру, что произойдет с сертификатом? "Сгорит"? Или его  
+можно перенести? По фтп он виден (кажется)<br><div class="absolute-bottom-right"><a href="https://foren.germany.ru/arch/showmessage.pl?Number=26598607&amp;Board=webmaster">#1</a></div></div>
+        </div>
+        <div class="clear"></div>
+</div>
+      
+<div class="list_cell0">
+        <div class="td-200px">
+                <div><a name="Post26630215"></a><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/germany_ru_16x16_status_male.gif" width="16" height="16" border="0"> <a href="https://my.germany.ru/916768" target="germany_profile">chestbone</a> <span class="no-mobile-phone"><small>посетитель</small></span><span class="only-mobile-phone">11.07.14 14:22</span></div>
+
+
+                <div class="pad2 no-mobile-phone float-left" align="center">
+                <span class="no-mobile"></span>
+		</div>
+        </div>
+        <div class="td-margin-200px">
+			<span class="no-mobile-phone">11.07.14 14:22&nbsp;</span> <b>Re: SSL- сертификат, переезд на другой хостинг</b>
+
+                        <div class="">
+                                <div class="disabled"><a href="https://foren.germany.ru/arch/showmessage.pl?Cat=&amp;Board=webmaster&amp;Number=26598607&amp;page=&amp;view=&amp;sb=&amp;vc=1#Post26598607">В ответ  Guliston</a> 06.07.14 09:12</div>
+                        </div>
+      
+                        <div class="foren-body">кто бы не "покупал" сертификат:<br>1.  сертификат привязан к названию сайта<br>2. сертификат привязан к приватному ключу<br>3. сертификат НЕ привязан к айпи адресу<br>4. сертификат, в отличии от приватного ключа- такая штука, которую может видеть каждый, кто захочет<br>таким образом, в случае <br>1. переноса пары- приватный ключ/сертификат с сервера, хостящегося на хостер1 на сервер, хостящийся на хостер2<br>или<br>2. физического переноса того же самого сервера с хостер1 на хостер2<br>при правильном изменении соответствующих ДНС сервисов со старого айпи на новый айпи, никаких головняков быть не должно.<br><div class="absolute-bottom-right"><a href="https://foren.germany.ru/arch/showmessage.pl?Number=26630215&amp;Board=webmaster">#2</a></div></div>
+        </div>
+        <div class="clear"></div>
+</div>
+      
+        <div class=""></div>
+        <div class="td-50 no-mobile">
+        </div>
+        <div class="td-50">
+                <div class="listing right"></div>
+        </div>
+        <div class="clear"></div>
+    <table class="no-mobile" width="98%" cellspacing="0" cellpadding="0" border="0" align="center"><form method="POST" action="https://foren.germany.ru/arch/jumper.pl"></form><tbody><tr><td align="right"><p align="right"><input name="Cat" value="" type="hidden">Перейти на <select name="board"><option value="art" selected="selected">ART 
+</option><option value="bruecke">Die Brücke
+</option><option value="gamers">Gamers
+</option><option value="linux">Linux &amp; Co
+</option><option value="tvsat">TV-Sat
+</option><option value="auto">Автомобили и мотоциклы
+</option><option value="events">Афиша germany.ru
+</option><option value="market">Барахолка
+</option><option value="webmaster">Вебдизайн и хостинг
+</option><option value="vituel">Виртуальные знакомства
+</option><option value="meetings">Встречи и компании
+</option><option value="other">Въезд и пребывание
+</option><option value="discus">Дискуссионный Клуб
+</option><option value="haus">Дом и семья
+</option><option value="mitfahrzentrale">Дорожные оказии
+</option><option value="juden">Еврейская иммиграция
+</option><option value="immo">Жилье и недвижимость
+</option><option value="familie">Заключение брака и воссоединение семьи 
+</option><option value="health">Здоровье
+</option><option value="partner">Ищу делового партнера
+</option><option value="dienst">Ищу/окажу услуги
+</option><option value="jobs">Ищу/предлагаю работу
+</option><option value="kino">Кино
+</option><option value="computer">Компьютер &amp; Co
+</option><option value="consul">Консульские вопросы
+</option><option value="kochkunst">Кулинария и кухня
+</option><option value="smoke">Курилка
+</option><option value="lepro">Лепрозорий
+</option><option value="animals">Мир животных
+</option><option value="flora">Мир растений
+</option><option value="lifestyle">Мода и стиль
+</option><option value="music">Музыка
+</option><option value="Deutsch">Немецкий язык
+</option><option value="aussiedler">Немецким переселенцам
+</option><option value="about">О Germany.ru
+</option><option value="education">Образование
+</option><option value="fortune">Познакомлюсь
+</option><option value="people">Поиск потерянных людей и земляков
+</option><option value="legal">Право
+</option><option value="programmer">Программирование
+</option><option value="travel">Путешествия
+</option><option value="immob">Сдам/сниму/куплю/продам недвижимость
+</option><option value="sport">Спорт
+</option><option value="advice">Спроси совет
+</option><option value="relations">Театр флирта
+</option><option value="telecommunication">Телефон и интернет
+</option><option value="common">Тусовка
+</option><option value="elecronics">Уголок потребителя
+</option><option value="bastler">Умелые руки
+</option><option value="religion">Философия. Вера. Религия.
+</option><option value="sieunder">Формула любви
+</option><option value="fotoart">ФотоВидеоАрт
+</option><option value="wissen">Хочу все знать!
+</option><option value="literat">Читальня
+</option><option value="schengen">Шенген и Европейский союз
+</option><option value="business">Экономика и Финансы
+</option></select><input name="Jump" value="Перейти" type="submit"></p></td></tr></tbody></table>		</div><!-- /wrap -->
+		</div></main>
+
+                <!--
+                //////////////
+                //  AD  //
+                //////////////
+                 -->
+
+                <div class="adblock" id="ad-bottom">
+			<script type="text/javascript" src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/publishertag.js"></script>
+			<div id="crt-214794"><iframe id="cto_iframe_b13baef7b3" allowtransparency="true" hspace="0" marginwidth="0" marginheight="0" scrolling="no" vspace="0" width="970px" height="250px" frameborder="0"></iframe></div> 
+			<div id="crt-299271"></div> 
+
+                        <script type="text/javascript">
+                                var width = $(document).width();
+                                if(width >= 478) {
+					Criteo.DisplayAd({
+						"zoneid": 543905,
+						"containerid": "crt-214794",
+						"async": false
+					}); 
+                                }
+                                else {
+					Criteo.DisplayAd({
+						"zoneid": 299271,
+					"containerid": "crt-299271"}); 
+                                }
+                        </script><script type="text/javascript" src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/ajs.php"></script>
+                </div>
+			
+                <!--
+                //////////////
+                //  FOOTER  //
+                //////////////
+                 -->
+
+		<div style="clear:both;"></div> 
+
+                <footer>
+                        <div class="wrap">
+                                © 1999-2017 Germany.ru
+                                <br>
+				<a href="https://help.germany.ru/index.php?action=show&amp;cat=13" class="light">Помощь</a>
+                                ·
+                                <a href="https://help.germany.ru/index.php?action=artikel&amp;cat=5&amp;id=144&amp;artlang=ru" class="light">Disclaimer</a>
+                                ·
+                                <a href="https://katalog.germany.ru/cgi-bin/discount/add.cgi" class="light">Реклама на сайте</a>
+                                ·
+                                <a href="https://www.germany.ru/contact.html" class="light">Контакт</a>
+
+                                <div class="float-right" style="margin-right: 0;">
+
+		<a href="javascript:void(0)" onclick="toggledropdown('dropdown_skinselector');" title="Выбор скина"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_sunny.gif" width="15" height="16" border="0" align="absmiddle"></a>
+	
+		<div class="hiddenitem" id="dropdown_skinselector">
+			<div style="position: absolute; bottom: 30px; border: 1px black solid; right: -30px; background-color: white; width: 150px;">
+		
+					<a><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_sunny_on.gif" width="15" height="16" align="absmiddle">&nbsp;HOT</a><br>
+				
+						<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;skin=999"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_yellow.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Yellow</a><br>
+					
+						<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;skin=1"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_blue.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Blue</a><br>
+					
+						<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;skin=2"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_mini.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Mini</a><br>
+					
+						<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;skin=3"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_matrix.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Matrix</a><br>
+					
+						<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;skin=4"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_camomile.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Camomile</a><br>
+					
+						<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;skin=5"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_nostalgie.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Nostalgie</a><br>
+					
+						<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;skin=6"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_sea.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Sea</a><br>
+					
+					<a><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_sunny_on.gif" width="15" height="16" align="absmiddle">&nbsp;Sunny</a><br>
+				
+						<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;skin=10"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_lilac.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Lilac</a><br>
+					
+						<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;skin=11"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_pen.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Pen</a><br>
+					
+						<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;skin=12"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_khaki.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Khaki</a><br>
+					
+						<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;skin=13"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_night.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Night</a><br>
+					
+						<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;skin=14"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_tiger.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Tiger</a><br>
+					
+						<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;skin=17"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_winter.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Зима</a><br>
+					
+						<a href="http://foren.germany.ru/cgi-bin/wwwthreads_arch/showflat.pl?Number=26598607&amp;Board=webmaster&amp;skin=18"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/skinswitch_xmas.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Xmas</a><br>
+					
+			<a href="https://www.germany.ru/cgi-bin/portal/skinselect.cgi"><img src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/1.gif" width="15" height="16" border="0" align="absmiddle">&nbsp;Еще</a>
+			</div>
+		</div>
+		
+                                </div>
+                        </div><!-- /wrap -->
+                </footer>
+
+        <script defer="defer" src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/g2.js"></script>
+
+	<script>var ed = '.abogat-redactor'; var lng = 'ru'; var vip = 0;</script>
+	<script defer="defer" src="SSL-%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82,%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D0%B7%D0%B4%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20-%20%D0%92%D0%B5%D0%B1%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B8%20%D1%85%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3_files/r.js"></script>
+
+    
+
+
+
+
+
+</body></html>
+<!--foren -->

@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html class=" js no-touch csstransforms csstransforms3d csstransitions svg" prefix="og: http://ogp.me/ns#" lang="ru-RU"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://serveradmin.ru/xmlrpc.php">
+<title>Настройка iptables в CentOS 7</title>
+
+<!-- This site is optimized with the Yoast SEO plugin v4.8 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Рассмотрены основные моменты настройки iptables в Centos 7 - установка, добавление правил, проброс портов, nat, логирование и д.р.">
+<meta name="robots" content="noodp">
+<link rel="canonical" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Настройка iptables в CentOS 7">
+<meta property="og:description" content="Рассмотрены основные моменты настройки iptables в Centos 7 - установка, добавление правил, проброс портов, nat, логирование и д.р.">
+<meta property="og:url" content="https://serveradmin.ru/nastroyka-iptables-v-centos-7/">
+<meta property="og:site_name" content="Системное администрирование">
+<meta property="article:tag" content="centos">
+<meta property="article:tag" content="firewall">
+<meta property="article:tag" content="firewalld">
+<meta property="article:tag" content="iptables">
+<meta property="article:tag" content="sysconfig">
+<meta property="article:section" content="CentOS">
+<meta property="article:published_time" content="2015-10-18T05:01:48+00:00">
+<meta property="article:modified_time" content="2015-10-31T17:35:04+00:00">
+<meta property="og:updated_time" content="2015-10-31T17:35:04+00:00">
+<meta property="og:image" content="https://serveradmin.ru/wp-content/uploads/2015/10/logo-iptables.png">
+<meta property="og:image:width" content="600">
+<meta property="og:image:height" content="320">
+<!-- / Yoast SEO plugin. -->
+
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Системное администрирование » Лента" href="https://serveradmin.ru/feed/">
+<link rel="alternate" type="application/rss+xml" title="Системное администрирование » Лента комментариев" href="https://serveradmin.ru/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Системное администрирование » Лента комментариев к «Настройка iptables в CentOS 7»" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/feed/">
+		<script src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/recaptcha__ru.js" async="" type="text/javascript"></script><script src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/watch.js" async="" type="text/javascript"></script><script src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/code.js" id="topmailru-code" async="" type="text/javascript"></script><script async="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/context.js" type="text/javascript"></script><script async="" type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/context.js"></script><script src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/analytics.js" async=""></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/serveradmin.ru\/wp-includes\/js\/wp-emoji-release.min.js"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),!(j.toDataURL().length<3e3)&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,65039,8205,55356,57096),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,55356,57096),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55357,56425,55356,57341,8205,55357,56507),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55357,56425,55356,57341,55357,56507),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script defer="defer" type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/wp-emoji-release.js"></script><style type="text/css">img[src="https://informer.yandex.ru/informer/23506456/3_0_FFB953FF_FF9933FF_0_pageviews"],
+img[src="//top-fwz1.mail.ru/counter?id=2722258;t=494;l=1"]
+{display:none !important;}</style>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="toc-screen-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/screen.css" type="text/css" media="all">
+<link rel="stylesheet" id="wpforo-widgets-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/widgets.css" type="text/css" media="all">
+<link rel="stylesheet" id="tie-style-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="tie-ilightbox-skin-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/skin.css" type="text/css" media="all">
+<link rel="stylesheet" id="Droid+Sans-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/css.css" type="text/css" media="all">
+<!-- This site uses the Google Analytics by MonsterInsights plugin v6.2.0 - Using Analytics tracking - https://www.monsterinsights.com/ -->
+<script type="text/javascript" data-cfasync="false">
+	/* Function to detect opted out users */
+	function __gaTrackerIsOptedOut() {
+		return document.cookie.indexOf(disableStr + '=true') > -1;
+	}
+
+	/* Disable tracking if the opt-out cookie exists. */
+	var disableStr = 'ga-disable-UA-46725791-1';
+	if ( __gaTrackerIsOptedOut() ) {
+		window[disableStr] = true;
+	}
+
+	/* Opt-out function */
+	function __gaTrackerOptout() {
+	  document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+	  window[disableStr] = true;
+	}
+
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
+
+	__gaTracker('create', 'UA-46725791-1', 'auto');
+	__gaTracker('set', 'forceSSL', true);
+	__gaTracker('send','pageview');
+</script>
+<!-- / Google Analytics by MonsterInsights -->
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/jquery.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/jquery-migrate.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var tieViewsCacheL10n = {"admin_ajax_url":"https:\/\/serveradmin.ru\/wp-admin\/admin-ajax.php","post_id":"1996"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/postviews-cache.js"></script>
+<link rel="https://api.w.org/" href="https://serveradmin.ru/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://serveradmin.ru/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://serveradmin.ru/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 4.7.5">
+<link rel="shortlink" href="https://serveradmin.ru/?p=1996">
+<link rel="alternate" type="application/json+oembed" href="https://serveradmin.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fserveradmin.ru%2Fnastroyka-iptables-v-centos-7%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://serveradmin.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fserveradmin.ru%2Fnastroyka-iptables-v-centos-7%2F&amp;format=xml">
+<style type="text/css">div#toc_container {background: #f9f9f9;border: 1px solid #aaaaaa;width: 100%;}div#toc_container ul li {font-size: 15px;}</style>		<script type="text/javascript">
+			jQuery(document).ready(function($){
+				$(document).on('click','.attach_cant_view', function(){
+					$("#wpf-msg-box").hide();
+					$('#wpforo-load').visible();
+					$("#wpf-msg-box p.wpf-msg-box-triangle-right").removeClass("error").removeClass("success");
+					$("#wpf-msg-box p.wpf-msg-box-triangle-right").html("<span>Пожалуйста, <a href=\"https://serveradmin.ru/forum/?wpforo=signin\" rel=\"nofollow\">Вход</a> или <a href=\"https://serveradmin.ru/forum/?wpforo=signup\" rel=\"nofollow\">Зарегистрироваться</a></span>");
+					$("#wpf-msg-box").show(150).delay(1000);
+					$('#wpforo-load').invisible();
+				});
+			});
+		</script>
+		<link rel="shortcut icon" href="https://serveradmin.ru/wp-content/uploads/2015/08/favicon.ico" title="Favicon">	
+<!--[if IE]>
+<script type="text/javascript">jQuery(document).ready(function (){ jQuery(".menu-item").has("ul").children("a").attr("aria-haspopup", "true");});</script>
+<![endif]-->	
+<!--[if lt IE 9]>
+<script src="https://serveradmin.ru/wp-content/themes/sahifa/js/html5.js"></script>
+<script src="https://serveradmin.ru/wp-content/themes/sahifa/js/selectivizr-min.js"></script>
+<![endif]-->
+<!--[if IE 9]>
+<link rel="stylesheet" type="text/css" media="all" href="https://serveradmin.ru/wp-content/themes/sahifa/css/ie9.css" />
+<![endif]-->
+<!--[if IE 8]>
+<link rel="stylesheet" type="text/css" media="all" href="https://serveradmin.ru/wp-content/themes/sahifa/css/ie8.css" />
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" media="all" href="https://serveradmin.ru/wp-content/themes/sahifa/css/ie7.css" />
+<![endif]-->
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/kwork_widget.js" async="" type="text/javascript"></script></head><body id="top" class="post-template-default single single-post postid-1996 single-format-standard"><div style="outline-style: none; border-style: none; padding: 0px; margin: 0px; visibility: visible; width: 50px; height: 4px; font-size: 4px; line-height: 4px; vertical-align: baseline; display: block; position: absolute; right: 0px; top: 0px;" id="plugindetect"><span style="outline-style: none; border-style: none; padding: 0px; margin: 0px; visibility: visible; font-size: 4px; line-height: 4px; vertical-align: baseline; display: inline;"><object style="outline-style:none;border-style:none;padding:0px;margin:0px;visibility:visible;display:inline;" type="application/x-shockwave-flash" height="1" width="1"></object></span></div>&lt; meta name="referrer" content="origin"&gt;
+
+<style type="text/css" media="screen"> 
+
+	
+body {
+	background-image : url(https://serveradmin.ru/wp-content/themes/sahifa/images/patterns/body-bg15.png);
+	background-position: top center;
+}
+
+body.single .post .entry a, body.page .post .entry a {
+	color: #e6773c;
+}
+		
+</style> 
+
+
+<!-- BEGIN recaptcha, injected by plugin wp-recaptcha-integration  -->
+
+<!-- END recaptcha -->
+
+
+
+<div class="wrapper-outer">
+
+	<div class="background-cover"></div>
+
+	<aside id="slide-out">
+	
+			<div class="search-mobile">
+			<form method="get" id="searchform-mobile" action="https://serveradmin.ru/">
+				<button class="search-button" type="submit" value="Поищем"><i class="fa fa-search"></i></button>	
+				<input id="s-mobile" name="s" title="Поищем" value="Поищем" onfocus="if (this.value == 'Поищем') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Поищем';}" type="text">
+			</form>
+		</div><!-- .search-mobile /-->
+		
+		
+		<div id="mobile-menu"><div class="main-menu"><ul id="menu-osnovnoe" class="menu"><li id="menu-item-1934" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1934"><a href="https://serveradmin.ru/">Главная</a></li>
+<li id="menu-item-3761" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3761"><a target="_blank" href="https://serveradmin.ru/forum/"><i class="fa fa-comments-o"></i>Форум</a></li>
+<li id="menu-item-1921" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1921"><a><i class="fa fa-server"></i>Системы</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-1932" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1932"><a href="https://serveradmin.ru/category/freebsd/">Freebsd</a></li>
+	<li id="menu-item-1922" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-1922"><a href="https://serveradmin.ru/category/linux/centos/">CentOS</a></li>
+	<li id="menu-item-1923" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1923"><a href="https://serveradmin.ru/category/linux/debian/">Debian</a></li>
+	<li id="menu-item-1924" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1924"><a href="https://serveradmin.ru/category/windows/">Windows</a></li>
+	<li id="menu-item-1925" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1925"><a href="https://serveradmin.ru/category/synology/">Synology</a></li>
+</ul>
+<i class="mobile-arrows fa fa-chevron-down"></i></li>
+<li id="menu-item-5106" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-5106"><a><i class="fa fa-list-ul"></i>Сервисы</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-5112" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5112"><a href="https://serveradmin.ru/tag/gate/">Шлюз</a></li>
+	<li id="menu-item-5110" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5110"><a href="https://serveradmin.ru/tag/webserver/">Веб сервер</a></li>
+	<li id="menu-item-5107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5107"><a href="https://serveradmin.ru/tag/mailserver">Почтовый сервер</a></li>
+	<li id="menu-item-5114" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5114"><a href="https://serveradmin.ru/tag/sysconfig/">Настройка системы</a></li>
+	<li id="menu-item-5113" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5113"><a href="https://serveradmin.ru/tag/backup/">Бэкап</a></li>
+</ul>
+<i class="mobile-arrows fa fa-chevron-down"></i></li>
+<li id="menu-item-1927" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-1927"><a href="https://serveradmin.ru/category/virtual/"><i class="fa fa-cloud"></i>Виртуализация</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-1928" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1928"><a href="https://serveradmin.ru/category/virtual/hyperv/">Hyper-V</a></li>
+	<li id="menu-item-1929" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1929"><a href="https://serveradmin.ru/category/virtual/vmware/">VMware</a></li>
+	<li id="menu-item-1972" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1972"><a href="https://serveradmin.ru/category/virtual/xenserver/">XenServer</a></li>
+	<li id="menu-item-3700" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3700"><a href="https://serveradmin.ru/category/virtual/proxmox/">Proxmox</a></li>
+	<li id="menu-item-4903" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-4903"><a href="https://serveradmin.ru/category/virtual/kvm/">KVM</a></li>
+</ul>
+<i class="mobile-arrows fa fa-chevron-down"></i></li>
+<li id="menu-item-1926" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1926"><a href="https://serveradmin.ru/category/mikrotik/"><i class="fa fa-maxcdn"></i>Mikrotik</a></li>
+<li id="menu-item-2272" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2272"><a><i class="fa fa-binoculars"></i>Мониторинг</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-2273" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2273"><a href="https://serveradmin.ru/category/zabbix/">Zabbix</a></li>
+</ul>
+<i class="mobile-arrows fa fa-chevron-down"></i></li>
+<li id="menu-item-3340" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3340"><a href="https://serveradmin.ru/category/asterisk/"><i class="fa fa-phone-square"></i>Asterisk</a></li>
+<li id="menu-item-4832" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-4832"><a href="https://serveradmin.ru/category/1c/"><i class="fa fa-copyright"></i>1C</a></li>
+<li id="menu-item-1930" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1930"><a href="https://serveradmin.ru/category/virus/"><i class="fa fa-exclamation-circle"></i>Осторожно, вирус!</a></li>
+<li id="menu-item-1931" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1931"><a href="https://serveradmin.ru/category/poleznyie-sovetyi/"><i class="fa fa-cogs"></i>Советы</a></li>
+<li id="menu-item-2803" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2803"><a href="https://serveradmin.ru/category/errors/"><i class="fa fa-times-circle"></i>Ошибки</a></li>
+<li id="menu-item-3205" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3205"><a href="https://serveradmin.ru/category/lichnoe/"><i class="fa fa-android"></i>Личное</a></li>
+</ul></div></div>
+	</aside><!-- #slide-out /-->
+
+		<div id="wrapper" class="boxed-all">
+		<div class="inner-wrapper">
+
+		<header id="theme-header" class="theme-header">
+						<div id="top-nav" class="top-nav">
+				<div class="container">
+
+								
+				<div class="top-menu"><ul id="menu-menyu-1" class="menu"><li id="menu-item-522" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-522"><a href="https://serveradmin.ru/">Главная</a></li>
+<li id="menu-item-636" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-636"><a href="https://serveradmin.ru/karta-sayta/">Карта сайта</a></li>
+<li id="menu-item-1183" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1183"><a href="https://serveradmin.ru/zakazat-statyu/">Заказать статью</a></li>
+<li id="menu-item-2592" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2592"><a href="https://serveradmin.ru/uslugi/">Услуги</a></li>
+<li id="menu-item-2593" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2593"><a href="https://serveradmin.ru/kontaktyi/">Контакты</a></li>
+</ul></div>
+						<div class="search-block">
+						<form method="get" id="searchform-header" action="https://serveradmin.ru/">
+							<button class="search-button" type="submit" value="Поищем"><i class="fa fa-search"></i></button>	
+							<input class="search-live" id="s-header" name="s" title="Поищем" value="Поищем" onfocus="if (this.value == 'Поищем') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Поищем';}" type="text">
+						</form>
+					</div><!-- .search-block /-->
+			<div class="social-icons">
+		<a class="ttip-none" title="Rss" href="https://serveradmin.ru/feed/" target="_blank"><i class="fa fa-rss"></i></a>		
+			</div>
+
+		
+	
+				</div><!-- .container /-->
+			</div><!-- .top-menu /-->
+			
+		<div class="header-content">
+		
+					<a id="slide-out-open" class="slide-out-open" href="#"><span></span></a>
+				
+			<div class="logo">
+			<h2>								<a title="Системное администрирование" href="https://serveradmin.ru/">
+					<img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/logo-new.png" alt="Системное администрирование"><strong>Системное
+ администрирование Сайт содержит статьи, обзоры, инструкции по 
+установке, настройке и администрированию различных информационных систем</strong>
+				</a>
+			</h2>			</div><!-- .logo /-->
+			<div class="e3lan e3lan-top">			<script async="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/adsbygoogle.js"></script>
+<!-- adaptive - шапка -->
+<ins oqistp5="" class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1310661631569687" data-ad-slot="4429939859" data-ad-format="auto" hidden=""></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>				</div>			<div class="clear"></div>
+			
+		</div>	
+													<nav id="main-nav">
+				<div class="container">
+				
+				
+					<div class="main-menu"><ul id="menu-osnovnoe" class="menu"><li id="menu-item-1934" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1934"><a href="https://serveradmin.ru/">Главная</a></li>
+<li id="menu-item-3761" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3761"><a target="_blank" href="https://serveradmin.ru/forum/"><i class="fa fa-comments-o"></i>Форум</a></li>
+<li id="menu-item-1921" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1921"><a><i class="fa fa-server"></i>Системы</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-1932" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1932"><a href="https://serveradmin.ru/category/freebsd/">Freebsd</a></li>
+	<li id="menu-item-1922" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-1922"><a href="https://serveradmin.ru/category/linux/centos/">CentOS</a></li>
+	<li id="menu-item-1923" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1923"><a href="https://serveradmin.ru/category/linux/debian/">Debian</a></li>
+	<li id="menu-item-1924" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1924"><a href="https://serveradmin.ru/category/windows/">Windows</a></li>
+	<li id="menu-item-1925" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1925"><a href="https://serveradmin.ru/category/synology/">Synology</a></li>
+</ul>
+</li>
+<li id="menu-item-5106" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-5106"><a><i class="fa fa-list-ul"></i>Сервисы</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-5112" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5112"><a href="https://serveradmin.ru/tag/gate/">Шлюз</a></li>
+	<li id="menu-item-5110" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5110"><a href="https://serveradmin.ru/tag/webserver/">Веб сервер</a></li>
+	<li id="menu-item-5107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5107"><a href="https://serveradmin.ru/tag/mailserver">Почтовый сервер</a></li>
+	<li id="menu-item-5114" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5114"><a href="https://serveradmin.ru/tag/sysconfig/">Настройка системы</a></li>
+	<li id="menu-item-5113" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5113"><a href="https://serveradmin.ru/tag/backup/">Бэкап</a></li>
+</ul>
+</li>
+<li id="menu-item-1927" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-1927"><a href="https://serveradmin.ru/category/virtual/"><i class="fa fa-cloud"></i>Виртуализация</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-1928" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1928"><a href="https://serveradmin.ru/category/virtual/hyperv/">Hyper-V</a></li>
+	<li id="menu-item-1929" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1929"><a href="https://serveradmin.ru/category/virtual/vmware/">VMware</a></li>
+	<li id="menu-item-1972" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1972"><a href="https://serveradmin.ru/category/virtual/xenserver/">XenServer</a></li>
+	<li id="menu-item-3700" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3700"><a href="https://serveradmin.ru/category/virtual/proxmox/">Proxmox</a></li>
+	<li id="menu-item-4903" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-4903"><a href="https://serveradmin.ru/category/virtual/kvm/">KVM</a></li>
+</ul>
+</li>
+<li id="menu-item-1926" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1926"><a href="https://serveradmin.ru/category/mikrotik/"><i class="fa fa-maxcdn"></i>Mikrotik</a></li>
+<li id="menu-item-2272" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2272"><a><i class="fa fa-binoculars"></i>Мониторинг</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-2273" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2273"><a href="https://serveradmin.ru/category/zabbix/">Zabbix</a></li>
+</ul>
+</li>
+<li id="menu-item-3340" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3340"><a href="https://serveradmin.ru/category/asterisk/"><i class="fa fa-phone-square"></i>Asterisk</a></li>
+<li id="menu-item-4832" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-4832"><a href="https://serveradmin.ru/category/1c/"><i class="fa fa-copyright"></i>1C</a></li>
+<li id="menu-item-1930" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1930"><a href="https://serveradmin.ru/category/virus/"><i class="fa fa-exclamation-circle"></i>Осторожно, вирус!</a></li>
+<li id="menu-item-1931" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1931"><a href="https://serveradmin.ru/category/poleznyie-sovetyi/"><i class="fa fa-cogs"></i>Советы</a></li>
+<li id="menu-item-2803" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2803"><a href="https://serveradmin.ru/category/errors/"><i class="fa fa-times-circle"></i>Ошибки</a></li>
+<li id="menu-item-3205" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3205"><a href="https://serveradmin.ru/category/lichnoe/"><i class="fa fa-android"></i>Личное</a></li>
+</ul></div>					
+					
+				</div>
+			</nav><!-- .main-nav /-->
+					</header><!-- #header /-->
+	
+		
+	
+	
+	<div id="main-content" class="container">
+			
+		
+	
+	
+		
+	<div class="content">
+	
+				
+		<div xmlns:v="http://rdf.data-vocabulary.org/#" id="crumbs"><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" class="crumbs-home" href="https://serveradmin.ru/">Home</a></span> <span class="delimiter">»</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="https://serveradmin.ru/category/linux/">Linux</a></span> <span class="delimiter">»</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="https://serveradmin.ru/category/linux/centos/">CentOS</a></span> <span class="delimiter">»</span> <span class="current">Настройка iptables в CentOS 7</span></div>
+					
+				
+						
+		<article class="post-listing post-1996 post type-post status-publish format-standard has-post-thumbnail hentry category-centos category-linux tag-centos tag-firewall tag-firewalld tag-iptables tag-sysconfig" id="the-post">
+			
+			<div class="post-inner">
+			
+							<h1 class="name post-title entry-title" itemprop="itemReviewed" itemscope="" itemtype="http://schema.org/Thing"><span itemprop="name">Настройка iptables в CentOS 7</span></h1>
+
+						
+<p class="post-meta">
+	
+		
+	<span class="tie-date"><i class="fa fa-clock-o"></i>Обновлено: 31.10.2015</span>	
+		
+	<span class="tie-date"><i class="fa fa-clock-o"></i>Написано: 18.10.2015</span>	
+	<span class="post-cats"><i class="fa fa-folder"></i><a href="https://serveradmin.ru/category/linux/centos/" rel="category tag">CentOS</a>, <a href="https://serveradmin.ru/category/linux/" rel="category tag">Linux</a></span>
+	
+	<span class="post-comments"><i class="fa fa-comments"></i><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comments">24 комментария</a></span>
+<span class="post-views"><i class="fa fa-eye"></i>84,947 Views</span> </p>
+<div class="clear"></div>
+			
+				<div class="entry">
+					
+					
+					<p style="text-align: justify;">На защиту сервера от внешних угроз в
+ первую очередь встает межсетевой экран, который фильтрует входящий и 
+исходящий траффик. Настройкой iptables — частного случая фаервола на 
+CentOS я хочу заняться в данной статье,&nbsp;а также рассказать о его 
+установке и отключении. Мое руководство не будет исчерпывающим, я 
+рассмотрю лишь те аспекты, которые считаю наиболее важными и сам 
+использую в своей работе.</p>
+<p><span id="more-1996"></span></p>
+<div id="toc_container" class="no_bullets"><p class="toc_title">Содержание:</p><ul class="toc_list"><li><a href="#i"><span class="toc_number toc_depth_1">1</span> Вступление</a></li><li><a href="#_firewalld"><span class="toc_number toc_depth_1">2</span> Отключение firewalld</a></li><li><a href="#_iptables"><span class="toc_number toc_depth_1">3</span> Установка iptables</a></li><li><a href="#i-2"><span class="toc_number toc_depth_1">4</span> Настройка фаервола</a></li><li><a href="#i-3"><span class="toc_number toc_depth_1">5</span> Открытие портов</a></li><li><a href="#_forward"><span class="toc_number toc_depth_1">6</span> Проброс (forward) порта</a></li><li><a href="#i-4"><span class="toc_number toc_depth_1">7</span> Включение логов</a></li><li><a href="#_iptables-2"><span class="toc_number toc_depth_1">8</span> Как отключить iptables</a></li><li><a href="#i-5"><span class="toc_number toc_depth_1">9</span> Заключение</a></li><li><a href="#i-6"><span class="toc_number toc_depth_1">10</span> Видео</a></li><li><a href="#__CentOS"><span class="toc_number toc_depth_1">11</span> Дополнительные материалы по CentOS</a></li></ul></div>
+
+<h2><span id="i">Вступление</span></h2>
+<p style="text-align: justify;">Iptables в настоящее время является 
+стандартом де-факто в среде современных linux дистрибутивов. Я даже 
+сходу не могу припомнить, что еще используют в качестве фаервола. Так 
+что любому администратору линукс приходится сталкиваться в своей работе с
+ настройкой этого межсетевого экрана.</p>
+<p style="text-align: justify;">К этому фаерволу&nbsp;существуют разные обвязки, которые используются для более «удобной» настройки. В ubuntu есть <strong>ufw</strong>, в centos — <strong>firewalld</strong>,
+ с другими не знаком. Лично я не вижу никакого удобства в использовании 
+этих инструментов. Я привык настраивать линуксовый 
+фаервол&nbsp;по-старинке, как научился в самом начале работы. Мне 
+кажется это наиболее простым и удобным способом, которым я с вами и 
+поделюсь. Суть его сводится к тому, что создается скрипт с правилами 
+фаервола. Этот скрипт можно легко редактировать под свои нужды и 
+переносить с сервера на сервер.</p>
+<h2><span id="_firewalld">Отключение firewalld</span></h2>
+<p>Вопрос отключения firewalld я уже касался в теме по <a href="https://serveradmin.ru/centos-7-nastroyka-servera/" target="_blank">настройке сервера</a>. Первым делом отключим firewalld, который присутствует в centos 7 по-умолчанию сразу после установки:</p>
+<pre># systemctl stop firewalld</pre>
+<p>Теперь удалим его из автозагрузки, чтобы он не включился снова после рестарта:</p>
+<pre># systemctl disable firewalld
+</pre>
+<p>После этого на сервере настройки сетевого экрана становятся полностью
+ открытыми. Посмотреть&nbsp;правила iptables можно командой:</p>
+<pre>#&nbsp;iptables -L -v -n</pre>
+<p><img class="aligncenter size-full wp-image-2012" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/iptables-rules.png" alt="Просмотр правил iptables" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/iptables-rules.png 692w, https://serveradmin.ru/wp-content/uploads/2015/10/iptables-rules-300x76.png 300w" sizes="(max-width: 692px) 100vw, 692px" height="176" width="692"></p>
+<div class="box info  "><div class="box-inner-block"><i class="fa tie-shortcode-boxicon"></i>
+			Дальше пойдет информация исключительно по 
+конфигурированию&nbsp;только&nbsp;iptables. Темы firewalld я больше 
+касаться не буду.
+			</div></div>
+<h2><span id="_iptables">Установка iptables</span></h2>
+<p style="text-align: justify;">На самом деле фаервол&nbsp;у нас на 
+сервере уже стоит и работает, просто нет никаких правил, все открыто. 
+Установить нам нужно будет дополнительные утилиты управления, без 
+которых конфигурировать iptables&nbsp;невозможно. Например, нельзя будет
+ перезапустить фаервол:</p>
+<pre># systemctl restart iptables.service
+Failed to issue method call: Unit iptables.service failed to load: No such file or directory.</pre>
+<p>Или добавить в автозапуск не получится:</p>
+<pre># systemctl enable iptables.service
+Failed to issue method call: No such file or directory</pre>
+<p>Чтобы подобных ошибок не было, установим необходимый пакет с утилитами:</p>
+<pre># yum -y install iptables-services</pre>
+<p>Теперь можно добавить iptables в автозагрузку и запустить:</p>
+<pre># systemctl enable iptables.service
+# systemctl start iptables.service</pre>
+<h2><span id="i-2">Настройка фаервола</span></h2>
+<p>Для управления правилами фаервола&nbsp;я использую скрипт. Создадим его:</p>
+<pre>#&nbsp;mcedit&nbsp;/etc/iptables.sh</pre>
+<p style="text-align: justify;">Далее будем наполнять его необходимыми правилами. Я буду разбирать все значимые части скрипта, а <strong>полностью его приведу в виде текстового файла в конце статьи</strong>.
+ Правила сделаны в виде картинок, чтобы запретить копирование и вставку.
+ Это может привести к ошибкам в работе правил, с чем я сам столкнулся во
+ время подготовки статьи.</p>
+<p style="text-align: justify;">Мы рассмотрим ситуацию, когда сервер является шлюзом в интернет для локальной сети.</p>
+<p style="text-align: justify;">Первым делом зададим все переменные, 
+которые будем использовать в скрипте. Это не обязательно делать, но 
+рекомендуется, потому что удобно переносить настройки с сервера на 
+сервер. Достаточно будет просто переназначить переменные.</p>
+<p><img class="aligncenter wp-image-2015 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-00-16.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-00-16.png 739w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-00-16-300x69.png 300w" sizes="(max-width: 739px) 100vw, 739px" height="169" width="739"></p>
+<p>Перед применением новых правил, очищаем все цепочки:</p>
+<p><img class="aligncenter wp-image-2016 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-00-29.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-00-29.png 739w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-00-29-300x53.png 300w" sizes="(max-width: 739px) 100vw, 739px" height="130" width="739"></p>
+<p>Блокируем весь трафик, который не соответствует ни одному из правил:</p>
+<p><img class="aligncenter wp-image-2017 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-00-38.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-00-38.png 738w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-00-38-300x30.png 300w" sizes="(max-width: 738px) 100vw, 738px" height="74" width="738"></p>
+<p>Разрешаем весь трафик локалхоста и локалки:</p>
+<p><img class="aligncenter wp-image-2018 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-00-48.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-00-48.png 738w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-00-48-300x37.png 300w" sizes="(max-width: 738px) 100vw, 738px" height="91" width="738"></p>
+<p>Разрешаем делать ping:</p>
+<p><img class="aligncenter wp-image-2019 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-00-57.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-00-57.png 740w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-00-57-300x37.png 300w" sizes="(max-width: 740px) 100vw, 740px" height="92" width="740"></p>
+<p>Если вам это не нужно, то не добавляйте разрешающие правила для icmp.</p>
+<p>Открываем доступ в инет самому серверу:</p>
+<p><img class="aligncenter wp-image-2020 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-01-06.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-01-06.png 738w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-01-06-300x14.png 300w" sizes="(max-width: 738px) 100vw, 738px" height="35" width="738"></p>
+<p>Если вы хотите открыть все входящие соединения сервера, то добавляйте дальше правило:</p>
+<p><img class="aligncenter wp-image-2021 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-01-11.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-01-11.png 739w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-01-11-300x14.png 300w" sizes="(max-width: 739px) 100vw, 739px" height="35" width="739"></p>
+<p>Делать это не рекомендуется, привожу просто для примера, если у вас появится такая необходимость.</p>
+<p style="text-align: justify;">Дальше разрешим все установленные 
+соединения и дочерние от них. Так как они уже установлены, значит прошли
+ через цепочки правил, фильтровать их еще раз нет смысла:</p>
+<p><img class="aligncenter wp-image-2022 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-01-21.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-01-21.png 740w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-01-21-300x31.png 300w" sizes="(max-width: 740px) 100vw, 740px" height="76" width="740"></p>
+<p>Теперь добавим защиту от наиболее распространенных сетевых атак. Сначала отбросим все пакеты, которые не имеют никакого статуса:</p>
+<p><img class="aligncenter wp-image-2023 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-01-34.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-01-34.png 737w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-01-34-300x22.png 300w" sizes="(max-width: 737px) 100vw, 737px" height="54" width="737"></p>
+<p>Блокируем нулевые пакеты:</p>
+<p><img class="aligncenter wp-image-2024 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-01-42.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-01-42.png 740w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-01-42-300x15.png 300w" sizes="(max-width: 740px) 100vw, 740px" height="37" width="740"></p>
+<p>Закрываемся от&nbsp;syn-flood атак:</p>
+<p><img class="aligncenter wp-image-2025 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-01-47.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-01-47.png 739w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-01-47-300x23.png 300w" sizes="(max-width: 739px) 100vw, 739px" height="56" width="739"></p>
+<p style="text-align: justify;">Следом за этими правилами рекомендуется 
+поставить правила на запрет доступа с определенных IP, если у вас 
+имеется такая необходимость. Например, вас задолбал адрес 84.122.21.197 
+брутом ssh. Блокируем его:</p>
+<p><img class="aligncenter wp-image-2026 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-01-57.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-01-57.png 739w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-01-57-300x15.png 300w" sizes="(max-width: 739px) 100vw, 739px" height="37" width="739"></p>
+<p>Если вы не ставите ограничений на доступ из локальной сети, то разрешаем всем выход&nbsp;в интернет:</p>
+<p><img class="aligncenter wp-image-2027 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-02-05.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-02-05.png 740w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-02-05-300x15.png 300w" sizes="(max-width: 740px) 100vw, 740px" height="38" width="740"></p>
+<p>Следом запрещаем доступ из инета в локальную сеть:</p>
+<p><img class="aligncenter wp-image-2028 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-02-14.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-02-14.png 741w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-02-14-300x15.png 300w" sizes="(max-width: 741px) 100vw, 741px" height="36" width="741"></p>
+<p>Чтобы наша локальная сеть пользовалась интернетом, включаем nat:</p>
+<p><img class="aligncenter wp-image-2029 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-02-23.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-02-23.png 739w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-02-23-300x15.png 300w" sizes="(max-width: 739px) 100vw, 739px" height="37" width="739"></p>
+<p>Чтобы не потерять доступ к серверу, после применения правил, разрешаем подключения по ssh:</p>
+<p><img class="aligncenter wp-image-2030 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-02-28.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-02-28.png 738w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-02-28-300x15.png 300w" sizes="(max-width: 738px) 100vw, 738px" height="37" width="738"></p>
+<p>И в конце записываем правила, чтобы они применились после перезагрузки:</p>
+<p><img class="aligncenter wp-image-2031 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-02-37.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-02-37.png 737w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-02-37-300x14.png 300w" sizes="(max-width: 737px) 100vw, 737px" height="35" width="737"></p>
+<p>Мы составили простейший конфиг, который блокирует все входящие 
+соединения, кроме ssh и разрешает доступ из локальной сети в интернет. 
+Попутно защитились от некоторых сетевых атак.</p>
+<p>Сохраняем скрипт, делаем исполняемым и запускаем:</p>
+<pre># chmod 0740 /etc/iptables.sh
+# /etc/iptables.sh</pre>
+<p>Выполним просмотр правил и проверим, все ли правила на месте:</p>
+<pre># iptables -L -v -n</pre>
+<div class="box warning  "><div class="box-inner-block"><i class="fa tie-shortcode-boxicon"></i>
+			Обращаю ваше внимание — применять правила нужно лишь в том случае, 
+если у вас имеется доступ к консоли сервера. При ошибке в настройках вы 
+можете потерять доступ. Убедитесь, что в нештатной ситуации вы сможете 
+отключить фаервол и скорректировать настройки.
+			</div></div>
+<h2><span id="i-3">Открытие портов</span></h2>
+<p style="text-align: justify;">Теперь немного расширим нашу 
+конфигурацию и откроем в iptables порты для некоторых сервисов. 
+Допустим, у нас работает веб-сервер и необходимо открыть к нему доступ 
+из интернета. Добавляем правила для веб-трафика:</p>
+<p><img class="aligncenter wp-image-2032 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-02-45.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-02-45.png 738w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-02-45-300x22.png 300w" sizes="(max-width: 738px) 100vw, 738px" height="54" width="738"></p>
+<p>Было добавлено разрешение на входящие соединения по 80-му и 443-му портам, которые использует web сервер в своей работе.</p>
+<p>Если у вас установлен почтовый сервер, то нужно разрешить на него входящие соединения по всем используемым портам:</p>
+<p><img class="aligncenter wp-image-2033 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-03-00.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-03-00.png 738w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-03-00-300x52.png 300w" sizes="(max-width: 738px) 100vw, 738px" height="127" width="738"></p>
+<p>Для корректной работы DNS сервера, нужно открыть UDP порт 53</p>
+<p><img class="aligncenter wp-image-2034 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-03-06.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-03-06.png 738w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-03-06-300x15.png 300w" sizes="(max-width: 738px) 100vw, 738px" height="36" width="738"></p>
+<p>И так далее. По аналогии можете открыть доступ для всех необходимых сервисов.</p>
+<h2><span id="_forward">Проброс (forward) порта</span></h2>
+<p style="text-align: justify;">Рассмотрим ситуацию, когда необходимо 
+выполнить проброс портов с внешнего интерфейса на какой-то компьютер в 
+локальной сети. Допустим, вам необходимо получить rdp доступ к 
+компьютеру 10.1.3.50 из интернета. Делаем проброс TCP порта 3389:</p>
+<p><img class="aligncenter wp-image-2035 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-03-15.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-03-15.png 739w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-03-15-300x15.png 300w" sizes="(max-width: 739px) 100vw, 739px" height="37" width="739"></p>
+<p>Если вы не хотите светить снаружи известным портом, то можно сделать 
+перенаправление с нестандартного порта на порт rdp конечного компьютера:</p>
+<p><img class="aligncenter wp-image-2036 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-03-23.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-03-23.png 741w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-03-23-300x15.png 300w" sizes="(max-width: 741px) 100vw, 741px" height="36" width="741"></p>
+<div class="box warning  "><div class="box-inner-block"><i class="fa tie-shortcode-boxicon"></i>
+			Если вы пробрасываете порт снаружи внутрь локальной сети, то 
+обязательно закомментируйте правило, которое блокирует доступ из внешней
+ сети во внутреннюю. В моем примере это правило:<p></p>
+<pre>$IPT -A FORWARD -i $WAN -o $LAN1 -j REJECT</pre>
+<p>Либо перед этим правилом создайте разрешающее правило для доступа снаружи к внутреннему сервису, например вот так:</p>
+<pre>$IPT -A FORWARD -i $WAN -d 10.1.3.50 -p tcp -m tcp --dport 3389&nbsp;-j ACCEPT</pre>
+
+			</div></div>
+<h2><span id="i-4">Включение логов</span></h2>
+<p style="text-align: justify;">Во время настройки полезно включить 
+логи, чтобы мониторить заблокированные пакеты и выяснять, почему 
+отсутствует доступ к необходимым сервисам, которые мы вроде бы уже 
+открыли. Я отправляю все заблокированные пакеты в отдельные цепочки 
+(block_in, block_out, block_fw), соответствующие направлению трафика и 
+маркирую в логах каждое направление. Так удобнее делать разбор полетов. 
+Добавляем следующие правила в самый конец скрипта, перед сохранением 
+настроек:</p>
+<p><img class="aligncenter wp-image-2037 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/18-10-2015-04-04-11.png" alt="" srcset="https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-04-11.png 740w, https://serveradmin.ru/wp-content/uploads/2015/10/18-10-2015-04-04-11-300x116.png 300w" sizes="(max-width: 740px) 100vw, 740px" height="285" width="740"></p>
+<p>Все заблокированные пакеты вы сможете отследить в файле /var/log/messages.</p>
+<p style="text-align: justify;">После того, как закончите настройку, 
+закомментируйте эти строки, отключив логирование. Обязательно стоит это 
+сделать, так как логи очень быстро разрастаются. Практического смысла в 
+хранении подобной информации&nbsp;лично я не вижу.</p>
+<h2><span id="_iptables-2">Как отключить iptables</span></h2>
+<p>Если вы вдруг решите, что firewall вам больше не нужен, то отключить его можно следующим образом:</p>
+<pre># systemctl stop iptables.service</pre>
+<p>Эта команда останавливает фаервол. А следующая удаляет из автозагрузки:</p>
+<pre># systemctl disable iptables.service</pre>
+<p>Отключив сетевой экран, мы разрешили все соединения.</p>
+<h2><span id="i-5">Заключение</span></h2>
+<p style="text-align: justify;">Как и обещал, выкладываю готовый скрипт с основным набором правил, которые мы рассмотрели <a href="https://serveradmin.ru/files/iptables.sh" target="_blank" class="shortc-button small red ">iptables.sh</a>
+</p><p style="text-align: justify;">Хочу&nbsp;еще раз обратить внимание,
+ что при настройке iptables необходимо быть предельно внимательным. Не 
+начинайте это дело, если не имеете доступа к консоли сервера. Даже во 
+время написания этой статьи я потерял доступ к серверу из-за нелепой 
+ошибке в правилах. Ошибка эта возникла из-за копирования и потери 
+двойного тире — оно заменилось на одинарное.</p>
+<p style="text-align: justify;">А представляете, если это был бы 
+удаленный сервер? Ко мне так обратился один знакомый, который попросил 
+настроить firewall на веб-сервере. Предыдущий админ заставил его 2 раза 
+приезжать к размещению машины&nbsp;и сбрасывать настройки неправильно 
+сконфигурированного экрана, что в конечном счете и привело к прекращению
+ сотрудничества. Это было давно, но случай мне запомнился. Сейчас 
+практически все хостинги предлагают платно или бесплатно удаленный KVM 
+доступ. Лучше озаботиться об этом заранее.</p>
+<h2 style="text-align: justify;"><span id="i-6">Видео</span></h2>
+<p><div style="padding-top: 75%;" class="fluid-width-video-wrapper"><iframe id="fitvid213644" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/feYZqq7gFrM.htm" allowfullscreen="allowfullscreen" frameborder="0"></iframe></div></p>
+<!-- Start shortcoder --><hr>
+
+<h4 style="text-align: center;">Помогла статья? Есть возможность отблагодарить автора</h4>
+<p style="text-align: center;"><iframe src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/shop-widget.htm" scrolling="no" frameborder="0" height="258" width="450"></iframe></p><!-- End shortcoder v4.0.1-->
+<h2><span id="__CentOS">Дополнительные материалы по CentOS</span></h2>
+<!-- Start shortcoder --><div class="clear"></div><div style="margin-top:20px; margin-bottom:20px;" class="divider divider-normal"></div>
+<table class=" aligncenter" style="border-color: #e5e5e5;">
+<tbody>
+<tr>
+<td style="background-color: #e7f6ff; border-color: #e5e5e5; text-align: center;"><span style="color: #ff0000;"><strong><span style="color: #000000;">Рекомендую полезные материалы по <a href="https://serveradmin.ru/category/linux/centos/" target="_blank">CentOS</a>:</span></strong></span></td>
+</tr>
+<tr>
+<th style="text-align: center;">Настройки системы</th>
+</tr>
+<tr>
+<td style="border-color: #e5e5e5;">
+	<script type="text/javascript">	jQuery(document).ready(function($){	jQuery("ul.tabs-nav").tabs("> .pane"); }); </script>
+
+		<div class="post-tabs-ver">
+		
+<ul class="tabs-nav">
+<li class="current">Установка</li>
+<li><strong>Базовая настройка</strong></li>
+<li>Настройка времени</li>
+<li>Настройка сети</li>
+<li>Настройка репозиториев</li>
+<li>Настройка iptables</li>
+</ul>
+
+		<div style="display: block;" class="pane">
+		<a href="https://serveradmin.ru/ustanovka-centos-7/" target="_blank">Установка CentOS 7</a> в конфигурации minimal или netinstall с загрузочной флешки или по сети на диск или raid раздел.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		<a href="https://serveradmin.ru/centos-7-nastroyka-servera/" target="_blank">Базовая настройка CentOS 7</a> для работы с любым функционалом. Приведены практические советы по улучшению безопасности и удобства администрирования.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Как установить точное <a href="https://serveradmin.ru/ustanovka-nastroyka-i-sinhronizatsiya-vremeni-v-centos/" target="_blank">время на сервере CentOS</a>, настроить часовой пояс, синхронизировать время с помощью ntpdate и ntpd и другое.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Подробное описание <a href="https://serveradmin.ru/nastroyka-seti-v-centos/" target="_blank">настройки сети в CentOS 7</a> - задать ip адрес, dhcp, отключить ipv6, dns, hostname, статические маршруты и др.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Установка репозиториев epel, rpmforge и др. Добавление, удаление, обновление rpm <a href="https://serveradmin.ru/ustanovka-repozitoriya-epel-rpmforge-v-centos/" target="_blank">репозиториев в CentOS</a>.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Рассмотрены основные моменты <a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/" target="_blank">настройки iptables в Centos 7</a> - установка, добавление правил, проброс портов, nat, логирование и д.р.
+		</div>
+	
+
+		</div>
+	</td>
+</tr>
+<tr>
+<th style="text-align: center;">Настройка программных комплексов</th>
+</tr>
+<tr>
+<td style="border-color: #e5e5e5;">&nbsp;
+	<script type="text/javascript">	jQuery(document).ready(function($){	jQuery("ul.tabs-nav").tabs("> .pane"); }); </script>
+
+		<div class="post-tabs-ver">
+		
+<ul class="tabs-nav">
+<li class="current">Прокси сервер</li>
+<li>Шлюз</li>
+<li>Asterisk</li>
+<li>Asterisk+Freepbx</li>
+<li>Сервер VPN</li>
+<li>Web сервер Apache</li>
+<li>Web сервер Nginx</li>
+<li>Почтовый сервер</li>
+</ul>
+
+		<div style="display: block;" class="pane">
+		Подробное описание настройки прокси сервера на базе CentOS 7 со связкой <a href="https://serveradmin.ru/nastroyka-proksi-servera-na-centos-7-squid-ad-sams2/" target="_blank">squid+AD+sams2</a>, реализован запрет доступа по url и группам пользователей.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Простая и быстрая <a href="https://serveradmin.ru/nastroyka-shlyuza-dlya-lokalnoy-seti-na-centos-7/" target="_blank">настройка шлюза на базе CentOS 7</a> для организации доступа в интернет из локальной сети.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Описание установки и <a href="https://serveradmin.ru/nastroyka-servera-telefonii-asterisk-s-nulya/" target="_blank">настройки asterisk</a>
+ - популярной современной sip атс. Описан расширенный&nbsp;функционал, 
+покрывающий большинство потребностей стандартного&nbsp;офиса в 
+современной телефонии.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Подробное описание установки voip сервера <a href="https://serveradmin.ru/ustanovka-asterisk-i-freepbx-na-centos-7/" target="_blank">asterisk и панели управления freepbx на CentOS 7</a>.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		<a href="https://serveradmin.ru/nastroyka-openvpn-na-centos-7/" target="_blank">Установка и настройка OpenVPN</a> сервера на CentOS для объединения офисов и подключения удаленных пользователей
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		<a href="https://serveradmin.ru/ustanovka-lamp-apache-php-mysql-v-centos-7/" target="_blank">Настройка web сервера CentOS 7</a> на базе связки http сервера apache, php и сервера db mysql, или коротко - установка lamp.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Установка и настройка высокопроизводительного web сервера на базе <a href="https://serveradmin.ru/nginx-php-fpm-na-centos-7/" target="_blank">nginx и php fpm</a>. В качестве кэша используется APC.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		<p>Описание установки и <a href="https://serveradmin.ru/ustanovka-i-nastroyka-iredmail/" target="_blank">настройки почтового сервера iRedMail</a> на основе готовой сборки на CentOS 7. Обзор основных возможностей и рекомендации по настройке.</p>
+<p>Самостоятельная <a href="https://serveradmin.ru/nastroyka-postfix-dovecot-centos-7/" target="_blank">настройки почтового сервера postfix + dovecot</a> а так же дополнительных полезных модулей для полноценной и удобной работы почты.</p>
+<p>Размышления на тему <a href="https://serveradmin.ru/kakoy-pochtovyiy-server-vyibrat-dlya-sredney-kompanii/" target="_blank">выбора почтового сервера</a> для малых и средних компаний.</p>
+		</div>
+	
+
+		</div>
+	</td>
+</tr>
+<tr>
+<th style="text-align: center;">Настройка отдельных программ</th>
+</tr>
+<tr>
+<td style="border-color: #e5e5e5;">&nbsp;
+	<script type="text/javascript">	jQuery(document).ready(function($){	jQuery("ul.tabs-nav").tabs("> .pane"); }); </script>
+
+		<div class="post-tabs-ver">
+		
+<ul class="tabs-nav">
+<li class="current">Zabbix</li>
+<li>Phpmyadmin</li>
+<li>Webmin</li>
+<li>Ruby</li>
+<li>Обновление php</li>
+<li>Vsftpd</li>
+<li>Bind</li>
+<li>Unison</li>
+<li>Observium</li>
+<li>Syslog-NG</li>
+</ul>
+
+		<div style="display: block;" class="pane">
+		Видео и подробное описание <a href="https://serveradmin.ru/ustanovka-i-nastroyka-zabbix-3-2-na-centos-7/" target="_blank">установки и настройки Zabbix 3.2</a>, а также установка агентов на linux и windows и подключение их к мониторингу.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Подробное описание <a href="https://serveradmin.ru/ustanovit-i-nastroit-phpmyadmin-na-centos-7/" target="_blank">установки и настройки панели управления phpmyadmin</a> на веб сервер apache и nginx под управлением Centos 7.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Подробное описание <a href="https://serveradmin.ru/ustanovka-webmin-na-centos-7/" target="_blank">установки и настройки Webmin на CentOS 7</a> для удаленного подключения и управления сервером.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Подробное описание <a href="https://serveradmin.ru/ustanovka-ruby-na-centos-7/" target="_blank">установки языка Ruby</a> последней версии на веб сервер под управлением CentOS 7.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Подробное описание установки или <a href="https://serveradmin.ru/ustanovka-i-obnovlenie-php-7-na-centos-7/" target="_blank">обновления php 7 на CentOS 7</a>. Рассмотрен вариант отката обновления и возврата на php 5.6 или 5.4.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Подробное описание с видео <a href="https://serveradmin.ru/ustanovka-i-nastroyka-ftp-servera-na-centos-7/" target="_blank">установки и настройки ftp сервера vsftpd</a>, примеры с локальными и виртуальные пользователями в mysql.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Настройка DNS сервера <a href="https://serveradmin.ru/nastroyka-dns-servera-bind-v-centos-7/" target="_blank">BIND (Named) в CentOS 7</a>. Рассмотрены наиболее популярные конфигурации, в том числе подробное логирование.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		<a href="https://serveradmin.ru/ustanovka-unison-v-centos-7/" target="_blank">Установка Unison в CentOS 7</a>&nbsp;для двухсторонней синхронизации файлов.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Инструкция по <a href="https://serveradmin.ru/observium-ustanovka-i-nastroyka/" target="_blank">установке и настройке сервера мониторинга Observium</a> на CentOS 7. В качестве примера в конце добавлено одно устройство для мониторинга.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Настройка сервера для централизованного сбора логов с удаленных устройств и серверов с помощью программы <a href="https://serveradmin.ru/nastroyka-syslog-ng-dlya-tsentralizovannogo-sbora-logov/" target="_blank">syslog-ng.</a>
+		</div>
+	
+
+		</div>
+	</td>
+</tr>
+<tr>
+<th style="text-align: center;">Разное</th>
+</tr>
+<tr>
+<td style="border-color: #e5e5e5;">
+	<script type="text/javascript">	jQuery(document).ready(function($){	jQuery("ul.tabs-nav").tabs("> .pane"); }); </script>
+
+		<div class="post-tabs-ver">
+		
+<ul class="tabs-nav">
+<li class="current">Настройка ssl в Apache</li>
+<li>Бэкап с помощью rsync</li>
+</ul>
+
+		<div style="display: block;" class="pane">
+		Настройка работы веб сервера apache с <a href="https://serveradmin.ru/nastroyka-ssl-v-apache-na-centos/" target="_blank">виртуальными хостами по протоколу https</a> с использованием бесплатного ssl сертификата.
+		</div>
+	
+
+		<div style="display: none;" class="pane">
+		Подробное описание <a href="https://serveradmin.ru/rsync-nastroyka-bekapa-na-centos-debian-ubuntu/" target="_blank">настройки бэкапа с помощью rsync</a> на примере скрипта инкрементного архива на системе Centos, Debian, Ubuntu, Windows.
+		</div>
+	
+
+		</div>
+	</td>
+</tr>
+</tbody>
+</table><!-- End shortcoder v4.0.1-->
+										
+									</div><!-- .entry /-->
+				<span style="display:none"><a href="https://serveradmin.ru/tag/centos/" rel="tag">centos</a> <a href="https://serveradmin.ru/tag/firewall/" rel="tag">firewall</a> <a href="https://serveradmin.ru/tag/firewalld/" rel="tag">firewalld</a> <a href="https://serveradmin.ru/tag/iptables/" rel="tag">iptables</a> <a href="https://serveradmin.ru/tag/sysconfig/" rel="tag">sysconfig</a></span>				<span style="display:none" class="updated">2015-10-18</span>
+								<div style="display:none" class="vcard author" itemprop="author" itemscope="" itemtype="http://schema.org/Person"><strong class="fn" itemprop="name"><a href="https://serveradmin.ru/author/zerox/" title="Записи Zerox" rel="author">Zerox</a></strong></div>
+								
+								<div class="clear"></div>
+			</div><!-- .post-inner -->
+		</article><!-- .post-listing -->
+		
+		
+		<div class="e3lan e3lan-post">			<!-- Яндекс.Директ -->
+<script type="text/javascript">
+yandex_partner_id = 184428;
+yandex_site_bg_color = 'FFFFFF';
+yandex_stat_id = 3;
+yandex_ad_format = 'direct';
+yandex_font_size = 1;
+yandex_direct_type = 'horizontal';
+yandex_direct_border_type = 'ad';
+yandex_direct_limit = 4;
+yandex_direct_title_font_size = 3;
+yandex_direct_border_radius = true;
+yandex_direct_links_underline = true;
+yandex_direct_header_bg_color = 'FF6600';
+yandex_direct_border_color = 'FF6600';
+yandex_direct_title_color = '993300';
+yandex_direct_url_color = '993300';
+yandex_direct_text_color = '000000';
+yandex_direct_hover_color = 'FF6600';
+yandex_direct_sitelinks_color = '993300';
+yandex_direct_favicon = true;
+yandex_no_sitelinks = false;
+document.write('<scr'+'ipt type="text/javascript" src="//an.yandex.ru/system/context.js"></scr'+'ipt>');
+</script><script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/context.js"></script>				</div>		
+				
+		
+			
+			<section id="related_posts">
+		<div class="block-head">
+			<h3>Похожие записи</h3><div class="stripe-line"></div>
+		</div>
+		<div class="post-listing">
+						<div class="related-item">
+							
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/blokirovka-dostupa-k-web-serveru-po-stranam-s-pomoshhyu-iptables/">
+						<img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/centos-ipset-310x165.png" class="attachment-tie-medium size-tie-medium wp-post-image" alt="" height="165" width="310">						<span class="fa overlay-icon"></span>
+					</a>
+				</div><!-- post-thumbnail /-->
+							
+				<h3><a href="https://serveradmin.ru/blokirovka-dostupa-k-web-serveru-po-stranam-s-pomoshhyu-iptables/" rel="bookmark">Блокировка доступа к web серверу по странам с помощью iptables</a></h3>
+				<p class="post-meta"><span class="tie-date"><i class="fa fa-clock-o"></i>05.05.2017</span></p>
+			</div>
+						<div class="related-item">
+							
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/analiz-sip-trafika-v-asterisk-s-pomoshhyu-sngrep/">
+						<img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/asterisk-sngrep-310x165.png" class="attachment-tie-medium size-tie-medium wp-post-image" alt="" height="165" width="310">						<span class="fa overlay-icon"></span>
+					</a>
+				</div><!-- post-thumbnail /-->
+							
+				<h3><a href="https://serveradmin.ru/analiz-sip-trafika-v-asterisk-s-pomoshhyu-sngrep/" rel="bookmark">Анализ SIP трафика в Asterisk с помощью sngrep</a></h3>
+				<p class="post-meta"><span class="tie-date"><i class="fa fa-clock-o"></i>27.04.2017</span></p>
+			</div>
+						<div class="related-item">
+							
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/ustanovka-i-nastroyka-mattermost/">
+						<img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/centos-mattermost-310x165.png" class="attachment-tie-medium size-tie-medium wp-post-image" alt="" height="165" width="310">						<span class="fa overlay-icon"></span>
+					</a>
+				</div><!-- post-thumbnail /-->
+							
+				<h3><a href="https://serveradmin.ru/ustanovka-i-nastroyka-mattermost/" rel="bookmark">Установка и настройка mattermost — форк корпоративного мессенджера slack</a></h3>
+				<p class="post-meta"><span class="tie-date"><i class="fa fa-clock-o"></i>24.04.2017</span></p>
+			</div>
+						<div class="clear"></div>
+		</div>
+	</section>
+			
+					
+		
+				
+<div id="comments">
+
+	
+	<div id="comments-box">
+		<div class="block-head">
+			<h3 id="comments-title">24 комментария </h3><div class="stripe-line"></div>
+		</div>
+		<div class="post-listing">
+
+			
+					
+				
+			<ol class="commentlist">	<li id="comment-281">
+		<div class="comment byuser comment-author-nelsy even thread-even depth-1 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/21e5bdd775abbf847e0e7e35bb4c63b8.png" srcset="https://secure.gravatar.com/avatar/21e5bdd775abbf847e0e7e35bb4c63b8?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">nelsy</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-281">	21.03.2016 at 03:03</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Как обезопасить себя от потери доступа к удаленному серверу:<br>
+Используем для этих целей iptables-apply или собираем свой шелл скрип на примере приведенном ниже.<br>
+Суть в том, что «испортив» правила iptables вы теряете доступ к серверу,
+ и не можете указать скрипту, что вы желаете сохранить настройки. 
+Скрипт, не получив ответ на свой вопрос восстанавливает исходные 
+настройки правил.<br>
+Пример для Debian/Ubuntu:</p>
+<p>#!/bin/sh</p>
+<p>safeMode=»y» # y/n<br>
+if [ «$safeMode» = «y» ] ; then<br>
+	printf «\n Сохраняем исходные правила в файл /etc/network/iptables.up.run …\n»<br>
+	/sbin/iptables-save &gt; /etc/network/iptables.up.run<br>
+fi<br>
+#===============================================================<br>
+export IPT=»iptables»<br>
+# Очищаем все цепочки правил iptables<br>
+$IPT -F<br>
+$IPT -F -t nat<br>
+$IPT -F -t mangle<br>
+$IPT -X<br>
+$IPT -t nat -X<br>
+$IPT -t mangle -X<br>
+# Блокируем весь трафик не соответствующий ни одному из правил<br>
+$IPT -P INPUT ACCEPT<br>
+$IPT -P OUTPUT ACCEPT<br>
+$IPT -P FORWARD ACCEPT<br>
+#===============================================================<br>
+if [ «$safeMode» != «y» ];then exit;fi<br>
+printf «\n Новые правила таблицы filter:\n»<br>
+$IPT -S<br>
+printf «\n Новые правила таблицы nat:\n»<br>
+$IPT -t nat -S<br>
+printf «\n Новые правила таблицы mangle:\n»<br>
+$IPT -t mangle -S<br>
+rc() {<br>
+	old=$(stty -g)<br>
+	stty raw min 0 time 255 #макс значение = 22.5 sec<br>
+	printf ‘%s’ $(dd bs=1 count=1 2&gt;/dev/null)<br>
+	stty $old<br>
+}<br>
+printf «\n Восстановить исходные правила? (Y/n) \n 25 сек до восстановления…: »<br>
+answer=$(rc)<br>
+if [ «$answer» = «n» ] || [ «$answer» = «N» ] ; then<br>
+	printf «\n Сохраняем правила в файл /etc/network/iptables.up.rules …\n»<br>
+	/sbin/iptables-save &gt; /etc/network/iptables.up.rules<br>
+	exit<br>
+fi<br>
+printf «\n Восстанавливаем исходные правила …\n»<br>
+/sbin/iptables-restore &lt; /etc/network/iptables.up.run</p>
+<p>printf "\n Исходные правила таблицы filter:\n"<br>
+$IPT -S<br>
+printf "\n Исходные правила таблицы nat:\n"<br>
+$IPT -t nat -S<br>
+printf "\n Исходные правила таблицы mangle:\n"<br>
+$IPT -t mangle -S</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=281#respond" onclick='return addComment.moveForm( "comment-281", "281", "respond", "1996" )' aria-label="Комментарий к записи nelsy">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-736">
+		<div class="comment odd alt thread-odd thread-alt depth-1 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/720bec23de8c948b29348daf0e90c7b3.png" srcset="https://secure.gravatar.com/avatar/720bec23de8c948b29348daf0e90c7b3?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Vladimir</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-736">	24.12.2016 at 11:30</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>короче настроил все как пописано да включил серверную игру samp  
+порт 777 порт в firewalld открыты но проверк кажет что порт закрыт на 
+сайте</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=736#respond" onclick='return addComment.moveForm( "comment-736", "736", "respond", "1996" )' aria-label="Комментарий к записи Vladimir">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-797">
+		<div class="comment even thread-even depth-1 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/a.png" srcset="https://secure.gravatar.com/avatar/?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo avatar-default" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Анатолий</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-797">	08.01.2017 at 12:40</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Можете подсказать, настроил все по вашим инструкциям, поставил 
+апач и никак не могу зайти на него с сервера, порты разрешил. В чем 
+может быть проблема?</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=797#respond" onclick='return addComment.moveForm( "comment-797", "797", "respond", "1996" )' aria-label="Комментарий к записи Анатолий">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-798">
+		<div class="comment byuser comment-author-zerox bypostauthor odd alt depth-2 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/021a5c3751266898c63b1b4431985d02.jpg" srcset="https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-798">	08.01.2017 at 12:41</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Очевидно, где-то ошибка <img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/1f642.svg" alt="🙂" class="emoji" draggable="false"></p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=798#respond" onclick='return addComment.moveForm( "comment-798", "798", "respond", "1996" )' aria-label="Комментарий к записи Zerox">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li id="comment-862">
+		<div class="comment even thread-odd thread-alt depth-1 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/a.png" srcset="https://secure.gravatar.com/avatar/?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo avatar-default" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Игорь</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-862">	21.01.2017 at 22:36</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Отличный конфиг, всё очень подробно разобрано, взял ваш скрипт за основу.</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=862#respond" onclick='return addComment.moveForm( "comment-862", "862", "respond", "1996" )' aria-label="Комментарий к записи Игорь">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-1073">
+		<div class="comment odd alt thread-even depth-1 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/a28dd3dff764ab9d55dc847f7e29f9e2.png" srcset="https://secure.gravatar.com/avatar/a28dd3dff764ab9d55dc847f7e29f9e2?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Андрей</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1073">	16.02.2017 at 14:28</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Ну вот ничего не понял, что есть firewalld и что есть iptables.<br>
+Вот на моём CentOS 7 поставил iptables, и он работает! Всё замечательно ни раз терял управление потом исправлял и т.д.<br>
+Но в один прекрасный день осознание работы системы linux демонов снова было разрушено вот таким выводом команд:<br>
+[root@servyak ~]# systemctl | grep fire<br>
+firewalld.service                                                 loaded active running   firewalld — dynamic firewall daemon<br>
+[root@servyak ~]# systemctl | grep iptables<br>
+[root@servyak ~]#</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1073#respond" onclick='return addComment.moveForm( "comment-1073", "1073", "respond", "1996" )' aria-label="Комментарий к записи Андрей">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1075">
+		<div class="comment byuser comment-author-zerox bypostauthor even depth-2 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/021a5c3751266898c63b1b4431985d02.jpg" srcset="https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1075">	16.02.2017 at 21:58</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>firewalld надстройка над iptables для более удобного управления правилами. Она не заменяет самого iptables.</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1075#respond" onclick='return addComment.moveForm( "comment-1075", "1075", "respond", "1996" )' aria-label="Комментарий к записи Zerox">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1299">
+		<div class="comment odd alt depth-3 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/8c0f2936a3c4ff7526b89477db3d661c.jpg" srcset="https://secure.gravatar.com/avatar/8c0f2936a3c4ff7526b89477db3d661c?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Алексей</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1299">	21.03.2017 at 10:14</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Фактически ваш скрипт это такая же надстройка как и firewalld. Разве нет?<br>
+Ведь скрипт это обвязка над командами, пачка правил. Firewalld тоже самое. Просто более интерактивное чем скрипт.<br>
+Я не фанат firewalld, но имел с ним дело — он очень юзабелен и логика у него относительно простая.</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1299#respond" onclick='return addComment.moveForm( "comment-1299", "1299", "respond", "1996" )' aria-label="Комментарий к записи Алексей">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1301">
+		<div class="comment byuser comment-author-zerox bypostauthor even depth-4 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/021a5c3751266898c63b1b4431985d02.jpg" srcset="https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1301">	21.03.2017 at 13:06</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Фактически да, скрипт это тоже надстройка. Я никого не уговариваю
+ за отказ от firewalld. Так удобно лично мне, поэтому описываю свой 
+опыт. Я работаю не только с centos, поэтому мне проще, когда у меня есть
+ универсальный инструмент для всех систем.</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1301#respond" onclick='return addComment.moveForm( "comment-1301", "1301", "respond", "1996" )' aria-label="Комментарий к записи Zerox">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li id="comment-1488">
+		<div class="comment odd alt thread-odd thread-alt depth-1 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/a.png" srcset="https://secure.gravatar.com/avatar/?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo avatar-default" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Аноним</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1488">	13.04.2017 at 10:17</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Только проброс портов не работает, что мешает?</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1488#respond" onclick='return addComment.moveForm( "comment-1488", "1488", "respond", "1996" )' aria-label="Комментарий к записи ">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-1496">
+		<div class="comment even thread-even depth-1 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/54ca3d7f2355ad3cb5f05342ce37ff9f.png" srcset="https://secure.gravatar.com/avatar/54ca3d7f2355ad3cb5f05342ce37ff9f?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Сергей</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1496">	15.04.2017 at 20:48</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Сделал вроде все верно, но теперь я не могу через ssh подключится к серверу</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1496#respond" onclick='return addComment.moveForm( "comment-1496", "1496", "respond", "1996" )' aria-label="Комментарий к записи Сергей">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1497">
+		<div class="comment byuser comment-author-zerox bypostauthor odd alt depth-2 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/021a5c3751266898c63b1b4431985d02.jpg" srcset="https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1497">	15.04.2017 at 20:49</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Значит что-то не верно <img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/1f642.svg" alt="🙂" class="emoji" draggable="false"> Надо отключить фаервол и еще раз проверить правила.</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1497#respond" onclick='return addComment.moveForm( "comment-1497", "1497", "respond", "1996" )' aria-label="Комментарий к записи Zerox">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1498">
+		<div class="comment even depth-3 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/54ca3d7f2355ad3cb5f05342ce37ff9f.png" srcset="https://secure.gravatar.com/avatar/54ca3d7f2355ad3cb5f05342ce37ff9f?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Сергей</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1498">	15.04.2017 at 20:58</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>уже трижды все переписал и раз 20 пересмотрел) Я не очень понимаю
+ в этом, но может проблема в том что мой сервер и комп с которого я 
+управляю находятся в сети одного маршрутизатора. Может нужно какие-то 
+пробросы делать?)</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1498#respond" onclick='return addComment.moveForm( "comment-1498", "1498", "respond", "1996" )' aria-label="Комментарий к записи Сергей">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1499">
+		<div class="comment byuser comment-author-zerox bypostauthor odd alt depth-4 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/021a5c3751266898c63b1b4431985d02.jpg" srcset="https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1499">	15.04.2017 at 21:01</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Приведи здесь вывод команды:<br>
+iptables -L -v -n</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1499#respond" onclick='return addComment.moveForm( "comment-1499", "1499", "respond", "1996" )' aria-label="Комментарий к записи Zerox">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1500">
+		<div class="comment even depth-5 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/54ca3d7f2355ad3cb5f05342ce37ff9f.png" srcset="https://secure.gravatar.com/avatar/54ca3d7f2355ad3cb5f05342ce37ff9f?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Сергей</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1500">	15.04.2017 at 21:28</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Аппетит приходит во время еды)) Кажется проблема была обнаружена и решена.<br>
+Но на всякий случай посмотрите, все правильно настроено?))<br>
+[root@gj ~]# iptables -L -v -n<br>
+Chain INPUT (policy DROP 3 packets, 100 bytes)<br>
+ pkts bytes target     prot opt in     out     source               destination<br>
+    0     0 ACCEPT     all  —  lo     *       0.0.0.0/0            0.0.0.0/0<br>
+    0     0 ACCEPT     all  —  eth1   *       0.0.0.0/0            0.0.0.0/0<br>
+   85  6636 ACCEPT     all  —  *      *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     state RELATED,ESTABLISHED<br>
+    0     0 DROP       all  —  *      *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     state INVALID<br>
+    0     0 DROP       tcp  —  *      *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     tcp flags:0x3F/0x00<br>
+    0     0 DROP       tcp  —  *      *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     tcp flags:!0x17/0x02 state NEW<br>
+    0     0 ACCEPT     tcp  —  enp3s0 *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     tcp dpt:22<br>
+    0     0 ACCEPT     udp  —  enp3s0 *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     udp dpt:53<br>
+    0     0 ACCEPT     udp  —  enp3s0 *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     udp dpt:123</p>
+<p>Chain FORWARD (policy DROP 0 packets, 0 bytes)<br>
+ pkts bytes target     prot opt in     out     source               destination<br>
+    0     0 ACCEPT     all  —  *      *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     state RELATED,ESTABLISHED<br>
+    0     0 ACCEPT     all  —  eth1   enp3s0  0.0.0.0/0            0.0.0.0/0<br>
+    0     0 REJECT     all  —  enp3s0 eth1    0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     reject-with icmp-port-unreachable</p>
+<p>Chain OUTPUT (policy DROP 0 packets, 0 bytes)<br>
+ pkts bytes target     prot opt in     out     source               destination<br>
+    0     0 ACCEPT     all  —  *      lo      0.0.0.0/0            0.0.0.0/0<br>
+    0     0 ACCEPT     all  —  *      eth1    0.0.0.0/0            0.0.0.0/0<br>
+   58  6124 ACCEPT     all  —  *      enp3s0  0.0.0.0/0            0.0.0.0/0<br>
+    0     0 ACCEPT     all  —  *      *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     state RELATED,ESTABLISHED<br>
+    0     0 DROP       tcp  —  *      *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     tcp flags:!0x17/0x02 state NEW<br>
+[root@gj ~]# Chain INPUT (policy DROP 3 packets, 100 bytes)<br>
+ pkts bytes target     prot opt in     out     source               destination<br>
+    0     0 ACCEPT     all  —  lo     *       0.0.0.0/0            0.0.0.0/0<br>
+    0     0 ACCEPT     all  —  eth1   *       0.0.0.0/0            0.0.0.0/0<br>
+   85  6636 ACCEPT     all  —  *      *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     state RELATED,ESTABLISHED<br>
+    0     0 DROP       all  —  *      *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     state INVALID<br>
+    0     0 DROP       tcp  —  *      *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     tcp flags:0x3F/0x00<br>
+    0     0 DROP       tcp  —  *      *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     tcp flags:!0x17/0x02 state NEW<br>
+    0     0 ACCEPT     tcp  —  enp3s0 *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     tcp dpt:22<br>
+    0     0 ACCEPT     udp  —  enp3s0 *       0.0.0.0/0            
+0.0.0.0/0                                                               
+                                     udp dpt:53<br>
+    0     0 ACCEPT     udp  —  enp3s0 *       0.0.0.0/0            0.0.0.0/0</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1500#respond" onclick='return addComment.moveForm( "comment-1500", "1500", "respond", "1996" )' aria-label="Комментарий к записи Сергей">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1501">
+		<div class="comment byuser comment-author-zerox bypostauthor odd alt depth-6 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/021a5c3751266898c63b1b4431985d02.jpg" srcset="https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1501">	15.04.2017 at 21:31</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Очень трудно читать лог с таким форматированием. К тому же тут 2 
+разных куска смешались. Но порт 22 на вход судя по всему открыт, ssh 
+должен работать.</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1501#respond" onclick='return addComment.moveForm( "comment-1501", "1501", "respond", "1996" )' aria-label="Комментарий к записи Zerox">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1502">
+		<div class="comment even depth-7 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/54ca3d7f2355ad3cb5f05342ce37ff9f.png" srcset="https://secure.gravatar.com/avatar/54ca3d7f2355ad3cb5f05342ce37ff9f?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Сергей</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1502">	15.04.2017 at 21:38</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<pre>[root@gj ~]# iptables -L -v -n
+Chain INPUT (policy DROP 89 packets, 5755 bytes)
+ pkts bytes target     prot opt in     out     source               destination                                                                                         
+    0     0 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0                                                                                           
+    0     0 ACCEPT     all  --  eth1   *       0.0.0.0/0            0.0.0.0/0                                                                                           
+  517 47950 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0                                                                                                    state RELATED,ESTABLISHED
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0                                                                                                    state INVALID
+    0     0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0                                                                                                    tcp flags:0x3F/0x00
+    0     0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0                                                                                                    tcp flags:!0x17/0x02 state NEW
+    2    96 ACCEPT     tcp  --  enp3s0 *       0.0.0.0/0            0.0.0.0/0                                                                                                    tcp dpt:22
+    0     0 ACCEPT     udp  --  enp3s0 *       0.0.0.0/0            0.0.0.0/0                                                                                                    udp dpt:53
+    0     0 ACCEPT     udp  --  enp3s0 *       0.0.0.0/0            0.0.0.0/0                                                                                                    udp dpt:123
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination                                                                                         
+    0     0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0                                                                                                    state RELATED,ESTABLISHED
+    0     0 ACCEPT     all  --  eth1   enp3s0  0.0.0.0/0            0.0.0.0/0                                                                                           
+    0     0 REJECT     all  --  enp3s0 eth1    0.0.0.0/0            0.0.0.0/0                                                                                                    reject-with icmp-port-unreachable
+
+Chain OUTPUT (policy DROP 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination                                                                                         
+    0     0 ACCEPT     all  --  *      lo      0.0.0.0/0            0.0.0.0/0                                                                                           
+    0     0 ACCEPT     all  --  *      eth1    0.0.0.0/0            0.0.0.0/0                                                                                           
+  478  124K ACCEPT     all  --  *      enp3s0  0.0.0.0/0            0.0.0.0/0                                                                                           
+    0     0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0                                                                                                    state RELATED,ESTABLISHED
+    0     0 DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0</pre>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1502#respond" onclick='return addComment.moveForm( "comment-1502", "1502", "respond", "1996" )' aria-label="Комментарий к записи Сергей">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1503">
+		<div class="comment odd alt depth-8 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/54ca3d7f2355ad3cb5f05342ce37ff9f.png" srcset="https://secure.gravatar.com/avatar/54ca3d7f2355ad3cb5f05342ce37ff9f?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Сергей</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1503">	15.04.2017 at 21:38</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>та же фигня))) пора в бан))</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1503#respond" onclick='return addComment.moveForm( "comment-1503", "1503", "respond", "1996" )' aria-label="Комментарий к записи Сергей">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-1504">
+		<div class="comment byuser comment-author-zerox bypostauthor even depth-8 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/021a5c3751266898c63b1b4431985d02.jpg" srcset="https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1504">	15.04.2017 at 21:44</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Порт 22 открыт, по нему пакеты идут. Все должно работать.</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1504#respond" onclick='return addComment.moveForm( "comment-1504", "1504", "respond", "1996" )' aria-label="Комментарий к записи Zerox">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1507">
+		<div class="comment odd alt depth-9 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/54ca3d7f2355ad3cb5f05342ce37ff9f.png" srcset="https://secure.gravatar.com/avatar/54ca3d7f2355ad3cb5f05342ce37ff9f?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Сергей</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1507">	16.04.2017 at 15:26</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>спасибо, все корректно вроде работает)</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1507#respond" onclick='return addComment.moveForm( "comment-1507", "1507", "respond", "1996" )' aria-label="Комментарий к записи Сергей">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li id="comment-1516">
+		<div class="comment even thread-odd thread-alt depth-1 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/a.png" srcset="https://secure.gravatar.com/avatar/?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo avatar-default" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Валерий</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1516">	16.04.2017 at 22:55</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>А возможно заблокировать сети Vk, Одноклассники и спутники мейл.ру???</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1516#respond" onclick='return addComment.moveForm( "comment-1516", "1516", "respond", "1996" )' aria-label="Комментарий к записи Валерий">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1519">
+		<div class="comment byuser comment-author-zerox bypostauthor odd alt depth-2 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/021a5c3751266898c63b1b4431985d02.jpg" srcset="https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1519">	17.04.2017 at 11:49</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Обычно это делают средствами прокси серверов, не iptables. Хотя 
+может и можно фаерволом, но я не занимался этим. В любом случае, 
+firewall не то средство, с помощью которого удобно делать фильтрацию 
+пользовательского доступа на уровне доменов. Лучше тогда squid 
+настроить.</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1519#respond" onclick='return addComment.moveForm( "comment-1519", "1519", "respond", "1996" )' aria-label="Комментарий к записи Zerox">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li id="comment-1601">
+		<div class="comment even thread-even depth-1 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/0d78acf6150b0dd8515e0064f4e0c0c1.png" srcset="https://secure.gravatar.com/avatar/0d78acf6150b0dd8515e0064f4e0c0c1?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Дмитрий</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1601">	26.04.2017 at 14:03</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Здравствуйте, когда пытаюсь запустить скрипт iptables.sh пишет iptables v1.4.21: no command specified<br>
+В чем может быть проблема?</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1601#respond" onclick='return addComment.moveForm( "comment-1601", "1601", "respond", "1996" )' aria-label="Комментарий к записи Дмитрий">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1603">
+		<div class="comment byuser comment-author-zerox bypostauthor odd alt depth-2 comment-wrap">
+			<div class="comment-avatar"><img alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/021a5c3751266898c63b1b4431985d02.jpg" srcset="https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x" class="avatar avatar-65 photo" height="65" width="65"></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#comment-1603">	26.04.2017 at 14:42</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Возможно iptables-services не установлены.</p>
+			</div>
+			<div class="reply"><a rel="nofollow" class="comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/?replytocom=1603#respond" onclick='return addComment.moveForm( "comment-1603", "1603", "respond", "1996" )' aria-label="Комментарий к записи Zerox">Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ol>
+				
+		 
+
+			
+					
+			
+		</div>
+	</div><!-- #comments-box -->
+			
+
+<div class="clear"></div>
+	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Добавить комментарий <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://serveradmin.ru/nastroyka-iptables-v-centos-7/#respond" style="display:none;">Отменить ответ</a></small></h3><div class="stripe-line"></div>			<form action="https://serveradmin.ru/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate="">
+				<p class="comment-notes"><span id="email-notes">Ваш e-mail не будет опубликован.</span></p><p class="comment-form-comment"><label for="comment">Комментарий</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></p><p></p><div data-widget-id="0" id="g-recaptcha-0" class="g-recaptcha" data-sitekey="6Lf-awsUAAAAANpq5nIhOaMMW6KOoPLtqoNqzHjw" data-theme="light"><div style="width: 304px; height: 78px;"><div><iframe name="undefined" scrolling="no" title="виджет reCAPTCHA" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/anchor.htm" frameborder="0" height="78" width="304"></iframe></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid #c1c1c1; margin: 10px 25px; padding: 0px; resize: none;  display: none; "></textarea></div></div><noscript>Пожалуйста, разрешите JavaScript чтобы отправить эту форму.<br></noscript><p></p><p class="comment-form-author"><label for="author">Имя</label> <input id="author" name="author" size="30" maxlength="245" type="text"></p>
+<p class="comment-form-email"><label for="email">E-mail</label> <input id="email" name="email" size="30" maxlength="100" aria-describedby="email-notes" type="email"></p>
+<p class="comment-form-url"><label for="url">Сайт</label> <input id="url" name="url" size="30" maxlength="200" type="url"></p>
+<p class="form-submit"><input name="submit" id="submit" class="submit" value="Отправить комментарий" type="submit"> <input name="comment_post_ID" value="1996" id="comment_post_ID" type="hidden">
+<input name="comment_parent" id="comment_parent" value="0" type="hidden">
+</p><!-- BEGIN: Email notification plugin by Elance360 --><p><label for="subscribe-reloaded"> Подписка на новые комментарии:<br><select name="subscribe-reloaded" id="subscribe-reloaded"><option value="none">Не отправлять уведомлений</option><option value="yes" selected="selected">Отправить уведомление только при ответе на мой комментарий</option><option value="replies">Отправить уведомление при появлении любого комментария</option></select></label></p><!-- END: Email notification plugin by Elance360 -->			</form>
+			</div><!-- #respond -->
+	
+
+</div><!-- #comments -->
+		
+	</div><!-- .content -->
+<aside style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;" id="sidebar">
+	<div style="padding-top: 0px; padding-bottom: 1px; position: static;" class="theiaStickySidebar">
+<div id="text-html-widget-21" class="widget text-html"><div class="widget-top"><h4> </h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div style="text-align:center;"><div id="kwork-widget">                         <iframe style="display: block;" id="widget_iframe" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/api.htm" scrolling="no" frameborder="0" height="393" width="350"></iframe></div>
+            <script type="text/javascript">
+                (function() {
+                    widgetOptions = {
+                        width: 350,
+                        catType:'42',    
+                        count:'10',
+                        ref:249810};
+
+                    var script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.async = true;
+                    script.src = "https://kwork.ru/js/kwork_widget.js";
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                })();
+            </script>
+				</div><div class="clear"></div></div></div><!-- .widget /--><div id="text-html-widget-8" class="widget text-html"><div class="widget-top"><h4>Хостинг</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div style="text-align:center;"><table style="width: 330px; height: 70px;" cellspacing="3">
+<tbody>
+<tr>
+<td width="120"><a href="https://www.ihor.ru/?from=84981" target="_blank"><img class="alignleft wp-image-2659 size-full" title="Надежный и быстрый хостинг на SSD за небольшие деньги" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/hosting.gif" alt="Быстрый хостинг" height="60" width="120"></a></td>
+<td style="line-height:20px;padding:.4em;text-align: left;">Надежный и быстрый хостинг на SSD за небольшие деньги. Рекомендую, использую сам.</td>
+</tr>
+</tbody>
+</table>
+				</div><div class="clear"></div></div></div><!-- .widget /-->			<div id="text-html-widget-19" class="text-html-box" style="text-align:center;">
+			<!-- Яндекс.Директ -->
+<div id="yandex_ad"></div>
+<script type="text/javascript">
+(function(w, d, n, s, t) {
+    w[n] = w[n] || [];
+    w[n].push(function() {
+        Ya.Direct.insertInto(184428, "yandex_ad", {
+            stat_id: 4,
+            ad_format: "direct",
+            type: "adaptive",
+            border_type: "ad",
+            limit: 2,
+            links_underline: true,
+            site_bg_color: "FFFFFF",
+            border_color: "FF6600",
+            title_color: "993300",
+            url_color: "993300",
+            text_color: "000000",
+            hover_color: "FF6600",
+            sitelinks_color: "993300",
+            favicon: true,
+            no_sitelinks: false,
+            height: 300,
+            width: 350
+        });
+    });
+    t = d.getElementsByTagName("script")[0];
+    s = d.createElement("script");
+    s.src = "//an.yandex.ru/system/context.js";
+    s.type = "text/javascript";
+    s.async = true;
+    t.parentNode.insertBefore(s, t);
+})(window, document, "yandex_context_callbacks");
+</script>			</div>
+		<div id="text-html-widget-13" class="widget text-html"><div class="widget-top"><h4>Группа Вконтакте</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div><script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/openapi.js"></script>
+
+<!-- VK Widget -->
+<div id="vk_groups"></div>
+<script type="text/javascript">
+VK.Widgets.Group("vk_groups", {redesign: 1, mode: 1, width: "350", height: "400", color1: 'FFFFFF', color2: '000000', color3: '5E81A8'}, 95686747);
+</script>
+				</div><div class="clear"></div></div></div><!-- .widget /--><div id="text-html-widget-20" class="widget text-html"><div class="widget-top"><h4>Чат в Telegram</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div style="text-align:center;"><a href="https://t.me/joinchat/AAAAAD_H1pmIcX3yfRlG_Q" target="_blank"><img class="aligncenter wp-image-4864 size-full" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/chat-2.png" alt="Чат системных администраторов" height="45" width="330"></a>
+				</div><div class="clear"></div></div></div><!-- .widget /--><div id="text-html-widget-6" class="widget text-html"><div class="widget-top"><h4>Прикольная игра</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div><a href="https://serveradmin.ru/igra-sistemnyiy-administrator/"><img class="aligncenter wp-image-2248 size-full" title="Симулятор системного администратора" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/sysadmin-game.png" alt="Игра Системный администратор" height="245" width="330">
+				</a></div><div class="clear"></div></div></div><!-- .widget /--><div id="posts-list-widget-2" class="widget posts-list"><div class="widget-top"><h4><a href="https://serveradmin.ru/igra-sistemnyiy-administrator/">Популярное		</a></h4><div class="stripe-line"></div></div><a href="https://serveradmin.ru/igra-sistemnyiy-administrator/">
+						</a><div class="widget-container"><a href="https://serveradmin.ru/igra-sistemnyiy-administrator/">				</a><ul><a href="https://serveradmin.ru/igra-sistemnyiy-administrator/">
+								</a><li><a href="https://serveradmin.ru/igra-sistemnyiy-administrator/">
+						
+				</a><div class="post-thumbnail"><a href="https://serveradmin.ru/igra-sistemnyiy-administrator/">
+					</a><a href="https://serveradmin.ru/vault-virus/" title="Как расшифровать файл с расширением vault после вируса шифровальщика" rel="bookmark"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/virus-110x75.png" class="attachment-tie-small size-tie-small wp-post-image" alt="" height="75" width="110"><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/vault-virus/">Как расшифровать файл с расширением vault после вируса шифровальщика</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>12.08.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>259,840 </span> <span>
+							</span></span></li>
+				<li>
+						
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/centos-7-nastroyka-servera/" title="CentOS 7 настройка сервера" rel="bookmark"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/centos-configure-110x75.png" class="attachment-tie-small size-tie-small wp-post-image" alt="Centos настройка" height="75" width="110"><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/centos-7-nastroyka-servera/">CentOS 7 настройка сервера</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>20.12.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>170,182 </span> <span>
+							</span></span></li>
+				<li>
+						
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/" title="Как настроить микротик routerboard RB951G-2HnD" rel="bookmark"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/mikrotik-settings-110x75.png" class="attachment-tie-small size-tie-small wp-post-image" alt="" height="75" width="110"><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/">Как настроить микротик routerboard RB951G-2HnD</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>20.12.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>159,052 </span> <span>
+							</span></span></li>
+				<li>
+						
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/nastroyka-seti-v-centos/" title="Сетевые настройки в CentOS 7" rel="bookmark"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/network-logo-110x75.png" class="attachment-tie-small size-tie-small wp-post-image" alt="Настройка сети в CentOS" height="75" width="110"><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/nastroyka-seti-v-centos/">Сетевые настройки в CentOS 7</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>23.08.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>137,020 </span> <span>
+							</span></span></li>
+				<li>
+						
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/mikrotik-nastroyka-prostogo-firewall/" title="Mikrotik настройка простого Firewall" rel="bookmark"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/firewall-110x75.jpg" class="attachment-tie-small size-tie-small wp-post-image" alt="" height="75" width="110"><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/mikrotik-nastroyka-prostogo-firewall/">Mikrotik настройка простого Firewall</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>28.02.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>88,063 </span> <span>
+							</span></span></li>
+		
+				</ul>
+		<div class="clear"></div>
+	</div></div><!-- .widget /--><div id="categories-4" class="widget widget_categories"><div class="widget-top"><h4>Рубрики</h4><div class="stripe-line"></div></div>
+						<div class="widget-container">		<ul>
+	<li class="cat-item cat-item-174"><a href="https://serveradmin.ru/category/1c/">1C</a> (6)
+</li>
+	<li class="cat-item cat-item-133"><a href="https://serveradmin.ru/category/asterisk/">Asterisk</a> (10)
+</li>
+	<li class="cat-item cat-item-65"><a href="https://serveradmin.ru/category/freebsd/">Freebsd</a> (19)
+</li>
+	<li class="cat-item cat-item-31"><a href="https://serveradmin.ru/category/linux/">Linux</a> (58)
+<ul class="children">
+	<li class="cat-item cat-item-67"><a href="https://serveradmin.ru/category/linux/centos/">CentOS</a> (32)
+</li>
+	<li class="cat-item cat-item-68"><a href="https://serveradmin.ru/category/linux/debian/">Debian</a> (14)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-66"><a href="https://serveradmin.ru/category/mikrotik/">Mikrotik</a> (9)
+</li>
+	<li class="cat-item cat-item-33"><a href="https://serveradmin.ru/category/synology/">Synology</a> (3)
+</li>
+	<li class="cat-item cat-item-30"><a href="https://serveradmin.ru/category/windows/">Windows</a> (15)
+</li>
+	<li class="cat-item cat-item-117"><a href="https://serveradmin.ru/category/zabbix/">Zabbix</a> (23)
+</li>
+	<li class="cat-item cat-item-69"><a href="https://serveradmin.ru/category/virtual/">Виртуализация</a> (22)
+<ul class="children">
+	<li class="cat-item cat-item-70"><a href="https://serveradmin.ru/category/virtual/hyperv/">Hyper-V</a> (9)
+</li>
+	<li class="cat-item cat-item-175"><a href="https://serveradmin.ru/category/virtual/kvm/">KVM</a> (1)
+</li>
+	<li class="cat-item cat-item-146"><a href="https://serveradmin.ru/category/virtual/proxmox/">Proxmox</a> (1)
+</li>
+	<li class="cat-item cat-item-72"><a href="https://serveradmin.ru/category/virtual/vmware/">VMware</a> (2)
+</li>
+	<li class="cat-item cat-item-71"><a href="https://serveradmin.ru/category/virtual/xenserver/">XenServer</a> (11)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-138"><a href="https://serveradmin.ru/category/lichnoe/">Личное</a> (5)
+</li>
+	<li class="cat-item cat-item-91"><a href="https://serveradmin.ru/category/virus/">Осторожно, вирус!</a> (8)
+</li>
+	<li class="cat-item cat-item-129"><a href="https://serveradmin.ru/category/errors/">Ошибки</a> (15)
+</li>
+	<li class="cat-item cat-item-95"><a href="https://serveradmin.ru/category/poleznyie-sovetyi/">Полезные советы</a> (23)
+</li>
+	<li class="cat-item cat-item-20"><a href="https://serveradmin.ru/category/raznoe/">Разное</a> (8)
+</li>
+		</ul>
+</div></div><!-- .widget /-->			<div id="text-html-widget-5" class="text-html-box" style="text-align:center;">
+			<script async="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/adsbygoogle.js"></script>
+<!-- adaptive - виджет -->
+<ins oqistp5="" class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1310661631569687" data-ad-slot="8152480252" data-ad-format="auto" hidden=""></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		<div id="text-html-widget-4" class="widget text-html"><div class="widget-top"><h4>Новости сайта на почту</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div style="text-align:center;"><form style="border:0px solid #ccc;padding:3px;text-align:center;" action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=serveradmin_ru', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+<input style="width:200px;margin:6px;" name="email" value=" Введите Ваш E-mail" type="text">
+<input value="serveradmin_ru" name="uri" type="hidden">
+<input name="loc" value="ru_RU" type="hidden"><input style="width:100px;margin:6px;" value="Подписаться" type="submit"></form>
+				</div><div class="clear"></div></div></div><!-- .widget /-->			<div id="text-html-widget-18" class="text-html-box">
+			<table class=" aligncenter" style="width: 310px; height: 255px;">
+<tbody>
+<tr>
+<td>
+<!-- Yandex.RTB R-A-184428-2 -->
+<div id="yandex_rtb_R-A-184428-2"></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-184428-2",
+                renderTo: "yandex_rtb_R-A-184428-2",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+</td>
+</tr>
+</tbody>
+</table>			</div>
+			</div><!-- .theiaStickySidebar /-->
+</aside><!-- #sidebar /-->	<div class="clear"></div>
+</div><!-- .container /-->
+
+<footer id="theme-footer">
+	<div id="footer-widget-area" class="footer-2c">
+
+			<div id="footer-first" class="footer-widgets-box">
+			<div id="login-widget-2" class="footer-widget login-widget"><div class="footer-widget-top"><h4>Вход/Регистрация</h4></div>
+						<div class="footer-widget-container">		<div id="login-form">
+			<form name="loginform" id="loginform" action="https://serveradmin.ru/wp-login.php" method="post">
+				<p id="log-username"><input name="log" id="log" title="Username" value="Username" onfocus="if (this.value == 'Username') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Username';}" size="33" type="text"></p>
+				<p id="log-pass"><input name="pwd" id="pwd" title="Password" value="Password" onfocus="if (this.value == 'Password') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Password';}" size="33" type="password"></p>
+				<input name="submit" value="Log in" class="login-button" type="submit">
+				<label for="rememberme"><input name="rememberme" id="rememberme" checked="checked" value="forever" type="checkbox"> Remember Me</label>
+				<input name="redirect_to" value="/nastroyka-iptables-v-centos-7/" type="hidden">
+			</form>
+			<ul class="login-links">
+				<li><a rel="nofollow" href="https://serveradmin.ru/wp-login.php?action=register">Регистрация</a></li>				<li><a href="https://serveradmin.ru/wp-login.php?action=lostpassword&amp;redirect_to=https://serveradmin.ru">Lost your password?</a></li>
+			</ul>
+		</div>
+	</div></div><!-- .widget /-->		</div>
+	
+			<div id="footer-second" class="footer-widgets-box">
+			<div id="text-2" class="footer-widget widget_text"><div class="footer-widget-top"><h4>Статистика</h4></div>
+						<div class="footer-widget-container">			<div class="textwidget"><!-- Yandex.Metrika informer -->
+<a href="https://metrika.yandex.ru/stat/?id=23506456&amp;from=informer" target="_blank" rel="nofollow"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/3_0_FFB953FF_FF9933FF_0_pageviews.png" style="width: 88px; height: 31px; border: 0px none; display: none ! important;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" class="ym-advanced-informer" data-cid="23506456" data-lang="ru" hidden=""></a>
+<!-- /Yandex.Metrika informer -->
+
+<!-- begin of Top100 code -->
+<script id="top100Counter" type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/top100.jcn"></script>
+<noscript>
+<a href="http://top100.rambler.ru/navi/3152045/">
+<img src="http://counter.rambler.ru/top100.cnt?3152045" alt="Rambler's Top100" border="0" />
+</a>
+</noscript>
+<!-- end of Top100 code -->
+
+<!-- Rating@Mail.ru logo -->
+<a href="http://top.mail.ru/jump?from=2722258" target="_blank">
+<img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/counter" style="border: 0px none; display: none ! important;" alt="Рейтинг@Mail.ru" height="31" hidden="" width="88"></a>
+<!-- //Rating@Mail.ru logo --></div>
+		</div></div><!-- .widget /-->		</div><!-- #second .widget-area -->
+	
+
+	
+		
+	</div><!-- #footer-widget-area -->
+	<div class="clear"></div>
+</footer><!-- .Footer /-->
+				
+<div class="clear"></div>
+<div class="footer-bottom">
+	<div class="container">
+		<div class="alignright">
+					</div>
+				
+		<div class="alignleft">
+					</div>
+		<div class="clear"></div>
+	</div><!-- .Container -->
+</div><!-- .Footer bottom -->
+
+</div><!-- .inner-Wrapper -->
+</div><!-- #Wrapper -->
+</div><!-- .Wrapper-outer -->
+	<div style="bottom: 10px;" id="topcontrol" class="fa fa-angle-up" title="Scroll To Top"></div>
+<div id="fb-root"></div>
+<!-- Rating@Mail.ru counter -->
+<script type="text/javascript">
+var _tmr = window._tmr || (window._tmr = []);
+_tmr.push({id: "2722258", type: "pageView", start: (new Date()).getTime()});
+(function (d, w, id) {
+  if (d.getElementById(id)) return;
+  var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+  ts.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//top-fwz1.mail.ru/js/code.js";
+  var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+  if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+})(document, window, "topmailru-code");
+</script><noscript><div style="position:absolute;left:-10000px;">
+<img src="//top-fwz1.mail.ru/counter?id=2722258;js=na" style="border:0;" height="1" width="1" alt="Рейтинг@Mail.ru" />
+</div></noscript>
+<!-- //Rating@Mail.ru counter -->
+<div style="width: 30.4475%;" id="reading-position-indicator"></div>
+<!-- BEGIN recaptcha, injected by plugin wp-recaptcha-integration  -->
+<script type="text/javascript">
+		var recaptcha_widgets={};
+		function wp_recaptchaLoadCallback(){ 
+			try {
+				grecaptcha;
+			} catch(err){
+				return;
+			}
+			var e = document.querySelectorAll ? document.querySelectorAll('.g-recaptcha:not(.wpcf7-form-control)') : document.getElementsByClassName('g-recaptcha'),
+				form_submits;
+
+			for (var i=0;i<e.length;i++) {
+				(function(el){
+					var wid;
+					// check if captcha element is unrendered
+					if ( ! el.childNodes.length) {
+						wid = grecaptcha.render(el,{
+							'sitekey':'6Lf-awsUAAAAANpq5nIhOaMMW6KOoPLtqoNqzHjw',
+							'theme':el.getAttribute('data-theme') || 'light'
+						});
+						el.setAttribute('data-widget-id',wid);
+					} else {
+						wid = el.getAttribute('data-widget-id');
+						grecaptcha.reset(wid);
+					}
+				})(e[i]);
+			}
+		}
+		
+		// if jquery present re-render jquery/ajax loaded captcha elements 
+		if ( typeof jQuery !== 'undefined' )
+			jQuery(document).ajaxComplete( function(evt,xhr,set){
+				if( xhr.responseText && xhr.responseText.indexOf('6Lf-awsUAAAAANpq5nIhOaMMW6KOoPLtqoNqzHjw') !== -1)
+					wp_recaptchaLoadCallback();
+			} );
+		
+		</script><script src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/api.js" async="" defer="defer"></script>
+<!-- END recaptcha -->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter23506456 = new Ya.Metrika({
+                    id:23506456,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/23506456" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter --><script type="text/javascript">
+/* <![CDATA[ */
+var tocplus = {"smooth_scroll":"1"};
+var tocplus = {"smooth_scroll":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/front.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var tie = {"mobile_menu_active":"true","mobile_menu_top":"","lightbox_all":"true","lightbox_gallery":"","woocommerce_lightbox":"","lightbox_skin":"dark","lightbox_thumb":"vertical","lightbox_arrows":"","sticky_sidebar":"1","is_singular":"1","SmothScroll":"","reading_indicator":"true","lang_no_results":"No Results","lang_results_found":"Results Found"};
+var tie = {"mobile_menu_active":"true","mobile_menu_top":"","lightbox_all":"true","lightbox_gallery":"","woocommerce_lightbox":"","lightbox_skin":"dark","lightbox_thumb":"vertical","lightbox_arrows":"","sticky_sidebar":"1","is_singular":"1","SmothScroll":"","reading_indicator":"true","lang_no_results":"No Results","lang_results_found":"Results Found"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/tie-scripts.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/ilightbox.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/comment-reply.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/wp-embed.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/tabs.js"></script>
+
+
+
+
+
+<div style="background-color: #fff; border: 1px solid #ccc; box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2); position: absolute; left: 0px; top: -10000px; transition: visibility 0s linear 0.3s, opacity 0.3s linear; opacity: 0; visibility: hidden; z-index: 2000000000;"><div style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 2000000000; background-color: #fff; opacity: 0.05;  filter: alpha(opacity=5)"></div><div class="g-recaptcha-bubble-arrow" style="border: 11px solid transparent; width: 0; height: 0; position: absolute; pointer-events: none; margin-top: -11px; z-index: 2000000000;"></div><div class="g-recaptcha-bubble-arrow" style="border: 10px solid transparent; width: 0; height: 0; position: absolute; pointer-events: none; margin-top: -10px; z-index: 2000000000;"></div><div style="z-index: 2000000000; position: relative;"><iframe name="ov5yic79xa5b" scrolling="no" style="width: 100%; height: 100%;" title="проверка recaptcha" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20iptables%20%D0%B2%20CentOS%207_files/bframe.htm" frameborder="0"></iframe></div></div></body><div style="display:none" id="sp_console_event"></div></html>
+<!-- Dynamic page generated in 0.568 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2017-06-08 11:48:50 -->
+<!-- Compression = gzip -->

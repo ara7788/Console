@@ -1,0 +1,2998 @@
+<!DOCTYPE html>
+<html class="bx-core bx-no-touch bx-no-retina bx-firefox"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<meta name="robots" content="all">
+<link rel="stylesheet" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/default.css" type="text/css">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<script type="text/javascript" async="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/watch.js"></script><script type="text/javascript" async="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/ba.js"></script><script type="text/javascript" async="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/ga.js"></script><script type="text/javascript" data-skip-moving="true">(function(w, d, n) {var cl = "bx-core";var ht = d.documentElement;var htc = ht ? ht.className : undefined;if (htc === undefined || htc.indexOf(cl) !== -1){return;}var ua = n.userAgent;if (/(iPad;)|(iPhone;)/i.test(ua)){cl += " bx-ios";}else if (/Android/i.test(ua)){cl += " bx-android";}cl += (/(ipad|iphone|android|mobile|touch)/i.test(ua) ? " bx-touch" : " bx-no-touch");cl += w.devicePixelRatio && w.devicePixelRatio >= 2? " bx-retina": " bx-no-retina";var ieVersion = -1;if (/AppleWebKit/.test(ua)){cl += " bx-chrome";}else if ((ieVersion = getIeVersion()) > 0){cl += " bx-ie bx-ie" + ieVersion;if (ieVersion > 7 && ieVersion < 10 && !isDoctype()){cl += " bx-quirks";}}else if (/Opera/.test(ua)){cl += " bx-opera";}else if (/Gecko/.test(ua)){cl += " bx-firefox";}if (/Macintosh/i.test(ua)){cl += " bx-mac";}ht.className = htc ? htc + " " + cl : cl;function isDoctype(){if (d.compatMode){return d.compatMode == "CSS1Compat";}return d.documentElement && d.documentElement.clientHeight;}function getIeVersion(){if (/Opera/i.test(ua) || /Webkit/i.test(ua) || /Firefox/i.test(ua) || /Chrome/i.test(ua)){return -1;}var rv = -1;if (!!(w.MSStream) && !(w.ActiveXObject) && ("ActiveXObject" in w)){rv = 11;}else if (!!d.documentMode && d.documentMode >= 10){rv = 10;}else if (!!d.documentMode && d.documentMode >= 9){rv = 9;}else if (d.attachEvent && !/Opera/.test(ua)){rv = 8;}if (rv == -1 || rv == 8){var re;if (n.appName == "Microsoft Internet Explorer"){re = new RegExp("MSIE ([0-9]+[\.0-9]*)");if (re.exec(ua) != null){rv = parseFloat(RegExp.$1);}}else if (n.appName == "Netscape"){rv = 11;re = new RegExp("Trident/.*rv:([0-9]+[\.0-9]*)");if (re.exec(ua) != null){rv = parseFloat(RegExp.$1);}}}return rv;}})(window, document, navigator);</script>
+
+
+<link href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/kernel_main.css" type="text/css" rel="stylesheet">
+<link href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/kernel_socialservices.css" type="text/css" rel="stylesheet">
+<link href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/core_viewer.css" type="text/css" rel="stylesheet">
+<link href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/page_ce47cf527a33ac7a0fae1d6090eab479.css" type="text/css" rel="stylesheet">
+<link href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/template_034b2624c897ec78f20d2a550ccd6d86.css" type="text/css" data-template-style="true" rel="stylesheet">
+<link href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/popup.css" type="text/css" data-template-style="true" rel="stylesheet">
+
+
+
+	<meta property="og:title" content="Настройка базы данных MySQL">
+	<meta property="og:image" content="https://dev.1c-bitrix.ru/bitrix/templates/1c-bitrix-new/images/logo.png">
+	<meta property="og:description" content="Оптимизация работы с базой данных для MySQL-версии продукта является одной из важнейших стратегий в оптимизации системы в целом, так как продукт активно работае...">
+	<title>Настройка базы данных MySQL</title>
+	</head>
+
+<body>
+			<div class="courses-pre-header">
+		<div class="courses-pre-header-container">
+			<div class="hd_signin">
+
+<div style="position:relative;">
+
+<a class="header-link" onclick="return systemAuthFormComponent_openBlock()" href="#">Авторизация</a>
+<div id="hd_loginform_container" class="hd_loginform_container" style="display:none">
+	<div onclick="return systemAuthFormComponent_closeBlock()" class="hd_loginform_container_close"></div>
+	<div class="hd_loginform">
+				<div class="arrow"></div>
+		<form name="system_auth_form6zOYVN" method="post" target="_top" action="/learning/course/index.php?login=yes&amp;COURSE_ID=32&amp;LESSON_ID=3371">
+							<input name="backurl" value="/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3371" type="hidden">
+										<input name="AUTH_FORM" value="Y" type="hidden">
+				<input name="TYPE" value="AUTH" type="hidden">
+			<input placeholder="Логин" id="USER_LOGIN_INPUT" tabindex="10" name="USER_LOGIN" type="text">
+			<input placeholder="Пароль" name="USER_PASSWORD" tabindex="20" type="password">
+
+			
+							<input id="USER_REMEMBER" tabindex="40" name="USER_REMEMBER" value="Y" checked="checked" type="checkbox">
+				<label for="USER_REMEMBER">Запомнить меня</label><br><br>
+						<table>
+				<tbody><tr>
+					<td>
+						<input tabindex="50" class="bt_green" value="Войти" type="submit">
+					</td>
+					<td>
+						<noindex>
+							<div style="text-align: left">
+								<a href="https://dev.1c-bitrix.ru/auth/?forgot_password=yes&amp;backurl=%2Flearning%2Fcourse%2Findex.php%3FCOURSE_ID%3D32%26LESSON_ID%3D3371" rel="nofollow">Забыли свой пароль?</a><br>
+																	<a href="https://dev.1c-bitrix.ru/auth/?register=yes&amp;backurl=%2Flearning%2Fcourse%2Findex.php%3FCOURSE_ID%3D32%26LESSON_ID%3D3371" rel="nofollow">Регистрация</a>
+															</div>
+						</noindex>
+					</td>
+				</tr>
+			</tbody></table>
+							<div class="bx-auth-lbl">Войти как пользователь:</div>
+				<div class="bx-auth-serv-icons">
+	<a title="Битрикс24" href="javascript:void(0)" onclick="BxShowAuthFloat('Bitrix24Net', 'form')"><i class="bx-ss-icon bitrix24"></i></a>
+	<a title="Google" href="javascript:void(0)" onclick="BxShowAuthFloat('GoogleOAuth', 'form')"><i class="bx-ss-icon google"></i></a>
+	<a title="ВКонтакте" href="javascript:void(0)" onclick="BxShowAuthFloat('VKontakte', 'form')"><i class="bx-ss-icon vkontakte"></i></a>
+	<a title="Мой Мир" href="javascript:void(0)" onclick="BxShowAuthFloat('MyMailRu', 'form')"><i class="bx-ss-icon mymailru"></i></a>
+	<a title="Twitter" href="javascript:void(0)" onclick="BxShowAuthFloat('Twitter', 'form')"><i class="bx-ss-icon twitter"></i></a>
+	<a title="Facebook" href="javascript:void(0)" onclick="BxShowAuthFloat('Facebook', 'form')"><i class="bx-ss-icon facebook"></i></a>
+	<a title="Livejournal" href="javascript:void(0)" onclick="BxShowAuthFloat('Livejournal', 'form')"><i class="bx-ss-icon livejournal"></i></a>
+	<a title="Mail.Ru" href="javascript:void(0)" onclick="BxShowAuthFloat('MailRuOpenID', 'form')"><i class="bx-ss-icon openid-mail-ru"></i></a>
+	<a title="Liveinternet" href="javascript:void(0)" onclick="BxShowAuthFloat('Liveinternet', 'form')"><i class="bx-ss-icon liveinternet"></i></a>
+	<a title="Blogger" href="javascript:void(0)" onclick="BxShowAuthFloat('Blogger', 'form')"><i class="bx-ss-icon blogger"></i></a>
+	<a title="OpenID" href="javascript:void(0)" onclick="BxShowAuthFloat('OpenID', 'form')"><i class="bx-ss-icon openid"></i></a>
+</div>
+					</form>
+					<div style="display:none">
+<div id="bx_auth_float" class="bx-auth-float">
+
+<div class="bx-auth">
+	<form method="post" name="bx_auth_servicesform" target="_top" action="/learning/course/index.php?login=yes&amp;amp;COURSE_ID=32&amp;amp;LESSON_ID=3371">
+					<div class="bx-auth-title">Войти как пользователь</div>
+			<div class="bx-auth-note">Вы можете войти на сайт, если вы зарегистрированы на одном из этих сервисов:</div>
+							<div class="bx-auth-services">
+									<div><a href="javascript:void(0)" onclick="BxShowAuthService('Bitrix24Net', 'form')" id="bx_auth_href_formBitrix24Net"><i class="bx-ss-icon bitrix24"></i><b>Битрикс24</b></a></div>
+									<div><a href="javascript:void(0)" onclick="BxShowAuthService('GoogleOAuth', 'form')" id="bx_auth_href_formGoogleOAuth"><i class="bx-ss-icon google"></i><b>Google</b></a></div>
+									<div><a href="javascript:void(0)" onclick="BxShowAuthService('VKontakte', 'form')" id="bx_auth_href_formVKontakte"><i class="bx-ss-icon vkontakte"></i><b>ВКонтакте</b></a></div>
+									<div><a href="javascript:void(0)" onclick="BxShowAuthService('MyMailRu', 'form')" id="bx_auth_href_formMyMailRu"><i class="bx-ss-icon mymailru"></i><b>Мой Мир</b></a></div>
+									<div><a href="javascript:void(0)" onclick="BxShowAuthService('Twitter', 'form')" id="bx_auth_href_formTwitter"><i class="bx-ss-icon twitter"></i><b>Twitter</b></a></div>
+									<div><a href="javascript:void(0)" onclick="BxShowAuthService('Facebook', 'form')" id="bx_auth_href_formFacebook"><i class="bx-ss-icon facebook"></i><b>Facebook</b></a></div>
+									<div><a href="javascript:void(0)" onclick="BxShowAuthService('Livejournal', 'form')" id="bx_auth_href_formLivejournal"><i class="bx-ss-icon livejournal"></i><b>Livejournal</b></a></div>
+									<div><a href="javascript:void(0)" onclick="BxShowAuthService('MailRuOpenID', 'form')" id="bx_auth_href_formMailRuOpenID"><i class="bx-ss-icon openid-mail-ru"></i><b>Mail.Ru</b></a></div>
+									<div><a href="javascript:void(0)" onclick="BxShowAuthService('Liveinternet', 'form')" id="bx_auth_href_formLiveinternet"><i class="bx-ss-icon liveinternet"></i><b>Liveinternet</b></a></div>
+									<div><a href="javascript:void(0)" onclick="BxShowAuthService('Blogger', 'form')" id="bx_auth_href_formBlogger"><i class="bx-ss-icon blogger"></i><b>Blogger</b></a></div>
+									<div><a href="javascript:void(0)" onclick="BxShowAuthService('OpenID', 'form')" id="bx_auth_href_formOpenID"><i class="bx-ss-icon openid"></i><b>OpenID</b></a></div>
+							</div>
+							<div class="bx-auth-line"></div>
+				<div class="bx-auth-service-form" id="bx_auth_servform" style="display:none">
+												<div id="bx_auth_serv_formBitrix24Net" style="display:none"><a href="javascript:void(0)" onclick="BX.util.popup('https://www.bitrix24.net/oauth/authorize/?user_lang=ru&amp;client_id=site.5440cbbf6f6692.76516444&amp;redirect_uri=https%3A%2F%2Fdev.1c-bitrix.ru%2Flearning%2Fcourse%2Findex.php%3Fauth_service_id%3DBitrix24Net%26COURSE_ID%3D32%26LESSON_ID%3D3371&amp;scope=auth,client&amp;response_type=code&amp;mode=popup&amp;state=site_id%3Ddv%26backurl%3D%252Flearning%252Fcourse%252Findex.php%253Fcheck_key%253Dc9aa7156506894a870e6d9cc5a4c65e3%2526COURSE_ID%253D32%2526LESSON_ID%253D3371%26mode%3Dpopup', 800, 600)" class="bx-ss-button bitrix24net-button bitrix24net-button-ru"></a><span class="bx-spacer"></span><span>Используйте вашу учетную запись на Битрикс24 для входа на сайт.</span></div>
+																<div id="bx_auth_serv_formGoogleOAuth" style="display:none"><a href="javascript:void(0)" onclick="BX.util.popup('https://accounts.google.com/o/oauth2/auth?client_id=724303204859.apps.googleusercontent.com&amp;redirect_uri=https%3A%2F%2Fdev.1c-bitrix.ru%2Fbitrix%2Ftools%2Foauth%2Fgoogle.php&amp;scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.google.com%2Fm8%2Ffeeds&amp;response_type=code&amp;access_type=offline&amp;state=provider%3DGoogleOAuth%26site_id%3Ddv%26backurl%3D%252Flearning%252Fcourse%252Findex.php%253Fcheck_key%253Dc9aa7156506894a870e6d9cc5a4c65e3%2526COURSE_ID%253D32%2526LESSON_ID%253D3371%26mode%3Dopener%26redirect_url%3D%252Flearning%252Fcourse%252Findex.php%253FCOURSE_ID%253D32%2526amp%253BLESSON_ID%253D3371', 580, 400)" class="bx-ss-button google-button"></a><span class="bx-spacer"></span><span>Используйте вашу учетную запись Google для входа на сайт.</span></div>
+																<div id="bx_auth_serv_formVKontakte" style="display:none"><a href="javascript:void(0)" onclick="BX.util.popup('https://oauth.vk.com/authorize?client_id=2234924&amp;redirect_uri=https%3A%2F%2Fdev.1c-bitrix.ru%2Flearning%2Fcourse%2Findex.php%3Fauth_service_id%3DVKontakte&amp;scope=friends,offline,email&amp;response_type=code&amp;state=site_id%3Ddv%26backurl%3D%252Flearning%252Fcourse%252Findex.php%253Fcheck_key%253Dc9aa7156506894a870e6d9cc5a4c65e3%2526COURSE_ID%253D32%2526LESSON_ID%253D3371%26redirect_url%3D%252Flearning%252Fcourse%252Findex.php%253FCOURSE_ID%253D32%2526amp%253BLESSON_ID%253D3371', 660, 425)" class="bx-ss-button vkontakte-button"></a><span class="bx-spacer"></span><span>Используйте вашу учетную запись VKontakte для входа на сайт.</span></div>
+																<div id="bx_auth_serv_formMyMailRu" style="display:none"><a href="javascript:void(0)" onclick="BX.util.popup('https://connect.mail.ru/oauth/authorize?client_id=602565&amp;redirect_uri=https://dev.1c-bitrix.ru/learning/course/index.php?auth_service_id=MyMailRu&amp;COURSE_ID=32&amp;LESSON_ID=3371&amp;response_type=code&amp;state=site_id%3Ddv%26backurl%3D%2Flearning%2Fcourse%2Findex.php%3Fcheck_key%3Dc9aa7156506894a870e6d9cc5a4c65e3%26COURSE_ID%3D32%26LESSON_ID%3D3371', 580, 400)" class="bx-ss-button mymailru-button"></a><span class="bx-spacer"></span><span>Используйте вашу учетную запись Мой Мир@Mail.ru для входа на сайт.</span></div>
+																<div id="bx_auth_serv_formTwitter" style="display:none"><a href="javascript:void(0)" onclick="BX.util.popup('/learning/course/index.php?ncc=1&amp;auth_service_id=Twitter&amp;check_key=c9aa7156506894a870e6d9cc5a4c65e3&amp;backurl=%2Flearning%2Fcourse%2Findex.php%3FCOURSE_ID%3D32%26amp%3BLESSON_ID%3D3371&amp;COURSE_ID=32&amp;LESSON_ID=3371', 800, 450)" class="bx-ss-button twitter-button"></a><span class="bx-spacer"></span><span>Используйте вашу учетную запись на Twitter.com для входа на сайт.</span></div>
+																<div id="bx_auth_serv_formFacebook" style="display:none"><a href="javascript:void(0)" onclick="BX.util.popup('https://www.facebook.com/dialog/oauth?client_id=171324696253486&amp;redirect_uri=https%3A%2F%2Fdev.1c-bitrix.ru%2Flearning%2Fcourse%2Findex.php%3Fauth_service_id%3DFacebook%26check_key%3Dc9aa7156506894a870e6d9cc5a4c65e3%26COURSE_ID%3D32%26LESSON_ID%3D3371%26backurl%3D%252Flearning%252Fcourse%252Findex.php%253FCOURSE_ID%253D32%2526amp%253BLESSON_ID%253D3371&amp;scope=email,publish_actions,user_friends&amp;display=popup', 580, 400)" class="bx-ss-button facebook-button"></a><span class="bx-spacer"></span><span>Используйте вашу учетную запись на Facebook.com для входа на сайт.</span></div>
+																<div id="bx_auth_serv_formLivejournal" style="display:none">
+<span class="bx-ss-icon livejournal"></span>
+<input name="OPENID_IDENTITY_LIVEJOURNAL" size="20" type="text">
+<span>.livejournal.com</span>
+<input name="sessid" id="sessid" value="e829f9383037b96d235bb83fb546c32a" type="hidden">
+<input name="auth_service_error" value="" type="hidden">
+<input class="button" name="" value="Войти" type="submit">
+</div>
+																<div id="bx_auth_serv_formMailRuOpenID" style="display:none">
+<span class="bx-ss-icon openid-mail-ru"></span>
+<input name="OPENID_IDENTITY_MAILRU" size="20" type="text">
+<span>@mail.ru</span>
+<input name="sessid" id="sessid_1" value="e829f9383037b96d235bb83fb546c32a" type="hidden">
+<input name="auth_service_error" value="" type="hidden">
+<input class="button" name="" value="Войти" type="submit">
+</div>
+																<div id="bx_auth_serv_formLiveinternet" style="display:none">
+<span class="bx-ss-icon liveinternet"></span>
+<span>liveinternet.ru/users/</span>
+<input name="OPENID_IDENTITY_LIVEINTERNET" size="15" type="text">
+<input name="sessid" id="sessid_2" value="e829f9383037b96d235bb83fb546c32a" type="hidden">
+<input name="auth_service_error" value="" type="hidden">
+<input class="button" name="" value="Войти" type="submit">
+</div>
+																<div id="bx_auth_serv_formBlogger" style="display:none">
+<span class="bx-ss-icon blogger"></span>
+<input name="OPENID_IDENTITY_BLOGGER" size="20" type="text">
+<span>.blogspot.com</span>
+<input name="sessid" id="sessid_3" value="e829f9383037b96d235bb83fb546c32a" type="hidden">
+<input name="auth_service_error" value="" type="hidden">
+<input class="button" name="" value="Войти" type="submit">
+</div>
+																<div id="bx_auth_serv_formOpenID" style="display:none">
+<span class="bx-ss-icon openid"></span>
+<span>OpenID:</span>
+<input name="OPENID_IDENTITY_OPENID" size="30" type="text">
+<input name="sessid" id="sessid_4" value="e829f9383037b96d235bb83fb546c32a" type="hidden">
+<input name="auth_service_error" value="" type="hidden">
+<input class="button" name="" value="Войти" type="submit">
+</div>
+									</div>
+				<input name="auth_service_id" value="" type="hidden">
+	</form>
+</div>
+
+</div>
+</div>
+			</div>
+</div>
+</div>
+</div>																																	<div id="courses_list_container" class="dark">
+	Выбрать курс	<ul class="courses_list">
+						<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=34&amp;INDEX=Y">Контент-менеджер</a></li>
+										<li style="margin-top: 20px;"><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=35&amp;INDEX=Y">Администратор. Базовый</a></li>
+													<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=41&amp;INDEX=Y">Администратор. Модули</a></li>
+										<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=42&amp;INDEX=Y">Администратор. Бизнес</a></li>
+										<li style="margin-top: 20px;"><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=43&amp;INDEX=Y">Разработчик Bitrix Framework</a></li>
+													<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=39&amp;INDEX=Y">Технология Композитный сайт</a></li>
+										<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=38&amp;INDEX=Y">Разработка и эксплуатация высоконагруженных проектов</a></li>
+										<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=80&amp;INDEX=Y">BitrixMobile - создание кроссплатформенных мобильных приложений</a></li>
+										<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=101&amp;INDEX=Y">Маркетплейс Bitrix Framework</a></li>
+										<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=103&amp;INDEX=Y">Многосайтовость</a></li>
+										<li style="margin-top: 20px;"><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;INDEX=Y">Курс для хостеров</a></li>
+													<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=37&amp;INDEX=Y">Виртуальная машина BitrixVM</a></li>
+										<li style="margin-top: 20px;"><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=71&amp;INDEX=Y">Пользователь коробочной версии Битрикса24</a></li>
+													<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=52&amp;INDEX=Y">Пользователь  сервиса Битрикс24</a></li>
+										<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=45&amp;INDEX=Y">Пользователь корпоративного портала (дизайн Lite)</a></li>
+										<li style="margin-top: 20px;"><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=48&amp;INDEX=Y">Администратор сервиса Битрикс24 (коробочная версия)</a></li>
+													<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=53&amp;INDEX=Y">Внедрение корпоративного портала</a></li>
+										<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=93&amp;INDEX=Y">Бот платформа Битрикс24</a></li>
+										<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=99&amp;INDEX=Y">Маркетплейс Битрикс24</a></li>
+										<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=77&amp;INDEX=Y">Телефония в Битрикс24</a></li>
+										<li><a href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=57&amp;INDEX=Y">Бизнес-процессы</a></li>
+						</ul>
+</div>
+							<div class="pre-header-left-block">
+					<div class="courses-search-block">
+	<form action="/learning/course/index.php">
+					<input name="COURSE_ID" value="32" type="hidden">
+					<input name="SEARCH" value="Y" type="hidden">
+				<input name="where" value="C" type="hidden">
+		<input class="courses-search" name="q" size="15" maxlength="50" placeholder="Поиск..." type="text">
+	</form>
+</div>				</div>
+							<div class="pre-header-left-block">
+				<span class="header-link" title="Пройдено уроков">
+					250				</span>
+				<span style="color:#999;font-size:15px;">&nbsp;/&nbsp;</span>
+				<span class="header-link" title="Всего уроков">
+					253				</span>
+			</div>
+						<div style="clear:both"></div>
+		</div>
+	</div>
+	<div class="courses-header">
+		<div class="courses-header-container">
+			<span class="courses-logo">Курс для хостеров</span>
+		</div>
+	</div>
+	<div id="learning_video_container">
+		<div class="video_wrapper">
+			<div class="video"></div>
+			<div id="close_video_button"></div>
+		</div>
+	</div>
+	<div class="courses-main-wrapper">
+					<div class="deprecated-error-container" id="require-result" style="display: block;">
+							<p class="requirements">У Вас браузер устаревшей версии, либо не установлены необходимые плееры. Видео в учебном курсе может быть недоступно.</p></div>
+						<noscript><p class="requirements">Для просмотра видео, должно быть разрешено использование Java Script!</p></noscript>
+			 <div class="courses-left-side">
+			
+
+<div class="left-side-top-bar">
+	<a class="left-side-link certification-link" title="Пройти сертификацию" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;TEST_LIST=Y"></a>
+	<a class="left-side-link all-materials-link" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;TYPE=Y" title="Все материалы курса"></a>
+	<a class="left-side-link log-link" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;GRADEBOOK=Y" title="Журнал"></a>
+	<a class="left-side-link print-link" href="https://dev.1c-bitrix.ru/learning/course/index.php?print_course=Y&amp;COURSE_ID=32&amp;LESSON_ID=3371" rel="nofollow" title="Версия для печати"></a>
+	<div class="left-side-top-bar-separator"></div>
+</div>
+<div class="courses-main-menu-wrap">
+	<ul class="main-menu">
+							<li class="main-menu-item ">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;INDEX=Y">Описание курса</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4905')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04905&amp;LESSON_PATH=3903.4905">Bitrix Framework и хостинг</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3262&amp;LESSON_PATH=3903.4905.3262">Скрипт bitrix_server_test</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4631')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04631&amp;LESSON_PATH=3903.4631">Основные сведения</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2152&amp;LESSON_PATH=3903.4631.2152">Справочная информация</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6440&amp;LESSON_PATH=3903.4631.6440">Как отформатирован текст в курсе</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2833&amp;LESSON_PATH=3903.4631.2833">Глоссарий</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2352&amp;LESSON_PATH=3903.4631.2352">Схема работы продукта</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4862')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04862&amp;LESSON_PATH=3903.4862">Установка и настройка</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4868')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04868&amp;LESSON_PATH=3903.4862.4868">Системные требования</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3183&amp;LESSON_PATH=3903.4862.4868.3183">Требования к серверному программному обеспечению</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3186&amp;LESSON_PATH=3903.4862.4868.3186">Поддержка стандартов и технологий. Требования к клиентскому программному обеспечению</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4888')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04888&amp;LESSON_PATH=3903.4862.4888">Установка продукта «1С-Битрикс: Управление сайтом»</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3157&amp;LESSON_PATH=3903.4862.4888.3157">Предварительные операции</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4538')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04538&amp;LESSON_PATH=3903.4862.4888.4538">Мастер установки «1C-Битрикс: Управление сайтом»</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2041&amp;LESSON_PATH=3903.4862.4888.4538.2041">Первый шаг</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2042&amp;LESSON_PATH=3903.4862.4888.4538.2042">Второй шаг</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2043&amp;LESSON_PATH=3903.4862.4888.4538.2043">Третий шаг</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2044&amp;LESSON_PATH=3903.4862.4888.4538.2044">Четвертый шаг</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2045&amp;LESSON_PATH=3903.4862.4888.4538.2045">Пятый шаг</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2058&amp;LESSON_PATH=3903.4862.4888.4538.2058">Шестой шаг</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2059&amp;LESSON_PATH=3903.4862.4888.4538.2059">Седьмой шаг</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2060&amp;LESSON_PATH=3903.4862.4888.4538.2060">Восьмой шаг</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2061&amp;LESSON_PATH=3903.4862.4888.4538.2061">Девятый шаг</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2063&amp;LESSON_PATH=3903.4862.4888.4538.2063">Десятый шаг</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=4582&amp;LESSON_PATH=3903.4862.4888.4538.4582">Установка демо-сайта для разработчиков</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5325&amp;LESSON_PATH=3903.4862.4888.4538.5325">Установка решения «1C-Битрикс: Управление сайтом» версии 16.5.х и выше</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4594')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04594&amp;LESSON_PATH=3903.4862.4888.4538.4594">Установка стороннего решения из Marketplace</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3181&amp;LESSON_PATH=3903.4862.4888.4538.4594.3181">До установки продукта</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3182&amp;LESSON_PATH=3903.4862.4888.4538.4594.3182">После установки продукта</a>
+				</span>
+			</li>
+			</ul></li></ul></li>					<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=4891&amp;LESSON_PATH=3903.4862.4888.4891">Установка продукта с помощью BitrixSetup</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5050&amp;LESSON_PATH=3903.4862.4888.5050">Быстрая установка (Short install)</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4518')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04518&amp;LESSON_PATH=3903.4862.4888.4518">Регистрация продукта</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=1945&amp;LESSON_PATH=3903.4862.4888.4518.1945">Регистрация коммерческого продукта</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=1947&amp;LESSON_PATH=3903.4862.4888.4518.1947">Регистрация демо-версии коммерческим ключом</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4745')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04745&amp;LESSON_PATH=3903.4862.4888.4745">Система обновлений</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2688&amp;LESSON_PATH=3903.4862.4888.4745.2688">Общие сведения</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2689&amp;LESSON_PATH=3903.4862.4888.4745.2689">Настройки системы обновлений</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2693&amp;LESSON_PATH=3903.4862.4888.4745.2693">Обновление ядра продукта</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2694&amp;LESSON_PATH=3903.4862.4888.4745.2694">Просмотр и загрузка языковых файлов</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2696&amp;LESSON_PATH=3903.4862.4888.4745.2696">Активация купона</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2697&amp;LESSON_PATH=3903.4862.4888.4745.2697">Типичные ошибки</a>
+				</span>
+			</li>
+			</ul></li></ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4894')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04894&amp;LESSON_PATH=3903.4862.4894">Перенос продукта</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'2014')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=02014&amp;LESSON_PATH=3903.4862.4894.2014">Перенос продукта «1C-Битрикс» v.12 и выше</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2559&amp;LESSON_PATH=3903.4862.4894.2014.2559">Перенос сайтов в многосайтовой конфигурации</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2705&amp;LESSON_PATH=3903.4862.4894.2705">Перенос продукта «1C-Битрикс» до v.12</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3293&amp;LESSON_PATH=3903.4862.4894.3293">Возможные ошибки при переносе сайта</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4895')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04895&amp;LESSON_PATH=3903.4862.4895">Дополнительные моменты</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3294&amp;LESSON_PATH=3903.4862.4895.3294">Необходимый уровень прав на сервере</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3295&amp;LESSON_PATH=3903.4862.4895.3295">Использование файлов .htaccess</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3296&amp;LESSON_PATH=3903.4862.4895.3296">Ошибки подключения к БД</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3297&amp;LESSON_PATH=3903.4862.4895.3297">Ошибки запросов к БД</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3379&amp;LESSON_PATH=3903.4862.4895.3379">500 - Internal Server Error</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'8809')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=08809&amp;LESSON_PATH=3903.4862.8809">Виртуальная машина BitrixVM v7.x</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8811&amp;LESSON_PATH=3903.4862.8809.8811">Установка «1С-Битрикс: Веб-окружение» - Linux (BitrixEnv)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8813&amp;LESSON_PATH=3903.4862.8809.8813">Запуск виртуальной машины BitrixVM</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'9371')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=09371&amp;LESSON_PATH=3903.4862.8809.9371">Установка и перенос продуктов «1С-Битрикс» в BitrixVM/BitrixEnv</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9369&amp;LESSON_PATH=3903.4862.8809.9371.9369">Установка дистрибутива сайта в BitrixVM/BitrixEnv</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8815&amp;LESSON_PATH=3903.4862.8809.9371.8815">Перенос продукта «1C-Битрикс» в виртуальную среду BitrixVM/BitrixEnv</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'8817')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=08817&amp;LESSON_PATH=3903.4862.8809.8817">1. Управление хостами (1. Manage Hosts in the pool)</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8819&amp;LESSON_PATH=3903.4862.8809.8817.8819">1. Добавление нового хоста в пул (1. Add new host in the pool)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8821&amp;LESSON_PATH=3903.4862.8809.8817.8821">2. Удаление хоста из пула (2. Delete host from pool)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8823&amp;LESSON_PATH=3903.4862.8809.8817.8823">3. Перезапуск хоста (3. Reboot host)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8825&amp;LESSON_PATH=3903.4862.8809.8817.8825">4. Обновление BitrixEnv на хосте (4. Update BitrixEnv on host)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8827&amp;LESSON_PATH=3903.4862.8809.8817.8827">5. Смена пароля пользователя bitrix (5. Change password for bitrix user on host)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8829&amp;LESSON_PATH=3903.4862.8809.8817.8829">6. Настройка таймзоны в пуле (6. Configure timezone in the pool)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8995&amp;LESSON_PATH=3903.4862.8809.8817.8995">7. Удаление конфигурации пула (7. Remove pool configuration)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8831&amp;LESSON_PATH=3903.4862.8809.8817.8831">8. Обновление PHP и MySQL (8. Upgrade php and mysql versions)</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'8833')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=08833&amp;LESSON_PATH=3903.4862.8809.8833">2. Управление локальным сервером (2. Manage localhost)</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8835&amp;LESSON_PATH=3903.4862.8809.8833.8835">1. Изменение имени хоста (1. Configure hostname)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8837&amp;LESSON_PATH=3903.4862.8809.8833.8837">2. Настройка IP-адреса сервера через DHCP (2. Configure network interface via DHCP)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9315&amp;LESSON_PATH=3903.4862.8809.8833.9315">3. Настройка IP-адреса сервера вручную (3. Configure network inteface manually)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8839&amp;LESSON_PATH=3903.4862.8809.8833.8839">6. Обновление локального сервера (6. Update server)</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'8841')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=08841&amp;LESSON_PATH=3903.4862.8809.8841">3. Настройка MySQL (3. Configure MySQL servers)</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9317&amp;LESSON_PATH=3903.4862.8809.8841.9317">1. Обновить настройки для всех MySQL-серверов (1. Update settings for all MySQL servers)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9319&amp;LESSON_PATH=3903.4862.8809.8841.9319">2. Изменить пароль root для mysql-сервера (2. Change password for mysql user root)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9321&amp;LESSON_PATH=3903.4862.8809.8841.9321">3. Остановить/Запустить службу mysql (3. Stop/Start mysql service on the server)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9323&amp;LESSON_PATH=3903.4862.8809.8841.9323">4. Создать slave MySQL-сервер (4. Create slave MySQL server)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9337&amp;LESSON_PATH=3903.4862.8809.8841.9337">5. Смена master сервера MySQL (5. Change master MySQL server)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9339&amp;LESSON_PATH=3903.4862.8809.8841.9339">6. Удаление slave сервера MySQL (6. Remove slave MySQL server)</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'8843')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=08843&amp;LESSON_PATH=3903.4862.8809.8843">4. Настройка memcached (4. Configure memcached servers)</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9341&amp;LESSON_PATH=3903.4862.8809.8843.9341">1. Создание memcached сервера (1. Create memcached server)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9345&amp;LESSON_PATH=3903.4862.8809.8843.9345">2. Обновить настроек memcached сервера (2. Update settings on all memcached servers)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9343&amp;LESSON_PATH=3903.4862.8809.8843.9343">3. Удаление memcached сервера (3. Remove memcached server)</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8845&amp;LESSON_PATH=3903.4862.8809.8845">5. Фоновые задачи (5. Background tasks in the pool)</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'8847')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=08847&amp;LESSON_PATH=3903.4862.8809.8847">6. Управление сайтами (6. Manage sites in the pool)</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8849&amp;LESSON_PATH=3903.4862.8809.8847.8849">1. Создание сайта (1. Create site)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9353&amp;LESSON_PATH=3903.4862.8809.8847.9353">2. Удалить сайт (2. Delete site)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8851&amp;LESSON_PATH=3903.4862.8809.8847.8851">3. Настройка задач cron (3. Change cron tasks on site)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8853&amp;LESSON_PATH=3903.4862.8809.8847.8853">4. Настройка почтового сервера (4. Change e-mail settings on site)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8855&amp;LESSON_PATH=3903.4862.8809.8847.8855">5. Настройка https на сайте (5. Change https settings on site)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8857&amp;LESSON_PATH=3903.4862.8809.8847.8857">6. Настройка резервного копирования сайта (6. Change backup settings on site) </a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8859&amp;LESSON_PATH=3903.4862.8809.8847.8859">7. Настройка NTLM-авторизации на всех сайтах (7. Configure NTLM auth for all sites)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8861&amp;LESSON_PATH=3903.4862.8809.8847.8861">8. Настройка xmppd|smtpd сервисов для сайта (8. Configure optional services (xmppd|smtpd) for site)</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'8863')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=08863&amp;LESSON_PATH=3903.4862.8809.8847.8863">9. Настройка nginx для работы с композитом (9. Configure nginx for composite)</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8865&amp;LESSON_PATH=3903.4862.8809.8847.8863.8865">Условия работы композитного кеша</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8867&amp;LESSON_PATH=3903.4862.8809.8847.8863.8867">Конфигурационный файл сайта</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'9355')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=09355&amp;LESSON_PATH=3903.4862.8809.8847.9355">10. Настроить опции сайта (10. Configure site options)</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9357&amp;LESSON_PATH=3903.4862.8809.8847.9355.9357">1. Настроить параметр proxy_ignore_client_abort (1. Configure proxy_ignore_client_abort for site)</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8869&amp;LESSON_PATH=3903.4862.8809.8847.8869">11. Сайты с ошибками (11. Show sites with errors)</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'8871')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=08871&amp;LESSON_PATH=3903.4862.8809.8871">7. Управление sphinx (7. Manage sphinx in the pool)</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9347&amp;LESSON_PATH=3903.4862.8809.8871.9347">1. Создать инстанс sphinx на сервере (1. Create sphinx instance on server)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9349&amp;LESSON_PATH=3903.4862.8809.8871.9349">2. Обновить настройки sphinx (создать индекс) (2. Update sphinx instance on server (add index))</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9351&amp;LESSON_PATH=3903.4862.8809.8871.9351">3. Удалить sphinx на сервере (3. Remove sphinx instance on server)</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'8873')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=08873&amp;LESSON_PATH=3903.4862.8809.8873">8. Управление веб-серверами (8. Manage web nodes in the pool)</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9359&amp;LESSON_PATH=3903.4862.8809.8873.9359">1. Создание веб-сервера (1. Create web instance on server)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9375&amp;LESSON_PATH=3903.4862.8809.8873.9375">2. Настроить модули PHP (2. Manage PHP extensions)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9361&amp;LESSON_PATH=3903.4862.8809.8873.9361">3. Удаление роли web c сервера (3. Remove web instance on server)</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'8875')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=08875&amp;LESSON_PATH=3903.4862.8809.8875">9. Мониторинг (9. Monitoring in pool)</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9363&amp;LESSON_PATH=3903.4862.8809.8875.9363">1. Настроить сервисы мониторинга (1. Configure monitoring services)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9365&amp;LESSON_PATH=3903.4862.8809.8875.9365">2. Выключить сервисы мониторинга  (2. Disable monitoring services)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9367&amp;LESSON_PATH=3903.4862.8809.8875.9367">3. Добавить хосты для мониторинга (3. Add new host(s) on monitoring)</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'9377')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=09377&amp;LESSON_PATH=3903.4862.8809.9377">10. Настроить сервис Push/RTC (10. Configure Push/RTC service)</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9379&amp;LESSON_PATH=3903.4862.8809.9377.9379">1. Настроить NodeJS RTC сервис (1. Configure NodeJS RTC Service)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9381&amp;LESSON_PATH=3903.4862.8809.9377.9381">2. Удалить NodeJS RTC сервис (2. Remove NodeJS RTC Service)</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'8877')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=08877&amp;LESSON_PATH=3903.4862.8809.8877">Дополнительные настройки BitrixVM/BitrixEnv</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8879&amp;LESSON_PATH=3903.4862.8809.8877.8879">Изменение стандартных настроек BitrixVM без отключения автоподстройки</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9099&amp;LESSON_PATH=3903.4862.8809.8877.9099">Добавление ssl-сертификатов в BitrixVM/BitrixEnv</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'8883')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=08883&amp;LESSON_PATH=3903.4862.8809.8877.8883">Увеличение дискового пространства BitrixVM</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8885&amp;LESSON_PATH=3903.4862.8809.8877.8883.8885">Добавление дополнительного жесткого диска BitrixVM</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8887&amp;LESSON_PATH=3903.4862.8809.8877.8883.8887">Увеличение размера существующего жесткого диска BitrixVM</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9383&amp;LESSON_PATH=3903.4862.8809.8877.8883.9383">Увеличение размера LVM-раздела BitrixVM</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8889&amp;LESSON_PATH=3903.4862.8809.8877.8889">Подключение Swap-раздела</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8891&amp;LESSON_PATH=3903.4862.8809.8877.8891">Корректное монтирование Windows-ресурсов</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8895&amp;LESSON_PATH=3903.4862.8809.8877.8895">Настройка Postfix для отправки почты</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8897&amp;LESSON_PATH=3903.4862.8809.8877.8897">Выполнение всех агентов на Cron</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8899&amp;LESSON_PATH=3903.4862.8809.8877.8899">Опции монтирования</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8901&amp;LESSON_PATH=3903.4862.8809.8877.8901">Подключение IDE </a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'8903')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=08903&amp;LESSON_PATH=3903.4862.8809.8903">BitrixVM API для провайдеров</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8905&amp;LESSON_PATH=3903.4862.8809.8903.8905">Провайдеры</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8907&amp;LESSON_PATH=3903.4862.8809.8903.8907">Скрипт работы с провайдерами</a>
+				</span>
+			</li>
+			</ul></li></ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'6488')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=06488&amp;LESSON_PATH=3903.4862.6488">Виртуальная машина BitrixVM v5.x</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6489&amp;LESSON_PATH=3903.4862.6488.6489">Установка «1С-Битрикс: Веб-окружение» - Linux 5.x</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6490&amp;LESSON_PATH=3903.4862.6488.6490">Запуск виртуальной машины BitrixVM</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6550&amp;LESSON_PATH=3903.4862.6488.6550">Перенос продукта «1C-Битрикс» на виртуальную среду BitrixVM/BitrixEnv</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'6511')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=06511&amp;LESSON_PATH=3903.4862.6488.6511">Управление хостами (Manage Hosts in the pool)</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6519&amp;LESSON_PATH=3903.4862.6488.6511.6519">Добавление нового хоста в пул (Add new host in the pool)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6520&amp;LESSON_PATH=3903.4862.6488.6511.6520">Удаление хоста из пула (Delete host from pool)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6521&amp;LESSON_PATH=3903.4862.6488.6511.6521">Перезапуск хоста (Reboot host)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6522&amp;LESSON_PATH=3903.4862.6488.6511.6522">Обновление BitrixEnv на хосте (Update BitrixEnv on host)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6523&amp;LESSON_PATH=3903.4862.6488.6511.6523">Смена пароля пользователя bitrix (Change password for bitrix user on host)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6524&amp;LESSON_PATH=3903.4862.6488.6511.6524">Настройка таймзоны в пуле (Configure timezone in the pool)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=7127&amp;LESSON_PATH=3903.4862.6488.6511.7127">Обновление PHP и MySQL (Upgrade php and mysql versions)</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'6500')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=06500&amp;LESSON_PATH=3903.4862.6488.6500">Управление локальным сервером (Manage localhost)</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6502&amp;LESSON_PATH=3903.4862.6488.6500.6502">Изменение названия хоста</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6503&amp;LESSON_PATH=3903.4862.6488.6500.6503">Настройка IP-адреса сервера</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6501&amp;LESSON_PATH=3903.4862.6488.6500.6501">Обновление локального сервера</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6513&amp;LESSON_PATH=3903.4862.6488.6513">Настройка MySQL (Configure MySQL servers)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6514&amp;LESSON_PATH=3903.4862.6488.6514">Настройка memcached (Configure memcached servers)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6515&amp;LESSON_PATH=3903.4862.6488.6515">Фоновые задачи (Background tasks in the pool)</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'6516')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=06516&amp;LESSON_PATH=3903.4862.6488.6516">Управление сайтами (Manage sites in the pool)</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6535&amp;LESSON_PATH=3903.4862.6488.6516.6535">Создание и удаление сайта (Create\Delete site)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6536&amp;LESSON_PATH=3903.4862.6488.6516.6536">Настройка задач cron (Change cron tasks on site)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6537&amp;LESSON_PATH=3903.4862.6488.6516.6537">Настройка почтового сервера (Change e-mail settings on site)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6538&amp;LESSON_PATH=3903.4862.6488.6516.6538">Настройка https на сайте (Change https settings on site)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6539&amp;LESSON_PATH=3903.4862.6488.6516.6539">Настройка резервного копирования сайта (Change backup settings on site) </a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6540&amp;LESSON_PATH=3903.4862.6488.6516.6540">Настройка NTLM-авторизации на всех сайтах (Configure NTLM auth for all sites)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=7348&amp;LESSON_PATH=3903.4862.6488.6516.7348">Настройка xmppd|smtpd сервисов для сайта (Configure optional services (xmppd|smtpd) for site)</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'3087')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=03087&amp;LESSON_PATH=3903.4862.6488.6516.3087">Настройки NGINX в BitrixVM  для работы с композитом</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3085&amp;LESSON_PATH=3903.4862.6488.6516.3087.3085">Условия работы композитного кеша</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3086&amp;LESSON_PATH=3903.4862.6488.6516.3087.3086">Конфигурационный файл сайта</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=7773&amp;LESSON_PATH=3903.4862.6488.6516.7773">Сайты с ошибками (Show sites with errors)</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6517&amp;LESSON_PATH=3903.4862.6488.6517">Управление sphinx (Manage sphinx in the pool)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6518&amp;LESSON_PATH=3903.4862.6488.6518">Управление веб-серверами (Manage web nodes in the pool)</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6508&amp;LESSON_PATH=3903.4862.6488.6508">Мониторинг (Monitoring in pool)</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'5501')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=05501&amp;LESSON_PATH=3903.4862.6488.5501">Дополнительные настройки BitrixVM</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5502&amp;LESSON_PATH=3903.4862.6488.5501.5502">Изменение стандартных настроек BitrixVM без отключения автоподстройки</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'5448')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=05448&amp;LESSON_PATH=3903.4862.6488.5501.5448">Увеличение дискового пространства BitrixVM</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6929&amp;LESSON_PATH=3903.4862.6488.5501.5448.6929">Добавление дополнительного жесткого диска BitrixVM</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6928&amp;LESSON_PATH=3903.4862.6488.5501.5448.6928">Увеличение размера существующего жесткого диска BitrixVM</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=8909&amp;LESSON_PATH=3903.4862.6488.5501.5448.8909">Увеличение размера LVM-раздела BitrixVM</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9101&amp;LESSON_PATH=3903.4862.6488.5501.9101">Добавление ssl-сертификатов в BitrixVM</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5503&amp;LESSON_PATH=3903.4862.6488.5501.5503">Подключение Swap-раздела</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9325&amp;LESSON_PATH=3903.4862.6488.5501.9325">Дополнительные настройки и отладка msmtp</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5504&amp;LESSON_PATH=3903.4862.6488.5501.5504">Корректное монтирование Windows-ресурсов</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5505&amp;LESSON_PATH=3903.4862.6488.5501.5505">Настройка memcached</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=9327&amp;LESSON_PATH=3903.4862.6488.5501.9327">Настройка отправки Nagios-уведомлений в BitrixVM 5.1.3</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5506&amp;LESSON_PATH=3903.4862.6488.5501.5506">Настройка Postfix для отправки почты</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5507&amp;LESSON_PATH=3903.4862.6488.5501.5507">Выполнение всех агентов на Cron</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5509&amp;LESSON_PATH=3903.4862.6488.5501.5509">Опции монтирования</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5510&amp;LESSON_PATH=3903.4862.6488.5501.5510">Настройка NTLM-авторизации</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3421&amp;LESSON_PATH=3903.4862.6488.5501.3421">Подключение IDE </a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'6627')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=06627&amp;LESSON_PATH=3903.4862.6488.6627">BitrixVM API для провайдеров</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6629&amp;LESSON_PATH=3903.4862.6488.6627.6629">Провайдеры</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6628&amp;LESSON_PATH=3903.4862.6488.6627.6628">Скрипт работы с провайдерами</a>
+				</span>
+			</li>
+			</ul></li></ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4699')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04699&amp;LESSON_PATH=3903.4862.4699">Виртуальная машина BitrixVM v4.3</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2713&amp;LESSON_PATH=3903.4862.4699.2713">Введение</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2715&amp;LESSON_PATH=3903.4862.4699.2715">Запуск виртуальной машины BitrixVM</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=2716&amp;LESSON_PATH=3903.4862.4699.2716">Настройка почтового сервера</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5233&amp;LESSON_PATH=3903.4862.4699.5233">Создание кластера master-slave</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5232&amp;LESSON_PATH=3903.4862.4699.5232">Добавление дополнительного сайта</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6304&amp;LESSON_PATH=3903.4862.4699.6304">Мониторинг сервера</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3459&amp;LESSON_PATH=3903.4862.4699.3459">Автоматическое создание резервной копии</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5838&amp;LESSON_PATH=3903.4862.4699.5838">Настройка сервера поиска Sphinx</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5262&amp;LESSON_PATH=3903.4862.4699.5262">Обновление виртуальной машины VMBitrix</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5794&amp;LESSON_PATH=3903.4862.4699.5794">Перенос продукта «1C-Битрикс» на виртуальную машину BitrixVM</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'6551')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=06551&amp;LESSON_PATH=3903.4862.4699.6551">Дополнительные настройки BitrixVM</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6552&amp;LESSON_PATH=3903.4862.4699.6551.6552">Изменение стандартных настроек BitrixVM без отключения автоподстройки</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6553&amp;LESSON_PATH=3903.4862.4699.6551.6553">Увеличение дискового пространства BitrixVM</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6554&amp;LESSON_PATH=3903.4862.4699.6551.6554">Подключение Swap-раздела</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6555&amp;LESSON_PATH=3903.4862.4699.6551.6555">Корректное монтирование Windows-ресурсов</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6556&amp;LESSON_PATH=3903.4862.4699.6551.6556">Настройка memcached</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6557&amp;LESSON_PATH=3903.4862.4699.6551.6557">Настройка Postfix для отправки почты</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6558&amp;LESSON_PATH=3903.4862.4699.6551.6558">Выполнение всех агентов на Cron</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6559&amp;LESSON_PATH=3903.4862.4699.6551.6559">Опции монтирования</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6560&amp;LESSON_PATH=3903.4862.4699.6551.6560">Настройка NTLM-авторизации</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=6561&amp;LESSON_PATH=3903.4862.4699.6551.6561">Подключение IDE</a>
+				</span>
+			</li>
+			</ul></li></ul></li></ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4904')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04904&amp;LESSON_PATH=3903.4904">Монитор производительности</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3374&amp;LESSON_PATH=3903.4904.3374">Настройки модуля</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3375&amp;LESSON_PATH=3903.4904.3375">Публичная часть модуля</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'5061')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=05061&amp;LESSON_PATH=3903.4904.5061">Административные страницы модуля</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5020&amp;LESSON_PATH=3903.4904.5061.5020">Скорость сайта</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5125&amp;LESSON_PATH=3903.4904.5061.5125">Страницы</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5126&amp;LESSON_PATH=3903.4904.5061.5126">Хиты</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5127&amp;LESSON_PATH=3903.4904.5061.5127">Компоненты</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5128&amp;LESSON_PATH=3903.4904.5061.5128">SQL запросы</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3838&amp;LESSON_PATH=3903.4904.5061.3838">Кеширование</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5129&amp;LESSON_PATH=3903.4904.5061.5129">Таблицы в базе данных</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3798&amp;LESSON_PATH=3903.4904.5061.3798">Индексы</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5130&amp;LESSON_PATH=3903.4904.5061.5130">Настройки PHP</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5132&amp;LESSON_PATH=3903.4904.5061.5132">Сервер БД</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5133&amp;LESSON_PATH=3903.4904.5061.5133">Ошибки PHP</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=5508&amp;LESSON_PATH=3903.4904.5061.5508">История замеров производительности</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3376&amp;LESSON_PATH=3903.4904.3376">Поиск "узких" мест сайта</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3377&amp;LESSON_PATH=3903.4904.3377">Пример нахождения мелких ошибок в производительности</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item main-menu-item-open">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4897')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04897&amp;LESSON_PATH=3903.4897">Конфигурирование веб-систем для оптимальной работы</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4898')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04898&amp;LESSON_PATH=3903.4897.4898">Особенности веб-приложений</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3353&amp;LESSON_PATH=3903.4897.4898.3353">PHP-приложения</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3354&amp;LESSON_PATH=3903.4897.4898.3354">Базы данных</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3355&amp;LESSON_PATH=3903.4897.4898.3355">Какие проекты можно назвать большими?</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4899')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04899&amp;LESSON_PATH=3903.4897.4899">Почему умирают сайты?</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3356&amp;LESSON_PATH=3903.4897.4899.3356">Передача данных клиенту</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3357&amp;LESSON_PATH=3903.4897.4899.3357">Производительность PHP, базы данных и статика</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3402&amp;LESSON_PATH=3903.4897.4899.3402">Причины "умирания" сайтов</a>
+				</span>
+			</li>
+			</ul></li>					<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4900')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04900&amp;LESSON_PATH=3903.4897.4900">Двухуровневая конфигурация веб-сервера Front-End и Back-End</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3358&amp;LESSON_PATH=3903.4897.4900.3358">Front-end</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3359&amp;LESSON_PATH=3903.4897.4900.3359">Back-end и порядок взаимодействия</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3360&amp;LESSON_PATH=3903.4897.4900.3360">Стабилизируем Back-end по расходу оперативной памяти</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3361&amp;LESSON_PATH=3903.4897.4900.3361">Производительность PHP</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3362&amp;LESSON_PATH=3903.4897.4900.3362">Сжатие страниц</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3363&amp;LESSON_PATH=3903.4897.4900.3363">Дополнительные рекомендации для двухуровневой конфигурации</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3364&amp;LESSON_PATH=3903.4897.4900.3364">Достигнутые результаты</a>
+				</span>
+			</li>
+								<li class="main-menu-item tree-item-closed">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4902')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04902&amp;LESSON_PATH=3903.4897.4900.4902">Пример настройки двухуровневой архитектуры</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3365&amp;LESSON_PATH=3903.4897.4900.4902.3365">Настройка веб-сервера Apache</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3366&amp;LESSON_PATH=3903.4897.4900.4902.3366">Пример: число процессов веб-сервера</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3367&amp;LESSON_PATH=3903.4897.4900.4902.3367">Настройка Front-end NGINX</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3368&amp;LESSON_PATH=3903.4897.4900.4902.3368">Отдача графики напрямую NGINX</a>
+				</span>
+			</li>
+			</ul></li></ul></li>					<li class="main-menu-item main-menu-item-open">
+				<span class="main-menu-link">
+					<span class="main-menu-arrow" onclick="JMenu.OpenChapter(this,'4903')"></span>
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;CHAPTER_ID=04903&amp;LESSON_PATH=3903.4897.4903">Оптимизация базы данных</a>
+				</span>
+				<ul class="main-submenu">
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3369&amp;LESSON_PATH=3903.4897.4903.3369">Основные принципы</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3370&amp;LESSON_PATH=3903.4897.4903.3370">Постоянное соединение с базой данных</a>
+				</span>
+			</li>
+								<li class="main-menu-item main-menu-item-active">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3371&amp;LESSON_PATH=3903.4897.4903.3371">Настройка базы данных MySQL</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3372&amp;LESSON_PATH=3903.4897.4903.3372">Настройка базы данных Oracle</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3373&amp;LESSON_PATH=3903.4897.4903.3373">Пример-упражнение</a>
+				</span>
+			</li>
+								<li class="main-menu-item">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3594&amp;LESSON_PATH=3903.4897.4903.3594">Запросы и методы</a>
+				</span>
+			</li>
+			</ul></li></ul></li>					<li class="main-menu-item ">
+				<span class="main-menu-link">
+					<a class="main-menu-text" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;TEST_LIST=Y">Тесты&nbsp;(4)</a>
+				</span>
+			</li>
+				</ul>
+</div>
+	</div>
+<div class="courses-right-side">
+	<h2 class="courses-post-title">Настройка базы данных MySQL</h2>
+		<div class="courses-post">
+				<div id="last_change_form">
+	Просмотров: 6725 (Статистика ведётся с 06.02.2017)<br>
+    Дата последнего изменения: 21.03.2017</div>
+<script type="application/ld+json">
+	
+{"@context":"http:\/\/schema.org","@type":"Article","name":"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430
+ \u0431\u0430\u0437\u044b \u0434\u0430\u043d\u043d\u044b\u0445 
+MySQL","headline":"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430
+ \u0431\u0430\u0437\u044b \u0434\u0430\u043d\u043d\u044b\u0445 
+MySQL","url":"https:\/\/dev.1c-bitrix.ru\/learning\/course\/index.php?COURSE_ID=32\u0026LESSON_ID=3371","image":"https:\/\/dev.1c-bitrix.ru\/bitrix\/templates\/learning_new\/images\/logo.gif","articleBody":"\u0026amp;lt;p\u0026amp;gt;\u041e\u043f\u0442\u0438\u043c\u0438\u0437\u0430\u0446\u0438\u044f
+ \u0440\u0430\u0431\u043e\u0442\u044b \u0441 
+\u0431\u0430\u0437\u043e\u0439 \u0434\u0430\u043d\u043d\u044b\u0445 
+\u0434\u043b\u044f MySQL-\u0432\u0435\u0440\u0441\u0438\u0438 
+\u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0430 
+\u044f\u0432\u043b\u044f\u0435\u0442\u0441\u044f 
+\u043e\u0434\u043d\u043e\u0439 \u0438\u0437 
+\u0432\u0430\u0436\u043d\u0435\u0439\u0448\u0438\u0445 
+\u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0439 \u0432 
+\u043e\u043f\u0442\u0438\u043c\u0438\u0437\u0430\u0446\u0438\u0438 
+\u0441\u0438\u0441\u0442\u0435\u043c\u044b \u0432 
+\u0446\u0435\u043b\u043e\u043c, \u0442\u0430\u043a \u043a\u0430\u043a 
+\u043f\u0440\u043e\u0434\u0443\u043a\u0442 
+\u0430\u043a\u0442\u0438\u0432\u043d\u043e 
+\u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u0441 
+\u0431\u0430\u0437\u043e\u0439 \u0434\u0430\u043d\u043d\u044b\u0445. 
+\u0026amp;lt;\/p\u0026amp;gt;\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u0421\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u043e
+ MySQL \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442 \u0441 
+\u0444\u043e\u0440\u043c\u0430\u0442\u043e\u043c 
+\u0434\u0430\u043d\u043d\u044b\u0445 
+\u0026amp;lt;b\u0026amp;gt;MyISAM\u0026amp;lt;\/b\u0026amp;gt;. 
+\u041f\u0440\u043e\u0441\u0442\u043e\u0439 
+\u0444\u043e\u0440\u043c\u0430\u0442 
+\u0434\u0430\u043d\u043d\u044b\u0445 
+\u0445\u0440\u0430\u043d\u0438\u0442 
+\u043a\u0430\u0436\u0434\u0443\u044e 
+\u0442\u0430\u0431\u043b\u0438\u0446\u0443 \u0441 
+\u0434\u0430\u043d\u043d\u044b\u043c\u0438 \u0438\u043b\u0438 
+\u0438\u043d\u0434\u0435\u043a\u0441 \u0432 
+\u043e\u0442\u0434\u0435\u043b\u044c\u043d\u043e\u043c 
+\u0444\u0430\u0439\u043b\u0435. \u0412 \u0446\u0435\u043b\u043e\u043c, 
+\u043d\u0430 \u043d\u0435\u0431\u043e\u043b\u044c\u0448\u0438\u0445 
+\u043f\u043e \u043d\u0430\u0433\u0440\u0443\u0437\u043a\u0435 
+\u0441\u0430\u0439\u0442\u0430\u0445 
+\u0434\u0430\u043d\u043d\u044b\u0439 
+\u0444\u043e\u0440\u043c\u0430\u0442 
+\u044f\u0432\u043b\u044f\u0435\u0442\u0441\u044f 
+\u043d\u0430\u0438\u0431\u043e\u043b\u0435\u0435 
+\u0431\u044b\u0441\u0442\u0440\u044b\u043c, \u0445\u043e\u0442\u044f 
+\u0438 \u043d\u0435 
+\u043e\u0431\u0435\u0441\u043f\u0435\u0447\u0438\u0432\u0430\u0435\u0442
+ \u043f\u043e\u043b\u043d\u043e\u0439 
+\u0446\u0435\u043b\u043e\u0441\u0442\u043d\u043e\u0441\u0442\u0438 
+\u0438 \u043d\u0430\u0434\u0435\u0436\u043d\u043e\u0433\u043e 
+\u0445\u0440\u0430\u043d\u0435\u043d\u0438\u044f 
+\u0434\u0430\u043d\u043d\u044b\u0445 \u0437\u0430 
+\u0441\u0447\u0435\u0442 
+\u043e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0438\u044f 
+\u0442\u0440\u0430\u043d\u0437\u0430\u043a\u0446\u0438\u0439.\u0026amp;lt;\/p\u0026amp;gt;
+ 
+\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u041e\u0441\u043d\u043e\u0432\u043d\u044b\u043c
+ \u043d\u0435\u0434\u043e\u0441\u0442\u0430\u0442\u043a\u043e\u043c 
+MyISAM \u0441 \u0442\u043e\u0447\u043a\u0438 
+\u0437\u0440\u0435\u043d\u0438\u044f 
+\u043f\u0440\u043e\u0438\u0437\u0432\u043e\u0434\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u0438
+ \u044f\u0432\u043b\u044f\u0435\u0442\u0441\u044f 
+\u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u043a\u0430 
+\u043d\u0430 \u0443\u0440\u043e\u0432\u043d\u0435 
+\u0442\u0430\u0431\u043b\u0438\u0446\u044b \u043f\u0440\u0438 
+\u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u0438 
+\u0442\u0435\u0445 \u0438\u043b\u0438 \u0438\u043d\u044b\u0445 
+\u043e\u043f\u0435\u0440\u0430\u0446\u0438\u0439. \u0412 
+\u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u0435, 
+\u043f\u0440\u0438 \u0431\u043e\u043b\u044c\u0448\u043e\u0439 
+\u043d\u0430\u0433\u0440\u0443\u0437\u043a\u0435 MySQL 
+\u0438\u043c\u0435\u043d\u043d\u043e MyISAM 
+\u0442\u0430\u0431\u043b\u0438\u0446\u044b 
+\u0441\u0442\u0430\u043d\u043e\u0432\u044f\u0442\u0441\u044f 
+\u043e\u0441\u043d\u043e\u0432\u043d\u044b\u043c 
+\u0443\u0437\u043a\u0438\u043c \u043c\u0435\u0441\u0442\u043e\u043c 
+\u0432 \u0441\u0438\u0441\u0442\u0435\u043c\u0435, 
+\u043c\u0435\u0448\u0430\u044f 
+\u0443\u0432\u0435\u043b\u0438\u0447\u0438\u0432\u0430\u0442\u044c 
+\u0443\u0442\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u044e 
+\u043c\u0430\u0448\u0438\u043d\u044b \u0438 
+\u0447\u0438\u0441\u043b\u043e 
+\u043e\u0431\u0440\u0430\u0431\u0430\u0442\u044b\u0432\u0430\u0435\u043c\u044b\u0445
+ \u0437\u0430\u043f\u0440\u043e\u0441\u043e\u0432. \u042d\u0442\u043e 
+\u0442\u0430\u043a\u0436\u0435 
+\u043f\u0440\u0438\u0432\u043e\u0434\u0438\u0442 \u043a 
+\u0443\u0432\u0435\u043b\u0438\u0447\u0435\u043d\u0438\u044e 
+\u0432\u0440\u0435\u043c\u0435\u043d\u0438 
+\u0440\u0430\u0431\u043e\u0442\u044b 
+\u0441\u0442\u0440\u0430\u043d\u0438\u0446\u044b \u0437\u0430 
+\u0441\u0447\u0435\u0442 
+\u043e\u0436\u0438\u0434\u0430\u043d\u0438\u044f 
+\u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0435\u043c\u044b\u0445
+ \u0442\u0430\u0431\u043b\u0438\u0446 \u043d\u0430 
+\u0443\u0440\u043e\u0432\u043d\u0435 MySQL.\u0026amp;lt;\/p\u0026amp;gt;
+ 
+\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u0420\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u0442\u0441\u044f
+ \u043f\u0435\u0440\u0435\u0432\u043e\u0434\u0438\u0442\u044c 
+\u0432\u0441\u0435 \u0442\u0430\u0431\u043b\u0438\u0446\u044b 
+\u043f\u0440\u043e\u0435\u043a\u0442\u0430 \u0432 
+\u0444\u043e\u0440\u043c\u0430\u0442 
+\u0434\u0430\u043d\u043d\u044b\u0445 \u0026amp;lt;a 
+target=\u0026amp;quot;_blank\u0026amp;quot; 
+href=\u0026amp;quot;https:\/\/dev.mysql.com\/doc\/refman\/5.6\/en\/innodb-storage-engine.html\u0026amp;quot;\u0026amp;gt;InnoDB\u0026amp;lt;\/a\u0026amp;gt;.
+ \u0424\u043e\u0440\u043c\u0430\u0442 InnoDB, 
+\u043d\u0430\u0447\u0438\u043d\u0430\u044f \u0441 
+\u0432\u0435\u0440\u0441\u0438\u0438 MySQL 4.0, 
+\u0432\u0445\u043e\u0434\u0438\u0442 \u0432 
+\u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u0443\u044e 
+\u043f\u043e\u0441\u0442\u0430\u0432\u043a\u0443 
+\u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0430 \u0438 
+\u043e\u0431\u0435\u0441\u043f\u0435\u0447\u0438\u0432\u0430\u0435\u0442
+ \u043d\u0430\u0434\u0435\u0436\u043d\u043e\u0435 
+\u0445\u0440\u0430\u043d\u0435\u043d\u0438\u0435 
+\u0434\u0430\u043d\u043d\u044b\u0445, 
+\u0442\u0440\u0430\u043d\u0437\u0430\u043a\u0446\u0438\u043e\u043d\u043d\u043e\u0441\u0442\u044c
+ \u0438 
+\u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435
+ \u0434\u0430\u043d\u043d\u044b\u0445 \u043d\u0430 
+\u0443\u0440\u043e\u0432\u043d\u0435 
+\u0441\u0442\u0440\u043e\u043a\u0438. 
+\u0026amp;lt;\/p\u0026amp;gt;\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u0414\u0432\u0430
+ \u0432\u0430\u0436\u043d\u044b\u0445 
+\u043c\u043e\u043c\u0435\u043d\u0442\u0430, 
+\u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u0434\u0430\u044e\u0442 
+\u043e\u0441\u043d\u043e\u0432\u0430\u043d\u0438\u0435 
+\u043f\u0440\u0435\u0434\u043f\u043e\u0447\u0435\u0441\u0442\u044c 
+\u0442\u0430\u0431\u043b\u0438\u0446\u044b 
+\u0026amp;lt;b\u0026amp;gt;InnoDB\u0026amp;lt;\/b\u0026amp;gt; 
+\u043f\u0435\u0440\u0435\u0434 
+\u0026amp;lt;b\u0026amp;gt;MyISAM\u0026amp;lt;\/b\u0026amp;gt;:\r\n\u0026amp;lt;\/p\u0026amp;gt;\r\n\u0026amp;lt;ol\u0026amp;gt;\r\n\u0026amp;lt;li\u0026amp;gt;\u0026amp;lt;b\u0026amp;gt;\u041d\u0430\u0434\u0435\u0436\u043d\u043e\u0441\u0442\u044c\u0026amp;lt;\/b\u0026amp;gt;.
+ \u0412 MyISAM \u0432\u044b\u0441\u043e\u043a\u0430 
+\u0432\u0435\u0440\u043e\u044f\u0442\u043d\u043e\u0441\u0442\u044c 
+\u0441\u0431\u043e\u044f \u0442\u0430\u0431\u043b\u0438\u0446, 
+\u043e\u0441\u043e\u0431\u0435\u043d\u043d\u043e 
+\u0431\u043e\u043b\u044c\u0448\u0438\u0445, 
+\u043e\u0441\u043e\u0431\u0435\u043d\u043d\u043e \u043f\u0440\u0438 
+\u0432\u044b\u0441\u043e\u043a\u043e\u0439 
+\u043f\u043e\u0441\u0435\u0449\u0430\u0435\u043c\u043e\u0441\u0442\u0438,
+ \u043e\u0441\u043e\u0431\u0435\u043d\u043d\u043e 
+\u0447\u0430\u0441\u0442\u043e 
+\u0438\u0437\u043c\u0435\u043d\u044f\u0435\u043c\u044b\u0445. 
+\u0415\u0441\u0442\u044c \u0440\u0438\u0441\u043a 
+\u043f\u043e\u0442\u0435\u0440\u044f\u0442\u044c 
+\u043d\u0435\u0441\u043a\u043e\u043b\u044c\u043a\u043e 
+(\u0434\u0435\u0441\u044f\u0442\u043a\u043e\u0432, 
+\u0441\u043e\u0442\u0435\u043d) 
+\u0437\u0430\u043f\u0438\u0441\u0435\u0439 \u0438 
+\u0446\u0435\u043b\u043e\u0441\u0442\u043d\u043e\u0441\u0442\u044c 
+\u0434\u0430\u043d\u043d\u044b\u0445. \u0412 InnoDB 
+\u0447\u0438\u043d\u0438\u0442\u044c 
+\u043e\u0442\u0434\u0435\u043b\u044c\u043d\u044b\u0435 
+\u0442\u0430\u0431\u043b\u0438\u0446\u044b \u043d\u0435 
+\u043f\u0440\u0438\u0434\u0435\u0442\u0441\u044f. 
+\u0415\u0441\u043b\u0438 \u0443\u043f\u0430\u0434\u0435\u0442, 
+\u0442\u0430\u043a \u0432\u0441\u0435 \u0441\u0440\u0430\u0437\u0443. 
+\u041d\u043e \u043d\u0430 
+\u043f\u0440\u0430\u043a\u0442\u0438\u043a\u0435 \u044d\u0442\u043e - 
+\u0438\u0441\u043a\u043b\u044e\u0447\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0435
+ \u044f\u0432\u043b\u0435\u043d\u0438\u0435, 
+\u043f\u0440\u0430\u043a\u0442\u0438\u0447\u0435\u0441\u043a\u0438 
+\u043d\u0435 
+\u0432\u0441\u0442\u0440\u0435\u0447\u0430\u0435\u043c\u043e\u0435. 
+\u0411\u043b\u0430\u0433\u043e\u0434\u0430\u0440\u044f 
+\u0442\u0440\u0430\u043d\u0437\u0430\u043a\u0446\u0438\u043e\u043d\u043d\u043e\u0441\u0442\u0438,
+ \u0440\u0438\u0441\u043a 
+\u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0438\u044f 
+\u0446\u0435\u043b\u043e\u0441\u0442\u043d\u043e\u0441\u0442\u0438 
+\u043c\u0438\u043d\u0438\u043c\u0430\u043b\u044c\u043d\u044b\u0439.\r\n\u0026amp;lt;p\u0026amp;gt;
+ \u041d\u0435\u0434\u043e\u0441\u0442\u0430\u0442\u043a\u0438 
+\u0026amp;lt;b\u0026amp;gt;InnoDB\u0026amp;lt;\/b\u0026amp;gt;: 
+\u043d\u0443\u0436\u043d\u043e 
+\u0432\u043d\u0438\u043c\u0430\u0442\u0435\u043b\u044c\u043d\u043e 
+\u0441\u043b\u0435\u0434\u0438\u0442\u044c \u0437\u0430 
+\u0441\u0432\u043e\u0431\u043e\u0434\u043d\u044b\u043c 
+\u043c\u0435\u0441\u0442\u043e\u043c \u043d\u0430 
+\u0434\u0438\u0441\u043a\u0435; 
+\u043d\u0430\u043a\u0430\u043f\u043b\u0438\u0432\u0430\u044e\u0449\u0430\u044f\u0441\u044f
+ 
+\u0444\u0440\u0430\u0433\u043c\u0435\u043d\u0442\u0430\u0446\u0438\u044f
+ \u0434\u0430\u043d\u043d\u044b\u0445 
+(\u043b\u0435\u0447\u0438\u0442\u0441\u044f 
+\u043f\u0435\u0440\u0438\u043e\u0434\u0438\u0447\u0435\u0441\u043a\u0438\u043c
+ \u043f\u0435\u0440\u0435\u0432\u043e\u0434\u043e\u043c 
+\u0442\u0430\u0431\u043b\u0438\u0446 \u0438\u0437 InnoDB \u0432 MyISAM 
+\u0438 
+\u043e\u0431\u0440\u0430\u0442\u043d\u043e).\u0026amp;lt;\/p\u0026amp;gt;\u0026amp;lt;\/li\u0026amp;gt;\r\n\u0026amp;lt;li\u0026amp;gt;\u0026amp;lt;b\u0026amp;gt;\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c\u0026amp;lt;\/b\u0026amp;gt;.
+ \u041d\u0430 \u043d\u0435\u0432\u044b\u0441\u043e\u043a\u043e\u0439 
+\u043f\u043e\u0441\u0435\u0449\u0430\u0435\u043c\u043e\u0441\u0442\u0438
+ MyISAM \u0432\u0435\u0434\u0435\u0442 \u0441\u0435\u0431\u044f 
+\u0431\u044b\u0441\u0442\u0440\u0435\u0435, \u043a\u0430\u043a 
+\u043d\u0430 
+\u043c\u043e\u0434\u0438\u0444\u0438\u043a\u0430\u0446\u0438\u044e, 
+\u0442\u0430\u043a \u0438 \u043d\u0430 
+\u0447\u0442\u0435\u043d\u0438\u0435. 
+\u041e\u0434\u043d\u0430\u043a\u043e, \u043f\u0440\u0438 
+\u0440\u043e\u0441\u0442\u0435 
+\u043f\u043e\u0441\u0435\u0449\u0430\u0435\u043c\u043e\u0441\u0442\u0438
+ \u0434\u043e\u0441\u0442\u0430\u0442\u043e\u0447\u043d\u043e 
+\u0431\u044b\u0441\u0442\u0440\u043e 
+\u0441\u043a\u0430\u0437\u044b\u0432\u0430\u0435\u0442\u0441\u044f 
+\u043e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0438\u0435 
+\u0442\u0440\u0430\u043d\u0437\u0430\u043a\u0446\u0438\u0439 \u0438 
+\u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u043a\u0430 
+\u043d\u0430 \u0443\u0440\u043e\u0432\u043d\u0435 
+\u0442\u0430\u0431\u043b\u0438\u0446. \u041f\u0440\u0438 
+\u043d\u0435\u043a\u043e\u0442\u043e\u0440\u043e\u0439 
+\u0432\u0435\u043b\u0438\u0447\u0438\u043d\u0435 
+\u043f\u043e\u0441\u0435\u0449\u0430\u0435\u043c\u043e\u0441\u0442\u0438
+ \u043f\u0440\u043e\u0435\u043a\u0442 
+\u043f\u0440\u043e\u0441\u0442\u043e 
+\u0440\u0435\u0430\u043b\u044c\u043d\u043e 
+\u0443\u043c\u0438\u0440\u0430\u0435\u0442. \u0412 InnoDB 
+\u0437\u0430\u043f\u0438\u0441\u044c \u0431\u0443\u0434\u0435\u0442 
+\u043c\u0435\u0434\u043b\u0435\u043d\u043d\u0435\u0435 
+(\u0442\u0440\u0430\u043d\u0437\u0430\u043a\u0446\u0438\u0438 
+\u0436\u0435), \u0437\u0430\u0442\u043e \u043f\u0440\u0438 
+\u0432\u044b\u0441\u043e\u043a\u043e\u0439 
+\u043f\u043e\u0441\u0435\u0449\u0430\u0435\u043c\u043e\u0441\u0442\u0438
+ \u0431\u043b\u043e\u043a\u0438\u0440\u043e\u0432\u043a\u0438 
+\u043d\u0430\u0441\u0442\u0443\u043f\u044f\u0442 
+\u043d\u0430\u043c\u043d\u043e\u0433\u043e, 
+\u043d\u0430\u043c\u043d\u043e\u0433\u043e 
+\u043f\u043e\u0437\u0436\u0435, \u0447\u0435\u043c \u0434\u043b\u044f 
+MyISAM.\u0026amp;lt;\/li\u0026amp;gt; \r\n 
+\u0026amp;lt;\/ol\u0026amp;gt;\r\n\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u041f\u043e\u043c\u0435\u043d\u044f\u0442\u044c
+ \u0442\u0438\u043f \u0442\u0430\u0431\u043b\u0438\u0446 \u043d\u0430 
+InnoDB \u043c\u043e\u0436\u043d\u043e 
+\u0441\u043b\u0435\u0434\u0443\u044e\u0449\u0438\u043c 
+\u043e\u0431\u0440\u0430\u0437\u043e\u043c: 
+\u0026amp;lt;\/p\u0026amp;gt;\r\n\u0026amp;lt;ol\u0026amp;gt;\r\n\u0026amp;lt;li\u0026amp;gt;\u0412
+ 
+\u0430\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u0438\u0432\u043d\u043e\u043c
+ \u043c\u0435\u043d\u044e \u0026amp;lt;span 
+class=\u0026amp;quot;path\u0026amp;quot;\u0026amp;gt;\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438
+ \u0441\u0438\u0441\u0442\u0435\u043c\u044b \u0026amp;gt; 
+\u0418\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u044b 
+\u0026amp;gt; SQL 
+\u0437\u0430\u043f\u0440\u043e\u0441\u0026amp;lt;\/span\u0026amp;gt; 
+\u0432\u044b\u043f\u043e\u043b\u043d\u0438\u0442\u044c 
+\u043a\u043e\u043c\u0430\u043d\u0434\u0443:\r\n\u0026amp;lt;pre 
+class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt; SHOW TABLES 
+\u0026amp;lt;\/pre\u0026amp;gt;\u0026amp;lt;\/li\u0026amp;gt;\r\n\r\n\u0026amp;lt;li\u0026amp;gt;\u0412
+ \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u0435 
+\u0432\u044b \u043f\u043e\u043b\u0443\u0447\u0438\u0442\u0435 
+\u0441\u043f\u0438\u0441\u043e\u043a \u0432\u0441\u0435\u0445 
+\u0442\u0435\u043a\u0443\u0449\u0438\u0445 
+\u0442\u0430\u0431\u043b\u0438\u0446 
+\u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0430. \u0414\u043b\u044f 
+\u043a\u0430\u0436\u0434\u043e\u0439 
+\u0442\u0430\u0431\u043b\u0438\u0446\u044b 
+\u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e 
+\u0432\u044b\u043f\u043e\u043b\u043d\u0438\u0442\u044c 
+\u043a\u043e\u043c\u0430\u043d\u0434\u0443:\r\n\u0026amp;lt;pre 
+class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt; ALTER TABLE 
+\u0026amp;amp;lt;\u0418\u041c\u042f 
+\u0422\u0410\u0411\u041b\u0418\u0426\u042b\u0026amp;amp;gt;, type=InnoDB
+ 
+\u0026amp;lt;\/pre\u0026amp;gt;\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u0412
+ FAQ \u043f\u0440\u0438\u0432\u0435\u0434\u0435\u043d \u0026amp;lt;a 
+target=\u0026amp;quot;blank\u0026amp;quot; 
+href=\u0026amp;quot;http:\/\/dev.1c-bitrix.ru\/support\/faq\/8366\/#112808\u0026amp;quot;\u0026amp;gt;\u043f\u0440\u0438\u043c\u0435\u0440\u0026amp;lt;\/a\u0026amp;gt;
+ \u0434\u043b\u044f \u0441\u043e\u0437\u0434\u0430\u043d\u0438\u044f 
+\u0441\u043a\u0440\u0438\u043f\u0442\u0430 \u0434\u043b\u044f 
+\u043f\u0435\u0440\u0435\u0432\u043e\u0434\u0430 
+\u0442\u0430\u0431\u043b\u0438\u0446 \u0432 
+InnoDB.\u0026amp;lt;\/p\u0026amp;gt;\u0026amp;lt;\/li\u0026amp;gt; 
+\r\n\u0026amp;lt;li\u0026amp;gt;\u041f\u043e\u0441\u043b\u0435 
+\u043f\u0435\u0440\u0435\u0432\u043e\u0434\u0430 
+\u0442\u0430\u0431\u043b\u0438\u0446 \u0432\u0430\u0448\u0435\u0439 
+\u0431\u0430\u0437\u044b \u0432 InnoDB \u043d\u0430\u0434\u043e 
+\u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0432 
+\u0444\u0430\u0439\u043b 
+\r\n\u0026amp;lt;code\u0026amp;gt;\/bitrix\/php_interface\/dbconn.php\u0026amp;lt;\/code\u0026amp;gt;
+ 
+\u043d\u0438\u0436\u0435\u0441\u043b\u0435\u0434\u0443\u044e\u0449\u0438\u0439
+ \u043a\u043e\u0434: \r\n\u0026amp;lt;pre 
+class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt; 
+define(\u0026amp;amp;quot;MYSQL_TABLE_TYPE\u0026amp;amp;quot;, 
+\u0026amp;amp;quot;InnoDB\u0026amp;amp;quot;); 
+\u0026amp;lt;\/pre\u0026amp;gt;\r\n\u0026amp;lt;\/li\u0026amp;gt; \r\n 
+\u0026amp;lt;\/ol\u0026amp;gt;\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u041f\u0435\u0440\u0435\u0445\u043e\u0434
+ \u043d\u0430 \u0442\u0438\u043f \u0442\u0430\u0431\u043b\u0438\u0446 
+InnoDB \u043f\u043e\u0437\u0432\u043e\u043b\u044f\u0435\u0442 
+\u0438\u0437\u0431\u0435\u0436\u0430\u0442\u044c 
+\u0432\u043e\u0437\u043d\u0438\u043a\u043d\u043e\u0432\u0435\u043d\u0438\u044f
+ \u0443\u0437\u043a\u043e\u0433\u043e 
+\u0443\u0447\u0430\u0441\u0442\u043a\u0430 \u0432 
+\u043f\u0440\u043e\u0438\u0437\u0432\u043e\u0434\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u0438
+ \u043f\u0440\u0438 \u0440\u0430\u0431\u043e\u0442\u0435 \u0441 
+\u0431\u0430\u0437\u043e\u0439 \u0434\u0430\u043d\u043d\u044b\u0445 
+\u0438 \u0432 \u043f\u043e\u043b\u043d\u043e\u043c 
+\u043e\u0431\u044a\u0435\u043c\u0435 
+\u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u044c
+ \u0441\u0438\u0441\u0442\u0435\u043c\u043d\u044b\u0435 
+\u0440\u0435\u0441\u0443\u0440\u0441\u044b.\u0026amp;lt;\/p\u0026amp;gt;
+ \r\n\u0026amp;lt;div 
+class=\u0026amp;quot;warning\u0026amp;quot;\u0026amp;gt;\u0026amp;lt;b\u0026amp;gt;\u0412\u043d\u0438\u043c\u0430\u043d\u0438\u0435!\u0026amp;lt;\/b\u0026amp;gt;
+ \u041e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u043e 
+\u043a\u043e\u043d\u0444\u0438\u0433\u0443\u0440\u0438\u0440\u0443\u0439\u0442\u0435
+ \u0026amp;lt;b\u0026amp;gt;InnoDB\u0026amp;lt;\/b\u0026amp;gt;. 
+\u0414\u043b\u044f \u043b\u0443\u0447\u0448\u0435\u0439 
+\u043f\u0440\u043e\u0438\u0437\u0432\u043e\u0434\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u0438
+ \u0431\u0430\u0437\u044b \u0434\u0430\u043d\u043d\u044b\u0445 
+\u043f\u0440\u0438 \u0440\u0430\u0431\u043e\u0442\u0435 \u0441 InnoDB 
+\u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u0442\u0441\u044f
+ \u043d\u0430\u0441\u0442\u0440\u043e\u0438\u0442\u044c 
+\u0026amp;lt;code\u0026amp;gt;my.cnf\u0026amp;lt;\/code\u0026amp;gt; 
+\u0434\u043b\u044f MySQL \u0432 
+\u0440\u0430\u0437\u0434\u0435\u043b\u0435 \u0026amp;lt;a 
+target=\u0026amp;quot;_blank\u0026amp;quot; 
+href=\u0026amp;quot;http:\/\/dev.mysql.com\/doc\/refman\/5.0\/en\/innodb-configuration.html\u0026amp;quot;\u0026amp;gt;\u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u043e\u0432
+ \u0434\u043b\u044f InnoDB\u0026amp;lt;\/a\u0026amp;gt; 
+\u0026amp;lt;code\u0026amp;gt;innodb_*\u0026amp;lt;\/code\u0026amp;gt;.\u0026amp;lt;\/div\u0026amp;gt;\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u041d\u0430\u0438\u0431\u043e\u043b\u044c\u0448\u0435\u0435
+ \u0432\u043d\u0438\u043c\u0430\u043d\u0438\u0435 
+\u0441\u043b\u0435\u0434\u0443\u0435\u0442 
+\u043e\u0431\u0440\u0430\u0442\u0438\u0442\u044c \u043d\u0430 
+\u0441\u043b\u0435\u0434\u0443\u044e\u0449\u0438\u0435 
+\u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b \u0438 
+\u043f\u0440\u0438\u043c\u0435\u0440\u044b:\u0026amp;lt;\/p\u0026amp;gt;
+ \r\n\u0026amp;lt;pre 
+class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt;\r\n set-variable
+ = innodb_buffer_pool_size=250M \r\n set-variable = 
+innodb_additional_mem_pool_size=50M \r\n set-variable = 
+innodb_file_io_threads=8 \r\n set-variable = innodb_lock_wait_timeout=50
+ \r\n set-variable = innodb_log_buffer_size=8M \r\n set-variable = 
+innodb_flush_log_at_trx_commit=0 
+\r\n\u0026amp;lt;\/pre\u0026amp;gt;\r\n\u0026amp;lt;div 
+class=\u0026amp;quot;hint\u0026amp;quot;\u0026amp;gt;\u0026amp;lt;b\u0026amp;gt;\u0420\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u0442\u0441\u044f\u0026amp;lt;\/b\u0026amp;gt;:
+ \u0414\u043b\u044f 
+\u0441\u043e\u043a\u0440\u0430\u0449\u0435\u043d\u0438\u044f 
+\u0432\u0440\u0435\u043c\u0435\u043d\u0438 
+\u043e\u0442\u0432\u0435\u0442\u0430 
+\u0441\u0435\u0440\u0432\u0435\u0440\u0430 
+\u043c\u043e\u0436\u043d\u043e 
+\u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u044c
+ \u043e\u0442\u043b\u043e\u0436\u0435\u043d\u043d\u044b\u0435 
+\u0442\u0440\u0430\u043d\u0437\u0430\u043a\u0446\u0438\u0438 \u0438, 
+\u0432 \u0447\u0430\u0441\u0442\u043d\u043e\u0441\u0442\u0438, 
+\u0443\u0441\u0442\u0430\u043d\u0430\u0432\u043b\u0438\u0432\u0430\u0442\u044c
+ \u043f\u0435\u0440\u0435\u043c\u0435\u043d\u043d\u0443\u044e 
+\u0026amp;lt;code\u0026amp;gt;set-variable = 
+innodb_flush_log_at_trx_commit=0\u0026amp;lt;\/code\u0026amp;gt;.\u0026amp;lt;\/div\u0026amp;gt;\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u0415\u0441\u043b\u0438
+ MyISAM \u0443\u0436\u0435 \u043d\u0435 
+\u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0435\u0442\u0441\u044f
+ \u0430\u043a\u0442\u0438\u0432\u043d\u043e, 
+\u043c\u043e\u0436\u043d\u043e 
+\u0432\u044b\u0441\u0432\u043e\u0431\u043e\u0434\u0438\u0442\u044c 
+\u043f\u0430\u043c\u044f\u0442\u044c \u0432 
+\u043f\u043e\u043b\u044c\u0437\u0443 InnoDB 
+\u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u043e\u0432.\u0026amp;lt;\/p\u0026amp;gt;\r\n\u0026amp;lt;p\u0026amp;gt;\u0416\u0435\u043b\u0430\u0442\u0435\u043b\u044c\u043d\u043e,
+ \u0447\u0442\u043e\u0431\u044b \u043a\u044d\u0448 
+\u0434\u0430\u043d\u043d\u044b\u0445 
+\u0432\u043c\u0435\u0449\u0430\u043b \u0432 \u0441\u0435\u0431\u044f 
+\u043e\u0441\u043d\u043e\u0432\u043d\u043e\u0439 
+\u043e\u0431\u044a\u0435\u043c \u0434\u0430\u043d\u043d\u044b\u0445, 
+\u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0435\u043c\u044b\u0445
+ \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u043e\u043c \u0432 
+\u0440\u0430\u0431\u043e\u0442\u0435. 
+\u041e\u0431\u044b\u0447\u043d\u043e \u0434\u043b\u044f 
+\u0440\u0430\u0431\u043e\u0442\u044b \u0431\u0430\u0437\u044b 
+\u0434\u0430\u043d\u043d\u044b\u0445 
+\u0432\u044b\u0434\u0435\u043b\u044f\u0435\u0442\u0441\u044f 
+\u043f\u043e\u0440\u044f\u0434\u043a\u0430 60-80% 
+\u0441\u0432\u043e\u0431\u043e\u0434\u043d\u043e\u0439 
+\u043f\u0430\u043c\u044f\u0442\u0438 \u0432 
+\u0441\u0438\u0441\u0442\u0435\u043c\u0435.\u0026amp;lt;\/p\u0026amp;gt;
+ \r\n\u0026amp;lt;div 
+class=\u0026amp;quot;hint\u0026amp;quot;\u0026amp;gt;\u0026amp;lt;b\u0026amp;gt;\u0420\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u0442\u0441\u044f\u0026amp;lt;\/b\u0026amp;gt;:
+ \u041f\u0440\u043e\u0438\u0437\u0432\u043e\u0434\u0438\u0442\u044c 
+\u043c\u043d\u043e\u0433\u043e\u043f\u043e\u0442\u043e\u043a\u043e\u0432\u0443\u044e
+ (multithreading) \u0441\u0431\u043e\u0440\u043a\u0443 
+\u0026amp;lt;i\u0026amp;gt;MySQL\u0026amp;lt;\/i\u0026amp;gt; 
+\u0434\u043b\u044f 
+\u0443\u043b\u0443\u0447\u0448\u0435\u043d\u0438\u044f 
+\u043f\u0440\u043e\u0438\u0437\u0432\u043e\u0434\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u0438
+ \u0441\u0438\u0441\u0442\u0435\u043c\u044b \u0438 
+\u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e\u0441\u0442\u0435\u0439
+ \u043f\u043e 
+\u043f\u0430\u0440\u0430\u043b\u043b\u0435\u043b\u044c\u043d\u043e\u0439
+ \u043e\u0431\u0440\u0430\u0431\u043e\u0442\u043a\u0435 
+\u0437\u0430\u043f\u0440\u043e\u0441\u043e\u0432.\u0026amp;lt;\/div\u0026amp;gt;
+  
+\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u041f\u0440\u0438\u043c\u0435\u0440 
+\u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u043c\u044b\u0445
+ \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043a \u0434\u043b\u044f 
+\u0441\u0435\u0440\u0432\u0435\u0440\u0430 \u0441 2 \u0413\u0431 
+\u043e\u043f\u0435\u0440\u0430\u0442\u0438\u0432\u043d\u043e\u0439 
+\u043f\u0430\u043c\u044f\u0442\u0438, 
+\u0440\u0430\u0431\u043e\u0442\u0430\u044e\u0449\u0435\u0433\u043e 
+\u0441 
+\u043e\u043f\u0435\u0440\u0430\u0446\u0438\u043e\u043d\u043d\u043e\u0439
+ \u0441\u0438\u0441\u0442\u0435\u043c\u043e\u0439 FreeBSD\/Linux: 
+\u0026amp;lt;\/p\u0026amp;gt;\r\n\u0026amp;lt;pre 
+class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt; set-variable = 
+table_cache=4096\u0026amp;lt;\/pre\u0026amp;gt;\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u0412
+ \u0441\u043e\u0441\u0442\u0430\u0432\u0435 
+\u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0430 
+\u043e\u043a\u043e\u043b\u043e 250 \u0442\u0430\u0431\u043b\u0438\u0446,
+ \u043f\u043e\u044d\u0442\u043e\u043c\u0443 
+\u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u0442\u0441\u044f
+ \u0443\u0432\u0435\u043b\u0438\u0447\u0438\u0432\u0430\u0442\u044c 
+\u043a\u044d\u0448 \u0434\u043b\u044f 
+\u0437\u0430\u0433\u043e\u043b\u043e\u0432\u043a\u043e\u0432 
+\u0442\u0430\u0431\u043b\u0438\u0446. 
+\u0026amp;lt;\/p\u0026amp;gt;\r\n\r\n\u0026amp;lt;pre 
+class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt; set-variable = 
+key_buffer_size=16M \r\n set-variable = sort_buffer=8M \r\n set-variable
+ = read_buffer_size=16M 
+\u0026amp;lt;\/pre\u0026amp;gt;\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u042d\u0442\u0438
+ \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b 
+\u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u044e\u0442\u0441\u044f
+ \u0442\u043e\u043b\u044c\u043a\u043e \u0434\u043b\u044f MyISAM. 
+\u0415\u0441\u043b\u0438 \u0432 \u0431\u0430\u0437\u0435 
+\u043d\u0435\u0442 \u0442\u0430\u0431\u043b\u0438\u0446 MyISAM, 
+\u0442\u043e \u043b\u0443\u0447\u0448\u0435 
+\u0443\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c 
+\u043c\u0438\u043d\u0438\u043c\u0430\u043b\u044c\u043d\u044b\u0435 
+\u0437\u043d\u0430\u0447\u0435\u043d\u0438\u044f. 
+\u0026amp;lt;\/p\u0026amp;gt;\r\n\u0026amp;lt;pre 
+class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt;set-variable = 
+query_cache_size=64M \r\n set-variable = 
+query_cache_type=1\u0026amp;lt;\/pre\u0026amp;gt; 
+\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u041a\u044d\u0448\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435
+ \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u043e\u0432 
+\u0437\u0430\u043f\u0440\u043e\u0441\u043e\u0432. 
+\u041e\u0431\u044b\u0447\u043d\u043e 
+\u0431\u044b\u0432\u0430\u0435\u0442 
+\u0434\u043e\u0441\u0442\u0430\u0442\u043e\u0447\u043d\u043e 32 
+\u041c\u0431 (\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c 
+\u043d\u0430 \u0441\u0442\u0430\u0442\u0443\u0441 
+\u0026amp;lt;b\u0026amp;gt;Qcache_lowmem_prunes\u0026amp;lt;\/b\u0026amp;gt;).
+ 
+\u041c\u0430\u043a\u0441\u0438\u043c\u0430\u043b\u044c\u043d\u044b\u0439
+ \u0440\u0430\u0437\u043c\u0435\u0440 
+\u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u0430 
+\u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e - 1 
+\u041c\u0431, \u0435\u0433\u043e \u043c\u043e\u0436\u043d\u043e 
+\u0440\u0435\u0433\u0443\u043b\u0438\u0440\u043e\u0432\u0430\u0442\u044c.\u0026amp;lt;\/p\u0026amp;gt;
+ \r\n\u0026amp;lt;pre 
+class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt; set-variable = 
+innodb_buffer_pool_size=780M 
+\u0026amp;lt;\/pre\u0026amp;gt;\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u041e\u0441\u043d\u043e\u0432\u043d\u043e\u0439
+ \u0431\u0443\u0444\u0435\u0440 - \u0447\u0435\u043c 
+\u0431\u043e\u043b\u044c\u0448\u0435, \u0442\u0435\u043c 
+\u043b\u0443\u0447\u0448\u0435.\u0026amp;lt;\/p\u0026amp;gt; 
+\r\n\u0026amp;lt;pre 
+class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt;set-variable = 
+innodb_additional_mem_pool_size=20M\u0026amp;lt;\/pre\u0026amp;gt; 
+\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u0412\u0441\u043f\u043e\u043c\u043e\u0433\u0430\u0442\u0435\u043b\u044c\u043d\u044b\u0439
+ \u0431\u0443\u0444\u0435\u0440 \u043d\u0430 
+\u0432\u043d\u0443\u0442\u0440\u0435\u043d\u043d\u0438\u0435 
+\u0441\u0442\u0440\u0443\u043a\u0442\u0443\u0440\u044b, 
+\u0431\u043e\u043b\u044c\u0448\u043e\u0439 
+\u0434\u0435\u043b\u0430\u0442\u044c \u043d\u0435 
+\u0438\u043c\u0435\u0435\u0442 
+\u0441\u043c\u044b\u0441\u043b\u0430.\u0026amp;lt;\/p\u0026amp;gt; 
+\r\n\u0026amp;lt;pre 
+class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt;\r\n set-variable
+ = innodb_log_file_size=100M \r\n set-variable = 
+innodb_log_buffer_size=16M\u0026amp;lt;\/pre\u0026amp;gt; 
+\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u0427\u0435\u043c 
+\u0431\u043e\u043b\u044c\u0448\u0435 
+\u0440\u0430\u0437\u043c\u0435\u0440 
+\u043b\u043e\u0433-\u0444\u0430\u0439\u043b\u0430, \u0442\u0435\u043c 
+\u0440\u0435\u0436\u0435 \u043d\u0430\u0434\u043e 
+\u0431\u0443\u0434\u0435\u0442 
+\u0437\u0430\u043f\u0438\u0441\u044b\u0432\u0430\u0442\u044c \u0432 
+\u043e\u0441\u043d\u043e\u0432\u043d\u043e\u0439 
+\u0444\u0430\u0439\u043b \u0434\u0430\u043d\u043d\u044b\u0445. 
+\u0421\u0443\u043c\u043c\u0430\u0440\u043d\u044b\u0439 
+\u0440\u0430\u0437\u043c\u0435\u0440 
+\u043b\u043e\u0433-\u0444\u0430\u0439\u043b\u0430 
+\u043c\u043e\u0436\u0435\u0442 \u0431\u044b\u0442\u044c 
+\u0441\u043e\u043f\u043e\u0441\u0442\u0430\u0432\u0438\u043c \u0441 
+\u0432\u0435\u043b\u0438\u0447\u0438\u043d\u043e\u0439 
+\u0026amp;lt;code\u0026amp;gt;innodb_buffer_pool_size\u0026amp;lt;\/code\u0026amp;gt;
+ (\u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e 
+\u0432\u0435\u0434\u0435\u0442\u0441\u044f \u0434\u0432\u0430 
+\u043b\u043e\u0433\u0430). 
+\u0026amp;lt;\/p\u0026amp;gt;\r\n\u0026amp;lt;pre 
+class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt;\r\n set-variable
+ = innodb_flush_log_at_trx_commit=0 
+\u0026amp;lt;\/pre\u0026amp;gt;\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u041e\u0442\u043b\u043e\u0436\u0435\u043d\u043d\u0430\u044f
+ \u0444\u0438\u043a\u0441\u0430\u0446\u0438\u044f 
+\u0442\u0440\u0430\u043d\u0437\u0430\u043a\u0446\u0438\u0439, 
+\u0440\u0430\u0437 \u0432 
+\u0441\u0435\u043a\u0443\u043d\u0434\u0443\u0026amp;lt;\/p\u0026amp;gt; 
+\r\n\u0026amp;lt;pre 
+class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt;\r\n set-variable
+ = tmp_table_size=32m\u0026amp;lt;\/pre\u0026amp;gt; 
+\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u0420\u0430\u0437\u043c\u0435\u0440 
+\u0432\u0440\u0435\u043c\u0435\u043d\u043d\u044b\u0445 
+\u0442\u0430\u0431\u043b\u0438\u0446 
+\u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u0442\u0441\u044f
+ \u0443\u0432\u0435\u043b\u0438\u0447\u0438\u0432\u0430\u0442\u044c 
+\u0434\u043e 32 \u041c\u0431.\u0026amp;lt;\/p\u0026amp;gt; 
+\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u0420\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u0442\u0441\u044f
+ \u0442\u0430\u043a \u0436\u0435 
+\u0443\u0432\u0435\u043b\u0438\u0447\u0438\u0432\u0430\u0442\u044c 
+\u0026amp;lt;code\u0026amp;gt;join_buffer_size\u0026amp;lt;\/code\u0026amp;gt;
+ \u0434\u043e 2 \u041c\u0431, \u044d\u0442\u043e 
+\u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0435\u043d\u043d\u043e 
+\u0432\u043b\u0438\u044f\u0435\u0442 \u043d\u0430 
+\u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c 
+\u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u044f 
+\u0440\u044f\u0434\u0430 
+\u0437\u0430\u043f\u0440\u043e\u0441\u043e\u0432.\u0026amp;lt;\/p\u0026amp;gt;
+ \r\n\u0026amp;lt;pre 
+class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt;\r\nset-variable =
+ join_buffer_size = 
+2M\u0026amp;lt;\/pre\u0026amp;gt;\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u0026amp;lt;div
+ 
+class=\u0026amp;quot;hint\u0026amp;quot;\u0026amp;gt;\u0026amp;lt;b\u0026amp;gt;\u0421\u043e\u0432\u0435\u0442
+ 
+\u0430\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440\u0443\u0026amp;lt;\/b\u0026amp;gt;
+ \u041f\u0435\u0440\u0435\u0445\u043e\u0434 \u043d\u0430 
+\u0026amp;lt;b\u0026amp;gt;InnoDB\u0026amp;lt;\/b\u0026amp;gt; 
+\u043c\u043e\u0436\u0435\u0442 
+\u043f\u0440\u0438\u0432\u0435\u0441\u0442\u0438 \u043a 
+\u0437\u043d\u0430\u0447\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u043c\u0443
+ \u0437\u0430\u043c\u0435\u0434\u043b\u0435\u043d\u0438\u044e 
+\u043d\u0435\u043a\u043e\u0442\u043e\u0440\u044b\u0445 
+\u043c\u0430\u0441\u0448\u0442\u0430\u0431\u043d\u044b\u0445 
+\u043e\u043f\u0435\u0440\u0430\u0446\u0438\u0439 
+\u0437\u0430\u043f\u0438\u0441\u0438 \u0438 
+\u043e\u0431\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u044f 
+\u0434\u0430\u043d\u043d\u044b\u0445. \u042d\u0442\u043e 
+\u0441\u0432\u044f\u0437\u0430\u043d\u043e \u0441 \u0442\u0435\u043c, 
+\u0447\u0442\u043e \u0432\u0441\u0435 
+\u043e\u043f\u0435\u0440\u0430\u0446\u0438\u0438 \u043f\u043e 
+\u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044e 
+\u0434\u0430\u043d\u043d\u044b\u0445 
+\u043d\u0430\u0447\u0438\u043d\u0430\u044e\u0442 
+\u0432\u044b\u043f\u043e\u043b\u043d\u044f\u0442\u044c\u0441\u044f 
+\u0441 
+\u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435\u043c
+ \u0442\u0440\u0430\u043d\u0437\u0430\u043a\u0446\u0438\u0439. 
+\u041a\u0440\u043e\u043c\u0435 \u0442\u043e\u0433\u043e, \u0432 
+\u043e\u0442\u043b\u0438\u0447\u0438\u0435 \u043e\u0442 MyISAM 
+\u0434\u043b\u044f 
+\u043a\u044d\u0448\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f 
+\u0442\u0430\u0431\u043b\u0438\u0446 InnoDB \u043d\u0435 
+\u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0435\u0442\u0441\u044f
+ \u043a\u044d\u0448 
+\u043e\u043f\u0435\u0440\u0430\u0446\u0438\u043e\u043d\u043d\u043e\u0439
+ \u0441\u0438\u0441\u0442\u0435\u043c\u044b, \u0430 \u0432\u0441\u0435 
+\u043a\u044d\u0448\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u044b\u0435
+ \u0434\u0430\u043d\u043d\u044b\u0435 
+\u0445\u0440\u0430\u043d\u044f\u0442\u0441\u044f \u0432 
+\u043a\u044d\u0448\u0435 \u0411\u0414, 
+\u043e\u043f\u0440\u0435\u0434\u0435\u043b\u044f\u0435\u043c\u043e\u043c
+ \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u043e\u043c  
+\u0026amp;lt;code\u0026amp;gt;innodb_buffer_pool_size\u0026amp;lt;\/code\u0026amp;gt;.
+ \u0412\u044b \u0434\u043e\u043b\u0436\u043d\u044b 
+\u0441\u0430\u043c\u0438 
+\u043e\u043f\u0440\u0435\u0434\u0435\u043b\u0438\u0442\u044c 
+\u043e\u043f\u0442\u0438\u043c\u0430\u043b\u044c\u043d\u043e\u0441\u0442\u044c
+ \u043f\u0435\u0440\u0435\u0445\u043e\u0434\u0430 
+\u0432\u0430\u0448\u0435\u0433\u043e 
+\u043f\u0440\u043e\u0435\u043a\u0442\u0430 \u043d\u0430 
+\u0444\u043e\u0440\u043c\u0430\u0442 
+\u0434\u0430\u043d\u043d\u044b\u0445 
+InnoDB.\u0026amp;lt;\/div\u0026amp;gt;\r\n\u0026amp;lt;\/p\u0026amp;gt;\r\n\u0026amp;lt;div
+ 
+class=\u0026amp;quot;warning\u0026amp;quot;\u0026amp;gt;\u0026amp;lt;b\u0026amp;gt;\u0412\u043d\u0438\u043c\u0430\u043d\u0438\u0435!\u0026amp;lt;\/b\u0026amp;gt;
+ \u0415\u0441\u043b\u0438 \u043f\u043e 
+\u043a\u0430\u043a\u0438\u043c-\u0442\u043e 
+\u043f\u0440\u0438\u0447\u0438\u043d\u0430\u043c \u0432\u044b 
+\u0440\u0435\u0448\u0438\u043b\u0438 
+\u043f\u0440\u043e\u0434\u043e\u043b\u0436\u0438\u0442\u044c 
+\u0440\u0430\u0431\u043e\u0442\u0443 \u0441 
+\u0442\u0438\u043f\u043e\u043c \u0434\u0430\u043d\u043d\u044b\u0445 
+\u0026amp;lt;b\u0026amp;gt;MyISAM\u0026amp;lt;\/b\u0026amp;gt;, 
+\u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u043e 
+\u043f\u0440\u043e\u0432\u0435\u0434\u0438\u0442\u0435 
+\u043a\u043e\u043d\u0444\u0438\u0433\u0443\u0440\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435
+ MySQL \u0434\u043b\u044f 
+\u0443\u0432\u0435\u043b\u0438\u0447\u0435\u043d\u0438\u044f 
+\u043e\u0431\u044a\u0435\u043c\u043e\u0432 
+\u043a\u044d\u0448\u0438\u0440\u0443\u0435\u043c\u043e\u0439 
+\u0438\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u0438, 
+\u043e\u0431\u043b\u0430\u0441\u0442\u0435\u0439 
+\u0441\u043e\u0440\u0442\u0438\u0440\u043e\u0432\u043a\u0438 \u0438 
+\u043c\u0438\u043d\u0438\u043c\u0438\u0437\u0430\u0446\u0438\u0438 
+\u0447\u0438\u0441\u043b\u0430 
+\u0434\u0438\u0441\u043a\u043e\u0432\u044b\u0445 
+\u043e\u043f\u0435\u0440\u0430\u0446\u0438\u0439. 
+\u0418\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435
+ \u0434\u043b\u044f \u0431\u0430\u0437\u044b 
+\u0434\u0430\u043d\u043d\u044b\u0445 60-80% 
+\u043e\u043f\u0435\u0440\u0430\u0442\u0438\u0432\u043d\u043e\u0439 
+\u043f\u0430\u043c\u044f\u0442\u0438 \u043c\u043e\u0436\u0435\u0442 
+\u0443\u0441\u043a\u043e\u0440\u0438\u0442\u044c 
+\u0440\u0430\u0431\u043e\u0442\u0443 
+\u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u043e\u0433\u043e
+ \u043f\u0440\u043e\u0435\u043a\u0442\u0430 \u0432 
+\u043d\u0435\u0441\u043a\u043e\u043b\u044c\u043a\u043e 
+\u0440\u0430\u0437.\u0026amp;lt;\/div\u0026amp;gt; 
+\r\n\r\n\r\n\u0026amp;lt;h4\u0026amp;gt;\u0412\u0440\u0435\u043c\u0435\u043d\u043d\u0430\u044f
+ 
+\u043f\u0430\u043f\u043a\u0430\u0026amp;lt;\/h4\u0026amp;gt;\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u041f\u0440\u0438
+ \u043d\u0430\u043b\u0438\u0447\u0438\u0438 
+\u0434\u043e\u0441\u0442\u0430\u0442\u043e\u0447\u043d\u043e\u0433\u043e
+ \u043a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u0430 
+\u041e\u0417\u0423 
+\u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u0442\u0441\u044f
+ \u0432\u044b\u043d\u043e\u0441\u0438\u0442\u044c 
+\u0432\u0440\u0435\u043c\u0435\u043d\u043d\u0443\u044e 
+\u043f\u0430\u043f\u043a\u0443 MySQL \u043d\u0430 
+\u0026amp;lt;b\u0026amp;gt;ramdisk\u0026amp;lt;\/b\u0026amp;gt; \u0432 
+\u043f\u0430\u043c\u044f\u0442\u0438.\u0026amp;lt;\/p\u0026amp;gt;\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u0414\u043b\u044f
+ \u044d\u0442\u043e\u0433\u043e: 
+\u0026amp;lt;\/p\u0026amp;gt;\r\n\r\n\u0026amp;lt;ul\u0026amp;gt;\r\n\u0026amp;lt;li\u0026amp;gt;\u0423\u0431\u0435\u0434\u0438\u0442\u0435\u0441\u044c,
+ \u0447\u0442\u043e \u0432 \u044f\u0434\u0440\u0435 
+\u0440\u0435\u0430\u043b\u0438\u0437\u043e\u0432\u0430\u043d\u0430 
+\u043f\u043e\u0434\u0434\u0435\u0440\u0436\u043a\u0430 
+\u0026amp;lt;b\u0026amp;gt;tmpfs\u0026amp;lt;\/b\u0026amp;gt;.\u0026amp;lt;\/li\u0026amp;gt;\r\n\u0026amp;lt;li\u0026amp;gt;\u0421\u043e\u0437\u0434\u0430\u0439\u0442\u0435
+ \u043d\u043e\u0432\u0443\u044e \u0442\u043e\u0447\u043a\u0443 
+\u043c\u043e\u043d\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f
+ \u0438 \u0434\u0430\u0439\u0442\u0435 \u0432\u0441\u0435 
+\u043f\u0440\u0430\u0432\u0430 \u043d\u0430 
+\u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435:\r\n\u0026amp;lt;pre
+ class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt;    # mkdir 
+\/mnt\/tmpfs\/\r\n    # chmod 777 
+\/mnt\/tmpfs\/\u0026amp;lt;\/pre\u0026amp;gt;\r\n\u0026amp;lt;\/li\u0026amp;gt;
+ \r\n\u0026amp;lt;li\u0026amp;gt;\u0414\u0430\u0439\u0442\u0435 
+\u043a\u043e\u043c\u0430\u043d\u0434\u0443 (\u043e\u0442 
+\u0440\u0443\u0442\u0430 \u0438\u043b\u0438 
+\u0447\u0435\u0440\u0435\u0437 sudo):\r\n\r\n\u0026amp;lt;pre 
+class=\u0026amp;quot;syntax\u0026amp;quot;\u0026amp;gt;\r\n    # mount 
+-t tmpfs -o size=1024M tmpfs \/mnt\/tmpfs\/\r\n    
+\u0438\u043b\u0438\r\n    $ sudo mount -t tmpfs -o size=1024M tmpfs 
+\/mnt\/tmpfs\/\u0026amp;lt;\/pre\u0026amp;gt;\r\n\r\n\u0433\u0434\u0435 
+1024M \u0435\u0441\u0442\u044c \u0440\u0430\u0437\u043c\u0435\u0440 
+RAMdisk \u0432 
+\u041c\u0435\u0433\u0430\u0431\u0430\u0439\u0442\u0430\u0445.\r\n\u0026amp;lt;p\u0026amp;gt;\u0026amp;lt;div
+ 
+class=\u0026amp;quot;warning\u0026amp;quot;\u0026amp;gt;\u0026amp;lt;b\u0026amp;gt;\u0412\u043d\u0438\u043c\u0430\u043d\u0438\u0435!\u0026amp;lt;\/b\u0026amp;gt;
+ \u041a \u0440\u0430\u0437\u043c\u0435\u0440\u0443 
+\u043f\u0430\u043f\u043a\u0438 \u043d\u0443\u0436\u043d\u043e 
+\u043f\u043e\u0434\u0445\u043e\u0434\u0438\u0442\u044c 
+\u043e\u0441\u0442\u043e\u0440\u043e\u0436\u043d\u043e: 
+\u0435\u0441\u043b\u0438 \u0432\u044b 
+\u043f\u043e\u043f\u0440\u043e\u0441\u0438\u0442\u0435 
+\u0441\u043e\u0437\u0434\u0430\u0442\u044c 
+\u0026amp;lt;b\u0026amp;gt;ramdisk\u0026amp;lt;\/b\u0026amp;gt; 
+\u0431\u043e\u043b\u044c\u0448\u0435, \u0447\u0435\u043c 
+\u0438\u043c\u0435\u0435\u0442\u0435 
+\u043e\u043f\u0435\u0440\u0430\u0442\u0438\u0432\u043d\u043e\u0439 
+\u043f\u0430\u043c\u044f\u0442\u0438, 
+\u0441\u0438\u0441\u0442\u0435\u043c\u0430 
+\u043d\u0430\u0447\u043d\u0451\u0442 
+\u0441\u0433\u0440\u0443\u0436\u0430\u0442\u044c \u0432\u0441\u0451 
+\u0432 swap-\u0444\u0430\u0439\u043b \u0438 
+\u0440\u0435\u0430\u043b\u044c\u043d\u044b\u0439 
+\u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442 
+\u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f 
+\u0432\u0440\u0435\u043c\u0435\u043d\u043d\u043e\u0439 
+\u043f\u0430\u043f\u043a\u0438 \u043c\u043e\u0436\u0435\u0442 
+\u0431\u044b\u0442\u044c 
+\u043e\u0442\u0440\u0438\u0446\u0430\u0442\u0435\u043b\u044c\u043d\u044b\u043c.\u0026amp;lt;\/div\u0026amp;gt;\u0026amp;lt;\/p\u0026amp;gt;\r\n\r\n\u0026amp;lt;\/li\u0026amp;gt;
+ \r\n 
+\u0026amp;lt;\/ul\u0026amp;gt;\r\n\u0026amp;lt;p\u0026amp;gt;\u0026amp;lt;table
+ width=\u0026amp;quot;100%\u0026amp;quot; 
+height=\u0026amp;quot;1\u0026amp;quot; 
+cellspacing=\u0026amp;quot;0\u0026amp;quot; 
+cellpadding=\u0026amp;quot;0\u0026amp;quot; 
+bgcolor=\u0026amp;quot;#cecece\u0026amp;quot;\u0026amp;gt; \r\n  
+\u0026amp;lt;tbody\u0026amp;gt; \r\n    
+\u0026amp;lt;tr\u0026amp;gt;\u0026amp;lt;td\u0026amp;gt;\u0026amp;lt;\/td\u0026amp;gt;\u0026amp;lt;\/tr\u0026amp;gt;\r\n
+   \u0026amp;lt;\/tbody\u0026amp;gt;\r\n 
+\u0026amp;lt;\/table\u0026amp;gt;\u0026amp;lt;\/p\u0026amp;gt;\r\n\r\n\u0026amp;lt;p\u0026amp;gt;\u0421\u043f\u0438\u0441\u043e\u043a
+ \u0441\u0441\u044b\u043b\u043e\u043a \u043f\u043e 
+\u0442\u0435\u043c\u0435:\u0026amp;lt;\/p\u0026amp;gt;\r\n\r\n\u0026amp;lt;ul\u0026amp;gt;\r\n\u0026amp;lt;li\u0026amp;gt;\u0026amp;lt;a
+ 
+href=\u0026amp;quot;http:\/\/dev.1c-bitrix.ru\/community\/webdev\/user\/23706\/blog\/1472\/\u0026amp;quot;
+ 
+target=\u0026amp;quot;_blank\u0026amp;quot;\u0026amp;gt;\u0427\u0430\u0441\u0442\u043d\u044b\u0439
+ \u043e\u043f\u044b\u0442 
+\u043d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 
+MySQL\u0026amp;lt;\/a\u0026amp;gt;\u0026amp;lt;\/li\u0026amp;gt;\r\n 
+\u0026amp;lt;\/ul\u0026amp;gt;\r\n","dateModified":"2017-03-21 
+13:03:37","mainEntityOfPage":"https:\/\/dev.1c-bitrix.ru\/learning\/course\/index.php?COURSE_ID=32\u0026INDEX=Y","datePublished":"2012-01-16
+ 
+17:01:04","publisher":{"@type":"Organization","name":"1\u0421-\u0411\u0438\u0442\u0440\u0438\u043a\u0441","logo":"https:\/\/www.1c-bitrix.ru\/bitrix\/templates\/1c-bitrix-new\/images\/logo.png"},"author":{"@type":"Organization","name":"1\u0421-\u0411\u0438\u0442\u0440\u0438\u043a\u0441","logo":"https:\/\/www.1c-bitrix.ru\/bitrix\/templates\/1c-bitrix-new\/images\/logo.png"}}</script>
+		<p>Оптимизация работы с базой данных для MySQL-версии продукта 
+является одной из важнейших стратегий в оптимизации системы в целом, так
+ как продукт активно работает с базой данных. </p>
+
+<p>Стандартно MySQL работает с форматом данных <b>MyISAM</b>. Простой 
+формат данных хранит каждую таблицу с данными или индекс в отдельном 
+файле. В целом, на небольших по нагрузке сайтах данный формат является 
+наиболее быстрым, хотя и не обеспечивает полной целостности и надежного 
+хранения данных за счет отсутствия транзакций.</p> 
+
+<p>Основным недостатком MyISAM с точки зрения производительности 
+является блокировка на уровне таблицы при выполнении тех или иных 
+операций. В результате, при большой нагрузке MySQL именно MyISAM таблицы
+ становятся основным узким местом в системе, мешая увеличивать 
+утилизацию машины и число обрабатываемых запросов. Это также приводит к 
+увеличению времени работы страницы за счет ожидания используемых таблиц 
+на уровне MySQL.</p> 
+
+<p>Рекомендуется переводить все таблицы проекта в формат данных <a target="_blank" href="https://dev.mysql.com/doc/refman/5.6/en/innodb-storage-engine.html">InnoDB</a>.
+ Формат InnoDB, начиная с версии MySQL 4.0, входит в стандартную 
+поставку продукта и обеспечивает надежное хранение данных, 
+транзакционность и блокирование данных на уровне строки. </p>
+
+<p>Два важных момента, которые дают основание предпочесть таблицы <b>InnoDB</b> перед <b>MyISAM</b>:
+</p>
+<ol>
+<li><b>Надежность</b>. В MyISAM высока вероятность сбоя таблиц, особенно
+ больших, особенно при высокой посещаемости, особенно часто изменяемых. 
+Есть риск потерять несколько (десятков, сотен) записей и целостность 
+данных. В InnoDB чинить отдельные таблицы не придется. Если упадет, так 
+все сразу. Но на практике это - исключительное явление, практически не 
+встречаемое. Благодаря транзакционности, риск нарушения целостности 
+минимальный.
+<p> Недостатки <b>InnoDB</b>: нужно внимательно следить за свободным 
+местом на диске; накапливающаяся фрагментация данных (лечится 
+периодическим переводом таблиц из InnoDB в MyISAM и обратно).</p></li>
+<li><b>Скорость</b>. На невысокой посещаемости MyISAM ведет себя 
+быстрее, как на модификацию, так и на чтение. Однако, при росте 
+посещаемости достаточно быстро сказывается отсутствие транзакций и 
+блокировка на уровне таблиц. При некоторой величине посещаемости проект 
+просто реально умирает. В InnoDB запись будет медленнее (транзакции же),
+ зато при высокой посещаемости блокировки наступят намного, намного 
+позже, чем для MyISAM.</li> 
+ </ol>
+
+
+<p>Поменять тип таблиц на InnoDB можно следующим образом: </p>
+<ol>
+<li>В административном меню <span class="path">Настройки системы &gt; Инструменты &gt; SQL запрос</span> выполнить команду:
+<pre class="syntax hljs sql"> <span class="hljs-operator"><span class="hljs-keyword">SHOW</span> TABLES </span></pre></li>
+
+<li>В результате вы получите список всех текущих таблиц продукта. Для каждой таблицы необходимо выполнить команду:
+<pre class="syntax hljs sql"> <span class="hljs-operator"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> &lt;ИМЯ ТАБЛИЦЫ&gt;, type=InnoDB </span></pre>
+
+<p>В FAQ приведен <a target="blank" href="http://dev.1c-bitrix.ru/support/faq/8366/#112808">пример</a> для создания скрипта для перевода таблиц в InnoDB.</p></li> 
+<li>После перевода таблиц вашей базы в InnoDB надо добавить в файл 
+<code>/bitrix/php_interface/dbconn.php</code> нижеследующий код: 
+<pre class="syntax hljs javascript"> define(<span class="hljs-string">"MYSQL_TABLE_TYPE"</span>, <span class="hljs-string">"InnoDB"</span>); </pre>
+</li> 
+ </ol>
+
+<p>Переход на тип таблиц InnoDB позволяет избежать возникновения узкого 
+участка в производительности при работе с базой данных и в полном объеме
+ использовать системные ресурсы.</p> 
+<div class="warning"><b>Внимание!</b> Обязательно конфигурируйте <b>InnoDB</b>. Для лучшей производительности базы данных при работе с InnoDB рекомендуется настроить <code>my.cnf</code> для MySQL в разделе <a target="_blank" href="http://dev.mysql.com/doc/refman/5.0/en/innodb-configuration.html">параметров для InnoDB</a> <code>innodb_*</code>.</div>
+
+<p>Наибольшее внимание следует обратить на следующие параметры и примеры:</p> 
+<pre class="syntax hljs sql"> <span class="hljs-operator"><span class="hljs-keyword">set</span>-variable = innodb_buffer_pool_size=<span class="hljs-number">250</span>M 
+ <span class="hljs-keyword">set</span>-variable = innodb_additional_mem_pool_size=<span class="hljs-number">50</span>M 
+ <span class="hljs-keyword">set</span>-variable = innodb_file_io_threads=<span class="hljs-number">8</span> 
+ <span class="hljs-keyword">set</span>-variable = innodb_lock_wait_timeout=<span class="hljs-number">50</span> 
+ <span class="hljs-keyword">set</span>-variable = innodb_log_buffer_size=<span class="hljs-number">8</span>M 
+ <span class="hljs-keyword">set</span>-variable = innodb_flush_log_at_trx_commit=<span class="hljs-number">0</span> 
+</span></pre>
+<div class="hint"><b>Рекомендуется</b>: Для сокращения времени ответа сервера можно использовать отложенные транзакции и, в частности, устанавливать переменную <code>set-variable = innodb_flush_log_at_trx_commit=0</code>.</div>
+
+<p>Если MyISAM уже не используется активно, можно высвободить память в пользу InnoDB параметров.</p>
+<p>Желательно, чтобы кэш данных вмещал в себя основной объем данных, 
+используемых продуктом в работе. Обычно для работы базы данных 
+выделяется порядка 60-80% свободной памяти в системе.</p> 
+<div class="hint"><b>Рекомендуется</b>: Производить многопотоковую (multithreading) сборку <i>MySQL</i> для улучшения производительности системы и возможностей по параллельной обработке запросов.</div>  
+
+<p>Пример рекомендуемых настроек для сервера с 2 Гб оперативной памяти, работающего с операционной системой FreeBSD/Linux: </p>
+<pre class="syntax hljs sql"> <span class="hljs-operator"><span class="hljs-keyword">set</span>-variable = table_cache=<span class="hljs-number">4096</span></span></pre>
+
+<p>В составе продукта около 250 таблиц, поэтому рекомендуется увеличивать кэш для заголовков таблиц. </p>
+
+<pre class="syntax hljs sql"> <span class="hljs-operator"><span class="hljs-keyword">set</span>-variable = key_buffer_size=<span class="hljs-number">16</span>M 
+ <span class="hljs-keyword">set</span>-variable = sort_buffer=<span class="hljs-number">8</span>M 
+ <span class="hljs-keyword">set</span>-variable = read_buffer_size=<span class="hljs-number">16</span>M </span></pre>
+
+<p>Эти параметры используются только для MyISAM. Если в базе нет таблиц MyISAM, то лучше установить минимальные значения. </p>
+<pre class="syntax hljs sql"><span class="hljs-operator"><span class="hljs-keyword">set</span>-variable = query_cache_size=<span class="hljs-number">64</span>M 
+ <span class="hljs-keyword">set</span>-variable = query_cache_type=<span class="hljs-number">1</span></span></pre> 
+
+<p>Кэширование результатов запросов. Обычно бывает достаточно 32 Мб (смотреть на статус <b>Qcache_lowmem_prunes</b>). Максимальный размер результата по умолчанию - 1 Мб, его можно регулировать.</p> 
+<pre class="syntax hljs sql"> <span class="hljs-operator"><span class="hljs-keyword">set</span>-variable = innodb_buffer_pool_size=<span class="hljs-number">780</span>M </span></pre>
+
+<p>Основной буфер - чем больше, тем лучше.</p> 
+<pre class="syntax hljs sql"><span class="hljs-operator"><span class="hljs-keyword">set</span>-variable = innodb_additional_mem_pool_size=<span class="hljs-number">20</span>M</span></pre> 
+
+<p>Вспомогательный буфер на внутренние структуры, большой делать не имеет смысла.</p> 
+<pre class="syntax hljs sql"> <span class="hljs-operator"><span class="hljs-keyword">set</span>-variable = innodb_log_file_size=<span class="hljs-number">100</span>M 
+ <span class="hljs-keyword">set</span>-variable = innodb_log_buffer_size=<span class="hljs-number">16</span>M</span></pre> 
+
+<p>Чем больше размер лог-файла, тем реже надо будет записывать в 
+основной файл данных. Суммарный размер лог-файла может быть сопоставим с
+ величиной <code>innodb_buffer_pool_size</code> (по умолчанию ведется два лога). </p>
+<pre class="syntax hljs sql"> <span class="hljs-operator"><span class="hljs-keyword">set</span>-variable = innodb_flush_log_at_trx_commit=<span class="hljs-number">0</span> </span></pre>
+
+<p>Отложенная фиксация транзакций, раз в секунду</p> 
+<pre class="syntax hljs sql"> <span class="hljs-operator"><span class="hljs-keyword">set</span>-variable = tmp_table_size=<span class="hljs-number">32</span>m</span></pre> 
+
+<p>Размер временных таблиц рекомендуется увеличивать до 32 Мб.</p> 
+
+<p>Рекомендуется так же увеличивать <code>join_buffer_size</code> до 2 Мб, это существенно влияет на скорость выполнения ряда запросов.</p> 
+<pre class="syntax hljs sql"><span class="hljs-operator"><span class="hljs-keyword">set</span>-variable = join_buffer_size = <span class="hljs-number">2</span>M</span></pre>
+
+<p></p><div class="hint"><b>Совет администратору</b> Переход на <b>InnoDB</b>
+ может привести к значительному замедлению некоторых масштабных операций
+ записи и обновления данных. Это связано с тем, что все операции по 
+изменению данных начинают выполняться с использованием транзакций. Кроме
+ того, в отличие от MyISAM для кэширования таблиц InnoDB не используется
+ кэш операционной системы, а все кэшированные данные хранятся в кэше БД,
+ определяемом параметром  <code>innodb_buffer_pool_size</code>. Вы должны сами определить оптимальность перехода вашего проекта на формат данных InnoDB.</div>
+<p></p>
+<div class="warning"><b>Внимание!</b> Если по каким-то причинам вы решили продолжить работу с типом данных <b>MyISAM</b>,
+ обязательно проведите конфигурирование MySQL для увеличения объемов 
+кэшируемой информации, областей сортировки и минимизации числа дисковых 
+операций. Использование для базы данных 60-80% оперативной памяти может 
+ускорить работу стандартного проекта в несколько раз.</div> 
+
+
+<h4>Временная папка</h4>
+
+<p>При наличии достаточного количества ОЗУ рекомендуется выносить временную папку MySQL на <b>ramdisk</b> в памяти.</p>
+
+<p>Для этого: </p>
+
+<ul>
+<li>Убедитесь, что в ядре реализована поддержка <b>tmpfs</b>.</li>
+<li>Создайте новую точку монтирования и дайте все права на использование:
+<pre class="syntax hljs php">    <span class="hljs-comment"># mkdir /mnt/tmpfs/</span>
+    <span class="hljs-comment"># chmod 777 /mnt/tmpfs/</span></pre>
+</li> 
+<li>Дайте команду (от рута или через sudo):
+
+<pre class="syntax hljs php">    <span class="hljs-comment"># mount -t tmpfs -o size=1024M tmpfs /mnt/tmpfs/</span>
+    или
+    $ sudo mount -t tmpfs -o size=<span class="hljs-number">1024</span>M tmpfs /mnt/tmpfs/</pre>
+
+где 1024M есть размер RAMdisk в Мегабайтах.
+<p></p><div class="warning"><b>Внимание!</b> К размеру папки нужно подходить осторожно: если вы попросите создать <b>ramdisk</b>
+ больше, чем имеете оперативной памяти, система начнёт сгружать всё в 
+swap-файл и реальный результат подключения временной папки может быть 
+отрицательным.</div><p></p>
+
+</li> 
+ </ul>
+<p></p><table width="100%" cellspacing="0" cellpadding="0" height="1" bgcolor="#cecece"> 
+  <tbody> 
+    <tr><td></td></tr>
+   </tbody>
+ </table><p></p>
+
+<p>Список ссылок по теме:</p>
+
+<ul>
+<li><a href="http://dev.1c-bitrix.ru/community/webdev/user/23706/blog/1472/" target="_blank">Частный опыт настройки MySQL</a></li>
+ </ul>			<div class="learn-rating">
+				<span class="ilike-light"><span class="bx-ilike-button bx-ilike-button-disable" id="bx-ilike-button-LEARN_LESSON-3371-1499759188"><span class="bx-ilike-right-wrap "><span class="bx-ilike-right">15</span></span><span class="bx-ilike-left-wrap" title="Только авторизованные пользователи могут участвовать в голосовании"></span></span><span class="bx-ilike-wrap-block" id="bx-ilike-popup-cont-LEARN_LESSON-3371-1499759188" style="display:none;"><span class="bx-ilike-popup"><span class="bx-ilike-wait"></span></span></span></span>
+			</div>
+					<div class="courses-footer">
+			<div class="courses-page-nav">
+
+				<a class="courses-page-link desc" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;INDEX=Y">Описание курса</a>
+			<br>
+			<br>
+			<br>
+					<a class="courses-page-link prev" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3370&amp;LESSON_PATH=3903.4897.4903.3370"><span class="arrow">назад</span><span>Постоянное соединение с базой данных</span></a>
+		
+		
+					<a class="courses-page-link next" href="https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=32&amp;LESSON_ID=3372&amp;LESSON_PATH=3903.4897.4903.3372"><span>Настройка базы данных Oracle</span><span class="arrow">вперед</span> </a>
+		
+		</div>
+
+		</div>
+		<div class="dev-course-developers-info">
+            Курсы разработаны в компании <a class="dev-course-developers-info-link" href="https://dev.1c-bitrix.ru/">«1С-Битрикс»</a>		</div>
+				<hr class="dev-course-navigation-bottom-separator">
+		<div class="dev-course-comment-message-cnr">
+            Если вы нашли неточность в тексте, непонятное объяснение, пожалуйста, сообщите нам об этом в комментариях.		</div>
+					<a id="collapse-button" data-collapse="1" href="#">Развернуть комментарии</a>
+				<div style="margin:30px 0px"></div>
+					<div id="collapse" style="height:0px;opacity:0;overflow:hidden;">
+												<div class="feed-wrap">
+<div class="feed-comments-block">
+	<a name="comments"></a>
+<div id="record-LEARNING_COURSE_32_LESSON_3371-corner" class="feed-com-corner"></div><div id="record-LEARNING_COURSE_32_LESSON_3371-new"></div></div>
+</div>							</div>
+					
+	</div>
+</div>							<div style="clear:both"></div>
+			<div id="scrollup-wrapper">
+				<div id="scrollup" style="display: none;">
+					<img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/up.png" class="up" alt="Прокрутить вверх">
+				</div>
+			</div>
+		</div>
+		<!-- Yandex.Metrika counter -->
+		<noscript><div><img src="//mc.yandex.ru/watch/9405961" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+	<!-- /Yandex.Metrika counter -->
+									<script type="text/javascript">if(!window.BX)window.BX={message:function(mess){if(typeof
+ mess=='object') for(var i in mess) BX.message[i]=mess[i]; return 
+true;}};</script>
+<script type="text/javascript">(window.BX||top.BX).message({'JS_CORE_LOADING':'Загрузка...','JS_CORE_NO_DATA':'-
+ Нет данных 
+-','JS_CORE_WINDOW_CLOSE':'Закрыть','JS_CORE_WINDOW_EXPAND':'Развернуть','JS_CORE_WINDOW_NARROW':'Свернуть
+ в 
+окно','JS_CORE_WINDOW_SAVE':'Сохранить','JS_CORE_WINDOW_CANCEL':'Отменить','JS_CORE_WINDOW_CONTINUE':'Продолжить','JS_CORE_H':'ч','JS_CORE_M':'м','JS_CORE_S':'с','JSADM_AI_HIDE_EXTRA':'Скрыть
+ лишние','JSADM_AI_ALL_NOTIF':'Показать все','JSADM_AUTH_REQ':'Требуется
+ 
+авторизация!','JS_CORE_WINDOW_AUTH':'Войти','JS_CORE_IMAGE_FULL':'Полный
+ размер'});</script>
+<script type="text/javascript">(window.BX||top.BX).message({'WEEK_START':'1'});(window.BX||top.BX).message({'MONTH_1':'Январь','MONTH_2':'Февраль','MONTH_3':'Март','MONTH_4':'Апрель','MONTH_5':'Май','MONTH_6':'Июнь','MONTH_7':'Июль','MONTH_8':'Август','MONTH_9':'Сентябрь','MONTH_10':'Октябрь','MONTH_11':'Ноябрь','MONTH_12':'Декабрь','MONTH_1_S':'Января','MONTH_2_S':'Февраля','MONTH_3_S':'Марта','MONTH_4_S':'Апреля','MONTH_5_S':'Мая','MONTH_6_S':'Июня','MONTH_7_S':'Июля','MONTH_8_S':'Августа','MONTH_9_S':'Сентября','MONTH_10_S':'Октября','MONTH_11_S':'Ноября','MONTH_12_S':'Декабря','MON_1':'Янв','MON_2':'Фев','MON_3':'Мар','MON_4':'Апр','MON_5':'Май','MON_6':'Июн','MON_7':'Июл','MON_8':'Авг','MON_9':'Сен','MON_10':'Окт','MON_11':'Ноя','MON_12':'Дек','DAY_OF_WEEK_0':'Воскресенье','DAY_OF_WEEK_1':'Понедельник','DAY_OF_WEEK_2':'Вторник','DAY_OF_WEEK_3':'Среда','DAY_OF_WEEK_4':'Четверг','DAY_OF_WEEK_5':'Пятница','DAY_OF_WEEK_6':'Суббота','DOW_0':'Вс','DOW_1':'Пн','DOW_2':'Вт','DOW_3':'Ср','DOW_4':'Чт','DOW_5':'Пт','DOW_6':'Сб','FD_SECOND_AGO_0':'#VALUE#
+ секунд назад','FD_SECOND_AGO_1':'#VALUE# секунду 
+назад','FD_SECOND_AGO_10_20':'#VALUE# секунд 
+назад','FD_SECOND_AGO_MOD_1':'#VALUE# секунду 
+назад','FD_SECOND_AGO_MOD_2_4':'#VALUE# секунды 
+назад','FD_SECOND_AGO_MOD_OTHER':'#VALUE# секунд 
+назад','FD_SECOND_DIFF_0':'#VALUE# секунд','FD_SECOND_DIFF_1':'#VALUE# 
+секунда','FD_SECOND_DIFF_10_20':'#VALUE# 
+секунд','FD_SECOND_DIFF_MOD_1':'#VALUE# 
+секунда','FD_SECOND_DIFF_MOD_2_4':'#VALUE# 
+секунды','FD_SECOND_DIFF_MOD_OTHER':'#VALUE# 
+секунд','FD_MINUTE_AGO_0':'#VALUE# минут 
+назад','FD_MINUTE_AGO_1':'#VALUE# минуту 
+назад','FD_MINUTE_AGO_10_20':'#VALUE# минут 
+назад','FD_MINUTE_AGO_MOD_1':'#VALUE# минуту 
+назад','FD_MINUTE_AGO_MOD_2_4':'#VALUE# минуты 
+назад','FD_MINUTE_AGO_MOD_OTHER':'#VALUE# минут 
+назад','FD_MINUTE_DIFF_0':'#VALUE# минут','FD_MINUTE_DIFF_1':'#VALUE# 
+минута','FD_MINUTE_DIFF_10_20':'#VALUE# 
+минут','FD_MINUTE_DIFF_MOD_1':'#VALUE# 
+минута','FD_MINUTE_DIFF_MOD_2_4':'#VALUE# 
+минуты','FD_MINUTE_DIFF_MOD_OTHER':'#VALUE# 
+минут','FD_MINUTE_0':'#VALUE# минут','FD_MINUTE_1':'#VALUE# 
+минуту','FD_MINUTE_10_20':'#VALUE# минут','FD_MINUTE_MOD_1':'#VALUE# 
+минуту','FD_MINUTE_MOD_2_4':'#VALUE# 
+минуты','FD_MINUTE_MOD_OTHER':'#VALUE# минут','FD_HOUR_AGO_0':'#VALUE# 
+часов назад','FD_HOUR_AGO_1':'#VALUE# час 
+назад','FD_HOUR_AGO_10_20':'#VALUE# часов 
+назад','FD_HOUR_AGO_MOD_1':'#VALUE# час 
+назад','FD_HOUR_AGO_MOD_2_4':'#VALUE# часа 
+назад','FD_HOUR_AGO_MOD_OTHER':'#VALUE# часов 
+назад','FD_HOUR_DIFF_0':'#VALUE# часов','FD_HOUR_DIFF_1':'#VALUE# 
+час','FD_HOUR_DIFF_10_20':'#VALUE# часов','FD_HOUR_DIFF_MOD_1':'#VALUE# 
+час','FD_HOUR_DIFF_MOD_2_4':'#VALUE# 
+часа','FD_HOUR_DIFF_MOD_OTHER':'#VALUE# 
+часов','FD_YESTERDAY':'вчера','FD_TODAY':'сегодня','FD_TOMORROW':'завтра','FD_DAY_AGO_0':'#VALUE#
+ суток назад','FD_DAY_AGO_1':'#VALUE# сутки 
+назад','FD_DAY_AGO_10_20':'#VALUE# суток 
+назад','FD_DAY_AGO_MOD_1':'#VALUE# сутки 
+назад','FD_DAY_AGO_MOD_2_4':'#VALUE# суток 
+назад','FD_DAY_AGO_MOD_OTHER':'#VALUE# суток 
+назад','FD_DAY_DIFF_0':'#VALUE# дней','FD_DAY_DIFF_1':'#VALUE# 
+день','FD_DAY_DIFF_10_20':'#VALUE# дней','FD_DAY_DIFF_MOD_1':'#VALUE# 
+день','FD_DAY_DIFF_MOD_2_4':'#VALUE# 
+дня','FD_DAY_DIFF_MOD_OTHER':'#VALUE# дней','FD_DAY_AT_TIME':'#DAY# в 
+#TIME#','FD_MONTH_AGO_0':'#VALUE# месяцев 
+назад','FD_MONTH_AGO_1':'#VALUE# месяц 
+назад','FD_MONTH_AGO_10_20':'#VALUE# месяцев 
+назад','FD_MONTH_AGO_MOD_1':'#VALUE# месяц 
+назад','FD_MONTH_AGO_MOD_2_4':'#VALUE# месяца 
+назад','FD_MONTH_AGO_MOD_OTHER':'#VALUE# месяцев 
+назад','FD_MONTH_DIFF_0':'#VALUE# месяцев','FD_MONTH_DIFF_1':'#VALUE# 
+месяц','FD_MONTH_DIFF_10_20':'#VALUE# 
+месяцев','FD_MONTH_DIFF_MOD_1':'#VALUE# 
+месяц','FD_MONTH_DIFF_MOD_2_4':'#VALUE# 
+месяца','FD_MONTH_DIFF_MOD_OTHER':'#VALUE# 
+месяцев','FD_YEARS_AGO_0':'#VALUE# лет назад','FD_YEARS_AGO_1':'#VALUE# 
+год назад','FD_YEARS_AGO_10_20':'#VALUE# лет 
+назад','FD_YEARS_AGO_MOD_1':'#VALUE# год 
+назад','FD_YEARS_AGO_MOD_2_4':'#VALUE# года 
+назад','FD_YEARS_AGO_MOD_OTHER':'#VALUE# лет 
+назад','FD_YEARS_DIFF_0':'#VALUE# лет','FD_YEARS_DIFF_1':'#VALUE# 
+год','FD_YEARS_DIFF_10_20':'#VALUE# лет','FD_YEARS_DIFF_MOD_1':'#VALUE# 
+год','FD_YEARS_DIFF_MOD_2_4':'#VALUE# 
+года','FD_YEARS_DIFF_MOD_OTHER':'#VALUE# 
+лет','CAL_BUTTON':'Выбрать','CAL_TIME_SET':'Установить 
+время','CAL_TIME':'Время'});</script>
+<script type="text/javascript">(window.BX||top.BX).message({'DISK_MYOFFICE':false});(window.BX||top.BX).message({'JS_CORE_VIEWER_DOWNLOAD':'Скачать','JS_CORE_VIEWER_EDIT':'Редактировать','JS_CORE_VIEWER_DESCR_AUTHOR':'Автор','JS_CORE_VIEWER_DESCR_LAST_MODIFY':'Последние
+ изменения','JS_CORE_VIEWER_TOO_BIG_FOR_VIEW':'Файл слишком большой для 
+просмотра','JS_CORE_VIEWER_OPEN_WITH_GVIEWER':'Открыть файл в Google 
+Viewer','JS_CORE_VIEWER_IFRAME_DESCR_ERROR':'Просмотр файла невозможен 
+из-за просроченной авторизации в Google. Откройте файл в Google Viewer и
+ авторизуйтесь.','JS_CORE_VIEWER_IFRAME_PROCESS_SAVE_DOC':'Сохранение 
+документа','JS_CORE_VIEWER_IFRAME_UPLOAD_DOC_TO_GOOGLE':'Загрузка 
+документа','JS_CORE_VIEWER_IFRAME_CONVERT_ACCEPT':'Конвертировать','JS_CORE_VIEWER_IFRAME_CONVERT_DECLINE':'Отменить','JS_CORE_VIEWER_IFRAME_CONVERT_TO_NEW_FORMAT':'Документ
+ будет сконвертирован в docx, xls, pptx, так как имеет старый 
+формат.','JS_CORE_VIEWER_IFRAME_DESCR_SAVE_DOC':'Сохранить 
+документ?','JS_CORE_VIEWER_IFRAME_SAVE_DOC':'Сохранить','JS_CORE_VIEWER_IFRAME_DISCARD_DOC':'Отменить
+ изменения','JS_CORE_VIEWER_IFRAME_CHOICE_SERVICE_EDIT':'Редактировать с
+ помощью','JS_CORE_VIEWER_IFRAME_SET_DEFAULT_SERVICE_EDIT':'Использовать
+ для всех 
+файлов','JS_CORE_VIEWER_IFRAME_CHOICE_SERVICE_EDIT_ACCEPT':'Применить','JS_CORE_VIEWER_IFRAME_CHOICE_SERVICE_EDIT_DECLINE':'Отменить','JS_CORE_VIEWER_IFRAME_UPLOAD_NEW_VERSION_IN_COMMENT':'Загрузил
+ новую версию файла','JS_CORE_VIEWER_SERVICE_GOOGLE_DRIVE':'Google 
+Docs','JS_CORE_VIEWER_SERVICE_SKYDRIVE':'MS Office 
+Online','JS_CORE_VIEWER_IFRAME_CANCEL':'Отмена','JS_CORE_VIEWER_IFRAME_DESCR_SAVE_DOC_F':'В
+ одном из окон вы редактируете данный документ. Если вы завершили работу
+ над документом, нажмите \"#SAVE_DOC#\", чтобы загрузить измененный файл
+ на 
+портал.','JS_CORE_VIEWER_SAVE':'Сохранить','JS_CORE_VIEWER_EDIT_IN_SERVICE':'Редактировать
+ в #SERVICE#','JS_CORE_VIEWER_NOW_EDITING_IN_SERVICE':'Редактирование в 
+#SERVICE#','JS_CORE_VIEWER_SAVE_TO_OWN_FILES':'Сохранить на 
+Битрикс24.Диск','JS_CORE_VIEWER_DOWNLOAD_TO_PC':'Скачать на локальный 
+компьютер','JS_CORE_VIEWER_GO_TO_FILE':'Перейти к 
+файлу','JS_CORE_VIEWER_DESCR_SAVE_FILE_TO_OWN_FILES':'Файл #NAME# 
+успешно сохранен<br>в папку 
+\"Файлы\\Сохраненные\"','JS_CORE_VIEWER_DESCR_PROCESS_SAVE_FILE_TO_OWN_FILES':'Файл
+ #NAME# сохраняется<br>на ваш 
+\"Битрикс24.Диск\"','JS_CORE_VIEWER_HISTORY_ELEMENT':'История','JS_CORE_VIEWER_VIEW_ELEMENT':'Просмотреть','JS_CORE_VIEWER_THROUGH_VERSION':'Версия
+ #NUMBER#','JS_CORE_VIEWER_THROUGH_LAST_VERSION':'Последняя 
+версия','JS_CORE_VIEWER_DISABLE_EDIT_BY_PERM':'Автор не разрешил вам 
+редактировать этот 
+документ','JS_CORE_VIEWER_IFRAME_UPLOAD_NEW_VERSION_IN_COMMENT_F':'Загрузила
+ новую версию 
+файла','JS_CORE_VIEWER_IFRAME_UPLOAD_NEW_VERSION_IN_COMMENT_M':'Загрузил
+ новую версию 
+файла','JS_CORE_VIEWER_IFRAME_CONVERT_TO_NEW_FORMAT_EX':'Документ будет 
+сконвертирован в формат #NEW_FORMAT#, так как текущий формат 
+#OLD_FORMAT# является 
+устаревшим.','JS_CORE_VIEWER_CONVERT_TITLE':'Конвертировать в 
+#NEW_FORMAT#?','JS_CORE_VIEWER_CREATE_IN_SERVICE':'Создать с помощью 
+#SERVICE#','JS_CORE_VIEWER_NOW_CREATING_IN_SERVICE':'Создание документа в
+ #SERVICE#','JS_CORE_VIEWER_SAVE_AS':'Сохранить 
+как','JS_CORE_VIEWER_CREATE_DESCR_SAVE_DOC_F':'В одном из окон вы 
+создаете новый документ. Если вы завершили работу над документом, 
+нажмите \"#SAVE_AS_DOC#\", чтобы перейти к добавлению документа на 
+портал.','JS_CORE_VIEWER_NOW_DOWNLOAD_FROM_SERVICE':'Загрузка документа 
+из #SERVICE#','JS_CORE_VIEWER_EDIT_IN_LOCAL_SERVICE':'Редактировать на 
+моём 
+компьютере','JS_CORE_VIEWER_EDIT_IN_LOCAL_SERVICE_SHORT':'Редактировать 
+на #SERVICE#','JS_CORE_VIEWER_SERVICE_LOCAL':'моём 
+компьютере','JS_CORE_VIEWER_DOWNLOAD_B24_DESKTOP':'Скачать','JS_CORE_VIEWER_SERVICE_LOCAL_INSTALL_DESKTOP':'Для
+ эффективного редактирования документов на компьютере, установите 
+десктоп приложение и подключите 
+Битрикс24.Диск','JS_CORE_VIEWER_SERVICE_B24_DISK':'Битрикс24.Диск','JS_CORE_VIEWER_SHOW_FILE_DIALOG_OAUTH_NOTICE':'Для
+ просмотра файла, пожалуйста, авторизуйтесь в своем аккаунте <a 
+id=\"bx-js-disk-run-oauth-modal\" 
+href=\"#\">#SERVICE#<\/a>.','JS_CORE_VIEWER_SERVICE_OFFICE365':'Office365','JS_CORE_VIEWER_DOCUMENT_IS_LOCKED_BY':'Документ
+ заблокирован на редактирование'});</script>
+<script type="text/javascript">(window.BX||top.BX).message({'TOOLTIP_ENABLED':'Y'});</script>
+<script type="text/javascript">(window.BX||top.BX).message({'CORE_CLIPBOARD_COPY_SUCCESS':'Скопировано','CORE_CLIPBOARD_COPY_FAILURE':'Не
+ удалось скопировать'});</script>
+<script type="text/javascript">(window.BX||top.BX).message({'SONET_RENDERPARTS_JS_DESTINATION_ALL':'','SONET_RENDERPARTS_JS_HIDDEN':'Скрытый получатель'});</script>
+<script type="text/javascript">(window.BX||top.BX).message({'SONET_COMMENTAUX_JS_SHARE_TEXT':'Новый
+ получатель: #SHARE_LIST#','SONET_COMMENTAUX_JS_SHARE_TEXT_1':'Новые 
+получатели: 
+#SHARE_LIST#','SONET_COMMENTAUX_JS_CREATETASK_BLOG_POST':'Создана задача
+ \"#TASK_NAME#\" на основании сообщения Живой 
+ленты.','SONET_COMMENTAUX_JS_CREATETASK_BLOG_COMMENT':'Создана задача 
+\"#TASK_NAME#\" на основании 
+#COMMENT_LINK#.','SONET_COMMENTAUX_JS_CREATETASK_BLOG_COMMENT_LINK':'комментария
+ к сообщению Живой 
+ленты','SONET_COMMENTAUX_JS_FILEVERSION_TEXT':'Загрузил(а) новую версию 
+файла','SONET_COMMENTAUX_JS_FILEVERSION_TEXT_M':'Загрузил новую версию 
+файла','SONET_COMMENTAUX_JS_FILEVERSION_TEXT_F':'Загрузила новую версию 
+файла','SONET_COMMENTAUX_JS_HEAD_FILEVERSION_TEXT':'Отредактировал(а) 
+файл','SONET_COMMENTAUX_JS_HEAD_FILEVERSION_TEXT_M':'Отредактировал 
+файл','SONET_COMMENTAUX_JS_HEAD_FILEVERSION_TEXT_F':'Отредактировала 
+файл'});</script>
+<script type="text/javascript">(window.BX||top.BX).message({'LANGUAGE_ID':'ru','FORMAT_DATE':'DD.MM.YYYY','FORMAT_DATETIME':'DD.MM.YYYY
+ 
+HH:MI:SS','COOKIE_PREFIX':'BITRIX_SM','SERVER_TZ_OFFSET':'10800','SITE_ID':'dv','SITE_DIR':'/','USER_ID':'','SERVER_TIME':'1499758198','USER_TZ_OFFSET':'0','USER_TZ_AUTO':'Y','bitrix_sessid':'e829f9383037b96d235bb83fb546c32a'});</script><script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/core.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/core_db.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/core_ajax.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/json2.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/core_ls.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/core_fx.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/core_frame_cache.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/ss.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/core_window.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/scorm.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/core_popup.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/rating_like.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/utils.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/core_date.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/core_viewer.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/core_tooltip.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/core_clipboard.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/render_parts.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/comment_aux.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/word_detail_info.js"></script>
+<script type="text/javascript">BX.setCSSList(['/bitrix/js/main/core/css/core.css','/bitrix/js/main/core/css/core_popup.css','/bitrix/js/main/core/css/core_date.css','/bitrix/js/main/core/css/core_tooltip.css','/bitrix/js/socialservices/css/ss.css','/bitrix/templates/learning_new_2014/components/bitrix/search.form/.default/style.css','/bitrix/templates/learning_new_2014/components/bitrix/learning.course/.default/style.css','/bitrix/templates/learning_new_2014/components/bitrix/learning.course/.default/bitrix/learning.course.tree/.default/style.css','/bitrix/templates/learning_new_2014/components/bitrix/learning.course/.default/bitrix/learning.lesson.detail/.default/style.css','/bitrix/components/bitrix/rating.vote/templates/like/popup.css','/bitrix/components/bitrix/rating.vote/templates/like/style.css','/bitrix/templates/learning_new_2014/components/bitrix/learning.course/.default/bitrix/learning.course.tree/navigation/style.css','/bitrix/components/bitrix/forum.comments/templates/.default/style.css','/bitrix/components/bitrix/main.post.list/templates/.default/style.css','/bitrix/components/bitrix/socialnetwork.log.ex/templates/.default/style.css','/bitrix/components/bitrix/socialnetwork.blog.blog/templates/.default/style.css','/bitrix/templates/learning_new/css/images_with_zoom.css','/bitrix/templates/.default/css/learning/common.css','/bitrix/templates/.default/css/learning/service_blocks.css','/bitrix/templates/.default/components/bitrix/system.auth.form/learning_auth/style.css','/bitrix/templates/.default/components/bitrix/learning.course.list/course_dropdown_list/style.css','/bitrix/components/bx/learning.course.comment.button/templates/.default/style.css','/bitrix/templates/learning_new_2014/template_styles.css']);
+ </script>
+<script type="text/javascript">
+					(function () {
+						"use strict";
+
+						var counter = function ()
+						{
+							var cookie = (function (name) {
+								var parts = ("; " + document.cookie).split("; " + name + "=");
+								if (parts.length == 2) {
+									try {return JSON.parse(decodeURIComponent(parts.pop().split(";").shift()));}
+									catch (e) {}
+								}
+							})("BITRIX_CONVERSION_CONTEXT_dv");
+
+							if (cookie && cookie.EXPIRE >= BX.message("SERVER_TIME") && cookie.UNIQUE && cookie.UNIQUE.length > 0)
+							{
+								for (var i = 0; i < cookie.UNIQUE.length; i++)
+								{
+									if (cookie.UNIQUE[i] == "conversion_visit_day")
+										return;
+								}
+							}
+
+							var request = new XMLHttpRequest();
+							request.open("POST", "/bitrix/tools/conversion/ajax_counter.php", true);
+							request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+							request.send(
+								"SITE_ID="+encodeURIComponent("dv")+
+								"&sessid="+encodeURIComponent(BX.bitrix_sessid())+
+								"&HTTP_REFERER="+encodeURIComponent(document.referrer)
+							);
+						};
+
+						if (window.frameRequestStart === true)
+							BX.addCustomEvent("onFrameDataReceived", counter);
+						else
+							BX.ready(counter);
+					})();
+				</script>
+
+
+
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/ga_002.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/video_popup.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/imgshw.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/set_zoom_in_image.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/script_005.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/script_003.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/script_002.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/script.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/script_004.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/scripts_for_form.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/scripts_for_im.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/comment_collapse.js"></script>
+<script type="text/javascript">var _ba = _ba || []; _ba.push(["aid", 
+"582fd04dac6869e159ea80524ec43d0d"]); _ba.push(["host", 
+"dev.1c-bitrix.ru"]); (function() {var ba = 
+document.createElement("script"); ba.type = "text/javascript"; ba.async =
+ true;ba.src = (document.location.protocol == "https:" ? "https://" : 
+"http://") + "bitrix.info/ba.js";var s = 
+document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ba,
+ s);})();</script>
+
+
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/swfobject.js"></script>
+<script type="text/javascript">
+function ShowSwf(sSwfPath, width1, height1){
+	var scroll = 'no';
+	var top=0, left=0;
+	if(width1 > screen.width-10 || height1 > screen.height-28)
+		scroll = 'yes';
+	if(height1 < screen.height-28)
+		top = Math.floor((screen.height - height1)/2-14);
+	if(width1 < screen.width-10)
+		left = Math.floor((screen.width - width1)/2);
+	width = Math.min(width1, screen.width-10);
+	height = Math.min(height1, screen.height-28);
+	
+window.open('/bitrix/templates/learning_new_2014/js/swfpg.php?width='+width1+'&height='+height1+'&img='+sSwfPath,'','scrollbars='+scroll+',resizable=yes,
+ width='+width+',height='+height+',left='+left+',top='+top);
+}
+</script>
+<script>
+				<!--
+				BX.ready( function() {
+					var message = "";
+					if(BX.browser.IsIE())
+					{
+						if(BX.browser.DetectIeVersion() <= 9)
+						{
+                            message = 'У Вас браузер устаревшей версии, 
+либо не установлены необходимые плееры. Видео в учебном курсе может быть
+ недоступно.';
+						}
+					}
+					else
+					{
+						var v = document.createElement("video");
+						if(v.canPlayType('video/mp4').length == 0)
+						{
+                            message = 'У Вас браузер устаревшей версии, 
+либо не установлены необходимые плееры. Видео в учебном курсе может быть
+ недоступно.';
+						}
+						else
+						{
+							var playerVersion = swfobject.getFlashPlayerVersion()
+							if(playerVersion.major <= 9)
+							{
+                                message = 'У Вас устаревший FlashPlayer.
+ Видео в учебном курсе может быть недоступно.';
+							}
+						}
+					}
+					if(message.length > 0)
+					{
+						var mes = document.createElement("p");
+						mes.className = "requirements";
+						mes.innerHTML = message;
+						BX("require-result").appendChild(mes);
+						BX("require-result").style.display = "block";
+					}
+				});
+
+				function CloseErrorMess()
+				{
+					BX.userOptions.save('learning', 'learningDeprecatedBrowser', 
+'closeErrorMessage', 'close');
+					BX("require-result").innerHTML = "";
+				}
+				//-->
+			</script>
+<script type="text/javascript">
+	var JMenu = new JCMenu('', '32');
+</script>
+<script type="text/javascript">
+BX.ready(function() {
+		if (!window.RatingLike && top.RatingLike)
+			RatingLike = top.RatingLike;
+
+		if (typeof(RatingLike) == 'undefined')
+			return false;
+
+		RatingLike.Set(
+			'LEARN_LESSON-3371-1499759188',
+			'LEARN_LESSON',
+			'3371',
+			'N',
+			'',
+			{'LIKE_Y' : 'Мне нравится', 'LIKE_N' : 'Мне нравится', 'LIKE_D' : 'Это нравится'},
+			'light',
+			'/community/webdev/user/#USER_ID#/'
+		);
+
+		if (typeof(RatingLikePullInit) == 'undefined')
+		{
+			RatingLikePullInit = true;
+			BX.addCustomEvent("onPullEvent-main", function(command,params) {
+				if (command == 'rating_vote')
+				{
+					RatingLike.LiveUpdate(params);
+				}
+			});
+		}
+
+
+});
+</script><script type="text/javascript">
+BX.ready(function(){
+	window["UC"]["LEARNING_COURSE_32_LESSON_3371"] = new FCList({
+			ENTITY_XML_ID : 'LEARNING_COURSE_32_LESSON_3371',
+			container : BX('LEARNING_COURSE_32_LESSON_3371_hidden_records'),
+			nav : BX('LEARNING_COURSE_32_LESSON_3371_page_nav'),
+			mid : 0,
+			order : 'DESC',
+			rights : {
+				MODERATE : 'N',
+				EDIT : 'N',
+				DELETE : 'N',
+				CREATETASK : 'N'
+			},
+			sign : 'LEARNING_COURSE_32_LESSON_3371.986d101a821f78a1e5a191df24c0d6e248960963d1dfa3b4e16e2eaf690aead2'
+		},
+		{
+			VIEW_URL : '/learning/course/index.php?MID=#ID#&COURSE_ID=32&LESSON_ID=3371',
+			EDIT_URL : '/learning/course/index.php?MID=#ID#&COURSE_ID=32&LESSON_ID=3371&REVIEW_ACTION=GET',
+			MODERATE_URL : '/learning/course/index.php?MID=#ID#&COURSE_ID=32&LESSON_ID=3371&REVIEW_ACTION=#ACTION#',
+			DELETE_URL : '/learning/course/index.php?MID=#ID#&COURSE_ID=32&LESSON_ID=3371&REVIEW_ACTION=DEL',
+			AUTHOR_URL : '',
+			AUTHOR_URL_PARAMS: {},
+
+			AVATAR_SIZE : '100',
+			NAME_TEMPLATE : '#NAME# #LAST_NAME#',
+			SHOW_LOGIN : 'Y',
+
+			DATE_TIME_FORMAT : 'd.m.Y H:i:s',
+			LAZYLOAD : '',
+			NOTIFY_TAG : '',
+			NOTIFY_TEXT : '',
+			SHOW_POST_FORM : 'N',
+			BIND_VIEWER : 'Y'
+		}
+	);
+});
+</script>
+<script type="text/javascript">
+if (window.FCForm)
+	FCForm.onUCUsersAreWriting();
+if (window.SPC)
+{
+	SPC.notifyManagerShow();
+}
+
+if (BX.CommentAux)
+{
+	BX.CommentAux.init({
+		currentUserSonetGroupIdList: [],
+		mobile: false,
+		publicSection: false	});
+}
+
+BX.message({
+	MPL_HAVE_WRITTEN : ' написал:', // space here is important
+	B_B_MS_LINK : 'Скопировать ссылку',
+	MPL_MES_HREF : 'Перейти к комментарию',
+	BPC_MES_EDIT : 'Редактировать',
+	BPC_MES_HIDE : 'Скрыть',
+	BPC_MES_SHOW : 'Показать',
+	BPC_MES_DELETE : 'Удалить',
+	BPC_MES_DELETE_POST_CONFIRM : 'Вы уверены, что хотите удалить 
+комментарий?',
+	BPC_MES_CREATE_TASK : 'Создать задачу',
+	BPC_MES_CREATE_TASK_CONFIRM : '',
+	MPL_RECORD_TEMPLATE : '<!--RCRD_#FULL_ID#--><a id=\"com#ID#\" 
+name=\"com#ID#\" bx-mpl-full-id=\"#FULL_ID#\"><\/a><div 
+id=\"record-#FULL_ID#\" 
+class=\"feed-com-block-outer\">#BEFORE_RECORD#<div 
+class=\"feed-com-block feed-com-block-#NEW# 
+blog-comment-user-#AUTHOR_ID# sonet-log-comment-createdby-#AUTHOR_ID# 
+feed-com-block-#APPROVED##CLASSNAME#\">#BEFORE_HEADER#<div 
+class=\"feed-com-avatar feed-com-avatar-#AUTHOR_AVATAR_IS#\"><img 
+src=\"#AUTHOR_AVATAR#\" width=\"100\" height=\"100\" 
+/><\/div><!--/noindex--><span class=\"feed-com-name 
+#AUTHOR_EXTRANET_STYLE# feed-author-name 
+feed-author-name-#AUTHOR_ID#\">#AUTHOR_NAME#<\/span><a target=\"_top\" 
+class=\"feed-com-name #AUTHOR_EXTRANET_STYLE# feed-author-name 
+feed-author-name-#AUTHOR_ID#\" id=\"bpc_#FULL_ID#\" 
+href=\"javascript:void(0);\">#AUTHOR_NAME#<\/a><!--/noindex--><div 
+class=\"feed-com-informers\"><span 
+class=\"feed-comment-time-wrap\"><span class=\"feed-time\"><a 
+href=\"#VIEW_URL##com#ID#\">#DATE#<\/a><\/span><\/span>#BEFORE_ACTIONS#<a
+ href=\"#\" id=\"record-#FULL_ID#-actions\" 
+bx-mpl-view-url=\"#VIEW_URL#\" bx-mpl-view-show=\"#VIEW_SHOW#\" 
+bx-mpl-edit-url=\"#EDIT_URL#\" bx-mpl-edit-show=\"#EDIT_SHOW#\" 
+bx-mpl-moderate-url=\"#MODERATE_URL#\" 
+bx-mpl-moderate-show=\"#MODERATE_SHOW#\" 
+bx-mpl-moderate-approved=\"#APPROVED#\" 
+bx-mpl-delete-url=\"#DELETE_URL###ID#\" 
+bx-mpl-delete-show=\"#DELETE_SHOW#\" 
+bx-mpl-createtask-show=\"#CREATETASK_SHOW#\" 
+onclick=\"fcShowActions(\'#ENTITY_XML_ID#\', \'#ID#\', this); return 
+BX.PreventDefault(this);\" class=\"feed-post-more-link 
+feed-post-more-link-#VIEW_SHOW#-#EDIT_SHOW#-#MODERATE_SHOW#-#DELETE_SHOW#\"><span
+ class=\"feed-post-more-text\">Ещё<\/span><span 
+class=\"feed-post-more-arrow\"><\/span><\/a>#AFTER_ACTIONS#<\/div>#AFTER_HEADER##BEFORE#<div
+ class=\"feed-com-text\"><div class=\"feed-com-text-inner\"><div 
+class=\"feed-com-text-inner-inner\" 
+id=\"record-#FULL_ID#-text\"><div>#TEXT#<\/div><\/div><\/div><div 
+class=\"feed-post-text-more\" onclick=\"fcExpandComment(\'#FULL_ID#\', 
+this)\" id=\"record-#FULL_ID#-more\"><div 
+class=\"feed-post-text-more-but\"><div 
+class=\"feed-post-text-more-left\"><\/div><div 
+class=\"feed-post-text-more-right\"><\/div><\/div><\/div><script>var 
+arCommentsMoreButtonID = (arCommentsMoreButtonID || 
+[]);arCommentsMoreButtonID.push({\'bodyBlockID\' : 
+\'record-#FULL_ID#-text\',\'moreButtonBlockID\' : 
+\'record-#FULL_ID#-more\'});<\/script><\/div>#AFTER#<\/div>#AFTER_RECORD#<\/div><div
+ id=\"record-#FULL_ID#-placeholder\" class=\"blog-comment-edit 
+feed-com-add-block blog-post-edit\" 
+style=\"display:none;\"><\/div><!--RCRD_END_#FULL_ID#-->',
+	JERROR_NO_MESSAGE : 'Не введен текст комментария',
+	BLOG_C_HIDE : 'Свернуть комментарии',
+	MPL_IS_EXTRANET_SITE: 'N',
+	JQOUTE_AUTHOR_WRITES : 'пишет',
+	FC_ERROR : 'Ошибка:',
+	MPL_SAFE_EDIT : 'Вы пишете сообщение. Сбросить изменения?',
+	MPL_ERROR_OCCURRED : 'Произошла ошибка',
+	MPL_CLOSE : 'Закрыть',
+	MPL_LINK_COPIED : 'Ссылка скопирована'
+				, MPL_WORKGROUPS_PATH : '/community/webdev/'
+				});
+</script><script>
+					var learningCourseEntityXmlId = 'LEARNING_COURSE_32_LESSON_3371';
+				</script>
+<script>
+			BX.ready(
+				function()
+				{
+					var wordDetailInfoNodes = document.querySelectorAll('.js-detail-info-block');
+					for(var i = 0; i < wordDetailInfoNodes.length; i++)
+					{
+						var wordDetailInfo = new BXWordDetailInfo(
+							{
+								container: wordDetailInfoNodes[i],
+								listCode: 'lesson_detail_info',
+								showClass: 'learning-lesson-detail-show',
+								showAnimationClass: 'learning-lesson-detail-show-animation',
+								hideOpenedWhenShowNew: true
+							}
+						);
+					}
+				}
+			);
+		</script>
+<script type="text/javascript">
+	(function (d, w, c) {
+		(w[c] = w[c] || []).push(function() {
+			try {
+				w.yaCounter9405961 = new Ya.Metrika({id:9405961,
+						webvisor:true,
+						clickmap:true,
+						trackLinks:true,
+						accurateTrackBounce:true,
+						trackHash:true,params:{ }});
+			} catch(e) { }
+		});
+
+		var n = d.getElementsByTagName("script")[0],
+			s = d.createElement("script"),
+			f = function () { n.parentNode.insertBefore(s, n); };
+		s.type = "text/javascript";
+		s.async = true;
+		s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+		if (w.opera == "[object Opera]") {
+			d.addEventListener("DOMContentLoaded", f, false);
+		} else { f(); }
+	})(document, window, "yandex_metrika_callbacks");
+	</script>
+<script src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D0%B1%D0%B0%D0%B7%D1%8B%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20MySQL_files/highlight.js"></script>
+<script>
+			BX.ready(function(){
+				hljs.configure({tabReplace: '    '});
+				hljs.initHighlightingOnLoad();
+				var elements = BX.findChildren(document, {tag: 'pre'}, true);
+				if (elements != null)
+				{
+					for (var j = 0; j < elements.length; j++)
+					{
+						hljs.highlightBlock(elements[j]);
+					}
+				}		
+			});
+		</script>
+<script>
+		BX.ready(function () {
+            SetZoomForImages('courses-right-side');
+		});
+	</script>
+
+</body></html>

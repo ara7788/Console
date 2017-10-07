@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">	<title>Краткий обзор файла configuration.php для системы Joomla!</title>
+	<meta name="title" content="Краткий обзор файла configuration.php для системы Joomla!">
+	<meta name="keywords" content=" E44157">
+	<meta name="description" content="При перемещениях или других действиях с сайтом под управлением Joomla частенько требуется решить небольшие проблемы с настройкой путей, паролей, базы данных и других основных моментов конфигурации. Большая часть таких вопросов легко решается прямым редактированием файла конфигурации configuration.php. ">
+    <link rel="shortcut icon" href="https://ruseller.com/css/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/goodalert.css">
+    <script src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/cbgapi.loaded_0" async=""></script><script type="text/javascript" async="" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/widget_002.js"></script><script src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/ca-pub-0562005659861244.js"></script><script src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/goodalert.js" type="text/javascript"></script><script type="text/javascript" async="" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/widget.js"></script>
+    
+    <link rel="stylesheet" href="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/bookmarks.css" type="text/css" media="screen, projection">    <link rel="stylesheet" type="text/css" href="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/colorbox.css">
+    <link rel="stylesheet" media="print" type="text/css" href="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/print.css">
+        <!--[if lte IE 8]><link rel="stylesheet" type="text/css" href="css/ie.css" /><![endif]-->
+    
+    <script src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/jquery_003.js"></script>
+    <script src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/jquery_002.js"></script>
+    <script src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/oa.js" type="text/javascript"></script>
+    <script src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/jquery.js" type="text/javascript"></script>
+    
+    <script src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/bookmarks.js&amp;1358395463"></script>        <!--[if lte IE 8]><script src="/min/b=js&amp;f=ie_corner.js,ie_must_die.js&amp;1296138205"></script><![endif]-->
+    <script>
+    SyntaxHighlighter.config.clipboardSwf = 'plugins/syntax/scripts/clipboard.swf';
+    SyntaxHighlighter.all();
+    </script>    
+    <script src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/bjsfjquery.js&amp;1313749703"></script><link rel="alternate" type="application/rss+xml" title="RSS" href="https://feeds.feedburner.com/ruseller/CdHX">      
+<!--Digital window verification 001 -->
+<script type="text/javascript" async="" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/reformal.js"></script><style type="text/css" media="screen">#reformal_tab {display:block; font-size:0; background-color:#c01209 !important; line-height: 0; cursor: pointer; z-index:100001;left:0;margin-top:-112.5px;position:fixed;top:50%;border:2px solid #FFFFFF;padding:10px 4px 10px 4px; border-left:0;   background: #c01209 url(https://media.reformal.ru/widgets/v3/gl.png) 0 0 repeat-y;    -webkit-border-radius:0 5px 5px 0; -moz-border-radius:0 5px 5px 0; border-radius:0 5px 5px 0; -moz-box-shadow:1px 0 2px #888;  -webkit-box-shadow:1px 0 2px #888;  box-shadow:1px 0 2px #888;}#reformal_tab:hover {padding-left:6px;}#reformal_tab img {border: none; padding:0; margin: 0;}</style><link rel="stylesheet" type="text/css" media="screen" href="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/index.css"><script src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/hypertext.js"></script></head>
+
+<body><a id="reformal_tab" href="http://newruseller.reformal.ru/" onclick="Reformal.widgetOpen();return false;" onmouseover="Reformal.widgetPreload();" onmouseout="Reformal.widgetAbortPreload();"><img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/tab.png" alt=""></a><div id="cboxOverlay" style="display: none;"></div><div style="padding-bottom: 42px; padding-right: 42px; display: none;" id="colorbox" class=""><div id="cboxWrapper" style=""><div style=""><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxLoadedContent" style="width: 0px; height: 0px; overflow: hidden;" class=""></div><div id="cboxLoadingOverlay" style="" class=""></div><div id="cboxLoadingGraphic" style="" class=""></div><div id="cboxTitle" style="" class=""></div><div id="cboxCurrent" style="" class=""></div><div id="cboxNext" style="" class=""></div><div id="cboxPrevious" style="" class=""></div><div id="cboxSlideshow" style="" class=""></div><div id="cboxClose" style="" class=""></div></div><div id="cboxMiddleRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div>
+<div id="body" style="width: auto;">
+ 
+    <div id="wrapper">
+    
+    	<div id="header">
+		
+		
+           
+            <div id="innerHeader" class="corner15">
+                <img id="droshaHeader" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/drosha_header.png" alt="*">
+                <img id="header1" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/header1.jpg">
+                <img id="header2" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/header2.jpg" style="display: inline;">
+                <a href="https://ruseller.com/"><img id="logo" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/logo.png" alt="ruseller.com"></a>
+                <p data-hc-id="4aeb2f182499478f777a843c3110">Частная коллекция качественных материалов для тех, кто делает сайты<span class="hcc hc__ht hc_4aeb2f182499478f777a843c3110" data-hc-id="4aeb2f182499478f777a843c3110" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+                  <div id="www-projects-list-wrapper">
+                       <a id="www-projects-list-toogle" href="#www-projects-list" class="toggle"></a> 
+                       <div id="www-projects-list">
+                            <ul>
+                                <li>
+                                    <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/favicon_002.ico">
+                                    <a href="https://photoshop-master.ru/" target="_blank">Фотошоп-мастер</a>
+                                    <span><strong>2000+</strong> уроков по фотошопу</span>
+                                </li>
+                                
+                                <li>
+                                    <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/favicon.ico">
+                                    <a href="https://photo-monster.ru/" target="_blank">Фото-монстр</a>
+                                    <span><strong>300+</strong> уроков для фотографов</span>
+                                </li>                       
+                               
+                                <li>
+                                    <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/favicon_003.ico">
+                                    <a href="https://videosmile.ru/" target="_blank">Видео-смайл</a>
+                                    <span><strong>200+ </strong>уроков по видеообработке</span>
+                                </li>
+
+                                <li style="height: 72px;">
+                                    <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/favicon32.png">
+                                    <a href="https://kzen.ru/" target="_blank">Жизнь в стиле «Кайдзен»</a> 
+                                    <span>Техники и приемы для гармоничной и сбалансированной жизни</span>
+                                </li>   
+                                                                    
+                            </ul>
+                       </div>
+                  </div>
+                  <script>
+                  $(function (){ 
+	                   $('#www-projects-list-toogle').click(function(){
+	                        $('#www-projects-list').slideToggle();
+                            return false;
+	                   });
+                  });
+                  </script>                
+            </div>
+    	</div>
+   
+	   <section id="top_menu"> 
+           <nav>
+                    <a href="https://ruseller.com/"><img id="homeButton" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/home.png"><img class="separator" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/menu_separator.png"></a>
+                    <a href="https://ruseller.com/page.php?doc=goodies">Видеокурсы на DVD<img class="separator" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/menu_separator.png"></a>
+                                     
+                    <a href="https://ruseller.com/page.php?doc=to_offer_lessons">Предложить урок<img class="separator" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/menu_separator.png"> </a>
+                    <a href="https://ruseller.com/page.php?doc=recommend">Рекомендую</a>
+           </nav>
+            <div id="search">
+                <form method="get" action="search.php">
+                        <div class="input">
+                            <input name="s" class="fields_default" value="Поиск" type="text">
+                        </div>
+                    <input id="searchSubmit" class="corner5" value="»»" type="submit">
+                </form>
+            </div>
+            <div class="clear"></div>
+        </section>	
+
+		<div id="after_header" style="text-align: center; position: relative; top: 99; z-index: 99; margin: 0 0 10px 0;"><div style="text-align: center;" id="null"><a class="nmn1n4hq_23 rotor-item" target="_blank" href="https://redhappy.ru/2017//30"> <img style="max-width: 100%;" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/cf50d43400d739ecb2d7f58085de3df5.gif" alt="" title=""> </a> </div></div>    		
+
+	   <section id="middle">
+    		<div id="container">
+    			<div id="content">
+                <div id="hideRightSidebar" style="display: none;"></div>
+                <div id="generalContent" class="contentConteiner">
+<ul id="track">
+         <li><a href="https://ruseller.com/">Главная</a>»</li>
+                  <li>
+                            <a href="https://ruseller.com/lessons.php">Уроки</a>»
+                
+         </li>
+                  <li>
+                            <a href="https://ruseller.com/lessons.php?rub=41">Joomla!</a>»
+                
+         </li>
+                  <li>
+                            Краткий обзор файла configuration.php для системы Joomla!                
+         </li>
+             </ul>
+<div class="clear"></div>            <ul id="tag_lessons">
+            <li><a href="https://ruseller.com/lessons.php?tag">Метки</a> урока:</li>
+                                    <li><a href="https://ruseller.com/lessons.php?tag=22">кодинг</a></li>
+                                    <li><a href="https://ruseller.com/lessons.php?tag=161">joomla</a></li>
+                                    <li><a href="https://ruseller.com/lessons.php?tag=21">оптимизация</a></li>
+                        </ul>
+        
+
+     
+    
+    <div id="lessons">
+        <div style="text-align: center;">
+            <div style="text-align: center;" id="null"><a class="d1h4n2hj_25 rotor-item" target="_blank" href="https://redhappy.ru/2017//29"> <img style="max-width: 100%;" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/14b396f361fd4b97a360cb69d6a08da5.jpg" alt="" title=""> </a> </div>        </div>        
+       
+                
+          
+        <h1 style="margin-top: 40px;">Краткий обзор файла configuration.php для системы Joomla!</h1>
+        <p data-hc-id="e05fad43a001113c5f58bab34338">При перемещениях 
+или других действиях с сайтом под управлением       Joomla частенько 
+требуется решить небольшие проблемы с настройкой       путей, паролей, 
+базы данных и других основных моментов       конфигурации. Большая часть
+ таких вопросов легко решается прямым       редактированием файла 
+конфигурации <span style="font-style:         italic; font-weight: bold;">configuration.php</span>.<span class="hcc hc__ht hc_e05fad43a001113c5f58bab34338" data-hc-id="e05fad43a001113c5f58bab34338" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p data-hc-id="8a2c26a70bed38cb17702b3c3b38">Данный урок предназначен 
+помочь владельцам сайта под           управлением Joomla разобраться с 
+конфигурацией и назначением           различных параметров. Вы узнаете:<span class="hcc hc__ht hc_8a2c26a70bed38cb17702b3c3b38" data-hc-id="8a2c26a70bed38cb17702b3c3b38" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<ul>
+<li>Где находится файл <span style="font-style: italic;               font-weight: bold;">configuration.php</span> на сайте.</li>
+<li>Как влияет значение установок на работу системы.</li>
+</ul>
+<p data-hc-id="f4815426039c521c60566b58c338">Урок содержит только общие 
+сведения и не может быть           использован в качестве полноценного 
+руководства. Наша задача -           дать общее представление и помочь 
+понять, где искать причины и           возможные решения различных 
+проблем.<span class="hcc hc__ht hc_f4815426039c521c60566b58c338" data-hc-id="f4815426039c521c60566b58c338" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p>&nbsp;</p>
+<h2>Где находится файл <span style="font-style: italic;             font-weight: bold;">configuration.php</span></h2>
+<p><img style="width: 254px; height: 290px;" title="Место             расположения файла configuration.php" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/img_1.png" alt="Место             расположения файла configuration.php"></p>
+<p data-hc-id="e3d10bc1c0c40048e0d81d2f0528">На рисунке представлено 
+расположение файла, которое             демонстрируется в Filezilla. 
+Установка сайта была выполнена             в каталог "joomla" .<span class="hcc hc__ht hc_e3d10bc1c0c40048e0d81d2f0528" data-hc-id="e3d10bc1c0c40048e0d81d2f0528" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p>Файл <span style="font-style: italic; font-weight: bold;">configuration.php</span> располагается в корневом каталоге с установленной Joomla.</p>
+<p data-hc-id="38da1d84cbdd34710fd211bd47f0">Прежде чем приступить к 
+изменению файла обязательно надо             сделать резервную копию. 
+Изучение материала лучше всего             проводить на тестовом 
+проекте.<span class="hcc hc__ht hc_38da1d84cbdd34710fd211bd47f0" data-hc-id="38da1d84cbdd34710fd211bd47f0" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+<p>&nbsp;</p>
+<h2>Установки сайта</h2>
+<p><img style="width: 351px; height: 111px;" title="Установки сайта" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/img_2.png" alt="Установки               сайта"></p>
+<ul>
+<li><strong>$offline</strong> : значение "0" включает                 сайт, значение "1" - отключает. </li>
+<li><strong>$offline_message</strong> : сообщение, которое                 выводится при отключенном сайте.</li>
+<li><strong>$sitename</strong> : имя сайта, которое                 выводится в заголовках.</li>
+<li><strong>$editor</strong> : редактор, который                 используется по умолчанию.</li>
+<li><strong>$list_limit</strong> : длина списка в панели                 управления для всех пользователей. По умолчанию: 20.</li>
+<li><strong>$access </strong>: уровень доступа на сайт по               
+  умолчанию: "1" - открытый доступ для всех; "2" -                 
+ограниченный доступ; "3"&nbsp; - специальный режим.</li>
+</ul>
+<p>&nbsp;</p>
+<h2>Установки отладки</h2>
+<p><img style="width: 304px; height: 42px;" title="Установки отладки" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/img_3.png" alt="Установки                 отладки"></p>
+<ul>
+<li><strong>$debug </strong>: "0" - отладка отключена;                  
+ "1" - отладка включена. При включенной отладке система                 
+  выдает различные информационные сообщения о работе                   
+системы и ошибках вверху страницы. </li>
+<li><strong>$debug_lang </strong>: "0" - выключено; "1"                 
+  - включено. Включение отладочных индикаторов (*...*)                  
+ или (?...?) для языковых файлов Joomla. </li>
+</ul>
+<p>&nbsp;</p>
+<h2>Установки базы данных</h2>
+<p><img style="width: 312px; height: 113px;" title="Установки базы                   данных" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/img_4.png" alt="Установки базы данных"></p>
+<ul>
+<li><strong>$dbtype</strong> : "mysqli" или "mysql". Тип                   используемой базы данных. </li>
+<li><strong>$host</strong> : "localhost" для большинства                
+   серверов. Конкретное значение может зависеть от                   
+требований хостера.</li>
+<li><strong>$user :</strong> имя пользователя базы                   данных.</li>
+<li><strong>$password</strong> : пароль пользователя                   базы данных.</li>
+<li><strong>$db</strong> : имя используемой базы                   данных.</li>
+<li><strong>$dbprefix :</strong> минимум три символа,                   завершающихся подчеркиванием (определяется при                   установке Joomla).</li>
+</ul>
+<p>&nbsp;</p>
+<h2>Дополнительные опции</h2>
+<p><img style="width: 457px; height: 114px;" title="Дополнительные                   опции" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/img_5.png" alt="Дополнительные опции"></p>
+<ul>
+<li><strong>$live_site </strong>: адрес URL сайта. В                    
+ последних версиях данная опция не должна иметь                     
+значения. Но в случаях перенаправлений или работы с                     
+копиями сайта здесь нужно указывать URL                     
+сайта-оригинала.</li>
+<li><strong>$secret:</strong> НЕ ИЗМЕНЯТЬ. Значение                     
+генерируется при установке Joomla и используется для                    
+ обеспечения безопасности.</li>
+<li><strong>$gzip </strong>: "0" - отключено; "1" -                     включено. Архивирование.</li>
+<li><strong>$error_reporting </strong>: уровень                     
+подробности отчета об ошибках. Чем выше уровень, тем                    
+ больше различных ошибок будут генерировать                     
+сообщения, записываемые в журнал, что может привести                    
+ к трате дискового пространства.</li>
+<li><strong>$helpurl </strong>: адрес страниц помощи.                     По умолчанию указывается официальная страница помощи                     по Joomla. </li>
+</ul>
+<p><img style="width: 317px; height: 112px;" title="Дополнительные                     опции" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/img_6.png" alt="Дополнительные опции">&nbsp;</p>
+<ul>
+<li><strong>$ftp_host:</strong> : IP адрес локального                   
+  хоста FTP. Сервер хостера может иметь отличное                     
+значение от 127.0.0.1.</li>
+<li> <strong>$ftp_port : </strong>номер порта для                     FTP. Сервер хостера может иметь отличное значение от                     21.</li>
+<li> <strong>$ftp_user</strong> : имя пользователя                     для FTP.</li>
+<li> <strong>$ftp_pass</strong> : пароль пользователя                     для FTP.</li>
+<li> <strong>$ftp_root: </strong>: путь корневой                     папки для FTP (обычно, имеет вид                     /home/username/public_html).</li>
+<li> <strong>$ftp_enable </strong>: Указывает Joomla                     использовать встроенные функции FTP вместо обработки                     через PHP.</li>
+</ul>
+<p>&nbsp;</p>
+<h2>Установки временной зоны</h2>
+<p><img style="width: 282px; height: 41px;" title="Устанвоки                     временнной зоны" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/img_7.png" alt="Устанвоки временнной зоны"></p>
+<ul>
+<li><strong>$offset </strong>: временная зона                       сервера. </li>
+<li><strong>$offset_user</strong> : временная зона                       пользователя</li>
+</ul>
+<p>&nbsp;</p>
+<h2>Установки почты</h2>
+<p><img style="width: 409px; height: 181px;" title="Установки почты" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/img_8.png" alt="Установки почты"></p>
+<ul>
+<li><strong>$mailer :</strong> "mail" - используем                      
+ функцию PHP для работы с почтой; "sendmail" -                       
+используем сервер SMTP.</li>
+<li><strong>$mailfrom : </strong>адрес email,                       который использует Joomla! для отправки почты.</li>
+<li><strong>$sendmail : </strong>путь, по которому                      
+ располагается программа Sendmail. Данная опция                       
+используется только если $mailer имеет значение                       
+"sendmail".</li>
+<li><strong>$smtpauth</strong> : если на сервере                       
+SMTP требуется аутентификация, то нужно установить                      
+ значение '1'. Данная опция используется только                       
+если $mailer имеет значение "sendmail".</li>
+<li><strong>$smtpuser</strong> : имя пользователя                       
+для доступа к серверу SMTP. Данная опция                       
+используется только если $mailer имеет значение                       
+"sendmail".</li>
+<li><strong>$smtppass</strong>: пароль для доступа к                    
+   серверу SMTP. Данная опция используется только                       
+если $mailer имеет значение "sendmail".</li>
+<li><strong>$smtphost </strong>: адрес SMTP                       
+сервера. Данная опция используется только если                       
+$mailer имеет значение "sendmail".</li>
+<li><strong>$smtpsecure </strong>: модель                       безопасности на сервере SMTP. Доступны значения                       'SSL' и 'TTL'.</li>
+<li><strong>$smtpport </strong>: порт SMTP.                       
+Большинство серверов для незащищенного соединения                       
+используют порт 25, а для защищенного - порт 465.                       
+Конкретное значение нужно узнать у хостера.</li>
+</ul>
+<p>&nbsp;</p>
+<h2>Установки журнала</h2>
+<p><img style="width: 456px; height: 40px;" title="Установки журнала" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/img_9.png" alt="Установки журнала"></p>
+<ul>
+<li><strong>$log_path : </strong>путь, по                         которому хранится журнал системы.</li>
+<li><strong>$tmp_path</strong> : путь, по которому                      
+   хранятся временные файлы системы. Правильное                         
+значение данной опции критично для системы.</li>
+</ul>
+<p>&nbsp;</p>
+<h2>Установки кеша</h2>
+<p><img style="width: 371px; height: 56px;" title="Установки кеша" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/img_10.png" alt="Установки кеша"></p>
+<ul>
+<li><strong>$caching :</strong> "0" - выключено,                        
+   "1" - консервативное кеширование; "2"&nbsp; -                        
+   прогрессивное кеширование.</li>
+<li><strong>$cache_handler</strong> : "file" -                           полное кеширование; "cachelite"&nbsp; -                           частичное кеширование.</li>
+<li><strong>$cachetime</strong> : время (минут)                           хранения файла кеширования до его обновления.</li>
+</ul>
+<p>&nbsp;</p>
+<h2>Установки метаданных</h2>
+<p><img style="width: 304px; height: 55px;" title="Установки                           метаданных" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/img_11.png" alt="Установки метаданных"></p>
+<ul>
+<li><strong>$MetaDesc</strong> : текстовое                             описание сайта для целей SEO.</li>
+<li><strong>$MetaKeys</strong> : ключевые                             слова, разделенные запятой. </li>
+<li><strong>$MetaAuthor</strong> : "0" -                             скрывать информацию об авторе; "1"&nbsp; -                             выводить мета тег. </li>
+</ul>
+<p>&nbsp;</p>
+<h2>Установки для SEO</h2>
+<p><img style="width: 365px; height: 96px;" title="Установки для                             SEO" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/img_12.png" alt="Установки для SEO"></p>
+<ul>
+<li><strong>$sef</strong> : "0" - отключено,                            
+   "1" - включено. Модификация адресов URL в                            
+   более подходящий для целей SEO вид.                               
+Например, адрес <span style="font-style:                                 italic;">www.example.com/index.php?option=com_content&amp;view=etc...</span> трансформируется в <span style="font-style: italic;">www.example.com/псевдоним</span>.</li>
+<li><strong>$sef_rewrite</strong> : 0" -                               
+отключено, "1" - включено. использовать                               
+установки mod_rewrite сервера Apache для                               
+создания модифицированных адресов.</li>
+<li><strong>$sef_suffix</strong> : 0" -                               
+отключено, "1" - включено. Добавление                               
+.html в конец адреса URL.</li>
+<li><strong>$unicodeslugs</strong> : 0" -                               
+отключено, "1" - включено. Выбор между                               
+форматом псевдонимов в транслитерации или                               
+юникоде.</li>
+<li><strong>$feed_limit </strong>:                               ограничение на количество фидов. </li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>Установки сессии</h2>
+<p><strong><img style="width: 363px; height: 62px;" title="Установки сессии" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/img_13.png" alt="Установки сессии"> </strong></p>
+<ul>
+<li><strong>$lifetime </strong>:                                 
+длительность сессии в минутах.                                 
+Определяет время, которое пройдет до                                 
+отключения пользователя, который не                                 
+проявляет активности.</li>
+<li><strong>$session_handler</strong> :                                 
+"database" или "none". Определяет                                 
+обработку сессии после подключения                                 
+пользователя.</li>
+</ul>        <div id="lessonPrepared">
+            <p data-hc-id="bb5a6735688d818fdc1f0924c778">Данный урок подготовлен для вас командой сайта <a href="http://ruseller.com/">ruseller.com</a><br>
+               Источник урока: <a target="_blank" href="https://ruseller.com/www.ostraining.com/blog/joomla/guided-tour-your-joomla-configurationphp-file/">www.ostraining.com/blog/joomla/guided-tour-your-joomla-configurationphp-file/</a><br>
+               Перевел: Сергей Фастунов<br>
+               Урок создан: 24 Марта 2012<br>
+               Просмотров: 84633<br>
+               <a href="https://ruseller.com/page.php?doc=reprint">Правила перепечатки</a>
+            <span class="hcc hc__ht hc_bb5a6735688d818fdc1f0924c778" data-hc-id="bb5a6735688d818fdc1f0924c778" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+        </div>
+    </div>
+    <hr>                     
+    <div id="contentInfo">    
+                         
+	  
+      <div style="text-align: center;" id="null"><a class="mfgyeyho_22 rotor-item" target="_blank" href="https://redhappy.ru/2017//46"> <img style="max-width: 100%;" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/b6bcf65f92ccff4e3aceb7beebe93159.gif" alt="" title=""> </a> </div>	
+    </div>           
+</div>    
+<div class="contentConteiner">    
+    <h2>5 последних уроков рубрики "Joomla!"</h2>
+
+    <ul id="last5" class="lessons">
+             <li>  
+             <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/mini.jpg"> 
+             <h4><a href="https://ruseller.com/lessons.php?rub=41&amp;id=1403">Использование капчи в Joomla 2.5</a></h4>
+             <p data-hc-id="3bd8ad16aa51c3710f5a6ceced18">Обратной 
+стороной использования популярных систем, таких как Joomla, WordPress 
+или Drupal, является то, что спаммеры знают, как устроено программное 
+обеспечение. Поэтому вполне вероятна ситуация, когда на сайте имеется 
+большое число регистраций для спама.<span class="hcc hc__ht hc_3bd8ad16aa51c3710f5a6ceced18" data-hc-id="3bd8ad16aa51c3710f5a6ceced18" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+             <div class="clear"></div>
+        </li>                     
+            <li>  
+             <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/mini_002.jpg"> 
+             <h4><a href="https://ruseller.com/lessons.php?rub=41&amp;id=1267">Установка и настройка модуля новостей для Joomla 1.7 AidaNews2 (Чaсть 2) </a></h4>
+             <p data-hc-id="b60c09a120da640d545b4d821138">В данном уроке мы научимся устанавливать и настраивать очень гибкий модуль для отображения новостей на Joomla 1.7<span class="hcc hc__ht hc_b60c09a120da640d545b4d821138" data-hc-id="b60c09a120da640d545b4d821138" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+             <div class="clear"></div>
+        </li>                     
+            <li>  
+             <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/mini_002.jpg"> 
+             <h4><a href="https://ruseller.com/lessons.php?rub=41&amp;id=1263">Установка и настройка модуля новостей для Joomla 1.7 AidaNews2 (Часть 1)</a></h4>
+             <p data-hc-id="b60c09a120da640d545b4d821138">В данном уроке мы научимся устанавливать и настраивать очень гибкий модуль для отображения новостей на Joomla 1.7 <span class="hcc hc__ht hc_b60c09a120da640d545b4d821138" data-hc-id="b60c09a120da640d545b4d821138" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+             <div class="clear"></div>
+        </li>                     
+            <li>  
+             <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/mini_004.jpg"> 
+             <h4><a href="https://ruseller.com/lessons.php?rub=41&amp;id=1179">Создание шаблона Joomla за 6 шагов. Шаг 6.</a></h4>
+             <p data-hc-id="db1133e5a872309857285bae1b58">В данном уроке мы закончим построение простого шаблона Joomla. <span class="hcc hc__ht hc_db1133e5a872309857285bae1b58" data-hc-id="db1133e5a872309857285bae1b58" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+             <div class="clear"></div>
+        </li>                     
+            <li>  
+             <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/mini_003.jpg"> 
+             <h4><a href="https://ruseller.com/lessons.php?rub=41&amp;id=1168">Создание шаблона Joomla за 6 шагов. Шаг 5.</a></h4>
+             <p data-hc-id="d85109e3e0bc5878dcdbc9a60938">В данном уроке серии разбирается вопрос скрытия колонок шаблона, в которых отсутствует контент.<span class="hcc hc__ht hc_d85109e3e0bc5878dcdbc9a60938" data-hc-id="d85109e3e0bc5878dcdbc9a60938" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+             <div class="clear"></div>
+        </li>                     
+                                                                                           
+    </ul> 
+    <div class="clear"></div>
+       
+
+</div>
+<style>
+    #hypercomments_widget{
+        margin-top: 30px;
+    }
+    #comment{
+        display: none;
+    }
+    
+    .hc__form__send {
+        background: #3da115 url(/css/images/button_green_bg.png) repeat-x !important;
+        border: solid 1px #fff !important; 
+        color: white !important;
+        border-radius: 6px !important;
+        padding: 2px 15px !important;
+    }    
+    
+</style>
+<div class="contentConteiner">
+     <article>
+                               <div class="noRegister">
+                <a class="sign_up">Зарегистрируйтесь</a> или <a id="autorizLink" href="#">авторизуйтесь</a>, чтобы добавлять комментарии, оценивать уроки и сохранять их в личном кабинете
+             </div>
+         
+                  <div id="hypercomments_widget">
+             <ul id="comment">
+                <li data-time="1332613338" id="comm27530"><img class="avatar" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/vqqYKAj8Lys.jpg">
+<div class="comment-content" data-uid="" data-cid="27530">
+    <div class="vcorner"></div>
+    <small class="date">24 Марта 2012 22:22</small>
+    <h6>
+                    <img class="provider_icon" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/vkontakte.png">
+                godofwarsa    </h6>
+    <div class="p">исстемы
+Опечатка...</div>
+    
+        
+     <div class="clear"></div>
+</div><ul id="childs27530"><li data-time="1332649207" id="comm27537"><img class="avatar" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/avt46577.jpg">
+<div class="comment-content odd" data-uid="" data-cid="27537">
+    <div class="vcorner"></div>
+    <small class="date">25 Марта 2012 08:20</small>
+    <h6>
+                user46577    </h6>
+    <div class="p" data-hc-id="241e81044a40242842ef692e2000">на сайте установлен Orphius, выделяйте слова с ошибками и нажимайте Ctrl+Enter<span class="hcc hc__ht hc_241e81044a40242842ef692e2000" data-hc-id="241e81044a40242842ef692e2000" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></div>
+    
+        
+     <div class="clear"></div>
+</div></li></ul></li><li data-time="1332659896" id="comm27541"><img class="avatar" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/no_avt.jpg">
+<div class="comment-content" data-uid="" data-cid="27541">
+    <div class="vcorner"></div>
+    <small class="date">25 Марта 2012 11:18</small>
+    <h6>
+                Koshka    </h6>
+    <div class="p">Спасибо за урок!
+</div>
+    
+        
+     <div class="clear"></div>
+</div></li><li data-time="1332705683" id="comm27563"><img class="avatar" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/no_avt.jpg">
+<div class="comment-content odd" data-uid="" data-cid="27563">
+    <div class="vcorner"></div>
+    <small class="date">26 Марта 2012 00:01</small>
+    <h6>
+                Dimon33    </h6>
+    <div class="p" data-hc-id="1c00d2050c4e18f0b44ffc3ccb78">Зачетный урок. то что давно искал. Сделайте еще уроке по джумле :)<span class="hcc hc__ht hc_1c00d2050c4e18f0b44ffc3ccb78" data-hc-id="1c00d2050c4e18f0b44ffc3ccb78" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></div>
+    
+        
+     <div class="clear"></div>
+</div></li><li data-time="1332711796" id="comm27565"><img class="avatar" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/no_avt.jpg">
+<div class="comment-content" data-uid="" data-cid="27565">
+    <div class="vcorner"></div>
+    <small class="date">26 Марта 2012 01:43</small>
+    <h6>
+                Snatch    </h6>
+    <div class="p" data-hc-id="34c484e4803dd3a48adce56ba7f0">$dbtype : "mysqli" или "mysql". Тип используемой базы данных.
+Может тип используемого драйвера БД ?<span class="hcc hc__ht hc_34c484e4803dd3a48adce56ba7f0" data-hc-id="34c484e4803dd3a48adce56ba7f0" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></div>
+    
+        
+     <div class="clear"></div>
+</div></li><li data-time="1332735576" id="comm27566"><img class="avatar" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/no_avt.jpg">
+<div class="comment-content odd" data-uid="" data-cid="27566">
+    <div class="vcorner"></div>
+    <small class="date">26 Марта 2012 08:19</small>
+    <h6>
+                Magnum79    </h6>
+    <div class="p" data-hc-id="959025250a8e53c5c19e944c2208">Всё, что 
+тут написано, устанавливается в НАСТРОЙКАХ админки. Зачем нужно ковырять
+ код, когда можно всё перечисленное установить по человечески и нажать 
+"СОХРАНИТЬ" ?
+И live_site для sh404sef нельзя оставлять пустым...
+В общем урок беспонтовый.<span class="hcc hc__ht hc_959025250a8e53c5c19e944c2208" data-hc-id="959025250a8e53c5c19e944c2208" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></div>
+    
+        
+     <div class="clear"></div>
+</div></li><li data-time="1333038908" id="comm27627"><img class="avatar" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/no_avt.jpg">
+<div class="comment-content" data-uid="" data-cid="27627">
+    <div class="vcorner"></div>
+    <small class="date">29 Марта 2012 20:35</small>
+    <h6>
+                Pega    </h6>
+    <div class="p" data-hc-id="d40452afa2bc73f8f27e60887470">Когда же 
+будут действительно стоящие уроки по Joomla 2.5, например цикл статей по
+ созданию модуля, и не просто простейшего модуля, а с углублением.<span class="hcc hc__ht hc_d40452afa2bc73f8f27e60887470" data-hc-id="d40452afa2bc73f8f27e60887470" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></div>
+    
+        
+     <div class="clear"></div>
+</div></li><li data-time="1341749411" id="comm29650"><img class="avatar" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/no_avt.jpg">
+<div class="comment-content odd" data-uid="" data-cid="29650">
+    <div class="vcorner"></div>
+    <small class="date">8 Июля 2012 16:10</small>
+    <h6>
+                nuikoj    </h6>
+    <div class="p" data-hc-id="04bea0b72919134c6fcf4d23ac10">извиняюсь,что
+ пишу здесь. Подскажите, пожалуйста, возможно ли в joomla 1.5 посмотреть
+ всех зарегистрированных с фротэнда или хотя бы последнего 
+зарегистрировавшегося.
+Спасибо.<span class="hcc hc__ht hc_04bea0b72919134c6fcf4d23ac10" data-hc-id="04bea0b72919134c6fcf4d23ac10" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></div>
+    
+        
+     <div class="clear"></div>
+</div></li><li data-time="1435223025" id="comm39743"><img class="avatar" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/no_avt.jpg">
+<div class="comment-content" data-uid="" data-cid="39743">
+    <div class="vcorner"></div>
+    <small class="date">25 Июня 2015 12:03</small>
+    <h6>
+                MyWeb    </h6>
+    <div class="p" data-hc-id="c740bcb6d2ff431fe70e8ea614c8">А через 
+configuration.php можно восстановить пароль от админки как-то? Я находил
+ как это сделать через c-panel в блоге 
+https://joomla.shneider-host.ru/blog/obshchie-voprosy-dzhumla/kak-vosstanovit-parol-administratora-joomla
+но
+ у меня не c-panel
+<span class="hcc hc__ht hc_c740bcb6d2ff431fe70e8ea614c8" data-hc-id="c740bcb6d2ff431fe70e8ea614c8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></div>
+    
+        
+     <div class="clear"></div>
+</div></li><li data-time="1441106715" id="comm39922"><img class="avatar" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/no_avt.jpg">
+<div class="comment-content odd" data-uid="" data-cid="39922">
+    <div class="vcorner"></div>
+    <small class="date">1 Сентября 2015 14:25</small>
+    <h6>
+                koshkarev    </h6>
+    <div class="p" data-hc-id="be1728616afc2a4a75d70d1e9e28">vmError: 
+VmTableData Псевдоним отсутствует! Не удается сохранить запись без 
+Псевдоним. Подскажите пож. как решить такую проблему в joomla 2.5.24
+<span class="hcc hc__ht hc_be1728616afc2a4a75d70d1e9e28" data-hc-id="be1728616afc2a4a75d70d1e9e28" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></div>
+    
+        
+     <div class="clear"></div>
+</div></li>                                                                 
+             </ul>
+         </div>
+    </article> 
+</div>         
+
+
+<script type="text/javascript">
+var hc_config = {"widget":"Stream","widget_id":83049,"xid":"1_1407"};
+hc_config.callback = function(app, init){
+    var form = document.querySelector('.hc__form'); 
+    var menu = document.querySelector('.hc__menu'); 
+  
+      if (document.cookie.indexOf("policy_accept") < 0){
+          form.classList.add('hidden');    
+          var div = document.createElement('div');
+          var btn = document.createElement('button');
+          
+          div.classList.add('hc_accept_private'); 
+          btn.classList.add('hc__form__send'); 
+          
+          btn.innerHTML = '✔ Согласен'; 
+          div.innerHTML = '<p>Сервис комментирования материалов сайта 
+ruseller.com не является частью сайта ruseller.com, а предоставлен 
+сервисом hypercomments.com. При размещении комментария администрация 
+сайта в целях вашей безопасности просит не размещать персональные 
+данные, а при их размещении ознакомиться с политикой конфиденциальности 
+сервиса hypercomments.com, поскольку обработка персональных данных 
+осуществляется сервисом hypercomments.com самостоятельно.</p>';
+          
+          btn.addEventListener("click", function() {
+            var date = new Date(new Date().getTime() + 31536000 * 1000);
+            
+            form.classList.remove('hidden');
+            div.classList.add('hidden');
+            
+            document.cookie = "policy_accept=1; path=/; expires=" + 
+date.toUTCString();
+            return false;
+         });                  
+          
+          div.appendChild(btn);
+          menu.parentNode.insertBefore(div, menu.nextSibling);
+    }; 
+}
+_hcwp = window._hcwp || [];
+_hcwp.push(hc_config);
+(function() {
+if("HC_LOAD_INIT" in window)return;
+HC_LOAD_INIT = true;
+var lang = (navigator.language || navigator.systemLanguage || 
+navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+var hcc = document.createElement("script"); hcc.type = 
+"text/javascript"; hcc.async = true;
+hcc.src = ("https:" == document.location.protocol ? "https" : 
+"http")+"://w.hypercomments.com/widget/hc/83049/"+lang+"/widget.js";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hcc, s.nextSibling);
+})();
+</script>            	</div><!-- #content-->
+    		</div><!-- #container-->
+    
+  		<aside id="sideLeft">
+                <div class="box">
+    <div class="innerBox">
+        <h3><a href="https://ruseller.com/lessons.php">Уроки и статьи:</a></h3>
+            <menu>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/lessons.php?rub=1">
+                            HTML и DHTML                             
+                                <span>(85)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/lessons.php?rub=2">
+                            CSS                             
+                                <span>(557)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/lessons.php?rub=28">
+                            Разное                             
+                                <span>(439)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/lessons.php?rub=29">
+                            Для сайта                             
+                                <span>(186)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/lessons.php?rub=30">
+                            Электронные деньги                             
+                                <span>(2)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/lessons.php?rub=32">
+                            jQuery                             
+                                <span>(580)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/lessons.php?rub=33">
+                            Mootools                             
+                                <span>(17)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/lessons.php?rub=35">
+                            Юзабилити                             
+                                <span>(22)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/lessons.php?rub=37">
+                            PHP                             
+                                <span>(502)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/lessons.php?rub=40">
+                            Wordpress                             
+                                <span>(106)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/lessons.php?rub=41">
+                            Joomla!                             
+                                <span>(16)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/lessons.php?rub=42">
+                            SEO                             
+                                <span>(12)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/lessons.php?rub=43">
+                            HTML5                             
+                                <span>(45)</span>
+                                                   </a>
+                   </li>
+                
+                                <li><a href="https://ruseller.com/project">Проекты <span style="color: #5e0404;">NEW!</span></a></li>
+                            </menu>
+      </div>           
+</div><div class="box">
+    <div class="innerBox">
+        <h3><a href="https://ruseller.com/adds.php">Скачать:</a></h3>
+            <menu>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/adds.php?rub=10">
+                            Программы                             
+                                <span>(23)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/adds.php?rub=11">
+                            Скрипты                             
+                                <span>(105)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/adds.php?rub=12">
+                            Видеоуроки                             
+                                <span>(95)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/adds.php?rub=31">
+                            Дизайн                             
+                                <span>(686)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/adds.php?rub=34">
+                            Полезное                             
+                                <span>(45)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/adds.php?rub=36">
+                            Шаблоны сайтов                             
+                                <span>(1540)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/adds.php?rub=38">
+                            Flash заготовки                             
+                                <span>(122)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/adds.php?rub=39">
+                            Wordpress темы                             
+                                <span>(248)</span>
+                                                   </a>
+                   </li>
+                
+                            </menu>
+      </div>           
+</div><div class="box">
+    <div class="innerBox">
+        <h3><a href="https://ruseller.com/service.php">Online-инструменты:</a></h3>
+            <menu>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/service.php?rub=19">
+                            CSS                             
+                                <span>(55)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/service.php?rub=21">
+                            Изображения                             
+                                <span>(40)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a href="https://ruseller.com/service.php?rub=22">
+                            Разное                             
+                                <span>(52)</span>
+                                                   </a>
+                   </li>
+                                    
+                   <li>
+                       <a target="_blank" href="http://hosting-ninja.ru/">
+                            Подобрать хостинг                                                   </a>
+                   </li>
+                
+                            </menu>
+      </div>           
+</div> 			    <div class="box hn">
+                    <div class="innerBox">
+    			         <h3>ТОП-10 Хостеров:</h3>
+                         <menu>
+                                                     </menu>
+                         <div class="center"><a style="text-decoration: underline;" target="_blank" href="https://hosting-ninja.ru/rating/">Смотреть весь рейтинг</a></div>
+                    </div>                
+                </div>
+                
+    			<div class="box">
+                    <div class="innerBox">
+    			         <h3>Шпаргалки:</h3>
+                         <menu>
+                            <li><a target="_blank" href="https://jquery.page2page.ru/">JQUERY</a></li>
+                            <li><a href="https://ruseller.com/shporacss.php">CSS</a></li>
+                            <li><a href="https://ruseller.com/htmlshpora.php">HTML</a></li>
+                         </menu>
+                    </div>                
+                </div>
+    			<div class="box drosha">
+                    <img class="drosha" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/drosha_white.jpg" alt="*">
+                    <div class="innerBox cours">
+                        <p class="question" data-hc-id="a5613941a4e621910b680c693320">Хотите быстро изучить JavaScript и jQuery?<span class="hcc hc__ht hc_a5613941a4e621910b680c693320" data-hc-id="a5613941a4e621910b680c693320" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+                        <p data-hc-id="b5d83809889e689003425a7458f0">Предлагаю использовать самый эффективный и современный метод обучения - <strong>видеокурс</strong>.<span class="hcc hc__ht hc_b5d83809889e689003425a7458f0" data-hc-id="b5d83809889e689003425a7458f0" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p> 
+                        <p data-hc-id="450802482aff7e38d3d664984358">За 
+счет получения информации сразу по двум каналам (зрение и слух) 
+эффективность обучения значительно превосходит обучение по книгам. А 
+домашние задания и онлайн-тесты позволят вам постоянно думать на 
+изучаемом языке и сразу проверять свои знания! <span class="hcc hc__ht hc_450802482aff7e38d3d664984358" data-hc-id="450802482aff7e38d3d664984358" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+                        <p><strong>Более 100 видеоуроков на одном DVD.</strong></p>
+                        <p>Автор: <a target="_blank" href="https://ruseller.com/page.php?doc=about">Евгений Попов</a>.</p> 
+                        <a href="https://1popov.ru/rusreliz/disc11" target="_blank"><img style="border: medium none;" alt="Javascript and jQuery" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/javascript168.jpg" width="168" height="223"></a>
+                        <p><a href="https://1popov.ru/c/13" target="_blank" class="small">Смотреть видеопрезентацию</a></p>
+                    </div>
+                </div>                
+
+    			<div class="box">
+                    <div id="bonusHtml" class="innerBox cours">
+                        <p class="question" data-hc-id="b10838b2c1b042060e88d3222430">Видеокурс "HTML с нуля"<span class="hcc hc__ht hc_b10838b2c1b042060e88d3222430" data-hc-id="b10838b2c1b042060e88d3222430" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+                        <a href="https://1popov.ru/bonuscourse/htmlform/" target="_blank" class="small">
+                            <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/HTML.png">
+                        </a>                            
+                        <p data-hc-id="94466d10a4ddc1513e208d6210a8">Если вы давно хотите как следует изучить HTML, то у меня для Вас есть отличная новость!<span class="hcc hc__ht hc_94466d10a4ddc1513e208d6210a8" data-hc-id="94466d10a4ddc1513e208d6210a8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+                        <p data-hc-id="b6a046a48ca62e69660de631cd00">Вы можете совершенно бесплатно получить полноценный курс по HTML из моего платного сборника. 33 видеоурока от Евгения Попова!<span class="hcc hc__ht hc_b6a046a48ca62e69660de631cd00" data-hc-id="b6a046a48ca62e69660de631cd00" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p> 
+                        <p class="freeCours">Бесплатно!</p>
+                        <p class="center"><a href="https://1popov.ru/bonuscourse/htmlform/" target="_blank" class="small">Список уроков и подробности получения курса здесь</a></p>
+                        
+                    </div>
+                </div>   
+
+    			<div class="box">
+                    <div id="bonusHtml" class="innerBox cours">
+                        <p class="question" data-hc-id="290010fa9d30460c4cc891a2a400">Видеокурс "CSS с нуля"<span class="hcc hc__ht hc_290010fa9d30460c4cc891a2a400" data-hc-id="290010fa9d30460c4cc891a2a400" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+                        <a href="https://1popov.ru/bonuscourse/cssform/" target="_blank" class="small">
+                            <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/CSS.png">
+                        </a>
+                        <p data-hc-id="a486057882d702b832044d7811a8">Если вы уже изучили HTML и хотите двигаться дальше, то следующим шагом будет изучение технологии CSS. <span class="hcc hc__ht hc_a486057882d702b832044d7811a8" data-hc-id="a486057882d702b832044d7811a8" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+                        <p data-hc-id="df92667e04af9f09772fe7b05da0">Так
+ же, как и в случае с HTML, вы можете совершенно бесплатно получить 
+полноценный курс по СSS из моего платного сборника. Вас ждет 45 
+подробных видеоуроков от Евгения Попова!<span class="hcc hc__ht hc_df92667e04af9f09772fe7b05da0" data-hc-id="df92667e04af9f09772fe7b05da0" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p> 
+                        <p class="freeCours">Бесплатно!</p>
+                        <p class="center"><a href="https://1popov.ru/bonuscourse/cssform/" target="_blank" class="small">Список уроков и подробности получения курса здесь</a></p>
+                    </div>
+                </div>  
+    			<div class="box">
+                    <div id="bonusHtml" class="innerBox cours">
+                        <p class="question" data-hc-id="8d923024a1e046188d4807e17230">Видеокурс "Домен и хостинг"<span class="hcc hc__ht hc_8d923024a1e046188d4807e17230" data-hc-id="8d923024a1e046188d4807e17230" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+                        <a href="https://1popov.ru/bonuscourse/domenform/" target="_blank" class="small"><img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/DOMEN.png"></a>
+                        <p data-hc-id="a4072dc02edf5b4d56256dfc1168">Если
+ вы хотите разобраться с понятиями домена и хостинга, научиться 
+создавать базы данных, закачивать файлы сайта на сервер по FTP, 
+создавать поддомены, настраивать почтовые ящики для своего сайта и 
+следить за его посещаемостью, то этот курс создан специально для вас!<span class="hcc hc__ht hc_a4072dc02edf5b4d56256dfc1168" data-hc-id="a4072dc02edf5b4d56256dfc1168" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+                        <p class="freeCours">Бесплатно!</p>
+                        <p class="center"><a href="https://1popov.ru/bonuscourse/domenform/" target="_blank" class="small">Список уроков и подробности получения курса здесь</a></p>
+                    </div>
+                </div>                  
+  
+    			<div class="box">
+                    <div id="subscribeEmail" class="innerBox sidebarForm">
+    			        <h4>Получать новые уроки на E-mail:</h4>
+                        <form action="//feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('//feedburner.google.com/fb/a/mailverify?uri=ruseller/CdHX', 'popupwindow','scrollbars=yes,width=550,height=520');return true">
+                            <label>Ваш email:</label>
+                            <div class="input">
+                                <input name="email" type="text">
+                            </div>    
+                            <input value="ruseller/CdHX" name="uri" type="hidden">
+                            <input name="loc" value="ru_RU" type="hidden">
+                            <button type="submit" class="button green">Подписаться</button>
+                        </form>
+                    </div>                
+                </div>                                
+    			<div class="box">
+                    <div id="rss" class="innerBox">
+                        <h4>RSS подписка</h4>
+                        <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/rss.jpg"><br>
+                        <p><img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/CdHX.gif" style="border:0" alt="feed" width="88" height="26"></p>
+                        <a href="https://feeds.feedburner.com/ruseller/CdHX" class="button orange">Подписаться</a>
+                    </div>
+ 
+                                      
+                </div>                 
+                                                               
+    		</aside><!-- #sideLeft -->
+    		<aside id="sideRight">
+                <div class="box">
+                    <div id="login" class="innerBox sidebarForm">
+                    <span class="oAuth" id="oAuthTop">
+                                                    <a href="http://oauth.vk.com//authorize?client_id=2438490&amp;redirect_uri=http://ruseller.com/oauth/?provider=vkontakte&amp;response_type=code" title="Войти с Вконтакте">
+                                <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/vkontakte.png">
+                            </a>  
+                                                    <a href="https://connect.mail.ru/oauth/authorize?client_id=639618&amp;response_type=code&amp;redirect_uri=http://ruseller.com/oauth/?provider=mailru" title="Войти с Mail.ru">
+                                <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/mailru.png">
+                            </a>  
+                                                    <a href="http://www.odnoklassniki.ru/oauth/authorize?client_id=3621888&amp;response_type=code&amp;redirect_uri=http://ruseller.com/oauth/?provider=odnoklassniki" title="Войти с Одноклассники">
+                                <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/odnoklassniki.png">
+                            </a>  
+                                                    <a href="https://www.facebook.com/dialog/oauth?client_id=220051411380386&amp;redirect_uri=http%3A%2F%2Fruseller.com%2Foauth%2F%3Fprovider%3Dfacebook" title="Войти с Facebook">
+                                <img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/facebook.png">
+                            </a>  
+                                              </span>    			        
+                        
+                         <h4>Авторизация</h4>
+                         <form action="userarea.php?action=login" method="post">
+                             <label>Логин </label>
+                             <div class="input">
+                                <input name="name" type="text">
+                             </div>                         
+                            <label>Пароль</label>
+                            <div class="input">
+                                <input name="password" type="password">                         
+                            </div>
+                            <button type="submit" class="button green">Я все заполнил</button>
+                        </form>
+                        <div id="recoveryPassword">
+                            <a class="sign_up">Регистрация</a> <br> <a class="recoveryPassword" href="#">Забыли пароль?</a>
+                        </div>
+                    </div>
+                </div>                                <div class="box">
+                    <div style="padding-bottom: 0; overflow: hidden;" class="innerBox">
+                        <h3>Рекомендуем</h3>
+                        <div style="overflow: hidden;">
+                            <div style="text-align: center;" id="null"><a class="zlivszhr_24 rotor-item" target="_blank" href="https://redhappy.ru/2017//31"> <img style="max-width: 100%;" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/1af840a360f96baf581d2d7dd5b47e2b.png" alt="" title=""> </a> </div>                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="box">
+                    <div style="padding-bottom: 0; overflow: hidden;" class="innerBox">
+                        <div style="overflow: hidden;">
+                            <a target="_blank" href="https://4994.ru/911">
+                                <img style="position: relative;left: -9px;" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/in_s240.gif">
+                            </a>
+                            <p style="text-align: center; padding-bottom: 15px;" data-hc-id="c0f86182814529ac221720408008">При регистрации введите промокод <strong>1popov</strong> и получите 28 дней бесплатного использования.<span class="hcc hc__ht hc_c0f86182814529ac221720408008" data-hc-id="c0f86182814529ac221720408008" style="display: none;"><svg width="11" height="11" viewBox="0 0 511.626 511.626"><path d="M477.371,127.44c-22.843-28.074-53.871-50.249-93.076-66.523c-39.204-16.272-82.035-24.41-128.478-24.41c-34.643,0-67.762,4.805-99.357,14.417c-31.595,9.611-58.812,22.602-81.653,38.97c-22.845,16.37-41.018,35.832-54.534,58.385C6.757,170.833,0,194.484,0,219.228c0,28.549,8.61,55.3,25.837,80.234c17.227,24.931,40.778,45.871,70.664,62.811c-2.096,7.611-4.57,14.846-7.426,21.693c-2.855,6.852-5.424,12.474-7.708,16.851c-2.286,4.377-5.376,9.233-9.281,14.562c-3.899,5.328-6.849,9.089-8.848,11.275c-1.997,2.19-5.28,5.812-9.851,10.849c-4.565,5.048-7.517,8.329-8.848,9.855c-0.193,0.089-0.953,0.952-2.285,2.567c-1.331,1.615-1.999,2.423-1.999,2.423l-1.713,2.566c-0.953,1.431-1.381,2.334-1.287,2.707c0.096,0.373-0.094,1.331-0.57,2.851c-0.477,1.526-0.428,2.669,0.142,3.433v0.284c0.765,3.429,2.43,6.187,4.998,8.277c2.568,2.092,5.474,2.95,8.708,2.563c12.375-1.522,23.223-3.606,32.548-6.276c49.87-12.758,93.649-35.782,131.334-69.097c14.272,1.522,28.072,2.286,41.396,2.286c46.442,0,89.271-8.138,128.479-24.417c39.208-16.272,70.233-38.448,93.072-66.517c22.843-28.062,34.263-58.663,34.263-91.781C511.626,186.108,500.207,155.509,477.371,127.44z"></path></svg><span class="hcc hc__htcount">+</span></span></p>
+                        </div>
+                    </div>
+                </div>                
+                
+                                
+               
+
+                
+    			<div class="box">
+                    <div class="innerBox red" style="padding-left: 10px; padding-top: 15px; padding-bottom: 15px;">
+                    <div style="text-align: center;" id="null"><a class="bytxfxkp_26 rotor-item" target="_blank" href="https://redhappy.ru/2017//32"> <img style="max-width: 100%;" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/b60dea6e1fad2ae38d2ec9bfbe075e20.jpg" alt="" title=""> </a> </div>                    </div>                
+                </div>
+                
+    			<div class="box">
+                    <div class="innerBox red" style="padding-bottom: 0;">
+    			         <h3>Немного рекламы</h3>
+
+                         <div class="google google-wrap" data-value="39">
+                            <script type="text/javascript">
+                                google_ad_client = "pub-0562005659861244";
+                                google_ad_slot = "1603257820";
+                                google_ad_width = 160;
+                                google_ad_height = 600;
+                            </script>
+                            <script type="text/javascript" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/show_ads.js"></script><ins id="aswift_0_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:160px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:160px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;width:160px;height:600px;" width="160" height="600" frameborder="0"></iframe></ins></ins>                               
+                         </div>   
+                    </div> 
+                                   
+                </div> 
+                
+                <div class="box">       
+                    <div class="innerBox"> 
+                        <script type="text/javascript" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/orphus.js"></script>
+                        <div style="padding-top: 15px;">
+                        <a href="https://orphus.ru/" id="orphus" target="_blank" title="undefined">
+                        <img alt="Система Orphus" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/img.png" border="0">
+                        </a>
+                        </div>
+                    </div>
+                </div>
+                                                               
+    		</aside><!-- #sideRight -->
+           
+    	</section><!-- #middle-->
+    </div><!-- #wrapper -->
+        <div id="footer_wrap" style="height: 399px; margin-top: -99px;"></div>
+    	<footer id="footer">
+                <nav>
+                    <ul> 
+                        <li><a href="https://ruseller.com/">Главная</a><span>|</span></li>
+                        
+                        <li><a href="https://ruseller.com/page.php?doc=goodies">Видеокурсы на DVD</a><span>|</span></li>
+                                             
+                        <li><a href="https://ruseller.com/page.php?doc=to_offer_lessons">Предложить урок</a></li>
+                    </ul>
+                </nav> 
+                <small id="copyright">© 2017 Евгений Попов. Все права защищены. <a href="https://evgeniypopov.ru/">Служба поддержки</a><br>
+                Сайт мониторится с помощью сервиса  <a href="https://r.1popov.ru/1325663033">ping-admin</a>
+                </small>
+                <a href="https://ruseller.com/images/comix.jpg" id="kinderSurprise" class="cboxElement">:)</a>
+    	</footer><!-- #footer -->
+</div>
+
+<div id="rusellerOverlay"></div>
+<img id="big_loader" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/big_loader.gif">
+<div id="rusellerBox">
+    <a id="rusellerBoxClose"></a>
+    <div id="rusellerBoxContent">
+    </div>
+</div>
+<a id="toTop" style="display: none; cursor: pointer;">^ Наверх ^</a>
+<script type="text/javascript" src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/plusone.js" gapi_processed="true">
+  {lang: 'ru'}
+</script>
+
+<!-- Yandex.Metrika counter -->
+<div style="display:none;"><script type="text/javascript">
+(function(w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter3946864 = new Ya.Metrika(3946864);
+             yaCounter3946864.clickmap(true);
+             yaCounter3946864.trackLinks(true);
+        
+        } catch(e) { }
+    });
+})(window, 'yandex_metrika_callbacks');
+</script></div>
+<script src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/watch.js" type="text/javascript" defer="defer"></script>
+<noscript><div style="position:absolute"><img src="//mc.yandex.ru/watch/3946864" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<script type="text/javascript">
+    var reformalOptions = {
+        project_id: 93911,
+        project_host: "newruseller.reformal.ru",
+        tab_orientation: "left",
+        tab_indent: "50%",
+        tab_bg_color: "#c01209",
+        tab_border_color: "#FFFFFF",
+        tab_image_url: 
+"//tab.reformal.ru/T9GC0LfRi9Cy0Ysg0Lgg0L%252FRgNC10LTQu9C%252B0LbQtdC90LjRjw==/FFFFFF/4bfb34d91c8d7fb481972ca3c84aec38/left/0/tab.png",
+
+        tab_border_width: 2
+    };
+    
+    (function() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript'; script.async = true;
+        script.src = ('https:' == document.location.protocol ? 
+'https://' : '//') + 'media.reformal.ru/widgets/v3/reformal.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
+    })();
+</script><noscript><a href="//reformal.ru"><img 
+src="//media.reformal.ru/reformal.png" /></a><a 
+href="//newruseller.reformal.ru">Oтзывы и предложения для 
+Ruseller.com</a></noscript>
+<div id="d33b41c8cbee21d8b2862b54bc716d2a"></div><script>(function(){ 
+"use strict"; /* Наживка */ var doc = document, o = 
+doc.createElement('img'), b = doc.querySelector('body'), h = 
+doc.querySelector('head'), r = false, cn = 
+'c4a1ee4b7ec697b58e0529c0bc3e780c', rc = 
+doc.querySelectorAll('.google-wrap'), itv; /*авто-тип*/ o.src = 
+'https://redhappy.ru/2017//baner.png'; o.style.position = 'absolute'; 
+o.style.top = '-9999px'; o.style.left = '-9999px'; b.appendChild(o); itv
+ = setInterval(function (){ var d = o.style.display; var v = 
+o.style.visibility; if(d == 'none' || v == 'hidden'){ 
+clearInterval(itv); run(); } },10); /* ручной тип */ if(rc){ 
+setTimeout(function () { rc.forEach(function (item, i, arr) { 
+if(item.offsetHeight < 1){ run(); } }); },333); } function run(){ if(r 
+!= false) return; r = true; setTimeout(function (){ var ifr = 
+doc.querySelectorAll('.google-wrap'); ifr.forEach(function (item, i, 
+arr){ var id = item.getAttribute('data-value'), s = 
+document.createElement('script'), n = 'https://redhappy.ru/2017/' + id +
+ '/rotor.js', d = item.style.display, h; item.style.display='block'; h =
+ getComputedStyle(item).height; h = parseInt(h); if(h > 0){ 
+item.style.display = d; } else{ s.setAttribute('src', n); 
+s.setAttribute('id', 'rotor_' + id); item.parentNode.replaceChild(s, 
+item); } }); if(!cs){ var cs = '.vzgwse4q-wrap'; } var t = 'replace'; 
+var a1 = doc.querySelectorAll('.vzgwse4q-close'); var a2 = 
+doc.querySelectorAll('.vzgwse4q-btn'); cs = doc.querySelectorAll(cs); 
+if(a1){ a1.forEach(function (item, i, arr){ 
+item.addEventListener("click", function() { var mem = 0; 
+cs[i].parentNode.innerHTML = ''; if(mem > 0){ sc(cn, mem, {'expires' : 
+mem, 'path' : '/'}); } return false; }); }); } if(a2) { 
+a2.forEach(function (item, i, arr){ item.addEventListener("click", wn); 
+}); } function wn(){ var c = doc.createElement('div'), m, n; c.innerHTML
+ = ``; m = c.querySelector('#modal-vzgwse4q'); n = 
+c.querySelector('#modal-vzgwse4q-back'); 
+c.querySelector('#modal-vzgwse4q-close').addEventListener("click", 
+remove); n.addEventListener("click", remove); function remove(){ 
+m.parentNode.removeChild(m); n.parentNode.removeChild(n); } 
+b.appendChild(c); return false; } }, 0*1000); } function sc(name, value,
+ options) { options = options || {}; var expires = options.expires; if 
+(typeof expires == "number" && expires) { var d = new Date(); 
+d.setTime(d.getTime() + expires * 1000); expires = options.expires = d; }
+ if (expires && expires.toUTCString) { options.expires = 
+expires.toUTCString(); } value = encodeURIComponent(value); var 
+updatedCookie = name + "=" + value; for (var propName in options) { 
+updatedCookie += "; " + propName; var propValue = options[propName]; if 
+(propValue !== true) { updatedCookie += "=" + propValue; } } doc.cookie =
+ updatedCookie; } function gc(name) { var matches = doc.cookie.match(new
+ RegExp( "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, 
+'\\$1') + "=([^;]*)" )); return matches ? decodeURIComponent(matches[1])
+ : undefined; } function dc(name) { sc(name, "", {expires: -1}); } })();</script><img src="%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B8%D0%B9%20%D0%BE%D0%B1%D0%B7%D0%BE%D1%80%20%D1%84%D0%B0%D0%B9%D0%BB%D0%B0%20configuration.php%20%D0%B4%D0%BB%D1%8F%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20Joomla%21_files/baner.png" style="position: absolute; top: -9999px; left: -9999px;">
+            
+   
+
+ 
+    
+
+</body></html>

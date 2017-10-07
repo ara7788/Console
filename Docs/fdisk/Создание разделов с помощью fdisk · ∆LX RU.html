@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title> Создание разделов с помощью fdisk · ∆LX RU </title>
+
+
+<link rel="stylesheet" href="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%BE%D0%B2%20%D1%81%20%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E%20fdisk%20%C2%B7%20%E2%88%86LX%20RU_files/fonts.css">
+<link rel="stylesheet" href="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%BE%D0%B2%20%D1%81%20%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E%20fdisk%20%C2%B7%20%E2%88%86LX%20RU_files/slim.css">
+<link rel="stylesheet" href="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%BE%D0%B2%20%D1%81%20%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E%20fdisk%20%C2%B7%20%E2%88%86LX%20RU_files/highlight.css">
+<link href="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%BE%D0%B2%20%D1%81%20%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E%20fdisk%20%C2%B7%20%E2%88%86LX%20RU_files/css.css" rel="stylesheet" type="text/css">
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://ru.alxschwarz.com/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="https://ru.alxschwarz.com/favicon.ico">
+
+
+<link href="" rel="alternate" type="application/rss+xml" title="∆LX RU">
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+  <h1 class="site-title"><a href="https://ru.alxschwarz.com/">∆LX RU</a></h1>
+  <p class="site-tagline"></p>
+  <div class="nav">
+    <a class="nav-btn" href="#">
+      <span class="ci ci-burger"></span>
+    </a>
+    <ul class="nav-list">
+       
+	  <li class="spacer">∾</li>
+
+      <li><a href="https://github.com/alexfinn">Github</a></li> 
+      <li><a href="https://twitter.com/alxschwarz">Twitter</a></li> 
+    </ul>
+  </div>
+</div>
+    <div class="content">
+      <div class="posts">
+        <div class="post">
+          <h2 class="post-title"><a href="https://ru.alxschwarz.com/2009/03/sozdanie-razdelov-s-pomoshhyu-fdisk/">Создание разделов с помощью fdisk</a></h2>
+          <span class="post-date">Mar 3, 2009 </span>
+          <div class="post-content">
+            <p>Временами ко мне заходят люди с поисковиком с запросами 
+по поводу fdisk. Где-то в статьях упоминается эта команда. Но толком 
+ничего у меня про нее не было.
+А я помню, как в свое время мучался с ней :smile: Поскольку писать свое
+собственное что-то мне очень часто посто лень, то я потихоньку перевожу
+интересные и полезные для меня статьи. Вот и сейчас сделал то же самое. 
+Может,
+пригодится кому-то. Хотя, как всегда, статья далеко не целиком 
+раскрывает
+тему, а потому чтение манов никто не отменяет :mrgreen:</p>
+
+<p>Итак, очередной перевод. Оригинал, как всегда, на <a href="http://www.novell.com/coolsolutions/feature/19350.html">Novell Cool Solutions</a>. Читайте.</p>
+
+<p>Создать разделы через интерфейс командной строки - просто и быстро, также
+учитывая знание ядра о модифицированной таблице разделов и наличия схемы
+разделов, позволяет получить нужный эффект без необходимости перезагрузки
+рабочей станции/сервера и без необходимости использовать утилиты для
+разделения.</p>
+
+<p>Первым делом необходимо посмотреть, какие жесткие диски доступны, и какой
+жесткий диск необходимо разделить. Если на вашей машине установлено несколько
+жестких дисков, fdisk сообщит вам об этом. Два жестких диска показано в
+следующем листинге как sda и sdb.</p>
+
+<p>Команда fdisk с оператором -l (fdisk -l) покажет вам текущие таблицы разделов
+наряду с жесткими дисками, подключенными к вашей рабочей станции или серверу:</p>
+
+<pre><code class="hljs sql">    linux-1reo:~ # fdisk -l
+
+    Disk /dev/sda: 80.0 GB, 80026361856 bytes 255 heads, 63 sectors/track, 9729 cylinders
+    Units = cylinders of 16065 * 512 = 8225280 bytes
+
+    Device Boot <span class="hljs-operator"><span class="hljs-keyword">Start</span> <span class="hljs-keyword">End</span> Blocks Id System
+    /dev/sda1 * <span class="hljs-number">1</span> <span class="hljs-number">1402</span> <span class="hljs-number">11261533</span>+ <span class="hljs-number">7</span> HPFS/NTFS
+    /dev/sda2 <span class="hljs-number">1403</span> <span class="hljs-number">1415</span> <span class="hljs-number">104422</span>+ <span class="hljs-number">83</span> Linux
+    /dev/sda3 <span class="hljs-number">1416</span> <span class="hljs-number">1546</span> <span class="hljs-number">1052257</span>+ <span class="hljs-number">82</span> Linux swap / Solaris
+    /dev/sda4 <span class="hljs-number">1547</span> <span class="hljs-number">9729</span> <span class="hljs-number">65729947</span>+ <span class="hljs-number">5</span> <span class="hljs-keyword">Extended</span>
+    /dev/sda5 <span class="hljs-number">1547</span> <span class="hljs-number">7920</span> <span class="hljs-number">51199123</span>+ <span class="hljs-number">8</span>e Linux LVM
+
+    Disk /dev/sdb: <span class="hljs-number">80.0</span> GB, <span class="hljs-number">80026361856</span> bytes
+    <span class="hljs-number">255</span> heads, <span class="hljs-number">63</span> sectors/track, <span class="hljs-number">9729</span> cylinders
+    Units = cylinders <span class="hljs-keyword">of</span> <span class="hljs-number">16065</span> * <span class="hljs-number">512</span> = <span class="hljs-number">8225280</span> bytes
+
+    Device Boot <span class="hljs-keyword">Start</span> <span class="hljs-keyword">End</span> Blocks Id System
+    /dev/sdb1 * <span class="hljs-number">1</span> <span class="hljs-number">9729</span> <span class="hljs-number">78148161</span> <span class="hljs-number">8</span>e Linux LVM
+
+    Disk /dev/sdc: <span class="hljs-number">500.1</span> GB, <span class="hljs-number">500107862016</span> bytes
+    <span class="hljs-number">255</span> heads, <span class="hljs-number">63</span> sectors/track, <span class="hljs-number">60801</span> cylinders
+    Units = cylinders <span class="hljs-keyword">of</span> <span class="hljs-number">16065</span> * <span class="hljs-number">512</span> = <span class="hljs-number">8225280</span> bytes
+</span></code></pre>
+
+<p>Как только вы определили, какой жесткий диск вы хотите разделить, вы можете
+запустить команду fdisk, завершив ее нужным жестким диском (fdisk /dev/sda). В
+этой статье мы будем использовать первый жесткий диск - <strong>sda</strong>.</p>
+
+<pre><code class="hljs sql">    linux-1reo:~ # fdisk /dev/sda
+    The number of cylinders for this disk is <span class="hljs-operator"><span class="hljs-keyword">set</span> <span class="hljs-keyword">to</span> <span class="hljs-number">9729.</span>
+    There <span class="hljs-keyword">is</span> nothing wrong <span class="hljs-keyword">with</span> that, but this <span class="hljs-keyword">is</span> larger than <span class="hljs-number">1024</span>,
+    <span class="hljs-keyword">and</span> could <span class="hljs-keyword">in</span> certain setups cause problems <span class="hljs-keyword">with</span>:
+    <span class="hljs-number">1</span>) software that runs <span class="hljs-keyword">at</span> boot <span class="hljs-keyword">time</span> (e.g., old versions <span class="hljs-keyword">of</span> LILO)
+    <span class="hljs-number">2</span>) booting <span class="hljs-keyword">and</span> partitioning software <span class="hljs-keyword">from</span> other OSs
+    (e.g., DOS FDISK, OS/<span class="hljs-number">2</span> FDISK)Command (m <span class="hljs-keyword">for</span> <span class="hljs-keyword">help</span>):
+</span></code></pre>
+
+<p>Как только fdisk будет запущен, ваше приглашение командной строки изменится на
+“Command (m for help):“, и вы будете готовы к проверке и разделению жесткого
+диска. Команды, которые поддерживает fdisk, можно просмотреть нажав клавишу <code>m</code>,
+а затем Enter. Команды, которые мы будем использовать:</p>
+
+<ul>
+<li>p - для печати таблицы раздела</li>
+<li>n - для создания нового раздела</li>
+<li>w - для сохранения изменений и выхода</li>
+</ul>
+
+<p><strong>Отображение текущей таблицы раздела</strong></p>
+
+<p>Перед тем, как мы начнем делить жесткий диск, необходимо узнать какой объем
+дискового пространства нам доступен и как вообще выгдялит текущая таблица
+раздела. “p“, команда, которую мы будеи использовать, выведет текущую таблицу
+раздела:</p>
+
+<pre><code class="hljs sql">    Command (m for <span class="hljs-operator"><span class="hljs-keyword">help</span>): p
+
+    Disk /dev/sda: <span class="hljs-number">80.0</span> GB, <span class="hljs-number">80026361856</span> bytes
+    <span class="hljs-number">255</span> heads, <span class="hljs-number">63</span> sectors/track, <span class="hljs-number">9729</span> cylinders
+    Units = cylinders <span class="hljs-keyword">of</span> <span class="hljs-number">16065</span> * <span class="hljs-number">512</span> = <span class="hljs-number">8225280</span> bytes
+
+    Device Boot <span class="hljs-keyword">Start</span> <span class="hljs-keyword">End</span> Blocks Id System
+    /dev/sda1 * <span class="hljs-number">1</span> <span class="hljs-number">1402</span> <span class="hljs-number">11261533</span>+ <span class="hljs-number">7</span> HPFS/NTFS
+    /dev/sda2 <span class="hljs-number">1403</span> <span class="hljs-number">1415</span> <span class="hljs-number">104422</span>+ <span class="hljs-number">83</span> Linux
+    /dev/sda3 <span class="hljs-number">1416</span> <span class="hljs-number">1546</span> <span class="hljs-number">1052257</span>+ <span class="hljs-number">82</span> Linux swap / Solaris
+    /dev/sda4 <span class="hljs-number">1547</span> <span class="hljs-number">9729</span> <span class="hljs-number">65729947</span>+ <span class="hljs-number">5</span> <span class="hljs-keyword">Extended</span>
+    /dev/sda5 <span class="hljs-number">1547</span> <span class="hljs-number">7920</span> <span class="hljs-number">51199123</span>+ <span class="hljs-number">8</span>e Linux LVM
+</span></code></pre>
+
+<p>Вывод, приведенный выше, показывает, что у нас доступно 1809 цилиндров (9729 -
+7920 = 1809), и мы можем выполнить вычисление (1809 * 16065 * 512) =
+14879531520байтов, что примерно равно 14 гигабайтов.</p>
+
+<p><strong>Создание нового раздела</strong></p>
+
+<p>Следующий шаг - создание нашего нового раздела. Для примера, мы создадим
+раздел с типом “Linux” и размером 1 гигабайт. Мы используем команду “n” для
+создания нового раздела. Нас спросят, с какого цилиндра будет начинаться
+раздел (я советую оставить по умолчанию) и необходимый размер раздела:</p>
+
+<pre><code class="hljs sql">    Command (m for <span class="hljs-operator"><span class="hljs-keyword">help</span>): n
+    <span class="hljs-keyword">First</span> cylinder (<span class="hljs-number">7921</span>-<span class="hljs-number">9729</span>, <span class="hljs-keyword">default</span> <span class="hljs-number">7921</span>):
+    <span class="hljs-keyword">Using</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">value</span> <span class="hljs-number">7921</span>
+    <span class="hljs-keyword">Last</span> cylinder <span class="hljs-keyword">or</span> +<span class="hljs-keyword">size</span> <span class="hljs-keyword">or</span> +sizeM <span class="hljs-keyword">or</span> +sizeK (<span class="hljs-number">7921</span>-<span class="hljs-number">9729</span>, <span class="hljs-keyword">default</span> <span class="hljs-number">9729</span>): +<span class="hljs-number">1024</span>M
+</span></code></pre>
+
+<p>После того, как раздел будет создан, мы, используя команду “p“, можем
+отобразить на экране нашу новую таблицу раздела:</p>
+
+<pre><code class="hljs sql">    Command (m for <span class="hljs-operator"><span class="hljs-keyword">help</span>): p
+
+    Disk /dev/sda: <span class="hljs-number">80.0</span> GB, <span class="hljs-number">80026361856</span> bytes
+    <span class="hljs-number">255</span> heads, <span class="hljs-number">63</span> sectors/track, <span class="hljs-number">9729</span> cylinders
+    Units = cylinders <span class="hljs-keyword">of</span> <span class="hljs-number">16065</span> * <span class="hljs-number">512</span> = <span class="hljs-number">8225280</span> bytes
+
+    Device Boot <span class="hljs-keyword">Start</span> <span class="hljs-keyword">End</span> Blocks Id System
+    /dev/sda1 * <span class="hljs-number">1</span> <span class="hljs-number">1402</span> <span class="hljs-number">11261533</span>+ <span class="hljs-number">7</span> HPFS/NTFS
+    /dev/sda2 <span class="hljs-number">1403</span> <span class="hljs-number">1415</span> <span class="hljs-number">104422</span>+ <span class="hljs-number">83</span> Linux
+    /dev/sda3 <span class="hljs-number">1416</span> <span class="hljs-number">1546</span> <span class="hljs-number">1052257</span>+ <span class="hljs-number">82</span> Linux swap / Solaris
+    /dev/sda4 <span class="hljs-number">1547</span> <span class="hljs-number">9729</span> <span class="hljs-number">65729947</span>+ <span class="hljs-number">5</span> <span class="hljs-keyword">Extended</span>
+    /dev/sda5 <span class="hljs-number">1547</span> <span class="hljs-number">7920</span> <span class="hljs-number">51199123</span>+ <span class="hljs-number">8</span>e Linux LVM
+    /dev/sda6 <span class="hljs-number">7921</span> <span class="hljs-number">8045</span> <span class="hljs-number">1004031</span> <span class="hljs-number">83</span> Linux
+</span></code></pre>
+
+<p><strong>Запись нового раздела на диск</strong></p>
+
+<p>Теперь, когда раздел был успешно создан, вы можете записать изменения на диск,
+нажав клавишу “w“, а затем Enter:</p>
+
+<pre><code class="hljs sql">    Command (m for <span class="hljs-operator"><span class="hljs-keyword">help</span>): w
+    The <span class="hljs-keyword">partition</span> <span class="hljs-keyword">table</span> has been altered!
+
+    Calling ioctl() <span class="hljs-keyword">to</span> re-<span class="hljs-keyword">read</span> <span class="hljs-keyword">partition</span> <span class="hljs-keyword">table</span>.
+
+    WARNING: Re-reading the <span class="hljs-keyword">partition</span> <span class="hljs-keyword">table</span> failed <span class="hljs-keyword">with</span> error <span class="hljs-number">16</span>: Device <span class="hljs-keyword">or</span> resource busy.
+    The kernel still uses the old <span class="hljs-keyword">table</span>.
+    The new <span class="hljs-keyword">table</span> will be used <span class="hljs-keyword">at</span> the <span class="hljs-keyword">next</span> reboot.
+    Syncing disks.
+</span></code></pre>
+
+<p><strong>Активирование вновь созданного раздела</strong></p>
+
+<p>Как только новая таблица раздела записана на жесткий диск, ядро имеет
+возможность читать новую таблицу раздела без необходимости перезагрузки.
+Первый шаг - создание точки монтирования для нового раздела, в нашем примере
+мы будем использовать /media/newpart, а также использование команды
+“partprobe” для того, чтобы ядро имело возможность перечитать таблицу раздела:</p>
+
+<pre><code class="hljs bash">    linux-<span class="hljs-number">1</span>reo:~ <span class="hljs-comment"># mkdir /media/newpart</span>
+    linux-<span class="hljs-number">1</span>reo:~ <span class="hljs-comment"># partprobe</span>
+</code></pre>
+
+<p>Теперь, когда новая точка монтирования создана и ядро перечитало таблицу
+раздела, вы можете отформатировать раздел и разместить на нем файловую систему
+на ваш выбор (ext2, ext3, reiserfs и т.д.). В нашем примере, мы выбрали
+reiserfs:</p>
+
+<pre><code class="hljs coffeescript">    linux-<span class="hljs-number">1</span><span class="hljs-attribute">reo</span>:~ <span class="hljs-comment"># mkfs.reiserfs /dev/sda6</span>
+    mkfs.reiserfs <span class="hljs-number">3.6</span>.19 (<span class="hljs-number">2003</span> www.namesys.com)
+
+    A pair <span class="hljs-keyword">of</span> <span class="hljs-attribute">credits</span>:
+    The Defense Advanced Research Projects Agency (DARPA, www.darpa.mil) <span class="hljs-keyword">is</span> the
+    primary sponsor <span class="hljs-keyword">of</span> Reiser4. DARPA does <span class="hljs-keyword">not</span> endorse <span class="hljs-keyword">this</span> project; it merely
+    sponsors it.
+
+    Alexander Lyamin keeps our hardware running, <span class="hljs-keyword">and</span> was very generous to our
+    project <span class="hljs-keyword">in</span> many little ways.
+
+    Guessing about desired format.. Kernel <span class="hljs-number">2.6</span>.16.21-<span class="hljs-number">0.8</span>-<span class="hljs-reserved">default</span> <span class="hljs-keyword">is</span> running.
+    Format <span class="hljs-number">3.6</span> <span class="hljs-reserved">with</span> standard journal
+    Count <span class="hljs-keyword">of</span> blocks <span class="hljs-literal">on</span> the <span class="hljs-attribute">device</span>: <span class="hljs-number">126496</span>
+    Number <span class="hljs-keyword">of</span> blocks consumed <span class="hljs-keyword">by</span> mkreiserfs formatting <span class="hljs-attribute">process</span>: <span class="hljs-number">8215</span>
+    <span class="hljs-attribute">Blocksize</span>: <span class="hljs-number">4096</span>
+    Hash <span class="hljs-reserved">function</span> used to sort <span class="hljs-attribute">names</span>: “r5″
+    Journal Size <span class="hljs-number">8193</span> blocks (first block <span class="hljs-number">18</span>)
+    Journal Max transaction length <span class="hljs-number">1024</span>
+    inode generation <span class="hljs-attribute">number</span>: <span class="hljs-number">0</span>
+    <span class="hljs-attribute">UUID</span>: e20e2dc1-<span class="hljs-number">7277</span>-<span class="hljs-number">4</span>ab1-<span class="hljs-number">930</span>c-<span class="hljs-number">038e54548540</span>
+    <span class="hljs-attribute">ATTENTION</span>: YOU SHOULD REBOOT AFTER FDISK!
+    ALL DATA WILL BE LOST ON ‘/dev/sda3′!
+    Continue (y/n):y
+    Initializing journal - <span class="hljs-number">0</span>%….<span class="hljs-number">20</span>%….<span class="hljs-number">40</span>%….<span class="hljs-number">60</span>%….<span class="hljs-number">80</span>%….<span class="hljs-number">100</span>%
+    Syncing..ok
+    ReiserFS <span class="hljs-keyword">is</span> successfully created <span class="hljs-literal">on</span> /dev/sda3.
+
+    linux-<span class="hljs-number">1</span><span class="hljs-attribute">reo</span>:~ <span class="hljs-comment">#</span>
+</code></pre>
+
+<p>Как только размер будет отформатирован, вы можете примонтировать и
+использовать ваш вновь созданный раздел:</p>
+
+<pre><code class="hljs bash">    linux-<span class="hljs-number">1</span>reo:~ <span class="hljs-comment"># mount /dev/sda6 /media/partnew</span>
+</code></pre>
+
+<p><strong>Заключение</strong></p>
+
+<p>После монтирования созданного и отформатированного раздела вы можете хранить
+ваши файлы на этом разделе безо всяких пробле, вы можете также добавить ваш
+новый раздел в файл /etc/fstab для того, чтобы ваш раздел монтировался после
+каждой перезагрузки.</p>
+
+<p><strong>Протестировано на:</strong></p>
+
+<ul>
+<li>SUSE Linux Enterprise Desktop 10</li>
+<li>SUSE Linux Enterprise Server 10</li>
+</ul>
+
+          </div>
+        </div>
+        <div class="pagination">
+          <a class="btn previous " href="https://ru.alxschwarz.com/2009/03/predotvrashhenie-brute-force-atak-s-pomoshhyu-fail2ban/"> Prev</a>  
+          <a class="btn next " href="https://ru.alxschwarz.com/2009/03/ustanovka-skype-na-sled-10/"> Next</a> 
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+  
+  <p>Powered by <a href="http://gohugo.io/">Hugo</a>  ||  © ∆LX 2016 || <a href="https://alxschwarz.com/">English Version</a></p>
+  
+</div>
+
+  </div>
+  <script type="text/javascript" async="" id="gauges-tracker" data-site-id="5379d5ebe32bb402be001a01" data-track-path="https://track.gaug.es/track.gif" src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%BE%D0%B2%20%D1%81%20%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E%20fdisk%20%C2%B7%20%E2%88%86LX%20RU_files/track.js"></script><script src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%BE%D0%B2%20%D1%81%20%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E%20fdisk%20%C2%B7%20%E2%88%86LX%20RU_files/slim.js"></script>
+  <script src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%BE%D0%B2%20%D1%81%20%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E%20fdisk%20%C2%B7%20%E2%88%86LX%20RU_files/highlight.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '5379d5ebe32bb402be001a01');
+    t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+    t.src = 'https://d36ee2fcip1434.cloudfront.net/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+
+
+
+
+</body></html>

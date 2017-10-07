@@ -1,0 +1,457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" class="js" lang="ru"><head>
+
+
+  <title>Ошибка 504 Gateway Timeout (time out) nginx. Как исправить. Хостинг в деталях</title>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="keywords" content="хостинг,hosting">
+<link rel="shortcut icon" href="http://hosting101.ru/files/barroness_favicon.ico" type="image/x-icon">
+
+<link rel="alternate" type="application/rss+xml" title="Hosting101.ru - блог про хостинг" href="http://hosting101.ru/articles/rss">
+  
+  <style type="text/css" media="all">@import "/files/css/f45cd5db261c0b3fba6033ba78866d8b.css";</style>
+  
+    
+  <script src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/osd.js"></script><script src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/rum.js"></script><script src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/ads"></script><script type="text/javascript" async="" src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/watch.js"></script><script type="text/javascript" async="" src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/ga.js"></script><script async="" type="text/javascript" src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/gpt.js"></script><script type="text/javascript" src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/839c22b6458c2524c99a0b676d51baec.js"></script>
+<script type="text/javascript" src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/autocomplete.js"></script>  
+<script type="text/javascript">
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+(function() {
+var gads = document.createElement('script');
+gads.async = true;
+gads.type = 'text/javascript';
+var useSSL = 'https:' == document.location.protocol;
+gads.src = (useSSL ? 'https:' : 'http:') + 
+'//www.googletagservices.com/tag/js/gpt.js';
+var node = document.getElementsByTagName('script')[0];
+node.parentNode.insertBefore(gads, node);
+})();
+</script>
+
+<script type="text/javascript">
+googletag.cmd.push(function() {
+googletag.defineSlot('/4484370/h101_top', [728, 90], 'div-gpt-ad-1321539059863-3').addService(googletag.pubads());
+googletag.defineSlot('/4484370/h101_sidebar_top', [240, 180], 'div-gpt-ad-1360535832459-2').addService(googletag.pubads());
+googletag.defineSlot('/4484370/h101_sidebar_bottom', [240, 180], 'div-gpt-ad-1360535832459-1').addService(googletag.pubads());
+googletag.defineSlot('/4484370/h101_bottom', [728, 90], 'div-gpt-ad-1321539059863-0').addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.enableServices();
+});
+</script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', "UA-5507" + "043-7"]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+<script src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/pubads_impl_141.js" async=""></script></head>
+
+<body>
+
+      <div id="container">
+    
+      <div id="header">
+        <div id="logoWrapper">
+                        <div id="siteName"><a href="http://hosting101.ru/" title="Главная">Хостинг в деталях</a></div>            <h1 id="siteSlogan">Отзывы и обзоры хостинга</h1>        </div>
+				
+								
+<div class="banner_728x90_top">
+<!-- h101_top -->
+
+<!--<script type='text/javascript'>
+GA_googleFillSlot("h101_top");
+</script>-->
+
+<!-- h101_top -->
+<div id="div-gpt-ad-1321539059863-3" style="width: 728px; height: 90px;" data-google-query-id="COu0j73Hx9UCFQWbGAodzLgGCg">
+<script type="text/javascript">
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1321539059863-3'); });
+</script>
+<div id="google_ads_iframe_/4484370/h101_top_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/4484370/h101_top_0" title="3rd party ad content" name="google_ads_iframe_/4484370/h101_top_0" scrolling="no" marginwidth="0" marginheight="0" style="border: 0px none; vertical-align: bottom;" srcdoc="" width="728" height="90" frameborder="0"></iframe></div></div>
+
+</div>
+				
+      <div id="nav">
+      <ul class="links-menu">
+<li><a href="http://hosting101.ru/">Главная</a></li>
+<li><a href="http://hosting101.ru/rating-popular.html">Рейтинг</a></li>
+<li><a href="http://hosting101.ru/pricing-plans">Подобрать по цене</a></li>
+<li><a href="http://hosting101.ru/pricing-plans-vps">Подобрать VPS</a></li>
+<li><a href="http://hosting101.ru/compare">Сравнить хостинги</a></li>
+<li><a href="http://hosting101.ru/best-hosting.html">Как выбрать</a></li>
+<li><a href="http://hosting101.ru/qa">Форум</a></li>
+<li><a href="http://hosting101.ru/search/google">Поиск</a></li>
+<li><a href="http://hosting101.ru/user/login">Вход</a></li>
+<li><a href="http://hosting101.ru/user/register">Регистрация</a></li>
+</ul>       </div>
+      <div id="cat-nav">
+        <div class="block block-menu" id="block-menu-110">
+        <div class="content">
+<ul class="menu">
+<li class="leaf"><a href="http://hosting101.ru/catalog/php-mysql">Хостинг</a></li>
+<li class="leaf"><a href="http://hosting101.ru/catalog/vps-vds">VPS</a></li>
+<li class="leaf"><a href="http://hosting101.ru/catalog/cloud">Облака</a></li>
+<li class="leaf"><a href="http://hosting101.ru/catalog/dedicated-servers">Выделенные сервера</a></li>
+<li class="leaf"><a href="http://hosting101.ru/catalog/windows-asp-net-mssql">Windows</a></li>
+<li class="leaf"><a href="http://hosting101.ru/catalog/ua">Украина</a></li>
+<li class="leaf"><a href="http://hosting101.ru/catalog/de">Германия</a></li>
+<li class="leaf"><a href="http://hosting101.ru/catalog/us">США</a></li>
+<li class="leaf"><a href="http://hosting101.ru/catalog">Весь каталог</a></li>
+
+</ul>
+</div>
+ </div>
+      </div>
+    </div>
+
+      <div id="content">
+    
+                        
+                  <h1 class="pageTitle">Ошибка 504 Gateway Timeout (time out) nginx. Как исправить</h1>
+                
+                	        
+
+<div id="node-5532" class="node">
+
+	
+    <span class="submitted"></span>
+       
+    <div class="content"><p><em>В этой статье описаны причины возникновения ошибки 504 Gateway Timeout (time out).</em></p>
+<p>Часто ошибку можно видеть на серверах, где установлен nginx в 
+качестве фронтенда и Apache в качестве бэкенда. И многие думают, что 
+проблема в nginx. Это не так.</p>
+<p>504 Gateway Timeout - значит, что клиентский запрос nginx передал 
+апачу, а апач не смог в установленный лимит времени вернуть HTTP-ответ. 
+Немного подробнее о взаимоотношениях nginx’а и апача в статье про <a href="http://hosting101.ru/502-bad-gateway-nginx.html">502 Bad Gateway</a>.</p>
+<p><strong>Почему Apache не смог ответить?</strong></p>
+<p>Скорее всего дело в возросшей нагрузке на сайт, при которой Apache не
+ успевает отдавать HTTP-ответы, и новые запросы встают в очередь. 
+Клиенты «висят» в очереди, но за приемлемое время их так и не успевают 
+обслужить, поэтому соединения сбрасываются.</p>
+<p>Чтобы решить проблему, можно добавить ресурсов серверу, в частности 
+оперативной памяти, и увеличить количество процессов httpd (Apache). 
+Другой вариант - оптимизировать работу скриптов сайта, чтобы они 
+выполнялись быстрее. Если вы на обычном виртуальном хостинге, то без 
+усилий администрации ситуация не улучшится. Если проблема не решается, 
+надо искать другого провайдера.</p>
+<p>Другая возможная причина возникновения ошибки 504 - исполняемый 
+скрипт не укладывается в отведенный лимит времени. Это бывает, когда 
+скрипт обращается к другим сайтам, либо просто выполняет тяжелую 
+операцию, например, строит поисковый индекс.</p>
+<p>Варианты решения: увеличить значение параметра PHP max_execution_time или облегчить скрипт.</p>
+<p>Критические замечания к статье приветствуются.</p>
+</div>
+    
+		<div class="taxonomy">Теги: <span class="first taxonomy_term_24"><a href="http://hosting101.ru/taxonomy/term/24" rel="tag" title="" class="taxonomy_term_24">Apache</a></span>&nbsp;· <span class="taxonomy_term_25"><a href="http://hosting101.ru/taxonomy/term/25" rel="tag" title="" class="taxonomy_term_25">HTTP-ошибки</a></span>&nbsp;· <span class="taxonomy_term_23"><a href="http://hosting101.ru/taxonomy/term/23" rel="tag" title="" class="taxonomy_term_23">Nginx</a></span>&nbsp;· <span class="taxonomy_term_19"><a href="http://hosting101.ru/taxonomy/term/19" rel="tag" title="" class="taxonomy_term_19">PHP</a></span>&nbsp;· <span class="taxonomy_term_16"><a href="http://hosting101.ru/taxonomy/term/16" rel="tag" title="" class="taxonomy_term_16">VPS</a></span>&nbsp;· <span class="taxonomy_term_7"><a href="http://hosting101.ru/taxonomy/term/7" rel="tag" title="" class="taxonomy_term_7">Виртуальный хостинг</a></span></div>    
+        
+		    
+    
+<div style="padding-top: 15px;"><h2>Смотрите также</h2><ul>
+<li><a href="http://hosting101.ru/502-bad-gateway-nginx.html">Ошибка 502 Bad Gateway nginx. Как исправить</a></li>
+<li><a href="http://hosting101.ru/qa/23/14497">В какой лог пишутся 502-ые ошибки?</a></li>
+<li><a href="http://hosting101.ru/qa/24/26015">Как настроить VPS?</a></li>
+<li><a href="http://hosting101.ru/qa/112/24013">Ошибка 502 каждые 15 минут</a></li>
+<li><a href="http://hosting101.ru/qa/23/16953">Как забанить диапазон ip?</a></li>
+</ul>
+</div>    
+<div class="banner_728x90_bottom">
+<div class="advertisement group-tids-59" id="group-id-tids-59">
+<!-- h101_bottom -->
+<div id="div-gpt-ad-1321539059863-0" style="width: 728px; height: 90px;" data-google-query-id="CO60j73Hx9UCFQWbGAodzLgGCg">
+<script type="text/javascript">
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1321539059863-0'); });
+</script>
+<div id="google_ads_iframe_/4484370/h101_bottom_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/4484370/h101_bottom_0" title="3rd party ad content" name="google_ads_iframe_/4484370/h101_bottom_0" scrolling="no" marginwidth="0" marginheight="0" style="border: 0px none; vertical-align: bottom;" srcdoc="" width="728" height="90" frameborder="0"></iframe></div></div>
+</div>
+</div>
+</div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+<div id="comments"><p class="section">Комментарии</p><a id="comment-4184"></a>
+<div class="comment comment-marker"><div class="submitted"><span class="author"><a href="http://hosting101.ru/user/91" title="Информация о пользователе.">winrs</a></span> <span class="date2">17.01.2010 01:47</span>&nbsp;</div><div class="content"><p>еакселератор может немного помочь</p>
+</div></div><a id="comment-4251"></a>
+<div class="comment comment-marker"><div class="submitted"><span class="author">Гость</span> <span class="date2">23.01.2010 17:49</span>&nbsp;</div><div class="content"><p>а можно попроще написать? Ну прям ваще подробно. Как и куда нажать, чтоб эту ошибку исправить, а то я блондинка))</p>
+</div></div><div class="indented"><a id="comment-4511"></a>
+<div class="comment"><div class="submitted"><span class="author">Гость</span> <span class="date2">07.02.2010 19:20</span>&nbsp;</div><div class="content"><p>Проблема непростая. Если не разбираетесь, то у вас два варианта:</p>
+<p>1) На удачу переехать к другому хостеру / на другой сервер / на дорогой тариф. Не факт, что проблема решится, но шансы неплохие.</p>
+<p>2) Найти специалиста, который всё осмотрит и скажет, нельзя ли что-то
+ сделать с сайтом, чтобы ошибок не было. Есть вероятность, что 
+специалист в конце концов посоветует вам сменить хостинг.</p>
+</div></div><div class="indented"><a id="comment-10172"></a>
+<div class="comment"><div class="submitted"><span class="author">Гость</span> <span class="date2">29.11.2010 14:23</span>&nbsp;</div><div class="content"><p>А специалист просто уберет апач нафиг и оставит один gninx+ fastcgi php.</p>
+</div></div></div></div><a id="comment-6817"></a>
+<div class="comment comment-marker"><div class="submitted"><span class="author"><a href="http://www.mikafan.ru/">Мика</a></span> <span class="date2">25.05.2010 21:54</span>&nbsp;</div><div class="content"><p>У
+ меня постоянно такая ошибка 504 возникает - раз в день точно, не знаю 
+уже что и делать(( Переехал к другому хостеру - все равно одно и то же. 
+Помогает только перезагрузка ВПС-сервера. Движок сайта - Datalife Engine
+ (DLE) - может есть какое-то решение для него? Кто-нибудь знает?</p>
+</div></div><div class="indented"><a id="comment-6861"></a>
+<div class="comment"><div class="submitted"><span class="author"><a href="http://hosting101.ru/user/357" title="Информация о пользователе.">contact@hvarta.com</a></span> <span class="date2">27.05.2010 17:02</span>&nbsp;</div><div class="content"><p>Какой-то кривой модуль установлен, вероятнее всего.</p>
+</div></div><a id="comment-48924"></a>
+<div class="comment"><div class="submitted"><span class="author">BoBka_altRUist</span> <span class="date2">24.07.2014 09:38</span>&nbsp;</div><div class="content"><p>если
+ у вас VPS значит скорее всего валится из-за того что не хватает 
+оперативной памяти, часто вижу такую проблему на сайтах которые на 
+движках типа DLE, Drupal, Wordpress ...<br>
+перейдите на обычный хостинг, и не надо брать VPS с памятью 1/2 Гб</p>
+</div></div></div><a id="comment-11134"></a>
+<div class="comment comment-marker"><div class="submitted"><span class="author"><a href="http://gamed.info/">Гость</a></span> <span class="date2">23.01.2011 14:34</span>&nbsp;</div><div class="content"><p>У
+ меня тоже аналогичная проблема с nginx. Позволю себе не согласиться с 
+автором статьи. Утверждение что в таком случае всегда виноват Apache мне
+ кажется не всегда верным. Например у меня, возникает эта ошибка 
+довольно часто0, но если в это время зайти напрямую в Apache, то Apache 
+летает. И даже если зайти на страницу статистики nginx, то она тоже 
+тормозит и еле грузиться, хотя тут уж Apache точно не причем. Может кто 
+посоветует, куда копать?</p>
+</div></div><div class="indented"><a id="comment-18449"></a>
+<div class="comment"><div class="submitted"><span class="author">Рома Волков</span> <span class="date2">25.11.2011 04:08</span>&nbsp;</div><div class="content"><p>проблема
+ в скриптах и хостерах, а не в серверах, например если юзаеш крон то эт 
+постояные тормоза будут особено если хостер ограничивает на всем</p>
+<p>вообще сложно все, но если ошибка поевляется эт говорит о том что нужно уже арендавать сервер.</p>
+<p>не забывайте если у вас 10к посещалки и лагает тормозит то тут 
+логичнее удалить нах все и сайт и хостинг и улететь на луну =))) 
+_________ просто идет нагрузка на сервер, либо вас ddos-ят либо вы 
+юзаете крон, либо у вас высокая посещаемость.</p>
+<p>а в случае dle (часто там эт косяк) то это скорее и за вашего скрипта граббинга+крон =))</p>
+</div></div></div><a id="comment-11731"></a>
+<div class="comment comment-marker"><div class="submitted"><span class="author"><a href="http://teerex.intome.ru/blog">teerex</a></span> <span class="date2">20.02.2011 01:06</span>&nbsp;</div><div class="content"><p>504 - значит скрипт слишком долго отвечал или скрипт завершается раньше, чем получен ответ.<br>
+Причин может быть много: недостаток ресурсов (чаще всего - оперативной 
+памяти), кривые скрипты, проблемы с базой данных и файловой системой, 
+кривая настройка сервера...<br>
+Увеличение количества ресурсов и смена тех.площадки часто в таких 
+случаях являются только отсрочкой проблем (до увеличения посещаемости).</p>
+<p>Увеличение времени ожидания nginx при проксировании.<br>
+Для работы некоторых скриптов действительно требуется увеличение времени ожидания и выполнения, но таких немного.<br>
+Для изменения времени ожидания в конфиг надо добавить следующие параметры (лучше вставлять в контекст location):</p>
+<p>proxy_send_timeout 60; # время ожидания при передаче запроса<br>
+proxy_read_timeout 60; # время ожидания при чтении ответа</p>
+<p>Время указывается в секундах, по-умолчанию 60, т.е. 1 минута.</p>
+<p>Но будьте готовы, что не каждый хостер пойдёт на это, т.к. увеличение лимитов = увеличение расхода ресурсов.</p>
+</div></div><a id="comment-12298"></a>
+<div class="comment comment-marker"><div class="submitted"><span class="author"><a href="http://djane.com.ua/">Djane</a></span> <span class="date2">19.03.2011 00:14</span>&nbsp;</div><div class="content"><p>данная ошибка является что ли больше кривыми настройками апач, если очень много обращений?</p>
+</div></div><div class="indented"><a id="comment-13191"></a>
+<div class="comment"><div class="submitted"><span class="author"><a href="http://teerex.intome.ru/blog">teerex</a></span> <span class="date2">24.04.2011 02:44</span>&nbsp;</div><div class="content"><p>может быть дело и в настройке апача.<br>
+но чаще всего дело в тормозных скриптах/серверах.</p>
+</div></div></div><a id="comment-12637"></a>
+<div class="comment comment-marker"><div class="submitted"><span class="author"><a href="http://32bit.pp.ua/">32bit</a></span> <span class="date2">01.04.2011 14:25</span>&nbsp;</div><div class="content"><p>а может из за 504-й ошибки выкинуть из индексации поисковиком?</p>
+</div></div><div class="indented"><a id="comment-13192"></a>
+<div class="comment"><div class="submitted"><span class="author"><a href="http://teerex.intome.ru/blog">teerex</a></span> <span class="date2">24.04.2011 02:46</span>&nbsp;</div><div class="content"><p>Может.<br>
+Если ошибка будет висеть довольно долго (по крайней мере больше часа).<br>
+Причём выкидываются конкретные страницы, на которых была ошибка.</p>
+</div></div></div><a id="comment-14258"></a>
+<div class="comment comment-marker"><div class="submitted"><span class="author">Crus</span> <span class="date2">17.06.2011 08:54</span>&nbsp;</div><div class="content"><p>А
+ если PHP скрипт по _задумке_ _должен_ долго работать, например, 
+вычислять Google PR для сотни сайтов с паузой в 10 сек (во избежание 
+бана)? В скрипте указан set_time_limit(20000), но если не производить 
+вывод, все равно скрипт вывалится по 504... А мне надо, чтобы работа 
+скрипта была автономной, без вывода...<br>
+Вопрос: возможно ли в настройках nginx для определенной папки установить таймлимит посущественнее? (сервер не виртуал, дедик)<br>
+Спасибо!</p>
+</div></div><a id="comment-20310"></a>
+<div class="comment comment-marker"><div class="submitted"><span class="author"><a href="http://allmania.ru/">Гость</a></span> <span class="date2">05.02.2012 20:45</span>&nbsp;</div><div class="content"><p>По
+ моему такая проблема в основном зависит от ресурсов сервера, а точнее 
+оперативной памяти. Когда у моего сайта выросла посещаемость часто 
+начала возникать ошибка 504 Gateway Timeout, и тогда я поменял тариф VDS
+ сервера на более дорогой, и это помогло избежать такой ошибки.</p>
+</div></div><a id="comment-23317"></a>
+<div class="comment comment-marker"><div class="submitted"><span class="author"><a href="http://www.rukazan.ru/">Adward</a></span> <span class="date2">28.06.2012 11:30</span>&nbsp;</div><div class="content"><p>Скажите плиз где увеличить значение max_execution_time ?<br>
+в PHP.ini?</p>
+</div></div><div class="indented"><a id="comment-48136"></a>
+<div class="comment"><div class="submitted"><span class="author"><a href="http://master-it.biz/">Master-It</a></span> <span class="date2">10.06.2014 22:04</span>&nbsp;</div><div class="content"><p>Да это значение нужно увеличить в php.ini</p>
+</div></div></div><a id="comment-30334"></a>
+<div class="comment comment-marker"><div class="submitted"><span class="author"><a href="http://1000videourokov.ru/">Гость</a></span> <span class="date2">11.03.2013 07:06</span>&nbsp;</div><div class="content"><p>Ответ в следующем: Такая проблема возникает из за:<br>
+Малой скорости интернет соединения<br>
+Долгой обработки запроса</p>
+</div></div><a id="comment-36118"></a>
+<div class="comment comment-marker"><div class="submitted"><span class="author"><a href="http://glav-travel.ru/">Гость</a></span> <span class="date2">21.10.2013 09:19</span>&nbsp;</div><div class="content"><p>Надо
+ вначале общаться с хостером, если они не чешуться то надо самому 
+ковырять код, сжимать его, убирать ненужные скрипты, также надо через 
+акцесс банить айпишники роботов и т.п., но надолго этого не хватит, как 
+только увеличиться посещалка проблема вернется.</p>
+</div></div><div class="pager"><span class="pager-list"><strong class="pager-current">1</strong><a href="http://hosting101.ru/504-gateway-timeout.html?page=1#comments" class="pager-last active" title="На страницу номер 2">2</a></span><a href="http://hosting101.ru/504-gateway-timeout.html?page=1#comments" class="pager-last active" title="На следующую страницу">следующая ›</a><a href="http://hosting101.ru/504-gateway-timeout.html?page=1#comments" class="pager-last active" title="На последнюю страницу">последняя »</a></div></div>       
+                        
+        
+  </div>
+
+      <div id="sidebarWrapper">
+      <div id="sidebar">
+                  <div class="block block-node_quick_find" id="block-node_quick_find-0">
+        <div class="content"><form action="/504-gateway-timeout.html" accept-charset="UTF-8" method="post" id="node-quick-find-block-contents-form">
+<div><div class="form-item">
+ <label for="edit-titl3">Найти провайдера: </label>
+ <input maxlength="128" name="titl3" id="edit-titl3" size="16" class="form-text form-autocomplete" autocomplete="OFF" type="text">
+</div>
+<input class="autocomplete" id="edit-titl3-autocomplete" value="http://hosting101.ru/node_quick_find/autocomplete/0" disabled="disabled" type="hidden"><input name="op" id="edit-submit" value="Отправить" class="form-submit" type="submit">
+<input name="form_id" id="edit-node-quick-find-block-contents-form" value="node_quick_find_block_contents_form" type="hidden">
+
+</div></form>
+</div>
+ </div>
+  <div class="block block-block" id="block-block-5">
+        <div class="content"><p><a href="http://hosting101.ru/node/add/provider">Добавить провайдера</a></p>
+</div>
+ </div>
+  <div class="block block-block" id="block-block-8">
+        <div class="content"><div class="s-wr"><h2 class="title hosting_cat">Виртуальный хостинг c PHP и MySQL с русской поддержкой</h2><div class="hosting_col1"><ul><li><a href="http://hosting101.ru/beget.ru" class="r5 l-7344">Beget.ru</a><img src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/special-violet.png" alt="Картинка для привлечения внимания" title="Картинка для привлечения внимания" style="vertical-align: middle; margin-left: 4px; padding: 0;"></li><li><a href="http://hosting101.ru/1gb.ru" class="r5 l-56">1Gb.ru</a></li><li><a href="http://hosting101.ru/best-hoster.ru" class="r4 l-508">Best-hoster.ru</a></li><li><a href="http://hosting101.ru/colobrigde.net-shared" class="r3 l-114732">Colobrigde.net</a><img src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/special-green.png" alt="Картинка для привлечения внимания" title="Картинка для привлечения внимания" style="vertical-align: middle; margin-left: 2px; padding: 0;"></li><li><a href="http://hosting101.ru/diphost.ru" class="r3 l-355">Diphost.ru</a></li><li><a href="http://hosting101.ru/e-planet.ru" class="r3 l-4378">E-Planet</a></li><li><a href="http://hosting101.ru/fozzy.com" class="r4 l-43199">Fozzy.com</a></li><li><a href="http://hosting101.ru/handyhost.ru" class="r3 l-24757">Handyhost.ru</a></li><li><a href="http://hosting101.ru/hc.ru" class="r4 l-145">Hc.ru</a></li><li><a href="http://hosting101.ru/hoster.ru" class="r3 l-634">Hoster.ru</a></li><li><a href="http://hosting101.ru/hostia.ru" class="r4 l-4381">Hostia.ru</a></li><li><a href="http://hosting101.ru/hostiq.com.ua-shared" class="r3 l-87750">Hostiq.com.ua</a></li><li><a href="http://hosting101.ru/hostland.ru" class="r5 l-4377">Hostland.ru</a></li><li><a href="http://hosting101.ru/hostplus.ws" class="r3 l-8921">Hostplus.ws</a></li><li><a href="http://hosting101.ru/hothat.ru-shared" class="r3 l-125943">Hothat.ru</a></li><li><a href="http://hosting101.ru/ht-systems.ru" class="r4 l-447">HTS.ru</a></li><li><a href="http://hosting101.ru/ihc.ru" class="r4 l-10705">ihc.ru</a></li><li><a href="http://hosting101.ru/infobox.ru" class="r4 l-54">infobox.ru</a></li><li><a href="http://hosting101.ru/ipipe.ru" class="r3 l-12476">ipipe.ru</a></li><li><a href="http://hosting101.ru/ispserver.com-shared" class="r3 l-3039">ISPserver.com</a></li><li><a href="http://hosting101.ru/it-mcp.ru" class="r3 l-13164">it-mcp.ru</a></li><li><a href="http://hosting101.ru/jino.ru" class="r4 l-28">Jino.ru</a></li><li><a href="http://hosting101.ru/komtet.ru" class="r4 l-4221">Komtet.ru</a><img src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/special-red.png" alt="Картинка для привлечения внимания" title="Картинка для привлечения внимания" style="vertical-align: middle; margin-left: 4px; padding: 0;"></li></ul></div><div class="hosting_col2"><ul><li><a href="http://hosting101.ru/locum.ru" class="r3 l-7368">Locum.ru</a></li><li><a href="http://hosting101.ru/m-hoster.com" class="r3 l-6711">M-hoster.com</a></li><li><a href="http://hosting101.ru/majordomo.ru" class="r4 l-55">Majordomo.ru</a></li><li><a href="http://hosting101.ru/masterhost.ru" class="r4 l-33">Masterhost.ru</a></li><li><a href="http://hosting101.ru/mne.ru" class="r3 l-91484">Mne.ru</a></li><li><a href="http://hosting101.ru/owlhost.net" class="r3 l-75834">OWLHOSt</a></li><li><a href="http://hosting101.ru/peterhost.ru" class="r4 l-58">Peterhost.ru</a></li><li><a href="http://hosting101.ru/profitserver.ru" class="r3 l-117033">Profitserver.ru</a></li><li><a href="http://hosting101.ru/reg.ru" class="r4 l-4845">Reg.ru</a></li><li><a href="http://hosting101.ru/ru-center" class="r4 l-250">Ru-Center</a></li><li><a href="http://hosting101.ru/rusonyx.ru-shared" class="r4 l-798">Rusonyx.ru</a></li><li><a href="http://hosting101.ru/ruweb.net" class="r3 l-99">RuWeb.net</a></li><li><a href="http://hosting101.ru/sherlockhost.ru" class="r3 l-119798">Sherlockhost.ru</a></li><li><a href="http://hosting101.ru/shneider-host.ru" class="r3 l-5615">Shneider-host.ru</a></li><li><a href="http://hosting101.ru/smartape.ru" class="r4 l-76538">SmartApe.ru</a><img src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/special.png" alt="Безлимитный хостинг с защитой от DDoS" title="Безлимитный хостинг с защитой от DDoS" style="vertical-align: middle; margin-left: 4px; padding: 0;"></li><li><a href="http://hosting101.ru/spaceweb.ru" class="r4 l-122">SpaceWeb.ru</a></li><li><a href="http://hosting101.ru/sprinthost.ru" class="r4 l-372">Sprinthost.ru</a></li><li><a href="http://hosting101.ru/timeweb.ru" class="r5 l-747">Timeweb.com</a></li><li><a href="http://hosting101.ru/unihost.com" class="r3 l-6929">Unihost.com</a></li><li><a href="http://hosting101.ru/webhost1.ru" class="r4 l-16346">Webhost1.ru</a></li><li><a href="http://hosting101.ru/yutex.ru" class="r3 l-887">Yutex.ru</a></li><li><a href="http://hosting101.ru/zenon" class="r3 l-395">Zenon</a></li><li><a href="http://hosting101.ru/mchost.ru" class="r5 l-116">Макхост</a></li><li><a href="http://hosting101.ru/more-providers.html#45ca" class="r3">Остальные</a>&nbsp;→</li></ul></div></div><div class="s-wr"><h2 class="title hosting_cat">Хостинг в Украине</h2><div class="hosting_col1"><ul><li><a href="http://hosting101.ru/bitte.com.ua" class="r5 l-26527">Bitte.com.ua</a></li><li><a href="http://hosting101.ru/domen.com.ua" class="r3 l-537">Domen.com.ua</a></li><li><a href="http://hosting101.ru/friendhosting.net" class="r3 l-15689">Friendhosting.net</a></li><li><a href="http://hosting101.ru/hostlife.net" class="r5 l-4279">HOSTLIFE</a><img src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/special.png" alt="Картинка для привлечения внимания" title="Картинка для привлечения внимания" style="vertical-align: middle; margin-left: 4px; padding: 0;"></li><li><a href="http://hosting101.ru/hostpro.ua" class="r4 l-1326">Hostpro.ua</a></li><li><a href="http://hosting101.ru/hvosting.ua" class="r3 l-4964">Hvosting.ua</a></li></ul></div><div class="hosting_col2"><ul><li><a href="http://hosting101.ru/hyperhost.com.ua" class="r4 l-14023">Hyperhost.ua</a></li><li><a href="http://hosting101.ru/mirohost.net" class="r4 l-1961">Mirohost.net</a></li><li><a href="http://hosting101.ru/thehost.com.ua" class="r4 l-26512">TheHost.ua</a></li><li><a href="http://hosting101.ru/ukrainehosting.com" class="r4 l-3173">Uh.ua</a></li><li><a href="http://hosting101.ru/ukraine.com.ua" class="r5 l-7999">Ukraine.com.ua</a></li><li><a href="http://hosting101.ru/ukrnames.com" class="r5 l-36334">Ukrnames.com</a></li><li><a href="http://hosting101.ru/catalog/ua" class="r3">Остальные</a>&nbsp;→</li></ul></div></div><div style="margin: 15px 0 5px 0;"><!-- h101_sidebar_top -->
+<div id="div-gpt-ad-1360535832459-2" style="width: 240px; height: 180px;" data-google-query-id="COy0j73Hx9UCFQWbGAodzLgGCg">
+<script type="text/javascript">
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1360535832459-2'); });
+</script>
+<div id="google_ads_iframe_/4484370/h101_sidebar_top_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/4484370/h101_sidebar_top_0" title="3rd party ad content" name="google_ads_iframe_/4484370/h101_sidebar_top_0" scrolling="no" marginwidth="0" marginheight="0" style="border: 0px none; vertical-align: bottom;" srcdoc="" width="240" height="180" frameborder="0"></iframe></div></div></div><div class="s-wr"><h2 class="title hosting_cat">Виртуальные выделенные сервера (VPS, VDS) с русской поддержкой</h2><div class="hosting_col1"><ul><li><a href="http://hosting101.ru/vps.ua" class="r5 l-25926">VPS.ua</a><img src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/special-violet.png" alt="Картинка для привлечения внимания" title="Картинка для привлечения внимания" style="vertical-align: middle; margin-left: 4px; padding: 0;"></li><li><a href="http://hosting101.ru/1cloud.ru" class="r4 l-104923">1cloud.ru</a></li><li><a href="http://hosting101.ru/1gb.ru-vps" class="r4 l-16580">1Gb.ru</a></li><li><a href="http://hosting101.ru/adminvps.ru-vps" class="r5 l-85533">AdminVPS.ru</a></li><li><a href="http://hosting101.ru/alliance-host.ru" class="r3 l-38643">Ahost.eu</a></li><li><a href="http://hosting101.ru/berihoster.ru" class="r3 l-103476">Berihoster.ru</a></li><li><a href="http://hosting101.ru/bitweb.ru" class="r4 l-86665">Bitweb.ru</a><img src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/special-red.png" alt="Картинка для привлечения внимания" title="Картинка для привлечения внимания" style="vertical-align: middle; margin-left: 4px; padding: 0;"></li><li><a href="http://hosting101.ru/camelhost.net" class="r3 l-81406">Camelhost.net</a></li><li><a href="http://hosting101.ru/clodo.ru" class="r4 l-19302">Clodo.ru</a></li><li><a href="http://hosting101.ru/fastvps.ru" class="r4 l-1850">FASTVPS</a><img src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/special.png" alt="Картинка для привлечения внимания" title="Картинка для привлечения внимания" style="vertical-align: middle; margin-left: 4px; padding: 0;"></li><li><a href="http://hosting101.ru/firstvds.ru" class="r5 l-12">FirstVDS.ru</a><img src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/special-green.png" alt="Картинка для привлечения внимания" title="Картинка для привлечения внимания" style="vertical-align: middle; margin-left: 4px; padding: 0;"></li><li><a href="http://hosting101.ru/fornex.com" class="r4 l-19216">Fornex.com</a></li><li><a href="http://hosting101.ru/fozzy.com-vps" class="r3 l-82248">Fozzy.com</a></li><li><a href="http://hosting101.ru/hostline.ru" class="r4 l-20587">Hostline.ru</a></li><li><a href="http://hosting101.ru/ihc.ru-vps" class="r3 l-17794">ihc.ru</a></li><li><a href="http://hosting101.ru/ihor.ru-vps" class="r4 l-82654">ihor.ru</a></li><li><a href="http://hosting101.ru/inferno.name-vps" class="r4 l-23602">Inferno Solutions</a></li><li><a href="http://hosting101.ru/infobox.ru-vps" class="r4 l-39684">infobox.ru</a></li><li><a href="http://hosting101.ru/interserver.ru" class="r4 l-5595">Interserver.ru</a></li><li><a href="http://hosting101.ru/ispserver.com" class="r3 l-1">ISPserver.com</a></li><li><a href="http://hosting101.ru/just-hosting.ru-vps" class="r3 l-84586">Just-hosting.ru</a></li><li><a href="http://hosting101.ru/mr-hosting.com" class="r4 l-84209">Mr-hosting.com</a></li></ul></div><div class="hosting_col2"><ul><li><a href="http://hosting101.ru/nqhost.com" class="r3 l-18141">NQhost.com</a></li><li><a href="http://hosting101.ru/planetahost.ru" class="r3 l-28999">Planetahost.ru</a></li><li><a href="http://hosting101.ru/reg.ru-vps" class="r4 l-82201">Reg.ru</a></li><li><a href="http://hosting101.ru/rootwelt.de" class="r3 l-98741">Rootwelt.de</a></li><li><a href="http://hosting101.ru/rusonyx.ru" class="r5 l-17">Rusonyx.ru</a></li><li><a href="http://hosting101.ru/ruweb.net-vps" class="r3 l-26886">Ruweb.net</a></li><li><a href="http://hosting101.ru/selectel.ru" class="r3 l-10596">Selectel.ru</a></li><li><a href="http://hosting101.ru/serverdale.com" class="r3 l-91497">Serverdale.com</a></li><li><a href="http://hosting101.ru/simplecloud.ru" class="r4 l-106577">Simplecloud.ru</a></li><li><a href="http://hosting101.ru/simplyway" class="r3 l-35482">SimplyWAY</a></li><li><a href="http://hosting101.ru/siteko.net-vps" class="r3 l-30585">Siteko.net</a></li><li><a href="http://hosting101.ru/sprinthost.ru-vps" class="r3 l-30734">Sprinthost.ru</a></li><li><a href="http://hosting101.ru/theideahosting.com" class="r3 l-101125">Theideahosting.com</a></li><li><a href="http://hosting101.ru/timeweb.ru-vps" class="r4 l-15884">Timeweb.com</a></li><li><a href="http://hosting101.ru/uh.ua" class="r3 l-18376">Uh.ua</a></li><li><a href="http://hosting101.ru/ultravds.com" class="r4 l-95681">Ultravds.com</a></li><li><a href="http://hosting101.ru/vds-sh" class="r3 l-125307">VDS.sh</a></li><li><a href="http://hosting101.ru/vdsina.ru" class="r4 l-103295">VDSina.ru</a></li><li><a href="http://hosting101.ru/vmland.ru" class="r3 l-128682">Vmland.ru</a></li><li><a href="http://hosting101.ru/vps-server.ru" class="r3 l-18772">VPS-server.ru</a></li><li><a href="http://hosting101.ru/vpsville.ru" class="r4 l-21635">VPSville.ru</a></li><li><a href="http://hosting101.ru/vscale.io" class="r3 l-117994">Vscale.io</a></li><li><a href="http://hosting101.ru/more-providers.html#d190" class="r3">Остальные</a>&nbsp;→</li></ul></div></div><div class="s-wr"><h2 class="title hosting_cat">Облачные сервера (VPS)</h2><div class="hosting_col1"><ul><li><a href="http://hosting101.ru/activecloud.ru" class="r3 l-26961">Activecloud.ru</a></li><li><a href="http://hosting101.ru/cloud4y.ru" class="r4 l-32365">Cloud4y.ru</a></li><li><a href="http://hosting101.ru/flops.ru" class="r5 l-81805">Flops.ru</a></li></ul></div><div class="hosting_col2"><ul><li><a href="http://hosting101.ru/hostpro.ua-cloud" class="r3 l-34860">Hostpro.ua</a></li><li><a href="http://hosting101.ru/infobox.ru-cloud" class="r3 l-92137">infobox.ru</a></li><li><a href="http://hosting101.ru/makecloud.ru" class="r3 l-89241">Makecloud.ru</a></li><li><a href="http://hosting101.ru/catalog/cloud" class="r3">Остальные</a>&nbsp;→</li></ul></div></div><div class="s-wr"><h2 class="title hosting_cat">Выделенные сервера с русской поддержкой</h2><div class="hosting_col1"><ul><li><a href="http://hosting101.ru/sartelekom.ru" class="r4 l-14997">SarTelekom.ru</a><img src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/special-red.png" alt="Картинка для привлечения внимания" title="Картинка для привлечения внимания" style="vertical-align: middle; margin-left: 4px; padding: 0;"></li><li><a href="http://hosting101.ru/firstdedic.ru" class="r4 l-11511">1dedic.ru</a></li><li><a href="http://hosting101.ru/1gb.ru-dedicated" class="r3 l-95957">1Gb.ru</a></li><li><a href="http://hosting101.ru/anetsis.net-dedicated" class="r3 l-27880">Anetsis.net</a></li><li><a href="http://hosting101.ru/artplanet.su" class="r4 l-91241">Artplanet.su</a></li><li><a href="http://hosting101.ru/beget.ru-vps" class="r4 l-82224">Beget.ru</a></li><li><a href="http://hosting101.ru/cadedic.ru" class="r4 l-32381">Cadedic.ru</a></li><li><a href="http://hosting101.ru/tehnodom.com" class="r4 l-84834">Chipcore.com</a></li><li><a href="http://hosting101.ru/creanova.ru" class="r3 l-8585">Creanova.ru</a></li><li><a href="http://hosting101.ru/data-xata.com" class="r4 l-3989">Data-xata.com</a></li><li><a href="http://hosting101.ru/dedic-center.ru" class="r4 l-106102">Dedic-center.ru</a></li><li><a href="http://hosting101.ru/dedicated.sale" class="r3 l-129270">Dedicated.sale</a></li><li><a href="http://hosting101.ru/evrohoster.ru-dedicated" class="r4 l-80082">Eurohoster.org</a></li><li><a href="http://hosting101.ru/fastvps.ru-dedicated" class="r4 l-82334">FASTVPS</a><img src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/special-green.png" alt="Картинка для привлечения внимания" title="Картинка для привлечения внимания" style="vertical-align: middle; margin-left: 4px; padding: 0;"></li><li><a href="http://hosting101.ru/fornex.com-dedicated" class="r5 l-19224">Fornex.com</a></li><li><a href="http://hosting101.ru/h1host.ru" class="r3 l-25714">H1host.ru</a></li><li><a href="http://hosting101.ru/hostkey.ru" class="r4 l-31207">Hostkey.ru</a></li></ul></div><div class="hosting_col2"><ul><li><a href="http://hosting101.ru/inferno.name-dedicated" class="r5 l-23604">Inferno Solutions</a></li><li><a href="http://hosting101.ru/itl.ua-dedicated" class="r4 l-32427">itldc.com</a></li><li><a href="http://hosting101.ru/itsoft.ru" class="r4 l-6627">ITSOFT</a></li><li><a href="http://hosting101.ru/king-servers.com" class="r3 l-92454">King-servers.com</a></li><li><a href="http://hosting101.ru/likehost.ws-dedicated" class="r4 l-101533">Likehost.ws</a></li><li><a href="http://hosting101.ru/machoster.ru-dedicated" class="r3 l-77504">Machoster.ru</a></li><li><a href="http://hosting101.ru/pqcservice.org" class="r4 l-85556">Pqcservice.net</a></li><li><a href="http://hosting101.ru/reg.ru-dedicated" class="r3 l-82292">Reg.ru</a></li><li><a href="http://hosting101.ru/renter.ru" class="r3 l-98977">Renter.ru</a></li><li><a href="http://hosting101.ru/rusonyx.ru-dedicated" class="r3 l-43773">Rusonyx.ru</a></li><li><a href="http://hosting101.ru/selectel.ru-dedicated" class="r4 l-14380">Selectel.ru</a></li><li><a href="http://hosting101.ru/sim-networks.com-dedicated" class="r4 l-80743">Sim-networks.com</a></li><li><a href="http://hosting101.ru/starvps" class="r3 l-141774">StarVPS.ru</a></li><li><a href="http://hosting101.ru/timeweb.ru-dedicated" class="r3 l-132799">Timeweb.ru</a></li><li><a href="http://hosting101.ru/ua-hosting.com.ua-dedicated" class="r4 l-28367">Ua-hosting.com.ua</a></li><li><a href="http://hosting101.ru/unihost.com-dedicated" class="r3 l-8704">Unihost.com</a><img src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/special.png" alt="Картинка для привлечения внимания" title="Картинка для привлечения внимания" style="vertical-align: middle; margin-left: 4px; padding: 0;"></li><li><a href="http://hosting101.ru/vdscom.ru-dedicated" class="r4 l-42538">VDScom.ru</a></li><li><a href="http://hosting101.ru/more-providers.html#7ba1" class="r3">Остальные</a>&nbsp;→</li></ul></div></div><div class="s-wr"><h2 class="title hosting_cat">Размещение серверов (colocation)</h2><div class="hosting_col1"><ul><li><a href="http://hosting101.ru/atlex.ru-colocation" class="r3 l-82979">Atlex.ru</a></li><li><a href="http://hosting101.ru/datacheap.ru" class="r5 l-18675">Datacheap.ru</a></li><li><a href="http://hosting101.ru/datahouse.ru-colocation" class="r4 l-15737">Datahouse.ru</a></li><li><a href="http://hosting101.ru/deac.eu-colocation" class="r4 l-24059">Deac.eu</a></li><li><a href="http://hosting101.ru/itsoft.ru-colocation" class="r3 l-16985">ITSOFT</a><img src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/special-red.png" alt="Картинка для привлечения внимания" title="Картинка для привлечения внимания" style="vertical-align: middle; margin-left: 4px; padding: 0;"></li><li><a href="http://hosting101.ru/mixtelecom.ru-colocation" class="r4 l-75898">Mixtelecom.ru</a></li></ul></div><div class="hosting_col2"><ul><li><a href="http://hosting101.ru/planetahost.ru-colocation" class="r5 l-40009">Planetahost.ru</a></li><li><a href="http://hosting101.ru/rackstore-colocation" class="r4 l-75382">Rackstore.ru</a></li><li><a href="http://hosting101.ru/rufox.ru-0" class="r3 l-16431">Rufox.ru</a></li><li><a href="http://hosting101.ru/selectel.ru-colocation" class="r5 l-15732">Selectel.ru</a></li><li><a href="http://hosting101.ru/uh.ua-colocation" class="r4 l-27845">Uh.ua</a></li><li><a href="http://hosting101.ru/zenon-colocation" class="r3 l-82322">Zenon</a></li><li><a href="http://hosting101.ru/catalog/data-centers" class="r3">Остальные</a>&nbsp;→</li></ul></div></div><div class="s-wr"><h2 class="title hosting_cat">Бесплатный русский хостинг с PHP и MySQL</h2><div class="hosting_col1"><ul><li><a href="http://hosting101.ru/cpanelhosting.ru" class="r3 l-130701">Cpanelhosting.ru</a></li><li><a href="http://hosting101.ru/hostiman.ru" class="r5 l-127192">Hostiman.ru</a></li></ul></div><div class="hosting_col2"><ul><li><a href="http://hosting101.ru/nx0.ru" class="r4 l-22775">nx0.ru</a></li><li><a href="http://hosting101.ru/more-providers.html#2e12" class="r3">Остальные</a>&nbsp;→</li></ul></div></div><div class="s-wr"><h2 class="title hosting_cat">Зарубежный виртуальный хостинг</h2><div class="hosting_col1"><ul><li><a href="http://hosting101.ru/dreamhost.com" class="r3 l-805">DreamHost.com</a></li><li><a href="http://hosting101.ru/godaddy.com" class="r5 l-131">GoDaddy.com</a></li><li><a href="http://hosting101.ru/hostgator.com" class="r3 l-897">Hostgator.com</a></li></ul></div><div class="hosting_col2"><ul><li><a href="http://hosting101.ru/hostmonster.com" class="r3 l-3368">HostMonster.com</a></li><li><a href="http://hosting101.ru/mochahost.com" class="r3 l-7765">Mochahost.com</a></li><li><a href="http://hosting101.ru/more-providers.html#7694" class="r3">Остальные</a>&nbsp;→</li></ul></div></div><div class="s-wr"><h2 class="title hosting_cat">Зарубежный VPS-хостинг</h2><div class="hosting_col1"><ul><li><a href="http://hosting101.ru/amazon-ec2" class="r4 l-88133">Amazon EC2</a></li><li><a href="http://hosting101.ru/burst.net" class="r3 l-7253">Burst.net</a></li><li><a href="http://hosting101.ru/cloudatcost.com" class="r3 l-101352">Cloudatcost.com</a></li><li><a href="http://hosting101.ru/contabo.com" class="r4 l-101620">Contabo.com</a></li><li><a href="http://hosting101.ru/digitalocean.com" class="r5 l-77386">Digitalocean.com</a></li></ul></div><div class="hosting_col2"><ul><li><a href="http://hosting101.ru/linode.com" class="r4 l-560">Linode.com</a></li><li><a href="http://hosting101.ru/tilaa.nl" class="r3 l-41780">Tilaa.nl</a></li><li><a href="http://hosting101.ru/vps.me" class="r4 l-90410">VPS.me</a></li><li><a href="http://hosting101.ru/vultr.com" class="r3 l-101347">Vultr.com</a></li><li><a href="http://hosting101.ru/more-providers.html#534c" class="r3">Остальные</a>&nbsp;→</li></ul></div></div><div class="s-wr"><h2 class="title hosting_cat">Выделенные сервера от зарубежных провайдеров</h2><div class="hosting_col1"><ul><li><a href="http://hosting101.ru/hetzner.de" class="r5 l-329">Hetzner.de</a></li><li><a href="http://hosting101.ru/leaseweb.com" class="r4 l-912">Leaseweb.com</a></li><li><a href="http://hosting101.ru/ovh.com" class="r4 l-95259">Ovh.com</a></li></ul></div><div class="hosting_col2"><ul><li><a href="http://hosting101.ru/polusweb.com" class="r3 l-118506">Polusweb.com</a></li><li><a href="http://hosting101.ru/webzilla.com" class="r3 l-28863">Webzilla.com</a></li><li><a href="http://hosting101.ru/more-providers.html#990a" class="r3">Остальные</a>&nbsp;→</li></ul></div></div><div class="s-wr"><h2 class="title hosting_cat">Бесплатный зарубежный хостинг с PHP и MySQL</h2><div class="hosting_col1"><ul><li><a href="http://hosting101.ru/000webhost.com" class="r5 l-172">000webhost.com</a></li></ul></div><div class="hosting_col2"><ul><li><a href="http://hosting101.ru/byethost.com" class="r3 l-463">Byethost.com</a></li><li><a href="http://hosting101.ru/more-providers.html#ed39" class="r3">Остальные</a>&nbsp;→</li></ul></div></div></div>
+ </div>
+  <div class="block block-block" id="block-block-6">
+        <div class="content"><p style="margin-top: 15px;"><a href="http://hosting101.ru/node/add/provider">Добавить провайдера</a></p>
+</div>
+ </div>
+      </div>
+    </div>
+  
+</div>
+
+<div id="footer2">
+  <div id="footer">
+  
+  <div class="footer-links" style="padding: 0 35px 0 10px;">
+    <ul>
+      <li><a href="http://hosting101.ru/rating-popular.html">Рейтинг хостингов</a></li>
+      <li><a href="http://hosting101.ru/pricing-plans">Подобрать хостинг</a> или <a href="http://hosting101.ru/pricing-plans-vps">VPS</a></li>
+      <li><a href="http://hosting101.ru/compare">Сравнить отзывы</a></li>
+      <li><a href="http://hosting101.ru/catalog">Каталог хостингов</a></li>
+    </ul>
+  </div>
+  <div class="footer-links">    
+    <ul>
+      <li><a href="http://hosting101.ru/catalog/php-mysql">Виртуальный хостинг</a></li>
+      <li><a href="http://hosting101.ru/catalog/vps-vds">VDS</a> · <a href="http://hosting101.ru/free-test-vps.html">попробовать бесплатно</a></li>
+      <li><a href="http://hosting101.ru/catalog/dedicated-servers">Выделенные сервера</a></li>
+      <li><a href="http://hosting101.ru/catalog/cloud">Облачный хостинг</a></li>
+      <li><a href="http://hosting101.ru/catalog/php-mysql-free">Бесплатный хостинг</a></li>
+    </ul>
+  </div>
+  <div class="footer-links">    
+    <ul>
+      <li><a href="http://hosting101.ru/catalog/ru-msk">Россия</a></li>
+      <li><a href="http://hosting101.ru/catalog/ua">Украина</a></li>
+      <li><a href="http://hosting101.ru/catalog/de">Германия</a> · <a href="http://hosting101.ru/catalog/nl">Голландия</a></li>
+      <li><a href="http://hosting101.ru/catalog/us">США</a></li>
+      
+            
+    </ul>
+  </div>
+  <div class="footer-links">
+    <ul>
+    
+            
+      <li><a href="http://hosting101.ru/user/register">Сервис для провайдеров</a></li>
+      
+            
+      <li><a href="http://hosting101.ru/node/37027">Приглашаем авторов</a></li>
+    </ul>
+  </div>
+  
+  <div class="copyright" style="clear: both; padding: 25px 0 0 10px;">
+
+    <div style="width: 247px; float: right;">
+<!--LiveInternet counter--><script type="text/javascript"><!--
+document.write("<a href='http://www.liveinternet.ru/click' "+
+"target=_blank><img src='http://counter.yadro.ru/hit?t15.2;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число просмотров за 24"+
+" часа, посетителей за 24 часа и за сегодня' "+
+"border=0 width=88 height=31><\/a>")//--></script><a href="http://www.liveinternet.ru/click" target="_blank"><img src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/hit.gif" alt="" title="LiveInternet: показано число просмотров за 24 часа, посетителей за 24 часа и за сегодня" width="88" height="31" border="0"></a><!--/LiveInternet-->
+    </div>
+  
+    © 2008—2016 <a href="mailto:dima.sergeev@gmail.com">Дмитрий Сергеев</a>
+    <br>
+    <strong>Отзывы о хостинге</strong> на сайте «<a href="http://hosting101.ru/">Хостинг в деталях</a>»
+
+  </div>
+    
+  </div>
+</div>
+
+
+<!-- -->
+
+<script type="text/javascript">
+var google_tag_params = {
+section: 'external',
+subsection: 'hosting101'
+};
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 990045788;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D1%8F%D1%85_files/conversion.js">
+</script><iframe name="google_conversion_frame" title="Google conversion frame" src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/990045788/?random=1502192588451&amp;cv=8&amp;fst=1502192588451&amp;num=1&amp;fmt=1&amp;guid=ON&amp;u_h=1200&amp;u_w=1920&amp;u_ah=1176&amp;u_aw=1855&amp;u_cd=24&amp;u_his=1&amp;u_tz=180&amp;u_java=false&amp;u_nplug=0&amp;u_nmime=0&amp;data=section%3Dexternal%3Bsubsection%3Dhosting101&amp;frm=0&amp;url=http%3A%2F%2Fhosting101.ru%2F504-gateway-timeout.html&amp;ref=https%3A%2F%2Fwww.google.com.ua%2F&amp;tiba=%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%20504%20Gateway%20Timeout%20%28time%20out%29%20nginx.%20%D0%9A%D0%B0%D0%BA%20%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C.%20%D0%A5%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B3%20%D0%B2%20%D0%B4%D0%B5%D1%82%D0%B0%D0%BB" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" width="300" height="13" frameborder="0"></iframe>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" 
+src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/990045788/?value=0&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter53927 = new Ya.Metrika({id:53927,
+                    webvisor:false,
+                    clickmap:false,
+                    trackLinks:true,
+                    accurateTrackBounce:false,
+                    trackHash:true,type:1});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/53927?cnt-class=1" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+
+<iframe id="google_osd_static_frame_8777470256855" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe></body></html>

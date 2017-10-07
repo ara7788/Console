@@ -1,0 +1,1243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html class="client-js" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" dir="ltr" lang="en"><head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="generator" content="MediaWiki 1.19.24">
+<link rel="shortcut icon" href="https://fedoraproject.org/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="https://fedoraproject.org/w/opensearch_desc.php" title="FedoraProject (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://fedoraproject.org/w/api.php?action=rsd">
+<link rel="copyright" href="https://fedoraproject.org/wiki/Legal:Main">
+<link rel="alternate" type="application/atom+xml" title="FedoraProject Atom feed" href="https://fedoraproject.org/w/index.php?title=Special:RecentChanges&amp;feed=atom">		<title>FirewallD/ru - FedoraProject</title>
+		<link rel="stylesheet" href="FirewallD_ru%20-%20FedoraProject_files/load_002.css">
+<style type="text/css" media="all">.js-messagebox{margin:1em 5%;padding:0.5em 2.5%;border:1px solid #ccc;background-color:#fcfcfc;font-size:0.8em}.js-messagebox .js-messagebox-group{margin:1px;padding:0.5em 2.5%;border-bottom:1px solid #ddd}.js-messagebox .js-messagebox-group:last-child{border-bottom:thin none transparent}
+
+/* cache key: fpo-mediawiki-en_:resourceloader:filter:minify-css:7:8b08bdc91c52a9ffba396dccfb5b473c */
+
+.mw-collapsible-toggle{float:right} li .mw-collapsible-toggle{float:none} .mw-collapsible-toggle-li{list-style:none}
+
+/* cache key: fpo-mediawiki-en_:resourceloader:filter:minify-css:7:4250852ed2349a0d4d0fc6509a3e7d4c */</style><meta name="ResourceLoaderDynamicStyles" content="">
+<link rel="stylesheet" href="FirewallD_ru%20-%20FedoraProject_files/load.css">
+<style>a:lang(ar),a:lang(ckb),a:lang(fa),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}a.new,#quickbar a.new{color:#ba0000}
+
+/* cache key: fpo-mediawiki-en_:resourceloader:filter:minify-css:7:c88e2bcd56513749bec09a7e29cb3ffa */</style>
+
+  <link rel="stylesheet" type="text/css" media="all" href="FirewallD_ru%20-%20FedoraProject_files/fedora.css">
+  <link rel="stylesheet" type="text/css" media="print" href="FirewallD_ru%20-%20FedoraProject_files/print.css">
+
+		<style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/w/skins/fedora/main.css?273"; /*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="FirewallD_ru%20-%20FedoraProject_files/commonPrint.css">
+		<link rel="stylesheet" type="text/css" media="handheld" href="FirewallD_ru%20-%20FedoraProject_files/handheld.css">
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/w/skins/fedora/IE50Fixes.css?273";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/w/skins/fedora/IE55Fixes.css?273";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/w/skins/fedora/IE60Fixes.css?273";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/w/skins/fedora/IE70Fixes.css?273";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/w/skins/common/IEFixes.js?273"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"FirewallD/ru","wgTitle":"FirewallD/ru","wgCurRevisionId":418095,"wgArticleId":49071,"wgIsArticle":true,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgRelevantPageName":"FirewallD/ru","wgRestrictionEdit":[],"wgRestrictionMove":[]});
+}</script>                
+		<script type="text/javascript" src="FirewallD_ru%20-%20FedoraProject_files/wikibits.js"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+<script src="FirewallD_ru%20-%20FedoraProject_files/load.php"></script><script src="FirewallD_ru%20-%20FedoraProject_files/load_005.php"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"FirewallD/ru","wgTitle":"FirewallD/ru","wgCurRevisionId":418095,"wgArticleId":49071,"wgIsArticle":true,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgRelevantPageName":"FirewallD/ru","wgRestrictionEdit":[],"wgRestrictionMove":[]});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($){mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":5,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"fedora","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,
+"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":true,"searchNs5":false,"searchNs6":true,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":true,"searchNs13":false,"searchNs14":true,"searchNs15":false,"searchNs100":false,"searchNs101":false,"searchNs102":false,"searchNs103":false,"searchNs104":false,"searchNs105":false,"searchNs106":true,"searchNs107":false,"searchNs108":true,"searchNs109":false,"searchNs110":true,"searchNs111":false,"searchNs112":true,"searchNs113":false,"searchNs114":true,"searchNs115":false,"searchNs116":true,"searchNs117":false});;},{},{});mw.loader.implement("user.tokens",function($){mw.user.tokens.set({"editToken":"+\\","watchToken":false});;},{},{});
+
+/* cache key: fpo-mediawiki-en_:resourceloader:filter:minify-js:7:2e839801c875f3062717112bdc5ea3e0 */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax"]);
+}</script><script type="text/javascript" src="FirewallD_ru%20-%20FedoraProject_files/load_002.php"></script>	<link href="FirewallD_ru%20-%20FedoraProject_files/fedmenu.css" rel="stylesheet"></head>
+<body class="mediawiki  ltr ns-0 ns-subject page-FirewallD_ru">
+	<div id="wrapper">
+        <div id="head">
+        <h1><a href="https://fedoraproject.org/wiki/Fedora_Project_Wiki" title="Visit the main page [z]" accesskey="z">Fedora</a></h1>
+	<div id="p-personal">
+		<h5>Personal tools</h5>
+			<ul>
+				<li id="pt-login"><a href="https://fedoraproject.org/w/index.php?title=Special:UserLogin&amp;returnto=FirewallD%2Fru" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+	</div>
+
+<!-- Top actions bar -->
+	<div id="p-cactions">
+		<h5>Views</h5>
+			<ul>
+					 <li id="ca-nstab-main" class="selected"><a href="https://fedoraproject.org/wiki/FirewallD/ru" title="View the content page [c]" accesskey="c">Page</a></li>
+					 <li id="ca-talk" class="new"><a href="https://fedoraproject.org/w/index.php?title=Talk:FirewallD/ru&amp;action=edit&amp;redlink=1" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+					 <li id="ca-viewsource"><a href="https://fedoraproject.org/w/index.php?title=FirewallD/ru&amp;action=edit" title="This page is protected.
+You can view its source [e]" accesskey="e">View source</a></li>
+					 <li id="ca-history"><a href="https://fedoraproject.org/w/index.php?title=FirewallD/ru&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+				</ul>
+	</div>
+
+        </div>
+<div id="sidebar">
+<div id="nav">
+<!-- Sidebar -->
+		<div id="p-wiki">
+		<h2>wiki</h2>
+			<ul>
+				<li id="n-mainpage"><a href="https://fedoraproject.org/wiki/Fedora_Project_Wiki" title="Visit the main page [z]" accesskey="z">Fedora Project Wiki</a></li>
+				<li id="n-News"><a href="https://fedoraproject.org/wiki/FWN">News</a></li>
+				<li id="n-Events"><a href="https://fedoraproject.org/wiki/FedoraEvents">Events</a></li>
+				<li id="n-Features"><a href="https://fedoraproject.org/wiki/Features">Features</a></li>
+				<li id="n-recentchanges"><a href="https://fedoraproject.org/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="https://fedoraproject.org/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-Help"><a href="https://fedoraproject.org/wiki/Help" title="The place to find out">Help</a></li>
+			</ul>
+	</div>
+		<div id="p-navigation">
+		<h2>Navigation</h2>
+			<ul>
+				<li id="n-Home"><a href="http://fedoraproject.org/">Home</a></li>
+				<li id="n-Get-Fedora"><a href="http://get.fedoraproject.org/">Get Fedora</a></li>
+				<li id="n-Join-Fedora"><a href="http://join.fedoraproject.org/">Join Fedora</a></li>
+			</ul>
+	</div>
+		<div id="p-sub-projects">
+		<h2>sub-projects</h2>
+			<ul>
+				<li id="n-Ambassadors"><a href="https://fedoraproject.org/wiki/Ambassadors">Ambassadors</a></li>
+				<li id="n-Community-Operations"><a href="https://fedoraproject.org/wiki/CommOps">Community Operations</a></li>
+				<li id="n-Design"><a href="https://fedoraproject.org/wiki/Design">Design</a></li>
+				<li id="n-Documentation"><a href="https://fedoraproject.org/wiki/DocsProject">Documentation</a></li>
+				<li id="n-EPEL"><a href="https://fedoraproject.org/wiki/EPEL">EPEL</a></li>
+				<li id="n-Infrastructure"><a href="https://fedoraproject.org/wiki/Infrastructure">Infrastructure</a></li>
+				<li id="n-Internationalization"><a href="https://fedoraproject.org/wiki/I18N">Internationalization</a></li>
+				<li id="n-Localization"><a href="https://fedoraproject.org/wiki/L10N">Localization</a></li>
+				<li id="n-Marketing"><a href="https://fedoraproject.org/wiki/Marketing">Marketing</a></li>
+				<li id="n-Magazine"><a href="https://fedoraproject.org/wiki/FWN">Magazine</a></li>
+				<li id="n-Package-Maintainers"><a href="https://fedoraproject.org/wiki/PackageMaintainers">Package Maintainers</a></li>
+				<li id="n-Quality-Assurance"><a href="https://fedoraproject.org/wiki/QA">Quality Assurance</a></li>
+				<li id="n-Websites"><a href="https://fedoraproject.org/wiki/Websites">Websites</a></li>
+				<li id="n-All-projects"><a href="https://fedoraproject.org/wiki/Projects">All projects</a></li>
+			</ul>
+	</div>
+		<div id="p-search">
+		<h2><label for="searchInput">Search</label></h2>
+			<form action="/wiki/Special:Search" id="searchform"><div>
+				<input id="searchInput" name="search" title="Search FedoraProject [alt-shift-f]" accesskey="f" type="text"><br>
+				<input name="go" class="searchButton" id="searchGoButton" value="Go" type="submit">&nbsp;
+				<input name="fulltext" class="searchButton" id="mw-searchButton" value="Search" type="submit">
+			</div></form>
+	</div>
+	<div id="p-tb">
+		<h2>Tools</h2>
+			<ul>
+				<li id="t-whatlinkshere"><a href="https://fedoraproject.org/wiki/Special:WhatLinksHere/FirewallD/ru" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="https://fedoraproject.org/wiki/Special:RecentChangesLinked/FirewallD/ru" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="https://fedoraproject.org/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="https://fedoraproject.org/w/index.php?title=FirewallD/ru&amp;printable=yes" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="https://fedoraproject.org/w/index.php?title=FirewallD/ru&amp;oldid=418095" title="Permanent link to this revision of the page">Permanent link</a></li>			</ul>
+	</div>
+</div>
+</div><!-- end of the left (by default at least) column -->
+
+	<div id="content"><div style="display: none;" class="js-messagebox" id="mw-js-message"></div>
+		<div id="siteNotice"><div id="localNotice" dir="ltr" lang="en"></div></div>		<h2>FirewallD/ru</h2>
+			<h3 id="siteSub">From FedoraProject</h3>
+			<div id="contentSub"><span class="subpages">&lt; <a href="https://fedoraproject.org/wiki/FirewallD" title="FirewallD">FirewallD</a></span></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<div id="mw-content-text" dir="ltr" class="mw-content-ltr" lang="en"><div id="otherlangs" class="plainlinks" style="padding-left: 26px;"><div style="float: left; margin-left: -21px;"><a href="https://fedoraproject.org/wiki/FedoraProject:Translating" title="FedoraProject:Translating"><img alt="Language.png" src="FirewallD_ru%20-%20FedoraProject_files/Language.png" height="16" width="16"></a></div><div><b><a href="https://fedoraproject.org/wiki/FedoraProject:Translating" title="FedoraProject:Translating">In other languages:</a></b> <span class="plainlinks languagelink firstlang" style="white-space:nowrap"><a class="external text" href="https://fedoraproject.org/wiki/FirewallD"><span class="firstlang" dir="ltr" lang="en">English</span> <small>(en)</small></a></span> <span class="plainlinks languagelink" style="white-space:nowrap"><a class="external text" href="https://fedoraproject.org/wiki/FirewallD/es"><span class="firstlang" dir="ltr" lang="es">Español</span> <small>(es)</small></a></span> <span class="plainlinks languagelink" style="white-space:nowrap"><a class="external text" href="https://fedoraproject.org/wiki/FirewallD/jp"><span class="firstlang" dir="ltr" lang="jp">jp</span> <small>(jp)</small></a></span> <span class="plainlinks languagelink" style="white-space:nowrap"><b><span class="firstlang" dir="ltr" lang="ru">Русский</span> <small>(ru)</small></b></span> <span class="plainlinks languagelink" style="white-space:nowrap"><a class="external text" href="https://fedoraproject.org/wiki/FirewallD/zh-cn"><span class="firstlang" dir="ltr" lang="zh-cn">‪中文(中国大陆)‬</span> <small>(zh-cn)</small></a></span>                                                        <span class="editlink">[<a class="external text" href="https://fedoraproject.org/w/index.php?title=Template:Lang/FirewallD&amp;action=edit">edit</a>]</span>
+</div></div>
+<table id="toc" class="toc"><tbody><tr><td><div id="toctitle"><h2>Contents</h2><span class="toctoggle">&nbsp;[<a href="#" class="internal" id="togglelink">hide</a>]&nbsp;</span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#.D0.94.D0.B8.D0.BD.D0.B0.D0.BC.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.B8.D0.B9_.D0.B1.D1.80.D0.B0.D0.BD.D0.B4.D0.BC.D0.B0.D1.83.D1.8D.D1.80_.D1.81_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5.D0.BC_FirewallD_.28firewall_daemon_.2F_.D0.B4.D0.B5.D0.BC.D0.BE.D0.BD_.D0.BC.D0.B5.D0.B6.D1.81.D0.B5.D1.82.D0.B5.D0.B2.D0.BE.D0.B3.D0.BE_.D1.8D.D0.BA.D1.80.D0.B0.D0.BD.D0.B0.29"><span class="tocnumber">1</span> <span class="toctext">Динамический брандмауэр с использованием FirewallD (firewall daemon / демон межсетевого экрана)</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#.D0.94.D0.B5.D0.BC.D0.BE.D0.BD"><span class="tocnumber">1.1</span> <span class="toctext">Демон</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#.D0.A1.D1.82.D0.B0.D1.82.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.B8.D0.B9_.D0.BC.D0.B5.D0.B6.D1.81.D0.B5.D1.82.D0.B5.D0.B2.D0.BE.D0.B9_.D1.8D.D0.BA.D1.80.D0.B0.D0.BD_.28system-config-firewall.2Flokkit.29"><span class="tocnumber">1.2</span> <span class="toctext">Статический межсетевой экран (system-config-firewall/lokkit)</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#.D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D0.BF.D1.80.D0.B0.D0.B2.D0.B8.D0.BB_.D1.81.D1.82.D0.B0.D1.82.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.BE.D0.B3.D0.BE_.D0.BC.D0.B5.D0.B6.D1.81.D0.B5.D1.82.D0.B5.D0.B2.D0.BE.D0.B3.D0.BE_.D1.8D.D0.BA.D1.80.D0.B0.D0.BD.D0.B0_.D1.81.D0.BE.D0.B2.D0.BC.D0.B5.D1.81.D1.82.D0.BD.D0.BE_.D1.81.D0.BE_.D1.81.D0.BB.D1.83.D0.B6.D0.B1.D0.B0.D0.BC.D0.B8_iptables_.D0.B8_ip6tables"><span class="tocnumber">1.3</span> <span class="toctext">Использование правил статического межсетевого экрана совместно со службами iptables и ip6tables</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#.D0.A7.D1.82.D0.BE_.D1.82.D0.B0.D0.BA.D0.BE.D0.B5_.D0.B7.D0.BE.D0.BD.D0.B0.3F"><span class="tocnumber">1.4</span> <span class="toctext">Что такое зона?</span></a>
+<ul>
+<li class="toclevel-3 tocsection-6"><a href="#.D0.9E.D0.BF.D1.80.D0.B5.D0.B4.D0.B5.D0.BB.D1.91.D0.BD.D0.BD.D1.8B.D0.B5_.D0.B7.D0.B0.D1.80.D0.B0.D0.BD.D0.B5.D0.B5_.D1.81.D0.BB.D1.83.D0.B6.D0.B1.D1.8B"><span class="tocnumber">1.4.1</span> <span class="toctext">Определённые заранее службы</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="#.D0.9F.D0.BE.D1.80.D1.82.D1.8B_.D0.B8_.D0.BF.D1.80.D0.BE.D1.82.D0.BE.D0.BA.D0.BE.D0.BB.D1.8B"><span class="tocnumber">1.4.2</span> <span class="toctext">Порты и протоколы</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="#.D0.91.D0.BB.D0.BE.D0.BA.D0.B8_ICMP"><span class="tocnumber">1.4.3</span> <span class="toctext">Блоки ICMP</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="#.D0.9C.D0.B0.D1.81.D0.BA.D0.B0.D1.80.D0.B0.D0.B4.D0.B8.D0.BD.D0.B3"><span class="tocnumber">1.4.4</span> <span class="toctext">Маскарадинг</span></a></li>
+<li class="toclevel-3 tocsection-10"><a href="#.D0.9F.D1.80.D0.BE.D0.B1.D1.80.D0.BE.D1.81_.D0.BF.D0.BE.D1.80.D1.82.D0.BE.D0.B2"><span class="tocnumber">1.4.5</span> <span class="toctext">Проброс портов</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-11"><a href="#.D0.9A.D0.B0.D0.BA.D0.B8.D0.B5_.D0.B4.D0.BE.D1.81.D1.82.D1.83.D0.BF.D0.BD.D1.8B_.D0.B7.D0.BE.D0.BD.D1.8B.3F"><span class="tocnumber">1.5</span> <span class="toctext">Какие доступны зоны?</span></a>
+<ul>
+<li class="toclevel-3 tocsection-12"><a href="#.D0.A1.D0.B1.D1.80.D0.BE.D1.81_.28drop.2C_.D0.BD.D0.B5.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D1.8F.D0.B5.D0.BC.D0.B0.D1.8F_.D0.B7.D0.BE.D0.BD.D0.B0.29"><span class="tocnumber">1.5.1</span> <span class="toctext">Сброс (drop, неизменяемая зона)</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#.D0.91.D0.BB.D0.BE.D0.BA.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.28block.2C_.D0.BD.D0.B5.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D1.8F.D0.B5.D0.BC.D0.B0.D1.8F_.D0.B7.D0.BE.D0.BD.D0.B0.29"><span class="tocnumber">1.5.2</span> <span class="toctext">Блокирование (block, неизменяемая зона)</span></a></li>
+<li class="toclevel-3 tocsection-14"><a href="#.D0.9E.D0.B1.D1.89.D0.B5.D1.81.D1.82.D0.B2.D0.B5.D0.BD.D0.BD.D0.BE.D0.B5_.D0.BC.D0.B5.D1.81.D1.82.D0.BE_.28public.29"><span class="tocnumber">1.5.3</span> <span class="toctext">Общественное место (public)</span></a></li>
+<li class="toclevel-3 tocsection-15"><a href="#.22.D0.92.D0.BD.D0.B5.D1.88.D0.BD.D1.8F.D1.8F.22_.D1.81.D0.B5.D1.82.D1.8C_.28external.29"><span class="tocnumber">1.5.4</span> <span class="toctext">"Внешняя" сеть (external)</span></a></li>
+<li class="toclevel-3 tocsection-16"><a href="#.22.D0.91.D0.B5.D0.B7.D0.BE.D1.80.D1.83.D0.B6.D0.BD.D0.B0.D1.8F.22_.D0.B7.D0.BE.D0.BD.D0.B0_.28demilitarized_zone.2C_DMZ.29"><span class="tocnumber">1.5.5</span> <span class="toctext">"Безоружная" зона (demilitarized zone, DMZ)</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="#.D0.A0.D0.B0.D0.B1.D0.BE.D1.87.D0.B5.D0.B5_.D0.BF.D1.80.D0.BE.D1.81.D1.82.D1.80.D0.B0.D0.BD.D1.81.D1.82.D0.B2.D0.BE_.28work.29"><span class="tocnumber">1.5.6</span> <span class="toctext">Рабочее пространство (work)</span></a></li>
+<li class="toclevel-3 tocsection-18"><a href="#.D0.94.D0.BE.D0.BC.D0.B0.D1.88.D0.BD.D1.8F.D1.8F_.D1.81.D0.B5.D1.82.D1.8C_.28home.29"><span class="tocnumber">1.5.7</span> <span class="toctext">Домашняя сеть (home)</span></a></li>
+<li class="toclevel-3 tocsection-19"><a href="#.22.D0.92.D0.BD.D1.83.D1.82.D1.80.D0.B5.D0.BD.D0.BD.D1.8F.D1.8F.22_.D1.81.D0.B5.D1.82.D1.8C_.28internal.29"><span class="tocnumber">1.5.8</span> <span class="toctext">"Внутренняя" сеть (internal)</span></a></li>
+<li class="toclevel-3 tocsection-20"><a href="#.D0.94.D0.BE.D0.B2.D0.B5.D1.80.D0.B5.D0.BD.D0.BD.D0.B0.D1.8F_.D1.81.D0.B5.D1.82.D1.8C_.28trusted.2C_.D0.BD.D0.B5.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D1.8F.D0.B5.D0.BC.D0.B0.D1.8F_.D0.B7.D0.BE.D0.BD.D0.B0.29"><span class="tocnumber">1.5.9</span> <span class="toctext">Доверенная сеть (trusted, неизменяемая зона)</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-21"><a href="#.D0.9A.D0.B0.D0.BA.D1.83.D1.8E_.D0.B7.D0.BE.D0.BD.D1.83_.D1.81.D0.BB.D0.B5.D0.B4.D1.83.D0.B5.D1.82_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D1.82.D1.8C.3F"><span class="tocnumber">1.6</span> <span class="toctext">Какую зону следует использовать?</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#.D0.9A.D0.B0.D0.BA_.D0.B4.D0.BE.D0.B1.D0.B0.D0.B2.D0.B8.D1.82.D1.8C_.D0.B8.D0.BB.D0.B8_.D0.BD.D0.B0.D1.81.D1.82.D1.80.D0.BE.D0.B8.D1.82.D1.8C_.D0.B7.D0.BE.D0.BD.D1.8B.3F"><span class="tocnumber">1.7</span> <span class="toctext">Как добавить или настроить зоны?</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#.D0.9A.D0.B0.D0.BA_.D1.83.D0.BA.D0.B0.D0.B7.D0.B0.D1.82.D1.8C_.D0.B8.D0.BB.D0.B8_.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D0.B8.D1.82.D1.8C_.D0.B7.D0.BE.D0.BD.D1.83_.D0.B4.D0.BB.D1.8F_.D1.81.D0.BE.D0.B5.D0.B4.D0.B8.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F.3F"><span class="tocnumber">1.8</span> <span class="toctext">Как указать или изменить зону для соединения?</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#.D0.A1.D0.B5.D1.82.D0.B5.D0.B2.D1.8B.D0.B5_.D1.81.D0.BE.D0.B5.D0.B4.D0.B8.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F.2C_.D0.BE.D0.B1.D1.80.D0.B0.D0.B1.D0.B0.D1.82.D1.8B.D0.B2.D0.B0.D0.B5.D0.BC.D1.8B.D0.B5_NetworkManager"><span class="tocnumber">1.9</span> <span class="toctext">Сетевые соединения, обрабатываемые NetworkManager</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#.D0.A1.D0.B5.D1.82.D0.B5.D0.B2.D1.8B.D0.B5_.D1.81.D0.BE.D0.B5.D0.B4.D0.B8.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F.2C_.D0.BE.D0.B1.D1.80.D0.B0.D0.B1.D0.B0.D1.82.D1.8B.D0.B2.D0.B0.D0.B5.D0.BC.D1.8B.D0.B5_.D1.81.D0.B5.D1.82.D0.B5.D0.B2.D1.8B.D0.BC.D0.B8_.D1.81.D0.BA.D1.80.D0.B8.D0.BF.D1.82.D0.B0.D0.BC.D0.B8_.28network_scripts.29"><span class="tocnumber">1.10</span> <span class="toctext">Сетевые соединения, обрабатываемые сетевыми скриптами (network scripts)</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#.D0.A0.D0.B0.D0.B1.D0.BE.D1.82.D0.B0_.D1.81_FirewallD"><span class="tocnumber">1.11</span> <span class="toctext">Работа с FirewallD</span></a>
+<ul>
+<li class="toclevel-3 tocsection-27"><a href="#.D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_firewall-cmd"><span class="tocnumber">1.11.1</span> <span class="toctext">Использование firewall-cmd</span></a>
+<ul>
+<li class="toclevel-4 tocsection-28"><a href="#.D0.9E.D0.B1.D1.89.D0.B8.D0.B5_.D0.BF.D0.BE.D0.BB.D0.BE.D0.B6.D0.B5.D0.BD.D0.B8.D1.8F_.D0.BE.D0.B1_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B8"><span class="tocnumber">1.11.1.1</span> <span class="toctext">Общие положения об использовании</span></a></li>
+<li class="toclevel-4 tocsection-29"><a href="#.D0.9E.D0.B1.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.BA.D0.B0_.D0.B7.D0.BE.D0.BD_.D1.81_.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D1.8F.D0.B5.D0.BC.D1.8B.D0.BC.D0.B8_.D0.B2.D0.BE_.D0.B2.D1.80.D0.B5.D0.BC.D1.8F_.D0.B2.D1.8B.D0.BF.D0.BE.D0.BB.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F_.D0.BF.D0.B0.D1.80.D0.B0.D0.BC.D0.B5.D1.82.D1.80.D0.B0.D0.BC.D0.B8"><span class="tocnumber">1.11.1.2</span> <span class="toctext">Обработка зон с изменяемыми во время выполнения параметрами</span></a></li>
+<li class="toclevel-4 tocsection-30"><a href="#.D0.9E.D0.B1.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.BA.D0.B0_.D0.B7.D0.BE.D0.BD_.D1.81_.D0.BF.D0.BE.D1.81.D1.82.D0.BE.D1.8F.D0.BD.D0.BD.D1.8B.D0.BC.D0.B8.2F.D1.83.D1.81.D1.82.D0.BE.D0.B9.D1.87.D0.B8.D0.B2.D1.8B.D0.BC.D0.B8_.D0.BF.D0.B0.D1.80.D0.B0.D0.BC.D0.B5.D1.82.D1.80.D0.B0.D0.BC.D0.B8"><span class="tocnumber">1.11.1.3</span> <span class="toctext">Обработка зон с постоянными/устойчивыми параметрами</span></a></li>
+<li class="toclevel-4 tocsection-31"><a href="#.D0.9F.D1.80.D1.8F.D0.BC.D1.8B.D0.B5_.D0.BE.D0.BF.D1.86.D0.B8.D0.B8"><span class="tocnumber">1.11.1.4</span> <span class="toctext">Прямые опции</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-32"><a href="#.D0.A4.D1.83.D0.BD.D0.BA.D1.86.D0.B8.D0.BE.D0.BD.D0.B0.D0.BB_FirewallD_.D0.BD.D0.B0_.D0.B4.D0.B0.D0.BD.D0.BD.D1.8B.D0.B9_.D0.BC.D0.BE.D0.BC.D0.B5.D0.BD.D1.82"><span class="tocnumber">1.12</span> <span class="toctext">Функционал FirewallD на данный момент</span></a>
+<ul>
+<li class="toclevel-3 tocsection-33"><a href="#.D0.98.D0.BD.D1.82.D0.B5.D1.80.D1.84.D0.B5.D0.B9.D1.81_D-BUS"><span class="tocnumber">1.12.1</span> <span class="toctext">Интерфейс D-BUS</span></a></li>
+<li class="toclevel-3 tocsection-34"><a href="#.D0.97.D0.BE.D0.BD.D1.8B"><span class="tocnumber">1.12.2</span> <span class="toctext">Зоны</span></a></li>
+<li class="toclevel-3 tocsection-35"><a href="#.D0.A1.D0.BB.D1.83.D0.B6.D0.B1.D1.8B"><span class="tocnumber">1.12.3</span> <span class="toctext">Службы</span></a></li>
+<li class="toclevel-3 tocsection-36"><a href="#.D0.A2.D0.B8.D0.BF.D1.8B_ICMP"><span class="tocnumber">1.12.4</span> <span class="toctext">Типы ICMP</span></a></li>
+<li class="toclevel-3 tocsection-37"><a href="#.D0.9F.D1.80.D1.8F.D0.BC.D0.BE.D0.B9_.D0.B8.D0.BD.D1.82.D0.B5.D1.80.D1.84.D0.B5.D0.B9.D1.81"><span class="tocnumber">1.12.5</span> <span class="toctext">Прямой интерфейс</span></a></li>
+<li class="toclevel-3 tocsection-38"><a href="#.D0.9A.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D1.8F_.D0.B2.D1.80.D0.B5.D0.BC.D0.B5.D0.BD.D0.B8_.D0.B2.D1.8B.D0.BF.D0.BE.D0.BB.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F"><span class="tocnumber">1.12.6</span> <span class="toctext">Конфигурация времени выполнения</span></a></li>
+<li class="toclevel-3 tocsection-39"><a href="#.D0.9F.D0.BE.D1.81.D1.82.D0.BE.D1.8F.D0.BD.D0.BD.D0.B0.D1.8F.2F.D1.83.D1.81.D1.82.D0.BE.D0.B9.D1.87.D0.B8.D0.B2.D0.B0.D1.8F_.D0.BA.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D1.8F"><span class="tocnumber">1.12.7</span> <span class="toctext">Постоянная/устойчивая конфигурация</span></a></li>
+<li class="toclevel-3 tocsection-40"><a href="#.D0.90.D0.BF.D0.BF.D0.BB.D0.B5.D1.82_.D0.B2_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D0.BD.D0.BE.D0.BC_.D1.82.D1.80.D0.B5.D0.B5"><span class="tocnumber">1.12.8</span> <span class="toctext">Апплет в системном трее</span></a></li>
+<li class="toclevel-3 tocsection-41"><a href="#.D0.93.D1.80.D0.B0.D1.84.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.BE.D0.B5_.D1.81.D1.80.D0.B5.D0.B4.D1.81.D1.82.D0.B2.D0.BE_.D0.BA.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D1.8F"><span class="tocnumber">1.12.9</span> <span class="toctext">Графическое средство конфигурирования</span></a></li>
+<li class="toclevel-3 tocsection-42"><a href="#.D0.9A.D0.BE.D0.BD.D1.81.D0.BE.D0.BB.D1.8C.D0.BD.D1.8B.D0.B9_.D0.BA.D0.BB.D0.B8.D0.B5.D0.BD.D1.82"><span class="tocnumber">1.12.10</span> <span class="toctext">Консольный клиент</span></a></li>
+<li class="toclevel-3 tocsection-43"><a href="#.D0.9F.D0.BE.D0.B4.D0.B4.D0.B5.D1.80.D0.B6.D0.BA.D0.B0_ebtables"><span class="tocnumber">1.12.11</span> <span class="toctext">Поддержка ebtables</span></a></li>
+<li class="toclevel-3 tocsection-44"><a href="#.D0.9A.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D1.8F_.D0.BF.D0.BE_.D1.83.D0.BC.D0.BE.D0.BB.D1.87.D0.B0.D0.BD.D0.B8.D1.8E_.2F_.D0.B4.D0.BB.D1.8F_.D0.BE.D1.82.D0.BA.D0.B0.D1.82.D0.B0.2C_.D1.85.D1.80.D0.B0.D0.BD.D1.8F.D1.89.D0.B0.D1.8F.D1.81.D1.8F_.D0.B2_.2Fusr.2Flib.2Ffirewalld"><span class="tocnumber">1.12.12</span> <span class="toctext">Конфигурация по умолчанию / для отката, хранящаяся в /usr/lib/firewalld</span></a></li>
+<li class="toclevel-3 tocsection-45"><a href="#.D0.A1.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D0.BD.D1.8B.D0.B5_.D0.BF.D0.B0.D1.80.D0.B0.D0.BC.D0.B5.D1.82.D1.80.D1.8B_.D0.BA.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D0.B8.2C_.D1.85.D1.80.D0.B0.D0.BD.D1.8F.D1.89.D0.B8.D0.B5.D1.81.D1.8F_.D0.B2_.2Fetc.2Ffirewalld"><span class="tocnumber">1.12.13</span> <span class="toctext">Системные параметры конфигурации, хранящиеся в /etc/firewalld</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-46"><a href="#.D0.A0.D0.B5.D0.B0.D0.BB.D0.B8.D0.B7.D1.83.D0.B5.D0.BC.D1.8B.D0.B9_.D0.B2_.D0.BD.D0.B0.D1.81.D1.82.D0.BE.D1.8F.D1.89.D0.B5.D0.B5_.D0.B2.D1.80.D0.B5.D0.BC.D1.8F_.D1.84.D1.83.D0.BD.D0.BA.D1.86.D0.B8.D0.BE.D0.BD.D0.B0.D0.BB"><span class="tocnumber">1.13</span> <span class="toctext">Реализуемый в настоящее время функционал</span></a>
+<ul>
+<li class="toclevel-3 tocsection-47"><a href="#.D0.A0.D0.B0.D0.B7.D0.B2.D0.B8.D1.82.D1.8B.D0.B9_.D1.8F.D0.B7.D1.8B.D0.BA"><span class="tocnumber">1.13.1</span> <span class="toctext">Развитый язык</span></a></li>
+<li class="toclevel-3 tocsection-48"><a href="#.D0.91.D0.BB.D0.BE.D0.BA.D0.B8.D1.80.D0.BE.D0.B2.D0.BA.D0.B0_.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F_.D0.BA.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D0.B8"><span class="tocnumber">1.13.2</span> <span class="toctext">Блокировка изменения конфигурации</span></a></li>
+<li class="toclevel-3 tocsection-49"><a href="#.D0.9F.D0.BE.D1.81.D1.82.D0.BE.D1.8F.D0.BD.D0.BD.D1.8B.D0.B5_.D0.BF.D1.80.D1.8F.D0.BC.D1.8B.D0.B5_.D0.BF.D1.80.D0.B0.D0.B2.D0.B8.D0.BB.D0.B0"><span class="tocnumber">1.13.3</span> <span class="toctext">Постоянные прямые правила</span></a></li>
+<li class="toclevel-3 tocsection-50"><a href="#.D0.A3.D1.85.D0.BE.D0.B4_.D0.BE.D1.82_.D1.81.D0.BB.D1.83.D0.B6.D0.B1_ip.2Atables_.D0.B8_ebtables"><span class="tocnumber">1.13.4</span> <span class="toctext">Уход от служб ip*tables и ebtables</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-51"><a href="#.D0.97.D0.B0.D0.BF.D0.BB.D0.B0.D0.BD.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.BD.D1.8B.D0.B9_.D0.B8_.D0.BF.D1.80.D0.B5.D0.B4.D0.BB.D0.B0.D0.B3.D0.B0.D0.B5.D0.BC.D1.8B.D0.B9_.D0.BA_.D1.80.D0.B5.D0.B0.D0.BB.D0.B8.D0.B7.D0.B0.D1.86.D0.B8.D0.B8_.D1.84.D1.83.D0.BD.D0.BA.D1.86.D0.B8.D0.BE.D0.BD.D0.B0.D0.BB"><span class="tocnumber">1.14</span> <span class="toctext">Запланированный и предлагаемый к реализации функционал</span></a>
+<ul>
+<li class="toclevel-3 tocsection-52"><a href="#.D0.90.D0.B1.D1.81.D1.82.D1.80.D0.B0.D0.BA.D1.82.D0.BD.D0.B0.D1.8F_.D0.BC.D0.BE.D0.B4.D0.B5.D0.BB.D1.8C_.D0.BC.D0.B5.D0.B6.D1.81.D0.B5.D1.82.D0.B5.D0.B2.D0.BE.D0.B3.D0.BE_.D1.8D.D0.BA.D1.80.D0.B0.D0.BD.D0.B0"><span class="tocnumber">1.14.1</span> <span class="toctext">Абстрактная модель межсетевого экрана</span></a></li>
+<li class="toclevel-3 tocsection-53"><a href="#.D0.9F.D0.BE.D0.B4.D0.B4.D0.B5.D1.80.D0.B6.D0.BA.D0.B0_.D1.82.D1.80.D0.B0.D1.81.D1.81.D0.B8.D1.80.D0.BE.D0.B2.D1.89.D0.B8.D0.BA.D0.B0"><span class="tocnumber">1.14.2</span> <span class="toctext">Поддержка трассировщика</span></a></li>
+<li class="toclevel-3 tocsection-54"><a href="#.D0.A0.D0.B5.D0.B6.D0.B8.D0.BC_.D0.B2.D0.B7.D0.B0.D0.B8.D0.BC.D0.BE.D0.B4.D0.B5.D0.B9.D1.81.D1.82.D0.B2.D0.B8.D1.8F_.D1.81_.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D1.82.D0.B5.D0.BB.D0.B5.D0.BC"><span class="tocnumber">1.14.3</span> <span class="toctext">Режим взаимодействия с пользователем</span></a></li>
+<li class="toclevel-3 tocsection-55"><a href="#.D0.9F.D0.BE.D0.B4.D0.B4.D0.B5.D1.80.D0.B6.D0.BA.D0.B0_.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D1.82.D0.B5.D0.BB.D1.8C.D1.81.D0.BA.D0.BE.D0.B9_.D0.BF.D0.BE.D0.BB.D0.B8.D1.82.D0.B8.D0.BA.D0.B8"><span class="tocnumber">1.14.4</span> <span class="toctext">Поддержка пользовательской политики</span></a></li>
+<li class="toclevel-3 tocsection-56"><a href="#.D0.98.D0.BD.D1.84.D0.BE.D1.80.D0.BC.D0.B0.D1.86.D0.B8.D1.8F_.D0.BE_.D0.BC.D0.B5.D1.82.D0.B0-.D0.B4.D0.B0.D0.BD.D0.BD.D1.8B.D1.85_.D0.BF.D0.BE.D1.80.D1.82.D0.BE.D0.B2_.28.D0.BF.D1.80.D0.B5.D0.B4.D0.BB.D0.BE.D0.B6.D0.B5.D0.BD.D0.BE_.D0.9B.D0.B5.D0.BD.D0.BD.D0.B0.D1.80.D1.82.D0.BE.D0.BC_.D0.9F.D0.BE.D1.82.D1.82.D0.B5.D1.80.D0.B8.D0.BD.D0.B3.D0.BE.D0.BC.29"><span class="tocnumber">1.14.5</span> <span class="toctext">Информация о мета-данных портов (предложено Леннартом Поттерингом)</span></a></li>
+<li class="toclevel-3 tocsection-57"><a href="#sysctld"><span class="tocnumber">1.14.6</span> <span class="toctext">sysctld</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-58"><a href="#.D0.9F.D1.80.D0.B0.D0.B2.D0.B8.D0.BB.D0.B0_.D0.BC.D0.B5.D0.B6.D1.81.D0.B5.D1.82.D0.B5.D0.B2.D0.BE.D0.B3.D0.BE_.D1.8D.D0.BA.D1.80.D0.B0.D0.BD.D0.B0"><span class="tocnumber">1.15</span> <span class="toctext">Правила межсетевого экрана</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></tbody></table>
+<h1> <span class="mw-headline" id=".D0.94.D0.B8.D0.BD.D0.B0.D0.BC.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.B8.D0.B9_.D0.B1.D1.80.D0.B0.D0.BD.D0.B4.D0.BC.D0.B0.D1.83.D1.8D.D1.80_.D1.81_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5.D0.BC_FirewallD_.28firewall_daemon_.2F_.D0.B4.D0.B5.D0.BC.D0.BE.D0.BD_.D0.BC.D0.B5.D0.B6.D1.81.D0.B5.D1.82.D0.B5.D0.B2.D0.BE.D0.B3.D0.BE_.D1.8D.D0.BA.D1.80.D0.B0.D0.BD.D0.B0.29"> Динамический брандмауэр с использованием FirewallD (firewall daemon / демон межсетевого экрана) </span></h1>
+<p>FirewallD предоставляет функционал динамически управляемого 
+брандмауэра с поддержкой сетевых зон, призванных определить уровень 
+доверия для сетевого соединения или интерфейса. Он имеет поддержку 
+настройки межсетевого экрана IPv4, IPv6 и сетевых мостов, а также 
+разделяет среду выполнения и параметры конфигурации. FirewallD также 
+имеет интерфейс для добавления правил брандмауэра непосредственно из 
+служб и приложений.
+</p><p>Прежняя модель брандмауэра (с применением 
+system-config-firewall/lokkit) была статической и каждое изменение 
+требовало полной перезагрузки межсетевого экрана. Такая модель также 
+подразумевала и выгрузку модулей ядра, обеспечивающих функционирование 
+брандмауэра, а также загрузку модулей, необходимых для работы новой 
+конфигурации. Выгрузка модулей приводила к нарушению состояния 
+межсетевого экрана и установленных соединений.
+</p><p>С другой стороны, FirewallD обеспечивает динамическое управление 
+брандмауэром и применяет изменения конфигурации без перезагрузки всего 
+межсетевого экрана. Следовательно, нет необходимости перезагружать все 
+модули ядра, обеспечивающие функционирование брандмауэра. Но 
+использование FirewallD требует, чтобы все изменения в конфигурации 
+межсетевого экрана выполнялись именно демоном, для обеспечения 
+соответствия в состояниях демона и брандмауэра. FirewallD не может 
+анализировать правила брандмауэра, добавленные консольными утилитами 
+ip*tables и ebtables.
+</p><p>FirewallD предоставляет информацию об активных в текущее время 
+параметрах межсетевого экрана через шину D-BUS, а также утверждает 
+изменения, полученные посредством D-BUS, используя метод аутентификации 
+PolicyKit.
+</p>
+<h2> <span class="mw-headline" id=".D0.94.D0.B5.D0.BC.D0.BE.D0.BD"> Демон </span></h2>
+<p>Приложения, демоны и пользователь могут сделать запрос через D-BUS 
+для разрешения функции брандмауэра. Это может быть одна из 
+предопределённых функций межсетевого экрана, таких как комбинации служб,
+ порта и протокола, перенаправление порта/пакета, маскарадинг или 
+блокирование ICMP. Функция может быть включена на определённое время или
+ может быть снова отключена.
+</p><p>С помощью так называемого прямого интерфейса другие службы 
+(например, такие как libvirt) могут добавлять собственные правила, 
+используя аргументы и параметры iptables.
+</p><p>Вспомогательные модули межсетевого экрана, которые используются, 
+например, для служб amanda, ftp, samba и tftp, также обрабатываются 
+демоном, пока они являются частью определённой заранее службы. Загрузка 
+дополнительных вспомогательных модулей не является частью текущего 
+интерфейса. Для некоторых вспомогательных модулей выгрузка возможна 
+только после того, как все обрабатываемые соединения завершатся. Поэтому
+ отслеживаемые данные о соединении в данном случае важны и должны 
+обрабатываться.
+</p>
+<h2> <span class="mw-headline" id=".D0.A1.D1.82.D0.B0.D1.82.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.B8.D0.B9_.D0.BC.D0.B5.D0.B6.D1.81.D0.B5.D1.82.D0.B5.D0.B2.D0.BE.D0.B9_.D1.8D.D0.BA.D1.80.D0.B0.D0.BD_.28system-config-firewall.2Flokkit.29"> Статический межсетевой экран (system-config-firewall/lokkit) </span></h2>
+<p>Действующая статическая модель брандмауэра (с применением 
+system-config-firewall и lokkit) всё ещё будет доступна и пригодна к 
+использованию, но не одновременно с запущенным FirewallD. Пользователь 
+либо администратор могут принимать решение, какой из вариантов 
+межсетевого экрана следует исползовать, путём запуска соответствующей 
+службы.
+</p><p>Запланировано добаление средства выбора, какой вариант 
+брандмауэра использовать вдальнейшем, в этапы инсталляции или 
+первоначальной настройки системы. Конфигурация другого варианта 
+останется нетронутой и может быть разрешена простым переключением к 
+другой модели.
+</p><p>FirewallD не зависит от system-config-firewall, тем не менее, их не следует использовать одновременно.
+</p>
+<h2> <span class="mw-headline" id=".D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.D0.BF.D1.80.D0.B0.D0.B2.D0.B8.D0.BB_.D1.81.D1.82.D0.B0.D1.82.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.BE.D0.B3.D0.BE_.D0.BC.D0.B5.D0.B6.D1.81.D0.B5.D1.82.D0.B5.D0.B2.D0.BE.D0.B3.D0.BE_.D1.8D.D0.BA.D1.80.D0.B0.D0.BD.D0.B0_.D1.81.D0.BE.D0.B2.D0.BC.D0.B5.D1.81.D1.82.D0.BD.D0.BE_.D1.81.D0.BE_.D1.81.D0.BB.D1.83.D0.B6.D0.B1.D0.B0.D0.BC.D0.B8_iptables_.D0.B8_ip6tables"> Использование правил статического межсетевого экрана совместно со службами iptables и ip6tables </span></h2>
+<p>Если вы хотите использовать собственные правила статического 
+брандмауэра совместно со службами iptables и ip6tables, установите 
+iptables-services, отключите FirewallD, а также включите iptables и 
+ip6tables:
+</p>
+<pre>yum install iptables-services
+systemctl mask firewalld.service
+systemctl enable iptables.service
+systemctl enable ip6tables.service
+</pre>
+<p>Для задействования своих правил статического межсетевого экрана используйте /etc/sysconfig/iptables и /etc/sysconfig/ip6tables.
+</p><p>Важно: Пакеты iptables и iptables-services не содержат правил 
+брандмауэра, необходимых для использования указанных выше служб. Эти 
+службы доступны для совместимости, а также для тех людей, которые хотят 
+использовать собственные правила. В связи с этим, можно использовать 
+system-config-firewall для создания правил самостоятельно. Для того 
+чтобы использовать system-config-firewall, необходимо остановить 
+выполнение FirewallD.
+</p><p>После создания правил, необходимых для использования служб 
+статического межсетевого экрана, следует остановить FirewallD и 
+запустить iptables и ip6tables:
+</p>
+<pre>systemctl stop firewalld.service
+systemctl start iptables.service
+systemctl start ip6tables.service
+</pre>
+<h2> <span class="mw-headline" id=".D0.A7.D1.82.D0.BE_.D1.82.D0.B0.D0.BA.D0.BE.D0.B5_.D0.B7.D0.BE.D0.BD.D0.B0.3F"> Что такое зона? </span></h2>
+<p>Сетевая зона определяет уровень доверия для сетевых соединений. Она 
+представляет собой связь, подразумевающую, что соединение может быть 
+только частью зоны, но зона может быть использована для многих 
+соединений.
+</p><p>Большинство зон являются изменяемыми, но также есть и 
+неизменяемые зоны. Неизменяемые зоны нельзя настроить, не существует 
+способа их перегрузить.
+</p>
+<h3> <span class="mw-headline" id=".D0.9E.D0.BF.D1.80.D0.B5.D0.B4.D0.B5.D0.BB.D1.91.D0.BD.D0.BD.D1.8B.D0.B5_.D0.B7.D0.B0.D1.80.D0.B0.D0.BD.D0.B5.D0.B5_.D1.81.D0.BB.D1.83.D0.B6.D0.B1.D1.8B"> Определённые заранее службы </span></h3>
+<p>Служба ― это комбинация записей портов и/или протоколов. Опционально 
+могут добавляться вспомогательные модули, а также адрес назначения IPv4 и
+ IPv6.
+</p>
+<h3> <span class="mw-headline" id=".D0.9F.D0.BE.D1.80.D1.82.D1.8B_.D0.B8_.D0.BF.D1.80.D0.BE.D1.82.D0.BE.D0.BA.D0.BE.D0.BB.D1.8B"> Порты и протоколы </span></h3>
+<p>Определение портов TCP или UDP, где порты могут представлять собой единственный порт либо диапазон поротов.
+</p>
+<h3> <span class="mw-headline" id=".D0.91.D0.BB.D0.BE.D0.BA.D0.B8_ICMP"> Блоки ICMP </span></h3>
+<p>Отдельные блоки межсетевого протокола управляющих сообщений (Internet
+ Control Message Protocol, ICMP). Эти блоки являются либо 
+информационными запросами, либо сообщениями, созданными в ответ на 
+информационные запросы, либо сообщениями об ошибках.
+</p>
+<h3> <span class="mw-headline" id=".D0.9C.D0.B0.D1.81.D0.BA.D0.B0.D1.80.D0.B0.D0.B4.D0.B8.D0.BD.D0.B3"> Маскарадинг </span></h3>
+<p>Адреса частной сети спрятаны за доступным извне адресом IP и привязаны к нему. Это разновидность трансляции адресов.
+</p>
+<h3> <span class="mw-headline" id=".D0.9F.D1.80.D0.BE.D0.B1.D1.80.D0.BE.D1.81_.D0.BF.D0.BE.D1.80.D1.82.D0.BE.D0.B2"> Проброс портов </span></h3>
+<p>Порт переназначается на другой порт и/или другой узел.
+</p>
+<h2> <span class="mw-headline" id=".D0.9A.D0.B0.D0.BA.D0.B8.D0.B5_.D0.B4.D0.BE.D1.81.D1.82.D1.83.D0.BF.D0.BD.D1.8B_.D0.B7.D0.BE.D0.BD.D1.8B.3F"> Какие доступны зоны? </span></h2>
+<p>Предоставляемые FirewallD зоны по умолчанию отсортированы в соответствии с уронями доверия ― от ненадёжного до доверенного:
+</p>
+<h3> <span class="mw-headline" id=".D0.A1.D0.B1.D1.80.D0.BE.D1.81_.28drop.2C_.D0.BD.D0.B5.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D1.8F.D0.B5.D0.BC.D0.B0.D1.8F_.D0.B7.D0.BE.D0.BD.D0.B0.29"> Сброс (drop, неизменяемая зона) </span></h3>
+<p>Все входящие сетевые пакеты сбрасываются, ответ на них недопустим. Возможны только исходящие сетевые соединения.
+</p>
+<h3> <span class="mw-headline" id=".D0.91.D0.BB.D0.BE.D0.BA.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_.28block.2C_.D0.BD.D0.B5.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D1.8F.D0.B5.D0.BC.D0.B0.D1.8F_.D0.B7.D0.BE.D0.BD.D0.B0.29"> Блокирование (block, неизменяемая зона) </span></h3>
+<p>Все входящие сетевые соединения отклоняются с сообщениями 
+icmp-host-prohibited (для IPv4) и icmp6-adm-prohibited (для IPv6). 
+Возможны только инициированные в рамках данной системы сетевые 
+соединения.
+</p>
+<h3> <span class="mw-headline" id=".D0.9E.D0.B1.D1.89.D0.B5.D1.81.D1.82.D0.B2.D0.B5.D0.BD.D0.BD.D0.BE.D0.B5_.D0.BC.D0.B5.D1.81.D1.82.D0.BE_.28public.29"> Общественное место (public) </span></h3>
+<p>Предназначено для использования в общественных местах. Остальные 
+компьютеры сети считаются ненадёжными (с точки зрения причинения вреда 
+вашему ПК). Разрешены лишь отдельные входящие соединения.
+</p>
+<h3> <span class="mw-headline" id=".22.D0.92.D0.BD.D0.B5.D1.88.D0.BD.D1.8F.D1.8F.22_.D1.81.D0.B5.D1.82.D1.8C_.28external.29"> "Внешняя" сеть (external) </span></h3>
+<p>Предназначено для использования во "внешних" сетях с активированным 
+режимом маскарадинга, особенно с применением роутеров. Остальные 
+компьютеры сети считаются ненадёжными (с точки зрения причинения вреда 
+вашему ПК). Разрешены лишь отдельные входящие соединения.
+</p>
+<h3> <span class="mw-headline" id=".22.D0.91.D0.B5.D0.B7.D0.BE.D1.80.D1.83.D0.B6.D0.BD.D0.B0.D1.8F.22_.D0.B7.D0.BE.D0.BD.D0.B0_.28demilitarized_zone.2C_DMZ.29"> "Безоружная" зона (demilitarized zone, DMZ) </span></h3>
+<p>Предназначено для компьютеров в личной "безоружной" зоне с 
+ограниченным общественным доступом к внутренней сети. Разрешены лишь 
+отдельные входящие соединения.
+</p>
+<h3> <span class="mw-headline" id=".D0.A0.D0.B0.D0.B1.D0.BE.D1.87.D0.B5.D0.B5_.D0.BF.D1.80.D0.BE.D1.81.D1.82.D1.80.D0.B0.D0.BD.D1.81.D1.82.D0.B2.D0.BE_.28work.29"> Рабочее пространство (work) </span></h3>
+<p>Предназначено для использования в рабочем пространстве. Остальные 
+компьютеры сети, по большей части, считаются надёжными (с точки зрения 
+причинения вреда вашему ПК). Разрешены лишь отдельные входящие 
+соединения.
+</p>
+<h3> <span class="mw-headline" id=".D0.94.D0.BE.D0.BC.D0.B0.D1.88.D0.BD.D1.8F.D1.8F_.D1.81.D0.B5.D1.82.D1.8C_.28home.29"> Домашняя сеть (home) </span></h3>
+<p>Предназначено для использования в домашних сетях. Остальные 
+компьютеры сети, по большей части, считаются надёжными (с точки зрения 
+причинения вреда вашему ПК). Разрешены лишь отдельные входящие 
+соединения.
+</p>
+<h3> <span class="mw-headline" id=".22.D0.92.D0.BD.D1.83.D1.82.D1.80.D0.B5.D0.BD.D0.BD.D1.8F.D1.8F.22_.D1.81.D0.B5.D1.82.D1.8C_.28internal.29"> "Внутренняя" сеть (internal) </span></h3>
+<p>Предназначено для использования во "внутренних" сетях. Остальные 
+компьютеры сети, по большей части, считаются надёжными (с точки зрения 
+причинения вреда вашему ПК). Разрешены лишь отдельные входящие 
+соединения.
+</p>
+<h3> <span class="mw-headline" id=".D0.94.D0.BE.D0.B2.D0.B5.D1.80.D0.B5.D0.BD.D0.BD.D0.B0.D1.8F_.D1.81.D0.B5.D1.82.D1.8C_.28trusted.2C_.D0.BD.D0.B5.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D1.8F.D0.B5.D0.BC.D0.B0.D1.8F_.D0.B7.D0.BE.D0.BD.D0.B0.29"> Доверенная сеть (trusted, неизменяемая зона) </span></h3>
+<p>Разрешены все сетевые соединения.
+</p>
+<h2> <span class="mw-headline" id=".D0.9A.D0.B0.D0.BA.D1.83.D1.8E_.D0.B7.D0.BE.D0.BD.D1.83_.D1.81.D0.BB.D0.B5.D0.B4.D1.83.D0.B5.D1.82_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D1.82.D1.8C.3F"> Какую зону следует использовать? </span></h2>
+<p>Например, общественное подключение к сети WiFi лучше всего отнести к 
+ненадёжным, проводное подключение к домашней сети должно быть, 
+безусловно, доверенным. Следует выбирать зону, наилучшим образом 
+соответствующую используемому подключению к сети.
+</p>
+<h2> <span class="mw-headline" id=".D0.9A.D0.B0.D0.BA_.D0.B4.D0.BE.D0.B1.D0.B0.D0.B2.D0.B8.D1.82.D1.8C_.D0.B8.D0.BB.D0.B8_.D0.BD.D0.B0.D1.81.D1.82.D1.80.D0.BE.D0.B8.D1.82.D1.8C_.D0.B7.D0.BE.D0.BD.D1.8B.3F"> Как добавить или настроить зоны? </span></h2>
+<p>Чтобы создать или настроить зоны, вы можете использовать какой-либо 
+из интерфейсов FirewallD, предназначенных для обработки и изменения 
+конфигурации. Ими являются графическое средство конфигурирования 
+firewall-config, консольная утилита firewall-cmd или интерфейс D-BUS. 
+Также вы можете создать или скопировать файл зоны в одном из каталогов 
+конфигурации. Директория /etc/firewalld/zone используется для хранения 
+настроек по-умолчанию, а также для возврата к ним в случае 
+необходимости; каталог @PREFIX@/lib/firewalld/zones используется для 
+хранения изменённых файлов конфигурации либо созданных пользователем.
+</p>
+<h2> <span class="mw-headline" id=".D0.9A.D0.B0.D0.BA_.D1.83.D0.BA.D0.B0.D0.B7.D0.B0.D1.82.D1.8C_.D0.B8.D0.BB.D0.B8_.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D0.B8.D1.82.D1.8C_.D0.B7.D0.BE.D0.BD.D1.83_.D0.B4.D0.BB.D1.8F_.D1.81.D0.BE.D0.B5.D0.B4.D0.B8.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F.3F"> Как указать или изменить зону для соединения? </span></h2>
+<p>Для соединения тип зоны сохраняется в значении опции ZONE= для ifcfg.
+ Если данная опция отсутствует или ей не присвоено значение, то 
+применяется зона, указанная FirewallD по умолчанию.
+</p><p>Если соединение управляется NetworkManager, то для изменения зоны вы также можете использовать nm-connection-editor.
+</p>
+<h2> <span class="mw-headline" id=".D0.A1.D0.B5.D1.82.D0.B5.D0.B2.D1.8B.D0.B5_.D1.81.D0.BE.D0.B5.D0.B4.D0.B8.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F.2C_.D0.BE.D0.B1.D1.80.D0.B0.D0.B1.D0.B0.D1.82.D1.8B.D0.B2.D0.B0.D0.B5.D0.BC.D1.8B.D0.B5_NetworkManager"> Сетевые соединения, обрабатываемые NetworkManager </span></h2>
+<p>Межсетевой экран не может обрабатывать сетевые соединения, созданные в
+ представлении NetworkManager, он может обрабатывать лишь сетевые 
+интерфейсы. Поэтому NetworkManager указывает FirewallD отнести сетевые 
+интерфейсы, относящиеся к соединениям, к зонам, определённым в 
+конфигурационном файле соединения (ifcfg), до установления соединения. 
+Если зона не задана в файле конфигурации, интерфейсы будут отнесены к 
+зоне, указанной FirewallD по умолчанию. Если соединение имеет более 
+одного интерфейса, то все они будут отнесены к соответствующей зоне. 
+Изменения в названиях интерфейсов также будут обработаны NetworkManager и
+ сообщены FirewallD.
+</p><p>Проще говоря, отныне соединения будут использоваться в связке с зонами.
+</p><p>Кроме того, NetworkManager указывает FirewallD удалить соединения из зон в том случае, если соединение разорвано.
+</p><p>Если FirewallD запускается или перезапускается посредством 
+systemd или скриптов инициализации (init scripts), FirewallD уведомляет 
+NetworkManager и соединения добавятся в соответствующие зоны.
+</p>
+<h2> <span class="mw-headline" id=".D0.A1.D0.B5.D1.82.D0.B5.D0.B2.D1.8B.D0.B5_.D1.81.D0.BE.D0.B5.D0.B4.D0.B8.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F.2C_.D0.BE.D0.B1.D1.80.D0.B0.D0.B1.D0.B0.D1.82.D1.8B.D0.B2.D0.B0.D0.B5.D0.BC.D1.8B.D0.B5_.D1.81.D0.B5.D1.82.D0.B5.D0.B2.D1.8B.D0.BC.D0.B8_.D1.81.D0.BA.D1.80.D0.B8.D0.BF.D1.82.D0.B0.D0.BC.D0.B8_.28network_scripts.29"> Сетевые соединения, обрабатываемые сетевыми скриптами (network scripts) </span></h2>
+<p>Для соединений, обрабатываемых сетевыми скриптами, существуют 
+ограничения. Не существует демона, который мог бы указать FirewallD 
+отнести соединения к той или иной зоне. Это делается только в случае 
+использования скриптов ifcfg-post. Поэтому изменения в именах, 
+произведённые после, не могут буть сообщены FirewallD. Кроме того, 
+перезапуск FirewallD в случае, если соединения уже активны, приведёт к 
+потере связи соединений с зонами. Но существуют идеи, как это исправить.
+ Самая простая из них — относить все соединения к зоне, указанной 
+FirewallD по умолчанию, если не задано другого.
+</p><p>Зона определяет функции межсетевого экрана, разрешённые в данной зоне:
+</p>
+<h2> <span class="mw-headline" id=".D0.A0.D0.B0.D0.B1.D0.BE.D1.82.D0.B0_.D1.81_FirewallD"> Работа с FirewallD </span></h2>
+<p>Для того чтобы, например, разрешить или запретить функции брандмауэра
+ в зонах, вы можете использовать либо графическое средство 
+конфигурирования <b>firewall-config</b>, либо консольную утилиту <b>firewall-cmd</b>.
+</p>
+<h3> <span class="mw-headline" id=".D0.98.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B5_firewall-cmd"> Использование firewall-cmd </span></h3>
+<p>Консольное приложение <b>firewall-cmd</b> поддерживает все функции 
+межсетевого экрана. В режимах статуса и запроса утилита не выдаёт 
+ответных сообщений, но команда возвращает состояние.
+</p>
+<h4> <span class="mw-headline" id=".D0.9E.D0.B1.D1.89.D0.B8.D0.B5_.D0.BF.D0.BE.D0.BB.D0.BE.D0.B6.D0.B5.D0.BD.D0.B8.D1.8F_.D0.BE.D0.B1_.D0.B8.D1.81.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D0.B8"> Общие положения об использовании </span></h4>
+<ul><li> Получение статуса FirewallD:
+</li></ul>
+<pre> firewall-cmd --state
+</pre>
+<p>Эта команда возвращает статус FirewallD, но видимого ответного 
+сообщения нет. Чтобы получить состояние в визуально различимом виде, 
+следует поступить так:
+</p>
+<pre> firewall-cmd --state &amp;&amp; echo "Running" || echo "Not running"
+</pre>
+<ul><li> Перезагрузка брандмауэра без потери информации о состоянии:
+</li></ul>
+<pre> firewall-cmd --reload
+</pre>
+<p>Если вместо этого вы используете ключ <b>--complete-reload</b>, 
+информация о состоянии будет потеряна. Эту опцию следует использовать 
+только в случае серьёзных проблем с межсетевым экраном, например, если 
+существуют такие неполадки с информацией о состоянии, что не может быть 
+установлено ни одно соединение, но все правила межсетевого экрана верны.
+</p>
+<ul><li> Получение списка всех поддерживаемых зон:
+</li></ul>
+<pre> firewall-cmd --get-zones
+</pre>
+<p>Данная команда выводит список, разделённый пробелами.
+</p>
+<ul><li> Получение списка всех поддерживаемых служб:
+</li></ul>
+<pre> firewall-cmd --get-services
+</pre>
+<p>Данная команда выводит список, разделённый пробелами.
+</p>
+<ul><li> Получение списка всех поддерживаемых типов ICMP:
+</li></ul>
+<pre> firewall-cmd --get-icmptypes
+</pre>
+<p>Данная команда выводит список, разделённый пробелами.
+</p>
+<ul><li> Вывод всех зон с включённым функционалом:
+</li></ul>
+<pre> firewall-cmd --list-all-zones
+</pre>
+<p>Формат вывода таков:
+</p>
+<pre> &lt;zone&gt;
+   interfaces: &lt;interface1&gt; ..
+   services: &lt;service1&gt; ..
+   ports: &lt;port1&gt; ..
+   forward-ports: &lt;forward port1&gt; ..
+   icmp-blocks: &lt;icmp type1&gt; ..
+   
+   ..
+</pre>
+<ul><li> Отображение зоны &lt;zone&gt; с включённым функционалом (если зона не задана, задействуется зона, указанная по умолчанию):
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --list-all
+</pre>
+<ul><li> Получение зоны, указанной по умолчанию для сетевых соединений:
+</li></ul>
+<pre> firewall-cmd --get-default-zone
+</pre>
+<ul><li> Задание зоны по умолчанию:
+</li></ul>
+<pre> firewall-cmd --set-default-zone=&lt;zone&gt;
+</pre>
+<p>Все интерфейсы, относящиеся к зоне, указанной по умолчанию, будут 
+отнесены к новой зоне по умолчанию, которая будет определять ограничения
+ для последующих вновь инициируемых сетевых соединений. Активные 
+соединения не подвержены действию этой команды.
+</p>
+<ul><li> Получение активных зон:
+</li></ul>
+<pre> firewall-cmd --get-active-zones
+</pre>
+<p>Данная команда выводит интерфейсы, указанные в качестве части зоны, в следующей форме:
+</p>
+<pre> &lt;zone1&gt;: &lt;interface1&gt; &lt;interface2&gt; ..
+ &lt;zone2&gt;: &lt;interface3&gt; ..
+</pre>
+<ul><li> Получение зон, относящихся к интерфейсу:
+</li></ul>
+<pre> firewall-cmd --get-zone-of-interface=&lt;interface&gt;
+</pre>
+<p>Данная команда выводит имя зоны, если интерфейс является частью зоны.
+</p>
+<ul><li> Добавление интерфейса в зону:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --add-interface=&lt;interface&gt;
+</pre>
+<p>Следует добавить интерфейс в зону, если он не был в зоне до этого. 
+Если опции зоны не заданы, будет задействована зона, указанная по 
+умолчанию. Параметры интерфейсов применяются после их перезагрузки.
+</p>
+<ul><li> Изменение зоны, которой принадлежит интерфейс:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --change-interface=&lt;interface&gt;
+</pre>
+<p>Данная команда схожа с опцией --add-interface, но она соотносит 
+интерфейс новой зоне, даже если до этого он принадлежал другой зоне.
+</p>
+<ul><li> Удаление интерфейса из зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --remove-interface=&lt;interface&gt;
+</pre>
+<ul><li> Сделать запрос, относится ли интерфейс к зоне:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --query-interface=&lt;interface&gt;
+</pre>
+<p>Осуществляет возврат, если интерфейс в зоне. Видимого ответного сообщения нет.
+</p>
+<ul><li> Вывод включённых в зоне служб:
+</li></ul>
+<pre> firewall-cmd [ --zone=&lt;zone&gt; ] --list-services
+</pre>
+<ul><li> Включение "режима паники", блокирующего весь сетевой трафик в случае крайней необходимости:
+</li></ul>
+<pre> firewall-cmd --panic-on
+</pre>
+<ul><li> Отключение "режима паники":
+</li></ul>
+<pre> firewall-cmd --panic-off
+</pre>
+<ul><li> Сделать запрос на предмет "режима паники":
+</li></ul>
+<pre> firewall-cmd --query-panic
+</pre>
+<p>Эта команда возвращает статус "режима паники" (0 если включено (on) и 1 в обратном случае), а также выводит на консоль yes/no.
+</p>
+<div class="messagebox" style="background-color: #def3fe; border: 1px solid #c5d7e0; color: black; padding: 5px; margin: 1ex 0; min-height: 35px; padding-left: 45px;">
+<div style="float: left; margin-left: -40px;"><a href="https://fedoraproject.org/wiki/File:Note.png" class="image"><img alt="Note.png" src="FirewallD_ru%20-%20FedoraProject_files/Note.png" height="35" width="35"></a></div>
+<div><b>Имена опций были изменены в версии 0.3.0</b><br>В предыдущих версиях они назывались соответственно <code>--enable-panic</code> и <code>--disable-panic</code>.</div>
+</div>
+<h4> <span class="mw-headline" id=".D0.9E.D0.B1.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.BA.D0.B0_.D0.B7.D0.BE.D0.BD_.D1.81_.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D1.8F.D0.B5.D0.BC.D1.8B.D0.BC.D0.B8_.D0.B2.D0.BE_.D0.B2.D1.80.D0.B5.D0.BC.D1.8F_.D0.B2.D1.8B.D0.BF.D0.BE.D0.BB.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F_.D0.BF.D0.B0.D1.80.D0.B0.D0.BC.D0.B5.D1.82.D1.80.D0.B0.D0.BC.D0.B8"> Обработка зон с изменяемыми во время выполнения параметрами </span></h4>
+<p>В режиме выполнения изменения в зонах не постоянны. Изменения будут утеряны после перезагрузки или перезапуска.
+</p>
+<ul><li> Включение службы в пределах зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --add-service=&lt;service&gt; [--timeout=&lt;seconds&gt;]
+</pre>
+<p>Данная команда включает службу в пределах зоны. Если зона не задана, 
+задействуется зона, указанная по умолчанию. Если задана выдержка 
+времени, служба будет включена для зоны только на время, указанное в 
+секундах. Если служба уже активна, то предупреждающих сообщений не 
+будет.
+</p>
+<ul><li> <b>Пример:</b> Включение службы ipp-client в пределах зоны на 60 секунд:
+</li></ul>
+<pre> firewall-cmd --zone=home --add-service=ipp-client --timeout=60
+</pre>
+<ul><li> <b>Пример:</b> Включение службы http в пределах зоны, указанной по умолчанию:
+</li></ul>
+<pre> firewall-cmd --add-service=http
+</pre>
+<ul><li> Отключение службы для зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --remove-service=&lt;service&gt;
+</pre>
+<p>Данная команда выключает службу для зоны. Если зона не задана, будет использована зона, указанная по умолчанию.
+</p>
+<ul><li> <b>Пример:</b> Отключение службы http для зоны home:
+</li></ul>
+<pre> firewall-cmd --zone=home --remove-service=http
+</pre>
+<p>Служба будет отключена для зоны. Если служба не включена в пределах зоны, то будет предупреждающее сообщение.
+</p>
+<ul><li> Сделать запрос, включена ли служба в пределах зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --query-service=&lt;service&gt;
+</pre>
+<p>Эта команда возвращает единицу, если служба включена для зоны, иначе возвращает нуль. Видимого ответного сообщения нет
+</p>
+<ul><li> Включение сочетания порта и протокола в пределах зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --add-port=&lt;port&gt;[-&lt;port&gt;]/&lt;protocol&gt; [--timeout=&lt;seconds&gt;]
+</pre>
+<p>Данная команда включает сочетание порта и протокола. Порт может 
+представлять собой единственный порт &lt;port&gt; или диапазон портов 
+&lt;port&gt;-&lt;port&gt;. Протоколом может быть как <b>tcp</b>, так и <b>udp</b>.
+</p>
+<ul><li> Отключение сочетания порта и протокола в пределах зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --remove-port=&lt;port&gt;[-&lt;port&gt;]/&lt;protocol&gt;
+</pre>
+<ul><li> Сделать запрос, включено ли сочетание порта и протокола в пределах зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --query-port=&lt;port&gt;[-&lt;port&gt;]/&lt;protocol&gt;
+</pre>
+<p>Осуществляет возврат, если сочетание включено, видимого ответного сообщения нет.
+</p>
+<ul><li> Включение маскарадинга в пределах зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --add-masquerade
+</pre>
+<p>Данная команда включает маскарадинг для зоны. Адреса частной сети 
+спрятаны за доступным извне адресом IP и привязаны к нему. Это 
+разновидность трансляции адресов, обычно используется в роутерах. 
+Маскарадинг доступен только для IPv4 из-за ограничений ядра.
+</p>
+<ul><li> Отключение маскарадинга для зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --remove-masquerade
+</pre>
+<ul><li> Сделать запрос на предмет маскарадинга в пределах зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --query-masquerade
+</pre>
+<p>Осуществляет возврат, если маскарадинг включён, видимого ответного сообщения нет.
+</p>
+<ul><li> Включение блока ICMP в пределах зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --add-icmp-block=&lt;icmptype&gt;
+</pre>
+<p>Эта команда включает блок выбранного межсетевого протокола 
+управляющих сообщений (ICMP). Сообщения ICMP являются либо 
+информационными запросами, либо сообщениями, созданными в ответ на 
+информационные запросы, либо сообщениями об ошибках.
+</p>
+<ul><li> Отключение блока ICMP для зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --remove-icmp-block=&lt;icmptype&gt;
+</pre>
+<ul><li> Сделать запрос на предмет блока ICMP в пределах зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --query-icmp-block=&lt;icmptype&gt;
+</pre>
+<p>Осуществляет возврат, если блок включён, видимого ответного сообщения нет.
+</p>
+<ul><li> <b>Пример:</b> Включение блока сообщений "эхо-ответ" в зоне public:
+</li></ul>
+<pre> firewall-cmd --zone=public --add-icmp-block=echo-reply
+</pre>
+<ul><li> Включение перенаправления или переназначения портов в пределах зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --add-forward-port=port=&lt;port&gt;[-&lt;port&gt;]:proto=&lt;protocol&gt; {&nbsp;:toport=&lt;port&gt;[-&lt;port&gt;] |&nbsp;:toaddr=&lt;address&gt; |&nbsp;:toport=&lt;port&gt;[-&lt;port&gt;]:toaddr=&lt;address&gt; }
+</pre>
+<p>Порт переназначается либо на такой же порт на другом узле, либо на 
+другой порт на том же узле, либо на другой порт на другом узле. Порт 
+может представлять собой единственный порт &lt;port&gt; или диапазон 
+портов &lt;port&gt;-&lt;port&gt;. Протоколом может быть как <b>tcp</b>, так и <b>udp</b>.
+ Значение опции toport может быть как портом &lt;port&gt;, так и 
+диапазоном портов &lt;port&gt;-&lt;port&gt;. Значение опции toaddr 
+является адресом IPv4. Перенаправление портов доступно только для IPv4 
+из-за ограничений ядра.
+</p>
+<ul><li> Отключение перенаправления или переназначения портов для зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --remove-forward-port=port=&lt;port&gt;[-&lt;port&gt;]:proto=&lt;protocol&gt; {&nbsp;:toport=&lt;port&gt;[-&lt;port&gt;] |&nbsp;:toaddr=&lt;address&gt; |&nbsp;:toport=&lt;port&gt;[-&lt;port&gt;]:toaddr=&lt;address&gt; }
+</pre>
+<ul><li> Сделать запрос на предмет перенаправления или переназначения портов в пределах зоны:
+</li></ul>
+<pre> firewall-cmd [--zone=&lt;zone&gt;] --query-forward-port=port=&lt;port&gt;[-&lt;port&gt;]:proto=&lt;protocol&gt; {&nbsp;:toport=&lt;port&gt;[-&lt;port&gt;] |&nbsp;:toaddr=&lt;address&gt; |&nbsp;:toport=&lt;port&gt;[-&lt;port&gt;]:toaddr=&lt;address&gt; }
+</pre>
+<p>Осуществляет возврат, если перенаправление либо переназначение включены, видимого ответного сообщения нет.
+</p>
+<ul><li> <b>Пример:</b> Перенаправление ssh на узел 127.0.0.2 в пределах зоны home:
+</li></ul>
+<pre> firewall-cmd --zone=home --add-forward-port=port=22:proto=tcp:toaddr=127.0.0.2
+</pre>
+<h4> <span class="mw-headline" id=".D0.9E.D0.B1.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D0.BA.D0.B0_.D0.B7.D0.BE.D0.BD_.D1.81_.D0.BF.D0.BE.D1.81.D1.82.D0.BE.D1.8F.D0.BD.D0.BD.D1.8B.D0.BC.D0.B8.2F.D1.83.D1.81.D1.82.D0.BE.D0.B9.D1.87.D0.B8.D0.B2.D1.8B.D0.BC.D0.B8_.D0.BF.D0.B0.D1.80.D0.B0.D0.BC.D0.B5.D1.82.D1.80.D0.B0.D0.BC.D0.B8"> Обработка зон с постоянными/устойчивыми параметрами </span></h4>
+<p>Постоянные опции не оказывают влияния непосредственно в среде 
+выполнения. Эти опции доступны только после перезагрузки или 
+перезапуска. Для того чтобы иметь опции, изменяемые в среде выполнения, и
+ постоянные опции, необходимо обеспечить оба варианта.
+Опция <b>--permanent</b> должна быть первой для всех постоянных вызовов.
+</p>
+<ul><li> Получение списка поддерживаемых постоянно служб:
+</li></ul>
+<pre> firewall-cmd --permanent --get-services
+</pre>
+<ul><li> Получение списка поддерживаемых постоянно типов ICMP:
+</li></ul>
+<pre> firewall-cmd --permanent --get-icmptypes
+</pre>
+<ul><li> Получение списка поддерживаемых постоянно зон:
+</li></ul>
+<pre> firewall-cmd --permanent --get-zones
+</pre>
+<ul><li> Включение службы в пределах зоны на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --add-service=&lt;service&gt;
+</pre>
+<p>Данная команда включает службу в пределах зоны на постоянно. Если 
+опция зоны не задана, задействуется зона, указанная по умолчанию.
+</p>
+<ul><li> Отключение службы для зоны на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --remove-service=&lt;service&gt;
+</pre>
+<ul><li> Сделать запрос, включена ли служба в пределах зоны на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --query-service=&lt;service&gt;
+</pre>
+<p>Осуществляет возврат, если служба включена, видимого ответного сообщения нет.
+</p>
+<ul><li> <b>Пример:</b> Включение службы ipp-client в пределах зоны home на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent --zone=home --add-service=ipp-client
+</pre>
+<ul><li> Включение сочетание порта и протокола в пределах зоны на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --add-port=&lt;port&gt;[-&lt;port&gt;]/&lt;protocol&gt;
+</pre>
+<ul><li> Отключение сочетания порта и протокола для зоны на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --remove-port=&lt;port&gt;[-&lt;port&gt;]/&lt;protocol&gt;
+</pre>
+<ul><li> Сделать запрос, включено ли сочетание порта и протокола в пределах зоны на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --query-port=&lt;port&gt;[-&lt;port&gt;]/&lt;protocol&gt;
+</pre>
+<p>Осуществляет возврат, если сочетание включено, видимого ответного сообщения нет.
+</p>
+<ul><li> <b>Пример:</b> Включение порта 443/TCP для https в пределах зоны home на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent --zone=home --add-port=443/tcp
+</pre>
+<ul><li> Включение маскарадинга в пределах зоны на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --add-masquerade
+</pre>
+<p>Данная команда включает маскарадинг в пределах зоны. Адреса частной 
+сети спрятаны за доступным извне адресом IP и привязаны к нему. Это 
+разновидность трансляции адресов, обычно используется в роутерах. 
+Маскарадинг доступен только для IPv4 из-за ограничений ядра.
+</p>
+<ul><li> Отключение маскарадинга для зоны на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --remove-masquerade
+</pre>
+<ul><li> Сделать запрос, включён ли маскарадинг в пределах зоны на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --query-masquerade
+</pre>
+<p>Осуществляет возврат, если маскарадинг включён, видимого ответного сообщения нет.
+</p>
+<ul><li> Включение блока ICMP в пределах зоны на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --add-icmp-block=&lt;icmptype&gt;
+</pre>
+<p>Эта команда включает блок выбранного межсетевого протокола 
+управляющих сообщений (ICMP). Сообщения ICMP являются либо 
+информационными запросами, либо сообщениями, созданными в ответ на 
+информационные запросы, либо сообщениями об ошибках.
+</p>
+<ul><li> Отключение блока ICMP для зоны на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --remove-icmp-block=&lt;icmptype&gt;
+</pre>
+<ul><li> Сделать запрос, включён ли блок ICMP в пределах зоны на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --query-icmp-block=&lt;icmptype&gt;
+</pre>
+<p>Осуществляет возврат, если блок ICMP включён, видимого ответного сообщения нет.
+</p>
+<ul><li> <b>Пример:</b> Включение блока сообщений "эхо-ответ" в зоне public на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent --zone=public --add-icmp-block=echo-reply
+</pre>
+<ul><li> Включение перенаправления или переназначения портов в пределах зоны на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --add-forward-port=port=&lt;port&gt;[-&lt;port&gt;]:proto=&lt;protocol&gt; {&nbsp;:toport=&lt;port&gt;[-&lt;port&gt;] |&nbsp;:toaddr=&lt;address&gt; |&nbsp;:toport=&lt;port&gt;[-&lt;port&gt;]:toaddr=&lt;address&gt; }
+</pre>
+<p>Порт переназначается либо на такой же порт на другом узле, либо на 
+другой порт на том же узле, либо на другой порт на другом узле. Порт 
+может представлять собой единственный порт &lt;port&gt; или диапазон 
+портов &lt;port&gt;-&lt;port&gt;. Протоколом может быть как <b>tcp</b>, так и <b>udp</b>.
+ Значение опции toport может быть как портом &lt;port&gt;, так и 
+диапазоном портов &lt;port&gt;-&lt;port&gt;. Значение опции toaddr 
+является адресом IPv4. Перенаправление портов доступно только для IPv4 
+из-за ограничений ядра.
+</p>
+<ul><li> Отключение перенаправления или переназначения портов для зоны на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --remove-forward-port=port=&lt;port&gt;[-&lt;port&gt;]:proto=&lt;protocol&gt; {&nbsp;:toport=&lt;port&gt;[-&lt;port&gt;] |&nbsp;:toaddr=&lt;address&gt; |&nbsp;:toport=&lt;port&gt;[-&lt;port&gt;]:toaddr=&lt;address&gt; }
+</pre>
+<ul><li> Сделать запрос на предмет постоянных перенаправления или переназначения портов в пределах зоны:
+</li></ul>
+<pre> firewall-cmd --permanent [--zone=&lt;zone&gt;] --query-forward-port=port=&lt;port&gt;[-&lt;port&gt;]:proto=&lt;protocol&gt; {&nbsp;:toport=&lt;port&gt;[-&lt;port&gt;] |&nbsp;:toaddr=&lt;address&gt; |&nbsp;:toport=&lt;port&gt;[-&lt;port&gt;]:toaddr=&lt;address&gt; }
+</pre>
+<p>Осуществляет возврат, если перенаправление либо переназначение включены, видимого ответного сообщения нет.
+</p>
+<ul><li> <b>Пример:</b> Перенаправление ssh на узел 127.0.0.2 в пределах зоны home на постоянно:
+</li></ul>
+<pre> firewall-cmd --permanent --zone=home --add-forward-port=port=22:proto=tcp:toaddr=127.0.0.2
+</pre>
+<h4> <span class="mw-headline" id=".D0.9F.D1.80.D1.8F.D0.BC.D1.8B.D0.B5_.D0.BE.D0.BF.D1.86.D0.B8.D0.B8"> Прямые опции </span></h4>
+<p>Прямые опции предназначены, в основном, для возможности назначения 
+пользовательских правил службам и приложениям. Правила не сохраняются и 
+должны быть переопределены после перезагрузки или перезапуска. Аргументы
+ &lt;args&gt; сквозной опции такие же, как и соответствующие аргументы 
+iptables, ip6tables ebtables.
+</p><p>Ключ <b>--direct</b> следует указывать перед всеми прямыми опциями.
+</p>
+<ul><li> Передача команды через межсетевой экран; аргументами 
+&lt;args&gt; могут быть все аргументы командной строки iptables, 
+ip6tables и ebtables:
+</li></ul>
+<pre> firewall-cmd --direct --passthrough { ipv4 | ipv6 | eb } &lt;args&gt;
+</pre>
+<ul><li> Добавление новой последовательности &lt;chain&gt; таблице &lt;table&gt;:
+</li></ul>
+<pre> firewall-cmd --direct --add-chain { ipv4 | ipv6 | eb } &lt;table&gt; &lt;chain&gt;
+</pre>
+<ul><li> Удаление последовательности с именем &lt;chain&gt; из таблицы &lt;table&gt;:
+</li></ul>
+<pre> firewall-cmd --direct --remove-chain { ipv4 | ipv6 | eb } &lt;table&gt; &lt;chain&gt;
+</pre>
+<ul><li> Сделать запрос, существует ли последовательность &lt;chain&gt; в таблице &lt;table&gt;; возвращает 0, если верно, иначе — 1:
+</li></ul>
+<pre> firewall-cmd --direct --query-chain { ipv4 | ipv6 | eb } &lt;table&gt; &lt;chain&gt;
+</pre>
+<p>Осуществляет возврат, если последовательность существует, видимого ответного сообщения нет.
+</p>
+<ul><li> Получение перечня всех последовательностей, добавленных в таблицу &lt;table&gt;, в виде списка, разделённого пробелами:
+</li></ul>
+<pre> firewall-cmd --direct --get-chains { ipv4 | ipv6 | eb } &lt;table&gt;
+</pre>
+<ul><li> Добавление правила с аргументами &lt;args&gt; в 
+последовательность &lt;chain&gt; в таблице &lt;table&gt; с приоритетом 
+&lt;priority&gt;:
+</li></ul>
+<pre> firewall-cmd --direct --add-rule { ipv4 | ipv6 | eb } &lt;table&gt; &lt;chain&gt; &lt;priority&gt; &lt;args&gt;
+</pre>
+<ul><li> Удаление правила с аргументами &lt;args&gt; из последовательности &lt;chain&gt; в таблице &lt;table&gt;:
+</li></ul>
+<pre> firewall-cmd --direct --remove-rule { ipv4 | ipv6 | eb } &lt;table&gt; &lt;chain&gt; &lt;args&gt;
+</pre>
+<ul><li> Сделать запрос, существует ли правило с аргументами 
+&lt;args&gt; в последовательности &lt;chain&gt; в таблице &lt;table&gt;;
+ возвращает 0, если верно, иначе — 1:
+</li></ul>
+<pre> firewall-cmd --direct --query-rule { ipv4 | ipv6 | eb } &lt;table&gt; &lt;chain&gt; &lt;args&gt;
+</pre>
+<p>Осуществляет возврат, если правило существует, видимого ответного сообщения нет.
+</p>
+<ul><li> Получение перечня всех правил, добавленных в последовательность
+ &lt;chain&gt; в таблице &lt;table&gt;, в виде списка, состоящего из 
+строк аргументов.
+</li></ul>
+<pre> firewall-cmd --direct --get-rules { ipv4 | ipv6 | eb } &lt;table&gt; &lt;chain&gt;
+</pre>
+<h2> <span class="mw-headline" id=".D0.A4.D1.83.D0.BD.D0.BA.D1.86.D0.B8.D0.BE.D0.BD.D0.B0.D0.BB_FirewallD_.D0.BD.D0.B0_.D0.B4.D0.B0.D0.BD.D0.BD.D1.8B.D0.B9_.D0.BC.D0.BE.D0.BC.D0.B5.D0.BD.D1.82"> Функционал FirewallD на данный момент </span></h2>
+<h3> <span class="mw-headline" id=".D0.98.D0.BD.D1.82.D0.B5.D1.80.D1.84.D0.B5.D0.B9.D1.81_D-BUS"> Интерфейс D-BUS </span></h3>
+<p>Интерфейс D-BUS предоставляет информацию о состоянии межсетевого 
+экрана и позволяет применять и отменять параметры брандмауэра и 
+осуществлять запросы.
+</p>
+<h3> <span class="mw-headline" id=".D0.97.D0.BE.D0.BD.D1.8B"> Зоны </span></h3>
+<p>Сетевая зона определяет уровень доверия интерфейса, используемого для
+ сетевого соединения. Существует несколько предопределённых зон, 
+обеспечиваемых FirewallD. Опции конфигурации зоны и общий информационный
+ файл описываются в man-странице firewalld.zone(5).
+</p>
+<h3> <span class="mw-headline" id=".D0.A1.D0.BB.D1.83.D0.B6.D0.B1.D1.8B"> Службы </span></h3>
+<p>Служба может быть списком локальных портов и направлений, а также, 
+кроме того, перечнем вспомогательных модулей межсетевого экрана, 
+загружаемых автоматически, если служба включена. Использование 
+предопределённых служб позволяет пользователю легче разрешать и 
+запрещать доступ к службе. Опции конфигурации службы и общий 
+информационный файл описываются в man-странице firewalld.service(5).
+</p>
+<h3> <span class="mw-headline" id=".D0.A2.D0.B8.D0.BF.D1.8B_ICMP"> Типы ICMP </span></h3>
+<p>Межсетевой протокол управляющих сообщений (Internet Control Message 
+Protocol, ICMP) используется для обмена информацией, а также сообщениями
+ об ошибках в пределах IP-адресации (Internet Protocol, IP). Типы ICMP 
+могут быть использованы в FirewallD для ограничения обмена этими 
+сообщениями. Опции конфигурации типов ICMP и общий информационный файл 
+описываются в man-странице firewalld.icmptype(5).
+</p>
+<h3> <span class="mw-headline" id=".D0.9F.D1.80.D1.8F.D0.BC.D0.BE.D0.B9_.D0.B8.D0.BD.D1.82.D0.B5.D1.80.D1.84.D0.B5.D0.B9.D1.81"> Прямой интерфейс </span></h3>
+<p>Прямой интерфейс используется, главным образом, службами или 
+приложениями для назначения специфических правил межсетевого экрана. 
+Правила не являются постоянными и должны применяться после получения 
+сообщения о запуске, перезапуске или перезагрузке от FirewallD 
+посредством D-BUS.
+</p>
+<h3> <span class="mw-headline" id=".D0.9A.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D1.8F_.D0.B2.D1.80.D0.B5.D0.BC.D0.B5.D0.BD.D0.B8_.D0.B2.D1.8B.D0.BF.D0.BE.D0.BB.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F"> Конфигурация времени выполнения </span></h3>
+<p>Конфигурация времени выполнения не является постоянной/устойчивой и 
+сохраняется только до перезагрузки. После перезапуска или останова 
+службы или перезагрузки системы эти параметры будут потеряны.
+</p>
+<h3> <span class="mw-headline" id=".D0.9F.D0.BE.D1.81.D1.82.D0.BE.D1.8F.D0.BD.D0.BD.D0.B0.D1.8F.2F.D1.83.D1.81.D1.82.D0.BE.D0.B9.D1.87.D0.B8.D0.B2.D0.B0.D1.8F_.D0.BA.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D1.8F"> Постоянная/устойчивая конфигурация </span></h3>
+<p>Постоянная конфигурация хранится в соответствующих файлах и 
+восстанавливается каждый раз при загрузке машины, перезагрузке службы 
+или перезапуске.
+</p>
+<h3> <span class="mw-headline" id=".D0.90.D0.BF.D0.BF.D0.BB.D0.B5.D1.82_.D0.B2_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D0.BD.D0.BE.D0.BC_.D1.82.D1.80.D0.B5.D0.B5"> Апплет в системном трее </span></h3>
+<p>Апплет в системном трее <b>firewall-applet</b> визуализирует для 
+пользователя состояние межсетевого экрана, а также проблемы с 
+брандмауэром. Он также может использован для конфигурирования с помощью 
+возможности запуска утилиты <b>firewall-config</b>.
+</p>
+<h3> <span class="mw-headline" id=".D0.93.D1.80.D0.B0.D1.84.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.BE.D0.B5_.D1.81.D1.80.D0.B5.D0.B4.D1.81.D1.82.D0.B2.D0.BE_.D0.BA.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.B8.D1.8F"> Графическое средство конфигурирования </span></h3>
+<p>Утилита <b>firewall-config</b> является главным средством 
+конфигурирования демона межсетевого экрана. Она поддерживает весь 
+функционал брандмауэра помимо прямого интерфейса, который обрабатывается
+ службами/приложениями, назначающими правила.
+</p>
+<h3> <span class="mw-headline" id=".D0.9A.D0.BE.D0.BD.D1.81.D0.BE.D0.BB.D1.8C.D0.BD.D1.8B.D0.B9_.D0.BA.D0.BB.D0.B8.D0.B5.D0.BD.D1.82"> Консольный клиент </span></h3>
+<p>Консольная утилита <b>firewall-cmd</b> обеспечивает большую часть функционала графического средства по настройке.
+</p>
+<h3> <span class="mw-headline" id=".D0.9F.D0.BE.D0.B4.D0.B4.D0.B5.D1.80.D0.B6.D0.BA.D0.B0_ebtables"> Поддержка ebtables </span></h3>
+<p>Поддержка ebtables нужна для удовлетворения всех потребностей демона 
+libvirt, а также чтобы предотвратить проблемы доступа между ip*tables и 
+ebtables на уровне вспомогательных модулей ядра для межсетевого экрана. 
+Все эти команды получают доступ к одним и тем же структурам, поэтому они
+ не должны использоваться одновременно.
+</p>
+<h3> <span class="mw-headline" id=".D0.9A.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D1.8F_.D0.BF.D0.BE_.D1.83.D0.BC.D0.BE.D0.BB.D1.87.D0.B0.D0.BD.D0.B8.D1.8E_.2F_.D0.B4.D0.BB.D1.8F_.D0.BE.D1.82.D0.BA.D0.B0.D1.82.D0.B0.2C_.D1.85.D1.80.D0.B0.D0.BD.D1.8F.D1.89.D0.B0.D1.8F.D1.81.D1.8F_.D0.B2_.2Fusr.2Flib.2Ffirewalld"> Конфигурация по умолчанию / для отката, хранящаяся в /usr/lib/firewalld </span></h3>
+<p>Данная директория содержит конфигурацию по умолчанию и для отката, 
+обеспечиваемую FirewallD для типов ICMP, служб и зон. Файлы, 
+предоставляемые пакетом FirewallD, не должны изменяться, изменения 
+производятся при обновлении пакета FirewallD. Дополнительные типы ICMP, 
+службы и зоны могут быть предоставлены соответствующими пакетами или 
+созданием соответствующих файлов.
+</p>
+<h3> <span class="mw-headline" id=".D0.A1.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D0.BD.D1.8B.D0.B5_.D0.BF.D0.B0.D1.80.D0.B0.D0.BC.D0.B5.D1.82.D1.80.D1.8B_.D0.BA.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D0.B8.2C_.D1.85.D1.80.D0.B0.D0.BD.D1.8F.D1.89.D0.B8.D0.B5.D1.81.D1.8F_.D0.B2_.2Fetc.2Ffirewalld"> Системные параметры конфигурации, хранящиеся в /etc/firewalld </span></h3>
+<p>Системная или пользовательская конфигурация, хранящаяся здесь, 
+создаётся как системным администратором, так и в ходе пользовательской 
+настройки посредством конфигурационного интерфейса FirewallD, а также 
+"вручную". Эти конфигурационные файлы будут преобладать над файлами 
+конфигурации по умолчанию.
+</p><p>Для того чтобы "вручную" изменить установки предопределённых 
+типов ICMP, зон или служб, необходимо скопировать файлы из директории 
+конфигурации по умолчанию в соответствующий каталог в системной 
+конфигурационной директории и соответственно их изменить.
+</p><p>Невозможно таким образом подменить параметры неизменяемых зон, 
+так как их нельзя изменить. Если производится возврат к параметрам по 
+умолчанию для зоны, имеющей файлы параметров по умолчанию / для отката, 
+то файл в директории /etc/firewalld  будет переименован в 
+&lt;file&gt;.old и произойдёт откат.
+</p>
+<h2> <span class="mw-headline" id=".D0.A0.D0.B5.D0.B0.D0.BB.D0.B8.D0.B7.D1.83.D0.B5.D0.BC.D1.8B.D0.B9_.D0.B2_.D0.BD.D0.B0.D1.81.D1.82.D0.BE.D1.8F.D1.89.D0.B5.D0.B5_.D0.B2.D1.80.D0.B5.D0.BC.D1.8F_.D1.84.D1.83.D0.BD.D0.BA.D1.86.D0.B8.D0.BE.D0.BD.D0.B0.D0.BB"> Реализуемый в настоящее время функционал </span></h2>
+<h3> <span class="mw-headline" id=".D0.A0.D0.B0.D0.B7.D0.B2.D0.B8.D1.82.D1.8B.D0.B9_.D1.8F.D0.B7.D1.8B.D0.BA"> Развитый язык </span></h3>
+<p>Данная функция привносит возможность применения высокоуровневого 
+языка для создания и использования более сложных правил межсетевого 
+экрана в сетях IPv4 и IPv6 без специального знания синтаксиса iptables.
+</p><p>В Fedora 19 реализован второй этап разработки развитого языка, 
+поддерживающий интерфейс D-Bus и параметрирование из командной строки. 
+Третий этап разработки обеспечит поддержку языка в графической 
+конфигурационной утилите firewall-config.
+</p><p>Дополнительную информацию можно получить на соответствующей странице: <a class="external text" href="https://fedoraproject.org/wiki/Features/FirewalldRichLanguage">развитый язык FirewallD (firewalld Rich Language)</a>
+</p>
+<h3> <span class="mw-headline" id=".D0.91.D0.BB.D0.BE.D0.BA.D0.B8.D1.80.D0.BE.D0.B2.D0.BA.D0.B0_.D0.B8.D0.B7.D0.BC.D0.B5.D0.BD.D0.B5.D0.BD.D0.B8.D1.8F_.D0.BA.D0.BE.D0.BD.D1.84.D0.B8.D0.B3.D1.83.D1.80.D0.B0.D1.86.D0.B8.D0.B8"> Блокировка изменения конфигурации </span></h3>
+<p>Данная функция добавляет простую опцию, для того чтобы FirewallD мог 
+заблокировать изменение своей конфигурации локальными приложениями или 
+службами. Это очень лёгкая версия политик приложений.
+</p><p>В Fedora 19 реализован второй этап разработки блокировки, 
+поддерживающий интерфейс D-Bus и параметрирование из командной строки. 
+Третий этап разработки обеспечит поддержку блокировки в графической 
+конфигурационной утилите firewall-config.
+</p><p>Дополнительную информацию можно получить на соответствующей странице: <a class="external text" href="https://fedoraproject.org/wiki/Features/FirewalldLockdown">блокировка изменения конфигурации FirewallD (firewalld Lockdown)</a>
+</p>
+<h3> <span class="mw-headline" id=".D0.9F.D0.BE.D1.81.D1.82.D0.BE.D1.8F.D0.BD.D0.BD.D1.8B.D0.B5_.D0.BF.D1.80.D1.8F.D0.BC.D1.8B.D0.B5_.D0.BF.D1.80.D0.B0.D0.B2.D0.B8.D0.BB.D0.B0"> Постоянные прямые правила </span></h3>
+<p>Реализация данной функции находится на ранней стадии разработки. Она 
+привнесёт возможность сохранить на постоянно прямые правила и цепочки. 
+Дополнительную информацию можно получить в разделе <a class="external text" href="https://fedoraproject.org/wiki/FirewallD/ru#.D0.9F.D1.80.D1.8F.D0.BC.D1.8B.D0.B5_.D0.BE.D0.BF.D1.86.D0.B8.D0.B8">Прямые опции</a>.
+</p>
+<h3> <span class="mw-headline" id=".D0.A3.D1.85.D0.BE.D0.B4_.D0.BE.D1.82_.D1.81.D0.BB.D1.83.D0.B6.D0.B1_ip.2Atables_.D0.B8_ebtables"> Уход от служб ip*tables и ebtables </span></h3>
+<p>Реализация данной функции находится на ранней стадии разработки. Она 
+имеет целью создание сценария преобразования, который будет создавать 
+постоянные прямые правила на основе конфигураций iptables, ip6tables и 
+ebtables (насколько это возможно). Ограничением здесь может стать 
+сложность интеграции получаемых правил в имеющиеся цепочки, 
+обеспечиваемые FirewallD.
+</p><p>Уход от ip*tables и ebtables требует много тестов на системах со сложными конфигурациями FirewallD.
+</p>
+<h2> <span class="mw-headline" id=".D0.97.D0.B0.D0.BF.D0.BB.D0.B0.D0.BD.D0.B8.D1.80.D0.BE.D0.B2.D0.B0.D0.BD.D0.BD.D1.8B.D0.B9_.D0.B8_.D0.BF.D1.80.D0.B5.D0.B4.D0.BB.D0.B0.D0.B3.D0.B0.D0.B5.D0.BC.D1.8B.D0.B9_.D0.BA_.D1.80.D0.B5.D0.B0.D0.BB.D0.B8.D0.B7.D0.B0.D1.86.D0.B8.D0.B8_.D1.84.D1.83.D0.BD.D0.BA.D1.86.D0.B8.D0.BE.D0.BD.D0.B0.D0.BB"> Запланированный и предлагаемый к реализации функционал </span></h2>
+<h3> <span class="mw-headline" id=".D0.90.D0.B1.D1.81.D1.82.D1.80.D0.B0.D0.BA.D1.82.D0.BD.D0.B0.D1.8F_.D0.BC.D0.BE.D0.B4.D0.B5.D0.BB.D1.8C_.D0.BC.D0.B5.D0.B6.D1.81.D0.B5.D1.82.D0.B5.D0.B2.D0.BE.D0.B3.D0.BE_.D1.8D.D0.BA.D1.80.D0.B0.D0.BD.D0.B0"> Абстрактная модель межсетевого экрана </span></h3>
+<p>Добавление слоя абстракции поверх правил межсетевых экранов ip*tables
+ и ebtables делает создание правил простым и более интуитивным. Слой 
+абстракции должен быть одновременно функциональным и простым, что делает
+ его создание нелёгкой задачей. Для этого должен быть придуман 
+специальный язык межсетевого экрана. Правила межсетевого экрана имеют 
+фиксированную позицию, а также возможно осуществление запроса общей 
+информацию о состоянии доступа, политиках доступа для портов и других 
+функциях брандмауэра.
+</p>
+<h3> <span class="mw-headline" id=".D0.9F.D0.BE.D0.B4.D0.B4.D0.B5.D1.80.D0.B6.D0.BA.D0.B0_.D1.82.D1.80.D0.B0.D1.81.D1.81.D0.B8.D1.80.D0.BE.D0.B2.D1.89.D0.B8.D0.BA.D0.B0"> Поддержка трассировщика </span></h3>
+<p>Трассировщик необходим, чтобы было возможно ограничить установленные 
+соединения для отключённого функционала. В некоторых ситуациях 
+ограничивать соединение не стоит: например, в случае включения службы 
+межсетевого экрана на ограниченное время, для того чтобы установить 
+постоянное внешнее соединение.
+</p>
+<h3> <span class="mw-headline" id=".D0.A0.D0.B5.D0.B6.D0.B8.D0.BC_.D0.B2.D0.B7.D0.B0.D0.B8.D0.BC.D0.BE.D0.B4.D0.B5.D0.B9.D1.81.D1.82.D0.B2.D0.B8.D1.8F_.D1.81_.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D1.82.D0.B5.D0.BB.D0.B5.D0.BC"> Режим взаимодействия с пользователем </span></h3>
+<p>Это специальный режим брандмауэра, включаемый пользователем или 
+администратором. Все запросы приложений, пытающиеся изменить состояние 
+межсетевого экрана, направляются пользователю, чтобы уведомить его и 
+получить ответ с разрешением или запрещением запроса. Возможно задать 
+промежуток времени для разрешения соединения и его ограничения для 
+узлов, сетей или других соединений. Этот сценарий может быть сохранён 
+для повторения такого же поведения в будущем уже без уведомления.
+</p><p>Дополнительная функция этого режима — предоставление пользователю
+ попыток осуществить прямое внешнее соединение на уровне выбранных 
+заранее служб или портов на тех же условиях, что и у приложений. 
+Ограничение на уровне служб и портов также ограничит число запросов, 
+отправляемых пользователю.
+</p>
+<h3> <span class="mw-headline" id=".D0.9F.D0.BE.D0.B4.D0.B4.D0.B5.D1.80.D0.B6.D0.BA.D0.B0_.D0.BF.D0.BE.D0.BB.D1.8C.D0.B7.D0.BE.D0.B2.D0.B0.D1.82.D0.B5.D0.BB.D1.8C.D1.81.D0.BA.D0.BE.D0.B9_.D0.BF.D0.BE.D0.BB.D0.B8.D1.82.D0.B8.D0.BA.D0.B8"> Поддержка пользовательской политики </span></h3>
+<p>Администратор может определить, кому разрешено использовать режим 
+взаимодействия с пользователем, а также может ограничить функции 
+межсетевого экрана, доступные в данном режиме.
+</p>
+<h3> <span class="mw-headline" id=".D0.98.D0.BD.D1.84.D0.BE.D1.80.D0.BC.D0.B0.D1.86.D0.B8.D1.8F_.D0.BE_.D0.BC.D0.B5.D1.82.D0.B0-.D0.B4.D0.B0.D0.BD.D0.BD.D1.8B.D1.85_.D0.BF.D0.BE.D1.80.D1.82.D0.BE.D0.B2_.28.D0.BF.D1.80.D0.B5.D0.B4.D0.BB.D0.BE.D0.B6.D0.B5.D0.BD.D0.BE_.D0.9B.D0.B5.D0.BD.D0.BD.D0.B0.D1.80.D1.82.D0.BE.D0.BC_.D0.9F.D0.BE.D1.82.D1.82.D0.B5.D1.80.D0.B8.D0.BD.D0.B3.D0.BE.D0.BC.29"> Информация о мета-данных портов (предложено Леннартом Поттерингом) </span></h3>
+<p>Неплохо было бы иметь информацию о мета-данных портов. Текущая модель
+ со статическим назначением портов и протоколов, исходя из 
+/etc/services,— не очень хорошее решение, она не соответствует 
+современным потребностям. Порты для приложений или служб являются 
+динамическими, поэтому порты сами по себе недостаточны при 
+использовании.
+</p><p>Информация о мета-данных могла бы использоваться для формирования простых правил для межсетевого экрана. Вот несколько примеров:
+</p>
+<pre> разрешение внешнего доступа к приложениям или службам, предоставляющим общий доступ к файлам
+ разрешение внешнего доступа к приложениям или службам, предоставляющим общий доступ к музыке
+ разрешение внешнего доступа к приложениям или службам, предоставляющим общий доступ к любому контенту
+ разрешение внешнего доступа к приложениям или службам, предоставляющий общий доступ к файлам посредством протокола torrent
+ разрешение внешнего доступа к службами, обеспечивающим работу http
+</pre>
+<p>Информация о мета-данных может быть не только специфичной для 
+приложений, но также и для целых категорий применений. Например, группа 
+доступа к любому контенту или группа доступа к файлам могут 
+соответствовать приложениям, предоставляющим общий доступ к файлам или 
+любому другому контенту, например, посредством протокола torrent. Это 
+только примеры, поэтому, возможно, они окажутся бесполезными.
+</p><p>В среде брандмауэра есть два возможных варианта получения информации о метаданных:
+</p><p>Первый вариант — добавить необходимый функционал во 
+вспомогательные модули (пространство ядра). Этот путь имеет преимущество
+ — он может использоваться отовсюду; но также он имеет и ограничение. 
+Для того чтобы получить какую-либо относящуюся к пользователю или 
+системе информацию, соответствующий функционал должен быть также 
+перенесён в пространство ядра.
+</p><p>Второй вариант — добавить такую возможность в демон межсетевого 
+экрана в виде абстрактных правил. Они могут использоваться совместно с 
+такой информацией как уровень доверия сетевых соединений, решение 
+пользователя о предоставлении общего доступа другим пользователям/узлам 
+или однозначное запрещение администратором общего доступа к любому 
+контенту.
+</p><p>Второе решение имеет следующее преимущество: новые группы 
+метаданных или изменения в отношении к уровням доверия, пользовательских
+ настройках или правилах администратора не потребуют обновления ядра. 
+Добавление такого рода абстрактных правил в демон межсетевого экрана 
+сделает его более гибким. Станет простым добавление в том числе и новых 
+уровней безопасности без обновления ядра.
+</p>
+<h3> <span class="mw-headline" id="sysctld"> sysctld </span></h3>
+<p>В данный момент возможно появление установок sysctl, которые 
+применяются некорректно. Такое случается, если модуль, обеспечивающий 
+установку, не подгружается в момент загрузки системы, когда запускается 
+rc.sysinit, или если модуль подгружается во время выполнения. Другим 
+примером является net.ipv4.ip_forward, который необходим, например, для 
+обеспечения специфичных установок брандмауэра, libvirt, а также 
+изменения пользовательских/административных настроек. Если есть два 
+приложения или демона, включающих перенаправление IP только в случае 
+необходимости, то может случиться так, что одно/один из них отключит 
+перенаправление, не будучи уведомлённым о том, что оставшемуся 
+приложению/демону оно всё ещё требуется включённым.
+</p><p>Демон sysctl мог бы решить эту проблему ведением внутреннего 
+счётчика для установок, что сделает возможным их отключение или возврат к
+ предыдущему состоянию, если процесс, выполнивший запрос, требует 
+осуществить возврат.
+</p>
+<h2> <span class="mw-headline" id=".D0.9F.D1.80.D0.B0.D0.B2.D0.B8.D0.BB.D0.B0_.D0.BC.D0.B5.D0.B6.D1.81.D0.B5.D1.82.D0.B5.D0.B2.D0.BE.D0.B3.D0.BE_.D1.8D.D0.BA.D1.80.D0.B0.D0.BD.D0.B0"> Правила межсетевого экрана </span></h2>
+<p>Брандмауэры, основанные на netfilter, всегда восприимчивы к проблемам
+ порядка размещения правил, так как правило не имеет фиксированной 
+позиции в цепочке. Позиция может изменяться, если добавляются или 
+удаляются другие правила, предшествующие в очереди раньше по цепочке.
+</p><p>В статической модели межсетевого экрана изменение в установках 
+брандмауэра влечёт за собой пересоздание "чистой" и "правильной" 
+конфигурации, ограниченной функциональностью, поддерживаемой утилитами 
+system-config-firewall (s-c-fw) / lokkit. Правила, создаваемые другими 
+приложениями, не интегрируются, и s-c-fw / lokkit ничего о них не знают,
+ если функции этих правил не используются.
+</p><p>Динамическая модель предусматривает дополнительные цепочки. Они 
+вызываются в определённом порядке, и правила, добавляемые в цепочку, не 
+могут приводить к порче или потере другие правил, вызванных ранее. Это 
+делает конфигурацию брандмауэра более "здоровой".
+</p><p>Вот примеры правил, создаваемых демоном, в виде таблицы 
+фильтрации для ssh, ipp-client и mdns, включённых в зоне "Общественное 
+место"; остальные зоны удалены для упрощения и сокращения вывода:
+</p>
+<pre> *filter
+&nbsp;:INPUT ACCEPT [0:0]
+&nbsp;:FORWARD ACCEPT [0:0]
+&nbsp;:OUTPUT ACCEPT [0:0]
+&nbsp;:FORWARD_ZONES - [0:0]
+&nbsp;:FORWARD_direct - [0:0]
+&nbsp;:INPUT_ZONES - [0:0]
+&nbsp;:INPUT_direct - [0:0]
+&nbsp;:IN_ZONE_public - [0:0]
+&nbsp;:IN_ZONE_public_allow - [0:0]
+&nbsp;:IN_ZONE_public_deny - [0:0]
+&nbsp;:OUTPUT_direct - [0:0]
+ -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+ -A INPUT -i lo -j ACCEPT
+ -A INPUT -j INPUT_direct
+ -A INPUT -j INPUT_ZONES
+ -A INPUT -p icmp -j ACCEPT
+ -A INPUT -j REJECT --reject-with icmp-host-prohibited
+ -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+ -A FORWARD -i lo -j ACCEPT
+ -A FORWARD -j FORWARD_direct
+ -A FORWARD -j FORWARD_ZONES
+ -A FORWARD -p icmp -j ACCEPT
+ -A FORWARD -j REJECT --reject-with icmp-host-prohibited
+ -A OUTPUT -j OUTPUT_direct
+ -A IN_ZONE_public -j IN_ZONE_public_deny
+ -A IN_ZONE_public -j IN_ZONE_public_allow
+ -A IN_ZONE_public_allow -p tcp -m tcp --dport 22 -m conntrack --ctstate NEW -j ACCEPT
+ -A IN_ZONE_public_allow -d 224.0.0.251/32 -p udp -m udp --dport 5353 -m conntrack --ctstate NEW -j ACCEPT
+ -A IN_ZONE_public_allow -p udp -m udp --dport 631 -m conntrack --ctstate NEW -j ACCEPT
+</pre>
+<p>Использована модель "запретить/разрешить", что способствует удалению 
+конфликтов между правилами в поведении межсетевого экрана. Например, 
+блоки ICMP описываются в цепочке IN_ZONE_public_deny, если выбрана зона 
+"Общественное место"; правила, описывающие их поведение, будут применены
+ перед правилами в цепочке IN_ZONE_public_allow chain.
+</p><p>Такая модель позволяет намного легче добавлять или удалять 
+правила из какого-либо блока без порчи или потери правил из другого 
+блока.
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 911/1000000
+Post‐expand include size: 9979/2097152 bytes
+Template argument size: 1095/2097152 bytes
+Expensive parser function count: 11/100
+-->
+
+<!-- Saved in parser cache with key fpo-mediawiki-en_:pcache:idhash:49071-0!*!0!!en!2!* and timestamp 20170620000234 -->
+</div><div class="printfooter">
+Retrieved from "<a href="https://fedoraproject.org/w/index.php?title=FirewallD/ru&amp;oldid=418095">https://fedoraproject.org/w/index.php?title=FirewallD/ru&amp;oldid=418095</a>"</div>
+			<div id="catlinks"><div id="catlinks" class="catlinks catlinks-allhidden"></div></div>			<!-- end content -->
+	</div>
+
+<!-- Top login, etc. bar -->
+<!-- #p-personal moved to inside #content so the text color says the same -->
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+</div>
+			<div id="bottom">
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="https://www.mediawiki.org/"><img src="FirewallD_ru%20-%20FedoraProject_files/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" height="31" width="88"></a></div>
+      <p class="copy">
+      Copyright © 2017 Red Hat, Inc. and others.  All Rights Reserved.  For comments or queries, please <a href="https://fedoraproject.org/wiki/Communicating_and_getting_help">contact us</a>.
+      </p>
+      <p class="disclaimer">
+      The Fedora Project is maintained and driven by the community and 
+sponsored by Red Hat.  This is a community maintained site.  Red Hat is 
+not responsible for content.
+      </p>
+			<ul>
+				<li class="first" id="lastmod"> This page was last modified on 20 July 2015, at 10:14.</li>
+				<li id="copyright">Content is available under <a href="https://fedoraproject.org/wiki/Legal:Main" title="Legal:Main">Attribution-Share Alike 3.0 Unported</a> unless otherwise noted.</li>
+			</ul>
+			<ul>
+				<li class="first" id="privacy"><a href="https://fedoraproject.org/wiki/FedoraProject:Privacy_policy" title="FedoraProject:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="https://fedoraproject.org/wiki/FedoraProject:About" title="FedoraProject:About">About FedoraProject</a></li>
+				<li id="disclaimer"><a href="https://fedoraproject.org/wiki/FedoraProject:General_disclaimer" title="FedoraProject:General disclaimer">Disclaimers</a></li>
+        <li><a href="http://fedoraproject.org/en/sponsors">Sponsors</a></li>
+        <li><a href="http://fedoraproject.org/wiki/Legal:Main">Legal</a></li>
+        <li><a href="http://fedoraproject.org/wiki/Legal:Trademark_guidelines">Trademark Guidelines</a></li>
+      </ul>
+		</div>
+		</div>
+		
+	<script>if(window.mw){
+mw.loader.load(["mediawiki.user","mediawiki.page.ready"], null, true);
+}</script><script type="text/javascript" src="FirewallD_ru%20-%20FedoraProject_files/load_004.php"></script>
+<script src="FirewallD_ru%20-%20FedoraProject_files/load_003.php"></script>
+
+  <script src="FirewallD_ru%20-%20FedoraProject_files/jquery-1.js"></script>
+  <script src="FirewallD_ru%20-%20FedoraProject_files/fedora-libravatar.js"></script>
+  <script src="FirewallD_ru%20-%20FedoraProject_files/fedmenu.js"></script>
+  <script>
+    fedmenu({
+        'url': 'https://apps.fedoraproject.org/js/data.js',
+        'mimeType': 'application/javascript',
+        'position': 'bottom-right',
+            });
+  </script>
+
+<!-- Served in 0.371 secs. -->
+<div id="fedmenu-tray" class="fedmenu-bottom-right"><div id="fedmenu-main-button" class="fedmenu-button"><div class="img"></div></div></div><div id="fedmenu-wrapper"></div></body><div style="display:none" id="sp_console_event"></div></html>

@@ -1,0 +1,869 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>	
+		<meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+		<meta name="f6524e3d6c604c95e64d77def4e8d17c" content="">
+		
+						<title>APC в PHP: Понятие, установка, использование APC</title>
+				
+		<meta name="description" content="Что такое APC, и как его использовать в PHP. Читайте в нашей статье все о понятии акселератора APC. Также его установке и использованию в PHP." />
+		<meta name="keywords" content="apc php, установка php apc, использование apc" />		
+		<meta http-equiv="Content-Language" content="ru">
+		<meta name="revisit-after" content="2 days" />
+		
+		<!-- Иконки для Экспресс-панели и вкладок -->
+		<link rel="icon" type="image/png" href="http://sitear.ru/application/views/_res/images/logo/logo.png">	
+		<link rel="icon" type="image/png" href="http://sitear.ru/application/views/_res/images/logo/favicon.png">    
+	   	
+	
+		<link rel="stylesheet" href="http://sitear.ru/application/views/_res/styles/s_main.css" type="text/css" />
+
+				
+		
+	</head>
+<body>
+	
+
+	
+<div id="content">
+	
+	<div id="header">
+							<a onclick="location.href='http://sitear.ru/'">
+						
+				<div width="200px" height="60px" class="svgSprite logoSvg logo"></div>
+
+				</a>
+
+			<div class="menu_button gray_gradient" id="categories">Разделы</div>
+			<div class="menu_button gray_gradient" onclick="location.href='http://wisear.ru'">Сервисы</div>
+			<div class="top_searchblock">	<div id="search" class="gray_gradient">
+		<form method="post" action="http://sitear.ru/search/query/">
+					<input name="search_query" class="findleft" type="text" value="Поиск по сайту" onfocus="clearText(this)" onblur="clearText(this)"/>
+				<input name="search_button" type="submit" class="findright gray_gradient svgSprite search" value=" "/>
+		</form>
+	</div>
+
+
+	</div>
+	</div>
+
+	<div id="ajaxmenu" class="menu_list"></div>
+	
+	<div id="path">
+	<a onclick="location.href='http://sitear.ru/'"><div class="svgSprite homeIcon"></div>
+	</a>
+		<ul>
+				
+				<li> &#8594; 
+											<a onclick="location.href='http://sitear.ru/section/programming'">
+									Программирование</a></li>
+				
+				<li> &#8594; 
+											<a onclick="location.href='http://sitear.ru/section/programming_php'">
+									PHP</a></li>
+				
+				<li> &#8594; 
+											<a onclick="location.href='http://sitear.ru/section/php_articles'">
+									Статьи</a></li>
+					</ul>
+	</div>
+
+			<div id="enter-reg">
+			<a href="http://sitear.ru//authorization/login">Войти</a>
+			<a href="http://sitear.ru//users/registration">Регистрация</a>
+		</div>
+	
+	
+	<div class="clear"></div>
+
+
+<div id="title"><h1>APC в PHP: Понятие, установка, использование APC</h1></div>
+
+<div id="center">
+	
+	<div class="content">
+
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- sitear top block -->
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-6569112952252193"
+		     data-ad-slot="6113573661"
+		     data-ad-format="auto"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+
+		<br/>
+		
+                                 
+			
+<p><strong><br></strong></p><p><strong>APC</strong> – это аббревиатура от <em>Alternative PHP Caching</em>. Русским
+текстом – это альтернативный PHP кэшер. Для чего он используется? Как и другие популярные кэшеры,
+такие как XCache и eAccelerator, он используется для увеличения скорости работы
+PHP скриптов.
+Если вы имеете собственный сервер, и вас волнуют вопросы быстродействия PHP скриптов,
+то APC может стать решением вашей проблемы. В сегодняшней статье мы более
+подробно узнаем о APC, научимся
+его устанавливать и тестировать, использовать APC кеширование
+при написании PHP скриптов.
+</p><h2>Сегодня мы узнаем</h2>
+<p><a href="#wi" title="Понятие APC">Что такое APC</a></p>
+<p><a href="#install" title="Установка пакета APC PHP">Установка APC</a></p>
+<p><a href="#work" title="Работа с APC в PHP">Использование APC в PHP</a></p>
+<h2 id="wi">Что такое акселератор APC?</h2>
+<p><strong>&nbsp;Акселератор </strong><strong>APC&nbsp;</strong>(Alternative PHP&nbsp;Cache)
+- бесплатный и открытый opcode
+кэшер для PHP. Он был
+задуман, как бесплатный, открытый и стабильный фреймворк для кэширования и
+оптимизации исходного кода PHP.
+APC находится
+на стадии своего развития. &nbsp;На данный
+момент поддерживает PHP 4 и PHP
+5, включая 5.3. Предположительно будет включен в стандартное ядро PHP шестой версии.</p>
+<p><strong>Каким образом
+достигается ускорение работы </strong><strong>PHP?</strong></p>
+<p>Когда идет задержка загрузки вашего сайта, возникает вопрос –
+Почему? Дело в том, что при выполнении стандартного обращения к PHP скрипту,
+каждый раз он компилируется заново. То есть, одна и та же работа делается
+несколько раз. Если это маленький проект, замедления в работе могут быть
+незначительными, даже невидимыми. Но если у вас большой проект (сайт), то вы
+замечали, что при обращении идет задержка загрузки страницы, несмотря на то,
+что сайт хорошо оптимизирован, в плане <a href="http://sitear.ru/material/szhatie-html" title="Сжатие HTML на PHP" target="_blank">сжатия
+html</a>&nbsp;и <a href="http://sitear.ru/material/szhatie-css" title="Сжатие CSS" target="_blank">сжатия css</a>. Для наглядности, посмотрим, как
+выполняется стандартный запрос без использования PHP акселераторов:</p>
+<p><img src="http://sitear.ru/uploads/files/programming/apc/query-result.png" style="vertical-align:baseline;border-top-color:#000000;border-left-color:#000000;border-right-color:#000000;border-bottom-color:#000000;border-top-width:0px;border-left-width:0px;border-right-width:0px;border-bottom-width:0px;border-top-style:none;border-left-style:none;border-right-style:none;border-bottom-style:none" title="Выполнение запроса без APC" alt="Выполнение запроса без APC" width="550" height="100"></p>
+<p>При этом идут выполнения <strong>компиляции кода</strong> при<strong> </strong>каждом
+запросе. Это отнимает много время на обработку запроса, потому и тормозит. Для
+обхода этого и придумали акселераторы, представителем которого является APC. Они кэшируют
+скомпилированный код на диске, после обращения к которому, он выводит
+результат. Таким образом увеличивается скорость работы PHP. APC может работать в двух режимах,
+которые настраиваются в файле <strong>/etc/php.d/apc.ini</strong>,
+переменная <strong>apc.stat</strong>. Переменная
+может принимать значения 1 и 0 (apc.stat=0 или apc.stat=1). При использование
+режима apc.stat=1 несколько замедляется работа скриптов так, как идет проверка
+на модификацию файла, но это позволяет избежать проблем, когда код изменен,&nbsp;а&nbsp;выдача результата остается прежней. Поэтому советую поставить значение переменной
+1. </p>
+<p>После установки акселератора APC, схема выполнения запроса будет
+следующей:</p>
+<p><img src="http://sitear.ru/uploads/files/programming/apc/apc-result.png" style="vertical-align:baseline;border-top-color:#000000;border-left-color:#000000;border-right-color:#000000;border-bottom-color:#000000;border-top-width:0px;border-left-width:0px;border-right-width:0px;border-bottom-width:0px;border-top-style:none;border-left-style:none;border-right-style:none;border-bottom-style:none" title="Применение APC для PHP" alt="Применение APC для PHP" width="550" height="150"></p>
+<h2 id="install">Установка APC</h2>
+<p>APC очень простой в установке. Его можно устанавливать как на Debian/Ubuntu, так и на другие дистрибутивы.</p>
+<p><strong>Установка APC на
+CentOS,&nbsp;RHEL,&nbsp;Fedora:</strong></p>
+<p>Будем устанавливать через PECL. Сначала подключаем .repo, который содержит актуальный APC. Смотрите пример ниже:</p>
+<h4>wget http://rpm.scwlab.com/el/php/yum.conf -O
+/etc/yum.repos.d/stalwart.repo</h4>
+<h4>yum install php-pecl-apc</h4>
+<p>Теперь, измените настройки файла /etc/php.d/apc.ini на свой
+вкус и сделайте рестарт сервера.</p>
+<p><strong>Установка APC на
+Debian,&nbsp;Ubuntu</strong></p>
+<h4>apt-get
+install apache2-threaded-dev php5-dev php5-pear make gcc g++</h4><br>
+<h4>pecl install apc</h4>
+<p>После загрузки, откройте файл по адресу /etc/php5/apache2/php.ini,
+добавьте параметр <strong>extension=apc.so</strong>,
+и перезапустите сервер.</p>
+<p>Как видите, установить APC на Debian или Ubuntu, достаточно просто, нужно набрать
+в консоли команду <em>sudo aptitude install php-apc</em>.
+Также можно установить это расширение через <em>synaptic</em>. Если у вас
+другой дистрибутив, то вы можете установить пакет APC из PECL. Для этого выполните в
+консоле следующую команду <em>sudo pecl
+install apc</em>.</p>
+<p><strong>Проверка наличия
+пакета </strong><strong>APC</strong></p>
+<p>Если в файле настроек php.ini,
+присутствует строка загрузки пакета <em>extension=apc.so</em>.
+Или создан файл apc.ini с
+идентичной строкой, в папке конфигурации расширений PHP. У каждого дистрибутива, он
+находится по своему адресу. Для Debian,
+это /etc/php5/apache2/conf.d/.</p>
+<p>Если вы проверили и убедились, что все хорошо, перезапустите
+сервер. Теперь проверим информацию о самом пакете APC. Для этого найдите папку в которой
+было установлено расширение. В папке вы найдете файл по имени <strong>apc.</strong><strong>php</strong>. Этот файл, также присутствует в
+архиве установки. Скопируйте его в любую директорию из сайтов вашего сервера.
+Например, что-бы он был доступен по адресу http://sitear.ru/apc.php. Если пакет был установлен успешно, то при загрузке этого
+файла, вы увидите следующую таблицу информации о текущем APC пакете.</p>
+<p><img src="http://sitear.ru/uploads/files/programming/apc/geninfo.jpg" style="vertical-align:baseline;border-top-color:#000000;border-left-color:#000000;border-right-color:#000000;border-bottom-color:#000000;border-top-width:0px;border-left-width:0px;border-right-width:0px;border-bottom-width:0px;border-top-style:none;border-left-style:none;border-right-style:none;border-bottom-style:none" title="Информация о пакете APC" alt="Информация о пакете APC" width="460" height="260"></p>
+<p><img src="http://sitear.ru/uploads/files/programming/apc/detinfo-apc.gif" style="vertical-align:baseline;border-top-color:#000000;border-left-color:#000000;border-right-color:#000000;border-bottom-color:#000000;border-top-width:0px;border-left-width:0px;border-right-width:0px;border-bottom-width:0px;border-top-style:none;border-left-style:none;border-right-style:none;border-bottom-style:none" title="Использование памяти расширением APC" alt="Использование памяти расширением APC" width="550" height="259"><br></p><p><img src="http://sitear.ru/uploads/files/programming/apc/hoststat-apc.gif" style="vertical-align:baseline;border-top-color:#000000;border-left-color:#000000;border-right-color:#000000;border-bottom-color:#000000;border-top-width:0px;border-left-width:0px;border-right-width:0px;border-bottom-width:0px;border-top-style:none;border-left-style:none;border-right-style:none;border-bottom-style:none" title="Статус хоста" alt="Статус хоста" width="550" height="306"><br></p><h2 id="work">Использование APC в PHP</h2>
+<p>Использовать расширение APC при написании PHP кода, очень
+просто и удобно. Сейчас вы сами убедитесь в этом.</p>
+<p>Для начала, мы напишем класс, для работы с памятью&nbsp;через&nbsp;APC систему
+кэширования. Создайте файл и поместите туда код по следующему адресу:</p>
+<p><strong>classes/apc.caching.php</strong></p>
+<p><pre class="code">&lt;?
+
+ 
+
+class CacheAPC {
+
+ 
+
+    var $iTtl = 600; // Time To Live
+
+    var $bEnabled = false; // APC enabled?
+
+ 
+
+    // конструктор
+
+    function CacheAPC() {
+
+        $this-&gt;bEnabled = extension_loaded('apc');
+
+    }
+
+ 
+
+    // получаем данные с памяти
+
+    function getData($sKey) {
+
+        $bRes = false;
+
+        $vData = apc_fetch($sKey, $bRes);
+
+        return ($bRes) ? $vData :null;
+
+    }
+
+ 
+
+    // сохраняем данные в память
+
+    function setData($sKey, $vData) {
+
+        return apc_store($sKey, $vData, $this-&gt;iTtl);
+
+    }
+
+ 
+
+    // удаляем данные с памяти
+
+    function delData($sKey) {
+
+        $bRes = false;
+
+        apc_fetch($sKey, $bRes);
+
+        return ($bRes) ? apc_delete($sKey) : true;
+
+    }
+
+}
+
+ 
+
+?&gt;</pre></p>
+<p>В классе описано, что делает каждая из функций. Теперь
+создадим тестовый файл.</p>
+<p><strong>index.php</strong></p>
+<p><pre class="code">&lt;?php
+
+ 
+
+$aData = array(
+
+    'name' =&gt; 'table',
+
+    'color' =&gt; 'brown',
+
+    'size' =&gt; array(
+
+        'x' =&gt; 200,
+
+        'y' =&gt; 120,
+
+        'z' =&gt; 150,
+
+    ),
+
+    'strength' =&gt; 10,
+
+);
+
+ 
+
+require_once('classes/apc.caching.php');
+
+$oCache = new CacheAPC();
+
+ 
+
+echo 'Данные: &lt;pre&gt;'; // Посмотрим что мы имеем
+
+print_r($aData);
+
+echo '&lt;/pre&gt;';
+
+ 
+
+if ($oCache-&gt;bEnabled) { // Если APC доступен
+
+ 
+
+    $oCache-&gt;setData('my_object', $aData); // Сохраняем данные в памяти
+
+    $oCache-&gt;setData('our_class_object', $oCache); // Сохраняем объект класса в памяти
+
+ 
+
+    echo 'По теории, мы сохранили данные в памяти, нажмите &lt;a href="ndex2.php"&gt;здесь&lt;/a&gt; для проверки, действительно ли все там.';
+
+ 
+
+} else {
+
+        echo 'Пакет APC не установлен, установите, а потом будете тестировать!';
+
+}
+
+ 
+
+?&gt;</pre></p>
+<p>В этом файле мы сохранили 2 объекта в память: массив и
+объект класса. Теперь создадим второй файл.</p>
+<p><strong>index2.php</strong></p>
+<p><pre class="code">&lt;?php
+
+ 
+
+require_once('classes/apc.caching.php');
+
+$oCache = new CacheAPC();
+
+ 
+
+if ($oCache-&gt;bEnabled) { // Если APC доступен
+
+ 
+
+    $aMemData = $oCache-&gt;getData('my_object'); // Получаем данные из памяти
+
+    $aMemData2 = $oCache-&gt;getData('our_class_object'); // получаем данные из памяти, которые в классе
+
+ 
+
+    echo 'Данные в памяти: &lt;pre&gt;'; // проверим, что у нас в памяти
+
+    print_r($aMemData);
+
+    echo '&lt;/pre&gt;';
+
+ 
+
+    echo 'Данные из памяти объекта CacheAPC class: &lt;pre&gt;';
+
+    print_r($aMemData2);
+
+    echo '&lt;/pre&gt;';
+
+ 
+
+    echo 'Как видите все данные доступны, теперь давайте извлечем их из памяти, для этого идем &lt;a href="index3.php"&gt;сюда&lt;/a&gt;…';
+
+ 
+
+} else {
+
+    echo 'Пакет APC не установлен, установите, а потом будете тестировать!';
+
+}
+
+ 
+
+?&gt;</pre></p>
+<p>В данном скрипте, мы только читаем информацию из памяти. Как
+вы видите, вся информация отлично считывается с памяти. Давайте посмотрим
+последний пример.</p>
+<p><strong>index3.php</strong></p>
+<p><pre class="code">&lt;?php
+
+ 
+
+require_once('classes/apc.caching.php');
+
+$oCache = new CacheAPC();
+
+ 
+
+if ($oCache-&gt;bEnabled) { // Если APC доступен
+
+ 
+
+    $oCache-&gt;delData('my_object'); // Извлечение данных из памяти
+
+    $oCache-&gt;delData('our_class_object'); // Извлечение данных из памяти
+
+ 
+
+    $aMemData = $oCache-&gt;getData('my_object'); // пытаемся получить данные обратно
+
+    $aMemData2 = $oCache-&gt;getData('our_class_object');
+
+ 
+
+    echo 'Данные из памяти: &lt;pre&gt;'; // Проверим, что у нас хранится в памяти
+
+    print_r($aMemData);
+
+    echo '&lt;/pre&gt;';
+
+ 
+
+    echo 'Данные из памяти объекта CacheAPC class: &lt;pre&gt;';
+
+    print_r($aMemData2);
+
+    echo '&lt;/pre&gt;';
+
+ 
+
+    echo 'Как видите все данные извлечены из памяти. Ура!';
+
+ 
+
+} else {
+
+    echo 'Пакет APC не установлен, установите, а потом будете тестировать!';
+
+}
+
+ 
+
+?&gt;</pre></p>
+<h2>Заключение</h2>
+<p><em>Спасибо за ваше
+внимание! Надеюсь вам было&nbsp;интересно&nbsp;почитать об использовании </em><em>APC в </em><em style="" mso-bidi-font-style:normal""="">PHP. Если вы
+имеете другие представления об использовании </em><em style="" mso-bidi-font-style:normal""="">APC при написании </em><em>PHP скриптов,
+напишите об этом в комментариях.</em>&nbsp;</p>  
+  
+			
+			
+<noindex>
+	<!-- Яндекс.Директ -->
+	<script type="text/javascript">
+	yandex_partner_id = 81592;
+	yandex_site_bg_color = 'FFFFFF';
+	yandex_stat_id = 1;
+	yandex_site_charset = 'windows-1251';
+	yandex_ad_format = 'direct';
+	yandex_font_size = 1;
+	yandex_direct_type = 'flat';
+	yandex_direct_limit = 1;
+	yandex_direct_title_font_size = 2;
+	yandex_direct_header_bg_color = 'FEEAC7';
+	yandex_direct_title_color = '0000CC';
+	yandex_direct_url_color = '006600';
+	yandex_direct_all_color = '0000CC';
+	yandex_direct_text_color = '000000';
+	yandex_direct_hover_color = '0066FF';
+	yandex_direct_favicon = true;
+	document.write('<sc'+'ript type="text/javascript" src="http://an.yandex.ru/system/context.js"></sc'+'ript>');
+	</script>
+</noindex>
+
+					
+			
+<noindex>
+<div style='border-top: dotted 1px silver; border-bottom: dotted 1px silver; margin-top:15px;'>
+
+		<div id='div_recomend_soc'>
+		<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"/></script>
+		<div class="yashare-auto-init" data-yashareL10n="ru" data-yashareQuickServices="vkontakte,facebook,twitter,odnoklassniki,gplus" data-yashareTheme="counter"></div>
+		</div>
+
+		<div class="clear"></div>			
+</div>
+</noindex>
+		
+			
+						
+						<br/><br/>
+			<p>
+				Дальше: <a href="http://sitear.ru/material/feedburner-readers-php">Счетчик подписчиков FeedBurner на PHP</a>
+			</p>
+			<br/>
+						
+	</div>
+
+			
+	<div id="coments">
+			<div class="title">
+				Дискуссия по теме
+
+				<span class="counter">
+					&nbsp;&nbsp;&nbsp;15 Комментариев				</span>
+			</div>
+			
+			
+	<div class="top_row">
+		<div id="open-form-button" class="gray_gradient" onClick="toggle('add-comment-form'); location.href='#coments';">
+			Добавить комментарий
+		</div>	
+	</div>
+			
+	<div id="add-comment-form" class="addcoment" style="display:none;">
+
+		<div id="repbox"></div>
+
+		<div id="statusbox">Комментарий должен быть по теме и составлен корректно!</div>
+		<form name="comment">
+			<input type="hidden" id="pid" value="0">
+
+			<label style='margin-left: 10px;'> Имя:
+				<input  id="name" type="text" name="name" value="���" maxlength="60"/>
+			</label>
+
+			<label style='margin-left: 10px;'>  E-mail:
+				<input id="mail" type="text" name="mail" value="E-mail" maxlength="60"/>
+			</label><br>
+			
+			<textarea id="text" name="text"></textarea>
+				
+				<div id="add-comment-button" class="button_add" src="http://sitear.ru/application/views/_res/images/comments/button_add.png" onclick='
+						ajax({
+							url:"http://sitear.ru/comments/add/apc-php",
+							statbox:"statusbox",
+							whait:"Пожалуйста подождите...",
+							method:"POST",
+							data:
+							{
+								name:gbi("name").value,
+								mail:gbi("mail").value,
+								text:gbi("text").value,
+								pid:gbi("pid").value
+							},
+							success:function(data){after_comment(data);}
+						})'
+				>
+					Комментировать
+				</div>
+		</form>
+	</div>
+
+			
+																<div class="main" id="comment-3887" onMouseOver="show_reply('comment-3887')">
+					<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+					
+					<div class="block_name">
+						<span class="name">Alex</span>
+						<span class="date">
+							22.01.2016 в 12:43						</span>
+					</div>
+					
+					<div class="coment"><div class="bottom" id="bottom">Благодарю! Подробно и ёмко освещено!</div></div>
+				</div>
+																																																																																																																																																											<div class="main" id="comment-3165" onMouseOver="show_reply('comment-3165')">
+					<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+					
+					<div class="block_name">
+						<span class="name">Сергей</span>
+						<span class="date">
+							26.06.2014 в 08:03						</span>
+					</div>
+					
+					<div class="coment"><div class="bottom" id="bottom">Здравствуйте, статья отличная!
+
+Я пользуюсь хостингом, там за доп. плату подключил персональный веб-сервер с модулями APC, eAccelerator и XCache. Сейчас включен только APC т.к. с eAccelerator и XCache у них конфликт.
+
+Скажите пожалуйста, какой модуль лучше? И как влияет на дальнейшую работу сайта эти модули, я имею ввиду в будущем не будет ли загружаться память на сервере или хостинге.
+
+Прошу прощение за тупость. Спасибо</div></div>
+				</div>
+																																																																																																																																																											<div class="main" id="comment-3156" onMouseOver="show_reply('comment-3156')">
+					<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+					
+					<div class="block_name">
+						<span class="name">Вадим</span>
+						<span class="date">
+							20.06.2014 в 08:20						</span>
+					</div>
+					
+					<div class="coment"><div class="bottom" id="bottom">Спасибо Вам за чудесную статью!</div></div>
+				</div>
+																																																																																																																																																											<div class="main" id="comment-2525" onMouseOver="show_reply('comment-2525')">
+					<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+					
+					<div class="block_name">
+						<span class="name">Генадий</span>
+						<span class="date">
+							19.07.2013 в 20:42						</span>
+					</div>
+					
+					<div class="coment"><div class="bottom" id="bottom">и чего ? Интерпретатор компилирующего типа - это означает то что Php может компилировать код, но это не значит что это компилируемый язык. Если бы был опыты работы с нормальными компилируемыми языками программирования, никогда бы не назвали компилируемым то что не компилируется</div></div>
+				</div>
+																																																																																																																											<div class="response">
+							<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+							<div class="block_name">
+								<span class="name">Тарас</span>
+								<span class="date">19.07.2013 в 23:08</span>
+							</div>
+							<div class="coment"><div class="bottom">Цитата с википедии: "Интерпретатор компилирующего типа — это система из компилятора, переводящего исходный код программы в промежуточное представление, например, в байт-код или p-код, и собственно интерпретатора, который выполняет полученный промежуточный код (так называемая виртуальная машина)."
+Насколько я понимаю, сразу код компилируется в байт-код, после чего последний интерпретируется.
+Даже, согласно Вашим словам: "Php может компилировать", я могу использовать в статье словосочетание "компиляция кода".
+Собственно, что не так в тексте статьи? Укажите цитату, я пересмотрю, исправлю.</div></div>
+						</div>
+																													<div class="response">
+							<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+							<div class="block_name">
+								<span class="name">xaseros</span>
+								<span class="date">31.10.2014 в 13:59</span>
+							</div>
+							<div class="coment"><div class="bottom">Идите и комментируйте статьи к "нормальным компилируемым" языкам. Ваше высокомерие можете оставить при себе. 
+
+Что до формы, то компиляция или интерпретация это лишь методики перевода кода программы на языке программирования, в код исполняемый процессором или виртуальной машиной. И в php давно уже используются обе методики. Да почти во всех платформах для разработки можно увидеть совмещение этих двух подходов.Даже программы на C   предварительно, построчно проверяются препроцессором и линковщиком. Так, что нет никакого повода упрекать php (и тех кто на нем пишет) в этом плане.</div></div>
+						</div>
+																									<div class="main" id="comment-2521" onMouseOver="show_reply('comment-2521')">
+					<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+					
+					<div class="block_name">
+						<span class="name">Генадий</span>
+						<span class="date">
+							18.07.2013 в 18:35						</span>
+					</div>
+					
+					<div class="coment"><div class="bottom" id="bottom">А вы в курсе что PHP это интерпретируемый язык а не компилируемый ? Что в нем компилируется ? </div></div>
+				</div>
+																																																																																																																		<div class="response">
+							<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+							<div class="block_name">
+								<span class="name">Тарас</span>
+								<span class="date">19.07.2013 в 02:43</span>
+							</div>
+							<div class="coment"><div class="bottom">Точно! А еще точнее "Тип исполнения: интерпретатор компилирующего типа"
+http://ru.wikipedia.org/wiki/PHP</div></div>
+						</div>
+																																																				<div class="main" id="comment-1790" onMouseOver="show_reply('comment-1790')">
+					<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+					
+					<div class="block_name">
+						<span class="name">Count Raven</span>
+						<span class="date">
+							08.11.2012 в 10:30						</span>
+					</div>
+					
+					<div class="coment"><div class="bottom" id="bottom">Блин, картинке ошибка. Что 3-й класс школы - не, не слышал?
+
+МодифицЫровался через И пишется, вообще всегда после Ц идет И, а не Ы в подобных случаях, только если на конце, то Ы, например, птицы.</div></div>
+				</div>
+																																																																														<div class="response">
+							<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+							<div class="block_name">
+								<span class="name">Тарас</span>
+								<span class="date">08.11.2012 в 23:02</span>
+							</div>
+							<div class="coment"><div class="bottom">В вашем комментарии также ошибка - "Блин, картинке ошибка."
+Там должна быть буква "В".</div></div>
+						</div>
+																													<div class="response">
+							<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+							<div class="block_name">
+								<span class="name">vitalik</span>
+								<span class="date">16.12.2012 в 14:15</span>
+							</div>
+							<div class="coment"><div class="bottom">Для этого "умника" есть хорошая поговорка.
+
+Глупость все видит;
+разум многое не станет замечать. (Б.Ф.Андреев)</div></div>
+						</div>
+																				<div class="response">
+							<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+							<div class="block_name">
+								<span class="name">Count Raven</span>
+								<span class="date">16.12.2012 в 17:45</span>
+							</div>
+							<div class="coment"><div class="bottom">У меня это просто опечатка, тем более, в комментарии. Это не ошибка. А вот на изображении в статье действительно ошибка, которую неплохо было бы поправить.</div></div>
+						</div>
+																																						<div class="response">
+							<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+							<div class="block_name">
+								<span class="name">Димчег</span>
+								<span class="date">16.02.2014 в 18:45</span>
+							</div>
+							<div class="coment"><div class="bottom">Ага, конечно. 
+Цыган на цыпочках подошел к цыпленку и цыкнул: «Цыц.</div></div>
+						</div>
+																																		<div class="main" id="comment-1636" onMouseOver="show_reply('comment-1636')">
+					<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+					
+					<div class="block_name">
+						<span class="name">Nikolay</span>
+						<span class="date">
+							07.09.2012 в 01:11						</span>
+					</div>
+					
+					<div class="coment"><div class="bottom" id="bottom">У вас небольшая ошибочка по тексту: "Они кэшируют скомпилированный код на диске". Опкод кешируется не на диске, а в оперативной памяти.</div></div>
+				</div>
+																																																																																							<div class="response">
+							<img src="http://sitear.ru/application/views/_res/images/comments/comentator.jpg">
+							<div class="block_name">
+								<span class="name">vitalik</span>
+								<span class="date">16.12.2012 в 14:08</span>
+							</div>
+							<div class="coment"><div class="bottom">Вы наверно не в курсе, что можно создать диск и в оперативной памяти? Почитайте хотя бы чем инстинктивно писать.
+
+ </div></div>
+						</div>
+																																																																																																																					
+						
+							<div class="top_row">
+					<div id="open-form-button" class="gray_gradient" onClick="toggle('add-comment-form'); location.href='#coments';">
+						Добавить комментарий
+					</div>
+				</div>
+				</div>
+
+	
+	<noindex>
+		<div class="contentbottom">
+			Просмотров: <b>67210</b>
+		</div>
+	</noindex>
+
+</div>
+
+
+<div id="right">
+
+	<center style="margin-top:0px;">
+
+	<a href="http://wisear.ru" target="_blank" title="Отзывы о веб сервисах">
+		<img src="http://sitear.ru/application/views/_res/images/wisear.jpg" border="0" title="Отзывы и сравнение веб сервисов" alt="wisear.ru">
+	</a>
+
+	</center>
+	
+		
+
+<noindex>
+	<div class="title">Искренне рекомендуем</div>
+
+	<div class="content">	
+		<table id="recomend">
+			<tr>
+				<td width="125"><b>Хостинг</b></td>
+				<td width="125"><b>Биржи трафика</b></td>
+				<td width="125"><b>Биржи ссылок</b></td>
+			</tr>
+			<tr>
+				<td valign="top">
+					<ul> 
+					    <li><a onclick="window.open('http://sitear.ru/link/ex/5','…','…'); return false">SprintHost</a></li>
+                        <li><a onclick="window.open('http://sitear.ru/link/ex/4','…','…'); return false">AvaHost</a></li>						
+                        <li><a onclick="window.open('http://sitear.ru/link/ex/16','…','…'); return false">Jino</a></li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li><a onclick="window.open('http://sitear.ru/link/ex/1','…','…'); return false">WizardTraffic</a></li>
+						<li><a onclick="window.open('http://sitear.ru/link/ex/8','…','…'); return false">Webunder</a></li>
+						<li><a onclick="window.open('http://sitear.ru/link/ex/2','…','…'); return false">Popunder</a></li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li><a onclick="window.open('http://sitear.ru/link/ex/9','…','…'); return false">Sape</a></li>
+						<li><a onclick="window.open('http://sitear.ru/link/ex/7','…','…'); return false">Miralinks</a></li>
+						<li><a onclick="window.open('http://sitear.ru/link/ex/6','…','…'); return false">GoGetLinks</a></li>
+					</ul>
+				</td>
+			</tr>
+		</table>
+	</div>
+</noindex>
+	
+	
+<!--<noindex>
+	<div class="title">Объявления</div>	
+	<div class="content">
+			
+
+		<script type="text/javascript">
+		yandex_partner_id = 81592;
+		yandex_site_bg_color = 'EBEFF1';
+		yandex_site_charset = 'windows-1251';
+		yandex_ad_format = 'direct';
+		yandex_font_size = 1;
+		yandex_direct_type = 'flat';
+		yandex_direct_limit = 4;
+		yandex_direct_title_font_size = 3;
+		yandex_direct_title_color = '266BA8';
+		yandex_direct_url_color = '006600';
+		yandex_direct_all_color = '000000';
+		yandex_direct_text_color = '000000';
+		yandex_direct_hover_color = '999955';
+		yandex_direct_favicon = true;
+		document.write('<sc'+'ript type="text/javascript" src="http://an.yandex.ru/system/context.js"></sc'+'ript>');
+		</script>	
+		
+	</div>			
+</noindex>-->
+
+		
+	
+</div>
+
+	
+<div id="copyright">
+
+		Copyright 2011 - 2014 SiteAR.ru. Все права защищены.</br>
+		Development — <a rel="nofollow" target="_blank" href="http://vk.com/id165807769">Slavik Nemchenko</a>, <a rel="nofollow" target="_blank" href="http://vk.com/id30167829">Taras Moroz</a><br />
+
+	<div id="counters">
+		<noindex>
+
+			<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+			<script Language="JavaScript" src="http://sitear.ru/js/js_services.js"> </script>
+			<script Language="JavaScript" src="http://sitear.ru/js/js_main.js"> </script>
+			
+			<script type="text/javascript">
+			document.write("<a href='http://www.liveinternet.ru/click' "+
+			"target=_blank><img src='//counter.yadro.ru/hit?t26.2;r"+
+			escape(document.referrer)+((typeof(screen)=="undefined")?"":
+			";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+			screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+			";"+Math.random()+
+			"' alt='' title='LiveInternet: показано число посетителей за"+
+			" сегодня' "+
+			"border='0' width='88' height='15'><\/a>")
+			</script>
+
+			<script type="text/javascript">
+			(function (d, w, c) {
+			    (w[c] = w[c] || []).push(function() {
+			        try {
+			            w.yaCounter11444038 = new Ya.Metrika({id:11444038,
+			                    webvisor:true,
+			                    clickmap:true,
+			                    trackLinks:true,
+			                    accurateTrackBounce:true});
+			        } catch(e) { }
+			    });
+
+			    var n = d.getElementsByTagName("script")[0],
+			        s = d.createElement("script"),
+			        f = function () { n.parentNode.insertBefore(s, n); };
+			    s.type = "text/javascript";
+			    s.async = true;
+			    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+			    if (w.opera == "[object Opera]") {
+			        d.addEventListener("DOMContentLoaded", f, false);
+			    } else { f(); }
+			})(document, window, "yandex_metrika_callbacks");
+			</script>
+			<noscript><div><img src="//mc.yandex.ru/watch/11444038" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+			
+			
+
+		</noindex>
+	</div>
+
+</div>
+
+</body>
+

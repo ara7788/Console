@@ -1,0 +1,1754 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru-RU">
+<head profile="http://gmpg.org/xfn/11">
+	<title>Управление демоном syslogd и журналированием в Linux | Блог любителя экспериментов</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="Блог о системном администрировании. Статьи о Linux, Windows, СХД NetApp и виртуализации." />
+	<style type="text/css" media="screen">@import url( http://www.k-max.name/wp-content/themes/deep-mix/style.css );</style>
+   <link rel="alternate" type="application/rss+xml" title="RSS 2.0 - all posts" href="http://feeds.feedburner.com/k-max/feed" />
+	<link rel="alternate" type="application/rss+xml" title="RSS 2.0 - all comments" href="http://www.k-max.name/comments/feed/" />
+   <link rel="pingback" href="http://www.k-max.name/xmlrpc.php" />
+      <!--[if lt IE 7]>
+      <script type="text/javascript" src="http://www.k-max.name/wp-content/themes/deep-mix/js/unitpngfix.js"></script>
+		<link rel="stylesheet" href="http://www.k-max.name/wp-content/themes/deep-mix/ie6.css" type="text/css" media="screen" />
+	   <![endif]-->
+      
+<!-- All in One SEO Pack 2.3.16 by Michael Torbert of Semper Fi Web Design[211,338] -->
+<meta name="description"  content="Сегодня на www.k-max.name речь пойдет о журналировании в Linux. Функция системного журналирования (т.н. &quot;логи&quot; или логирование) - это основной источник" />
+
+<meta name="keywords"  content="журналирование в linux,ротация логов,управление syslogd,cron,linux,syslog,vim,команды,основы" />
+
+<link rel="canonical" href="http://www.k-max.name/linux/syslogd-and-logrotate/" />
+<!-- /all in one seo pack -->
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Блог любителя экспериментов &raquo; Лента комментариев к &laquo;Системные журналы Linux (управление логированием)&raquo;" href="http://www.k-max.name/linux/syslogd-and-logrotate/feed/" />
+	<!-- <link rel="stylesheet" type="text/css" href="http://www.k-max.name/wp-content/plugins/fancybox/jquery.fancybox-1.3.4.css" media="screen" /> --> <link rel="stylesheet" type="text/css" href="http://www.k-max.name/wp-content/plugins/fancybox2/jquery.fancybox.css"  /> 
+	<link rel="stylesheet" type="text/css" href="http://www.k-max.name/wp-content/plugins/fancybox2/helpers/jquery.fancybox-buttons.css"  /> 
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/www.k-max.name\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.8.2"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b!==c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='simple-payments-css'  href='http://www.k-max.name/wp-content/plugins/jetpack/modules/simple-payments/simple-payments.css?ver=4.8.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-pagenavi-css'  href='http://www.k-max.name/wp-content/themes/deep-mix/pagenavi-css.css?ver=2.70' type='text/css' media='all' />
+<link rel='stylesheet' id='adv-spoiler-css'  href='http://www.k-max.name/wp-content/plugins/advanced-spoiler/css/advanced-spoiler.css?ver=2.02' type='text/css' media='all' />
+<link rel='stylesheet' id='open-sans-css'  href='https://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C600italic%2C300%2C400%2C600&#038;subset=latin%2Clatin-ext&#038;ver=4.8.2' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='http://www.k-max.name/wp-content/plugins/jetpack/css/jetpack.css?ver=5.2.1' type='text/css' media='all' />
+<link rel='stylesheet' id='cfq-css'  href='http://www.k-max.name/wp-content/plugins/comment-form-quicktags/style.css?ver=20120429' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.k-max.name/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='http://www.k-max.name/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript' src='http://www.k-max.name/wp-content/plugins/fancybox2/jquery.fancybox.pack.js?ver=4.8.2'></script>
+<script type='text/javascript' src='http://www.k-max.name/wp-content/plugins/fancybox2/helpers/jquery.fancybox-buttons.js?ver=4.8.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var ajax_tptn_tracker = {"ajax_url":"http:\/\/www.k-max.name\/wp-admin\/admin-ajax.php","top_ten_nonce":"a90ece71cf","top_ten_id":"2252","top_ten_blog_id":"1","activate_counter":"11","tptn_rnd":"481907983"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.k-max.name/wp-content/plugins/top-10/includes/js/top-10-tracker.js?ver=4.8.2'></script>
+<script type='text/javascript' src='http://www.k-max.name/wp-content/plugins/advanced-spoiler/js/jquery-spoiler.js?ver=2.02'></script>
+<script type='text/javascript' src='http://www.k-max.name/wp-content/plugins/comment-form-quicktags/quicktags.php?ver=20120429'></script>
+<link rel='https://api.w.org/' href='http://www.k-max.name/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.k-max.name/xmlrpc.php?rsd" />
+<link rel='prev' title='joomla скрытие ссылок в noindex и nofollow' href='http://www.k-max.name/web/joomla-skrytie-ssylok-v-noindex-i-nofollow/' />
+<link rel='next' title='Планировщик Linux (cron, crontab, anacron)' href='http://www.k-max.name/linux/planirovshhik-linux-cron-crontab-anacron/' />
+<meta name="generator" content="WordPress 4.8.2" />
+<link rel='shortlink' href='http://www.k-max.name/?p=2252' />
+<link rel="alternate" type="application/json+oembed" href="http://www.k-max.name/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.k-max.name%2Flinux%2Fsyslogd-and-logrotate%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.k-max.name/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.k-max.name%2Flinux%2Fsyslogd-and-logrotate%2F&#038;format=xml" />
+<style type='text/css'>img#wpstats{display:none}</style>
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Системные журналы Linux (управление логированием)" />
+<meta property="og:url" content="http://www.k-max.name/linux/syslogd-and-logrotate/" />
+<meta property="og:description" content="Сегодня на www.k-max.name речь пойдет о журналировании в Linux. Функция системного журналирования (т.н. &#171;логи&#187; или логирование) &#8212; это основной источник информации о работе системы и…" />
+<meta property="article:published_time" content="2010-12-20T15:19:35+00:00" />
+<meta property="article:modified_time" content="2014-01-29T09:42:39+00:00" />
+<meta property="og:site_name" content="Блог любителя экспериментов" />
+<meta property="og:image" content="http://www.k-max.name/wp-content/uploads/2010/12/syslogd1.jpg" />
+<meta property="og:image:width" content="591" />
+<meta property="og:image:height" content="364" />
+<meta property="og:locale" content="ru_RU" />
+<meta name="twitter:card" content="summary" />
+   <script type="text/javascript">
+jQuery(document).ready(function($){
+	$('a[href^="http://www.k-max.name/wp-content/uploads/"]:has(img)')
+	.fancybox({
+        padding    : 0,
+		closeBtn		: false,
+		helpers		: {
+			//title	: { type : 'inside' },
+			buttons	: { },
+		},
+        beforeShow : function() {
+        var alt = this.element.find('img').attr('alt');
+        
+        this.inner.find('img').attr('alt', alt);
+        
+        this.title = alt;
+		}
+
+      });
+});
+</script>
+</head>
+
+<body id="top">
+<!--LiveInternet counter-->
+<script type="text/javascript"><!--
+new Image().src = "//counter.yadro.ru/hit?r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";h"+escape(document.title.substring(0,80))+
+";"+Math.random();//--></script>
+<!--/LiveInternet-->
+<div id="navigation">
+   <div class="inner">
+   	<ul>
+   	   <li class="current_page_item"><a href="http://www.k-max.name">Главная</a></li>
+         <li class="page_item page-item-3062"><a href="http://www.k-max.name/karta-sajta/">Карта сайта</a></li>
+<li class="page_item page-item-1725"><a href="http://www.k-max.name/about/">О сайте</a></li>
+   	</ul>
+   </div>
+   <div class="fixed"></div>
+</div>
+
+<div id="header">
+   <div class="inner">
+   	<div id="logo">
+         			   <div id="title"><a href="http://www.k-max.name/" title="Блог любителя экспериментов" rel="home">Блог любителя экспериментов</a></div>
+           <h1>Блог о системном администрировании. Статьи о Linux, Windows, СХД NetApp и виртуализации.</h1>
+		      	</div>
+   </div>
+   <div class="fixed"></div>
+</div>
+    
+<div id="wrapout" class="inner">
+   <div id="wrapin">	<div id="main">
+    	<div id="content">
+
+		
+			<div class="post">
+				<div class="title">
+					<h1>Системные журналы Linux (управление логированием)</h1>
+					<div class="fixed"></div>
+				</div>
+
+				<div class="info">
+										<span class="date">Декабрь 20th, 2010</span> 
+					<span>Рубрики: <a href="http://www.k-max.name/category/linux/cron/" rel="category tag">cron</a>, <a href="http://www.k-max.name/category/linux/" rel="category tag">Linux</a>, <a href="http://www.k-max.name/category/linux/syslog-linux/" rel="category tag">Syslog</a>, <a href="http://www.k-max.name/category/linux/osnovy-linux/" rel="category tag">основы Linux</a></span>
+					<div class="fixed"></div>
+				</div>
+<!-- Яндекс.Директ  START -->
+<div>
+   <noindex>
+  <script type="text/javascript">
+ //<![CDATA[
+ yandex_partner_id = 82728;
+ yandex_stat_id = 1;
+ yandex_site_bg_color = 'FFFFFF';
+ yandex_site_charset = 'utf-8';
+ yandex_ad_format = 'direct';
+ yandex_font_size = 1.1;
+ yandex_direct_type = 'flat';
+ yandex_direct_limit = 2;
+ yandex_direct_title_font_size = 3;
+ yandex_direct_title_color = '990000';
+ yandex_direct_url_color = '333333';
+ yandex_direct_text_color = '333333';
+ yandex_direct_hover_color = 'CC0000';
+ yandex_direct_favicon = true;
+ document.write('<sc'+'ript type="text/javascript" src="http://an.yandex.ru/system/context.js"></sc'+'ript>');
+ //]]>
+ </script>   </noindex>
+</div>
+<!-- Яндекс.Директ  END -->  
+
+				<div class="content">
+					<p>Сегодня на <a title="блог об устройстве операционных систем" href="http://www.k-max.name/" target="_blank">www.k-max.name</a> речь пойдет о<strong> журналировании в Linux</strong>.<strong> Функция системного журналирования </strong>(т.н. "<strong>логи</strong>" или <strong>логирование</strong>) - это основной источник информации о работе системы и ошибках. <strong>Журналирование </strong>может осуществляться на локальной системе, а так же сообщения журналирования могут пересылаться на удаленную систему, кроме того, в конфигурационном файле <em>/etc/syslog.conf</em> (в некоторых новых дистрибутивах заменен на <em>/etc/rsyslog.conf</em>) возможна тонкая регулировка <strong>уровня журналирования</strong>. Журналирование осуществляется при помощи демона <strong>syslogd</strong> (<strong>rsyslogd - </strong>в некоторых новых дистрибутивах), который обычно получает входную информацию при помощи сокета <em><strong>/dev/log </strong></em>(локально) или с udp-порта 514 (с удаленных машин).</p>
+<pre>syslog-server:~# ls -l /dev/log
+srw-rw-rw- 1 root root 0 Дек 17 06:25 /dev/log</pre>
+<p><a href="http://www.k-max.name/linux/syslogd-and-logrotate/"><img class="aligncenter size-full wp-image-3887" title="логи linux, управление демоном syslogd" alt="логи linux, управление демоном syslogd, ротация логов" src="http://www.k-max.name/wp-content/uploads/2010/12/syslog-linux.png" width="500" height="149" srcset="http://www.k-max.name/wp-content/uploads/2010/12/syslog-linux.png 500w, http://www.k-max.name/wp-content/uploads/2010/12/syslog-linux-300x89.png 300w" sizes="(max-width: 500px) 100vw, 500px" /></a>В случае <strong>локального журналирования</strong> главным файлом - хранителем информации, обычно является <strong><em>/var/log/messages</em></strong>, но в большинстве инсталляций используются и многие другие файлы, которые могут быть тщательно настроены с помощью вышеуказанного конфигурационного файла. Например<span id="more-2252"></span>, может возникнуть необходимость выделить в отдельный лог сообщения, рождаемые демоном электронной почты.</p>
+<h2>Управление типом и подробностью журналируемой информации</h2>
+<h3>Конфигурационный файл syslog.conf</h3>
+<p>Файл <strong>syslog.conf</strong> является главным конфигурационным файлом для демона <strong>syslogd</strong>. <strong>Конфигурационный файл syslog.conf </strong>представляет собой<strong> набор правил</strong>. Каждое <strong>правило </strong>есть - строка, состоящая из <span style="color: #ff0000;"><em>селектора </em></span>и <span style="color: #0000ff;"><em>действия</em></span>, разделенных пробелом или табуляцией. <span style="color: #ff0000;"><strong>Селектор</strong></span> представляет собой запись в виде <em><span style="color: #008000;">источник</span>.<span style="color: #808000;">приоритет</span></em>. (<em>источник </em>иногда именуют - <em>категорией</em>) <strong>Селектор </strong>может состоять из нескольких записей <em>источник.приоритет, </em>разделенных символом ";" . Можно указывать несколько источников в одном селекторе (через запятую).  Поле <span style="color: #0000ff;"><strong>действие </strong></span>- устанавливает журналируемое действие для селектора.</p>
+<p>Получив сообщение для записи в журнал (от klogd, от локальной или удаленной программы), syslogd для каждого правила проверяет не подходит ли сообщение под шаблон, определяемый селектором. Если подходит, то выполняется указанное в правиле действие. Для одного сообщения м.б. выполнено произвольное количество действий (т.е. обработка сообщения не прекращается при первом успехе).</p>
+<p><strong>Сообщения </strong>с уровнем, <em>равным </em>или <em>выше </em>указанного в селекторе, и источником, <em>равным указанному </em>в селекторе, считается <em>подходящим</em>. <strong>Звездочка перед </strong>точкой соответствует <em>любому источнику</em>, <strong>после</strong> точки - <em>любому уровню</em>. Слово <strong>none </strong>после точки - никакому уровню для данного источника. Можно указывать несколько источников в одном селекторе (через запятую).</p>
+<p><span style="color: #008000;"><strong>Источник (он же категория)</strong></span> может быть следующим:</p>
+<ul>
+<li>0 - <strong>kern </strong>-  Сообщения ядра</li>
+<li>1 - <strong>user </strong>-  Сообщения пользовательских программ</li>
+<li>2 - <strong>mail </strong>-  Сообщения от почтовой системы.</li>
+<li>3 - <strong>daemon </strong>- Сообщения от тех системных демонов, которые в отличие от FTP или LPR не имеют выделенных специально для них категорий.</li>
+<li>4 - <strong>auth </strong>- Все что связано с авторизацией пользователей, вроде login и su (безопасность/права доступа)</li>
+<li>5 - <strong>syslog </strong>- Система протоколирования может протоколировать сообщения от самой себя.</li>
+<li>6 - <strong>lpr </strong>- Сообщения от системы печати.</li>
+<li>7 - <strong>news </strong>- Сообщения от сервера новостей. (в настоящее время не используется)</li>
+<li>8 - <strong>uucp </strong>- Сообщения от UNIX-to-UNIX Copy Protocol. Это часть истории UNIX и вероятнее всего она вам никогда не понадобится (хотя до сих пор определенная часть почтовых сообщений доставляется через UUCP).</li>
+<li>9 - <strong>cron </strong>- Сообщения от системного планировщика.</li>
+<li>10 - <strong>authpriv </strong>- То же самое, что и auth, однако сообщения этой категории записываются в файл, который могут читать лишь некоторые пользователи (возможно, эта категория выделена потому, что принадлежащие ей сообщения могут содержать открытые пароли пользователей, которые не должны попадать на глаза посторонним людям, и следовательно файлы протоколов должны иметь соответствующие права доступа).</li>
+<li>11 - <strong>ftp </strong>- При помощи этой категории вы сможете сконфигурировать ваш FTP сервер, что бы он записывал свои действия.</li>
+<li>12 - <strong>NTP </strong>- сообщения сервера времени</li>
+<li>13 - <strong>log audit </strong></li>
+<li>14 - <strong>log alert</strong></li>
+<li>15 -<strong> clock daemon - </strong>сообщения демона времени</li>
+<li>с 16 по 23   <strong> local0 - local7</strong> Зарезервированные категории для использования администратором системы. Категория local7 обычно используется для сообщений, генерируемых на этапе загрузки системы.</li>
+<li><strong>mark </strong>(не имеющая цифрового эквивалента) - присваивается отдельным сообщениям, формируемым самим демоном syslogd</li>
+</ul>
+<p>Под<strong> <span style="color: #808000;">приоритет (степени важности)</span> сообщений </strong>заданы 8 уровней важности, которые кодируются числами от 0 до 7:<a name="level"></a></p>
+<ul>
+<li>0 - <strong>emerg </strong>(старое название <strong>PANIC</strong>) - Чрезвычайная ситуация. Система неработоспособна.</li>
+<li>1 - <strong>alert - </strong>Тревога! Требуется немедленное вмешательство.</li>
+<li>2 - <strong>crit - </strong>Критическая ошибка (критическое состояние).</li>
+<li>3 - <strong>err </strong>(старое название <strong>ERROR</strong>) - Сообщение об ошибке.</li>
+<li>4 - <strong>warning </strong>(старое название <strong>WARN</strong>) - Предупреждение.</li>
+<li>5 - <strong>notice - </strong>Информация о каком-то нормальном, но важном событии.</li>
+<li>6 - <strong>info - </strong>Информационное сообщение.</li>
+<li>7 - <strong>debug - </strong>Сообщения, формируемые в процессе отладки.</li>
+</ul>
+<p>Согласно <span style="color: #0000ff;"><strong>действию,</strong></span> указанному в правиле, сообщение может быть записано в следующие назначения:</p>
+<p><strong>Обычный файл</strong></p>
+<p style="padding-left: 30px;">Задается полным путем, начиная со слеша (/). Поставьте перед ним дефис (-), чтобы отменить синхронизацию файла после каждой записи. Это может привести к потере информации, но повысить производительность.</p>
+<p><strong><a title="каналы Fifo" href="../linux/processy-v-linux#FIFO" target="_blank">Именованные каналы </a> </strong></p>
+<p style="padding-left: 30px;">Размещение перед именем файла символа канала (|) позволит использовать <strong>fifo (first in — first out,</strong> первый пришел — первый вышел) или <strong>именованный канал (named pipe)</strong> в качестве приемника для сообщений. Прежде чем запускать (или перезапускать) syslogd, необходимо создать fifo при помощи команды mkfifo. Иногда fifo используются для отладки.</p>
+<p><strong>Терминал и консоль </strong></p>
+<p style="padding-left: 30px;">Терминал, такой как /dev/console.</p>
+<p><strong>Удаленная машина</strong></p>
+<p style="padding-left: 30px;">Чтобы сообщения пересылались на другой хост, поместите перед именем хоста символ (@). Обратите внимание, что сообщения не пересылаются с принимающего хоста. (для работы данного назначения на клиенте и сервере в файле <em>/etc/services</em> должна быть прописана строчка <em>syslog 514/udp</em>, и открыт UTP-порт 514)</p>
+<p><strong>Список пользователей</strong></p>
+<p style="padding-left: 30px;">Разделенный запятыми список пользователей, получающих сообщения (если пользователь зарегистрирован в системе). Сюда часто включается пользователь root.</p>
+<p><strong>Все зарегистрированные пользователи</strong></p>
+<p style="padding-left: 30px;">Чтобы известить всех зарегистрированных пользователей при помощи команды wall, используйте символ звездочки (*).</p>
+<p>Пример несложного<strong> syslog.conf:</strong></p>
+<pre># Все сообщения ядра выдавать на консоль.
+#kern.*                                                 /dev/console
+
+# Все логи уровня info или выше, кроме сообщений электронной почты, а так же
+# не логировать сообщения аутентификации и сообщений демона cron!
+*.info;mail.none;authpriv.none;cron.none                /var/log/messages
+
+# Записывать в отдельный файл сообщения, содержащие конфиденциальную
+# информацию аутентификации, независимо от их уровня.
+authpriv.*                                              /var/log/secure
+
+# Все сообщения почтовой системы тоже записывать в отдельный файл.
+mail.*                                                  -/var/log/maillog
+
+# Логировать сообщения планировщика в файл /var/log/cron
+cron.*                                                  /var/log/cron
+
+# Сообщения о чрезвычайных ситуациях должны немедленно получить
+# все пользователи системы
+*.emerg                                                 *
+
+# Сохранять сообщения новостей уровня crit и выше в отдельный файл.
+uucp,news.crit                                          /var/log/spooler
+
+# Сохранять сообщения загрузки в boot.log
+local7.*                                                /var/log/boot.log</pre>
+<p>Как и во многих конфигурационных файлах, синтаксис следующий:</p>
+<ul>
+<li>строки, начинающиеся с #, и пустые строки игнорируются.</li>
+<li>Символ * может использоваться для указания всех категорий или всех приоритетов.</li>
+<li>Специальное ключевое слово none указывает, что журналирование для этой категории не должно быть выполнено для этого действия.</li>
+<li>Дефис перед именем файла (как -/var/log/maillog в этом примере) указывает, что после каждой записи журнал не должен синхронизироваться. В случае аварии системы вы можете потерять информацию, но отключение синхронизации позволит повысить производительность.</li>
+</ul>
+<p>В синтаксисе конфигурационного файла можно поставить перед приоритетом <strong>знак !</strong>, чтобы показать, что действие не должно применяться,<strong> начиная с этого уровня и выше</strong>. Подобным образом, перед приоритетом можно поставить <strong>знак =</strong>, чтобы показать, что правило применяется только к этому уровню, или <strong>!=</strong>, чтобы показать, что правило применяется ко всем уровням, кроме этого. Ниже показано несколько примеров (man syslog.conf можно найти множество других примеров):</p>
+<pre># Посылать все сообщения ядра в /var/log/kernel.
+# Посылать все сообщения уровня critical и higher на удаленную машину sysloger и на консоль
+# Посыласть все сообщения уровня  info, notice и warning в /var/log/kernel-info
+#
+kern.*                       /var/log/kernel
+kern.crit                    @sysloger
+kern.crit                    /dev/console
+kern.info;kern.!err          /var/log/kernel-info
+
+# Посылать все сообщения почтовой системы, кроме уровня info в /var/log/mail.
+mail.*;mail.!=info           /var/log/mail</pre>
+<p>Я постарался максимально понятно работу syslogd показать на схеме:</p>
+<p><a href="http://www.k-max.name/wp-content/uploads/2010/12/syslogd1.jpg"><img class="aligncenter size-full wp-image-2276" title="работа демона syslogd" alt="" src="http://www.k-max.name/wp-content/uploads/2010/12/syslogd1.jpg" width="591" height="364" srcset="http://www.k-max.name/wp-content/uploads/2010/12/syslogd1.jpg 591w, http://www.k-max.name/wp-content/uploads/2010/12/syslogd1-300x184.jpg 300w" sizes="(max-width: 591px) 100vw, 591px" /></a></p>
+<h2>Запуск демона syslogd</h2>
+<p>Запуск демона протоколирования запускаются на этапе инициализации системы посредством скрипта <em>/etc/rc.d/init.d/syslog</em>, однако для того, чтобы задать параметры запуска, нет необходимости корректировать этот скрипт - начиная с версии 7.2, опции запуска считываются из отдельного конфигурационного файла <em>/etc/sysconfig/syslog (/etc/default/syslog</em><em> в debian)</em>.</p>
+<p>Вот некоторые возможные <strong>параметры запуска демона syslogd:</strong></p>
+<ul>
+<li><em>-a /folder/socket</em> - указание дополнительного слушающего сокета (не забудьте предварительно создать сокет)</li>
+<li><em>-d</em> - отладочный режим. При этом демон не переходит в фоновый режим и выдает все сообщения на текущий терминал;</li>
+<li><em>-f</em> <em>имя-конфигурационного-файла</em>. Задает имя альтернативного конфигурационного файла, который будет использоваться вместо заданного по умолчанию /etc/syslog.conf;</li>
+<li><em>-l список-хостов </em>- задание списка хостов, имена которых не должны записываться с указанием полного доменного имени (FQDN - Full Qwalified Domain Name);</li>
+<li><em>-m минут</em> - запущенный без этой опции sysklogd через каждые 20 минут записывает в протокол сообщения категории mark (временные отметки). С помощью опции -m можно либо изменить интервал между отметками, либо вовсе отменить выдачу таких сообщений;</li>
+<li><em>-p socket</em> - задание альтернативного сокета UNIX (вместо прослушиваемого по умолчанию /dev/log);</li>
+<li><em>-r</em> - разрешение принимать сообщения от удаленных хостов;</li>
+<li><em>-x</em> - запрет определения имени хоста по его адресу для предотвращения зависания при работе на одном хосте с сервером DNS.</li>
+<li><em>-v</em> - показать версию и закончить работу</li>
+</ul>
+<p>После запуска демона syslogd создается файл статуса <em>/var/lock/subsys/syslog</em> нулевой длины, и файл с идентификационным номером процесса<em> /var/run/syslogd.pid</em>.</p>
+<p>С помощью команды<br />
+<em>kill -SIGNAL `cat /var/run/syslogd.pid`</em></p>
+<p>можно послать <strong>демону syslogd</strong> один из следующих сигналов: <strong>SIGHUP </strong>- перезапуск демона; <strong>SIGTERM </strong>- завершение работы; <strong>SIGUSR1 </strong>- включить/выключить режим отладки.</p>
+<p>Вообще-то в системе запускаются два демона протоколирования - <strong>syslogd </strong>и <strong>klogd</strong>. Оба демона входят в состав пакета <strong> sysklogd</strong>.</p>
+<p><strong>Демон klogd</strong> отвечает за журналирование событий, происходящих в <strong>ядре системы</strong>. Необходимость в отдельном демоне klogd объясняется тем, что ядро не может использовать стандартную функцию syslog. Дело в том, что стандартные библиотеки С (включая ту библиотеку, в которой находится функция syslog) предназначены для использования только <em>обычными приложениями</em>. Поскольку ядро тоже нуждается в функциях журналирования, в него включены свои библиотеки, недоступные приложениям. Поэтому ядро использует свой собственный механизм генерации сообщений. <strong></strong></p>
+<p><strong>Демон klogd</strong> предназначен для организации обработки этих сообщений. В принципе он может производить такую обработку полностью самостоятельно и независимо от syslogd, например, записывая эти сообщения в файл, но в большинстве случаев используется принятая по умолчанию настройка klogd, при которой все сообщения от ядра пересылаются тому же демону syslogd.</p>
+<h2><a name="logrotate"></a>Автоматическая ротация (обновление заполненных файлов) и архивирование журналов</h2>
+<p>Со временем, файл журнала имеет свойство увеличиваться, особенно при интенсивной работе какого-либо сервиса. Соответственно, необходимо иметь возможность контролировать размер журналов. Это делается при помощи<strong> команды logrotate</strong>, которая обычно выполняется<strong> демоном cron</strong>. О работе cron я расскажу в следующих статьях. Главная цель <strong>команды logrotate</strong> состоит в том, чтобы периодически создавать резервные копии журналов и создавать новые чистые журналы. Сохраняется несколько поколений журналов и, когда завершается срок жизни журнала последнего поколения, он может быть заархивирован (сжат). Результат может быть отправлен по почте, например, ответственному за ведение архивов.</p>
+<p>Для определения порядка ротации и архивирования журналов используется <strong>конфигурационный файл <em>/etc/logrotate.conf</em></strong>. Для разных журналов можно задать разную периодичность, например, ежедневно, еженедельно или ежемесячно, кроме того, можно регулировать количество накапливаемых поколений, а также указать, будут ли копии архивов отправляться ответственному за ведение архивов и, если будут, когда. Ниже показан<strong> пример файла /etc/logrotate.conf:</strong></p>
+<pre># сначала заданы параметры "по-умолчанию" (глобальные опции)
+# обновлять файлы журнала еженедельно
+weekly
+
+# хранить архив логов за 4 последние недели
+rotate 4
+
+# создавать новый (пустой) файл после ротации (обновления)
+create
+
+# раскомментируйте, если желаете, чтобы сохраненные файлы сжимались
+#compress
+
+# включить настройки ротации из указанного каталога
+include /etc/logrotate.d
+
+# не хранить wtmp, или btmp -- настройки ротации данных журналов следующие:
+/var/log/wtmp {
+ missingok
+ monthly
+ create 0664 root utmp
+ rotate 1
+}
+
+/var/log/btmp {
+ missingok
+ monthly
+ create 0664 root utmp
+ rotate 1
+}
+
+# специфичные системные журналы могут быть настроены ниже</pre>
+<p>Глобальные опции размещаются в начале<strong> файла logrotate.conf</strong>. Они используются по умолчанию, если где-то в другом месте не задано ничего более определенного. В примере ротация журналов происходит <strong>еженедельно </strong>и резервные копии сохраняются в течение <strong>четырех </strong>недель. Как только производится ротация журнала, на месте старого журнала автоматически создается новый. <strong>Файл logrotate.conf </strong>может содержать спецификации из других файлов. Так, в него включаются все файлы из каталога <strong>/etc/logrotate.d. </strong></p>
+<p>В этом примере также содержатся специальные правила для <em>/var/log/wtmp</em> и <em>/var/log/btmp</em> (хранящие информацию о удачных и неудачных попытках входя в систему), ротация которых происходит ежемесячно. Если файлы отсутствуют, сообщение об ошибке не выдается. Создается новый файл и сохраняется только одна резервная копия.</p>
+<p>В этом примере по достижении резервной копией последнего поколения она удаляется, поскольку не определено, что следует с ней делать.</p>
+<p><strong>Резервные копии журналов</strong> могут также создаваться, когда журналы достигают определенного размера, и могут быть созданы скрипты из наборов команд для выполнения до или после операции резервного копирования. Пример:</p>
+<pre>/var/log/messages {
+ rotate 5
+ mail logadmin@sysloger
+ size 100k
+ postrotate
+ /usr/bin/killall -HUP syslogd
+ endscript
+ }</pre>
+<p>В этом примере ротация <em>/var/log/messages</em> производится по достижении им размера 100 КБ. Накапливается пять резервных копий, и когда истекает срок жизни самой старой резервной копии, она отсылается по почте на адрес logadmin@sysloger. Командное слово postrotate включает скрипт, перезапускающий демон syslogd после завершения ротации путем отправки сигнала HUP. Командное слово endscript необходимо для завершения скрипта, а также в случае, если имеется скрипт prerotate. Более полную информацию см. в страницах руководства man для logrotate.</p>
+<p><strong>Параметры</strong>, задаваемые в конфигурационном файле<strong> logrotate.conf:</strong></p>
+<ul>
+<li><strong>compress </strong>| <strong>nocompress </strong>(старые версии сжимаются или не сжимаются с помощью gzip)</li>
+<li><strong>compresscmd </strong>(задает программу сжатия, по умолчанию - gzip)</li>
+<li><strong>uncompresscmd </strong>(задает программу разжатия, по умолчанию - ungzip)</li>
+<li><strong>compressext </strong>(задает суффикс для сжатых файлов)</li>
+<li><strong>compressoptions </strong>(задает параметры программы сжатия; по умолчанию - "-9", т.е. максимальное сжатие для gzip)</li>
+<li><strong>copytruncate </strong>| <strong>nocopytruncate </strong>(обычно старая версия переименовывается и создается новая версия журнала; при задании этого параметра logrotate копирует журнал в новый файл, а затем обрезает старый; используется, если программа, создающая журнал, не умеет его закрывать; теряются записи, сделанные в промежутке между копированием и обрезанием; а поможет ли, если создающая журнал программа вместо режима append просто пишет в файл, используя внутренний указатель?)</li>
+<li><strong>create </strong>[права-доступа владелец группа] | <strong>nocreate </strong>(сразу после переименования старой версии журнала и до вызова postrotate создается новый журнал с указанными атрибутами - права доступа задаются в восьмеричном виде, как в chmod.2; если атрибуты не указаны, то берутся от старого журнала)</li>
+<li><strong>daily </strong>(смена версий в серии происходит ежедневно)</li>
+<li><strong>delaycompress </strong>| <strong>nodelaycompress </strong>(некоторые программы не сразу закрывают журнал, в этом случае сжатие надо отложить до следующего цикла)</li>
+<li><strong>errors </strong><em>email </em>(кому направлять сообщения об ошибках)</li>
+<li><strong>extension </strong><em>суффикс </em>(задается суффикс, добавляемый к именам файлов при ротации перед суффиксом сжатия)</li>
+<li><strong>ifempty </strong>| <strong>notifempty </strong>(смена версий даже если файл пуст; действует по умолчанию)</li>
+<li><strong>include </strong><em>имя-файла</em> | имя-директории (текстуально подставить файл или все файлы из указанной директории; не включаются поддиректории, специальные файлы и файлы с суффиксами из списка исключений; нельзя использовать внутри секции)</li>
+<li><strong>mail </strong><em>адрес </em>| <strong>nomail </strong>(когда смена версий приводит к необходимости удалить старый журнал, то послать его по указанному адресу)</li>
+<li><strong>mailfirst </strong>(посылать не удаляемую версию журнала, а первую)</li>
+<li><strong>maillast </strong>(посылать удаляемую версию журнала; действует по умолчанию)</li>
+<li><strong>missingok </strong>| <strong>nomissingok </strong>(не посылать сообщения об ошибке, если журнал отсутствует)</li>
+<li><strong>monthly </strong>(смена версий происходит ежемесячно)</li>
+<li><strong>olddir </strong><em>директория </em>| <strong>noolddir </strong>(во время смены версий журнал перемещается в указанную директорию; д.б. на том же физическом устройстве)</li>
+<li><strong>postrotate </strong>(все дальнейшие строчки до строки endscript исполняются как команды shell после процесса смены версии)</li>
+<li><strong>prerotate </strong>(все дальнейшие строчки до строки endscript исполняются перед процессом смены версии)</li>
+<li><strong>rotate </strong><em>число </em>(сколько старых версий хранить; если 0, то ни одной)</li>
+<li><strong>size </strong><em>байт </em>(смена версии происходит, если размер журнала превысил указанное число; можно использовать суффиксы "k" - килобайт - и "M" - мегабайт)</li>
+<li><strong>sharedscripts </strong>| <strong>nosharedscripts </strong>(выполнять команды prerotate и postrotate только один раз для всех файлов, описанных в секции)</li>
+<li><strong>tabooext </strong>[+] <em>список-суффиксов</em> (задание списка суффиксов-исключений для include; если указан знак "плюс", то дополнение, иначе замена; по умолчанию: .rpmorig, .rpmsave, .rpmnew, ",v", .swp и "~")</li>
+<li><strong>weekly </strong>(смена версий происходит еженедельно)</li>
+</ul>
+<h2>Изучение и мониторинг журналов</h2>
+<p>Записи в журналах обычно содержат метку времени, имя хоста, на котором выполняется описываемый процесс, и имя процесса. <strong>Просматривать журналы</strong> можно при помощи программы постраничного вывода, например, <em>less</em>, искать определенные записи (например, сообщения ядра от определенного демона) можно при помощи команды <em>grep</em>:</p>
+<pre>[root@syslog-server ~]# less /var/log/messages
+[root@syslog-server ~]# grep "ppp" /var/log/messages | tail
+Dec 17 16:34:25 proxy pppd[7843]: Connection terminated.
+Dec 17 16:34:25 proxy pppd[7843]: Exit.
+Dec 17 16:35:57 proxy pppd[11345]: LCP terminated by peer (^P]kV^@&lt;M-Mt^@^@^@^@)
+Dec 17 16:35:57 proxy pppd[11345]: pptpd-logwtmp.so ip-down ppp2
+Dec 17 16:35:57 proxy pppd[11345]: Connect time 14.8 minutes.
+Dec 17 16:35:57 proxy pppd[11345]: Sent 130192 bytes, received 53946 bytes.
+Dec 17 16:35:57 proxy pppd[11345]: Modem hangup
+Dec 17 16:35:57 proxy pppd[11345]: Connection terminated.
+Dec 17 16:35:57 proxy pppd[11345]: Script /etc/ppp/ip-down finished (pid 12084), status = 0x1
+Dec 17 16:35:57 proxy pppd[11345]: Exit.</pre>
+<p>Компьютер может работать не постоянно и выключаться, допустим на ночь. Поэтому в /var/log/messages записи хранятся циклически от запуска компьютера к выключению, это можно заметить по сообщениям:</p>
+<pre>Дек 17 08:32:56 syslog-server syslogd 1.4-0: restart.
+Дек 17 08:32:56 syslog-server syslog: запуск syslogd succeeded
+Дек 17 08:32:56 syslog-server kernel: klogd 1.4-0, log source = /proc/kmsg started.
+Дек 17 08:32:56 syslog-server syslog: запуск klogd succeeded</pre>
+<p>Далее в файле протокола можно обнаружить версию ядра, параметры его запуска, информацию о типе процессора и объеме ОЗУ:</p>
+<pre>Dec 17 08:32:56 syslog-server kernel: Kernel command line:
+ auto BOOT_IMAGE=linux ro root=303
+ BOOT_FILE=/boot/vmlinuz-2.4.2-2
+Dec 17 08:32:56 syslog-server kernel: Memory: 125652k/130560k available (1365k kernel code, 4200k reserved, 92k data, 236k init, 0k highmem)
+Dec 17 08:32:56 syslog-server kernel: CPU: Intel(R) Pentium(R) 4 CPU 1.60GHz stepping 02</pre>
+<p>Так же, в этом файле можно найти информацию о дисковой памяти (включая информацию о геометрии диска, структуре разделов и используемых прерываниях), информацию о периферийных устройствах, о запуске отдельных служб и сервисов, информацию о подключении файловых систем и сообщения о входе пользователей в систему, а также сообщения об ошибках.</p>
+<p>Иногда может возникать необходимость<strong> мониторинга системных журналов</strong> с целью поиска текущих событий. Например, можно попробовать поймать редко случающееся событие в тот момент, когда оно произошло. В таком случае можно использовать команду <em>tail </em>с опцией<em> -f </em>для отслеживания содержимого системного журнала. Пример:</p>
+<pre>[root@syslog-server~]# tail -f /var/log/messages | grep syslog-server
+Dec 17 16:46:09 syslog-server pppd[12548]: pptpd-logwtmp.so ip-up ppp0 maikop 94.77.0.150
+Dec 17 16:46:09 syslog-server pppd[12548]: Script /etc/ppp/ip-up finished (pid 12552), status = 0x0
+Dec 17 16:46:49 syslog-server pptpd[12581]: CTRL: Client 85.175.197.65 control connection started
+Dec 17 16:46:49 syslog-server pptpd[12581]: CTRL: Starting call (launching pppd, opening GRE)
+Dec 17 16:46:49 syslog-server pppd[12582]: Plugin /usr/lib/pptpd/pptpd-logwtmp.so loaded.</pre>
+<p>Кроме файлов-журналов, указанных в /etc/syslog.conf, существуют так же и другие файлы, например файл <a title="dmesg" href="http://www.k-max.name/linux/nachalo-etapy-zagruzki-os-linux-v-sxeme#dmesg">/var/log/dmesg</a>,  который хранит информацию о процессе загрузки системы до запуска syslogd, а так же файлы <a title="/var/log" href="http://www.k-max.name/linux/fajlovaya-sistema-linux-i-struktura-katalogov#log" target="_blank"><strong>/var/log/lastlog, /var/log/wtmp, /var/log/btmp</strong></a>, имеющие двоичный формат и и хранящие информацию о последнем входе пользователя в систему, о всех удачных входах пользователей в систему и о всех неудачных входах пользователей в систему соответственно. Так же в каталоге /var/log/ могут находится лог-файлы таких демонов как веб-сервер или прокси-сервер. Формат данных файлов аналогичен журналам syslogd.</p>
+<p>На последок, хотелось бы сделать акцент на том, что данный протокол очень не защищен, т.к. syslog не содержит никаких средств защиты от подделок сообщений. Хуже того, использование протокола UDP позволяет злоумышленникам посылать сообщения от имени любого хоста. Ваша локальная сеть должна быть защищена экраном от приема пакетов с поддельными локальными адресами (хотя это не помешает посылать поддельные сообщения изнутри локальной сети) и от приема пакетов снаружи на порт 514/udp. Известны случаи переполнения диска ложными сообщениями.</p>
+<p>Протокол syslog и UDP не обеспечивают гарантированной доставки (сообщения могут быть потеряны при перегрузке сети или перехвачены, поврежденные сообщения удаляются без предупреждения), правильной последовательности доставки (сообщение о завершении процесса может придти раньше сообщения о его запуске), приоритетной доставки.</p>
+<p>Конфиденциальность сообщений не обеспечивается, так как они передаются открытым текстом.</p>
+<p>Если при настройке генератора сообщений указать неправильный адрес коллектора или релея, то никаких сообщений об ошибке не будет - сообщения будут удаляться (или записываться в чужой журнал).</p>
+<p>Были предложены несколько проектов улучшения протокола syslog. Например, документ RFC 3195 предлагает систему протоколирования (syslog-conn), основанную на TCP, обеспечивающую гарантированную доставку сообщений в правильной последовательности. Проект syslog-sign предлагает обеспечить аутентификацию, упорядоченность, целостность сообщений и обнаружение пропавших сообщений за счет генерации специальных сообщений, содержащих цифровую подпись (signature) блока предыдущих сообщений с сохранением стандартного протокола и формата syslog и использованием UDP.</p>
+<p><strong>Подведем небольшой итог:</strong></p>
+<p>В линукс есть единый демон, отвечающий за журналирование событий локальной системы и удаленных систем. Все события собираются из сокета /dev/log, порта UDP - 514, а так же от "помощника" - демона klogd, который присылает сообщения от ядра. Все собранные сообщения фильтруются демоном syslogd через правила в файле /etc/syslog.conf и в соответствии с правилами распределяются по соответствующим местам назначения. Файлы логов периодически "обрезаются". Периодичность определяет файл logrotate.conf и команда logrotate, которая запускается системным планировщиком - cron.</p>
+<p>На сегодня это все. Надеюсь описал все максимально понятно. Со временем буду дополнять статью!</p>
+<p style="text-align: right;"><em>С Уважением, Mc.Sim!</em></p>
+<div class="tptn_counter" id="tptn_counter_2252"><script type="text/javascript" data-cfasync="false" src="http://www.k-max.name/?top_ten_id=2252&amp;view_counter=1&amp;_wpnonce=cf1ca0a1b9"></script></div>					 
+<!-- Список доп материалов START -->
+<hr/>	
+<div class="list_posts">
+						
+			<h5>Другие материалы в категории cron</h5>
+				<ul>
+			
+								<li><a href="http://www.k-max.name/linux/planirovshhik-linux-cron-crontab-anacron/">Планировщик Linux (cron, crontab, anacron)</a></li>
+								<li><a href="http://www.k-max.name/linux/syslogd-and-logrotate/">Системные журналы Linux (управление логированием)</a></li>
+								</ul>
+			</div>
+<!-- Список доп материалов END-->
+<noindex>
+						<!-- Поделись от Яндекса --> 
+						<div class="jandex">
+						<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+						<div class="yashare-auto-init" data-yashareL10n="ru"  data-yashareQuickServices="vkontakte,facebook,twitter,odnoklassniki,moimir,gplus" data-yashareTheme="counter" data-yashareImage="http://www.k-max.name/favicon.ico" ></div> 
+
+
+						</div>
+						<!-- /Поделись от Яндекса --> 
+					</noindex>
+<br /><br />
+
+<!-- Яндекс.Директ START -->
+<div>
+	<noindex>
+ <script type="text/javascript">
+ //<![CDATA[
+ yandex_partner_id = 82728;
+ yandex_stat_id = 1;
+ yandex_site_bg_color = 'FFFFFF';
+ yandex_site_charset = 'utf-8';
+ yandex_ad_format = 'direct';
+ yandex_font_size = 1.1;
+ yandex_direct_type = 'flat';
+ yandex_direct_limit = 2;
+ yandex_direct_title_font_size = 3;
+ yandex_direct_title_color = '990000';
+ yandex_direct_url_color = '333333';
+ yandex_direct_text_color = '333333';
+ yandex_direct_hover_color = 'CC0000';
+ yandex_direct_favicon = true;
+ document.write('<sc'+'ript type="text/javascript" src="http://an.yandex.ru/system/context.js"></sc'+'ript>');
+ //]]>
+ </script>	</noindex>
+</div>
+<!-- Яндекс.Директ END -->
+
+
+					<span class="tags">Теги: <a href="http://www.k-max.name/tag/cron/" rel="tag">cron</a>, <a href="http://www.k-max.name/tag/linux/" rel="tag">Linux</a>, <a href="http://www.k-max.name/tag/syslog/" rel="tag">syslog</a>, <a href="http://www.k-max.name/tag/vim/" rel="tag">vim</a>, <a href="http://www.k-max.name/tag/komandy/" rel="tag">команды</a>, <a href="http://www.k-max.name/tag/osnovy/" rel="tag">основы</a></span>
+				</div>
+				<div class="comments comments_single">
+					<a href="#respond">Оставить комментарий</a>
+									</div>
+
+			</div>
+			
+			
+
+   <div id="comments">
+   <h3>25 комментариев к &#8220;Системные журналы Linux (управление логированием)&#8221;</h3>
+	<!-- comments START -->
+	<ol class="commentlist">
+			<li class="comment " id="comment-2583">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://1.gravatar.com/avatar/d922dab0af818ec14fb39ba5dc9a54c3?s=38&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/d922dab0af818ec14fb39ba5dc9a54c3?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											Костик									</div>
+				<div class="date">Январь 30th, 2011 at 15:32</div> 
+			</div>
+			<div class="count">
+				1			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-2583"><p>информативно и внятно, спасибо за статью  <img src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/wink.gif"  alt=";)" title=";)"/> </p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=2583#respond' onclick='return addComment.moveForm( "comment-2583", "2583", "respond", "2252" )' aria-label='Комментарий к записи Костик'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+<ul class="children">
+	<li class="comment " id="comment-2586">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=38&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											<noindex><a href='http://www.k-max.name/' rel='external nofollow' class='url'>Mc.Sim</a></noindex>									</div>
+				<div class="date">Январь 31st, 2011 at 09:18</div> 
+			</div>
+			<div class="count">
+				2			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-2586"><p>Спасибо за отзыв! Приходите еще!</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=2586#respond' onclick='return addComment.moveForm( "comment-2586", "2586", "respond", "2252" )' aria-label='Комментарий к записи Mc.Sim'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment " id="comment-2622">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://0.gravatar.com/avatar/94ea7c201f3fccdf1a1ea946447f377d?s=38&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/94ea7c201f3fccdf1a1ea946447f377d?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											Ир									</div>
+				<div class="date">Февраль 15th, 2011 at 23:01</div> 
+			</div>
+			<div class="count">
+				3			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-2622"><p>Спасибо <img src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/smile.gif"  alt="=)" title="=)"/> </p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=2622#respond' onclick='return addComment.moveForm( "comment-2622", "2622", "respond", "2252" )' aria-label='Комментарий к записи Ир'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+<ul class="children">
+	<li class="comment " id="comment-2623">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=38&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											<noindex><a href='http://www.k-max.name/' rel='external nofollow' class='url'>Mc.Sim</a></noindex>									</div>
+				<div class="date">Февраль 16th, 2011 at 20:57</div> 
+			</div>
+			<div class="count">
+				4			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-2623"><p>Пожалуйста. Приходите еще!</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=2623#respond' onclick='return addComment.moveForm( "comment-2623", "2623", "respond", "2252" )' aria-label='Комментарий к записи Mc.Sim'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment " id="comment-2746">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://1.gravatar.com/avatar/a128754d6c5d9d289ae0c5242cb84872?s=38&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a128754d6c5d9d289ae0c5242cb84872?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											<noindex><a href='http://hostres.ru' rel='external nofollow' class='url'>Polifem</a></noindex>									</div>
+				<div class="date">Март 19th, 2011 at 23:54</div> 
+			</div>
+			<div class="count">
+				5			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-2746"><p>Спасибо, отличная статья, воспользовался ей при настройке своей машины. Ю</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=2746#respond' onclick='return addComment.moveForm( "comment-2746", "2746", "respond", "2252" )' aria-label='Комментарий к записи Polifem'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+	<li class="comment " id="comment-3969">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://2.gravatar.com/avatar/bda7c3e7e9a0234173b71d5de74329ab?s=38&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/bda7c3e7e9a0234173b71d5de74329ab?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											Алексей									</div>
+				<div class="date">Февраль 10th, 2012 at 10:51</div> 
+			</div>
+			<div class="count">
+				6			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-3969"><p>Самая лучшая статья по Syslogу. Автору РЕСПЕКТ</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=3969#respond' onclick='return addComment.moveForm( "comment-3969", "3969", "respond", "2252" )' aria-label='Комментарий к записи Алексей'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+<ul class="children">
+	<li class="comment  admincomment" id="comment-3975">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=38&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											<noindex><a href='http://www.k-max.name/' rel='external nofollow' class='url'>Mc.Sim</a></noindex>									</div>
+				<div class="date">Февраль 10th, 2012 at 16:31</div> 
+			</div>
+			<div class="count">
+				7			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-3975"><p>спасибо! Приходите еще!</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=3975#respond' onclick='return addComment.moveForm( "comment-3975", "3975", "respond", "2252" )' aria-label='Комментарий к записи Mc.Sim'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment " id="comment-4042">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://0.gravatar.com/avatar/9ebc34ef14628a73017aeac97c6d978b?s=38&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/9ebc34ef14628a73017aeac97c6d978b?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											Paul									</div>
+				<div class="date">Февраль 13th, 2012 at 17:48</div> 
+			</div>
+			<div class="count">
+				8			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-4042"><p>А как мне принтер сетевой прикрутить к syslog-серверу? В настройках принтера прописал адрес сервера, а что мне подкрутить в syslog.conf, чтобы отслеживать печать, подключение к принтеру по http, ftp,telnet, а также неудачную авторизацию? Заранее благодарен.</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=4042#respond' onclick='return addComment.moveForm( "comment-4042", "4042", "respond", "2252" )' aria-label='Комментарий к записи Paul'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+<ul class="children">
+	<li class="comment  admincomment" id="comment-4346">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=38&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											<noindex><a href='http://www.k-max.name/' rel='external nofollow' class='url'>Mc.Sim</a></noindex>									</div>
+				<div class="date">Февраль 25th, 2012 at 14:36</div> 
+			</div>
+			<div class="count">
+				9			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-4346"><p>Необходимо открыть порт 514/udp и запустить демон с ключом -r (подробнее в man 8 syslogd). Это заставит демона принимать сетевые сообщения. Кроме того, если хочется направить сообщение от отдельного хоста в отдельный лог, то нужно добавить примерно такую строчку:<br />
+<code>+hostname.domain<br />
+*.* /var/log/hostname.log</code></p>
+<p>P.S. но данная статья немного не актуальна для современных дистрибутивов, т.к. syslogd заменен на rsyslogd, а у него несколько другая схема работы и синтаксис конфига.<br />
+P.P.S сорри, что долго отвечал <img src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/smile.gif"  alt=":)" title=":)"/> </p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=4346#respond' onclick='return addComment.moveForm( "comment-4346", "4346", "respond", "2252" )' aria-label='Комментарий к записи Mc.Sim'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment " id="comment-9412">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://0.gravatar.com/avatar/c0554dcfb8b40dc145b81ec1a4549dff?s=38&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c0554dcfb8b40dc145b81ec1a4549dff?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											Влад									</div>
+				<div class="date">Октябрь 23rd, 2013 at 10:41</div> 
+			</div>
+			<div class="count">
+				10			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-9412"><p>Спасибо!</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=9412#respond' onclick='return addComment.moveForm( "comment-9412", "9412", "respond", "2252" )' aria-label='Комментарий к записи Влад'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+	<li class="comment " id="comment-27981">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://0.gravatar.com/avatar/3376f5b9cd95a87ee36b02bd8d1f39f7?s=38&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3376f5b9cd95a87ee36b02bd8d1f39f7?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											Владимир									</div>
+				<div class="date">Апрель 22nd, 2014 at 05:39</div> 
+			</div>
+			<div class="count">
+				11			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-27981"><p>Добрый день!<br />
+Подскажите пожалуйста почему у меня создается несколько файлов одновременно?<br />
+Вот конфиг logrotate<br />
+/srv/log/switch/*<br />
+{<br />
+        rotate 18<br />
+        weekly<br />
+        compress<br />
+        delaycompress<br />
+}</p>
+<p>10.156.129.177. од					0 апр. 20 06:28<br />
+10.156.129.177.1og.1					0 апр. 20 06:28<br />
+10.156.129.177.1og.1.1 					0 апр. 20 06:28<br />
+10.156.129.177. Iод. 1.1.1					0 апр. 20 06:28<br />
+10. 156. 129. 177. 1 од.1.1.1.1					0 апр. 20 06:28<br />
+10.156.129.177.1og.1.1.1.1.1					0 апр. 20 06:28<br />
+10.156.129.177.1og.1.1.1.1.1.1					0 апр. 20 06:28<br />
+10.156.129.177.1og.1.1.1.1.1.1.1					2597 апр. 18 15:1<br />
+10.156. 129. 177.109.1.1.1.1.1.2.91					578 апр. 9 15:2<br />
+10.156.129.177.109.1.1.1.1.2.91					0 апр. 20 06:2<br />
+10.156.129.177.1o9.1.1.1.1.2.91.1					20 апр. 13 06:5<br />
+10.156.129.177.109.1.1.1.1.3.91					513 апр. 5 16:4<br />
+10.156.129.177.109.1.1.1.2.91					0 апр. 20 06:2<br />
+10.156.129.177.1og.1.1.1.2.91.1					0 апр. 20 06:2<br />
+10.156.129.177.1og.1.1.1.2.91.1.1					20 апр. 13 06:5<br />
+10.156.129.177.109.1.1.1.2.91.2.91					33 апр. 6 06:3<br />
+10.156.129. 177.109.1.1.1.3.91 					0 апр. 20 06:2<br />
+10.156.129.177.1og.1.1.1.3.g®					0 апр. 13 06:5<br />
+10.156.129.177.1og.1.1.1.4.91					900 марта 28 15:5<br />
+10.156.129.177.109.1.1.2.91					0 апр. 20 06:2<br />
+10.156.129.177.109.1.1.2.91.1					0 апр. 20 06:2<br />
+10.156.129.177.1og.1.1.2.91.1.1					0 апр. 20 06:2<br />
+10.156.129.177.1og.1.1.2.91.1.1.1					20 апр. 13 06:5<br />
+10.156.129.177.109.1.1.2.91.1.2.91					33 апр. 6 06:3<br />
+10. 156. 129. 177. 109. 1. 1.  2. gz. 2. gz					0 апр. 20 06:2<br />
+10.156.129.177.109.1.1.2.91.2.91.1					20 апр. 13 06:5<br />
+10.156. 129. 177.109.1.1.2.91.3.91					33 марта 30 О6:3<br />
+10.156.129.177.109.1.1.3.91					0 апр. 20 06:2<br />
+10.156.129.177.109.1.1.3.91.1					0 апр. 20 06:28<br />
+10.156.129.177.1og.1.1.3.91.1.1					0 апр. 13 06:5</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=27981#respond' onclick='return addComment.moveForm( "comment-27981", "27981", "respond", "2252" )' aria-label='Комментарий к записи Владимир'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+<ul class="children">
+	<li class="comment  admincomment" id="comment-35933">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=38&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											<noindex><a href='http://www.k-max.name/' rel='external nofollow' class='url'>Mc.Sim</a></noindex>									</div>
+				<div class="date">Июнь 24th, 2014 at 19:52</div> 
+			</div>
+			<div class="count">
+				12			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-35933"><p>потому что logrotate пытается произвести ротацию с файлами, которые уже ротированы. Попробуйте использовать параметр olddir /путь/куда/класть/архивы</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=35933#respond' onclick='return addComment.moveForm( "comment-35933", "35933", "respond", "2252" )' aria-label='Комментарий к записи Mc.Sim'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment " id="comment-40861">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://0.gravatar.com/avatar/3376f5b9cd95a87ee36b02bd8d1f39f7?s=38&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3376f5b9cd95a87ee36b02bd8d1f39f7?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											Владимир									</div>
+				<div class="date">Июль 28th, 2014 at 08:41</div> 
+			</div>
+			<div class="count">
+				13			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-40861"><p>Сделал так<br />
+/srv/log/switch/*.log<br />
+было<br />
+/srv/log/switch/*<br />
+Спасибо за подсказку</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=40861#respond' onclick='return addComment.moveForm( "comment-40861", "40861", "respond", "2252" )' aria-label='Комментарий к записи Владимир'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+	<li class="comment " id="comment-42536">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://2.gravatar.com/avatar/e031a7cd41dad3a125470729b5bcdc2f?s=38&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e031a7cd41dad3a125470729b5bcdc2f?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											Алексей									</div>
+				<div class="date">Август 6th, 2014 at 13:49</div> 
+			</div>
+			<div class="count">
+				14			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-42536"><p>Добрый день! В системе установлен пакет сторонней почтовой программы, лог которой пишется в /var/log/messages . В конфигах этой программы нет возможности указать куда писать логи. В /var/log/messages попадают записи о работе конкретного исполняемого файла, которого в пакете нет, но который формируется в процессе установки пакета. Возможно ли задать в syslog.conf файл лога, для этого исполняемого файла?</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=42536#respond' onclick='return addComment.moveForm( "comment-42536", "42536", "respond", "2252" )' aria-label='Комментарий к записи Алексей'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+<ul class="children">
+	<li class="comment " id="comment-42537">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://2.gravatar.com/avatar/e031a7cd41dad3a125470729b5bcdc2f?s=38&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e031a7cd41dad3a125470729b5bcdc2f?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											Алексей									</div>
+				<div class="date">Август 6th, 2014 at 13:54</div> 
+			</div>
+			<div class="count">
+				15			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-42537"><p>Извиняюсь, этот файл является ссылкой на исполняемый файл, который имеется в устоновочном пакете</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=42537#respond' onclick='return addComment.moveForm( "comment-42537", "42537", "respond", "2252" )' aria-label='Комментарий к записи Алексей'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+	<li class="comment  admincomment" id="comment-42695">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=38&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											<noindex><a href='http://www.k-max.name/' rel='external nofollow' class='url'>Mc.Sim</a></noindex>									</div>
+				<div class="date">Август 7th, 2014 at 09:31</div> 
+			</div>
+			<div class="count">
+				16			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-42695"><p>Какой именно syslog у Вас работает? rsyslog? syslog-ng или самый обычный syslogd?</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=42695#respond' onclick='return addComment.moveForm( "comment-42695", "42695", "respond", "2252" )' aria-label='Комментарий к записи Mc.Sim'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+<ul class="children">
+	<li class="comment " id="comment-42786">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://2.gravatar.com/avatar/e031a7cd41dad3a125470729b5bcdc2f?s=38&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e031a7cd41dad3a125470729b5bcdc2f?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											Алексей									</div>
+				<div class="date">Август 7th, 2014 at 19:39</div> 
+			</div>
+			<div class="count">
+				17			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-42786"><p>Ядро 2.4.32<br />
+Syslog :<br />
+/etc/init.d/syslog из rpm-пакета sysklogd-1.4.1-14</p>
+<p>В моем случае помогает селектор user.* , но в лог помимо записей о работе интересуемой программы попадают записи о работе других пользовательских программ (например, антивирус). А нужен отдельный файл с логами только ее.<br />
+Еще вот не понятно как использовать зарезервированные категории local0-local6 администратором системы. Может именно они мне как-то помогут? или они как-то ассоциируются с логированием на различных уровнях выполнения?</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=42786#respond' onclick='return addComment.moveForm( "comment-42786", "42786", "respond", "2252" )' aria-label='Комментарий к записи Алексей'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+<ul class="children">
+	<li class="comment " id="comment-42787">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://2.gravatar.com/avatar/e031a7cd41dad3a125470729b5bcdc2f?s=38&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e031a7cd41dad3a125470729b5bcdc2f?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											Алексей									</div>
+				<div class="date">Август 7th, 2014 at 19:44</div> 
+			</div>
+			<div class="count">
+				18			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-42787"><p>Работает обычный syslogd</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=42787#respond' onclick='return addComment.moveForm( "comment-42787", "42787", "respond", "2252" )' aria-label='Комментарий к записи Алексей'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+<ul class="children">
+	<li class="comment  admincomment" id="comment-45440">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=38&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											<noindex><a href='http://www.k-max.name/' rel='external nofollow' class='url'>Mc.Sim</a></noindex>									</div>
+				<div class="date">Август 19th, 2014 at 09:44</div> 
+			</div>
+			<div class="count">
+				19			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-45440"><p>Давайте по-порядку&#8230;<br />
+1. Что за ОС?<br />
+2. Что за сторонняя почтовая программа, которая не имеет настроек логирования?</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=45440#respond' onclick='return addComment.moveForm( "comment-45440", "45440", "respond", "2252" )' aria-label='Комментарий к записи Mc.Sim'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+<ul class="children">
+	<li class="comment " id="comment-45587">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://2.gravatar.com/avatar/e031a7cd41dad3a125470729b5bcdc2f?s=38&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e031a7cd41dad3a125470729b5bcdc2f?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											Алексей									</div>
+				<div class="date">Август 19th, 2014 at 21:45</div> 
+			</div>
+			<div class="count">
+				20			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-45587"><p>1. ОС Red Hat Linux 9<br />
+2. И некий не то самописный, не то доработанный на основе чего-то почтовый клиент, состоящий<br />
+из одного rpm-пакета</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=45587#respond' onclick='return addComment.moveForm( "comment-45587", "45587", "respond", "2252" )' aria-label='Комментарий к записи Алексей'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+<ul class="children">
+	<li class="comment  admincomment" id="comment-58198">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=38&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											<noindex><a href='http://www.k-max.name/' rel='external nofollow' class='url'>Mc.Sim</a></noindex>									</div>
+				<div class="date">Октябрь 13th, 2014 at 20:05</div> 
+			</div>
+			<div class="count">
+				21			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-58198"><p>Алексей, в Вашем случае я могу порекомендовать только следующее:<br />
+1. Обновить систему до более новой версии, поддерживающей syslog-ng или rsyslog. Это позволит более гибко фильтровать сообщения.<br />
+либо<br />
+2. попытаться найти и поставить rpm пакет для вашей системы syslog-ng или rsyslog. У меня найти не получилось&#8230; Это позволит более гибко фильтровать сообщения.<br />
+либо<br />
+3. Поднять syslog-ng или rsyslog на отдельной машине и перенаправлять сообщения на него. Локально (на вашей машине с почтовым клиентом) сообщения не хранить, а использовать для фильтрации syslog-ng или rsyslog.</p>
+<p>Использовать категории  local0-local6 получится только если Ваш почтовый клиент удастся настроить на отправку сообщений с соответствующей категорией&#8230;<br />
+Как-то так.</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment " id="comment-106977">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://2.gravatar.com/avatar/8440277fa71ef3394fb9660414b967b8?s=38&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8440277fa71ef3394fb9660414b967b8?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											Oleg									</div>
+				<div class="date">Июнь 19th, 2015 at 16:33</div> 
+			</div>
+			<div class="count">
+				22			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-106977"><p>Спасибо большое! Лучшей статьи про syslog не нашел. Как и про многое другое в этом блоге.</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=106977#respond' onclick='return addComment.moveForm( "comment-106977", "106977", "respond", "2252" )' aria-label='Комментарий к записи Oleg'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+<ul class="children">
+	<li class="comment  admincomment" id="comment-107248">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=38&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7e1afb92fa815ed2eb0b3d439022693e?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											<noindex><a href='http://www.k-max.name/' rel='external nofollow' class='url'>Mc.Sim</a></noindex>									</div>
+				<div class="date">Июнь 21st, 2015 at 23:16</div> 
+			</div>
+			<div class="count">
+				23			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-107248"><p>Пожалуйста, приходите еще.</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=107248#respond' onclick='return addComment.moveForm( "comment-107248", "107248", "respond", "2252" )' aria-label='Комментарий к записи Mc.Sim'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment " id="comment-128716">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://0.gravatar.com/avatar/f6610b3c6bd39cc936dd289e25d99922?s=38&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/f6610b3c6bd39cc936dd289e25d99922?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											<noindex><a href='http://www.k-max.name' rel='external nofollow' class='url'>Дмитрий</a></noindex>									</div>
+				<div class="date">Апрель 16th, 2016 at 14:47</div> 
+			</div>
+			<div class="count">
+				24			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-128716"><p>Добрый день. Я в ubuntu новичёк подскажите как отключить все логи какие тока есть?</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=128716#respond' onclick='return addComment.moveForm( "comment-128716", "128716", "respond", "2252" )' aria-label='Комментарий к записи Дмитрий'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+	<li class="comment " id="comment-128719">
+		<div class="userinfo">
+			<div class="userpic"><img alt='' src='http://0.gravatar.com/avatar/f6610b3c6bd39cc936dd289e25d99922?s=38&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/f6610b3c6bd39cc936dd289e25d99922?s=76&amp;d=mm&amp;r=g 2x' class='avatar avatar-38 photo' height='38' width='38' /></div>			<div class="usertext">
+				<div class="username">
+											<noindex><a href='http://www.k-max.name' rel='external nofollow' class='url'>Дмитрий</a></noindex>									</div>
+				<div class="date">Апрель 16th, 2016 at 17:23</div> 
+			</div>
+			<div class="count">
+				25			</div>
+			<div class="fixed"></div>
+		</div>
+		<div class="comment_text">
+			
+			<div id="commentbody-128719"><p>Всё разобрался сам.</p>
+</div>
+		</div>
+		<div class="commentmeta">
+		   <div class="reply">
+			   <a rel='nofollow' class='comment-reply-link' href='http://www.k-max.name/linux/syslogd-and-logrotate/?replytocom=128719#respond' onclick='return addComment.moveForm( "comment-128719", "128719", "respond", "2252" )' aria-label='Комментарий к записи Дмитрий'>Reply</a>			</div>
+		   <div class="edit">
+			   		   </div>
+		   <div class="fixed"></div>
+		</div>
+		<div class="fixed"></div>
+</li><!-- #comment-## -->
+	</ol>
+	</div>
+	<!-- comments END -->
+   
+	<!-- comments navi START -->
+		<!-- comments navi END -->
+
+	<!-- trackback START -->
+		<!-- trackback END -->
+
+
+	<div id="respond">
+	<p class="h3">Написать комментарий</p>
+	<div id="cancel-comment-reply"> 
+		<a rel="nofollow" id="cancel-comment-reply-link" href="/linux/syslogd-and-logrotate/#respond" style="display:none;">Нажмите здесь, чтобы отменить ответ.</a>	</div>
+	<form action="http://www.k-max.name/wp-comments-post.php" method="post" id="commentform">
+   
+	<!-- comment info -->
+	<div id="comment_header">
+		<div id="comment_info">
+							
+				<div id="author_info">
+					<div class="row">
+						<input type="text" name="author" id="author" class="textfield" value="" size="24" tabindex="1" />
+						<label for="author" class="small">Имя (обязательно)</label>
+					</div>
+					<div class="row">
+						<input type="text" name="email" id="email" class="textfield" value="" size="24" tabindex="2" />
+						<label for="email" class="small">Почта (скрыто) (обязательно)</label>
+					</div>
+					<div class="row">
+						<input type="text" name="url" id="url" class="textfield" value="" size="24" tabindex="3" />
+						<label for="url" class="small">Сайт</label>
+					</div>
+					<div class="rowwarn">
+						<label for="url" class="small">Редактор комментариев Wordpress любит заменять спецсимволы в тексте. Пожалуйста, для размещения блоков текста (конфигов, логов, консольных команд) используйте сервисы pastebin. Например, pastebin.com. </label>
+					</div>
+				</div>
+					</div>
+	</div><div id="qips_smiles">
+<img style="cursor: pointer;" onclick="javascript: qips_code('=)');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/smile.gif" alt="=)" title="=)" /> <img style="cursor: pointer;" onclick="javascript: qips_code('8)');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/glass.gif" alt="8)" title="8)" /> <img style="cursor: pointer;" onclick="javascript: qips_code(':(');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/sad.gif" alt=":(" title=":(" /> <img style="cursor: pointer;" onclick="javascript: qips_code(';)');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/wink.gif" alt=";)" title=";)" /> <img style="cursor: pointer;" onclick="javascript: qips_code(':P');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/tongue.gif" alt=":P" title=":P" /> <img style="cursor: pointer;" onclick="javascript: qips_code(':-D');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/laugh.gif" alt=":-D" title=":-D" /> <img style="cursor: pointer;" onclick="javascript: qips_code('=-O');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/wonder.gif" alt="=-O" title="=-O" /> <img style="cursor: pointer;" onclick="javascript: qips_code(':-!');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/sick.gif" alt=":-!" title=":-!" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*IN LOVE*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/inlove.gif" alt="*IN LOVE*" title="*IN LOVE*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('%)');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/eyes.gif" alt="%)" title="%)" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*CRAZY*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/crazy.gif" alt="*CRAZY*" title="*CRAZY*" /> <small><a style="text-decoration: none; border-bottom: 1px dashed; top: -5px; position: relative; margin-left: 3px;" href="javascript:void(0);" id="qips_button_smiles" title="Еще смайлы">Еще смайлы</a></small></div>
+<div id="qips_smiles_toggle_wrapper" style="display: none;">
+<img style="cursor: pointer;" onclick="javascript: qips_code('O=)');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/angel.gif" alt="O=)" title="O=)" /> <img style="cursor: pointer;" onclick="javascript: qips_code(':-[');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/blush.gif" alt=":-[" title=":-[" /> <img style="cursor: pointer;" onclick="javascript: qips_code(':-*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/kiss.gif" alt=":-*" title=":-*" /> <img style="cursor: pointer;" onclick="javascript: qips_code(':-x');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/quiet.gif" alt=":-x" title=":-x" /> <img style="cursor: pointer;" onclick="javascript: qips_code('>:o');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/strong.gif" alt=">:o" title=">:o" /> <img style="cursor: pointer;" onclick="javascript: qips_code(':-|');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/think.gif" alt=":-|" title=":-|" /> <img style="cursor: pointer;" onclick="javascript: qips_code(':-/');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/pitchup.gif" alt=":-/" title=":-/" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*JOKINGLY*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/jokingly.gif" alt="*JOKINGLY*" title="*JOKINGLY*" /> <img style="cursor: pointer;" onclick="javascript: qips_code(']:->');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/devil.gif" alt="]:->" title="]:->" /> <img style="cursor: pointer;" onclick="javascript: qips_code('[:-}');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/music.gif" alt="[:-}" title="[:-}" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*KISSED*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/kissed.gif" alt="*KISSED*" title="*KISSED*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*TIRED*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/tired.gif" alt="*TIRED*" title="*TIRED*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*STOP*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/stop.gif" alt="*STOP*" title="*STOP*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*KISSING*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/kissing.gif" alt="*KISSING*" title="*KISSING*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*ROSE*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/rose.gif" alt="*ROSE*" title="*ROSE*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*THUMBS UP*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/thumbsup.gif" alt="*THUMBS UP*" title="*THUMBS UP*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*DRINK*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/drink.gif" alt="*DRINK*" title="*DRINK*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('@=');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/bomb.gif" alt="@=" title="@=" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*HELP*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/sos.gif" alt="*HELP*" title="*HELP*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*MACHO*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/macho.gif" alt="*MACHO*" title="*MACHO*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*OK*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/ok.gif" alt="*OK*" title="*OK*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*WASSUP*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/wassup.gif" alt="*WASSUP*" title="*WASSUP*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*SORRY*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/sorry.gif" alt="*SORRY*" title="*SORRY*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*BRAVO*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/bravo.gif" alt="*BRAVO*" title="*BRAVO*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*LOL*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/rofl.gif" alt="*LOL*" title="*LOL*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*PARDON*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/pardon.gif" alt="*PARDON*" title="*PARDON*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*NO*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/no.gif" alt="*NO*" title="*NO*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*UNKNOWN*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/unknown.gif" alt="*UNKNOWN*" title="*UNKNOWN*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*DANCE*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/dance.gif" alt="*DANCE*" title="*DANCE*" /> <img style="cursor: pointer;" onclick="javascript: qips_code('*YAHOO*');" src="http://www.k-max.name/wp-content/plugins/qipsmiles/smiles/yahoo.gif" alt="*YAHOO*" title="*YAHOO*" /> </div>
+
+<!-- Begin QipSmiles Javascript -->
+<script type="text/javascript" src="http://www.k-max.name/wp-content/plugins/qipsmiles/qips-js.php"></script>
+<!-- End QipSmiles Javascript -->
+
+
+	<!-- comment input -->
+	<script type="text/javascript">var edInserted; if (!edInserted) {edToolbar(); edInserted = true;}</script>
+<textarea name="comment" id="comment" tabindex="4" rows="8" cols="50"></textarea>
+<script type="text/javascript">var edCanvas = document.getElementById('comment');</script>
+
+	<!-- comment submit and rss -->
+	<div id="submitbox">
+		<input name="submit" type="submit" id="submit" class="button" tabindex="5" value="Добавить комментарий" />
+		<input type="hidden" name="comment_post_ID" value="2252" />
+			<input type='hidden' name='comment_post_ID' value='2252' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+		<div class="fixed"></div>
+	</div>
+	<div class="mycomment">
+		<div class="floatright"><p><a href="http://www.k-max.name/linux/syslogd-and-logrotate/feed/">Комментарии через RSS: <br /><img  width="73" height="80" src="http://www.k-max.name/wp-content/themes/deep-mix/images/RSS-comments.png" alt="Подписаться на комментарии через RSS "></a></p> </div>
+		<div class="floatleft"><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="2538761fed" /></p>
+	<script language="javascript">
+	function dcaptcha_change(){
+		document.getElementById('dcaptcha_sess').value = 9759;
+
+	}
+
+		</script>
+
+	<div id="dcaptcha">
+		
+		<input  type="checkbox" id="dcaptcha_captcha1" onclick="dcaptcha_change();" value="Это не спам.">
+		<label class="small" for="dcaptcha_captcha1">Я не спамер (обязательно)</label>
+		
+	</div>
+	<input type="hidden" name="dcaptcha_sess" id="dcaptcha_sess" value="22462">
+
+	<script>
+	var commentField = document.getElementById("url");
+    var submitp = commentField.parentNode;
+    var answerDiv = document.getElementById("dcaptcha");	    
+    submitp.appendChild(answerDiv, commentField);
+</script>
+	<p style="clear: both;" class="subscribe-to-comments">
+			<input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;" />
+			<label for="subscribe">Уведомить меня о появлении новых комментариев.</label>
+			</p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="226"/></p>		</div>
+	</div>
+	</form>
+	</div>
+
+						<div class="fixed"></div>
+			<div id="bottom">
+				<div class="postnav">
+					<span class="alignleft">&laquo; <a href="http://www.k-max.name/web/joomla-skrytie-ssylok-v-noindex-i-nofollow/" rel="prev">joomla скрытие ссылок в noindex и nofollow</a></span>
+					<span class="alignright"><a href="http://www.k-max.name/linux/planirovshhik-linux-cron-crontab-anacron/" rel="next">Планировщик Linux (cron, crontab, anacron)</a> &raquo;</span>
+					<div class="fixed"></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+<div id="sidebarwrap">
+	<div id="sidebar">
+
+
+			<!-- searchbox START -->
+		<div id="searchbox">
+		  
+	   <form action="http://www.k-max.name" method="get">
+			<div class="content">
+				<input type="text" class="textfield" name="s" onblur="this.value=(this.value=='') ? 'Поиск...' : this.value;" onfocus="this.value=(this.value=='Поиск...') ? '' : this.value;" value="Поиск..." />
+				<input id="searchsubmit" name="searchsubmit" type="image" src="http://www.k-max.name/wp-content/themes/deep-mix/images/search.gif" alt="поиск" tabindex="2" />
+			</div>
+		</form>
+			   </div>	
+   <!-- searchbox END -->
+   
+         <div class="sidebar-box">
+            <div class="content">
+                <!-- НАЧАЛО спрятать стандартную подписку
+                <div id="subscribe">
+               <a rel="external nofollow" id="feedrss" title="Подписаться на блог..." href="http://feeds.feedburner.com/k-max/feed">RSS</a>
+               </div> 
+               -->
+                  			   <div class="fixed"></div>
+		      </div>
+         </div>
+  <div id="text-11" class="sidebar-box widget_text"><h6>Подпишитесь</h6>			<div class="textwidget"><div id="subscribe">
+	<noindex>
+		<div  id="rss"><a rel="external nofollow" title="Подписаться на блог..." href="http://feeds.feedburner.com/k-max/feed" target="_blank">
+			<img alt="RSS Linux" title="Подпишишь на RSS Блога любителя экспериментов" src="http://www.k-max.name/wp-content/uploads/2011/08/RSS.png"></a>
+<a target="_blank" rel="external nofollow" href="http://www.k-max.name/comments/feed/">
+<img width="60" height="63" alt="Подписаться на комментарии через RSS " src="http://www.k-max.name/wp-content/themes/deep-mix/images/RSS-comments.png">
+</a>
+		<a title="Подписаться на блог..." target="_blank" rel="external nofollow" href="http://feeds.feedburner.com/k-max/feed" id="burner">
+			<img width="88" height="26" src="http://feeds.feedburner.com/~fc/k-max/feed?bg=FF9900&amp;fg=444444&amp;anim=1">
+		</a>
+</div>
+		<div>
+			<form action="http://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri=k-max/feed', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+				<input class="subscribetomail" name="email" type="text" value="Введите Ваш e-mail" class="subscribe_textieldpost" onfocus="if (this.value == 'Введите Ваш e-mail') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Введите Ваш e-mail';}" />
+				<input type="hidden" value="k-max/feed" name="uri"/>
+				<input type="hidden" value="<?php bloginfo('name'); ?>" name="title"/>
+				<input type="hidden" name="loc" value="ru_RU"/>
+				<input type="submit" value="Подписаться" />
+			</form>
+			<a rel="external nofollow" href="http://feeds.feedburner.com/k-max/feed" title="Подписаться на блог..." > Получайте новые посты первыми! </a>
+		</div>
+	</noindex>
+</div>
+&nbsp;</div>
+		</div><div id="categories-3" class="sidebar-box widget_categories"><h6>Рубрики</h6>		<ul>
+	<li class="cat-item cat-item-135"><a href="http://www.k-max.name/category/bi-cycle/" >Bi-Cycle</a> (1)
+</li>
+	<li class="cat-item cat-item-360"><a href="http://www.k-max.name/category/howto/" title="Пошаговые руководства по настройке сетевых служб linux и Windows">HOWTO</a> (15)
+</li>
+	<li class="cat-item cat-item-246"><a href="http://www.k-max.name/category/life/" >Life</a> (15)
+<ul class='children'>
+	<li class="cat-item cat-item-125"><a href="http://www.k-max.name/category/life/xumor/" >Хумор</a> (4)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-44"><a href="http://www.k-max.name/category/linux/" title="Статьи, касающиеся операционной системы Linux">Linux</a> (67)
+<ul class='children'>
+	<li class="cat-item cat-item-66"><a href="http://www.k-max.name/category/linux/bash/" title="Статьи, описывающие теорию работы интерпретатора bash и различные практические примеры">bash</a> (6)
+</li>
+	<li class="cat-item cat-item-367"><a href="http://www.k-max.name/category/linux/clamav/" >ClamAV</a> (1)
+</li>
+	<li class="cat-item cat-item-231"><a href="http://www.k-max.name/category/linux/cron/" title="использование планировщика Linux">cron</a> (2)
+</li>
+	<li class="cat-item cat-item-305"><a href="http://www.k-max.name/category/linux/cups/" title="Настройка сервера печати на CUPS СГЗЫ ">CUPS</a> (2)
+</li>
+	<li class="cat-item cat-item-344"><a href="http://www.k-max.name/category/linux/dhcp-linux/" title="Статьи, описывающие протокол DHCP">DHCP</a> (1)
+</li>
+	<li class="cat-item cat-item-345"><a href="http://www.k-max.name/category/linux/dns-linux/" title="Статьи, описывающие работу протокола DNS (Domain Name System)">DNS</a> (2)
+</li>
+	<li class="cat-item cat-item-361"><a href="http://www.k-max.name/category/linux/netfilter-iptables/" title="iptables в Linux, настройка, примеры, установка. Управление iptables в Debian, Ubuntu, CentOS, RedHat">netfilter/iptables</a> (2)
+</li>
+	<li class="cat-item cat-item-337"><a href="http://www.k-max.name/category/linux/nfs/" title="Теоретические и практические статьи о Network file system в Linux и Windows ">NFS</a> (2)
+</li>
+	<li class="cat-item cat-item-346"><a href="http://www.k-max.name/category/linux/ntp-linux/" title="Network Time Protocol и все что с ним связано">NTP</a> (1)
+</li>
+	<li class="cat-item cat-item-340"><a href="http://www.k-max.name/category/linux/postgresql/" >PostgreSQL</a> (1)
+</li>
+	<li class="cat-item cat-item-294"><a href="http://www.k-max.name/category/linux/samba/" title="Статьи и работе SAMB и SMB протокола">SAMBA</a> (6)
+</li>
+	<li class="cat-item cat-item-366"><a href="http://www.k-max.name/category/linux/squid/" title="Статьи о настройке и установке SQUID. Описание аутентификации, авторизации ыйгшв.">SQUID</a> (6)
+</li>
+	<li class="cat-item cat-item-365"><a href="http://www.k-max.name/category/linux/ssh-linux/" >SSH</a> (1)
+</li>
+	<li class="cat-item cat-item-373"><a href="http://www.k-max.name/category/linux/syslog-linux/" title="Статьи о настройке и установке сервиса syslog. Описание syslogd, rsyslog и других syslog-подобных демонов.">Syslog</a> (2)
+</li>
+	<li class="cat-item cat-item-364"><a href="http://www.k-max.name/category/linux/server/" title="Настройка серверов SAMBA, CUPS, DNS, DHCP, NFS, NTP, PostgreSQL и других на базе Linux и Debian">Настройка сервера Linux</a> (22)
+</li>
+	<li class="cat-item cat-item-343"><a href="http://www.k-max.name/category/linux/osnovy-linux/" title="Статьи, содержащие материалы по изучению Linux и основным принципам работы ОС">основы Linux</a> (42)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-372"><a href="http://www.k-max.name/category/netapp/" >NetApp</a> (4)
+</li>
+	<li class="cat-item cat-item-374"><a href="http://www.k-max.name/category/vmware/" >VMware</a> (5)
+</li>
+	<li class="cat-item cat-item-70"><a href="http://www.k-max.name/category/web/" title="Статьи о Веб-программировании">Web</a> (10)
+<ul class='children'>
+	<li class="cat-item cat-item-92"><a href="http://www.k-max.name/category/web/cms/" title="Описание CMS, систем управления содержимым">CMS</a> (7)
+	<ul class='children'>
+	<li class="cat-item cat-item-180"><a href="http://www.k-max.name/category/web/cms/joomla/" >Joomla</a> (3)
+</li>
+	<li class="cat-item cat-item-91"><a href="http://www.k-max.name/category/web/cms/wordpress/" title="принципы и нюансы работы блога на wordpress">Wordpress</a> (3)
+</li>
+	</ul>
+</li>
+	<li class="cat-item cat-item-126"><a href="http://www.k-max.name/category/web/crm/" >CRM</a> (1)
+</li>
+	<li class="cat-item cat-item-73"><a href="http://www.k-max.name/category/web/css/" title="Статьи, содержащие описание методов работы CSS ">CSS</a> (1)
+</li>
+	<li class="cat-item cat-item-248"><a href="http://www.k-max.name/category/web/facebook/" >Facebook</a> (1)
+</li>
+	<li class="cat-item cat-item-75"><a href="http://www.k-max.name/category/web/html/" >HTML</a> (1)
+</li>
+	<li class="cat-item cat-item-72"><a href="http://www.k-max.name/category/web/mysql/" title="Статьи о СУБД MySQL и все что с ним связано. Примеры">MySQL</a> (2)
+</li>
+	<li class="cat-item cat-item-71"><a href="http://www.k-max.name/category/web/php/" title="примеры кодов и описание работы PHP">PHP</a> (5)
+</li>
+	<li class="cat-item cat-item-250"><a href="http://www.k-max.name/category/web/seo/" >SEO</a> (2)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://www.k-max.name/category/windows/" title="Статьи, касающиеся операционной системы Windows">Windows</a> (22)
+<ul class='children'>
+	<li class="cat-item cat-item-86"><a href="http://www.k-max.name/category/windows/1s/" title="Принципы работы, проблемы и решения по технологиям 1С Предприятия">1С</a> (3)
+</li>
+	<li class="cat-item cat-item-286"><a href="http://www.k-max.name/category/windows/active-directory/" >Active Directory</a> (6)
+</li>
+	<li class="cat-item cat-item-285"><a href="http://www.k-max.name/category/windows/gpo/" title="Использование Group policy в Windows. Групповые политики на практике">Group Policy</a> (2)
+</li>
+	<li class="cat-item cat-item-359"><a href="http://www.k-max.name/category/windows/microsoft-sql/" >Microsoft SQL</a> (2)
+</li>
+	<li class="cat-item cat-item-357"><a href="http://www.k-max.name/category/windows/soft-windows/" >Soft</a> (8)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-212"><a href="http://www.k-max.name/category/ats/" title="Статьи о настройке АТС Panasonic">АТС</a> (2)
+<ul class='children'>
+	<li class="cat-item cat-item-213"><a href="http://www.k-max.name/category/ats/panasonic/" title="Программирование АТС Panasonic и настройка">Panasonic</a> (2)
+</li>
+	<li class="cat-item cat-item-214"><a href="http://www.k-max.name/category/ats/soft/" title="Программное обесечение для АТС FNC Panasonic KX-TDA">Soft</a> (1)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-95"><a href="http://www.k-max.name/category/zhelezo/" >Железо</a> (6)
+<ul class='children'>
+	<li class="cat-item cat-item-130"><a href="http://www.k-max.name/category/zhelezo/raid/" >RAID</a> (1)
+</li>
+	<li class="cat-item cat-item-97"><a href="http://www.k-max.name/category/zhelezo/ozu/" >ОЗУ</a> (1)
+</li>
+	<li class="cat-item cat-item-309"><a href="http://www.k-max.name/category/zhelezo/printer/" >Принтер</a> (2)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-272"><a href="http://www.k-max.name/category/poznovatelno/" >Познавательно</a> (2)
+<ul class='children'>
+	<li class="cat-item cat-item-273"><a href="http://www.k-max.name/category/poznovatelno/o-linux/" >О Linux</a> (2)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-276"><a href="http://www.k-max.name/category/seti/" >Сети</a> (9)
+</li>
+		</ul>
+</div><div id="text-16" class="sidebar-box widget_text">			<div class="textwidget"><div class="adsgoogle"><noindex><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- sidebar_big -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-3491741793869457"
+     data-ad-slot="4901898322"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</noindex></div></div>
+		</div><div id="tag_cloud-3" class="sidebar-box widget_tag_cloud"><h6>Облако тегов</h6><div class="tagcloud"><a href="http://www.k-max.name/tag/1s-predpriyatie/" class="tag-cloud-link tag-link-88 tag-link-position-1" style="font-size: 9.3125pt;" aria-label="1С Предприятие (3 элемента)">1С Предприятие</a>
+<a href="http://www.k-max.name/tag/active-directory/" class="tag-cloud-link tag-link-398 tag-link-position-2" style="font-size: 12.046875pt;" aria-label="Active Directory (6 элементов)">Active Directory</a>
+<a href="http://www.k-max.name/tag/bash/" class="tag-cloud-link tag-link-380 tag-link-position-3" style="font-size: 14.5625pt;" aria-label="bash (11 элементов)">bash</a>
+<a href="http://www.k-max.name/tag/cms/" class="tag-cloud-link tag-link-386 tag-link-position-4" style="font-size: 12.59375pt;" aria-label="CMS (7 элементов)">CMS</a>
+<a href="http://www.k-max.name/tag/cups/" class="tag-cloud-link tag-link-399 tag-link-position-5" style="font-size: 9.3125pt;" aria-label="CUPS (3 элемента)">CUPS</a>
+<a href="http://www.k-max.name/tag/daemon/" class="tag-cloud-link tag-link-150 tag-link-position-6" style="font-size: 8pt;" aria-label="daemon (2 элемента)">daemon</a>
+<a href="http://www.k-max.name/tag/debian/" class="tag-cloud-link tag-link-113 tag-link-position-7" style="font-size: 17.1875pt;" aria-label="Debian (20 элементов)">Debian</a>
+<a href="http://www.k-max.name/tag/dhcp/" class="tag-cloud-link tag-link-269 tag-link-position-8" style="font-size: 8pt;" aria-label="dhcp (2 элемента)">dhcp</a>
+<a href="http://www.k-max.name/tag/dpkg/" class="tag-cloud-link tag-link-110 tag-link-position-9" style="font-size: 9.3125pt;" aria-label="dpkg (3 элемента)">dpkg</a>
+<a href="http://www.k-max.name/tag/grub/" class="tag-cloud-link tag-link-52 tag-link-position-10" style="font-size: 9.3125pt;" aria-label="GRUB (3 элемента)">GRUB</a>
+<a href="http://www.k-max.name/tag/howto-2/" class="tag-cloud-link tag-link-358 tag-link-position-11" style="font-size: 13.140625pt;" aria-label="HOWTO (8 элементов)">HOWTO</a>
+<a href="http://www.k-max.name/tag/html/" class="tag-cloud-link tag-link-384 tag-link-position-12" style="font-size: 8pt;" aria-label="HTML (2 элемента)">HTML</a>
+<a href="http://www.k-max.name/tag/init/" class="tag-cloud-link tag-link-49 tag-link-position-13" style="font-size: 12.046875pt;" aria-label="init (6 элементов)">init</a>
+<a href="http://www.k-max.name/tag/inod/" class="tag-cloud-link tag-link-57 tag-link-position-14" style="font-size: 8pt;" aria-label="Inod (2 элемента)">Inod</a>
+<a href="http://www.k-max.name/tag/ip/" class="tag-cloud-link tag-link-279 tag-link-position-15" style="font-size: 11.28125pt;" aria-label="ip (5 элементов)">ip</a>
+<a href="http://www.k-max.name/tag/iproute/" class="tag-cloud-link tag-link-353 tag-link-position-16" style="font-size: 9.3125pt;" aria-label="iproute (3 элемента)">iproute</a>
+<a href="http://www.k-max.name/tag/joomla-2/" class="tag-cloud-link tag-link-181 tag-link-position-17" style="font-size: 9.3125pt;" aria-label="joomla (3 элемента)">joomla</a>
+<a href="http://www.k-max.name/tag/kerberos/" class="tag-cloud-link tag-link-333 tag-link-position-18" style="font-size: 10.40625pt;" aria-label="kerberos (4 элемента)">kerberos</a>
+<a href="http://www.k-max.name/tag/kernel/" class="tag-cloud-link tag-link-209 tag-link-position-19" style="font-size: 9.3125pt;" aria-label="kernel (3 элемента)">kernel</a>
+<a href="http://www.k-max.name/tag/kx-tda100/" class="tag-cloud-link tag-link-215 tag-link-position-20" style="font-size: 8pt;" aria-label="KX-TDA100 (2 элемента)">KX-TDA100</a>
+<a href="http://www.k-max.name/tag/life/" class="tag-cloud-link tag-link-394 tag-link-position-21" style="font-size: 12.59375pt;" aria-label="Life (7 элементов)">Life</a>
+<a href="http://www.k-max.name/tag/linux/" class="tag-cloud-link tag-link-379 tag-link-position-22" style="font-size: 22pt;" aria-label="Linux (56 элементов)">Linux</a>
+<a href="http://www.k-max.name/tag/microsoft-windows/" class="tag-cloud-link tag-link-355 tag-link-position-23" style="font-size: 16.96875pt;" aria-label="Microsoft Windows (19 элементов)">Microsoft Windows</a>
+<a href="http://www.k-max.name/tag/mysql/" class="tag-cloud-link tag-link-382 tag-link-position-24" style="font-size: 9.3125pt;" aria-label="MySQL (3 элемента)">MySQL</a>
+<a href="http://www.k-max.name/tag/netapp/" class="tag-cloud-link tag-link-403 tag-link-position-25" style="font-size: 10.40625pt;" aria-label="NetApp (4 элемента)">NetApp</a>
+<a href="http://www.k-max.name/tag/network/" class="tag-cloud-link tag-link-275 tag-link-position-26" style="font-size: 17.1875pt;" aria-label="network (20 элементов)">network</a>
+<a href="http://www.k-max.name/tag/openoffice/" class="tag-cloud-link tag-link-124 tag-link-position-27" style="font-size: 8pt;" aria-label="OpenOffice (2 элемента)">OpenOffice</a>
+<a href="http://www.k-max.name/tag/panasonic/" class="tag-cloud-link tag-link-392 tag-link-position-28" style="font-size: 8pt;" aria-label="Panasonic (2 элемента)">Panasonic</a>
+<a href="http://www.k-max.name/tag/php-2/" class="tag-cloud-link tag-link-74 tag-link-position-29" style="font-size: 12.59375pt;" aria-label="php (7 элементов)">php</a>
+<a href="http://www.k-max.name/tag/samba-2/" class="tag-cloud-link tag-link-295 tag-link-position-30" style="font-size: 11.28125pt;" aria-label="SAMBA (5 элементов)">SAMBA</a>
+<a href="http://www.k-max.name/tag/squid/" class="tag-cloud-link tag-link-402 tag-link-position-31" style="font-size: 12.046875pt;" aria-label="SQUID (6 элементов)">SQUID</a>
+<a href="http://www.k-max.name/tag/syslog/" class="tag-cloud-link tag-link-228 tag-link-position-32" style="font-size: 9.3125pt;" aria-label="syslog (3 элемента)">syslog</a>
+<a href="http://www.k-max.name/tag/unix/" class="tag-cloud-link tag-link-58 tag-link-position-33" style="font-size: 14.890625pt;" aria-label="UNIX (12 элементов)">UNIX</a>
+<a href="http://www.k-max.name/tag/vim/" class="tag-cloud-link tag-link-69 tag-link-position-34" style="font-size: 9.3125pt;" aria-label="vim (3 элемента)">vim</a>
+<a href="http://www.k-max.name/tag/vmware-2/" class="tag-cloud-link tag-link-375 tag-link-position-35" style="font-size: 11.28125pt;" aria-label="vmware (5 элементов)">vmware</a>
+<a href="http://www.k-max.name/tag/web/" class="tag-cloud-link tag-link-381 tag-link-position-36" style="font-size: 11.28125pt;" aria-label="Web (5 элементов)">Web</a>
+<a href="http://www.k-max.name/tag/wins/" class="tag-cloud-link tag-link-301 tag-link-position-37" style="font-size: 9.3125pt;" aria-label="WINS (3 элемента)">WINS</a>
+<a href="http://www.k-max.name/tag/wordpress/" class="tag-cloud-link tag-link-385 tag-link-position-38" style="font-size: 9.3125pt;" aria-label="Wordpress (3 элемента)">Wordpress</a>
+<a href="http://www.k-max.name/tag/ats/" class="tag-cloud-link tag-link-391 tag-link-position-39" style="font-size: 8pt;" aria-label="АТС (2 элемента)">АТС</a>
+<a href="http://www.k-max.name/tag/fajlovaya-sistema/" class="tag-cloud-link tag-link-54 tag-link-position-40" style="font-size: 11.28125pt;" aria-label="Файловая система (5 элементов)">Файловая система</a>
+<a href="http://www.k-max.name/tag/zagruzka/" class="tag-cloud-link tag-link-47 tag-link-position-41" style="font-size: 11.28125pt;" aria-label="загрузка (5 элементов)">загрузка</a>
+<a href="http://www.k-max.name/tag/komandy/" class="tag-cloud-link tag-link-65 tag-link-position-42" style="font-size: 17.40625pt;" aria-label="команды (21 элемент)">команды</a>
+<a href="http://www.k-max.name/tag/nastrojka/" class="tag-cloud-link tag-link-84 tag-link-position-43" style="font-size: 16.53125pt;" aria-label="настройка (17 элементов)">настройка</a>
+<a href="http://www.k-max.name/tag/osnovy/" class="tag-cloud-link tag-link-101 tag-link-position-44" style="font-size: 20.25pt;" aria-label="основы (39 элементов)">основы</a>
+<a href="http://www.k-max.name/tag/oshibki/" class="tag-cloud-link tag-link-94 tag-link-position-45" style="font-size: 13.140625pt;" aria-label="ошибки (8 элементов)">ошибки</a></div>
+</div><div id="widget_tptn_pop-3" class="sidebar-box widget_widget_tptn_pop"><h6>Популярные записи</h6><div class="tptn_posts  tptn_posts_widget tptn_posts_widget3"><ul><li><span class="tptn_after_thumb"><a href="http://www.k-max.name/windows/zapusk-administrativnyx-instrumentov-iz-cmd/"    target="_blank"  class="tptn_link"><span class="tptn_title">Запуск административных инструментов из cmd</span></a> <span class="tptn_list_count">(198 432)</span></span></li><li><span class="tptn_after_thumb"><a href="http://www.k-max.name/windows/ne-obnaruzhen-klyuch-zashhity-programmy-v-1spredpriyatie-8-ili-likbez-zashhity-1s/"    target="_blank"  class="tptn_link"><span class="tptn_title">Не обнаружен ключ защиты программы в 1С:Предприятие 8 или ЛИКБЕЗ защиты 1С.</span></a> <span class="tptn_list_count">(140 970)</span></span></li><li><span class="tptn_after_thumb"><a href="http://www.k-max.name/linux/tcpdump-v-primerax/"    target="_blank"  class="tptn_link"><span class="tptn_title">tcpdump в примерах (или шпаргалка по tcpdump)</span></a> <span class="tptn_list_count">(133 671)</span></span></li><li><span class="tptn_after_thumb"><a href="http://www.k-max.name/linux/iptables-v-primerax/"    target="_blank"  class="tptn_link"><span class="tptn_title">iptables в простейших примерах</span></a> <span class="tptn_list_count">(122 425)</span></span></li><li><span class="tptn_after_thumb"><a href="http://www.k-max.name/linux/osnovnye-komandy-linux-ili-shpargalka-nachinayushhego-linuksojda/"    target="_blank"  class="tptn_link"><span class="tptn_title">Основные команды Linux или шпаргалка начинающего линуксойда</span></a> <span class="tptn_list_count">(111 425)</span></span></li><li><span class="tptn_after_thumb"><a href="http://www.k-max.name/linux/snmp-protocol/"    target="_blank"  class="tptn_link"><span class="tptn_title">SNMP протокол (основы)</span></a> <span class="tptn_list_count">(94 731)</span></span></li><li><span class="tptn_after_thumb"><a href="http://www.k-max.name/windows/microsoft-sql-server-2005-maintenance-plans-1c/"    target="_blank"  class="tptn_link"><span class="tptn_title">Настройка Microsoft SQL Server для 1С Предприятие (Maintenance Plans)</span></a> <span class="tptn_list_count">(85 955)</span></span></li><li><span class="tptn_after_thumb"><a href="http://www.k-max.name/linux/rsyslog-na-debian-nastrojka-servera/"    target="_blank"  class="tptn_link"><span class="tptn_title">Rsyslog на Debian, настройка сервера сбора логов</span></a> <span class="tptn_list_count">(83 090)</span></span></li><li><span class="tptn_after_thumb"><a href="http://www.k-max.name/linux/netfilter-iptables-v-linux/"    target="_blank"  class="tptn_link"><span class="tptn_title">Основные понятия iptables в Linux</span></a> <span class="tptn_list_count">(81 325)</span></span></li><li><span class="tptn_after_thumb"><a href="http://www.k-max.name/linux/syslogd-and-logrotate/"    target="_blank"  class="tptn_link"><span class="tptn_title">Системные журналы Linux (управление логированием)</span></a> <span class="tptn_list_count">(71 859)</span></span></li></ul><div class="tptn_clear"></div></div></div><div id="calendar-2" class="sidebar-box widget_calendar"><div id="calendar_wrap" class="calendar_wrap"><table id="wp-calendar">
+	<caption>Сентябрь 2017</caption>
+	<thead>
+	<tr>
+		<th scope="col" title="Понедельник">Пн</th>
+		<th scope="col" title="Вторник">Вт</th>
+		<th scope="col" title="Среда">Ср</th>
+		<th scope="col" title="Четверг">Чт</th>
+		<th scope="col" title="Пятница">Пт</th>
+		<th scope="col" title="Суббота">Сб</th>
+		<th scope="col" title="Воскресенье">Вс</th>
+	</tr>
+	</thead>
+
+	<tfoot>
+	<tr>
+		<td colspan="3" id="prev"><a href="http://www.k-max.name/2017/05/">&laquo; Май</a></td>
+		<td class="pad">&nbsp;</td>
+		<td colspan="3" id="next" class="pad">&nbsp;</td>
+	</tr>
+	</tfoot>
+
+	<tbody>
+	<tr>
+		<td colspan="4" class="pad">&nbsp;</td><td>1</td><td>2</td><td>3</td>
+	</tr>
+	<tr>
+		<td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td>
+	</tr>
+	<tr>
+		<td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td>
+	</tr>
+	<tr>
+		<td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td>
+	</tr>
+	<tr>
+		<td id="today">25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td>
+		<td class="pad" colspan="1">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table></div></div><div id="archives-3" class="sidebar-box widget_archive"><h6>Архивы</h6>		<ul>
+			<li><a href='http://www.k-max.name/2017/05/'>Май 2017</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2017/04/'>Апрель 2017</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2015/10/'>Октябрь 2015</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2015/04/'>Апрель 2015</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2014/12/'>Декабрь 2014</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2014/03/'>Март 2014</a>&nbsp;(2)</li>
+	<li><a href='http://www.k-max.name/2014/02/'>Февраль 2014</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2014/01/'>Январь 2014</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2013/11/'>Ноябрь 2013</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2013/09/'>Сентябрь 2013</a>&nbsp;(3)</li>
+	<li><a href='http://www.k-max.name/2013/08/'>Август 2013</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2013/06/'>Июнь 2013</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2013/05/'>Май 2013</a>&nbsp;(2)</li>
+	<li><a href='http://www.k-max.name/2013/04/'>Апрель 2013</a>&nbsp;(2)</li>
+	<li><a href='http://www.k-max.name/2013/03/'>Март 2013</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2012/12/'>Декабрь 2012</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2012/10/'>Октябрь 2012</a>&nbsp;(2)</li>
+	<li><a href='http://www.k-max.name/2012/09/'>Сентябрь 2012</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2012/05/'>Май 2012</a>&nbsp;(4)</li>
+	<li><a href='http://www.k-max.name/2012/04/'>Апрель 2012</a>&nbsp;(3)</li>
+	<li><a href='http://www.k-max.name/2012/03/'>Март 2012</a>&nbsp;(2)</li>
+	<li><a href='http://www.k-max.name/2012/02/'>Февраль 2012</a>&nbsp;(4)</li>
+	<li><a href='http://www.k-max.name/2012/01/'>Январь 2012</a>&nbsp;(4)</li>
+	<li><a href='http://www.k-max.name/2011/12/'>Декабрь 2011</a>&nbsp;(7)</li>
+	<li><a href='http://www.k-max.name/2011/11/'>Ноябрь 2011</a>&nbsp;(2)</li>
+	<li><a href='http://www.k-max.name/2011/10/'>Октябрь 2011</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2011/08/'>Август 2011</a>&nbsp;(2)</li>
+	<li><a href='http://www.k-max.name/2011/07/'>Июль 2011</a>&nbsp;(4)</li>
+	<li><a href='http://www.k-max.name/2011/06/'>Июнь 2011</a>&nbsp;(4)</li>
+	<li><a href='http://www.k-max.name/2011/05/'>Май 2011</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2011/04/'>Апрель 2011</a>&nbsp;(3)</li>
+	<li><a href='http://www.k-max.name/2011/03/'>Март 2011</a>&nbsp;(4)</li>
+	<li><a href='http://www.k-max.name/2011/02/'>Февраль 2011</a>&nbsp;(5)</li>
+	<li><a href='http://www.k-max.name/2011/01/'>Январь 2011</a>&nbsp;(5)</li>
+	<li><a href='http://www.k-max.name/2010/12/'>Декабрь 2010</a>&nbsp;(7)</li>
+	<li><a href='http://www.k-max.name/2010/11/'>Ноябрь 2010</a>&nbsp;(7)</li>
+	<li><a href='http://www.k-max.name/2010/10/'>Октябрь 2010</a>&nbsp;(3)</li>
+	<li><a href='http://www.k-max.name/2010/09/'>Сентябрь 2010</a>&nbsp;(6)</li>
+	<li><a href='http://www.k-max.name/2010/08/'>Август 2010</a>&nbsp;(1)</li>
+	<li><a href='http://www.k-max.name/2010/07/'>Июль 2010</a>&nbsp;(5)</li>
+	<li><a href='http://www.k-max.name/2010/06/'>Июнь 2010</a>&nbsp;(4)</li>
+	<li><a href='http://www.k-max.name/2010/05/'>Май 2010</a>&nbsp;(1)</li>
+		</ul>
+		</div><div id="text-12" class="sidebar-box widget_text"><h6>Пузомерки )</h6>			<div class="textwidget"><noindex>
+<!-- begin of Top100 code -->
+<script id="top100Counter" type="text/javascript" src="http://counter.rambler.ru/top100.jcn?2539493"></script>
+<noscript>
+<a rel="nofollow" href="http://top100.rambler.ru/navi/2539493/">
+<img src="http://counter.rambler.ru/top100.cnt?2539493" alt="Rambler's Top100" border="0" />
+</a>
+
+</noscript>
+<!-- end of Top100 code -->
+
+<!--LiveInternet logo--><a rel="nofollow"  href="http://www.liveinternet.ru/click"
+target="_blank"><img src="//counter.yadro.ru/logo?44.3"
+title="LiveInternet"
+alt="" border="0" width="31" height="31"/></a><!--/LiveInternet-->
+
+<!-- Rating@Mail.ru counter -->
+<script type="text/javascript">//<![CDATA[
+var a='';js=10;d=document;
+try{a+=';r='+escape(d.referrer);}catch(e){}try{a+=';j='+navigator.javaEnabled();js=11;}catch(e){}
+try{s=screen;a+=';s='+s.width+'*'+s.height;a+=';d='+(s.colorDepth?s.colorDepth:s.pixelDepth);js=12;}catch(e){}
+try{if(typeof((new Array).push('t'))==="number")js=13;}catch(e){}
+try{d.write('<a rel="nofollow" href="http://top.mail.ru/jump?from=2090176"><img rel="nofollow" src="http://d4.ce.bf.a1.top.mail.ru/counter?id=2090176;t=69;js='+js+
+a+';rand='+Math.random()+'" alt="Рейтинг@Mail.ru" style="border:0;" height="31" width="38" \/><\/a>');}catch(e){}//]]></script>
+<noscript><p><a rel="nofollow" href="http://top.mail.ru/jump?from=2090176"><img rel="nofollow" src="http://d4.ce.bf.a1.top.mail.ru/counter?js=na;id=2090176;t=69" 
+style="border:0;" height="31" width="38" alt="Рейтинг@Mail.ru" /></a></p></noscript>
+<!-- //Rating@Mail.ru counter -->
+
+<!-- HotLog -->
+<script type="text/javascript" language="javascript">
+hotlog_js="1.0"; hotlog_r=""+Math.random()+"&s=2174162&im=49&r="+
+escape(document.referrer)+"&pg="+escape(window.location.href);
+</script>
+<script type="text/javascript" language="javascript1.1">
+hotlog_js="1.1"; hotlog_r+="&j="+(navigator.javaEnabled()?"Y":"N");
+</script>
+<script type="text/javascript" language="javascript1.2">
+hotlog_js="1.2"; hotlog_r+="&wh="+screen.width+"x"+screen.height+"&px="+
+(((navigator.appName.substring(0,3)=="Mic"))?screen.colorDepth:screen.pixelDepth);
+</script>
+<script type="text/javascript" language="javascript1.3">
+hotlog_js="1.3";
+</script>
+<script type="text/javascript" language="javascript">
+hotlog_r+="&js="+hotlog_js;
+document.write('<a rel="external nofollow" href="http://click.hotlog.ru/?2174162" target="_blank"><img '+
+'rel="nofollow" src="http://hit39.hotlog.ru/cgi-bin/hotlog/count?'+
+hotlog_r+'" border="0" width="88" height="31" alt="HotLog"><\/a>');
+</script>
+<noscript>
+<a rel="nofollow" href="http://click.hotlog.ru/?2174162" target="_blank"><img
+src="http://hit39.hotlog.ru/cgi-bin/hotlog/count?s=2174162&im=49" border="0"
+width="88" height="31" alt="HotLog"></a>
+</noscript>
+<!-- /HotLog -->
+
+<!--Openstat-->
+<span id="openstat2200627"></span>
+<script type="text/javascript">
+var openstat = { counter: 2200627, image: 91, color: "ff9822", next: openstat, track_links: "all" };
+(function(d, t, p) {
+var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+j.src = ("https:" == p ? "https:" : "http:") + "//openstat.net/cnt.js";
+var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+})(document, "script", document.location.protocol);
+</script>
+<!--/Openstat-->
+<!--Google anal-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25382975-1', 'auto');
+ga('require', 'displayfeatures');
+ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+
+</script>
+<!--/Google anal-->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter1103813 = new Ya.Metrika({id:1103813,
+                    webvisor:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/1103813" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</noindex></div>
+		</div>	</div>
+</div>    	<div class="fixed"></div>
+   </div>
+   <div class="fixed"></div>
+</div>
+	<div class="fixed"></div>
+<div id="footer">
+   <div class="inner">
+   	<p>&copy; 2017 <a href="http://www.k-max.name">Блог любителя экспериментов</a> Все права защищены </p>
+   	<div class="alignright">
+				<a class="icn_up" title="К началу страницы" href="#top"> Наверх </a>
+		</div>
+   </div>
+   <div class="fixed"></div>
+</div>
+
+<script type='text/javascript' src='http://www.k-max.name/wp-includes/js/comment-reply.min.js?ver=4.8.2'></script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201739'></script>
+<script type='text/javascript' src='http://www.k-max.name/wp-includes/js/wp-embed.min.js?ver=4.8.2'></script>
+<script type='text/javascript' src='http://www.k-max.name/wp-content/plugins/akismet/_inc/form.js?ver=3.3.4'></script>
+<script type='text/javascript' src='https://stats.wp.com/e-201739.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:5.2.1',blog:'81074244',post:'2252',tz:'3',srv:'www.k-max.name'} ]);
+	_stq.push([ 'clickTrackerInit', '81074244', '2252' ]);
+</script>
+
+<center></center>
+
+</body>
+</html>

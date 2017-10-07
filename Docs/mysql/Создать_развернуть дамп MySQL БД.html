@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html><head>
+    <title>Создать/развернуть дамп MySQL БД</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="Создать/развернуть дамп MySQL БД.. MySQL">
+    
+            <meta name="keywords" content="Создать/развернуть дамп MySQL БД. Как создать дамп MySQL из консоли, как развернуть дамп MySQL, как восстановить определенную таблицу из дампа SQL.&lt;br&gt;">
+        <link href="http://onedev.net/post/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link rel="author" href="https://plus.google.com/111659537649887747185?rel=author">
+    <link rel="stylesheet" href="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/normalize.css" type="text/css">
+    <link rel="stylesheet" href="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/layout.css" type="text/css">
+    <link rel="stylesheet" href="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/adaptive.css" type="text/css">
+    <link rel="stylesheet" href="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/theme-base.css" type="text/css">
+    <link rel="stylesheet" href="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/colors.css" type="text/css">
+    <link rel="stylesheet" href="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/content.css" type="text/css">
+
+    <!-- Google+ Comments: 111659537649887747185 API key, который можно посмотреть в URL на странице вашего профиля в Google+ -->
+    <script src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/cbgapi.loaded_2" async=""></script><script src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/cbgapi.loaded_1" async=""></script><script src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/cbgapi.loaded_0" async=""></script><script async="" src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/analytics.js"></script><script type="text/javascript">
+        window.___gcfg = {
+            parsetags: 'explicit'
+            // lang: 'ru-RU' // Не отображается счетчик комментариев для русского
+        }
+    </script>
+
+    <script src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/require.js"></script><!-- data-main="http://onedev.net/post/js/main.js"> -->
+    <script>
+        requirejs.config({
+            baseUrl: 'http://onedev.net/post/',
+            config:  {
+                'config': { // config = a module name
+                    baseUrl: 'http://onedev.net/post/'
+                }
+            },
+            paths: { // set dynamically path to module
+                'some.module': 'http://onedev.net/post//path/to/module'
+            }
+        });
+    </script>
+    <script src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/main.js"></script>
+<script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="$" src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/jquery.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="library/require-css/css.min" src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/css.js"></script><link type="text/css" rel="stylesheet" href="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/ads.css"><link type="text/css" rel="stylesheet" href="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/slick.css"><link type="text/css" rel="stylesheet" href="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/slick-theme.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="slick" src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/slick.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="gapi" src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/plusone.js" gapi_processed="true"></script></head>
+<body>
+
+    <div id="wrapper">
+                    <header id="header">
+    <div id="logo">
+    <a href="http://onedev.net/post">OneDev.net</a>
+</div>        <div id="search">
+    <form action="http://onedev.net/post" method="get">
+        <input name="search" placeholder="Поиск" type="search">
+        <input value="Найти" type="submit">
+    </form>
+</div>    <div style="clear: both"></div>
+    <blockquote>
+    Единственный способ делать великие дела — любить то, что вы делаете. Стив Джобс
+</blockquote>
+    <nav id="breadcrumbs" itemscope="" itemtype="http://schema.org/SiteNavigationElement">
+    <ol>
+        <li>
+            <a href="http://onedev.net/post" itemprop="url"><span itemprop="name">Home</span></a> ›
+        </li>
+                <li>
+                            <a href="http://onedev.net/post/mysql" itemprop="url"><span itemprop="name">MySQL</span></a> ›
+                    </li>
+                <li>
+                            <a href="http://onedev.net/post/170" itemprop="url"><span itemprop="name">Создать/развернуть дамп MySQL БД</span></a>
+                    </li>
+            </ol>
+</nav>
+</header>        
+        <div id="columns">
+                            <div id="sidebar">
+    
+    <aside class="categories-menu">
+        <h6>Категории</h6>
+        <nav>
+            <ul>
+                                                    <li>
+                        <a href="http://onedev.net/post/linux">
+                            <span class="name">Linux</span>
+                            <span class="count" title="Количество записей в рубрике">71</span>
+                            <div style="clear: both"></div>
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="http://onedev.net/post/laravel">
+                            <span class="name">Laravel</span>
+                            <span class="count" title="Количество записей в рубрике">28</span>
+                            <div style="clear: both"></div>
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="http://onedev.net/post/php">
+                            <span class="name">PHP</span>
+                            <span class="count" title="Количество записей в рубрике">25</span>
+                            <div style="clear: both"></div>
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="http://onedev.net/post/wordpress">
+                            <span class="name">WordPress</span>
+                            <span class="count" title="Количество записей в рубрике">20</span>
+                            <div style="clear: both"></div>
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="http://onedev.net/post/bash">
+                            <span class="name">Bash</span>
+                            <span class="count" title="Количество записей в рубрике">14</span>
+                            <div style="clear: both"></div>
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="http://onedev.net/post/it-web-internet">
+                            <span class="name">IT / WEB / Internet</span>
+                            <span class="count" title="Количество записей в рубрике">13</span>
+                            <div style="clear: both"></div>
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="http://onedev.net/post/javascript">
+                            <span class="name">JavaScript</span>
+                            <span class="count" title="Количество записей в рубрике">11</span>
+                            <div style="clear: both"></div>
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="http://onedev.net/post/mysql">
+                            <span class="name">MySQL</span>
+                            <span class="count" title="Количество записей в рубрике">8</span>
+                            <div style="clear: both"></div>
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="http://onedev.net/post/ide">
+                            <span class="name">IDE</span>
+                            <span class="count" title="Количество записей в рубрике">8</span>
+                            <div style="clear: both"></div>
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="http://onedev.net/post/angularjs">
+                            <span class="name">AngularJS</span>
+                            <span class="count" title="Количество записей в рубрике">8</span>
+                            <div style="clear: both"></div>
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="http://onedev.net/post/symfony">
+                            <span class="name">Symfony2</span>
+                            <span class="count" title="Количество записей в рубрике">4</span>
+                            <div style="clear: both"></div>
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="http://onedev.net/post/misc">
+                            <span class="name">Чтиво</span>
+                            <span class="count" title="Количество записей в рубрике">4</span>
+                            <div style="clear: both"></div>
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="http://onedev.net/post/design-ui-css">
+                            <span class="name">Design/UI/CSS</span>
+                            <span class="count" title="Количество записей в рубрике">4</span>
+                            <div style="clear: both"></div>
+                        </a>
+                    </li>
+                            </ul>
+        </nav>
+
+        <div class="ads">
+                                    
+                                            <div class="ads banners sawius" style="height: 301px;">
+            <h6 style="text-align: center; font-size: 20px; margin: 10px;">Товары Sawius</h6>
+        <div class="banners-container slick-blue-dots slick-initialized slick-slider" role="toolbar">
+        <div aria-live="polite" class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 1440px; left: -960px;" role="listbox"><div class="item slick-slide slick-cloned" data-slick-index="-1" aria-hidden="true" style="width: 240px;" tabindex="-1">
+        <a href="http://sawius.com.ua/p467212870-fitnes-braslet-xiaomi.html?utm_source=onedev&amp;utm_medium=cpc&amp;utm_campaign=sidebar" onclick="trackGaEvent('Баннер sawius', 'Клик', 'Фитнес браслет Xiaomi Mi Band V2', 1);" title="" target="_blank" tabindex="-1">
+            <div class="image-wrap">
+                <img alt="Фитнес браслет Xiaomi Mi Band V2" src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/670890529_w240_h240_xiaomi_mi_band___pulsometr.jpg">
+            </div>
+            <div class="text-wrap">
+                Фитнес браслет Xiaomi Mi Band V2 за <span class="price">675 грн.</span>
+            </div>
+                    </a>
+    </div><div class="item slick-slide" data-slick-index="0" aria-hidden="true" style="width: 240px;" tabindex="-1" role="option" aria-describedby="slick-slide00">
+        <a href="http://sawius.com.ua/p540154390-mehanicheskaya-klaviatura-renault.html?utm_source=onedev&amp;utm_medium=cpc&amp;utm_campaign=sidebar" onclick="trackGaEvent('Баннер sawius', 'Клик', 'Механическая клавиатура K-70 MX Blue', 1);" title="" target="_blank" tabindex="-1">
+            <div class="image-wrap">
+                <img alt="Механическая клавиатура K-70 MX Blue" src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/804420793_w240_h240_klaviatura_meh___podsvetka.jpg">
+            </div>
+            <div class="text-wrap">
+                Механическая клавиатура K-70 MX Blue за <span class="price">1 480 грн.</span>
+            </div>
+                    </a>
+    </div><div class="item slick-slide" data-slick-index="1" aria-hidden="true" style="width: 240px;" tabindex="-1" role="option" aria-describedby="slick-slide01">
+        <a href="http://sawius.com.ua/p408930088-fonarik-dlya-chteniya.html?utm_source=onedev&amp;utm_medium=cpc&amp;utm_campaign=sidebar" onclick="trackGaEvent('Баннер sawius', 'Клик', 'Светильник-лампа для чтения', 1);" title="" target="_blank" tabindex="-1">
+            <div class="image-wrap">
+                <img alt="Led лампа для чтения с регулировкой уровня освещения" src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/784116943_w240_h240_led_lamp_8_led__ble_2_arms.jpg">
+            </div>
+            <div class="text-wrap">
+                Светильник-лампа для чтения за <span class="price">190 грн.</span>
+            </div>
+                    </a>
+    </div><div class="item slick-slide" data-slick-index="2" aria-hidden="true" style="width: 240px;" tabindex="-1" role="option" aria-describedby="slick-slide02">
+        <a href="http://sawius.com.ua/p540175942-mehanicheskaya-klaviatura-005.html?utm_source=onedev&amp;utm_medium=cpc&amp;utm_campaign=sidebar" onclick="trackGaEvent('Баннер sawius', 'Клик', 'Механическая клавиатура K-005 MX-Blue', 1);" title="" target="_blank" tabindex="-1">
+            <div class="image-wrap">
+                <img alt="Компактная механическая клавиатура K-005 MX-Blue" src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/804103787_w320_h240_mehanicheskaya___switchers.jpg">
+            </div>
+            <div class="text-wrap">
+                Механическая клавиатура K-005 MX-Blue за <span class="price">1 200 грн.</span>
+            </div>
+                    </a>
+    </div><div class="item slick-slide slick-current slick-active" data-slick-index="3" aria-hidden="false" style="width: 240px;" tabindex="-1" role="option" aria-describedby="slick-slide03">
+        <a href="http://sawius.com.ua/p467212870-fitnes-braslet-xiaomi.html?utm_source=onedev&amp;utm_medium=cpc&amp;utm_campaign=sidebar" onclick="trackGaEvent('Баннер sawius', 'Клик', 'Фитнес браслет Xiaomi Mi Band V2', 1);" title="" target="_blank" tabindex="0">
+            <div class="image-wrap">
+                <img alt="Фитнес браслет Xiaomi Mi Band V2" src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/670890529_w240_h240_xiaomi_mi_band___pulsometr.jpg">
+            </div>
+            <div class="text-wrap">
+                Фитнес браслет Xiaomi Mi Band V2 за <span class="price">675 грн.</span>
+            </div>
+                    </a>
+    </div><div class="item slick-slide slick-cloned" data-slick-index="4" aria-hidden="true" style="width: 240px;" tabindex="-1">
+        <a href="http://sawius.com.ua/p540154390-mehanicheskaya-klaviatura-renault.html?utm_source=onedev&amp;utm_medium=cpc&amp;utm_campaign=sidebar" onclick="trackGaEvent('Баннер sawius', 'Клик', 'Механическая клавиатура K-70 MX Blue', 1);" title="" target="_blank" tabindex="-1">
+            <div class="image-wrap">
+                <img alt="Механическая клавиатура K-70 MX Blue" src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/804420793_w240_h240_klaviatura_meh___podsvetka.jpg">
+            </div>
+            <div class="text-wrap">
+                Механическая клавиатура K-70 MX Blue за <span class="price">1 480 грн.</span>
+            </div>
+                    </a>
+    </div></div></div>
+    
+    
+    
+    <ul class="slick-dots" style="display: block;" role="tablist"><li class="" aria-hidden="true" role="presentation" aria-selected="true" aria-controls="navigation00" id="slick-slide00"><button type="button" data-role="none" role="button" aria-required="false" tabindex="0">1</button></li><li aria-hidden="true" role="presentation" aria-selected="false" aria-controls="navigation01" id="slick-slide01" class=""><button type="button" data-role="none" role="button" aria-required="false" tabindex="0">2</button></li><li aria-hidden="true" role="presentation" aria-selected="false" aria-controls="navigation02" id="slick-slide02" class=""><button type="button" data-role="none" role="button" aria-required="false" tabindex="0">3</button></li><li aria-hidden="false" role="presentation" aria-selected="false" aria-controls="navigation03" id="slick-slide03" class="slick-active"><button type="button" data-role="none" role="button" aria-required="false" tabindex="0">4</button></li></ul></div>
+
+    <script class="source-content" type="text/plain">
+        <div class="item">
+        <a 
+href="http://sawius.com.ua/p540154390-mehanicheskaya-klaviatura-renault.html?utm_source=onedev&amp;utm_medium=cpc&amp;utm_campaign=sidebar"
+
+           onclick="trackGaEvent('Баннер sawius', 'Клик', 'Механическая 
+клавиатура K-70 MX Blue', 1);"
+           title="" target="_blank">
+            <div class="image-wrap">
+                <img alt="Механическая клавиатура K-70 MX Blue" 
+src="https://images.ua.prom.st/804420793_w240_h240_klaviatura_meh___podsvetka.jpg">
+
+            </div>
+            <div class="text-wrap">
+                Механическая клавиатура K-70 MX Blue за <span 
+class="price">1 480 грн.</span>
+            </div>
+                    </a>
+    </div>
+    <div class="item">
+        <a 
+href="http://sawius.com.ua/p408930088-fonarik-dlya-chteniya.html?utm_source=onedev&amp;utm_medium=cpc&amp;utm_campaign=sidebar"
+
+           onclick="trackGaEvent('Баннер sawius', 'Клик', 
+'Светильник-лампа для чтения', 1);"
+           title="" target="_blank">
+            <div class="image-wrap">
+                <img alt="Led лампа для чтения с регулировкой уровня 
+освещения" 
+src="https://images.ua.prom.st/784116943_w240_h240_led_lamp_8_led__ble_2_arms.jpg">
+
+            </div>
+            <div class="text-wrap">
+                Светильник-лампа для чтения за <span class="price">190 
+грн.</span>
+            </div>
+                    </a>
+    </div>
+    <div class="item">
+        <a 
+href="http://sawius.com.ua/p540175942-mehanicheskaya-klaviatura-005.html?utm_source=onedev&amp;utm_medium=cpc&amp;utm_campaign=sidebar"
+
+           onclick="trackGaEvent('Баннер sawius', 'Клик', 'Механическая 
+клавиатура K-005 MX-Blue', 1);"
+           title="" target="_blank">
+            <div class="image-wrap">
+                <img alt="Компактная механическая клавиатура K-005 
+MX-Blue" 
+src="https://images.ua.prom.st/804103787_w320_h240_mehanicheskaya___switchers.jpg">
+
+            </div>
+            <div class="text-wrap">
+                Механическая клавиатура K-005 MX-Blue за <span 
+class="price">1 200 грн.</span>
+            </div>
+                    </a>
+    </div>
+    <div class="item">
+        <a 
+href="http://sawius.com.ua/p467212870-fitnes-braslet-xiaomi.html?utm_source=onedev&amp;utm_medium=cpc&amp;utm_campaign=sidebar"
+
+           onclick="trackGaEvent('Баннер sawius', 'Клик', 'Фитнес 
+браслет Xiaomi Mi Band V2', 1);"
+           title="" target="_blank">
+            <div class="image-wrap">
+                <img alt="Фитнес браслет Xiaomi Mi Band V2" 
+src="https://images.ua.prom.st/670890529_w240_h240_xiaomi_mi_band___pulsometr.jpg">
+
+            </div>
+            <div class="text-wrap">
+                Фитнес браслет Xiaomi Mi Band V2 за <span 
+class="price">675 грн.</span>
+            </div>
+                    </a>
+    </div>
+    </script>
+
+    <script>
+        require(['$'], function() {
+            $(function() {
+                var adsKey = 'sawius';
+                    timeout = parseInt('1000');
+
+                var loadAndInitSlider = function() {
+
+                    var initSlider = function() {
+                        var $adsBlock = $('.ads.' + adsKey),
+                            $bannersContainer = $adsBlock.find('.banners-container'),
+                            sourceContent = $adsBlock.find('script.source-content').html();
+
+                        var options = {
+                            //rows: 1,
+                            //slidesPerRow: 1,
+                            slidesToShow: 1,   // 4
+                            slidesToScroll: 1, // 3
+                            //adaptiveHeight: true,
+                            variableWidth: false, // Variable width each slides
+                            //mobileFirst: false,
+//                            responsive: [ // Enables settings sets at given screen width
+//                                { breakpoint: 800,  settings: { slidesToShow: 2, slidesToScroll: 2 } },
+//                                { breakpoint: 1000, settings: { slidesToShow: 3, slidesToScroll: 3 } },
+//                                { breakpoint: 1360, settings: { slidesToShow: 4, slidesToScroll: 4 } },
+//                                { breakpoint: 1700, settings: { slidesToShow: 4, slidesToScroll: 4 } },
+//                                { breakpoint: 2600, settings: { slidesToShow: 4, slidesToScroll: 4 } }
+//                            ],
+                            autoplay: true,
+                            infinite: true, // false
+                            autoplaySpeed: 7000, // 10000
+                            arrows: false, // true
+                            dots: true, // false
+                            //centerMode: true,  // works incorrect
+                            lazyLoad: 'ondemand' // ondemand || progressive
+                            //prevArrow: '<div class="slick-arrow left"></div>',
+                            //nextArrow: '<div class="slick-arrow right"></div>',
+                        };
+
+                        $bannersContainer.html(sourceContent);
+                        $adsBlock.removeClass('hide');
+                        $bannersContainer.slick(options);
+
+                         // :has(.slick-dots)
+                        //$adsBlock.filter(':has(.slick-dots)').css('margin-bottom');
+
+                        var correctAdsBlockHeight = function() {
+                            var adsBlockHeight = $adsBlock.filter(':has(.slick-dots)').outerHeight();
+                            $adsBlock.height(adsBlockHeight + 20);
+                        };
+
+                        correctAdsBlockHeight();
+                    };
+
+                    require(['slick', 'css!adsStyles'], function() {
+                        initSlider();
+                    });
+                };
+
+                setTimeout(loadAndInitSlider, timeout);
+            });
+        });
+    </script>
+</div>            
+                    </div>
+
+    </aside>
+
+</div>            
+            <main id="main" role="main">
+                    
+
+    <article class="single">
+        <header>
+            <h1>Создать/развернуть дамп MySQL БД</h1>
+            <div class="meta">
+                <time datetime="2013-06-25 07:33:26" title="Опубликовано 2013-06-25, последнее обновление 2017-05-19">
+    2 месяца назад</time>                <span class="category">
+    Категория: 
+    <a rel="directory tag" href="http://onedev.net/post/mysql" title="Просмотреть все записи в рубрике «MySQL»">MySQL</a>
+</span>            </div>
+        </header>
+        <div class="content wysiwyg-content"><p>Как веб разработчику, 
+мне часто приходится создавать и разворачивать дампы баз данных, и в 
+основном это MySQL. Поэтому в данной заметке я оставлю частые задачи по 
+работе с дампами этой БД. На вскидку, при развертывании InnoDB таблицы 
+~&nbsp;1GB уходит около получаса. Чтобы засечь время используйте 
+команду&nbsp;<code class=""><b>time</b></code>&nbsp;(<code class="">time mysql ...</code>).</p><p>Создать полный дамп MySQL:</p><pre><code class="bash">mysqldump -uroot --all-databases --routines --triggers -p &gt; mysql.dump</code></pre><p>Создать и сжать дамп БД:</p><pre><code class="bash">mysqldump -uroot -proot DATABASE | gzip &gt; ./db.sql.gz</code></pre><p>Создать дамп структуры MySQL:</p><pre><code class="bash">mysqldump -u%user% -p%pass% --no-data db_name &gt; db_name.dump</code></pre><p class="">Сжать SQL дамп:</p><pre class=""><code class="bash">gzip --best &lt; db_name.sql &gt; db_name.sql.gz</code></pre><p class="">Исключить таблицы юзеров WP:</p><pre class=""><code class="bash">mysqldump -uUSER -pPASS --ignore-table=blog.wp_users --ignore-table=blog.wp_usermeta blog &gt; blog_without_users.sql</code></pre><p class="">Создать полный дамп БД - каждая БД в отдельном архиве<i>&nbsp;</i>(shell-скрипт):</p><pre class=""><code class="bash">#!/bin/bash
+dblist=`mysql -u%user% -p%pass% -e "show databases" | sed -n '2,$ p'`
+for db in $dblist; do
+    mysqldump -u%user% -p%pass% --routines --triggers $db | gzip --best &gt; $db.sql.gz
+done</code></pre><p>Восстановить MySQL дамп:</p><pre><code class="bash">mysql -uUSER -hlocalhost -pPASS DB_NAME &lt; /path/dump.sql</code></pre><p>Восстановить&nbsp;<code class="">.sql.gz</code>&nbsp;дамп:<br></p><pre class=""><code class="bash">gunzip -c dump.sql.gz | mysql -uroot -hlocalhost -p%pass% %database%</code></pre><p>Выдернуть конкретную таблицу из общего дампа:</p><pre><code class="bash">awk '/CREATE TABLE `table_name`/,/UNLOCK TABLES/' db_name.dump</code></pre><p class=""><br></p><p class="">#mysqldump, #db dump, #restore database</p></div>
+        <footer>
+    <time datetime="2013-06-25 07:33:26" title="Опубликовано 2013-06-25, последнее обновление 2017-05-19">
+    2 месяца назад</time>    <span class="category">
+    категория: 
+    <a rel="directory tag" href="http://onedev.net/post/mysql" title="Просмотреть все записи в рубрике «MySQL»">MySQL</a>
+</span>        <div class="donate" style="display: inline-block; float: right;">
+        <iframe allowtransparency="true" scrolling="no" src="https://money.yandex.ru/quickpay/button-widget?account=410011919491978&amp;quickpay=small&amp;yamoney-payment-type=on&amp;button-text=06&amp;button-size=s&amp;button-color=orange&amp;targets=%D0%94%D0%BE%D0%BD%D0%B0%D1%82+%D0%BD%D0%B0+%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D1%83+%D0%B1%D0%BB%D0%BE%D0%B3%D0%B0&amp;default-sum=15&amp;successURL=" width="140" height="25" frameborder="0"></iframe>        <iframe src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/a.html" title="Flattr" style="border-width: 0px;" width="110" height="25"></iframe><script id="fb6ya5o">(function(i){var
+ 
+f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//button.flattr.com/view/?fid=51koe1&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=25;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fb6ya5o');</script>            </div>
+</footer>    </article>
+
+            <div id="place-after-post">
+
+            
+                    </div>
+    
+    <aside id="messages">
+    <h6 style="font-size: 1.1em; margin: 30px 0 10px; color: #3a4145;">
+        Сообщения
+    </h6>
+
+        <style>
+        .messages-list .message { border-bottom: 1px solid #e8e8e8; margin: 2px 0; padding: 5px; }
+        .messages-list .message time { opacity: 0.7; font-size: 14px; }
+        .messages-list .message time:before { content: '⌚'; }
+    </style>
+    <div class="messages-list">
+            </div>
+    
+    
+    
+    
+    <div class="message-publish">
+        <form action="http://onedev.net/post/message/publish" method="post" class="message-publish-form" id="message-publish-form">
+            <input name="note_id" value="170" type="hidden">
+            <input name="_token" value="d9lCtWwprJAGKNRfqImP2Bp0oIeQTqzKRdUodesG" type="hidden">
+
+            <div>
+                <textarea name="text" rows="3" cols="30" style="width: 100%"></textarea>
+            </div>
+
+            <div class="g-recaptcha" data-sitekey="6LeV6R0UAAAAAB5qM5Pd27fZmfELGDp_e5601Il2" style="margin-bottom: 3px"></div>
+
+            <div>
+                <input class="btnLoadAndShowRecaptcha" value="Пройти капчу и отправить сообщение" type="submit">
+                <input class="btnSendMessage hide" value="Отправить сообщение" type="submit">
+            </div>
+        </form>
+    </div>
+
+        <script>
+        require(['$'], function ($) {
+            $(function() {
+                // Загрузить и показать капчу перед отправкой формы
+                $('.btnLoadAndShowRecaptcha').click(function(e) {
+                    e.preventDefault();
+
+                    var $button = $(this);
+
+                    require(['https://www.google.com/recaptcha/api.js?render=onload&hl=ru'], function() {
+                        $button.addClass('hide').next(':submit').removeClass('hide');
+                    });
+                });
+            });
+        });
+    </script>
+</aside>    <aside id="comments">
+    <h6><h6>Комментарии</h6></h6>
+    <div id="jsGoogleplusСomments" style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent none repeat scroll 0% 0%; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 642px; height: 603px;"><iframe ng-non-bindable="" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 642px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 603px;" tabindex="0" vspace="0" id="I0_1499780465646" name="I0_1499780465646" src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/comments.html" data-gapiattached="true" title="Прокоментувати цей вміст" width="100%" frameborder="0"></iframe></div>
+    <script>
+        // @note  Комментарии тянут 400kb контента!
+        require(['$'], function ($) {
+            $(function() {
+
+                var bindShowCommentsHandler = function() {
+                    $('#jsShowComments').click(function(e) {
+                        e.preventDefault();
+
+                        $(this).off('click');
+                        $(this).replaceWith('<h6>Комментарии</h6>');
+
+                        gapi.comments.render('jsGoogleplusСomments', { 
+// ID контейнера с сообщениями
+                            //href: window.location,             // URL 
+страницы (можно задать вручную, если у записи есть несколько URL'ов)
+                            href: 'http://onedev.net/post/170',
+                            view_type: 'FILTERED_POSTMOD',     // Других
+ вариантов я не знаю
+                            first_party_property: 'BLOGGER',   // 
+'BLOGGER' - Иначе получите 400 Bad Request
+                            width: $('#coreContent').width() - 10 // 
+Ширина блока комментариев в px
+                        });
+                        return false;
+                    });
+                };
+
+                var renderGoogleCommentsCounter = function() {
+                    
+gapi.commentcount.render('jsGoogleplusCommentsCount', { href: 
+window.location });
+                    $('#jsGoogleplusCommentsCount 
+iframe').load(function() {
+                        setTimeout(function() {
+                            var matches = $('#jsGoogleplusCommentsCount 
+iframe').attr('title').match(/>\s?(\d+)/),
+                                commentsCount = matches ? matches[1] : 
+0;
+                            if (Number(commentsCount) > 0) {
+                                $('#jsCommentsCount').text('(' + 
+commentsCount + ')');
+                            }
+                        }, 100); // не успевают выполниться скрипты 
+внутри фрейма
+                    });
+                };
+
+                // Load and show the Google Comments after N sec
+                setTimeout(function() {
+                    require(['gapi'], function(gapi) {
+                        renderGoogleCommentsCounter();
+                        bindShowCommentsHandler();
+                        $('#jsShowComments').click(); // show comments
+                    });
+                }, 7000);
+            });
+        });
+    </script>
+</aside>
+            </main>
+        </div>
+
+
+        <footer id="footer">
+    <small>
+        <span>⚒</span> Powered by
+        <a href="http://github.com/sorbing/"><cite style="font-family: cursive">Sorbing</cite></a>
+        <span class="hide">⌚</span> <time>2013-2017</time>
+    </small>
+</footer>    </div>
+
+    <script>
+        // @todo  Заменить на GTM
+
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-42132055-1', 'onedev.net');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
+
+    </script>
+
+            <script>
+            window.trackGaEvent = function(category, action, label, valInt) {
+                if (!window.ga) {
+                    return;
+                }
+
+                //valInt = parseInt(valInt);
+                ga('send', 'event', category, action, label, valInt);
+            };
+        </script>
+        
+<iframe name="oauth2relay776939423" id="oauth2relay776939423" src="%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C_%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D0%BD%D1%83%D1%82%D1%8C%20%D0%B4%D0%B0%D0%BC%D0%BF%20MySQL%20%D0%91%D0%94_files/postmessageRelay.html" style="width: 1px; height: 1px; position: absolute; top: -100px;" tabindex="-1" aria-hidden="true"></iframe></body></html>

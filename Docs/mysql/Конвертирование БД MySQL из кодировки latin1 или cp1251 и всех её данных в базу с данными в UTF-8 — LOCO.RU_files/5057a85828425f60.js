@@ -1,0 +1,1 @@
+(function (w){if(!w.plusoWidgetButtons){w.plusoWidgetButtons = {};}w.plusoWidgetButtons.config = {"rss":{"url":"http:\/\/"},"news":{"count":"20"},"comments":{"type":"common"},"service":["share","news"],"share":["ok","vk","fb","tw","wa","tg"],"newsCount":"10","discusType":"common","hash":"5057a85828425f60.36895621"};})(window);

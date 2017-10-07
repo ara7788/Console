@@ -1,0 +1,1 @@
+var COUNTRYDATAJSON = {"countryJsonData":{"0":{"wid":2,"countryid":[41]},"1":{"wid":5,"countryid":[32]},"2":{"wid":3,"countryid":[19,58,65,72,90,94,95,100,224,18,225,118,229,23,131,136,137,28,161,31,167,176,33,34,40]},"wid":"59","countryid":[40]}};

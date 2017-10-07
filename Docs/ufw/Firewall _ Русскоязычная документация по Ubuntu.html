@@ -1,0 +1,690 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" dir="ltr" lang="ru"><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Firewall | Русскоязычная документация по Ubuntu</title><link rel="shortcut icon" href="http://help.ubuntu.ru/lib/tpl/ubuntu-portal/images/favicon.ico">
+<link rel="apple-touch-icon" href="http://help.ubuntu.ru/lib/tpl/ubuntu-portal/images/apple-touch-icon.png">
+		<link href="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/css_003.css" rel="stylesheet" type="text/css">
+				<link rel="stylesheet" type="text/css" href="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/ubuntu-portal.css">
+		<meta name="generator" content="DokuWiki">
+<meta name="robots" content="index,follow">
+<meta name="date" content="2012-06-21T22:14:20+0400">
+<meta name="keywords" content="wiki,руководство по ubuntu server,безопасность,firewall">
+<link rel="search" type="application/opensearchdescription+xml" href="http://help.ubuntu.ru/lib/exe/opensearch.php" title="Русскоязычная документация по Ubuntu">
+<link rel="start" href="http://help.ubuntu.ru/">
+<link rel="contents" href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/firewall?do=index" title="Все страницы">
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://help.ubuntu.ru/feed.php">
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://help.ubuntu.ru/feed.php?mode=list&amp;ns=wiki:%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server:%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C">
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://help.ubuntu.ru/_export/xhtml/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/firewall">
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://help.ubuntu.ru/_export/raw/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/firewall">
+<link rel="canonical" href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/firewall">
+<link rel="stylesheet" media="screen" type="text/css" href="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/css_004.css">
+<link rel="stylesheet" media="all" type="text/css" href="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/css_002.css">
+<link rel="stylesheet" media="print" type="text/css" href="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/css.css">
+<script type="text/javascript" async="" src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/ga.js"></script><script type="text/javascript"><!--//--><![CDATA[//><!--
+var NS='wiki:руководство_по_ubuntu_server:безопасность';var JSINFO = {"id":"wiki:\u0440\u0443\u043a\u043e\u0432\u043e\u0434\u0441\u0442\u0432\u043e_\u043f\u043e_ubuntu_server:\u0431\u0435\u0437\u043e\u043f\u0430\u0441\u043d\u043e\u0441\u0442\u044c:firewall","namespace":"wiki:\u0440\u0443\u043a\u043e\u0432\u043e\u0434\u0441\u0442\u0432\u043e_\u043f\u043e_ubuntu_server:\u0431\u0435\u0437\u043e\u043f\u0430\u0441\u043d\u043e\u0441\u0442\u044c"};
+//--><!]]></script>
+<script type="text/javascript" charset="utf-8" src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/js.php"></script>
+		<script type="text/javascript" src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/ubuntu-portal.js"></script>		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-4515300-6']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+</head>
+<body class="with-bottom-panel act-show">
+<div id="__container">
+<!-- Document -->
+<div>
+	<!-- Page -->
+	<div id="__page">
+		<div id="__wrapper"><div>
+			<!-- Header -->
+			<div id="__header">
+	<div id="__header-menu">
+		<ul>
+			<li>
+				<a href="http://ubuntu.ru/" title="Главная страница сайта ubuntu.ru">Сайт</a>			</li>
+			<li>
+				<a href="http://forum.ubuntu.ru/" title="Форум русскоязычного сообщества Ubuntu. На нём вы можете задать интересующие вас вопросы и получить помощь от других пользователей Ubuntu.">Форум</a>			</li>
+			<li>
+				<a href="http://help.ubuntu.ru/" title="Различная русскоязычная документация по семейству операционных систем на базе Ubuntu" class="active">Документация</a>					<div class="header-submenu">
+						<div>
+							<ul>
+								<li>
+					<a href="http://help.ubuntu.ru/wiki" title="Документация, создаваемая пользователями Ubuntu" class="active">Пользовательская документация</a>
+				<div class="header-popup">
+					<ul>
+						<li><a href="http://help.ubuntu.ru/wiki/%D1%81%D0%B5%D0%BC%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%BE_ubuntu" title="Документация по дистрибутивам, входящим в семейство Ubuntu">Семейство Ubuntu</a></li>
+						<li><a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%B0" title="Различные материалы по Ubuntu, доступные для загрузки">Материалы для загрузки</a></li>
+						<li><a href="http://help.ubuntu.ru/wiki/%D1%81%D0%BE%D0%B2%D0%BC%D0%B5%D1%81%D1%82%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D1%8C" title="Раздел, посвящённый совместимости Ubuntu с оборудованием, в первую очередь - с ноутбуками">Совместимость с оборудованием</a></li>
+					</ul>
+				</div></li>
+								<li><a href="http://help.ubuntu.ru/doc" title="Переводы официальной документации по Ubuntu на русский язык">Официальная документация</a></li>
+							</ul>
+									<div id="__header-controls">			<div id="__header-user"><a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/firewall?do=login&amp;sectok=be6185113f2e978aa9bdf948de6e6c09" class="action login" rel="nofollow" title="Войти">Войти / Зарегистрироваться</a>			</div>		</div>							<div class="clearer"></div>
+						</div>
+					</div>
+							</li>
+			<li>
+				<a href="http://team.ubuntu.ru/" title="Материалы, касающиеся работы русскоязычного сообщества и русскоязычной LoCo команды Ubuntu">Сообщество</a>			</li>
+			<li>
+				<a href="http://ubuntu.ru/get" title="Страница получения дистрибутива Ubuntu">Скачать Ubuntu</a>			</li>
+		</ul>
+		<div id="__header-logo">
+			<a href="http://ubuntu.ru/" title="На главную страницу сайта">
+				<img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/logo_ru.png" alt="">
+			</a>
+		</div>
+	</div>
+	<div id="__search-box">
+		<form action="/" accept-charset="utf-8" class="search" id="dw__search" method="get"><div class="no"><input name="do" value="search" type="hidden"><input id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" value="Поиск по ресурсу..." type="text"><input value="Поиск" class="button" title="Поиск" type="submit"><div id="qsearch__out" class="ajax_qsearch JSpopup" style="display: none;"></div></div></form>	</div>
+</div>
+			<!-- /Header -->
+			<!-- Main -->
+							<div id="__main">
+					<div id="__main-title">
+						<h1><a name="firewall" id="firewall">Firewall</a> <span></span></h1>
+					</div>
+					<div class="msgarea">
+											</div>
+					<div class="content">
+						<div class="content-main dokuwiki">
+							<!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header" style="cursor: pointer;"><span id="toc__toggle" class="toc_close"><span>−</span></span>Содержание</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#firewall" class="toc">Firewall</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#%D0%B2%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5" class="toc">Введение</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#ufw_-_%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%D0%B9_firewall" class="toc">ufw - простой Firewall</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#%D0%BC%D0%B0%D1%81%D0%BA%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0_ip" class="toc">Маскировка IP</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#%D0%B6%D1%83%D1%80%D0%BD%D0%B0%D0%BB%D1%8B" class="toc">Журналы</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#%D0%B4%D1%80%D1%83%D0%B3%D0%B8%D0%B5_%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B" class="toc">Другие инструменты</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8" class="toc">Ссылки</a></span></div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
+<div class="styler styler-float-left">
+<p>
+<a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server" class="wikilink1" title="wiki:руководство_по_ubuntu_server">Руководство по Ubuntu Server</a> »
+<a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C" class="wikilink1" title="wiki:руководство_по_ubuntu_server:безопасность">Безопасность</a>
+</p>
+</div><div class="styler styler-float-right">
+<p>
+<a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/console_security" class="wikilink1" title="wiki:руководство_по_ubuntu_server:безопасность:console_security">&lt;-назад</a> | 
+<a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/apparmor" class="wikilink1" title="wiki:руководство_по_ubuntu_server:безопасность:apparmor">далее-&gt;</a>
+</p>
+</div>
+<h2 class="sectionedit1"><a name="firewall" id="firewall">Firewall</a></h2>
+<div class="level2">
+
+</div>
+
+<h3 class="sectionedit2"><a name="введение" id="введение">Введение</a></h3>
+<div class="level3">
+
+<p>
+Ядро линукс включает подсистему <strong>Netfilter</strong> (сетевой 
+фильтр), который используется для манипулирования или решения судьбы 
+сетевого трафика передаваемого в или через ваш сервер. Все современные 
+решения линукс по сетевой защите используют эту систему пакетной 
+фильтрации.
+</p>
+
+<p>
+Система пакетной фильтрации на уровне ядра была бы малоиспользуема 
+администраторами без пользовательского интерфейса для ее управления. Для
+ этого предназначен iptables. Когда пакет попадает на ваш сервер, он 
+передается подсистеме Netfilter для одобрения, изменения или отказа на 
+основе правил, которые она получает от интерфейса пользователя через 
+iptables. Таким образом iptables - это все, что вам нужно для управления
+ вашей сетевой защитой, если вы хорошо с ним знакомы, однако множество 
+внешних интерфейсов доступны для упрощения этой задачи.
+</p>
+
+</div>
+
+<h3 class="sectionedit3"><a name="ufw_-_простой_firewall" id="ufw_-_простой_firewall">ufw - простой Firewall</a></h3>
+<div class="level3">
+
+<p>
+Инструмент для настройки сетевой защиты Ubuntu по умолчанию - это ufw. 
+Он разработан для легкой настройки iptables и предоставляет 
+дружественный способ создания сетевой защиты для IPv4 и IPv6.
+</p>
+
+<p>
+По умолчанию изначально ufw выключен. Со страницы man руководства ufw:
+</p>
+
+<p>
+<em>«ufw не предназначен для обеспечения полной функциональности 
+брандмауэра через свой командный интерфейс, но он предоставляет легкий 
+способ добавления или удаления простых правил. Сейчас в большинстве 
+случаев он используется для централизованных брандмауэров.»</em>
+</p>
+
+<p>
+Далее следуют несколько примеров использования ufw:
+</p>
+
+<p>
+ 1. Для начала требуется разрешить ufw. Наберите в терминале:
+</p>
+<pre class="code">sudo ufw enable</pre>
+
+<p>
+ 2. Открыть порт (в данном примере <acronym title="Secure Shell">SSH</acronym>):
+</p>
+<pre class="code">sudo ufw allow 22</pre>
+
+<p>
+ 3. Правила могут быть добавлены с использованием нумерованного формата:
+</p>
+<pre class="code">sudo ufw insert 1 allow 80</pre>
+
+<p>
+ 4. Подобным образом можно закрыть открытый порт:
+</p>
+<pre class="code">sudo ufw deny 22</pre>
+
+<p>
+ 5. Для удаления правила используйте delete:
+</p>
+<pre class="code">sudo ufw delete deny 22</pre>
+
+<p>
+ 6. Также можно разрешить доступ к порту с определенных компьютеров или 
+сетей. Следующий пример разрешает на этом компьютере доступ по <acronym title="Secure Shell">SSH</acronym> с адреса 192.168.0.2 на любой IP адрес:
+</p>
+<pre class="code">sudo ufw allow proto tcp from 192.168.0.2 to any port 22</pre>
+
+<p>
+Замените 192.168.0.2 на 192.168.0.0/24 чтобы разрешить доступ по <acronym title="Secure Shell">SSH</acronym> для всей подсети.
+</p>
+
+<p>
+ 7. Добавление опции <strong>–dry-run</strong> команде <strong>ufw</strong> выведет список правил, но не применит их. Например, далее показано, что было бы применено, если открыть <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> порт:
+</p>
+<pre class="code">sudo ufw --dry-run allow http</pre>
+<pre class="code">*filter
+:ufw-user-input - [0:0]
+:ufw-user-output - [0:0]
+:ufw-user-forward - [0:0]
+:ufw-user-limit - [0:0]
+:ufw-user-limit-accept - [0:0]
+### RULES ###
+
+### tuple ### allow tcp 80 0.0.0.0/0 any 0.0.0.0/0
+-A ufw-user-input -p tcp --dport 80 -j ACCEPT
+
+### END RULES ###
+-A ufw-user-input -j RETURN
+-A ufw-user-output -j RETURN
+-A ufw-user-forward -j RETURN
+-A ufw-user-limit -m limit --limit 3/minute -j LOG --log-prefix "[UFW LIMIT]: "
+-A ufw-user-limit -j REJECT
+-A ufw-user-limit-accept -j ACCEPT
+COMMIT
+Rules updated</pre>
+
+<p>
+ 8. <strong>ufw</strong> можно выключить командой:
+</p>
+<pre class="code">sudo ufw disable</pre>
+
+<p>
+ 9. Чтобы посмотреть статус сетевой защиты:
+</p>
+<pre class="code">sudo ufw status</pre>
+
+<p>
+ 10. Для более полного отображения информации введите:
+</p>
+<pre class="code">sudo ufw status verbose</pre>
+
+<p>
+ 11. Для отображения в виде формата <strong>numbered</strong>:
+</p>
+<pre class="code">sudo ufw status numbered</pre>
+<p></p><div class="noteclassic">Если порт, который вы хотите открыть или
+ закрыть определен в файле /etc/services, вы можете использовать имя 
+порта вместо его номера. В приведенных выше примерах можете заменить <strong>22</strong> на <strong>ssh</strong>.
+</div><p></p>
+<p>
+Это лишь краткое описание использования ufw. Пожалуйста обратитесь к странице man ufw для более подробной информации.
+</p>
+
+</div>
+
+<h4><a name="интеграция_приложений_в_ufw" id="интеграция_приложений_в_ufw">Интеграция Приложений в ufw</a></h4>
+<div class="level4">
+
+<p>
+Приложения, которые открывают порты, можно включать в профили ufw, 
+которые детализируют какие порты необходимы этому приложению для 
+корректной работы. Профили содержатся в /etc/ufw/applications.d, и могут
+ быть отредактированы, если порты по умолчанию были изменены.
+</p>
+
+<p>
+ 1. Чтобы посмотреть для каких приложений установлен профиль введите следующую команду в терминале:
+</p>
+<pre class="code">sudo ufw app list</pre>
+
+<p>
+ 2. Аналогично, разрешить трафик по порту, используя профиль приложения, можно следующей командой:
+</p>
+<pre class="code">sudo ufw allow Samba</pre>
+
+<p>
+ 3. Также доступен расширенный синтаксис:
+</p>
+<pre class="code">ufw allow from 192.168.0.0/24 to any app Samba</pre>
+
+<p>
+Замените <strong>Samba</strong> и <strong>192.168.0.0/24</strong> на используемый вами профиль приложения и IP диапазон вашей сети.
+</p>
+<p></p><div class="noteclassic">Нет необходимости в определении протокола, поскольку эта информация детализирована в профиле. Также обратите внимание, что имя <strong>app</strong> заменило номер <strong>port</strong>.
+</div><p></p>
+<p>
+ 4. Для просмотра деталей какие порты, протоколы и пр. определены для приложения введите:
+</p>
+<pre class="code">sudo ufw app info Samba</pre>
+
+<p>
+Не для всех приложений, которые требуют открытие сетевого порта, 
+поставляется профиль ufw, но если у вас есть профиль для приложения, и 
+вы хотите чтобы этот файл был включен в пакет приложения, 
+зарегистрируйте ошибку о пакете на сайте Launchpad.
+</p>
+<pre class="code">ubuntu-bug nameofpackage</pre>
+
+</div>
+
+<h3 class="sectionedit4"><a name="маскировка_ip" id="маскировка_ip">Маскировка IP</a></h3>
+<div class="level3">
+
+<p>
+Цель маскировки ip-адреса состоит в том, чтобы компьютеры с частными, 
+немаршрутизируемыми ip-адресами в вашей сети могли иметь доступ к 
+Интернету через компьютер выполняющий маскировку. Трафик из вашей 
+частной сети попадающий в Интернет должен быть правильно выпущен для 
+корректного ответа, отправленного именно тому компьютеру, который послал
+ запрос. Чтобы сделать это, ядро модифицирует заголовок каждого пакета 
+так, чтобы ответ приходил нужному компьютеру, а не частному ip-адресу, 
+который послал запрос, что невозможно в рамках сети Интернет. Линукс 
+использует Трассировку Соединений (conntrack) для трассировки каждого из
+ соединений принадлежащих соответствующим компьютерам и перенаправляет 
+каждый возвращенный пакет. Трафик, покидает вашу частную сеть 
+«маскируясь» таким образом, будто исходит от вашего шлюза Ubuntu. Этот 
+процесс обозначен в документации Microsoft как Internet Connection 
+Sharing (Общий доступ к Интернет-Соединению).
+</p>
+
+</div>
+
+<h4><a name="маскировка_ufw" id="маскировка_ufw">Маскировка ufw</a></h4>
+<div class="level4">
+
+<p>
+Маскировка ip-адреса может быть достигнута с использованием различных 
+правил ufw. Это возможно благодаря дополнению к ufw, которым является 
+iptables-restore с файлами правил, расположенных в /etc/ufw/*.rules. Эти
+ файлы являются отличным способом для добавления правил в iptables без 
+использования ufw, а также правил, которые более гибко взаимодействуют 
+со шлюзом или соединением типа «мост».
+</p>
+
+<p>
+Эти правила разбиты на два разных файла команд, одни должны быть 
+выполнены ufw перед списком правил, а другие выполняются после списка 
+правил.
+</p>
+
+<p>
+ 1. Во-первых, в ufw должно быть активировано перенаправление. Для этого
+ нужно изменить конфигурацию двух файлов, в /etc/default/ufw измените 
+DEFAULT_FORWARD_POLICY на “ACCEPT”:
+</p>
+<pre class="code">DEFAULT_FORWARD_POLICY="ACCEPT"</pre>
+
+<p>
+Затем отредактируйте /etc/ufw/sysctl.conf следующим образом:
+</p>
+<pre class="code">net/ipv4/ip_forward=1</pre>
+
+<p>
+Аналогично для IPv6:
+</p>
+<pre class="code">net/ipv6/conf/default/forwarding=1</pre>
+
+<p>
+ 2. Теперь добавим правила в файл /etc/ufw/before.rules. Правила по умолчанию описаны лишь в таблице <em>filter</em>, а для работы маскировки нам нужно отредактировать таблицу <em>nat</em>. Добавьте следующие строки в начало файла конфигурации сразу после заголовка с комментарием:
+</p>
+<pre class="code"># nat Table rules
+*nat
+:POSTROUTING ACCEPT [0:0]
+
+# Forward traffic from eth1 through eth0.
+-A POSTROUTING -s 192.168.0.0/24 -o eth0 -j MASQUERADE
+
+# don't delete the 'COMMIT' line or these nat table rules won't be processed
+COMMIT</pre>
+
+<p>
+Комментарии не обязательны, но считается хорошим тоном документировать свою конфигурацию. Также при изменении каких-либо <strong>rules</strong> файлов в каталоге /etc/ufw, убедитесь, что данные строки являются последними для каждой измененной таблицы:
+</p>
+<pre class="code"># don't delete the 'COMMIT' line or these rules won't be processed
+COMMIT</pre>
+
+<p>
+Для каждой таблицы обязательно присутствие соответствующего ей оператора <strong>COMMIT</strong>
+ (применение изменений). В данных примерах показаны только таблицы nat и
+ filter, но вы можете также добавлять правила для таблиц raw и mangle.
+</p>
+<p></p><div class="noteclassic">В примерах выше замените <strong>eth0</strong>, <strong>eth1</strong> и <strong>192.168.0.0/24</strong> на соответствующие интерфейсы и IP диапазон вашей сети.
+</div><p></p>
+<p>
+ 3. Наконец, выключите и повторно включите ufw для применения изменений:
+</p>
+<pre class="code">sudo ufw disable &amp;&amp; sudo ufw enable</pre>
+
+<p>
+IP маскировка теперь должна быть включена. Вы также можете добавить 
+дополнительные правила FORWARD в /etc/ufw/before.rules. Рекомендуется 
+чтобы эти дополнительные правила были добавлены в цепочку/секцию (chain)
+ <strong>ufw-before-forward</strong>.
+</p>
+
+</div>
+
+<h4><a name="маскировка_iptables" id="маскировка_iptables">Маскировка iptables</a></h4>
+<div class="level4">
+
+<p>
+Iptables также может быть использован для маскировки соединений.
+</p>
+
+<p>
+1. Подобно ufw, первым делом нам необходимо включить форвардинг для IPv4
+ отредактировав следующий файл /etc/sysctl.conf и убрав комментарий со 
+строки: 
+</p>
+<pre class="code">net.ipv4.ip_forward=1</pre>
+
+<p>
+Если вы хотите включить форвардинг для IPv6 также удалите комментарий:
+</p>
+<pre class="code">net.ipv6.conf.default.forwarding=1</pre>
+
+<p>
+2. Далее выполните команду sysctl для применения новых настроек в файле конфигурации:
+</p>
+<pre class="code">sudo sysctl -p</pre>
+
+<p>
+3. Теперь настройка маскировки ip-адреса может быть завершена с 
+выполнением лишь одной команды, которая может немного отличатся в 
+зависимости от вашей конфигурации сети:
+</p>
+<pre class="code">sudo iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -o ppp0 -j MASQUERADE</pre>
+
+<p>
+После выполнения этой команды можно считать, что ваша частная сеть имеет
+ адрес 192.168.0.0/16, а сетевая карта с выходом в Интернет - ppp0. 
+Синтаксис определен следующим образом:
+</p>
+
+<p>
+1. -t nat – правило применяется к таблице <em>nat</em>
+</p>
+
+<p>
+2. -A POSTROUTING – правило добавлено (-A) в цепочку POSTROUTING
+</p>
+
+<p>
+3. -s 192.168.0.0/16 – правило применено к трафику, исходящему из этого адресного пространства
+</p>
+
+<p>
+4. -o ppp0 – правило применено к трафику, который необходимо перенаправить через этот интерфейс
+</p>
+
+<p>
+5. -j MASQUERADE – трафик подпадающий под это правило выполняет «прыжок»
+ («jump») (-j) в цепочку MASQUERADE для дальнейшей манипуляции с ним как
+ описаны выше
+</p>
+
+<p>
+4. Также каждая цепочка таблицы <em>filter</em> (цепочка, где происходит
+ фильтрация большинства пакетов) по умолчанию имеет правило ACCEPT, но 
+если вы настраиваете ваш firewall с целью создания шлюза, вы должны 
+выбрать либо политику DROP либо REJECT, в этом случае ваш 
+«замаскированный» трафик должен быть пропущен через цепочку FORWARD для 
+срабатывания предыдущих правил:
+</p>
+<pre class="code">sudo iptables -A FORWARD -s 192.168.0.0/16 -o ppp0 -j ACCEPT
+sudo iptables -A FORWARD -d 192.168.0.0/16 -m state \
+--state ESTABLISHED,RELATED -i ppp0 -j ACCEPT</pre>
+
+<p>
+Вышеперечисленные команды разрешают форвардинг всех соединений из 
+локальной сети в Интернет, а весь трафик относящийся к этим соединениям 
+возвращается к компьютерам, пославшим запрос.
+</p>
+
+<p>
+Если вы хотите, чтобы маскировка работала после перезагрузки ПК, 
+отредактируйте файл /etc/rc.local и добавьте туде вышеперечисленные 
+команды. Например, добавьте первую команду без опций фильтрации:
+</p>
+<pre class="code">iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -o ppp0 -j MASQUERADE</pre>
+
+</div>
+
+<h3 class="sectionedit5"><a name="журналы" id="журналы">Журналы</a></h3>
+<div class="level3">
+
+<p>
+Журналы firewall крайне необходимы для обнаружения атак, возникающих 
+проблем с правилами, а также обнаружения повышенной активности в вашей 
+сети. В настройках firewall необходимо включить журналирование для 
+правил, которое должно быть указано перед списком правил (правил, 
+которые решают дальнейшую судьбу пакета, такие как ACCEPT, DROP или 
+REJECT).
+</p>
+
+<p>
+Если вы используете ufw, журналирование можно включить следующей командой:
+</p>
+<pre class="code">sudo ufw logging on</pre>
+
+<p>
+Чтобы выключить журналирование в ufw просто замените значение on на off.
+</p>
+
+<p>
+Для iptables введите:
+</p>
+<pre class="code">sudo iptables -A INPUT -m state --state NEW -p tcp --dport 80 \
+-j LOG --log-prefix "NEW_HTTP_CONN: "</pre>
+
+<p>
+В этом случае в начале поступит запрос на порт 80 от компьютера в 
+локальной сети, затем будет сгенерирован файл журнала в dmesg который 
+выгдлядит примерно так (одна строка разделена на три для корректного 
+отображения на экране):
+</p>
+<pre class="code">[4304885.870000] NEW_HTTP_CONN: IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00
+SRC=127.0.0.1 DST=127.0.0.1 LEN=60 TOS=0x00 PREC=0x00 TTL=64 ID=58288 DF PROTO=TCP
+SPT=53981 DPT=80 WINDOW=32767 RES=0x00 SYN URGP=0</pre>
+
+<p>
+Этот текст журнала также появится в файле /var/log/messages, 
+/var/log/syslog и /var/log/kern.log. Эти настройки можно изменить 
+отредактировав файл /etc/syslog.conf аналогично или при установке и 
+настройке ulogd, а также используя ULOG вместо LOG. Демон ulogd это 
+пользовательский сервер который слушает инструкции ядра для дальнейшего 
+журналирования, в частности для firewall, и может вести журналирование 
+даже в PostgreSQL или MySQL базы данных. Для того, чтобы легко 
+разобраться в файлах журнала можно использовать их анализаторы, такие 
+как logwatch, fwanalog, fwlogwatch или lire.
+</p>
+
+</div>
+
+<h3 class="sectionedit6"><a name="другие_инструменты" id="другие_инструменты">Другие инструменты</a></h3>
+<div class="level3">
+
+<p>
+Существует множество утилит для помощи в построении полноценного firewall без углубленных навыков в iptables. 
+</p>
+
+<p>
+Для работы с интерфейсом:
+</p>
+
+<p>
+ 1. <a href="http://www.fwbuilder.org/" class="urlextern" title="http://www.fwbuilder.org/" rel="nofollow">fwbuilder</a> очень мощная утилита, которая настраивается подобно проприетарным продуктам вроде <em>Checkpoint FireWall-1</em>.
+</p>
+
+<p>
+Если вы предпочитаете утилиты с поддержкой командной строки и списком файлов конфигураций:
+</p>
+
+<p>
+ 2. <a href="http://www.shorewall.net/" class="urlextern" title="http://www.shorewall.net/" rel="nofollow">Shorewall</a> - мощное решение, которое поможет вам создать серьезный firewall для любого типа вашей сети.
+</p>
+
+</div>
+
+<h3 class="sectionedit7"><a name="ссылки" id="ссылки">Ссылки</a></h3>
+<div class="level3">
+
+<p>
+1. Вики страница <a href="https://wiki.ubuntu.com/UncomplicatedFirewall" class="urlextern" title="https://wiki.ubuntu.com/UncomplicatedFirewall" rel="nofollow"> Ubuntu Firewall</a> содержит необходимую информацию о работе над ufw.
+</p>
+
+<p>
+2. Также посмотрите man страницу ufw, которая содержит много полезной информации: <strong>man ufw</strong>.
+</p>
+
+<p>
+3. Для более подробной информации об использовании iptables смотрите <a href="http://www.netfilter.org/documentation/HOWTO/packet-filtering-HOWTO.html" class="urlextern" title="http://www.netfilter.org/documentation/HOWTO/packet-filtering-HOWTO.html" rel="nofollow">packet-filtering-HOWTO</a>.
+</p>
+
+<p>
+4. Руководство <a href="http://www.netfilter.org/documentation/HOWTO/NAT-HOWTO.html" class="urlextern" title="http://www.netfilter.org/documentation/HOWTO/NAT-HOWTO.html" rel="nofollow">nat-HOWTO</a> содержит полное описание о маскировке соединений.
+</p>
+
+<p>
+5. <a href="https://help.ubuntu.com/community/IptablesHowTo" class="urlextern" title="https://help.ubuntu.com/community/IptablesHowTo" rel="nofollow">IPTables HowTo</a> Ubuntu Вики также отличный источник.
+</p>
+<hr>
+<div class="styler styler-float-right">
+<p>
+<a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/console_security" class="wikilink1" title="wiki:руководство_по_ubuntu_server:безопасность:console_security">&lt;-назад</a> | 
+<a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/apparmor" class="wikilink1" title="wiki:руководство_по_ubuntu_server:безопасность:apparmor">далее-&gt;</a>
+</p>
+</div>
+</div>
+
+							<div class="clearer"></div>
+						</div>
+					</div>
+					<div class="clearer"></div>
+				</div>
+						<!-- /Main -->
+		</div></div>
+		<!-- Footer -->
+		<div id="__site-footer">
+	<ul>
+		<li><a href="http://ubuntu.ru/" title="Главная страница сайта ubuntu.ru">Сайт</a></li>
+		<li><a href="http://ubuntu.ru/about" title="Описание и особенности дистрибутива Ubuntu">Об Ubuntu</a></li>
+		<li><a href="http://ubuntu.ru/get" title="Страница получения дистрибутива Ubuntu">Скачать Ubuntu</a></li>
+		<li><a href="http://ubuntu.ru/family" title="Список дистрибутивов, входящих в большое семейство Ubuntu">Семейство Ubuntu</a></li>
+		<li><a href="http://ubuntu.ru/news" title="Новости русскоязычного сообщества Ubuntu">Новости</a></li>
+	</ul>
+	<ul>
+		<li><a href="http://forum.ubuntu.ru/" title="Форум русскоязычного сообщества Ubuntu. На нём вы можете задать интересующие вас вопросы и получить помощь от других пользователей Ubuntu.">Форум</a></li>
+		<li><a href="http://forum.ubuntu.ru/index.php?action=help" title="Помощь по использованию форума">Помощь</a></li>
+		<li><a href="http://forum.ubuntu.ru/index.php?action=rules" title="Правила пользования форумом русскоязычного сообщества Ubuntu">Правила</a></li>
+	</ul>
+	<ul>
+		<li><a href="http://help.ubuntu.ru/" title="Различная русскоязычная документация по семейству операционных систем на базе Ubuntu">Документация</a></li>
+		<li><a href="http://help.ubuntu.ru/wiki" title="Документация, создаваемая пользователями Ubuntu">Пользовательская документация</a></li>
+		<li><a href="http://help.ubuntu.ru/doc" title="Переводы официальной документации по Ubuntu на русский язык">Официальная документация</a></li>
+		<li><a href="http://help.ubuntu.ru/wiki/%D1%81%D0%B5%D0%BC%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%BE_ubuntu" title="Документация по дистрибутивам, входящим в семейство Ubuntu">Семейство Ubuntu</a></li>
+		<li><a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%B0" title="Различные материалы по Ubuntu, доступные для загрузки">Материалы для загрузки</a></li>
+		<li><a href="http://help.ubuntu.ru/wiki/%D1%81%D0%BE%D0%B2%D0%BC%D0%B5%D1%81%D1%82%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D1%8C" title="Раздел, посвящённый совместимости Ubuntu с оборудованием, в первую очередь - с ноутбуками">Совместимость с оборудованием</a></li>
+		<li><a href="http://help.ubuntu.ru/feed.php" title="Позволяет подписаться на обновления посредством RSS" class="rss-feed">RSS лента</a></li>
+	</ul>
+	<ul>
+		<li><a href="http://team.ubuntu.ru/" title="Материалы, касающиеся работы русскоязычного сообщества и русскоязычной LoCo команды Ubuntu">Сообщество</a></li>
+		<li><a href="http://team.ubuntu.ru/projects" title="Проекты русскоязычного сообщества Ubuntu">Наши проекты</a></li>
+		<li><a href="http://team.ubuntu.ru/loco" title="Раздел, посвящённый местным сообществам Ubuntu (LoCo) в различных городах и областях">Местные сообщества</a></li>
+		<li><a href="http://team.ubuntu.ru/translate" title="Раздел, посвящённый переводу Ubuntu на русский язык">Перевод Ubuntu</a></li>
+		<li><a href="http://team.ubuntu.ru/qa" title="Тестирование новых версий Ubuntu">Тестирование</a></li>
+		<li><a href="http://team.ubuntu.ru/feed.php" title="Позволяет подписаться на обновления посредством RSS" class="rss-feed">RSS лента</a></li>
+	</ul>
+	<p>
+		© 2012 Ubuntu-ru — Русскоязычное сообщество Ubuntu Linux.<br>
+		© 2012 Canonical Ltd. Ubuntu и Canonical являются зарегистрированными торговыми знаками Canonical Ltd.
+	</p>
+	<div class="besthosting">
+		<a href="http://www.best-hosting.ru/dedicated_server.asp" title="Хостинг предоставлен компанией Best Hosting">
+			<img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/bhlogo.png" alt="Best Hosting">
+		</a><br>
+		<a href="http://www.best-hosting.ru/dedicated_server.asp">Серверы на Ubuntu</a>
+	</div>
+	<a href="http://ubuntu.ru/" title="На главную страницу сайта">
+		<img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/footer_logo_ru.png" alt="">
+	</a>
+	<div class="clearer"></div>
+</div>
+		<!-- /Footer -->
+	</div>
+	<div class="no"><img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/indexer.gif" alt="" width="2" height="1"></div>
+	<!-- /Page -->
+</div>
+<!-- /Document -->
+<!-- Control -->
+	<div id="__control" class="pinned-down">
+		<ul>
+			<li><a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/firewall?do=edit&amp;rev=" class="action source" accesskey="v" rel="nofollow" title="Показать исходный текст [V]">Показать исходный текст</a></li>
+			<li><a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/firewall?do=revisions" class="action revs" accesskey="o" rel="nofollow" title="История страницы [O]">История страницы</a></li>
+			<li></li>
+			<li><a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/firewall?do=backlink" class="action backlink" rel="nofollow" title="Ссылки сюда">Ссылки сюда</a></li>
+		</ul>
+		<ul>
+			<li id="__control_toggle">
+							<a href="" title="Закрепить панель">
+					<img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/remmina-pin-up.png" alt="Закрепить панель">
+				</a>
+						</li>
+			<li></li>
+			<li></li>
+			<li><a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/firewall?do=media" class="action media" rel="nofollow" title="Media Manager">Media Manager</a></li>
+			<li></li>
+			<li><a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/firewall?do=index" class="action index" accesskey="x" rel="nofollow" title="Все страницы [X]">Все страницы</a></li>
+			<li><a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE_%D0%BF%D0%BE_ubuntu_server/%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C/firewall?do=recent" class="action recent" accesskey="r" rel="nofollow" title="Недавние изменения [R]">Недавние изменения</a></li>
+		</ul>
+		<div class="clearer"></div>
+	</div>
+<!-- /Control -->
+</div>
+
+
+
+<div style="display: none; z-index: 1000; outline: 0px none;" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable" tabindex="-1" role="dialog" aria-labelledby="ui-dialog-title-media__popup_content"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title" id="ui-dialog-title-media__popup_content">Настройки ссылок</span><a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button"><span class="ui-icon ui-icon-closethick">close</span></a></div><div id="media__popup_content" class="ui-dialog-content ui-widget-content"><p id="media__link"><label>Значение target ссылки</label><button class="button" id="media__linkbtn1" title="Ссылка на подробности"><img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/media_link_lnk.png"></button><button class="button" id="media__linkbtn2" title="Прямая ссылка на оригинал"><img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/media_link_direct.png"></button><button class="button" id="media__linkbtn3" title="Без ссылки"><img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/media_link_nolnk.png"></button><button class="button" id="media__linkbtn4" title="Показывать только ссылку."><img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/media_link_displaylnk.png"></button></p><p id="media__align"><label>Выравнивание</label><button class="button" id="media__alignbtn1" title="Не выравнивать."><img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/media_align_noalign.png"></button><button class="button" id="media__alignbtn2" title="Выровнять изображение по левому краю."><img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/media_align_left.png"></button><button class="button" id="media__alignbtn3" title="Выровнять изображение по центру."><img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/media_align_center.png"></button><button class="button" id="media__alignbtn4" title="Выровнять изображение по правому краю."><img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/media_align_right.png"></button></p><p id="media__size"><label>Размер изображения</label><button class="button" id="media__sizebtn1" title="Малая версия"><img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/media_size_small.png"></button><button class="button" id="media__sizebtn2" title="Средняя версия"><img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/media_size_medium.png"></button><button class="button" id="media__sizebtn3" title="Крупная версия"><img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/media_size_large.png"></button><button class="button" id="media__sizebtn4" title="Исходная версия"><img src="Firewall%20%7C%20%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D1%8F%D0%B7%D1%8B%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Ubuntu_files/media_size_original.png"></button></p><p><input id="media__sendbtn" class="button" value="Вставить" type="button"></p></div></div></body></html>

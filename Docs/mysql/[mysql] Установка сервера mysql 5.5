@@ -1,0 +1,428 @@
+
+  Выполняю установку, настройку, сопровождение серверов. Для уточнения
+  деталей используйте форму обратной связи <http://skeletor.org.ua/>
+
+
+Меню Перейти к содержимому
+
+<#content>
+
+  * Главная <http://skeletor.org.ua/>
+  * Гостевая книга <http://skeletor.org.ua/?page_id=57>
+  * Моё резюме <http://skeletor.org.ua/?page_id=385>
+  * Наши друзья <http://skeletor.org.ua/?page_id=536>
+  * Обратная связь <http://skeletor.org.ua/?page_id=55>
+  * Ссылки на документацию <http://skeletor.org.ua/?page_id=2>
+
+
+  [mysql] Установка сервера mysql 5.5
+
+4 комментария <http://skeletor.org.ua/?p=887#comments>	
+
+Пришло время описать установку и настройку *mysql* сервера версии *5.5*
+с кодировками *utf-8* по умолчанию.
+
+*1) Подготовка*
+
+Добавляем такие строки в */etc/make.conf*
+
+|DEFAULT_MYSQL_VER=55
+PORTSDIR?= /usr/ports
+.if ${.CURDIR} == ${PORTSDIR}/databases/mysql55-server
+WITH_CHARSET=utf8
+WITH_COLLATION=utf8_bin
+BUILD_OPTIMIZED=yes
+BUILD_STATIC=yes
+WITH_XCHARSET=all
+.endif
+.if ${.CURDIR} == ${PORTSDIR}/databases/mysql55-client
+WITH_CHARSET=utf8
+WITH_COLLATION=utf8_bin
+BUILD_OPTIMIZED=yes
+.endif
+|
+Кстати, если заглянуть в порт */usr/ports/databases/mysql55-server* то в
+файле Makefile опций вы не обнаружите. Их можно взять, например, из
+порта */usr/ports/databases/mysql51-server*.
+
+*2) Установка*
+
+Теперь можно приступать к установке:
+
+|#cd /usr/ports/databases/mysql55-server && make install clean|
+
+*3) Настройка*
+
+После установки создаём файл */etc/my.cnf* такого содержания:
+
+|[mysqld]
+#bind-address = 127.0.0.1
+socket= /tmp/mysql.sock
+skip-networking
+character-set-server=utf8
+collation-server=utf8_general_ci
+init_connect='SET collation_connection = utf8_general_ci'
+init-connect='SET NAMES utf8'
+log_error=/var/log/mysql/error.log
+slow_query_log=1
+slow_query_log_file=/var/log/mysql/slow.log
+long_query_time = 5
+log-queries-not-using-indexes
+default-storage-engine = innodb
+innodb_file_per_table
+innodb_file_format=barracuda
+local-infile=0
+|
+
+|[mysqldump]
+default-character-set=utf8
+|
+
+|[client]
+default-character-set = utf8
+|
+
+Добавляем строку
+
+|mysql_enable="YES"|
+
+в */etc/rc.conf*
+
+Меняем права:
+
+|#chown -R mysql:mysql /var/db/mysql/|
+
+и запускаем:
+
+|#/usr/local/etc/rc.d/mysql-server start|
+
+Если в логах получаем ошибку
+
+|[ERROR] Fatal error: Can't open and lock privilege tables: Table
+'mysql.host' doesn't exist|
+
+Проверьте, стоит ли владелец *mysql:mysql*. Если стоит, а всё равно не
+запускается, удалите каталог */var/db/mysql/mysql* (скорее всего он
+пуст) и запустите снова:
+
+|#/usr/local/etc/rc.d/mysql-server start|
+
+*4) Проверка.*
+
+Что бы проверить, правильно ли у нас установлена кодировка, выполним
+такую команду:
+
+|mysql>show variables like 'char%';
+|
+Если вывод будет таким:
+
+|+--------------------------+----------------------------------+
+| Variable_name | Value |
++--------------------------+----------------------------------+
+| character_set_client | utf8 |
+| character_set_connection | utf8 |
+| character_set_database | utf8 |
+| character_set_filesystem | binary |
+| character_set_results | utf8 |
+| character_set_server | utf8 |
+| character_set_system | utf8 |
+| character_sets_dir | /usr/local/share/mysql/charsets/ |
++--------------------------+----------------------------------+
+8 rows in set (0.38 sec)|
+
+|mysql> show variables like '%collation%';
++----------------------+-----------------+
+| Variable_name | Value |
++----------------------+-----------------+
+| collation_connection | utf8_general_ci |
+| collation_database | utf8_general_ci |
+| collation_server | utf8_general_ci |
++----------------------+-----------------+
+3 rows in set (0.01 sec)|
+
+Значит всё правильно.
+
+Либо тоже самое, но через *mysqladmin*:
+
+|#mysqladmin variables | egrep 'collation|char'
+| character_set_client | utf8
+| character_set_connection | utf8
+| character_set_database | utf8
+| character_set_filesystem | binary
+| character_set_results | utf8
+| character_set_server | utf8
+| character_set_system | utf8
+| character_sets_dir | /usr/local/share/mysql/charsets/
+| collation_connection | utf8_general_ci
+| collation_database | utf8_general_ci
+| collation_server | utf8_general_ci|
+
+А полный список поддерживаемых кодировок можно узнать по команде:
+
+|mysql>SHOW CHARACTER SET;|
+
+*5) Просмотр и смена кодировки уже существующей базы*
+
+|mysql> create database AAA DEFAULT CHARACTER SET cp1251 COLLATE cp1251_bin;
+mysql> show create database AAA;
++----------+------------------------------------------------------------------------------+
+| Database | Create Database |
++----------+------------------------------------------------------------------------------+
+| AAA | CREATE DATABASE `AAA` /*!40100 DEFAULT CHARACTER SET cp1251
+COLLATE cp1251_bin */ |
++----------+------------------------------------------------------------------------------+
+1 row in set (0.01 sec)|
+
+|mysql> use AAA;
+Database changed
+mysql> show variables like "character_set_database";
++------------------------+--------+
+| Variable_name | Value |
++------------------------+--------+
+| character_set_database | cp1251 |
++------------------------+--------+
+1 row in set (0.00 sec)
+|
+|mysql> show variables like "%colla%";
++----------------------+-----------------+
+| Variable_name | Value |
++----------------------+-----------------+
+| collation_connection | utf8_general_ci |
+| collation_database | cp1251_bin |
+| collation_server | utf8_general_ci |
++----------------------+-----------------+
+3 rows in set (0.00 sec)|
+
+Попробуем изменить кодировку на*koi8-r*
+
+|mysql> alter database `AAA` character set koi8r;
+Query OK, 1 row affected (0.00 sec)
+|
+|mysql> show variables like "%colla%";
++----------------------+------------------+
+| Variable_name | Value |
++----------------------+------------------+
+| collation_connection | utf8_general_ci |
+| collation_database | koi8r_general_ci |
+| collation_server | utf8_general_ci |
++----------------------+------------------+
+3 rows in set (0.01 sec)|
+
+|mysql> show variables like "character_set_database";
++------------------------+-------+
+| Variable_name | Value |
++------------------------+-------+
+| character_set_database | koi8r |
++------------------------+-------+
+1 row in set (0.01 sec)|
+
+Собственно видим, что кодировка изменилась.
+
+*5) Пару слов о кодировках.*
+
+Допустим такую ситуацию. Вы используете *PhpMyAdmin* с кодировкой
+*UTF8*, а консоль у вас *KOI8R*. Естественно, хочется, что бы всё
+нормально отображалось и в консоли и в вебке. Для этого служит команда:
+
+|mysql>SET NAMES KOI8R;|
+
+которая объясняет серверу, в какой кодировке выводить данные.
+Естественно, каждый раз вводить это неудобно и для этого можно поместить
+в *my.cnf*:
+
+|[mysqld]
+init-connect='SET NAMES koi8r'|
+
+НО! Если вы обладаете правами *SUPER* (например, *root*), то для вас это
+не сработает. Придётся вручную каждый раз вводить. Читал, что это
+сделано специально.
+
+Запись опубликована 03.03.2011 <http://skeletor.org.ua/?p=887>автором
+skeletor <http://skeletor.org.ua/?author=1> в рубрике FreeBSD
+<http://skeletor.org.ua/?cat=4>, Базы данных
+<http://skeletor.org.ua/?cat=9>.
+
+
+      Навигация по записям
+
+← Работаем с usb <http://skeletor.org.ua/?p=870> [mysql] соединение по
+сокету. → <http://skeletor.org.ua/?p=909>
+
+
+    [mysql] Установка сервера mysql 5.5: 4 комментария
+
+ 1.
+    *Богдан*
+
+    22.06.2011 в 16:29
+
+    <http://skeletor.org.ua/?p=887#comment-14278>	
+
+    У меня на 5.5.13 это уже не работает.
+    MySQL собирается с помощью CMake, поэтому нужно немного править Makefile
+
+    Например где-то после строк
+
+    .if defined(WITH_FASTMTX)
+    CMAKE_ARGS+= -DWITH_FAST_MUTEXES=1
+    .endif
+
+    Можно вставить такое для выбора настроек сервера по умолчанию.
+
+    CMAKE_ARGS+= -DDEFAULT_CHARSET=»utf8″
+    CMAKE_ARGS+= -DDEFAULT_COLLATION=»utf8_general_ci»
+    CMAKE_ARGS+= -DEXTRA_CHARSETS=»all»
+
+    Если будет время попробую сделать и предложить маинтейнеру патч для
+    порта, чтобы было похоже на то как было раньше.
+
+    Ответить <http://skeletor.org.ua/?p=887&replytocom=14278#respond> ↓	
+
+ 2.
+    *Ower*
+
+    29.10.2011 в 13:25
+
+    <http://skeletor.org.ua/?p=887#comment-14477>	
+
+    Спасибо! Очень нужная статья — подробно все указано.
+
+    Ответить <http://skeletor.org.ua/?p=887&replytocom=14477#respond> ↓	
+
+ 3.
+    *Ламер <http://www/>*
+
+    03.02.2012 в 01:28
+
+    <http://skeletor.org.ua/?p=887#comment-14631>	
+
+    Спасибо.
+    Но для нас, для ламеров, нужно бы дописать
+    #chown -R mysql:mysql /var/log/mysql/
+    иначе счастья не видать…
+
+    Ответить <http://skeletor.org.ua/?p=887&replytocom=14631#respond> ↓	
+
+ 4.
+    *Vasiliy P. Melnik*
+
+    30.10.2013 в 12:22
+
+    <http://skeletor.org.ua/?p=887#comment-15617>	
+
+    Hi.
+
+    Если прописываешь в my.cnf то мускуль можно и не пересобирать. А вот
+    за статью спасибо — если бы не каммент Богдана еще бы долго искал,
+    как мускуль по-правильному собрать.
+
+    .if ${.CURDIR:N*/usr/ports/databases/mysql55-server} == «»
+    CMAKE_ARGS+= -DDEFAULT_CHARSET=utf8
+    CMAKE_ARGS+= -DDEFAULT_COLLATION=utf8_general_ci
+    .endif
+
+    В итоге вот такое:
+
+    show variables like ‘char%’;
+    +—————————+———————————-+
+    | Variable_name | Value |
+    +—————————+———————————-+
+    | character_set_client | utf8 |
+    | character_set_connection | utf8 |
+    | character_set_database | utf8 |
+    | character_set_filesystem | binary |
+    | character_set_results | utf8 |
+    | character_set_server | utf8 |
+    | character_set_system | utf8 |
+    | character_sets_dir | /usr/local/share/mysql/charsets/ |
+    +—————————+———————————-+
+    8 rows in set (0.01 sec)
+
+    З.Ы. клиента бесполезно пересобирать — он кодировку и так берет из
+    окружения.
+
+    З.Ы. перевести базу в другую кодировку можно очень просто через
+    phpmyadmin. Открываешь базу, отмечаешь все таблицы, нажимаешь сверху
+    «Опции» и выбираешь нужную кодировку для collation. И все.
+
+    Ответить <http://skeletor.org.ua/?p=887&replytocom=15617#respond> ↓	
+
+
+      Добавить комментарий Отменить ответ
+      <http://skeletor.org.ua/?p=887#respond>
+
+Ваш e-mail не будет опубликован. Обязательные поля помечены *
+
+Комментарий
+
+Имя *
+
+E-mail *
+
+Сайт
+
+5  +  image  = 
+
+Найти:
+
+
+      Рубрики
+
+  * Cisco <http://skeletor.org.ua/?cat=6>
+  * FreeBSD <http://skeletor.org.ua/?cat=4>
+  * Hardware <http://skeletor.org.ua/?cat=26>
+  * HP <http://skeletor.org.ua/?cat=18>
+  * Linksys <http://skeletor.org.ua/?cat=21>
+  * Linux <http://skeletor.org.ua/?cat=5>
+  * MacOSX <http://skeletor.org.ua/?cat=28>
+  * OpenBSD <http://skeletor.org.ua/?cat=25>
+  * Solaris <http://skeletor.org.ua/?cat=24>
+  * test <http://skeletor.org.ua/?cat=1>
+  * Thinstation <http://skeletor.org.ua/?cat=22>
+  * Windows <http://skeletor.org.ua/?cat=8>
+  * wrt <http://skeletor.org.ua/?cat=17>
+  * www <http://skeletor.org.ua/?cat=15>
+  * X-tools <http://skeletor.org.ua/?cat=27>
+  * Базы данных <http://skeletor.org.ua/?cat=9>
+  * Безопасность <http://skeletor.org.ua/?cat=13>
+  * Биллинг <http://skeletor.org.ua/?cat=23>
+  * Дистрибутивы <http://skeletor.org.ua/?cat=20>
+  * Почтовые системы <http://skeletor.org.ua/?cat=11>
+  * Программирование <http://skeletor.org.ua/?cat=14>
+  * Разное, мелочи <http://skeletor.org.ua/?cat=10>
+  * Телефония <http://skeletor.org.ua/?cat=7>
+  * Шлюз, инет <http://skeletor.org.ua/?cat=12>
+
+
+      Мета
+
+  * Войти <http://skeletor.org.ua/wp-login.php>
+  * RSS записей <http://skeletor.org.ua/?feed=rss2>
+  * RSS комментариев <http://skeletor.org.ua/?feed=comments-rss2>
+  * WordPress.org <https://ru.wordpress.org/>
+
+Hosted by 220.in.ua <http://220.in.ua/>
+Домашняя страничка Andy <http://andy.od.ua/>
+Записки молодого админа <http://angel2s2.blogspot.com/>
+Самостоятельная подготовка к Cisco CCNA
+<http://ccnastepbystep.blogspot.com/>
+Самостоятельная подготовка к Cisco CCNP
+<http://ccnpstepbystep.blogspot.com/>
+Советы, помощь, инструменты для сис.админа, статическая и динамическая
+маршрутизация, FreeBSD <http://www.subnets.ru/> <http://it-blojek.ru/>
+Powered by Muff <http://www.muff.kiev.ua/> <http://www.sergeysl.ru/>
+igNix.ru | Технология жизни - технологии будущего <http://www.ignix.ru/>
+[Unix.uz - Заметки BSDельника.] <http://unix.uz/>
+Блог Демина Евгения о unix-like ОС <http://unixzen.ru/> ВитичЪ Онлайн
+Блог музыкального сисадмина <http://vitich.kiev.ua/>
+Denis Tulyakov <http://www.dtulyakov.ru/> <http://blog.nahoste.ru/>
+Сайт работает на WordPress <https://wordpress.org/>
+
+MyCounter - счётчик и статистика <https://mycounter.ua/>
+<http://www.i.ua/> 	Rambler's Top100
+<https://top100.rambler.ru/home?id=2257765>
+Рейтинг@Mail.ru <http://top.mail.ru/jump?from=1892033> 	bigmir)net TOP
+100 <http://www.bigmir.net/>
+PR-CY.ru <http://www.pr-cy.ru/>
+
+<http://hit.ua/?x=35837>

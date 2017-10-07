@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" dir="ltr" lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="shortcut icon" href="http://lexpr.ru/files/garland_favicon.ico" type="image/x-icon">
+    <title>systemd для администратора | Linux Exp Group</title>
+    <link type="text/css" rel="stylesheet" media="all" href="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/node.css">
+<link type="text/css" rel="stylesheet" media="all" href="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/defaults.css">
+<link type="text/css" rel="stylesheet" media="all" href="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/system.css">
+<link type="text/css" rel="stylesheet" media="all" href="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/system-menus.css">
+<link type="text/css" rel="stylesheet" media="all" href="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/user.css">
+<link type="text/css" rel="stylesheet" media="all" href="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/views.css">
+<link type="text/css" rel="stylesheet" media="all" href="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/comment.css">
+<link type="text/css" rel="stylesheet" media="all" href="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/style.css">
+<link type="text/css" rel="stylesheet" media="print" href="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/print.css">
+        <!--[if lt IE 7]>
+      <link type="text/css" rel="stylesheet" media="all" href="/themes/garland/fix-ie.css" />    <![endif]-->
+  </head>
+  <body class="sidebar-right">
+
+<!-- Layout -->
+  <div id="header-region" class="clear-block"></div>
+
+    <div id="wrapper">
+    <div id="container" class="clear-block">
+
+      <div id="header">
+        <div id="logo-floater">
+        <h1><a href="http://lexpr.ru/" title="Linux Exp Group"><img src="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/garland_logo.png" alt="Linux Exp Group" id="logo"><span>Linux Exp Group</span></a></h1>        </div>
+
+                  <ul class="links primary-links"><li class="menu-45 first"><a href="http://www.lexpr.ru/info" title="Домашняя страница Linux Exp Group">Главная</a></li>
+<li class="menu-49"><a href="http://www.lexpr.ru/opensource_monitor" title="Ссылки на последние новости">OpenSource</a></li>
+<li class="menu-43"><a href="http://www.lexpr.ru/view" title="Описание принципов и успешных проектов">Основные подходы</a></li>
+<li class="menu-48"><a href="http://www.lexpr.ru/products" title="Описание услуг">Продукты</a></li>
+<li class="menu-44"><a href="http://www.lexpr.ru/free_linux" title="Чем мы можем помочь коллегам">Акция</a></li>
+<li class="menu-50"><a href="http://www.lexpr.ru/letters" title="Статьи и другая информация">Статьи и переводы</a></li>
+<li class="menu-47"><a href="http://www.lexpr.ru/phpBB3/index.php" title="Форум по вопросам использования Linux">Форум</a></li>
+<li class="menu-46 last"><a href="http://www.lexpr.ru/contacts" title="Контактная информация">Контакты</a></li>
+</ul>                                  
+      </div> <!-- /header -->
+
+      
+      <div id="center"><div id="squeeze"><div class="right-corner"><div class="left-corner">
+          <div class="breadcrumb"><a href="http://lexpr.ru/">Home</a></div>                              <h2>systemd для администратора</h2>                                                  <div class="clear-block">
+            <div id="node-498" class="node">
+
+
+
+  
+  <div class="content clear-block">
+    <p><img src="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/sysd_img_00.png"></p>
+<p>Lennart Poettering (автор)<br>
+Первоисточник (на английском языке) опубликован на сайте автора: <a href="http://0pointer.de/blog/projects" title="http://0pointer.de/blog/projects">http://0pointer.de/blog/projects</a></p>
+<p><a href="http://wiki.freedesktop.org/wiki/Software/systemd"> Базовые сведения о systemd </a></p>
+<p>Сергей Пташник (русский перевод)<br>
+Актуальная версия перевода доступна на личной странице переводчика: <a href="http://www2.kangran.su/%7Ennz/pub/s4a/" title="http://www2.kangran.su/~nnz/pub/s4a/">http://www2.kangran.su/~nnz/pub/s4a/</a><br>
+Данный документ доступен на условиях лицензии CC-BY-SA 3.0 Unported<br>
+6 декабря 2012 г.</p>
+<h2>Предисловие автора</h2>
+<p>Многие из вас, наверное, уже знают, что systemd — это новая система 
+инициализации дистрибутива Fedora, начиная с Fedora 14. Помимо Fedora, 
+systemd также поддерживает и другие дистрибутивы, в частности, 
+OpenSUSE2. systemd предоставляет администраторам целый ряд новых 
+возможностей, значительно упрощающих процесс обслуживания системы. Эта 
+статья является первой в серии публикаций, планируемых в ближайшие 
+месяцы. В каждой из этих статей я попытаюсь рассказать об очередной 
+новой возможности systemd. Большинство этих возможностей можно описать 
+легко и просто, и подобные статьи должны быть интересны довольно широкой
+ аудитории. Однако, время от времени мы будем рассматривать ключевые 
+новшества systemd, что может потребовать несколько более подробного 
+изложения.<br>
+Lennart Poettering, 23 августа 2010 г.</p>
+<h2>Содержание</h2>
+<p><a href="http://lexpr.ru/node/499">1 Контроль процесса загрузки</a><br>
+<a href="http://lexpr.ru/node/500">2 О службах и процессах</a><br>
+<a href="http://lexpr.ru/node/501">3 Преобразование SysV init-скрипта в systemd service-файл </a><br>
+<a href="http://lexpr.ru/node/502">4 Убить демона</a><br>
+<a href="http://lexpr.ru/node/503">5 Три уровня выключения</a><br>
+<a href="http://lexpr.ru/node/504">6 Смена корня</a><br>
+<a href="http://lexpr.ru/node/505">7 Поиск виновных</a><br>
+<a href="http://lexpr.ru/node/506">8 Новые конфигурационные файлы</a><br>
+<a href="http://lexpr.ru/node/507">9 О судьбе /etc/sysconfig и /etc/default</a><br>
+<a href="http://lexpr.ru/node/508">10 Экземпляры служб</a><br>
+<a href="http://lexpr.ru/node/509">11 Службы с активацией в стиле inetd</a><br>
+<a href="http://lexpr.ru/node/510">12 К вопросу о безопасности</a><br>
+<a href="http://lexpr.ru/node/511">13 Отчет о состоянии службы и ее журнал</a><br>
+<a href="http://lexpr.ru/node/512">14 Самодокументированный процесс загрузки</a><br>
+<a href="http://lexpr.ru/node/513">15 Сторожевые таймеры</a><br>
+<a href="http://lexpr.ru/node/514">16 Запуск getty на последовательных (и не только) консолях</a><br>
+<a href="http://lexpr.ru/node/515">17 Работа с Journal</a><br>
+<a href="http://lexpr.ru/node/516">18 Управление ресурсами с помощью cgroups</a></p>
+<p><br><br>
+<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Flexpr.ru%2Fnode%2F498&amp;send=true&amp;layout=standard&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=arial&amp;height=80" scrolling="no" style="border:none; overflow:hidden; width:450px; height:80px;" allowtransparency="true" frameborder="0"></iframe></p>
+  </div>
+
+  <div class="clear-block">
+    <div class="meta">
+        </div>
+
+          <div class="links"><ul class="links inline"><li class="comment_forbidden first last"><span><a href="http://lexpr.ru/user/login?destination=comment%2Freply%2F498%23comment-form">Login</a> to post comments</span></li>
+</ul></div>
+      </div>
+
+</div>
+          </div>
+                    <div id="footer"><table width="100%">
+<tbody><tr>
+<td width="19%" valign="center">
+<p>
+
+<a href="http://top100.rambler.ru/top100/"><img src="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/top100.gif" width="1" height="1" border="0"></a>
+
+
+
+<a href="http://top100.rambler.ru/top100/"><img src="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/banner-88x31-rambler-black2.gif" alt="Rambler's Top100" width="88" height="31" border="0"></a>
+
+</p>
+</td>
+<td width="19%">
+<p><a href="http://hc.ru/ru/"><img src="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/rbc-logo.gif" valign="center"></a>
+</p>
+</td>
+<td width="25%">
+
+<a href="http://info.flagcounter.com/FIYb"><img src="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/a.png" alt="Flag Counter" border="0"></a>
+
+
+
+
+</td>
+<td width="21%" valign="center">
+<a href="http://vdel.ru/"><img src="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/vdel_cut.jpg" valign="center"></a>
+</td>
+<td width="16%" valign="center">
+<p>
+<a href="http://ru.opensuse.org/"><img src="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/opensuseru.png" valign="center"></a>
+</p>
+</td>
+
+<td width="16%" valign="center">
+<p>
+
+</p>
+</td>
+
+</tr>
+
+<tr>
+
+
+
+</tr>
+</tbody></table>
+
+
+
+
+
+<br>
+Linux Exp Group
+<br>
+Независимость, надежность, технологичность
+<br>
+2007
+</div>
+      </div></div></div></div> <!-- /.left-corner, /.right-corner, /#squeeze, /#center -->
+
+              <div id="sidebar-right" class="sidebar">
+                    <div id="block-block-2" class="clear-block block block-block">
+
+
+  <div class="content"><p><strong>«Избыток информации ведет к оскудению души», Алексей Леонтьев, 1965</strong></p>
+<p><b>Партнёры</b><br>
+<a href="http://gm-legal.com/"><b>Правовое бизнес-бюро "Граф Маевский"</b></a><br>
+<a href="https://moosesportfit.com/marketing/coupon-page/"><b>Moose Sport</b></a><br>
+<a href="http://lanwell.ru/"><b>Lanwell Progress</b></a><br>
+<a href="http://www.navigator69.ru/"><b>Навигатор 1С</b></a><br>
+<a href="https://naivno.com/o_proekte.htm"><b>Наивно</b></a></p>
+<p><strong> Новые материалы на сайте: </strong><br>
+<a href="http://www.lexpr.ru/node/563"> Shadowstats - альтернативная статистика безработицы </a><br>
+<a href="http://www.lexpr.ru/node/562">Скрипт для обновления даты резюме на хх</a><br>
+<a href="http://www.lexpr.ru/node/560">Умолчания реализации как свойства черного ящика для тестировщика</a><br>
+<a href="http://www.lexpr.ru/node/449">Введение в ethtool (updated)</a><br>
+<a href="http://www.lexpr.ru/tcpdump">Утилита захвата пакетов tcpdump</a><br>
+<a href="http://lexpr.ru/python_for_android">Разработка приложений для Android на Python</a></p>
+<p><a href="http://www.lexpr.ru/registration"><b> Регистрация </b></a><br>
+<a href="http://www.lexpr.ru/catalog"><b> Тематический каталог </b></a><br>
+<a href="http://www.lexpr.ru/analitics"><b> Аналитика </b></a><br>
+<a href="http://www.lexpr.ru/node/526"><b>Обслуживание 1С</b></a></p>
+<p><b>10 самых посещаемых страниц на <a href="http://www.distrowatch.com/">DistroWatch.com</a><br>
+Эта информация обновляется 1 раз в 2 месяца</b><br>
+<img src="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/distr_raiting.png" border="0"></p>
+<p>За год в рейтинге на нижних позициях появились три новых игрока<br>
+<a href="http://www.everydaylinuxuser.com/2017/01/an-everyday-linux-user-review-of.html"> Обзор elementary</a><br>
+<a href="http://www.everydaylinuxuser.com/2016/08/an-everyday-linux-user-review-of.html">Обзор Antergos</a><br>
+<a href="http://distrowatch.com/weekly.php?issue=20160201#deepin">Обзор deepin</a></p>
+<p><br><br>
+<a href="#" onclick="window.open('https://www.sitelock.com/verify.php?site=lexpr.ru','SiteLock','width=600,height=600,left=160,top=170');"><img alt="website security" title="SiteLock" src="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/lexpr.png"></a><br>
+<br><br>
+<b>Мне нравится Lexpr<b><br>
+<iframe src="systemd%20%D0%B4%D0%BB%D1%8F%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%B0%20_%20Linux%20Exp%20Group_files/like_002.htm" style="border:none;overflow:hidden" scrolling="no" allowtransparency="true" width="450" height="80" frameborder="0"></iframe></b></b></p>
+</div>
+</div>
+        </div>
+      
+    </div> <!-- /container -->
+  </div>
+<!-- /layout -->
+
+    
+
+</body></html>

@@ -1,0 +1,4099 @@
+<!DOCTYPE html>
+<html class="wf-proximanova-i4-active wf-proximanova-n6-active wf-proximanova-n4-active wf-proximanova-n3-active wf-active" style="" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>How To Secure Nginx with Let's Encrypt on Ubuntu 14.04 | DigitalOcean</title>
+
+<meta name="description" content="In this tutorial, we will show you how to use Let's Encrypt to obtain a free SSL certificate and use it with Nginx on Ubuntu 14.04. We will also show you how to automatically renew your SSL certificate. If you're running a different web server, simply">
+<meta name="keywords" content="Security Let's Encrypt Nginx">
+
+<meta name="og:title" content="How To Secure Nginx with Let's Encrypt on Ubuntu 14.04 | DigitalOcean">
+<meta name="og:description" content="In this tutorial, we will show you how to use Let's Encrypt to obtain a free SSL certificate and use it with Nginx on Ubuntu 14.04. We will also show you how to automatically renew your SSL certificate. If you're running a different web server, simply">
+<meta name="og:site_name" content="DigitalOcean">
+<meta name="og:type" content="article">
+
+<meta name="twitter:site" content="DigitalOcean">
+<meta name="twitter:title" content="How To Secure Nginx with Let's Encrypt on Ubuntu 14.04 | DigitalOcean">
+<meta name="twitter:description" content="In this tutorial, we will show you how to use Let's Encrypt to obtain a free SSL certificate and use it with Nginx on Ubuntu 14.04. We will also show you how to automatically renew your SSL certificate. If you're running a different web server, simply">
+<meta name="twitter:creator" content="DigitalOcean">
+<meta name="twitter:card" content="photo">
+<meta name="twitter:url" content="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04">
+
+<meta property="og:image" content="https://community-cdn-digitalocean-com.global.ssl.fastly.net/assets/tutorials/images/large/Let's_Encrypt_nginx_tw_mostov.jpg?1468421700">
+<meta name="twitter:image" content="https://community-cdn-digitalocean-com.global.ssl.fastly.net/assets/tutorials/images/large/Let's_Encrypt_nginx_tw_mostov.jpg?1468421700">
+
+  <link rel="canonical" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04">
+
+
+    <link rel="stylesheet" media="all" href="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/application-bdfc2d8fb85ad3fae4a82273144bb2f0.css">
+
+    
+    <meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="AMxWZYWEIfhTYsv0jBa0IYBIL4Z08XIZ83jK3QZEdL/etdqQxvE4VdDp415esSlN9h5WjS9rndUZzbUN7mHRMQ==">
+      <script type="text/javascript" async="" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/munchkin.js"></script><script type="text/javascript" async="" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/linkid.js"></script><script type="text/javascript" async="" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/analytics.js"></script><script async="" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/gtm.js"></script><script type="text/javascript" async="" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/analytics_002.js"></script><script src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/izu1uqu.js"></script>
+      <style type="text/css">.tk-proxima-nova{font-family:"proxima-nova",sans-serif;}</style><style type="text/css">@font-face{font-family:tk-proxima-nova-n6;src:url(https://use.typekit.net/af/752410/00000000000000003b9ad1bb/27/l?subset_id=2&fvd=n6&v=3) format("woff2"),url(https://use.typekit.net/af/752410/00000000000000003b9ad1bb/27/d?subset_id=2&fvd=n6&v=3) format("woff"),url(https://use.typekit.net/af/752410/00000000000000003b9ad1bb/27/a?subset_id=2&fvd=n6&v=3) format("opentype");font-weight:600;font-style:normal;}@font-face{font-family:tk-proxima-nova-n4;src:url(https://use.typekit.net/af/a3ca77/00000000000000003b9ad1b9/27/l?subset_id=2&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/a3ca77/00000000000000003b9ad1b9/27/d?subset_id=2&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/a3ca77/00000000000000003b9ad1b9/27/a?subset_id=2&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;}@font-face{font-family:tk-proxima-nova-i4;src:url(https://use.typekit.net/af/98849f/00000000000000003b9ad1ba/27/l?subset_id=2&fvd=i4&v=3) format("woff2"),url(https://use.typekit.net/af/98849f/00000000000000003b9ad1ba/27/d?subset_id=2&fvd=i4&v=3) format("woff"),url(https://use.typekit.net/af/98849f/00000000000000003b9ad1ba/27/a?subset_id=2&fvd=i4&v=3) format("opentype");font-weight:400;font-style:italic;}@font-face{font-family:tk-proxima-nova-n3;src:url(https://use.typekit.net/af/0e059c/00000000000000003b9ad1b5/27/l?subset_id=2&fvd=n3&v=3) format("woff2"),url(https://use.typekit.net/af/0e059c/00000000000000003b9ad1b5/27/d?subset_id=2&fvd=n3&v=3) format("woff"),url(https://use.typekit.net/af/0e059c/00000000000000003b9ad1b5/27/a?subset_id=2&fvd=n3&v=3) format("opentype");font-weight:300;font-style:normal;}</style><script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <script src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/bugsnag-2.js" data-apikey="9ffc01bc3e1fa7891bfd20909d1bfb0e">
+    </script>
+    <!--<script src="//cdn.optimizely.com/js/701281621.js"></script>-->
+    <script type="text/javascript">
+      if(window.analytics=window.analytics||[],window.analytics.included)window.console&&console.error&&console.error("analytics.js included twice");else{window.analytics.included=!0,window.analytics.methods=["identify","group","track","page","pageview","alias","ready","on","once","off","trackLink","trackForm","trackClick","trackSubmit"],window.analytics.factory=function(a){return function(){var n=Array.prototype.slice.call(arguments);return n.unshift(a),window.analytics.push(n),window.analytics}};for(var i=0;i<window.analytics.methods.length;i++){var key=window.analytics.methods[i];window.analytics[key]=window.analytics.factory(key)}window.analytics.load=function(a){var n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+a+"/analytics.min.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(n,t)},window.analytics.SNIPPET_VERSION="2.0.9",
+      window.analytics.load("puo3uv968t")}
+      window.analytics.page();
+    </script>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.digitalocean.com/community/tutorials/feed">
+    <script src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/polyfill.js"></script>
+    <script>
+      window.comApp = {
+        prefix: '/community',
+        svgIconPath: 'https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg',
+        railsEnv: 'production',
+        rootUrl: 'https://www.digitalocean.com/community'
+      };
+    </script>
+      <script src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/forms2.js"></script>
+
+    <script src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/application-b0e192c1fa514f14157a544ef4930bf3.js"></script>
+  <style>.fluidvids {width: 100%; max-width: 100%; position: relative;}.fluidvids-item {position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;}</style><script id="twitter-wjs" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/widgets.js"></script><style type="text/css">@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/752410/00000000000000003b9ad1bb/27/l?subset_id=2&fvd=n6&v=3) format("woff2"),url(https://use.typekit.net/af/752410/00000000000000003b9ad1bb/27/d?subset_id=2&fvd=n6&v=3) format("woff"),url(https://use.typekit.net/af/752410/00000000000000003b9ad1bb/27/a?subset_id=2&fvd=n6&v=3) format("opentype");font-weight:600;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/a3ca77/00000000000000003b9ad1b9/27/l?subset_id=2&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/a3ca77/00000000000000003b9ad1b9/27/d?subset_id=2&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/a3ca77/00000000000000003b9ad1b9/27/a?subset_id=2&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/98849f/00000000000000003b9ad1ba/27/l?subset_id=2&fvd=i4&v=3) format("woff2"),url(https://use.typekit.net/af/98849f/00000000000000003b9ad1ba/27/d?subset_id=2&fvd=i4&v=3) format("woff"),url(https://use.typekit.net/af/98849f/00000000000000003b9ad1ba/27/a?subset_id=2&fvd=i4&v=3) format("opentype");font-weight:400;font-style:italic;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/0e059c/00000000000000003b9ad1b5/27/l?subset_id=2&fvd=n3&v=3) format("woff2"),url(https://use.typekit.net/af/0e059c/00000000000000003b9ad1b5/27/d?subset_id=2&fvd=n3&v=3) format("woff"),url(https://use.typekit.net/af/0e059c/00000000000000003b9ad1b5/27/a?subset_id=2&fvd=n3&v=3) format("opentype");font-weight:300;font-style:normal;}</style><script id="facebook-jssdk" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/all.js"></script><link id="mktoForms2BaseStyle" rel="stylesheet" type="text/css" href="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/forms2.css"><link id="mktoForms2ThemeStyle" rel="stylesheet" type="text/css" href="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/forms2-theme-simple.css"><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_loader{background-color:#f6f7f9;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{width:auto;height:auto;min-height:initial;min-width:initial;background:none}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{color:#fff;display:block;padding-top:20px;clear:both;font-size:18px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;bottom:0;left:0;right:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #29487d;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f6f7f9;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-repeat:no-repeat;background-position:50% 50%;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}</style><script type="text/javascript" async="" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/munchkin_002.js"></script></head>
+  <body class="feature-filter-bar feature-upvotes tutorials-controller tutorial-single" data-env="production" data-prefix="/community" data-user-id="" data-facebook-app-id="694818843983011" data-completed-tutorial-id="" data-tutorial-id="1838" data-js="tutorial">
+    <script>
+//<![CDATA[
+
+//]]>
+</script>
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KHWBBT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KHWBBT');</script>
+<!-- End Google Tag Manager -->
+
+    
+
+    <div class="outside_viewport">
+        <div id="contents-modal" class="modal fade mini-modal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1>Contents</h1>
+          <button class="close-button icon icon-close-light" data-dismiss="modal" aria-label="close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="table-of-contents-modal tocify"><ul id="tocify-header0" class="tocify-header"><li class="tocify-item tocify-focus" data-unique="prerequisites"><a>Prerequisites</a></li></ul><ul id="tocify-header1" class="tocify-header"><li class="tocify-item" data-unique="step-1-—-install-certbot"><a>Step 1 — Install Certbot</a></li></ul><ul id="tocify-header2" class="tocify-header"><li class="tocify-item" data-unique="step-2-—-obtain-a-certificate"><a>Step 2 — Obtain a Certificate</a></li></ul><ul id="tocify-header3" class="tocify-header"><li class="tocify-item" data-unique="step-3-—-configure-tlsssl-on-web-server-(nginx)"><a>Step 3 — Configure TLS/SSL on Web Server (Nginx)</a></li></ul><ul id="tocify-header4" class="tocify-header"><li class="tocify-item" data-unique="step-4-—-set-up-auto-renewal"><a>Step 4 — Set Up Auto Renewal</a></li></ul><ul id="tocify-header5" class="tocify-header"><li class="tocify-item" data-unique="conclusion"><a>Conclusion</a></li></ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="share-modal" class="modal fade mini-modal" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Share</h1>
+        <button type="button" class="close-button icon icon-close-light" aria-label="close" data-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="social-sharing social-sharing-container">
+          <ul class="top ">
+            <li class="shareBtn" id="sbTwitter">
+              <a href="http://twitter.com/share?text=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&amp;url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=twshare" class="share-icon share-popup" title="Share on Twitter">
+                <span class="sIcon icon-bird"></span>
+              </a>
+              <a href="http://twitter.com/share?text=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&amp;url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=twshare" class="share-link share-popup" title="Share on Twitter">
+                Twitter
+              </a>
+            </li>
+            <li class="shareBtn" id="sbFacebook">
+              <a class="share-icon facebook-share" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=fbshare" onclick="" title="Share on Facebook">
+                <span class="sIcon icon-facebook-B"></span>
+              </a>
+
+              <a class="share-link facebook-share" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=fbshare" onclick="" title="Share on Facebook">
+                Facebook
+              </a>
+            </li>
+            <li class="shareBtn" id="sbGoogle">
+              <a href="https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=gpshare" class="share-icon share-popup" title="Share on Google+">
+                <span class="sIcon icon-google-plus-B"></span>
+              </a>
+              <a href="https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=gpshare" class="share-link share-popup" title="Share on Google+">
+                Google+
+              </a>
+            </li>
+            <li class="shareBtn" id="sbYC">
+              <a href="https://news.ycombinator.com/submitlink?t=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&amp;u=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=hnshare" class="share-icon share-popup" target="_blank" title="Submit to Hacker News">
+                <span class="sIcon icon-hacker-news"></span>
+              </a>
+              <a href="https://news.ycombinator.com/submitlink?t=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&amp;u=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=hnshare" class="share-link share-popup" target="_blank" title="Submit to Hacker News">
+                Hacker News
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="table-of-contents has-init" style="top: 200px;">
+    <div data-js="tableOfContentsDesktop" class="tocify"><ul id="tocify-header0" class="tocify-header"><li class="tocify-item tocify-focus" data-unique="prerequisites"><a>Prerequisites</a></li></ul><ul id="tocify-header1" class="tocify-header"><li class="tocify-item" data-unique="step-1-—-install-certbot" style="cursor: pointer;"><a>Step 1 — Install Certbot</a></li></ul><ul id="tocify-header2" class="tocify-header"><li class="tocify-item" data-unique="step-2-—-obtain-a-certificate" style="cursor: pointer;"><a>Step 2 — Obtain a Certificate</a></li></ul><ul id="tocify-header3" class="tocify-header"><li class="tocify-item" data-unique="step-3-—-configure-tlsssl-on-web-server-(nginx)" style="cursor: pointer;"><a>Step 3 — Configure TLS/SSL on Web Server (Nginx)</a></li></ul><ul id="tocify-header4" class="tocify-header"><li class="tocify-item" data-unique="step-4-—-set-up-auto-renewal" style="cursor: pointer;"><a>Step 4 — Set Up Auto Renewal</a></li></ul><ul id="tocify-header5" class="tocify-header"><li class="tocify-item" data-unique="conclusion" style="cursor: pointer;"><a>Conclusion</a></li></ul></div>
+    <button type="button" class="Button--reset Tutorial-button " data-js="markAsComplete" data-tutorialinteraction="" data-tutorialsingle=""><svg class="svg-icon svg-icon-completed"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-completed"></use></svg><span>Mark as Complete</span></button>
+  </div>
+  
+  <div id="share-modal" class="modal fade mini-modal" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Share</h1>
+        <button type="button" class="close-button icon icon-close-light" aria-label="close" data-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="social-sharing social-sharing-container">
+          <ul class="bottom ">
+            <li class="shareBtn" id="sbTwitter">
+              <a href="http://twitter.com/share?text=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&amp;url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=twshare" class="share-icon share-popup" title="Share on Twitter">
+                <span class="sIcon icon-bird"></span>
+              </a>
+              <a href="http://twitter.com/share?text=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&amp;url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=twshare" class="share-link share-popup" title="Share on Twitter">
+                Twitter
+              </a>
+            </li>
+            <li class="shareBtn" id="sbFacebook">
+              <a class="share-icon facebook-share" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=fbshare" onclick="" title="Share on Facebook">
+                <span class="sIcon icon-facebook-B"></span>
+              </a>
+
+              <a class="share-link facebook-share" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=fbshare" onclick="" title="Share on Facebook">
+                Facebook
+              </a>
+            </li>
+            <li class="shareBtn" id="sbGoogle">
+              <a href="https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=gpshare" class="share-icon share-popup" title="Share on Google+">
+                <span class="sIcon icon-google-plus-B"></span>
+              </a>
+              <a href="https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=gpshare" class="share-link share-popup" title="Share on Google+">
+                Google+
+              </a>
+            </li>
+            <li class="shareBtn" id="sbYC">
+              <a href="https://news.ycombinator.com/submitlink?t=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&amp;u=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=hnshare" class="share-icon share-popup" target="_blank" title="Submit to Hacker News">
+                <span class="sIcon icon-hacker-news"></span>
+              </a>
+              <a href="https://news.ycombinator.com/submitlink?t=How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04&amp;u=https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04&amp;utm_medium=community&amp;utm_source=hnshare" class="share-link share-popup" target="_blank" title="Submit to Hacker News">
+                Hacker News
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div id="newsletter-signup-dialog" class="newsletter-signups-dialog reveal" data-newsletter-signup-dialog="" data-article-target=".content-body">
+  <div class="form-message">
+  <div class="pull-right">
+    <a href="javascript:;" class="newsletter-signups-dialog-dismiss" data-newsletter-signup-dismiss="">×</a>
+
+  </div>
+  <h4 class="newsletter-signups-dialog-title">
+    Sign up for our newsletter.
+  </h4>
+  <p class="newsletter-signups-dialog-description">
+    Get the latest tutorials on SysAdmin and open source topics.
+  </p>
+  <form class="newsletter-signup" id="new_newsletter_signup" data-newsletter-signup="true" action="/community/newsletter" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" value="✓" type="hidden">
+
+  <input data-newsletter-signup-field="url" name="newsletter_signup[url]" id="newsletter_signup_url" type="hidden">
+  <input data-newsletter-signup-field="title" name="newsletter_signup[title]" id="newsletter_signup_title" type="hidden">
+
+  <div class="newsletter-signup-ajax-error" data-newsletter-signup-ajax-error=""></div>
+
+
+  <div class="form-group">
+    <input placeholder="Enter your email address" required="required" class="field" name="newsletter_signup[email]" id="newsletter_signup_email" type="email">
+  </div>
+
+  <button data-disable-with="Sign Up" class="button blue-button">
+    Sign Up
+  </button>
+
+</form>
+
+</div>
+
+<div class="thanks-message hidden" data-newsletter-signup-successful=""> 
+  <div class="pull-right"> 
+    <a href="javascript:;" class="newsletter-signups-dialog-dismiss icon icon-close-light" data-newsletter-signup-dismiss=""></a> 
+  </div> 
+
+  <span class="newsletter-signups-dialog-success"> 
+    Thanks for signing up! 
+  </span> 
+</div>
+
+</div>
+
+
+      
+    </div>
+
+      <div class="mobile-nav">
+  
+<div class="account-buttons">
+    <div id="entrance">
+      <a id="sign-up" class="button" href="https://www.digitalocean.com/community/auth/digitalocean?display=sessionless+register">Sign Up</a>
+      <a id="log-in" class="button" href="https://www.digitalocean.com/community/auth/digitalocean">Log In</a>
+    </div>
+</div>
+
+  <button type="button" aria-label="close" class="close-panel icon-close"></button>
+
+  <form class="mobile-search" role="search" action="/community/search" accept-charset="UTF-8" method="get"><input name="utf8" value="✓" type="hidden">
+    <span class="icon icon-search-thin"></span>
+    <input name="q" id="q" title="Search" placeholder="Search" type="text">
+    <button name="button" type="submit" class="icon-btn">submit</button>
+</form>
+  
+<nav>
+
+  <ul>
+    <li><a class="active" href="https://www.digitalocean.com/community/tutorials">Tutorials</a></li>
+    <li><a href="https://www.digitalocean.com/community/questions">Questions</a></li>
+    <li><a href="https://www.digitalocean.com/community/projects">Projects</a></li>
+    <li><a href="https://www.meetup.com/pro/digitalocean/?utm_source=do_community" target="_blank">Meetups</a></li>
+    <li class="mobile-nav-only"><a href="https://www.digitalocean.com/">Main Site</a></li>
+  </ul>
+</nav>
+
+  
+</div>
+
+      
+      <header>
+  <div class="flash-container"></div>
+
+  <div class="main-menu-container">
+    <div class="wrapper">
+      <div class="logo">
+        <a class="logo-icon" href="https://www.digitalocean.com/">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 32" class="do-icon">
+<title>DigitalOcean</title>
+<path class="path1" d="M16.016 32v-6.204c6.584 0 11.648-6.52 9.147-13.42-0.95-2.564-2.975-4.59-5.539-5.539-6.9-2.501-13.42 2.564-13.42 9.147 0 0 0 0 0 0l-6.204 0.032c0-10.477 10.129-18.643 21.112-15.225 4.811 1.488 8.609 5.317 10.097 10.097 3.418 10.983-4.716 21.112-15.193 21.112z"></path>
+<path class="path2" d="M16.016 25.828h-6.172v-6.172h6.172z"></path>
+<path class="path3" d="M9.844 30.576h-4.748v-4.748h4.748v4.748z"></path>
+<path class="path4" d="M5.096 25.828h-3.988v-3.988h3.988z"></path>
+<path class="path5" d="M56.973 9.242c-1.836-1.266-4.115-1.931-6.773-1.931h-5.792v18.39h5.792c2.659 0 4.938-0.665 6.773-2.026 1.013-0.696 1.804-1.709 2.342-2.944s0.823-2.69 0.823-4.336c0-1.614-0.285-3.070-0.823-4.305-0.538-1.203-1.329-2.152-2.342-2.849zM47.794 10.445h1.836c2.026 0 3.703 0.411 4.969 1.171 1.393 0.855 2.121 2.469 2.121 4.779 0 2.406-0.728 4.083-2.121 5.001v0c-1.203 0.791-2.88 1.203-4.938 1.203h-1.867v-12.154z"></path>
+<path class="path6" d="M64.19 7.122c-0.57 0-1.044 0.19-1.424 0.57s-0.601 0.855-0.601 1.393c0 0.57 0.19 1.044 0.601 1.424 0.38 0.38 0.855 0.601 1.424 0.601s1.044-0.19 1.424-0.601c0.38-0.38 0.601-0.886 0.601-1.424 0-0.57-0.19-1.044-0.601-1.393-0.38-0.38-0.886-0.57-1.424-0.57z"></path>
+<path class="path7" d="M62.512 12.787h3.26v12.977h-3.26v-12.977z"></path>
+<path class="path8" d="M77.642 13.864c-0.981-0.886-2.089-1.393-3.26-1.393-1.804 0-3.292 0.633-4.463 1.836s-1.741 2.785-1.741 4.653c0 1.836 0.57 3.387 1.741 4.653 1.171 1.203 2.659 1.836 4.463 1.836 1.266 0 2.342-0.348 3.228-1.044v0.285c0 1.076-0.285 1.899-0.855 2.5-0.57 0.57-1.361 0.855-2.342 0.855-1.519 0-2.437-0.601-3.608-2.152l-2.216 2.121 0.063 0.095c0.475 0.665 1.203 1.329 2.184 1.962s2.184 0.95 3.64 0.95c1.931 0 3.513-0.601 4.653-1.773 1.171-1.171 1.741-2.754 1.741-4.716v-11.743h-3.197v1.076zM76.787 21.523c-0.57 0.633-1.298 0.95-2.247 0.95s-1.678-0.317-2.216-0.95c-0.57-0.633-0.855-1.488-0.855-2.532s0.285-1.931 0.855-2.564c0.57-0.633 1.298-0.981 2.216-0.981 0.95 0 1.678 0.317 2.247 0.981 0.57 0.633 0.855 1.519 0.855 2.564s-0.317 1.899-0.855 2.532z"></path>
+<path class="path9" d="M83.624 12.787h3.26v12.977h-3.26v-12.977z"></path>
+<path class="path10" d="M85.302 7.122c-0.57 0-1.044 0.19-1.424 0.57s-0.601 0.855-0.601 1.393c0 0.57 0.19 1.044 0.601 1.424 0.38 0.38 0.855 0.601 1.424 0.601s1.044-0.19 1.424-0.601c0.38-0.38 0.601-0.886 0.601-1.424 0-0.57-0.19-1.044-0.601-1.393-0.38-0.38-0.886-0.57-1.424-0.57z"></path>
+<path class="path11" d="M94.038 9.274h-3.197v3.513h-1.867v2.975h1.867v5.381c0 1.678 0.348 2.88 1.013 3.577s1.836 1.044 3.513 1.044c0.538 0 1.076-0.032 1.583-0.063h0.158v-2.975l-1.108 0.063c-0.791 0-1.298-0.127-1.551-0.411s-0.38-0.855-0.38-1.709v-4.906h3.039v-2.975h-3.039v-3.513z"></path>
+<path class="path12" d="M112.364 7.343h3.26v18.39h-3.26v-18.39z"></path>
+<path class="path13" d="M148.574 21.112c-0.57 0.665-1.171 1.234-1.646 1.519v0c-0.443 0.285-1.013 0.443-1.678 0.443-0.95 0-1.741-0.348-2.374-1.076s-0.95-1.646-0.95-2.754 0.317-2.026 0.918-2.722c0.633-0.728 1.393-1.076 2.342-1.076 1.044 0 2.152 0.665 3.102 1.773l2.152-2.057c-1.393-1.836-3.197-2.69-5.349-2.69-1.804 0-3.355 0.665-4.621 1.931s-1.899 2.912-1.899 4.843 0.633 3.545 1.899 4.843c1.266 1.298 2.817 1.931 4.621 1.931 2.374 0 4.273-1.013 5.539-2.88l-2.057-2.026z"></path>
+<path class="path14" d="M161.962 14.591c-0.475-0.633-1.108-1.171-1.867-1.551-0.791-0.38-1.678-0.57-2.69-0.57-1.836 0-3.323 0.665-4.431 1.994-1.076 1.329-1.646 2.944-1.646 4.874 0 1.962 0.601 3.577 1.804 4.843 1.171 1.234 2.785 1.867 4.716 1.867 2.184 0 4.020-0.886 5.349-2.659l0.063-0.095-2.121-2.057c-0.19 0.253-0.475 0.506-0.728 0.76-0.317 0.317-0.633 0.538-0.95 0.696-0.475 0.253-1.044 0.348-1.646 0.348-0.918 0-1.646-0.253-2.216-0.791-0.538-0.475-0.855-1.139-0.918-1.962h8.641l0.032-1.203c0-0.855-0.127-1.646-0.348-2.406-0.222-0.728-0.57-1.456-1.044-2.089zM154.841 17.63c0.158-0.633 0.443-1.139 0.855-1.551 0.443-0.443 1.013-0.665 1.709-0.665 0.791 0 1.393 0.222 1.804 0.665 0.38 0.411 0.601 0.918 0.665 1.519h-5.033z"></path>
+<path class="path15" d="M174.497 13.737v0c-0.981-0.855-2.342-1.266-4.051-1.266-1.076 0-2.089 0.253-3.007 0.696-0.855 0.443-1.678 1.139-2.216 2.089l0.032 0.032 2.089 1.994c0.855-1.361 1.804-1.836 3.070-1.836 0.696 0 1.234 0.19 1.678 0.538s0.633 0.823 0.633 1.393v0.633c-0.823-0.253-1.614-0.38-2.406-0.38-1.614 0-2.944 0.38-3.925 1.139s-1.488 1.867-1.488 3.229c0 1.203 0.411 2.216 1.266 2.944 0.855 0.696 1.899 1.076 3.134 1.076s2.406-0.506 3.45-1.361v1.076h3.197v-8.324c0.063-1.583-0.443-2.817-1.456-3.672zM168.704 20.795c0.38-0.253 0.886-0.38 1.551-0.38 0.791 0 1.614 0.158 2.469 0.475v1.266c-0.696 0.665-1.646 0.981-2.817 0.981-0.57 0-1.013-0.127-1.298-0.38s-0.443-0.538-0.443-0.95c0-0.443 0.19-0.76 0.538-1.013z"></path>
+<path class="path16" d="M188.55 13.99c-0.918-1.013-2.184-1.519-3.798-1.519-1.298 0-2.342 0.38-3.134 1.108v-0.791h-3.197v12.977h3.26v-7.185c0-0.981 0.222-1.773 0.696-2.311 0.475-0.57 1.076-0.823 1.931-0.823 0.728 0 1.298 0.253 1.709 0.728 0.411 0.506 0.633 1.171 0.633 2.026v7.501h3.26v-7.47c0-1.804-0.443-3.229-1.361-4.241z"></path>
+<path class="path17" d="M108.281 13.737v0c-0.981-0.855-2.342-1.266-4.051-1.266-1.076 0-2.089 0.253-3.007 0.696-0.855 0.443-1.678 1.139-2.216 2.089l0.032 0.032 2.089 1.994c0.855-1.361 1.804-1.836 3.070-1.836 0.696 0 1.234 0.19 1.678 0.538s0.633 0.823 0.633 1.393v0.633c-0.823-0.253-1.614-0.38-2.406-0.38-1.614 0-2.944 0.38-3.925 1.139s-1.488 1.867-1.488 3.229c0 1.203 0.411 2.216 1.266 2.944 0.855 0.696 1.899 1.076 3.134 1.076s2.406-0.506 3.45-1.361v1.076h3.197v-8.324c0.032-1.583-0.475-2.817-1.456-3.672zM102.489 20.795c0.38-0.253 0.886-0.38 1.551-0.38 0.791 0 1.614 0.158 2.469 0.475v1.266c-0.696 0.665-1.646 0.981-2.817 0.981-0.57 0-1.013-0.127-1.298-0.38s-0.443-0.538-0.443-0.95c0-0.443 0.158-0.76 0.538-1.013z"></path>
+<path class="path18" d="M127.462 26.018c-5.223 0-9.496-4.241-9.496-9.496s4.241-9.496 9.496-9.496 9.496 4.241 9.496 9.496-4.273 9.496-9.496 9.496zM127.462 10.382c-3.387 0-6.14 2.754-6.14 6.14s2.754 6.14 6.14 6.14 6.14-2.754 6.14-6.14-2.754-6.14-6.14-6.14z"></path>
+</svg>
+
+          <span class="sr-only">DigitalOcean</span>
+</a>
+        <span class="logo-separator"></span>
+
+        <a class="home-link" href="https://www.digitalocean.com/community">
+          <span class="logo-community-text">Community</span>
+</a>      </div>
+
+      <a class="mobile-nav-toggle icon-menu-thin" data-role="left">
+        <span>Menu</span>
+      </a>
+
+      
+<nav>
+
+  <ul>
+    <li><a class="active" href="https://www.digitalocean.com/community/tutorials">Tutorials</a></li>
+    <li><a href="https://www.digitalocean.com/community/questions">Questions</a></li>
+    <li><a href="https://www.digitalocean.com/community/projects">Projects</a></li>
+    <li><a href="https://www.meetup.com/pro/digitalocean/?utm_source=do_community" target="_blank">Meetups</a></li>
+    <li class="mobile-nav-only"><a href="https://www.digitalocean.com/">Main Site</a></li>
+  </ul>
+</nav>
+
+
+      
+<div class="account-buttons">
+    <div id="entrance">
+      <a id="sign-up" class="button" href="https://www.digitalocean.com/community/auth/digitalocean?display=sessionless+register">Sign Up</a>
+      <a id="log-in" class="button" href="https://www.digitalocean.com/community/auth/digitalocean">Log In</a>
+    </div>
+</div>
+      <div class="header-search open">
+  <form action="/community/search" accept-charset="UTF-8" method="get"><input name="utf8" value="✓" type="hidden">
+    <span class="icon icon-search-thin"></span>
+    <input name="q" id="q" title="Search" placeholder="Search" autocomplete="off" spellcheck="false" class="header-search-input" data-algolia-application-id="6ZHEUVKJ88" data-algolia-api-key="c5470567eae7fa1177d43222e18ba086" type="text">
+    <button name="button" type="submit" class="icon-btn">submit</button>
+</form></div>
+
+<div class="search-results-dropdown dropdown" data-root-path="https://www.digitalocean.com/community">
+  <div class="container">
+    <div class="header-search-results-list"></div>
+
+    <div id="btn-wrap">
+      <a class="more-search-results" data-search-path="/community/search" href="https://www.digitalocean.com/community/search">
+        <span class="icon-mag"></span>
+        View All Results
+</a>    </div>
+  </div>
+</div>
+
+<script type="text/template" id="autocomplete-hits-template">
+  <div class="inner-search">
+    <ul>
+        {{#hits}}
+          <li>
+            <span class='icon icon-{{type}}'></span>
+            <a href='{{url}}'>{{title}}</a>
+          </li>
+        {{/hits}}
+    </ul>
+  </div>
+</script>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <div class="wrapper">
+    
+  </div>
+</header>
+
+
+      
+
+      <div class="wrapper layout-wrapper">
+
+        
+
+
+
+
+
+
+
+
+
+<div class="section-content section-content-growable content Tutorial-content content-has-mobile-image">
+  <div class="postable-info-bar-container">
+  <div class="postable-info-bar">
+    <div class="left-section">
+        <div class="tutorial-author-avatar">
+    <a href="https://www.digitalocean.com/community/users/manicas"><div class="mod-avatar mod-avatar-small"><img alt="manicas" class="avatar avatar-small" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/695da9dd73504edfc622c9be380cb3cb.jpeg" width="80" height="80"><span class="mod-star" title="" data-toggle="tooltip" data-container="body" data-original-title="MOD"><span class="mod-star-icon"></span></span></div></a>
+  </div>
+  <div class="author-and-date">
+    <div class="tutorial-author">
+      <div class="by">By: </div>
+      <a href="https://www.digitalocean.com/community/users/manicas">Mitchell Anicas</a>
+    </div>
+  </div>
+
+      
+    </div>
+
+    <div class="right-section">
+      
+
+
+      <div class="section-item section-item-subscribe">
+  <span class="opt-in-switch off signed-out-subscribe">
+    <span class="subscribe-label">
+      <span class="icon icon-subscribe"></span>
+      <span class="subscription-label subscribe">Subscribe</span>
+      <span class="icon icon-subscribed"></span>
+      <span class="subscription-label subscribed">Subscribed</span>
+    </span>
+    <a data-toggle="modal" data-target="#sign-in-modal" class="mini-switch-container" href="javascript:void(0);"><div class="mini-switch off signed-out-subscribe"><div class="switch-handle"></div></div></a>
+  </span>
+</div>
+
+<div class="section-item social-sharing-item">
+  <div class="sharing">
+  <a class="share-button" href="#" data-toggle="modal" data-target="#share-modal">
+    <span class="icon icon-share-square"></span>
+    <span class="share-button-text">Share</span>
+  </a>
+</div>
+
+</div>
+
+        <div class="section-item table-of-contents-triggers"><div class="toc-trigger-mobile" data-toggle="modal" data-target="#contents-modal">
+  <a href="javascript:void(0);">
+    <span class="icon icon-contents"></span>
+    <span class="title">Contents</span>
+    <span class="icon icon-arrow-down"></span>
+  </a>
+</div>
+
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+    <img alt="How To Secure Nginx with Let's Encrypt on Ubuntu 14.04" title="How To Secure Nginx with Let's Encrypt on Ubuntu 14.04" class="tutorial-image-mobile" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/Lets_Encrypt_nginx_tw_mostov.jpg">
+
+  <div class="container tutorial-header">
+      <img alt="How To Secure Nginx with Let's Encrypt on Ubuntu 14.04" title="How To Secure Nginx with Let's Encrypt on Ubuntu 14.04" class="tutorial-image" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/Lets_Encrypt_nginx_tw_mostov.jpg">
+
+      <div class="info-cta">
+    <a class="icon-close-light" href="javascript:void();"></a>
+    We hope you find this tutorial helpful. In addition to guides like 
+this one, we provide simple cloud infrastructure for developers. <a href="https://www.digitalocean.com/?utm_medium=community&amp;utm_source=community_gencta&amp;utm_campaign=needaserver&amp;utm_content=how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04">
+        Learn more →
+</a>  </div>
+
+
+    <button name="button" type="button" class="new-upvote-button" data-upvotable-id="1838" data-upvotable-type="Tutorial" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">407</span></button>
+
+    <h1 class="content-title Tutorial-header">
+      <button type="button" class="Button--reset Tutorial-headerButton " data-toggle="tooltip" title="" data-js="markAsComplete" data-tutorialinteraction="" data-tutorialsingle="" data-original-title="Mark as Complete">
+        <svg class="svg-icon svg-icon-completed"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-completed"></use></svg>
+      </button> How To Secure Nginx with Let's Encrypt on Ubuntu 14.04
+    </h1>
+
+    <span class="meta-section timestamp"><span class="tutorial-date-text">Posted</span><span class="tutorial-date">December 17, 2015</span></span>
+
+    <span class="meta-section pageviews"><span class="icon icon-eye v-mid"></span><span class="views-count v-mid">598.8k</span><span class="sr-only"> views</span></span>
+
+    <span class="meta-section tags">
+      <a class="tag" href="https://www.digitalocean.com/community/tags/nginx?type=tutorials">Nginx</a> <a class="tag" href="https://www.digitalocean.com/community/tags/security?type=tutorials">Security</a> <a class="tag" href="https://www.digitalocean.com/community/tags/let-s-encrypt?type=tutorials">Let's Encrypt</a>
+      <a class="tag" href="https://www.digitalocean.com/community/tags/ubuntu?type=tutorials">Ubuntu</a>
+    </span>
+  </div>
+    <div class="content-body tutorial-content" data-growable-markdown="">
+      <h3 id="introduction">Introduction</h3>
+
+<p>Let's Encrypt is a new Certificate Authority (CA) that provides an 
+easy way to obtain and install free TLS/SSL certificates, thereby 
+enabling encrypted HTTPS on web servers. It simplifies the process by 
+providing a software client, <code>certbot</code>, that attempts to 
+automate most (if not all) of the required steps. Currently, the entire 
+process of obtaining and installing a certificate is fully automated 
+only on Apache web servers. However, Let's Encrypt can be used to easily
+ obtain a free SSL certificate, which can be installed manually, 
+regardless of your choice of web server software.</p>
+
+<p>In this tutorial, we will show you how to use the Let's Encrypt 
+client to obtain a free SSL certificate and use it with Nginx on Ubuntu 
+14.04. We will also show you how to automatically renew your SSL 
+certificate. If you're running a different web server, simply follow 
+your web server's documentation to learn how to use the certificate with
+ your setup.</p>
+
+<p><img src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/nginx-letsencrypt.png" alt="Nginx with Let's Encrypt TLS/SSL Certificate and Auto-renewal"></p>
+
+<div name="prerequisites" data-unique="prerequisites"></div><h2 id="prerequisites">Prerequisites</h2>
+
+<p>Before following this tutorial, you'll need a few things.</p>
+
+<p>You should have an Ubuntu 14.04 server with a non-root user who has <code>sudo</code> privileges.  You can learn how to set up such a user account by following steps 1-3 in our <a href="https://www.digitalocean.com/community/articles/initial-server-setup-with-ubuntu-14-04">initial server setup for Ubuntu 14.04 tutorial</a>.</p>
+
+<p>You must own or control the registered domain name that you wish to 
+use the certificate with. If you do not already have a registered domain
+ name, you may register one with one of the many domain name registrars 
+out there (e.g. Namecheap, GoDaddy, etc.).</p>
+
+<p>If you haven't already, be sure to create an <strong>A Record</strong>
+ that points your domain to the public IP address of your server. This 
+is required because of how Let's Encrypt validates that you own the 
+domain it is issuing a certificate for. For example, if you want to 
+obtain a certificate for <code>example.com</code>, that domain must resolve to your server for the validation process to work. Our setup will use <code>example.com</code> and <code>www.example.com</code> as the domain names, so <strong>both DNS records are required</strong>.</p>
+
+<p>Once you have all of the prerequisites out of the way, let's move on to installing Certbot, the Let's Encrypt client software.</p>
+
+<div name="step-1-—-install-certbot" data-unique="step-1-—-install-certbot"></div><h2 id="step-1-—-install-certbot">Step 1 — Install Certbot</h2>
+
+<p>The first step to using Let's Encrypt to obtain an SSL certificate is to install the <code>certbot</code>
+ software on your server. The Certbot developers maintain their own 
+Ubuntu software repository with up-to-date versions of the software. 
+Because Certbot is in such active development it's worth using this 
+repository to install a newer Certbot than provided by Ubuntu.</p>
+
+<p>First, add the repository:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo add-apt-repository ppa:certbot/certbot
+</li></ul></code></pre>
+<p>You'll need to press <code>ENTER</code> to accept. Afterwards, update the package list to pick up the new repository's package information:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo apt-get update
+</li></ul></code></pre>
+<p>And finally, install Certbot with <code>apt-get</code>:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo apt-get install certbot
+</li></ul></code></pre>
+<p>The <code>certbot</code> Let's Encrypt client is now ready to use.</p>
+
+<div name="step-2-—-obtain-a-certificate" data-unique="step-2-—-obtain-a-certificate"></div><h2 id="step-2-—-obtain-a-certificate">Step 2 — Obtain a Certificate</h2>
+
+<p>Let's Encrypt provides a variety of ways to obtain SSL certificates, 
+through various plugins. Unlike the Apache plugin, which is covered in <a href="https://www.digitalocean.com/community/tutorials/how-to-secure-apache-with-let-s-encrypt-on-ubuntu-14-04">a different tutorial</a>,
+ most of the plugins will only help you with obtaining a certificate 
+which you must manually configure your web server to use. Plugins that 
+only obtain certificates, and don't install them, are referred to as 
+"authenticators" because they are used to authenticate whether a server 
+should be issued a certificate.</p>
+
+<p>We'll show you how to use the <strong>Webroot</strong> plugin to obtain an SSL certificate.</p>
+
+<h3 id="how-to-use-the-webroot-plugin">How To Use the Webroot Plugin</h3>
+
+<p>The Webroot plugin works by placing a special file in the <code>/.well-known</code>
+ directory within your document root, which can be accessed (through 
+your web server) by the Let's Encrypt servers for validation. Depending 
+on your configuration, you may need to explicitly allow access to the <code>/.well-known</code> directory.</p>
+
+<p>If you haven't installed Nginx yet, do so with this command:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo apt-get install nginx
+</li></ul></code></pre>
+<p>To ensure that the directory is accessible to <code>certbot</code> for validation, let's make a quick change to our Nginx configuration. By default, it's located at <code>/etc/nginx/sites-available/default</code>. We'll use <code>nano</code> to edit it:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo nano /etc/nginx/sites-available/default
+</li></ul></code></pre>
+<p>Inside the server block, add this location block:</p>
+<div class="code-label " title="Add to SSL server block">Add to SSL server block</div><pre class="code-pre "><code langs="">server {
+        . . .
+
+        <span class="highlight">location ~ /.well-known {</span>
+                <span class="highlight">allow all;</span>
+        <span class="highlight">}</span>
+
+        . . .
+}
+</code></pre>
+<p>You will also want look up what your document root is set to by searching for the <code>root</code> directive, as the path is required to use the Webroot plugin. If you're using the default configuration file, the root will be <code>/usr/share/nginx/html</code>.</p>
+
+<p>Save and exit.</p>
+
+<p>Check the configuration file for syntax errors:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo nginx -t
+</li></ul></code></pre>
+<p>If all is well, restart Nginx with this command:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo service nginx restart
+</li></ul></code></pre>
+<p>Now that we know our <code>webroot-path</code>, we can use the 
+Webroot plugin to request an SSL certificate with these commands. Here, 
+we are also specifying our domain names with the <code>-d</code> option. If you want a single cert to work with multiple domain names (e.g. <code>example.com</code> and <code>www.example.com</code>), be sure to include all of them, starting with the most high level domain (e.g. <code>example.com</code>). Also, make sure that you replace the highlighted parts with the appropriate webroot path and domain name(s):</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">certbot certonly --webroot --webroot-path=<span class="highlight">/usr/share/nginx/html</span> -d <span class="highlight">example.com</span> -d <span class="highlight">www.example.com</span>
+</li></ul></code></pre>
+<p><span class="note"><strong>Note:</strong> The <code>certbot</code> software requires superuser privileges, so you will be required to enter your password if you haven't used <code>sudo</code> recently.<br></span></p>
+
+<p>If this is your first time running <code>certbot</code>, you will be 
+prompted to enter an email address and agree to the terms of service. 
+After doing so, you should see a message telling you the process was 
+successful and where your certificates are stored:</p>
+<pre class="code-pre "><code langs=""><div class="secondary-code-label " title="Output">Output</div>IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at
+   <span class="highlight">/etc/letsencrypt/live/example.com/</span>fullchain.pem. Your cert
+   will expire on <span class="highlight">2017-07-26</span>. To obtain a new or tweaked version of
+   this certificate in the future, simply run certbot again. To
+   non-interactively renew *all* of your certificates, run "certbot
+   renew"
+ - If you lose your account credentials, you can recover through
+   e-mails sent to sammy@example.com.
+ - Your account credentials have been saved in your Certbot
+   configuration directory at /etc/letsencrypt. You should make a
+   secure backup of this folder now. This configuration directory will
+   also contain certificates and private keys obtained by Certbot so
+   making regular backups of this folder is ideal.
+ - If you like Certbot, please consider supporting our work by:
+
+   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+   Donating to EFF:                    https://eff.org/donate-le
+</code></pre>
+<p>You will want to note the path and expiration date of your certificate, highlighted in the example above.</p>
+
+<span class="note"><p>
+<strong>Firewall Note:</strong> If you receive an error like <code>Failed to connect to host for DVSNI challenge</code>, your server's firewall may need to be configured to allow TCP traffic on port <code>80</code> and <code>443</code>.</p>
+
+<p><strong>Note:</strong> If your domain is routing through a DNS 
+service like CloudFlare, you will need to temporarily disable it until 
+you have obtained the certificate.<br></p></span>
+
+<h3 id="certificate-files">Certificate Files</h3>
+
+<p>After obtaining the cert, you will have the following PEM-encoded files:</p>
+
+<ul>
+<li><strong>cert.pem:</strong> Your domain's certificate</li>
+<li><strong>chain.pem:</strong> The Let's Encrypt chain certificate</li>
+<li><strong>fullchain.pem:</strong> <code>cert.pem</code> and <code>chain.pem</code> combined</li>
+<li><strong>privkey.pem:</strong> Your certificate's private key</li>
+</ul>
+
+<p>It's important that you are aware of the location of the certificate 
+files that were just created, so you can use them in your web server 
+configuration. The files themselves are placed in a subdirectory in <code>/etc/letsencrypt/archive</code>. However, Certbot creates symbolic links to the most recent certificate files in the <code>/etc/letsencrypt/live/<span class="highlight">your_domain_name</span></code>
+ directory. Because the links will always point to the most recent 
+certificate files, this is the path that you should use to refer to your
+ certificate files.</p>
+
+<p>You can check that the files exist by running this command (substituting in your domain name):</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo ls -l /etc/letsencrypt/live/<span class="highlight">your_domain_name</span>
+</li></ul></code></pre>
+<p>The output should be the four previously mentioned certificate files. In a moment, you will configure your web server to use <code>fullchain.pem</code> as the certificate file, and <code>privkey.pem</code> as the certificate key file.</p>
+
+<h3 id="generate-strong-diffie-hellman-group">Generate Strong Diffie-Hellman Group</h3>
+
+<p>To further increase security, you should also generate a strong 
+Diffie-Hellman group. To generate a 2048-bit group, use this command:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+</li></ul></code></pre>
+<p>This may take a few minutes but when it's done you will have a strong DH group at <code>/etc/ssl/certs/dhparam.pem</code>.</p>
+
+<div name="step-3-—-configure-tlsssl-on-web-server-(nginx)" data-unique="step-3-—-configure-tlsssl-on-web-server-(nginx)"></div><h2 id="step-3-—-configure-tls-ssl-on-web-server-nginx">Step 3 — Configure TLS/SSL on Web Server (Nginx)</h2>
+
+<p>Now that you have an SSL certificate, you need to configure your Nginx web server to use it.</p>
+
+<p>Edit the Nginx configuration that contains your server block. Again, it's at <code>/etc/nginx/sites-available/default</code> by default:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo nano /etc/nginx/sites-available/default
+</li></ul></code></pre>
+<p>Find the <code>server</code> block. <strong>Comment out</strong> or <strong>delete</strong>
+ the lines that configure this server block to listen on port 80. In the
+ default configuration, these two lines should be deleted:</p>
+<div class="code-label " title="Nginx configuration deletions">Nginx configuration deletions</div><pre class="code-pre "><code langs="">        listen 80 default_server;
+        listen [::]:80 default_server ipv6only=on;
+</code></pre>
+<p>We are going to configure this server block to listen on port 443 with SSL enabled instead. Within your <code>server {</code> block, add the following lines but replace all of the instances of <code>example.com</code> with your own domain:</p>
+<div class="code-label " title="Nginx configuration additions — 1 of 3">Nginx configuration additions — 1 of 3</div><pre class="code-pre "><code langs="">        listen 443 ssl;
+
+        server_name <span class="highlight">example.com</span> www.<span class="highlight">example.com</span>;
+
+        ssl_certificate /etc/letsencrypt/live/<span class="highlight">example.com</span>/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/<span class="highlight">example.com</span>/privkey.pem;
+</code></pre>
+<p>This enables your server to use SSL, and tells it to use the Let's Encrypt SSL certificate that we obtained earlier.</p>
+
+<p>To allow only the most secure SSL protocols and ciphers, and use the 
+strong Diffie-Hellman group we generated, add the following lines to the
+ same server block:</p>
+<div class="code-label " title="Nginx configuration additions — 2 of 3">Nginx configuration additions — 2 of 3</div><pre class="code-pre "><code langs="">        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+        ssl_prefer_server_ciphers on;
+        ssl_dhparam /etc/ssl/certs/dhparam.pem;
+        ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
+        ssl_session_timeout 1d;
+        ssl_session_cache shared:SSL:50m;
+        ssl_stapling on;
+        ssl_stapling_verify on;
+        add_header Strict-Transport-Security max-age=15768000;
+</code></pre>
+<p>Lastly, outside of the original server block (that is listening on 
+HTTPS, port 443), add this server block to redirect HTTP (port 80) to 
+HTTPS. Be sure to replace the highlighted part with your own domain 
+name:</p>
+<div class="code-label " title="Nginx configuration additions — 3 of 3">Nginx configuration additions — 3 of 3</div><pre class="code-pre "><code langs="">server {
+    listen 80;
+    server_name <span class="highlight">example.com</span> www.<span class="highlight">example.com</span>;
+    return 301 https://$host$request_uri;
+}
+</code></pre>
+<p>Save and exit.</p>
+
+<p>Test the configuration file for syntax errors by typing:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo nginx -t
+</li></ul></code></pre>
+<p>Once you have verified that there are no syntax errors, put the changes into effect by restarting Nginx:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo service nginx restart
+</li></ul></code></pre>
+<p>The Let's Encrypt TLS/SSL certificate is now in place. At this point,
+ you should test that the TLS/SSL certificate works by visiting your 
+domain via HTTPS in a web browser.</p>
+
+<p>You can use the Qualys SSL Labs Report to see how your server configuration scores:</p>
+<pre class="code-pre "><code langs=""><div class="secondary-code-label " title="In a web browser:">In a web browser:</div>https://www.ssllabs.com/ssltest/analyze.html?d=<span class="highlight">example.com</span>
+</code></pre>
+<p>This SSL setup should report an <strong>A+</strong> rating.</p>
+
+<div name="step-4-—-set-up-auto-renewal" data-unique="step-4-—-set-up-auto-renewal"></div><h2 id="step-4-—-set-up-auto-renewal">Step 4 — Set Up Auto Renewal</h2>
+
+<p>Let's Encrypt's certificates are only valid for ninety days. This is 
+to encourage users to automate their certificate renewal process. We'll 
+need to set up a regularly run command to check for expiring 
+certificates and renew them automatically.</p>
+
+<p>To run the renewal check daily, we will use <code>cron</code>, a standard system service for running periodic jobs. We tell <code>cron</code> what to do by opening and editing a file called a <code>crontab</code>.</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo crontab -e
+</li></ul></code></pre>
+<p>Your text editor will open the default crontab which is a text file 
+with some help text in it. Paste in the following line at the end of the
+ file, then save and close it:</p>
+<div class="code-label " title="crontab">crontab</div><pre class="code-pre "><code langs="">. . .
+15 3 * * * /usr/bin/certbot renew --quiet --renew-hook "/usr/sbin/service nginx reload"
+</code></pre>
+<p>The <code>15 3 * * *</code> part of this line means "run the following command at 3:15 am, every day". You may choose any time.</p>
+
+<p>The <code>renew</code> command for Certbot will check all 
+certificates installed on the system and update any that are set to 
+expire in less than thirty days. <code>--quiet</code> tells Certbot not to output information nor wait for user input. <code>--renew-hook "/usr/sbin/service nginx reload"</code> will reload Nginx to pick up the new certificate files, but only if a renewal has actually happened.</p>
+
+<p><code>cron</code> will now run this command daily. All installed 
+certificates will be automatically renewed and reloaded when they have 
+thirty days or less before they expire.</p>
+
+<p><span class="note">For more information on how to create and schedule cron jobs, you can check our <a href="https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-on-a-vps">How to Use Cron to Automate Tasks in a VPS</a> guide.<br></span></p>
+
+<div name="conclusion" data-unique="conclusion"></div><h2 id="conclusion">Conclusion</h2>
+
+<p>That's it! Your web server is now using a free Let's Encrypt TLS/SSL certificate to securely serve HTTPS content.</p>
+
+    </div>
+</div>
+
+<div class="tutorial-footer">
+  <div class="tutorial-footer-details">
+
+  <div class="postable-info-bar-container">
+  <div class="postable-info-bar">
+    <div class="left-section">
+        <div class="tutorial-author-avatar">
+    <a href="https://www.digitalocean.com/community/users/manicas"><div class="mod-avatar mod-avatar-small"><img alt="manicas" class="avatar avatar-small" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/695da9dd73504edfc622c9be380cb3cb.jpeg" width="80" height="80"><span class="mod-star" title="" data-toggle="tooltip" data-container="body" data-original-title="MOD"><span class="mod-star-icon"></span></span></div></a>
+  </div>
+  <div class="author-and-date">
+    <div class="tutorial-author">
+      <div class="by">By: </div>
+      <a href="https://www.digitalocean.com/community/users/manicas">Mitchell Anicas</a>
+    </div>
+  </div>
+
+    </div>
+    <div class="right-section">
+      <div class="upvote-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="1838" data-upvotable-type="Tutorial" data-include-caret="false"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-heart"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-heart"></use></svg></span><span class="new-upvote-text">Upvote</span><span class="new-upvote-count">407</span></button>
+      </div>
+      <div class="section-item section-item-subscribe">
+  <span class="opt-in-switch off signed-out-subscribe">
+    <span class="subscribe-label">
+      <span class="icon icon-subscribe"></span>
+      <span class="subscription-label subscribe">Subscribe</span>
+      <span class="icon icon-subscribed"></span>
+      <span class="subscription-label subscribed">Subscribed</span>
+    </span>
+    <a data-toggle="modal" data-target="#sign-in-modal" class="mini-switch-container" href="javascript:void(0);"><div class="mini-switch off signed-out-subscribe"><div class="switch-handle"></div></div></a>
+  </span>
+</div>
+
+<div class="section-item social-sharing-item">
+  <div class="sharing">
+  <a class="share-button" href="#" data-toggle="modal" data-target="#share-modal">
+    <span class="icon icon-share-square"></span>
+    <span class="share-button-text">Share</span>
+  </a>
+</div>
+
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+  <div class="section-content tutorial-contributors one">
+
+
+  </div>
+</div>
+
+
+  
+    <div class="tutorial-ctas" style="background-image:url(https://assets.digitalocean.com/labs/btp/general.png); background-color:#1b78f8; background-position:bottom center; overflow:hidden;">
+  <div class="section-content">
+    <div class="cta-description">
+      <h2 style="color: rgb(255, 255, 255);">Get started on DigitalOcean with free $10 credit</h2>
+
+      <p style="color: rgb(255, 255, 255); padding: 15px 0px; line-height: 1.3em;">You’ve
+ read five tutorials on DigitalOcean this week and are well on your way 
+to managing your infrastructure. Test your newfound knowledge by trying 
+out DigitalOcean with $10 in free credit.</p>
+
+      <a class="cloud-tutorial-cta" href="https://cloud.digitalocean.com/registrations/new?refcode=74a1c5d63dac&amp;utm_medium=btp_buildmode_ft_test" style="background:#FFF;color:#0069FF;">Create a Free Account</a>
+    </div>
+  </div>
+</div>
+    <div class="related-tutorials">
+    <div class="section-content">
+      <h2>Related Tutorials</h2>
+
+      <ul>
+        <li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-matrix-synapse-on-ubuntu-16-04">How To Install Matrix Synapse on Ubuntu 16.04</a></li>
+<li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/an-introduction-to-let-s-encrypt">An Introduction to Let's Encrypt</a></li>
+<li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-bro-on-ubuntu-16-04">How to Install Bro on Ubuntu 16.04</a></li>
+<li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-use-webmin-on-centos-7">How To Install and Use Webmin on CentOS 7</a></li>
+<li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-create-a-status-page-with-cachet-on-debian-8">How To Create a Status Page with Cachet on Debian 8</a></li>
+
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="content-comments">
+  <div class="section-content">
+    <div class="tutorial commentable" id="tutorial_1838">
+
+  <div class="comments-header">
+    <h4 class="comments-count"><span>223 Comments</span></h4>
+  </div>
+
+  <div class="response response-form no-avatar">
+  <div class="js-display-on-error flash error hidden"></div>
+
+
+  <form class="content-form disabled-form" id="new_comment" action="/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" value="✓" disabled="disabled" type="hidden">
+
+    <div class="meltdown_wrap" style="height: auto;"><div class="meltdown_topmargin"></div><div class="meltdown_bar"><ul class="meltdown_controls meltdown_controls_preview"><li class="meltdown_control-preview meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Toggle Preview"><span>Preview</span></li></ul><div class="preview-header">Markdown Preview</div><ul class="meltdown_controls meltdown_controls_main"><li class="meltdown_control-bold meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Bold"><span unselectable="on">B</span></li><li class="meltdown_control-italics meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Italics"><span unselectable="on">I</span></li><li class="meltdown_control-h1 meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Header 1"><span unselectable="on">H1</span></li><li class="meltdown_control-h2 meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Header 2"><span unselectable="on">H2</span></li><li class="meltdown_control-h3 meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Header 3"><span unselectable="on">H3</span></li><li class="meltdown_control-ul meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Unordered List"><span unselectable="on">UL</span></li><li class="meltdown_control-ol meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Ordered List"><span unselectable="on">OL</span></li><li class="meltdown_control-link meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Link"><span unselectable="on">Link</span></li><li class="meltdown_control-code meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Code"><span unselectable="on">Code</span></li><li class="meltdown_control-highlight meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Highlight"><span unselectable="on">Highlight</span></li><li class="meltdown_control-table meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Table"><span unselectable="on">Table</span></li></ul></div><div class="meltdown_editor-wrap"><div class="meltdown_editor-deco"><textarea name="comment[content]" id="comment_content" placeholder="Leave a comment..." class="js-comment-content tutorial-comment-field meltdown_editor" data-markdown="true" disabled="disabled" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 120px;"></textarea></div></div><div class="meltdown_preview-wrap"><div class="meltdown_preview-wrap2"><div class="meltdown_preview-error-message">Could not load preview. <a href="#">Try again</a></div><div class="meltdown_preview-loading-message">Loading preview...</div><div class="meltdown_preview content-body"></div></div></div><div class="meltdown_bottommargin"></div></div>
+
+      <div class="log-in-notice "><a href="https://www.digitalocean.com/community/auth/digitalocean">Log In to Comment</a></div>
+
+    <div class="clearfix"></div>
+</form>
+</div>
+
+
+  <div class="comments">
+    <ul class="response-list">
+          <a class="hidden" rel="nofollow" data-remote="true" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments">Load</a>
+    <li id="comment_41243" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41243" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">7</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/adamatan">adamatan</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41243">December 17, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Great article, and you were crazy-fast with the publication - a jiffy after the public beta is out. Kudos!</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41243">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+    
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41243"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41246" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41246" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/jermdw">jermdw</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41246">December 18, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>great job, i was looking for how to do it 
+on nginx, set it up easy enough for an owncloud server running apache, 
+this made it super easy to secure a reverse proxy i am running using 
+nginx, which i prefer. thanks!</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41246">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41246"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41255" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41255" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">3</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/hannupekka">hannupekka</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41255">December 18, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Line </p>
+<pre class="code-pre "><code langs="">netstat -na | 'grep :80.*LISTEN'
+</code></pre>
+<p>should be</p>
+<pre class="code-pre "><code langs="">netstat -na | grep ':80.*LISTEN'
+</code></pre></div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41255">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_41274" data-level="1" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41274" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">1</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/manicas">manicas</a></span>
+          <span class="mod-badge">MOD</span>
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41274">December 18, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Thanks for catching that. Fixed.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41274">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41274"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41255"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41267" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41267" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/bojanrnr">bojanrnr</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41267">December 18, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Does port 80 have to be always open in 
+order for this to work? I mean, what if I have some websites that are 
+still http, so nginx would be listening to port 80 for them... </p>
+
+<p>Do I have to set https for all my websites and make sure the the port
+ 80 is not used by nginx ever, in order for this standalone plugin to 
+work?</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41267">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_41273" data-level="1" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41273" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/manicas">manicas</a></span>
+          <span class="mod-badge">MOD</span>
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41273">December 18, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>The standalone plugin can work either on 
+port 80 or 443 (if you specify a different option). Because it runs its 
+own web server, one of those ports needs to be open when you 
+request/renew a certificate.</p>
+
+<p>The webroot plugin, that is used in the renew section, requires that 
+your web server responds on port 80 and can serve the hidden directory 
+is created.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41273">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41273"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41267"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41320" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41320" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/marshyon">marshyon</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41320">December 20, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>This is a great tutorial on lets encrypt 
+with nginx. I have got pretty much everything working as expected. I'm 
+not certain if it's required but I made the 'root' directory as 
+specified in the .ini file to be writeable by the user under which the 
+web server runs. I will experiment further to see if this is really 
+necessary.</p>
+
+<p>A question :</p>
+
+<p>The script that is run under cron to check for the renewal status of 
+the certificates - does this need to be run as a user that can 'sudo' 
+without a password ? I would have thought this to be the case but it is 
+not mentioned here or in the tutorial for setting sudo up to which is 
+referred. If so, would it be wise to limit the commands that can be run 
+by this user to be just the renewal script and nothing else ?</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41320">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_41338" data-level="1" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41338" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/manicas">manicas</a></span>
+          <span class="mod-badge">MOD</span>
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41338">December 21, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Hey there. Yes, the script needs to be run by a user that has superuser privileges without a password. The <code>sudo crontab -e</code> command edits the root user's crontab, so the script will run as root.</p>
+
+<p>It is possible to set up a separate user with passwordless sudo, if you want.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41338">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41338"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41320"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41347" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41347" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/robvdw">robvdw</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41347">December 21, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Great article!</p>
+
+<p>Small detail: you are downloading the le-renew-webroot script to 
+/usr/local/sbin, but have /usr/sbin/le-renew-webroot in the crontab</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41347">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41347"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41378" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41378" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/stefk">stefk</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41378">December 22, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Great article, thanks!</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41378">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41378"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41391" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41391" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">1</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/jesusam">jesusAM</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41391">December 22, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Great article, thank you very much! </p>
+
+<p>I've followed the steps to allow only the most secure SSL protocols 
+and ciphers. However, Chromium says my web is encrypted with an obsolete
+ ciphersuite (roughly, because I'm using the Spanish version). It uses 
+AES-256-CBC, HMAC-SHA1 and ECDHE_RSA. Should it use HMAC-SHA256 instead?
+ Why is this happening?</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41391">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_41430" data-level="1" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41430" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/m-kornobis">m.kornobis</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41430">December 23, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>The same issue I am facing and I would appreciate to get advice</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41430">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41430"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41527" data-level="1" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41527" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">4</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/philipsampaio">philipsampaio</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41527">December 27, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>I was getting the same message from Chrome. After reading <a href="https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html#The_Cipher_Suite" rel="nofollow">this article</a>, I changed the <code>ssl_ciphers</code> configuration to something like: </p>
+<pre class="code-pre "><code langs="">ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
+</code></pre>
+<p>And it works fine.<br>
+BTW, I recommend reading the <a href="https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html" rel="nofollow">full article</a>. And I also recommend <a href="https://www.ssllabs.com/ssltest/index.html" rel="nofollow">this tool</a> to verify your SSL configuration.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41527">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_41697" data-level="2" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41697" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">2</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/jesusam">jesusAM</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41697">January  2, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>That test is awesome, thank you!</p>
+
+<p>I solved it using <a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/" rel="nofollow">Mozilla SSL Configuration Generator</a>. I think it's really useful.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41697">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41697"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41527"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41391"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41411" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41411" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">1</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/alexweissman">alexweissman</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41411">December 23, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>The <code>./letsencrypt-auto certonly --standalone</code> command seems to fail, telling me that the domain name contains invalid characters.</p>
+
+<p>I believe this is supposed to be:<br>
+<code>./letsencrypt-auto certonly --standalone -d example.com</code></p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41411">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41411"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41429" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41429" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/m-kornobis">m.kornobis</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41429">December 23, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Really easy, I'm loving it!</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41429">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41429"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41446" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41446" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">3</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/pjcarly">pjcarly</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41446">December 24, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>i'm having errors, I believe it's because 
+my nginx configuration (from the one-click-app drupal install) blocks 
+hidden directories. Could you perhaps add a block to the nginx 
+configuration that allows the .well-known/acme-challenge directory</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41446">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_42611" data-level="1" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="42611" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/ose6fe5dcf405a2">ose6fe5dcf405a2</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=42611">January 24, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>I had the same problem but found this elegant solution:</p>
+
+<p>server {<br>
+  listen              80;<br>
+  listen              [::]:80;<br>
+  server<em>name         example.net example.org;<br>
+  location '/.well-known/acme-challenge' {<br>
+  default</em>type "text/plain";<br>
+    root        /tmp/letsencrypt-auto;<br>
+  }</p>
+
+<p>location / {<br>
+    return              301 https://$server<em>name$request</em>uri;<br>
+  }<br>
+}</p>
+
+<p><a href="https://gist.github.com/renchap/c093702f06df69ba5cac" rel="nofollow">https://gist.github.com/renchap/c093702f06df69ba5cac</a></p>
+
+<p>This way you can also remove the location from your ssl sever configuration.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_42611">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_46818" data-level="2" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="46818" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/estadamx">estadamx</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=46818">May 10, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>I'm also having problems, not sure if its the same. Its says "The server could not connect to the client to verify the domain"</p>
+
+<p>I tried the solution as provided by the link, but also doesnt work. Now I have a few questions, do you keep the server<em>name as example.net and example.org? Or do you change it to your domain names? I tried both and didn't work. Also, with $server</em>name$request_uri, do you change anything?</p>
+
+<p>Im using a Rails droplet on Ubuntu 14.04 with Nginx. All help appreciated!</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_46818">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_46818"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_42611"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41446"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41533" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41533" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">1</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/baslangenberg">baslangenberg</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41533">December 28, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>First of all, thank you for this very nice article! I used this on a Centos 7.2 box and it worked like a charm!</p>
+
+<p>I ran into an 'issue', I got only a B at SSL labs using this 
+configuration. I fixed it by generating a custom diffie hellman 2048 
+primes set as described on this page.</p>
+
+<p><a href="https://weakdh.org/sysadmin.html" rel="nofollow">https://weakdh.org/sysadmin.html</a></p>
+
+<p>Maybe you can update your guide with this, if you find it relevant.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41533">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41533"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41540" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41540" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/stefanfromcodeplant">stefanfromcodeplant</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41540">December 28, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Thanks, great article! It worked on my 
+Debian 8 minimal installation, with only one little glitch: I had to 
+install bc tool manually, in order to get the le-renew-webroot script to
+ work.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41540">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41540"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41595" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41595" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/metamesa">metamesa</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41595">December 30, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Thanks for this great tutorial!</p>
+
+<p>I'm sure that, with advanced bash scripting skills, it should be possible to adapt the <em>le-renew-webroot</em> script to handle multiple virtual hosts, but my bash skills are not what they should be.</p>
+
+<p>In the meantime, will it be okay to create a script and a matching cli config file for each virtual host?</p>
+
+<p>E.g.</p>
+<pre class="code-pre "><code langs="">/usr/local/sbin/le-renew-mywebsite.com
+/usr/local/sbin/le-renew-anotherwebsite.org
+...
+</code></pre>
+<p>with corresponding config files:</p>
+<pre class="code-pre "><code langs="">/usr/local/etc/le-renew-mywebsite.com.ini
+/usr/local/etc/le-renew-anotherwebsite.org.ini
+...
+</code></pre>
+<p>Thanks.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41595">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_41969" data-level="1" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41969" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">1</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/littleguga">littleguga</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41969">January 10, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>I created a simple script for multiply domains <a href="https://gist.github.com/littleguga/6fba83b7660f3ee8c90d" rel="nofollow">github gist here</a></p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41969">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_41971" data-level="2" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41971" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/metamesa">metamesa</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41971">January 10, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Thanks for this. If I'm reading the code 
+correctly, it looks as if I'll need a .ini file for each domain, but I 
+will need just one bash script. That will help a lot. </p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41971">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_41992" data-level="3" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41992" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/littleguga">littleguga</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41992">January 10, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Sorry, i forgot the instructions: in script
+ the var 'config_path', by default it is '/usr/local/letssl/'. Put there
+ .ini file for each domain/subdomain(if it have another root directory).</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41992">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41992"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41971"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41969"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41595"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41601" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41601" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">4</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/yvmarques">yvmarques</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41601">December 30, 2015</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Great article, thanks !</p>
+
+<p>I guess there is a little mistake here : </p>
+<pre class="code-pre "><code langs="">30 2 * * 1 /usr/sbin/le-renew-webroot &gt;&gt; /var/log/le-renewal.log
+</code></pre>
+<p>It should be</p>
+<pre class="code-pre "><code langs="">30 2 * * 1 /usr/local/sbin/le-renew-webroot &gt;&gt; /var/log/le-renewal.log
+</code></pre></div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41601">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41601"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41668" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41668" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/zxcvbn">zxcvbn</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41668">January  1, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Mitchell, </p>
+
+<p>Excellent write up! Can't give you enough kudos for this article, great stuff : )</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41668">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41668"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41703" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41703" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/xixiao007">XiXiao007</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41703">January  2, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>I have a nginx reverse-proxy listening to 
+port 80 and 443 (with HTTPS enabled), it routes the traffic to another 
+nginx web server sitting behind.<br>
+In this scenario, am I able to use the script to auto-renew certs? I would assume the answer is <code>no</code> since the website has no port80 directly exposing to internet?</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41703">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_41704" data-level="1" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41704" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/xixiao007">XiXiao007</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41704">January  2, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>or is the reverse-proxy able to take the role to renew the certs?</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41704">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_42031" data-level="2" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="42031" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/ztl8702">ztl8702</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=42031">January 11, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>I think yes. You just need to map the location <code>/.well-known</code> to static file, while keeping other urls proxied.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_42031">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_48327" data-level="3" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="48327" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/andrew8712">andrew8712</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=48327">June 24, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Could you provide a piece of config file related to this? I can't figure how to use renew with nginx reverse proxy</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_48327">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_48327"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_53785" data-level="3" class="comment-container">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="53785" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/kalimetric">Kalimetric</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=53785">December 13, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>I would also like to see a little more detail regarding this if possible, as I have the same set up.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_53785">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+    
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_53785"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_42031"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41704"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41703"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41707" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41707" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">1</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/abelokon">abelokon</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41707">January  2, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>This is great - thank you very much! It helped me a lot.. :)</p>
+
+<p>You may want to add in 'Nginx configuration additions — 3 of 3' your 
+domain with www before (to prevent errors in the renewal step):</p>
+<pre class="code-pre "><code langs="">    server_name example.com www.example.com;
+</code></pre>
+<p>Also I had to install bc to make your script work:</p>
+<pre class="code-pre "><code langs="">sudo apt-get install bc
+</code></pre></div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41707">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41707"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_41718" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-upvotable-id="41718" data-upvotable-type="Comment" data-include-caret="true"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">1</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/yuanmodu">YuanModu</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04?comment=41718">January  3, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>I need to publish both 80 and 443 ports in a
+ docker container in order to successfuly build the certs. Is it missed 
+in the tutorial (in verfy ports open section) or am I doing something 
+wrong?</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_41718">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_41718"></div>
+</div>
+    </div>
+
+  </li></ul><div class="comment-pagination"><span class="previous_page disabled">Previous</span> <em class="current">1</em> <a rel="next nofollow" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=2">2</a> <a rel="nofollow" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=3">3</a> <a rel="nofollow" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=4">4</a> <a rel="nofollow" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=5">5</a> <a rel="nofollow" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=6">6</a> <a rel="nofollow" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=7">7</a> <a rel="nofollow" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=8">8</a> <a class="next_page" rel="next nofollow" href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04/comments?page=2">Next</a></div>
+
+      <div class="comments-spinner" style="display: none;"><div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+</div>
+  </div>
+
+  <div class="load-more-container"><a class="load-more" href="javascript:void(0);"><span class="load-more-text">Load More Comments</span><div class="comments-spinner" style="display: none;"><div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+</div></a></div>
+</div>
+
+
+  </div>
+</div>
+
+<div class="creative-commons">
+  <a class="creative-commons-image" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img rel="license" alt="Creative Commons License" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/creativecommons-08b32a9279fcd47fcd78ac6a26331389.png"></a>
+    <div class="license-text">This work is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</div>
+</div>
+
+
+
+
+
+        <div class="clearfix"></div>
+      </div>
+
+      <footer class="Footer">
+  <span class="Footer-logo icon-sammy"></span>
+
+  <div>Copyright © 2017 DigitalOcean™ Inc.</div>
+
+  <ul class="Footer-nav">
+    <li><a href="https://www.digitalocean.com/community">Community</a></li>
+    <li><a href="https://www.digitalocean.com/community/tutorials">Tutorials</a></li>
+    <li><a href="https://www.digitalocean.com/community/questions">Questions</a></li>
+    <li><a href="https://www.digitalocean.com/community/projects">Projects</a></li>
+    <li><a href="https://www.digitalocean.com/community/tags">Tags</a></li>
+    <li><a href="https://www.digitalocean.com/community/newsletter">Newsletter</a></li>
+    <li>
+      <a href="https://www.digitalocean.com/community/tutorials/feed">
+        RSS <span class="icon-rss"></span>
+</a>    </li>
+  </ul>
+
+  <br>
+
+  <ul class="Footer-nav Footer-nav--secondary">
+    <li><a href="https://www.digitalocean.com/features/one-click-apps/">Distros &amp; One-Click Apps</a></li>
+    <li><a href="https://www.digitalocean.com/legal/terms/">Terms, Privacy, &amp; Copyright</a></li>
+    <li><a href="https://www.digitalocean.com/security/">Security</a></li>
+      <li><a data-toggle="modal" data-target="#sign-in-modal" href="#">Report a Bug</a></li>
+    <li><a href="https://www.digitalocean.com/community/get-paid-to-write">Get Paid to Write</a></li>
+    <li><a href="http://store.digitalocean.com/">Shop</a></li>
+  </ul>
+</footer>
+
+
+
+
+
+      <div id="sign-in-modal" class="modal fade mini-modal" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Almost there!</h1>
+        <a class="close-button" data-dismiss="modal" aria-label="close" href=""><span class="icon icon-close-light"></span></a>
+      </div>
+      <div class="modal-body">
+        <div class="sign-in-message">Sign into your account, or create a new one, to start interacting.</div>
+
+        <div class="sign-in-modal-actions">
+          <a class="sign-in-link button blue-button" data-default-url="/community/auth/digitalocean" href="https://www.digitalocean.com/community/auth/digitalocean">Log In</a>
+          <a class="sign-up-link button green-button" data-default-url="/community/auth/digitalocean?display=sessionless+register" href="https://www.digitalocean.com/community/auth/digitalocean?display=sessionless+register">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    
+  <script>
+    $(function() {
+      if (!!window.init_sharing) {
+        window.init_sharing();
+      }
+      new window.NewsletterSignup();
+      new window.GrowableMarkdown({ target: '[data-growable-markdown]' });
+
+      window.Bugsnag.beforeNotify = function(payload, metaData) {
+        // custom logic to determine groupingHash
+        metaData.groupingHash = "tutorialShow";
+      }
+    });
+  </script>
+
+  <div id="report-a-bug-modal" class="modal fade mini-modal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1>Report a Bug</h1>
+          <a class="close-button" data-dismiss="modal" aria-label="close" href=""><span class="icon icon-close-light"></span></a>
+        </div>
+        <div class="modal-body">
+          <div class="report-a-bug-message text-center">Use this form to report bugs related to the Community</div>
+          <div class="report-a-bug-actions do-form">
+            <div class="form-wrap">
+              <form class="new_bug_report" id="new_bug_report" action="/community/bug_reports" accept-charset="UTF-8" method="post"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="AMxWZYWEIfhTYsv0jBa0IYBIL4Z08XIZ83jK3QZEdL/etdqQxvE4VdDp415esSlN9h5WjS9rndUZzbUN7mHRMQ==" type="hidden">
+                <fieldset name="report-a-bug-info">
+                <legend class="sr-only">Report a bug:</legend>
+                  <div class="field">
+                    <label for="bug_reporter_name" class="sr-only">Name</label>
+                    <input placeholder="Name" id="bug_reporter_name" name="bug_report[name]" type="text">
+                  </div>
+                  <div class="field">
+                    <label for="bug_reporter_email" class="sr-only">Email</label>
+                    <input name="Email" placeholder="Email" id="bug_reporter_email" required="required" type="text">
+                  </div>
+                  <div class="field">
+                    <label for="bug_reporter_message" class="sr-only">Message</label>
+                    <textarea name="Message" placeholder="Message" id="bug_reporter_message" required="required" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 125px;"></textarea>
+                  </div>
+
+                  <div class="field actions">
+                    <input name="commit" value="Submit" class="button" type="submit">
+                  </div>
+                </fieldset>
+</form>            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    
+  
+
+<textarea tabindex="-1" aria-hidden="true" ,="" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px none; padding: 0px; box-sizing: content-box; overflow-wrap: break-word; height: 0px !important; min-height: 0px !important; overflow: hidden; transition: none 0s ease 0s ; font-family: &quot;proxima-nova&quot;,sans-serif; font-size: 17px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; word-spacing: 0px; text-indent: 0px; line-height: 23.8px; width: 58px;" class="autosizejs" id="autosizejs">Message
+</textarea><a id="scrollUp" href="#top" style="position: fixed; z-index: 1000; display: none;">Scroll to top</a><div id="scrollUp-active" style="position: absolute; top: 300px; width: 100%; border-top: 1px dotted rgb(0, 255, 255); z-index: 1000;"></div><script type="text/javascript" id="">var
+ 
+wait_count=0,jQWait=window.setInterval(function(){window.jQuery&&function(){window.clearInterval(window.jQWait);var
+ 
+f=window.BelowTutorialPanel=function(b){$.extend(this,{activeTest:"default",panelBodyTarget:"div.tutorial-ctas",panelContentTarget:"div.cta-description",relatedLinksTarget:"div.related-tutorials",tagSelector:'a.tag:contains("$TAG")',experimentName:"Below
+ Tutorial 
+Panel",tutorialRecommendationPath:"https://assets.digitalocean.com/labs/tutorial_recommendations/",scrollCheckInterval:1E3},
+b||{},{event_fired:!1});this.initialize()};$.extend(f.prototype,{initialize:function(){this.$panelBody=$($(this.panelBodyTarget).get(0));this.$relatedLinks=$(this.relatedLinksTarget);this.userTraits={};this.analyticsActive()&&(this.userTraits=window.analytics.user().traits());this.audience=this.getAudience(Object.keys(this.panelData),this.parseCookies(document.cookie),this.userTraits);this.panel=this.getPanel(this.panelData[this.audience]);this.panelContent=this.panel.content[Math.floor(Math.random()*
+this.panel.content.length)];this.$panelBody.attr("style",this.panel.style||"").find("h2").text(this.panelContent.title||"").css({color:this.panel.darkBG?"#FFF":"inherit"}).end().find("p").html(this.panelContent.desc||"").css({color:this.panel.darkBG?"#FFF":"inherit",padding:"15px
+ 
+0","line-height":"1.3em"}).end().find(".cloud-tutorial-cta").text(this.panelContent.cta||"").attr("style",this.panel.darkBG?"background:#FFF;color:#0069FF;":"").attr("href",this.panelContent.url+(0<this.panelContent.url.indexOf("?")?
+"\x26":"?")+"utm_medium\x3dbtp_"+this.audience+"_"+this.panel.name);"recommendation_algo"===this.panel.name?this.loadRecommendations($("body").data("tutorial-id"),this.panel.template,this.panel.template_short):this.initTracking(this.$panelBody.offset().top,this.$panelBody.height(),this.audience+"
+ \x3e "+this.panel.name+" \x3e 
+"+this.panelContent.cta||"",this.$panelBody.find("a"))},loadRecommendations:function(b,e,a){$.getJSON(this.tutorialRecommendationPath+b+".json",function(a){var
+ b=a.length,c,
+g,f="{SLUG} {TITLE} {DESC} {LIKES} {DATE} {COMMENTS}".split(" 
+"),k="";if(0<b){for(c=0;c<b&&2>c;c++){var 
+h=e;for(g=0;g<f.length;g++)h=h.replace(f[g],a[c][g]);k+=h.replace("{FIRST}",0==c?"margin-right:15px;":"")}this.$panelBody.find("h2").after('\x3cdiv
+ style\x3d"text-align:center; padding:15px 
+0;"\x3e'+k+"\x3c/div\x3e").end().find("p, 
+.cloud-tutorial-cta").remove();this.$relatedLinks.remove();this.initTracking(this.$panelBody.offset().top,this.$panelBody.height(),this.audience+"
+ \x3e "+this.panel.name+
+" \x3e 
+"+this.panelContent.cta||"",this.$panelBody.find("a"))}}.bind(this)).error(function(){var
+ 
+b="",d;for(d=0;4>d;d++)b+=a.replace("{FIRST}",0==d%2?"margin-right:15px;":"").replace("{TITLE}",this.$relatedLinks.find(".related-link").eq(d).text()).replace("{SLUG}",this.$relatedLinks.find(".related-link").eq(d).attr("href"));this.$panelBody.find("h2").after('\x3cdiv
+ style\x3d"text-align:center; padding:15px 
+0;"\x3e'+b+"\x3c/div\x3e").end().find("p, 
+.cloud-tutorial-cta").remove();this.$relatedLinks.remove();
+this.initTracking(this.$panelBody.offset().top,this.$panelBody.height(),this.audience+"
+ (fallback) \x3e "+this.panel.name+" \x3e 
+"+this.panelContent.cta||"",this.$panelBody.find("a"))}.bind(this))},getPanel:function(b){var
+ e=b.length,a,c,d=[];for(a=0;a<e;a++){if("tags"in 
+b[a])for(c=0;c<b[a].tags.length;c++)if(0<$(this.tagSelector.replace("$TAG",b[a].tags[c])).length)return
+ b[a];"priority"in 
+b[a]&&d.push({panel:a,priority:b[a].priority})}if(0<d.length)for(a=0;a<d.length;a++)if(Math.random()<d[a].priority)return
+ b[d[a].panel];
+return 
+b[Math.floor(Math.random()*e)]},getAudience:function(b,e,a){return-1<b.indexOf("customers")&&("signed_in"in
+ e||"ajs_user_id"in 
+e&&10<e.ajs_user_id.length)?"customers":-1<b.indexOf("refcode")&&"refcode"in
+ e?"refcode":-1<b.indexOf("buildmode")&&"recent"in a&&a.recent 
+instanceof 
+Array&&4===a.recent.length&&2===a.recent[3].length&&8>Math.round(+new 
+Date/864E5)-a.recent[3][1]?"buildmode":-1<b.indexOf("regulars")&&"recent"in
+ a&&a.recent instanceof 
+Array&&4===a.recent.length&&2===a.recent[3].length&&
+30>Math.round(+new 
+Date/864E5)-a.recent[3][1]?"regulars":"everyone_else"},analyticsActive:function(){return"object"===typeof
+ window.analytics},parseCookies:function(b){b=b.split(";");var 
+e={},a;for(a=0;a<b.length;a++){var 
+c=b[a].split("\x3d");e[c[0].trim()]=c[1].trim()}return 
+e},convertToId:function(b){return"string"===typeof 
+b?b.replace(/\W+/g,"_").toLowerCase():""},initTracking:function(b,e,a,c){if(this.analyticsActive()){var
+ 
+d,f=window.setInterval(function(){d=$(window).scrollTop();d+$(window).height()>
+b-e&&(window.clearInterval(f),analytics.track("Experiment
+ 
+Viewed",{experimentId:this.convertToId(this.experimentName),experimentName:this.experimentName,variationId:this.convertToId(a),variationName:a}))}.bind(this),1E3);analytics.trackLink(c,"Experiment
+ 
+Success",{experimentId:this.convertToId(this.experimentName),experimentName:this.experimentName,variationId:this.convertToId(a),variationName:a})}}});new
+ 
+f({panelData:{refcode:[{name:"referrals",style:"background-image:url(https://assets.digitalocean.com/labs/btp/referrals.png);
+ background-color:#1b78f8; background-position:bottom center;",
+darkBG:!0,content:[{title:"Your free credit awaits!",desc:"Sign up to 
+redeem your credit, and start deploying your sites and apps within 
+minutes.",cta:"Use Your 
+Credit",url:"https://cloud.digitalocean.com/registrations/new"},{title:"Free
+ credit active.",desc:"You came to digitalocean.com via 
+someone\x26apos;s referral link in the past month,\x3cbr\x3e making you 
+eligible for $10 credit when you sign up for an account.",cta:"Redeem 
+Credit",url:"https://cloud.digitalocean.com/registrations/new"}]}],
+customers:[{name:"highcpu",priority:.5,style:"background-image:url(https://assets.digitalocean.com/labs/btp/highcpu.png);
+ background-color:#1b78f8; background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"Introducing High CPU 
+Droplets",desc:"Spin up droplets with a new industry-leading CPU for 
+compute intensive tasks like high-load app-servers and queue/batch 
+processing.",cta:"Get Access 
+Here",url:"https://www.digitalocean.com/products/compute/high-cpu/"}]},{name:"objectstorage",
+priority:.5,style:"background-image:url(https://assets.digitalocean.com/labs/btp/objectstorage.png),
+ linear-gradient(to right, #04338b, #040434);  
+background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"Early access to Object 
+Storage",desc:"Store and serve a virtually unlimited amount of data. 
+Sign up for early access and receive 1TB of free usage until October 31,
+ 2017.",cta:"Learn 
+More",url:"https://www.digitalocean.com/products/storage/object-storage/"}]},{name:"firewalls",
+tags:["Firewall"],style:"background-image:url(https://assets.digitalocean.com/labs/btp/firewalls.png);
+ background-color:#1b78f8; background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"New on DigitalOcean: 
+Cloud Firewalls",desc:"Secure your infrastructure and define what 
+services are visible on your Droplets. Cloud Firewalls are free and 
+perfect for staging and production deployments.",cta:"Get started with 
+Firewalls",url:"https://cloud.digitalocean.com/networking/firewalls"}]},
+{name:"meetups",style:"background-image:url(https://assets.digitalocean.com/labs/btp/meetups.png);
+ background-color:#172232; background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"DigitalOcean, live from 
+your hometown",desc:"Meet developers of all skill levels to share 
+resources and form discussions around cloud and DevOps topics. Attend a 
+meetup, start one in your city, or apply to speak at one near 
+you.",cta:"Find a 
+Meetup",url:"https://www.meetup.com/pro/digitalocean/"}]},
+{name:"load-balancers",tags:["Load 
+Balancing"],style:"background-image:url(https://assets.digitalocean.com/labs/btp/load-balancers.png);
+ background-color:#1b78f8; background-position:bottom 
+center;",darkBG:!0,content:[{title:"Load Balancers now available on 
+DigitalOcean",desc:"Distribute traffic across your infrastructure, 
+managed from the control panel or API.",cta:"Learn 
+More",url:"https://cloud.digitalocean.com/networking/load_balancers"}]}],buildmode:[{name:"ft_test",style:"background-image:url(https://assets.digitalocean.com/labs/btp/general.png);
+ background-color:#1b78f8; background-position:bottom center; 
+overflow:hidden;",
+darkBG:!0,content:[{title:"Get started on DigitalOcean with free $10 
+credit",desc:"You\u2019ve read five tutorials on DigitalOcean this week 
+and are well on your way to managing your infrastructure. Test your 
+newfound knowledge by trying out DigitalOcean with $10 in free 
+credit.",cta:"Create a Free 
+Account",url:"https://cloud.digitalocean.com/registrations/new?refcode\x3d74a1c5d63dac"},{title:"Get
+ started on DigitalOcean with free $10 credit",desc:"Cheers to you, 
+voracious reader of Community Tutorials. You've read five tutorials in 
+the last week!\x3cbr/\x3eIf you haven't already spun up servers on DO, 
+here's $10 to give it a try.",
+cta:"Create an Account to Redeem 
+Credit",url:"https://cloud.digitalocean.com/registrations/new?refcode\x3d74a1c5d63dac"}]}],regulars:[{name:"deploy",content:[{title:"Spin
+ up an SSD cloud server in under a minute.",desc:"Simple setup. Full 
+root access. Straightforward pricing.",cta:"Deploy 
+Server",url:"https://cloud.digitalocean.com/registrations/new"}]},{name:"firewalls",tags:["Firewall"],style:"background-image:url(https://assets.digitalocean.com/labs/btp/firewalls.png);
+ background-color:#1b78f8; background-position:bottom center; 
+padding-top:-10px;",
+darkBG:!0,content:[{title:"New on DigitalOcean: Cloud 
+Firewalls",desc:"Secure your infrastructure and define what services are
+ visible on your Droplets. Cloud Firewalls are free and perfect for 
+staging and production deployments.",cta:"More on Cloud 
+Firewalls",url:"https://blog.digitalocean.com/cloud-firewalls-secure-droplets-by-default/"}]},{name:"oneclicks",style:"background-image:url(https://assets.digitalocean.com/labs/btp/oneclicks.png),
+ linear-gradient(to bottom, #4e9afb 0%,#0b7fff 100%); 
+background-position:bottom center; padding-top:-10px;",
+darkBG:!0,content:[{title:"Pre-built applications on 
+DigitalOcean",desc:"Get straight to deploying your code using one of our
+ pre-configured images supporting Node.js, Rails, Redis, MongoDB, 
+Cassandra, Docker, and many more.",cta:"View 
+One-Clicks",url:"https://www.digitalocean.com/products/one-click-apps/"}]},{name:"recommendation_algo",style:"background-image:url(https://assets.digitalocean.com/labs/btp/general.png);
+ background-color:#1b78f8; background-position:bottom center; 
+overflow:hidden;",
+darkBG:!0,template:'\x3ca style\x3d"width:330px; height:130px; 
+border-radius:3px; padding:12px 15px 15px; float:left; 
+margin-bottom:100px; background-color: #f9fcff; color: #0080ff; border: 
+1px solid #7fc0ff; text-align:left; position:relative; {FIRST}" 
+href\x3d"/community/tutorials/{SLUG}?utm_medium\x3dbtb_algo"\x3e\x3cstrong
+ style\x3d"font-size:15px; line-height:1.3; width:100%; overflow: 
+hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: 
+-webkit-box; -webkit-line-clamp: 2;"\x3e{TITLE}\x3c/strong\x3e\x3chr 
+style\x3d"border-top:1px solid #0080ff; opacity:0.25;"\x3e\x3cspan 
+style\x3d"font-size: 13px; line-height:1.3; width:100%; overflow: 
+hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: 
+-webkit-box; -webkit-line-clamp: 2; 
+max-height:2.6em;"\x3e{DESC}\x3c/span\x3e\x3cdiv style\x3d"font-size: 
+13px; position: absolute; left: 15px; right: 15px; bottom: 10px;"\x3e 
+\x3cspan style\x3d"margin-right: 4px;"\x3e\x3csvg style\x3d"height: 
+12px; width: 12px; stroke: currentColor; position: relative; top: -1px; 
+color: #0080ff; vertical-align: middle;"\x3e\x3cuse 
+xmlns:xlink\x3d"http://www.w3.org/1999/xlink" 
+xlink:href\x3d"https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-comment"\x3e\x3c/use\x3e\x3c/svg\x3e
+ {COMMENTS}\x3c/span\x3e \x3cspan style\x3d"margin-right: 
+4px;"\x3e\x3csvg style\x3d"height: 12px; width: 12px; stroke: 
+currentColor; fill:#0080ff; position: relative; top: -1px; color: 
+#0080ff; vertical-align: middle;"\x3e\x3cuse 
+xmlns:xlink\x3d"http://www.w3.org/1999/xlink" 
+xlink:href\x3d"https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-heart"\x3e\x3c/use\x3e\x3c/svg\x3e
+ {LIKES}\x3c/span\x3e\x3cspan style\x3d"float:right; 
+opacity:0.5;"\x3e{DATE}\x3c/span\x3e\x3c/div\x3e\x3c/a\x3e',
+template_short:'\x3ca style\x3d"width:330px; height:40px; 
+border-radius:3px; padding:12px 15px 15px; float:left; 
+margin-bottom:20px; background-color: #f9fcff; color: #0080ff; border: 
+1px solid #7fc0ff; text-align:left; position:relative; {FIRST}" 
+href\x3d"{SLUG}?utm_medium\x3dbtb_algo"\x3e\x3cstrong 
+style\x3d"font-size:15px; line-height:1.3; width:100%; overflow: hidden;
+ text-overflow: ellipsis; -webkit-box-orient: vertical; display: 
+-webkit-box; -webkit-line-clamp: 
+2;"\x3e{TITLE}\x3c/strong\x3e\x3c/a\x3e',
+content:[{title:"Related Tutorials:",desc:"",cta:"View Related 
+Tutorial",url:""}]},{name:"meetups",style:"background-image:url(https://assets.digitalocean.com/labs/btp/meetups.png);
+ background-color:#172232; background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"DigitalOcean, live from 
+your hometown",desc:"Meet developers of all skill levels to share 
+resources and form discussions around cloud and DevOps topics. Attend a 
+meetup, start one in your city, or apply to speak at one near you.",
+cta:"Find a 
+Meetup",url:"https://www.meetup.com/pro/digitalocean/"}]},{name:"highcpu",style:"background-image:url(https://assets.digitalocean.com/labs/btp/highcpu.png);
+ background-color:#1b78f8; background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"Introducing High CPU 
+Droplets",desc:"Spin up servers with a new industry-leading CPU for 
+compute intensive tasks like high-load app-servers and queue/batch 
+processing.",cta:"Get Access 
+Here",url:"https://www.digitalocean.com/products/compute/high-cpu/"}]},
+{name:"objectstorage",style:"background-image:url(https://assets.digitalocean.com/labs/btp/objectstorage.png),
+ linear-gradient(to right, #04338b, #040434); background-position:bottom
+ center; padding-top:-10px;",darkBG:!0,content:[{title:"Introducing 
+Object Storage",desc:"Store and serve a virtually unlimited amount of 
+data. Sign up for early access and receive 1TB of free usage until 
+October 31, 2017.",cta:"Learn 
+More",url:"https://www.digitalocean.com/products/storage/object-storage/"}]}],everyone_else:[{name:"objectstorage",
+priority:.75,style:"background-image:url(https://assets.digitalocean.com/labs/btp/objectstorage.png),
+ linear-gradient(to right, #04338b, #040434); background-position:bottom
+ center; padding-top:-10px;",darkBG:!0,content:[{title:"Introducing 
+Object Storage",desc:"Store and serve a virtually unlimited amount of 
+data. Sign up for early access and receive 1TB of free usage until 
+October 31, 2017.",cta:"Learn 
+More",url:"https://www.digitalocean.com/products/storage/object-storage/"}]},{name:"firewalls",
+tags:["Firewall"],style:"background-image:url(https://assets.digitalocean.com/labs/btp/firewalls.png);
+ background-color:#1b78f8; background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"New on DigitalOcean: 
+Cloud Firewalls",desc:"Secure your infrastructure and define what 
+services are visible on your Droplets. Cloud Firewalls are free and 
+perfect for staging and production deployments.",cta:"More on Cloud 
+Firewalls",url:"https://blog.digitalocean.com/cloud-firewalls-secure-droplets-by-default/"}]},
+{name:"wallpapers",style:"background-image:url(https://assets.digitalocean.com/labs/btp/wallpapers.png);
+ background-color:#1b78f8; background-position:bottom 
+center;",darkBG:!0,content:[{title:"A work of art on your 
+desktop",desc:"Like our tutorial illustrations? Choose the right one for
+ your workspace from among dozens of original DigitalOcean 
+illustrations.",cta:"Find a 
+Wallpaper",url:"https://imgur.com/a/q6i58"}]},{name:"load-balancers",style:"background-image:url(https://assets.digitalocean.com/labs/btp/load-balancers.png);
+ background-color:#1b78f8; background-position:bottom center;",
+darkBG:!0,content:[{title:"Load Balancers now available on 
+DigitalOcean",desc:"Distribute traffic across your infrastructure, 
+managed from the control panel or API.",cta:"Learn 
+More",url:"https://www.digitalocean.com/products/load-balancer/"}]},{name:"recommendation_algo",style:"background-image:url(https://assets.digitalocean.com/labs/btp/general.png);
+ background-color:#1b78f8; background-position:bottom center; 
+overflow:hidden;",darkBG:!0,template:'\x3ca style\x3d"width:330px; 
+height:130px; border-radius:3px; padding:12px 15px 15px; float:left; 
+margin-bottom:100px; background-color: #f9fcff; color: #0080ff; border: 
+1px solid #7fc0ff; text-align:left; position:relative; {FIRST}" 
+href\x3d"/community/tutorials/{SLUG}?utm_medium\x3dbtb_algo"\x3e\x3cstrong
+ style\x3d"font-size:15px; line-height:1.3; width:100%; overflow: 
+hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: 
+-webkit-box; -webkit-line-clamp: 2;"\x3e{TITLE}\x3c/strong\x3e\x3chr 
+style\x3d"border-top:1px solid #0080ff; opacity:0.25;"\x3e\x3cspan 
+style\x3d"font-size: 13px; line-height:1.3; width:100%; overflow: 
+hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: 
+-webkit-box; -webkit-line-clamp: 2; 
+max-height:2.6em;"\x3e{DESC}\x3c/span\x3e\x3cdiv style\x3d"font-size: 
+13px; position: absolute; left: 15px; right: 15px; bottom: 10px;"\x3e 
+\x3cspan style\x3d"margin-right: 4px;"\x3e\x3csvg style\x3d"height: 
+12px; width: 12px; stroke: currentColor; position: relative; top: -1px; 
+color: #0080ff; vertical-align: middle;"\x3e\x3cuse 
+xmlns:xlink\x3d"http://www.w3.org/1999/xlink" 
+xlink:href\x3d"https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-comment"\x3e\x3c/use\x3e\x3c/svg\x3e
+ {COMMENTS}\x3c/span\x3e \x3cspan style\x3d"margin-right: 
+4px;"\x3e\x3csvg style\x3d"height: 12px; width: 12px; stroke: 
+currentColor; fill:#0080ff; position: relative; top: -1px; color: 
+#0080ff; vertical-align: middle;"\x3e\x3cuse 
+xmlns:xlink\x3d"http://www.w3.org/1999/xlink" 
+xlink:href\x3d"https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-heart"\x3e\x3c/use\x3e\x3c/svg\x3e
+ {LIKES}\x3c/span\x3e\x3cspan style\x3d"float:right; 
+opacity:0.5;"\x3e{DATE}\x3c/span\x3e\x3c/div\x3e\x3c/a\x3e',
+template_short:'\x3ca style\x3d"width:330px; height:40px; 
+border-radius:3px; padding:12px 15px 15px; float:left; 
+margin-bottom:20px; background-color: #f9fcff; color: #0080ff; border: 
+1px solid #7fc0ff; text-align:left; position:relative; {FIRST}" 
+href\x3d"{SLUG}?utm_medium\x3dbtb_algo"\x3e\x3cstrong 
+style\x3d"font-size:15px; line-height:1.3; width:100%; overflow: hidden;
+ text-overflow: ellipsis; -webkit-box-orient: vertical; display: 
+-webkit-box; -webkit-line-clamp: 
+2;"\x3e{TITLE}\x3c/strong\x3e\x3c/a\x3e',
+content:[{title:"Related Tutorials:",desc:"",cta:"View Related 
+Tutorial",url:""}]},{name:"monitoring",tags:["monitoring"],style:"background-image:url(https://assets.digitalocean.com/labs/btp/monitoring.png);
+ background-color:#1b78f8; background-position:bottom center; 
+padding-top:-10px;",darkBG:!0,content:[{title:"Free Performance 
+Monitoring and Alerting",desc:"Know how your Droplets are performing 
+over time and get notified whenever critical issues arise in your 
+infrastructure for free with Monitoring on DigitalOcean.",
+cta:"Learn 
+More",url:"https://www.digitalocean.com/products/monitoring/"},{title:"DigitalOcean
+ Monitoring",desc:"Collect metrics, monitor Droplet performance, and 
+receive alerts when \x3cbr\x3eproblems arise in your 
+infrastructure\u2014no configuration required. Coming 2017.",cta:"Read 
+More",url:"https://www.digitalocean.com/products/monitoring/"}]},{name:"d4d",style:"background-image:url(https://assets.digitalocean.com/labs/btp/d4d.png);
+ background-color:#1b78f8; background-position:bottom center; 
+padding-top:-10px;",
+darkBG:!0,content:[{title:"Need free Droplets for a presentation? 
+Let\u2019s talk.",desc:"Receive free infrastructure credits to power 
+your next tech talk or live demo. ",cta:"Learn 
+More",url:"https://www.digitalocean.com/droplets-for-demos/"},{title:"Open
+ Source Presentation Grants",desc:"Receive free infrastructure credits 
+to power your next tech talk or live demo. ",cta:"Learn 
+More",url:"https://www.digitalocean.com/droplets-for-demos/"}]}],inactive:[{tags:["disabled"],style:"background-image:url(https://assets.digitalocean.com/labs/btp/hatch.png);
+ background-color:#ffffff; background-position:bottom center; 
+padding-top:-10px;",
+content:[{title:"It\u2019s Hatchening!",desc:"Gain a stronger foothold 
+as you scale your startup with 12 months of infrastructure credit, 
+technical support, resources, and access to exclusive perks from the 
+Hatch community.",cta:"Read 
+More",url:"https://www.digitalocean.com/hatch/"}]},{name:"write4do",style:"background-image:url(https://assets.digitalocean.com/labs/btp/write4do.png);
+ background-color:#1b78f8; background-position:bottom 
+center;",darkBG:!0,content:[{title:"Write for DigitalOcean",desc:"Share 
+your technical expertise with an audience of millions.",
+cta:"Learn 
+More",url:""}]}]}})}();10<wait_count++&&window.clearInterval(window.jQWait)},100);</script><script type="text/javascript" id="">(function(){try{analytics&&analytics.ready(function(){var
+ 
+c=analytics.user().traits(),a=c.recent||[],d=[$("body").data("tutorial-id")||"",Math.round(new
+ Date/864E5)],e=a.length,b;for(b=0;b<e;b++)if(a[b]instanceof 
+Array&&a[b][0]===d[0]){a.splice(b,1);break}a.unshift(d);5<=a.length&&a.pop();c.recent=a;analytics.user().traits(c)})}catch(c){}})();</script><script type="text/javascript" id="">try{document.addEventListener("copy",function(a){window.getSelection&&$(window.getSelection().anchorNode).parents("pre").length&&analytics.track("Web
+ Interaction",{action:"Code 
+Copy",name:window.getSelection().toString().substring(0,64)+(64<window.getSelection().toString().length?"\u2026":"")})})}catch(a){};</script><script type="text/javascript" id="">try{var
+ 
+t_id=document.querySelector("body").getAttribute("data-tutorial-id");if(t_id&&0==parseInt(t_id,10)%2){if("/community/tutorials/an-introduction-to-haproxy-and-load-balancing-concepts"===window.location.pathname){var
+ 
+amp=document.createElement("link");amp.setAttribute("rel","amphtml");amp.setAttribute("href","https://assets.digitalocean.com/labs/amp/an-introduction-to-haproxy-and-load-balancing-concepts.html");document.head.appendChild(amp)}var
+ xhr=new 
+XMLHttpRequest;xhr.open("GET","https://assets.digitalocean.com/labs/tutorial_recommendations/"+
+window.location.pathname.replace("/community/tutorials/","")+".json");xhr.onload=function(){if(200===xhr.status){var
+ 
+a=document.createElement("script");a.setAttribute("type","application/ld+json");a.innerHTML=xhr.responseText;document.body.appendChild(a)}};xhr.send()}}catch(a){};</script><script type="application/ld+json">{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "How To Secure Nginx with Let&#x27;s Encrypt on Ubuntu 14.04",
+  "headline": "How To Secure Nginx with Let&#x27;s Encrypt on Ubuntu 
+14.04",
+  "description": "In this tutorial, we will show you how to use 
+Let&#x27;s Encrypt to obtain a free SSL certificate and use it with 
+Nginx on Ubuntu 14.04. We will also show you how to automatically renew 
+your SSL certificate. If you&#x27;re running a different web server, 
+simply follow your web server&#x27;s documentation to learn how to use 
+the certificate with your setup.  ",
+  "keywords":"Nginx, Let&#x27;s Encrypt, Security, Ubuntu",
+  "url": 
+"https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04",
+
+  "mainEntityOfPage": {
+     "@type": "URL",
+     "@id": 
+"https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04"
+
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": 
+"https://community-cdn-digitalocean-com.global.ssl.fastly.net/assets/tutorials/images/large/Let&#x27;s_Encrypt_nginx_tw_mostov.jpg",
+
+    "height": "375",
+    "width": "750"
+  },
+
+  "author": {
+    "@type": "Person",
+    "name": "Mitchell Anicas",
+    "@id": "manicas"
+  },
+
+  "datePublished": "2015-12-17",
+  "dateModified": "2017-05-03",
+  "inLanguage": "EN",
+
+  "accessMode": "textual",
+  "accessModeSufficient": "textual",
+  "isAccessibleForFree": true,
+  "wordCount": "2125",
+  "license":"https://creativecommons.org/licenses/by-nc-sa/4.0/",
+  
+  "publisher": {
+    "@type" : "Organization",
+    "name": "DigitalOcean",
+    "url" : "https://www.digitalocean.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": 
+"https://www.digitalocean.com/assets/media/logo-dfead9f9.png",
+      "width": "220",
+      "height": "220"
+    }
+  },
+  "sourceOrganization": {
+    "@type" : "Organization",
+    "name": "DigitalOcean Community",
+    "url" : "https://www.digitalocean.com/community"
+  },
+  "publishingPrinciples": 
+"https://www.digitalocean.com/community/tutorials/technical-recommendations-and-best-practices-for-digitalocean-s-tutorials",
+
+
+  "interactionStatistic": [
+    {
+      "@type": "InteractionCounter",
+      "interactionType": "http://schema.org/LikeAction",
+      "userInteractionCount": "405"
+    },
+    {
+      "@type": "InteractionCounter",
+      "interactionType": "http://schema.org/CommentAction",
+      "userInteractionCount": "147"
+    }
+  ]
+}</script><div id="mktoStyleLoaded" style="display: none; border-top-color: rgb(18, 52, 86);"></div><div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_https" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" style="border: medium none;" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/XBwzv5Yrm_1.html" frameborder="0"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div></div><form novalidate="novalidate" style="font-family: Helvetica,Arial,sans-serif; font-size: 13px; color: rgb(51, 51, 51); visibility: hidden; position: absolute; top: -500px; left: -1000px; width: 1845px;" class="mktoForm mktoHasWidth mktoLayoutLeft"></form><iframe name="mktoFormsXDIframe0.5228532802589011" id="MktoForms2XDIframe" style="display: none;" src="How%20To%20Secure%20Nginx%20with%20Let%27s%20Encrypt%20on%20Ubuntu%2014.04%20%7C%20DigitalOcean_files/XDFrame.html"></iframe><script type="text/javascript" id="">(function(){function
+ 
+b(){!1===c&&window.Munchkin&&(c=!0,window.Munchkin.init("937-EID-756",{disableClickDelay:!0,clickTime:0,asyncOnly:!0}))}var
+ 
+c=!1,a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="//munchkin.marketo.net/munchkin.js";a.onreadystatechange=function(){"complete"!=this.readyState&&"loaded"!=this.readyState||b()};a.onload=b;document.getElementsByTagName("head")[0].appendChild(a)})();</script><script type="text/javascript" id="">(function(){try{analytics&&(analytics.track("dwell",{time:"5
+ minute"}),analytics.ready(function(){var 
+c=analytics.user().traits(),a=c.dwell||[],d=[$("body").data("tutorial-id")||"",Math.round(new
+ Date/864E5)],e=a.length,b;for(b=0;b<e;b++)if(a[b]instanceof 
+Array&&a[b][0]===d[0]){a.splice(b,1);break}a.unshift(d);5<=a.length&&a.pop();c.dwell=a;analytics.user().traits(c)}))}catch(c){}})();</script></body></html>

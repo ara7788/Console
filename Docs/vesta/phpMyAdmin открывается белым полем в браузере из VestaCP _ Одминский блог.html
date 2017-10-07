@@ -1,0 +1,470 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>phpMyAdmin открывается белым полем в браузере из VestaCP | Одминский блог</title>
+<meta name="generator" content="WordPress 3.9.19"> <!-- leave this for stats -->
+<link rel="stylesheet" href="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/style.css" type="text/css" media="screen">
+<link rel="alternate" type="application/rss+xml" title="Одминский блог RSS Feed" href="http://odminblog.ru/feed/">
+<link rel="pingback" href="http://odminblog.ru/xmlrpc.php">
+<script src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/ca-pub-2660414808188087.js"></script><script src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/js_liveclock.js" type="text/javascript"></script>
+ <!-- Disable F5 -->
+<script type="text/javascript">
+    window.onload = function () {
+        document.onkeydown = function (e) {
+            return (e.which || e.keyCode) != 116;
+        };
+    }
+</script>
+
+<link rel="alternate" type="application/rss+xml" title="Одминский блог » Проблема с открытием phpMyAdmin в VestaCP Comments Feed" href="http://odminblog.ru/problema-s-otkrytiem-phpmyadmin-v-vestacp/feed/">
+<link rel="stylesheet" id="gdsr_style_main-css" href="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/gdsr.css" type="text/css" media="all">
+<link rel="stylesheet" id="gdsr_style_xtra-css" href="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/rating.css" type="text/css" media="all">
+<link rel="stylesheet" id="wordpress-popular-posts-css" href="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/wpp.css" type="text/css" media="all">
+<script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/prototype.js"></script>
+<script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/scriptaculous.js"></script><script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/builder.js"></script><script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/effects_002.js"></script><script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/dragdrop.js"></script><script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/controls.js"></script><script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/slider.js"></script><script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/sound.js"></script>
+<script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/effects.js"></script>
+<script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/lightbox-resize.js"></script>
+<script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/jquery.js"></script>
+<script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/jquery-migrate.js"></script>
+<script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/gdsr.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://odminblog.ru/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://odminblog.ru/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 3.9.19">
+<link rel="shortlink" href="http://odminblog.ru/?p=2911">
+<script type="text/javascript">
+//<![CDATA[
+var gdsr_cnst_nonce = "4df2dd9eb2";
+var gdsr_cnst_ajax = "http://odminblog.ru/wp-content/plugins/gd-star-rating/ajax.php";
+var gdsr_cnst_button = 1;
+var gdsr_cnst_cache = 0;
+// ]]>
+</script>
+<!--[if IE]><style type="text/css">.ratemulti .starsbar .gdcurrent { -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)"; filter: alpha(opacity=70); }</style><![endif]-->
+
+	<!-- begin lightbox scripts -->
+	<script type="text/javascript">
+    //<![CDATA[
+    document.write('<link rel="stylesheet" href="http://odminblog.ru/wp-content/plugins/lightbox-2/Themes/Black/lightbox.css" type="text/css" media="screen" />');
+    //]]>
+    </script><link rel="stylesheet" href="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/lightbox.css" type="text/css" media="screen">
+	<!-- end lightbox scripts -->
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+				<!-- WordPress Popular Posts v3.3.4 -->
+				<script type="text/javascript">
+
+					var sampling_active = 0;
+					var sampling_rate   = 100;
+					var do_request = false;
+
+					if ( !sampling_active ) {
+						do_request = true;
+					} else {
+						var num = Math.floor(Math.random() * sampling_rate) + 1;
+						do_request = ( 1 === num );
+					}
+
+					if ( do_request ) {
+
+						/* Create XMLHttpRequest object and set variables */
+						var xhr = ( window.XMLHttpRequest )
+						  ? new XMLHttpRequest()
+						  : new ActiveXObject( "Microsoft.XMLHTTP" ),
+						url = 'http://odminblog.ru/wp-admin/admin-ajax.php',
+						params = 'action=update_views_ajax&token=5e6ed0aa9a&wpp_id=2911';
+						/* Set request method and target URL */
+						xhr.open( "POST", url, true );
+						/* Set request header */
+						xhr.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" );
+						/* Hook into onreadystatechange */
+						xhr.onreadystatechange = function() {
+							if ( 4 === xhr.readyState && 200 === xhr.status ) {
+								if ( window.console && window.console.log ) {
+									window.console.log( xhr.responseText );
+								}
+							}
+						};
+						/* Send request */
+						xhr.send( params );
+
+					}
+
+				</script>
+				<!-- End WordPress Popular Posts v3.3.4 -->
+				
+<!-- All in One SEO Pack 2.2.3.1 by Michael Torbert of Semper Fi Web Design[280,375] -->
+<meta name="description" content="При открытии phpMyAdmin под VestaCP в браузере показывается пустой белый экран.">
+
+<link rel="canonical" href="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/a_002.html">
+<!-- /all in one seo pack -->
+<!-- wp thread comment 1.4.9.4.002 -->
+<style type="text/css" media="screen">
+.editComment, .editableComment, .textComment{
+	display: inline;
+}
+.comment-childs{
+	border: 1px solid #999;
+	margin: 5px 2px 2px 4px;
+	padding: 4px 2px 2px 4px;
+	background-color: white;
+}
+.chalt{
+	background-color: #E2E2E2;
+}
+#newcomment{
+	border:1px dashed #777;width:90%;
+}
+#newcommentsubmit{
+	color:red;
+}
+.adminreplycomment{
+	border:1px dashed #777;
+	width:99%;
+	margin:4px;
+	padding:4px;
+}
+.mvccls{
+	color: #999;
+}
+			
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="top">
+<div id="header">
+<h1 class="title"><a href="http://odminblog.ru/">Одминский блог</a></h1>
+<p class="desc">Блог о технологиях, технократии и методиках борьбы с граблями</p>
+</div>
+<div id="clock">14:09:20 | Среда, 16 Августа 2017</div>
+</div>
+<div id="nav">
+<ul class="nav">
+<li class="first"><a href="http://odminblog.ru/">Главная</a></li>
+<li class="page_item page-item-2"><a href="http://odminblog.ru/about/">Проект</a></li>
+<li class="page_item page-item-180"><a href="http://odminblog.ru/service/" title="Услуги">Услуги</a></li>
+</ul>
+<form id="searchform" method="get" action="http://odminblog.ru/"><input value="поиск" onfocus="if (this.value == 'поиск') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Поиск';}" size="18" maxlength="50" name="s" id="s" type="text">
+</form></div>
+<center><br>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-2660414808188087";
+/* Odm-topmenu */
+google_ad_slot = "6327838843";
+google_ad_width = 728;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/show_ads.js">
+</script><ins id="aswift_0_expand" style="display:inline-table;border:none;height:15px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:15px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;width:728px;height:15px;" width="728" height="15" frameborder="0"></iframe></ins></ins>
+</center>
+
+<div id="main">
+<div id="content"> 
+
+			<div class="entry">
+		<div class="post" id="post-2911">
+			<h2><a href="http://odminblog.ru/problema-s-otkrytiem-phpmyadmin-v-vestacp/" rel="bookmark" title="Проблема с открытием phpMyAdmin в VestaCP">Проблема с открытием phpMyAdmin в VestaCP</a></h2>
+<small>09 Apr 2015 | Автор: anchous | </small>
+		
+				<div></div><p>Ставил тут себе на очередной дроплет <a href="http://odminblog.ru/do-hosting" target="_blank">облачного хостинга DigitalOcean</a>
+ (по рефке дают $10 кредитов в аккаунт, что хватит на 1-2 месяца тестов)
+ довольно не дурственную панельку VestaCP (о которой чуть позже) и 
+возникла проблема с phpMyAdmin, который почему открывался белой пустой 
+страницей при переходе из VestaCP, по адресу дроплета: 
+http://SERVER_IP/phpmyadmin/</p>
+<p>Ошибки говорили о том, что это какие то проблемы с вызовом функции<br>
+<span id="more-2911"></span><strong># tail /var/log/httpd/domains/default.domain.error.log</strong><br>
+[Wed Apr 08 15:39:02 2015] [error] [client 46.138.XXX.XXX] PHP Fatal 
+error:&nbsp; Call to undefined function __() in 
+/usr/share/phpMyAdmin/libraries/core.lib.php on line 245<br>
+[Wed Apr 08 15:39:07 2015] [error] [client 46.138.XXX.XXX] PHP Fatal 
+error:&nbsp; Call to undefined function __() in 
+/usr/share/phpMyAdmin/libraries/core.lib.php on line 245</p>
+<p>Смотрим что там вообще написано в этом файле<br>
+<strong># head -245 /usr/share/phpMyAdmin/libraries/core.lib.php | tail -10</strong><br>
+} else {<br>
+include_once ‘./libraries/php-gettext/gettext.inc’;<br>
+}<br>
+}<br>
+// these variables are used in the included file libraries/error.inc.php<br>
+//first check if php-mbstring is available<br>
+if (function_exists(‘mb_detect_encoding’)) {<br>
+//If present use gettext<br>
+$error_header = __(‘Error’);</p>
+<p>на всякий случай проверил php-mbstring и gettext, но они в системе присутствовали<br>
+<strong># php -m | grep gettext</strong><br>
+gettext<br>
+<strong># php -m | grep mbstring</strong><br>
+mbstring</p>
+<p>Игрища с правами на конфиг /etc/phpMyAdmin/config.inc.php 
+выставляемые в 755 и прочие дела ничего не дали, а вот ковыряние в 
+сторону работы Nginx, который идет в комплекте поставки, как раз очень 
+даже, т.к его модуль php-fpm пишет в /var/lib/php/session/ и для этого 
+ему нужны права на запись.</p>
+<p>После того как выставил права 777<br>
+<strong># chmod -R 777 /var/lib/php/session</strong><br>
+phpMyAdmin зафурычил как положено.</p>
+<p>Рутовый пароль к мускулю от установки VestaCP, если что, находится в файлах /usr/local/vesta/conf/mysql.conf и /root/.my.cnf<br>
+<strong># cat /usr/local/vesta/conf/mysql.conf</strong><br>
+HOST=’localhost’ USER=’root’ PASSWORD=’XXXXXX’ CHARSETS=’UTF8…..<br>
+<strong># cat&nbsp; /root/.my.cnf</strong><br>
+[client]<br>
+password=’XXXXX’</p>
+<div style="display: none">VN:F [1.9.21_1169]</div><div class="ratingblock "><div class="ratingheader "></div><div class="ratingstars "><div id="article_rater_2911" class="ratepost gdsr-oxygen gdsr-size-24"><div class="starsbar gdsr-size-24"><div class="gdouter gdheight"><div id="gdr_vote_a2911" style="width: 240px;" class="gdinner gdheight"></div><div id="gdr_stars_a2911" class="gdsr_rating_as"><a id="gdsrX2911X10X0XaXarticle_rater_2911Xarticle_loader_2911X0X24" title="10 / 10" class="s10" rel="nofollow"></a><a id="gdsrX2911X9X0XaXarticle_rater_2911Xarticle_loader_2911X0X24" title="9 / 10" class="s9" rel="nofollow"></a><a id="gdsrX2911X8X0XaXarticle_rater_2911Xarticle_loader_2911X0X24" title="8 / 10" class="s8" rel="nofollow"></a><a id="gdsrX2911X7X0XaXarticle_rater_2911Xarticle_loader_2911X0X24" title="7 / 10" class="s7" rel="nofollow"></a><a id="gdsrX2911X6X0XaXarticle_rater_2911Xarticle_loader_2911X0X24" title="6 / 10" class="s6" rel="nofollow"></a><a id="gdsrX2911X5X0XaXarticle_rater_2911Xarticle_loader_2911X0X24" title="5 / 10" class="s5" rel="nofollow"></a><a id="gdsrX2911X4X0XaXarticle_rater_2911Xarticle_loader_2911X0X24" title="4 / 10" class="s4" rel="nofollow"></a><a id="gdsrX2911X3X0XaXarticle_rater_2911Xarticle_loader_2911X0X24" title="3 / 10" class="s3" rel="nofollow"></a><a id="gdsrX2911X2X0XaXarticle_rater_2911Xarticle_loader_2911X0X24" title="2 / 10" class="s2" rel="nofollow"></a><a id="gdsrX2911X1X0XaXarticle_rater_2911Xarticle_loader_2911X0X24" title="1 / 10" class="s1" rel="nofollow"></a></div></div></div></div><div id="article_loader_2911" style="display: none; width: 240px " class="ratingloaderarticle"><div class="loader flower " style="height: 24px"><div class="loaderinner" style="padding-top: 2px">please wait...</div></div></div></div><div class="ratingtext "><div id="gdr_text_a2911">Rating: 10.0/<strong>10</strong> (6 votes cast)</div></div></div><div style="display: none">VN:F [1.9.21_1169]</div><div class="thumblock "><div id="gdsr_thumb_2911_a_up" class="gdt-size-20 gdthumb gdup"><a id="gdsrX2911XupXaX0X20XY" class="gdt-starrating" rel="nofollow"></a></div><div id="gdsr_thumb_2911_a_loader_up" style="display: none; width: 20px " class="ratingloader loadup"><div class="loader flower thumb" style="width: 20px; height: 20px;"></div></div><div id="gdsr_thumb_2911_a_dw" class="gdt-size-20 gdthumb gddw"><a id="gdsrX2911XdwXaX0X20XY" class="gdt-starrating" rel="nofollow"></a></div><div id="gdsr_thumb_2911_a_loader_dw" style="display: none; width: 20px " class="ratingloader loaddw"><div class="loader flower thumb" style="width: 20px; height: 20px;"></div></div><div class="ratingtext "><div id="gdsr_thumb_text_2911_a" class="gdt-size-20 gdthumbtext">Rating: <strong>+1</strong> (from 3 votes)</div></div><div class="raterclear"></div></div><span class="hreview-aggregate"><span class="item"><span class="fn">Проблема с открытием phpMyAdmin в VestaCP</span></span>, <span class="rating"><span class="average">10.0</span> out of <span class="best">10</span> based on <span class="votes">6</span> ratings <span class="summary"></span></span></span><p style="float:left;"><script type="text/javascript"><!--
+google_ad_client = "pub-2660414808188087"; google_ad_slot = "6942765834"; google_ad_width = 336; google_ad_height = 280;
+//--></script><script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/show_ads.js"></script><ins id="aswift_1_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;width:336px;height:280px;" width="336" height="280" frameborder="0"></iframe></ins></ins></p><div></div><div id="crp_related" class="crp_related"><h3>Читать еще:</h3><ul><li><a href="http://odminblog.ru/vesta-install-error/" class="crp_title">Проблема установки Vesta CP</a></li><li><a href="http://odminblog.ru/mysql-lock-error/" class="crp_title">Ошибка блокировки базы данных…</a></li><li><a href="http://odminblog.ru/funkcionalnaya-panel-upravleniya-xostingom-vestacp/" class="crp_title">Функциональная панель…</a></li><li><a href="http://odminblog.ru/nginx-php-install/" class="crp_title">Установка NGINX с поддержкой PHP</a></li><li><a href="http://odminblog.ru/mod_rewrite-ne-rabotaet-i-pishet-v-log-file-does-not-exist/" class="crp_title">mod_rewrite не работает и пишет в лог…</a></li></ul></div><p>Теги: <a href="http://odminblog.ru/label/apache/" rel="tag">apache</a>, <a href="http://odminblog.ru/label/nginx/" rel="tag">nginx</a>, <a href="http://odminblog.ru/label/hosting/" rel="tag">хостинг</a></p>				
+				
+
+			</div>
+		</div>
+<div class="entry">
+	
+<!-- You can start editing here. -->
+
+<div class="boxcomments">
+
+
+
+	
+	
+	<form action="http://odminblog.ru/wp-comments-post.php" method="post" id="commentform">
+
+	<h3 id="respond">Ваш отзыв</h3>
+
+		
+	
+		<p><label for="author">Имя *</label>
+		<input name="author" id="author" size="22" tabindex="1" type="text"></p>
+				
+		<p><label for="email">Почта (скрыта) *</label>
+		<input name="email" id="email" tabindex="2" size="22" type="text"></p>		
+		
+		<p><label for="url">Сайт</label>
+		<input name="url" id="url" size="22" tabindex="3" type="text"></p>
+	
+	
+		<p><textarea name="comment" id="comment" cols="5" rows="10" tabindex="4"></textarea></p>
+
+		<p><input name="submit" id="submit" tabindex="5" value="Добавить" type="submit">
+		<input name="comment_post_ID" value="2911" type="hidden"></p>
+	
+	<p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" value="572e23d467" type="hidden"></p>
+
+<script type="text/javascript">/*<![CDATA[*/
+var $j = jQuery.noConflict();
+$j(document).ready(function() {
+	$j('a.jqcl').each(function() {
+		var link = $j(this).attr('title');
+		$j(this).attr('href', 'http://'+link).attr('title', 'http://'+link);
+	});
+})
+/*]]>*/</script>
+<p style="display: none;"></p><p><input id="comment_reply_ID" name="comment_reply_ID" value="0" type="hidden"><input id="comment_reply_dp" name="comment_reply_dp" value="0" type="hidden"></p><div id="cancel_reply" style="display:none;"><a href="javascript:void(0)" onclick="movecfm(null,0,1,null);" style="color:red;">Click to cancel reply</a></div><script type="text/javascript">
+/* <![CDATA[ */
+var commentformid = "commentform";
+var USERINFO = false;
+var atreply = "author";
+/* ]]> */
+</script>
+<script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/wp-thread-comment.html"></script>
+
+	<input id="ak_js" name="ak_js" value="1502881751475" type="hidden"></form>
+
+
+</div>	</div>
+
+	
+	</div>
+<div id="sidebar">
+<div id="lsidebar">
+<ul>
+			<li id="categories-3" class="widget widget_categories"><h2 class="widgettitle">Рубрики</h2>
+		<ul>
+	<li class="cat-item cat-item-209"><a href="http://odminblog.ru/partition/android/" title="View all posts filed under Android">Android</a> (7)
+</li>
+	<li class="cat-item cat-item-10"><a href="http://odminblog.ru/partition/check-point/" title="View all posts filed under Check Point">Check Point</a> (22)
+</li>
+	<li class="cat-item cat-item-17"><a href="http://odminblog.ru/partition/freebsd/" title="View all posts filed under FreeBSD">FreeBSD</a> (31)
+</li>
+	<li class="cat-item cat-item-12"><a href="http://odminblog.ru/partition/iphone/" title="View all posts filed under iPhone">iPhone</a> (51)
+</li>
+	<li class="cat-item cat-item-5"><a href="http://odminblog.ru/partition/it-security/" title="Раздел посвященный информационной безопасности. Новости, принципы и возможности защиты, настройка серверов по защите информации, шифрование, защита периметра.">IT безопасность</a> (143)
+</li>
+	<li class="cat-item cat-item-31"><a href="http://odminblog.ru/partition/linux/" title="View all posts filed under Linux">Linux</a> (86)
+</li>
+	<li class="cat-item cat-item-46"><a href="http://odminblog.ru/partition/mac/" title="View all posts filed under mac">mac</a> (4)
+</li>
+	<li class="cat-item cat-item-44"><a href="http://odminblog.ru/partition/windows/" title="View all posts filed under Windows">Windows</a> (73)
+</li>
+	<li class="cat-item cat-item-144"><a href="http://odminblog.ru/partition/dbases/" title="View all posts filed under Базы данных">Базы данных</a> (13)
+</li>
+	<li class="cat-item cat-item-3"><a href="http://odminblog.ru/partition/intro/" title="View all posts filed under введение">введение</a> (2)
+</li>
+	<li class="cat-item cat-item-191"><a href="http://odminblog.ru/partition/vosstanovlenie-informacii/" title="View all posts filed under Восстановление информации">Восстановление информации</a> (3)
+</li>
+	<li class="cat-item cat-item-1"><a href="http://odminblog.ru/partition/odminzz/" title="View all posts filed under Дела Одминские">Дела Одминские</a> (109)
+</li>
+	<li class="cat-item cat-item-34"><a href="http://odminblog.ru/partition/inet/" title="View all posts filed under Интернет">Интернет</a> (97)
+</li>
+	<li class="cat-item cat-item-24"><a href="http://odminblog.ru/partition/review/" title="View all posts filed under Обзоры">Обзоры</a> (12)
+<ul class="children">
+	<li class="cat-item cat-item-50"><a href="http://odminblog.ru/partition/review/crossbeam-review/" title="View all posts filed under Crossbeam">Crossbeam</a> (1)
+</li>
+	<li class="cat-item cat-item-49"><a href="http://odminblog.ru/partition/review/iss-review/" title="View all posts filed under ISS">ISS</a> (2)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-119"><a href="http://odminblog.ru/partition/equipments/" title="View all posts filed under Оборудование">Оборудование</a> (12)
+</li>
+	<li class="cat-item cat-item-19"><a href="http://odminblog.ru/partition/humour/" title="View all posts filed under Одмины шутят">Одмины шутят</a> (22)
+</li>
+	<li class="cat-item cat-item-55"><a href="http://odminblog.ru/partition/hints/" title="View all posts filed under Подсказки">Подсказки</a> (22)
+</li>
+	<li class="cat-item cat-item-42"><a href="http://odminblog.ru/partition/mail-system/" title="View all posts filed under Почтовые системы">Почтовые системы</a> (30)
+</li>
+	<li class="cat-item cat-item-26"><a href="http://odminblog.ru/partition/site-projects/" title="View all posts filed under Сайты и их проблемы">Сайты и их проблемы</a> (105)
+</li>
+	<li class="cat-item cat-item-7"><a href="http://odminblog.ru/partition/networks/" title="Раздел посвященный сетевым технологиям. Предоставление сетевых сервисов, настройка и конфигурация сетевых устройств, организация сетей.">Сети</a> (51)
+</li>
+	<li class="cat-item cat-item-22"><a href="http://odminblog.ru/partition/articles/" title="Cтатьи и обзоры посвященные различным тематикам">Статьи</a> (8)
+</li>
+	<li class="cat-item cat-item-53"><a href="http://odminblog.ru/partition/file-systems/" title="View all posts filed under Файловые системы">Файловые системы</a> (9)
+</li>
+	<li class="cat-item cat-item-60"><a href="http://odminblog.ru/partition/hosters/" title="View all posts filed under Хостинг">Хостинг</a> (76)
+</li>
+		</ul>
+</li>
+<li id="text-13" class="widget widget_text"><h2 class="widgettitle">Домены RU по 99 рублей</h2>
+			<div class="textwidget"><center><a href="http://odminblog.ru/domreg/2dom/" onclick="javascript:_gaq.push(['_trackPageview','/domreg/2dom/']);" target="_blank" title="регистрация доменов" rel="nofollow"><img src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/120_200.gif" alt="регистрация доменов" border="1"></a>
+</center></div>
+		</li>
+<li id="recent-comments-2" class="widget widget_recent_comments"><h2 class="widgettitle">Последние комментарии</h2>
+<ul id="recentcomments"><li class="recentcomments"><a href="http://gog.by/" class="jqcl" title="http://gog.by" rel="nofollow">Эшли</a> on <a href="http://odminblog.ru/vesta-backup-temp/comment-page-1/#comment-117383">Скрипт архивирования Vesta забивает диск tmp файлами</a></li><li class="recentcomments">anchous on <a href="http://odminblog.ru/vesta-backup-temp/comment-page-1/#comment-114876">Скрипт архивирования Vesta забивает диск tmp файлами</a></li><li class="recentcomments">Эшли on <a href="http://odminblog.ru/vesta-backup-temp/comment-page-1/#comment-114465">Скрипт архивирования Vesta забивает диск tmp файлами</a></li><li class="recentcomments">Саша on <a href="http://odminblog.ru/zapuskaem-windows-mail-v-windows-7/comment-page-1/#comment-111822">Запускаем Windows Mail в Windows 7</a></li><li class="recentcomments">anchous on <a href="http://odminblog.ru/floating-ip-install/comment-page-1/#comment-111137">Бесплатные дополнительные IP в облачном хостинге DigitalOcean</a></li></ul></li>
+<li id="text-8" class="widget widget_text"><h2 class="widgettitle">Немножко статистики</h2>
+			<div class="textwidget"><center><noindex>
+<!--LiveInternet counter--><script type="text/javascript"><!--
+document.write("<a href='http://odminblog.ru/links/go.php?url=http://www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t22.6;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число просмотров за 24"+
+" часа, посетителей за 24 часа и за сегодня' "+
+"border='0' width='88' height='31'><\/a>")
+//--></script><a href="http://odminblog.ru/links/go.php?url=http://www.liveinternet.ru/click" target="_blank"><img src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/hit.gif" alt="" title="LiveInternet: показано число просмотров за 24 часа, посетителей за 24 часа и за сегодня" border="0" width="88" height="31"></a><!--/LiveInternet--><br>
+<!-- begin of Top100 code -->
+
+<script id="top100Counter" type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/top100.bin"></script><a href="https://top100.rambler.ru/home?id=2429752" target="_blank"><img src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/a.gif" title="Rambler's Top100" alt="Rambler's Top100" border="0"></a>
+<noscript>
+<a href="http://odminblog.ru/links/go.php?url=http://top100.rambler.ru/navi/2429752/">
+<img src="http://counter.rambler.ru/top100.cnt?2429752" alt="Rambler's Top100" border="0" />
+</a>
+
+</noscript>
+<!-- end of Top100 code -->
+</noindex></center></div>
+		</li>
+		</ul>
+</div>
+<div id="rsidebar">
+<ul>
+       
+	<li id="text-26" class="widget widget_text"><h2 class="widgettitle">Дешевый 100% SSD хостинг в Европе</h2>
+			<div class="textwidget"><a href="http://odminblog.ru/31jq" target="_top" rel="nofollow"><img src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/image-5464552-12740668.gif" alt="" border="0" width="250" height="250"></a></div>
+		</li>
+		<li id="recent-posts-3" class="widget widget_recent_entries">		<h2 class="widgettitle">Новые статьи в блоге</h2>
+		<ul>
+					<li>
+				<a href="http://odminblog.ru/problemy-pri-ustanovke-billinga-rootpanel/">Проблемы при установке биллинга RootPanel</a>
+						</li>
+					<li>
+				<a href="http://odminblog.ru/ram-usage-in-linux/">Мониторинг использования оперативной памяти процессами в Linux</a>
+						</li>
+					<li>
+				<a href="http://odminblog.ru/brainy-issues/">Проблемы установки пакетов в Brainy</a>
+						</li>
+					<li>
+				<a href="http://odminblog.ru/control-panel-brainy/">Новомодная хостинг панель Brainy</a>
+						</li>
+					<li>
+				<a href="http://odminblog.ru/disable-mdns/">Отключаем mDNS по абузе Hetzner</a>
+						</li>
+				</ul>
+		</li>
+
+<!-- WordPress Popular Posts Plugin v3.3.4 [W] [all] [views] [regular] -->
+<li id="wpp-3" class="widget popular-posts">
+<h2 class="widgettitle">Популярные статьи</h2>
+
+<ul class="wpp-list">
+<li><a href="http://odminblog.ru/programm-uninstall-from-iphone/" title="Удаление программ из Iphone" class="wpp-post-title" target="_self">Удаление программ из Iphone</a>  <span class="post-stats"><span class="wpp-views">54,628 views</span> | <span class="wpp-category">under <a href="http://odminblog.ru/partition/iphone/" class="cat-id-12">iPhone</a></span></span> </li>
+<li><a href="http://odminblog.ru/terminalnyj-server-pod-upravleniem-windows-7/" title="Терминальный сервер под управлением Windows 7" class="wpp-post-title" target="_self">Терминальный сервер под управлением Windows 7</a>  <span class="post-stats"><span class="wpp-views">46,712 views</span> | <span class="wpp-category">under <a href="http://odminblog.ru/partition/windows/" class="cat-id-44">Windows</a></span></span> </li>
+<li><a href="http://odminblog.ru/razlochivaem-4gb-operativnoy-pamyati-v-windows7-32bit/" title="Разлочиваем 4Gb оперативной памяти в Windows 7 32бита" class="wpp-post-title" target="_self">Разлочиваем 4Gb оперативной памяти в Windows 7 32бита</a>  <span class="post-stats"><span class="wpp-views">43,409 views</span> | <span class="wpp-category">under <a href="http://odminblog.ru/partition/windows/" class="cat-id-44">Windows</a></span></span> </li>
+<li><a href="http://odminblog.ru/disable-uac-windows-7/" title="Отключение контроля учетных записей UAC в Windows 7" class="wpp-post-title" target="_self">Отключение контроля учетных записей UAC в Windows 7</a>  <span class="post-stats"><span class="wpp-views">43,128 views</span> | <span class="wpp-category">under <a href="http://odminblog.ru/partition/hints/" class="cat-id-55">Подсказки</a></span></span> </li>
+<li><a href="http://odminblog.ru/v-centos-7-minimal-zabyli-polozhit-ifconfig/" title="В CentOS 7 minimal забыли положить ifconfig" class="wpp-post-title" target="_self">В CentOS 7 minimal забыли положить ifconfig</a>  <span class="post-stats"><span class="wpp-views">38,947 views</span> | <span class="wpp-category">under <a href="http://odminblog.ru/partition/linux/" class="cat-id-31">Linux</a></span></span> </li>
+
+</ul>
+</li>
+
+<!-- End WordPress Popular Posts Plugin v3.3.4 -->
+<li id="tag_cloud-3" class="widget widget_tag_cloud"><h2 class="widgettitle">Метки</h2>
+<div class="tagcloud"><a href="http://odminblog.ru/label/apache/" class="tag-link-156" title="18 topics" style="font-size: 12.360655737705pt;">apache</a>
+<a href="http://odminblog.ru/label/apple/" class="tag-link-162" title="10 topics" style="font-size: 9.6065573770492pt;">apple</a>
+<a href="http://odminblog.ru/label/centos/" class="tag-link-51" title="63 topics" style="font-size: 18.44262295082pt;">centos</a>
+<a href="http://odminblog.ru/label/checkpoint/" class="tag-link-11" title="24 topics" style="font-size: 13.737704918033pt;">Checkpoint</a>
+<a href="http://odminblog.ru/label/dns/" class="tag-link-78" title="16 topics" style="font-size: 11.786885245902pt;">dns</a>
+<a href="http://odminblog.ru/label/drupal/" class="tag-link-41" title="8 topics" style="font-size: 8.5737704918033pt;">drupal</a>
+<a href="http://odminblog.ru/label/exim/" class="tag-link-43" title="13 topics" style="font-size: 10.868852459016pt;">exim</a>
+<a href="http://odminblog.ru/label/firefox/" class="tag-link-37" title="16 topics" style="font-size: 11.786885245902pt;">firefox</a>
+<a href="http://odminblog.ru/label/freebsd/" class="tag-link-17" title="27 topics" style="font-size: 14.311475409836pt;">FreeBSD</a>
+<a href="http://odminblog.ru/label/google/" class="tag-link-155" title="13 topics" style="font-size: 10.868852459016pt;">google</a>
+<a href="http://odminblog.ru/label/iphone/" class="tag-link-12" title="52 topics" style="font-size: 17.409836065574pt;">iPhone</a>
+<a href="http://odminblog.ru/label/iphone-tips/" class="tag-link-59" title="21 topics" style="font-size: 13.049180327869pt;">iphone tips</a>
+<a href="http://odminblog.ru/label/it-security/" class="tag-link-5" title="128 topics" style="font-size: 21.885245901639pt;">IT безопасность</a>
+<a href="http://odminblog.ru/label/jailbreak-iphone/" class="tag-link-16" title="14 topics" style="font-size: 11.213114754098pt;">jailbreak iphone</a>
+<a href="http://odminblog.ru/label/joomla/" class="tag-link-140" title="7 topics" style="font-size: 8pt;">joomla</a>
+<a href="http://odminblog.ru/label/mac/" class="tag-link-46" title="7 topics" style="font-size: 8pt;">mac</a>
+<a href="http://odminblog.ru/label/mysql/" class="tag-link-75" title="15 topics" style="font-size: 11.44262295082pt;">mysql</a>
+<a href="http://odminblog.ru/label/pr/" class="tag-link-153" title="8 topics" style="font-size: 8.5737704918033pt;">pr</a>
+<a href="http://odminblog.ru/label/seo/" class="tag-link-29" title="11 topics" style="font-size: 10.065573770492pt;">seo</a>
+<a href="http://odminblog.ru/label/ssh/" class="tag-link-133" title="12 topics" style="font-size: 10.409836065574pt;">ssh</a>
+<a href="http://odminblog.ru/label/unix/" class="tag-link-18" title="15 topics" style="font-size: 11.44262295082pt;">Unix</a>
+<a href="http://odminblog.ru/label/unlock-iphone/" class="tag-link-15" title="11 topics" style="font-size: 10.065573770492pt;">unlock Iphone</a>
+<a href="http://odminblog.ru/label/vmware/" class="tag-link-166" title="21 topics" style="font-size: 13.049180327869pt;">vmware</a>
+<a href="http://odminblog.ru/label/vpn/" class="tag-link-93" title="13 topics" style="font-size: 10.868852459016pt;">vpn</a>
+<a href="http://odminblog.ru/label/windows/" class="tag-link-44" title="51 topics" style="font-size: 17.409836065574pt;">Windows</a>
+<a href="http://odminblog.ru/label/windows-7/" class="tag-link-65" title="44 topics" style="font-size: 16.606557377049pt;">windows 7</a>
+<a href="http://odminblog.ru/label/wordpress/" class="tag-link-45" title="21 topics" style="font-size: 13.049180327869pt;">wordpress</a>
+<a href="http://odminblog.ru/label/network-protocol/" class="tag-link-8" title="42 topics" style="font-size: 16.377049180328pt;">Сетевые протоколы</a>
+<a href="http://odminblog.ru/label/networks/" class="tag-link-7" title="85 topics" style="font-size: 19.819672131148pt;">Сети</a>
+<a href="http://odminblog.ru/label/%d0%b2%d0%b8%d1%80%d1%82%d1%83%d0%b0%d0%bb%d0%b8%d0%b7%d0%b0%d1%86%d0%b8%d1%8f/" class="tag-link-167" title="28 topics" style="font-size: 14.426229508197pt;">виртуализация</a>
+<a href="http://odminblog.ru/label/viruses/" class="tag-link-48" title="28 topics" style="font-size: 14.426229508197pt;">вирусня</a>
+<a href="http://odminblog.ru/label/domain/" class="tag-link-80" title="20 topics" style="font-size: 12.819672131148pt;">домен</a>
+<a href="http://odminblog.ru/label/internet/" class="tag-link-27" title="131 topics" style="font-size: 22pt;">интернет</a>
+<a href="http://odminblog.ru/label/system-tuning/" class="tag-link-32" title="90 topics" style="font-size: 20.16393442623pt;">настройка системы</a>
+<a href="http://odminblog.ru/label/search-engines/" class="tag-link-30" title="38 topics" style="font-size: 15.918032786885pt;">поисковики</a>
+<a href="http://odminblog.ru/label/mail-systems/" class="tag-link-20" title="24 topics" style="font-size: 13.737704918033pt;">почтовые системы</a>
+<a href="http://odminblog.ru/label/unlock-iphone3/" class="tag-link-14" title="16 topics" style="font-size: 11.786885245902pt;">разлочка IPhone</a>
+<a href="http://odminblog.ru/label/sites/" class="tag-link-28" title="88 topics" style="font-size: 20.049180327869pt;">сайты</a>
+<a href="http://odminblog.ru/label/service/" class="tag-link-73" title="9 topics" style="font-size: 9.1475409836066pt;">сервис</a>
+<a href="http://odminblog.ru/label/techsupport/" class="tag-link-72" title="54 topics" style="font-size: 17.639344262295pt;">техподдержка</a>
+<a href="http://odminblog.ru/label/titz/" class="tag-link-151" title="11 topics" style="font-size: 10.065573770492pt;">тиц</a>
+<a href="http://odminblog.ru/label/vulnerability/" class="tag-link-67" title="12 topics" style="font-size: 10.409836065574pt;">уязвимость</a>
+<a href="http://odminblog.ru/label/coolhackers/" class="tag-link-118" title="10 topics" style="font-size: 9.6065573770492pt;">хакеры</a>
+<a href="http://odminblog.ru/label/hosting/" class="tag-link-25" title="45 topics" style="font-size: 16.72131147541pt;">хостинг</a>
+<a href="http://odminblog.ru/label/comically/" class="tag-link-161" title="16 topics" style="font-size: 11.786885245902pt;">юмор</a></div>
+</li>
+		</ul>
+</div>		
+</div>
+
+
+
+</div>
+<div id="footer">Одминский блог работает на WordPress | <a href="http://odminblog.ru/feed/">Публикации (RSS)</a> и <a href="http://odminblog.ru/comments/feed/">Комментарии (RSS)</a> .
+  <!-- 88 запросов. 0.711 секунд. --><div></div><script type="text/javascript" src="phpMyAdmin%20%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D0%B2%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%BC%20%D0%BF%D0%BE%D0%BB%D0%B5%D0%BC%20%D0%B2%20%D0%B1%D1%80%D0%B0%D1%83%D0%B7%D0%B5%D1%80%D0%B5%20%D0%B8%D0%B7%20VestaCP%20%7C%20%D0%9E%D0%B4%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D0%B1%D0%BB%D0%BE%D0%B3_files/form.js"></script>
+</div>
+</div>
+
+<div id="stimuli_overlay" style="display: none;"></div><div id="stimuli_lightbox" style="display: none;"><div id="stimuli_outerImageContainer" style="width: 250px; height: 250px;"><div id="stimuli_imageContainer"><img id="stimuli_lightboxImage"><div id="stimuli_hoverNav"><a id="stimuli_prevLink" href="#"></a><a id="stimuli_nextLink" href="#"></a></div><div id="stimuli_loading"><a id="stimuli_loadingLink" href="#"></a></div></div></div><div id="stimuli_imageDataContainer"><div id="stimuli_imageData"><div id="stimuli_imageDetails"><span id="stimuli_caption"></span><span id="stimuli_numberDisplay"></span></div><div id="stimuli_bottomNav"><a id="stimuli_bottomNavClose" href="#"></a></div></div></div></div></body></html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html class="support desktop  blocks portrait online"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="support_data/jquery1.js"></script>
+		<script>
+			if (window.location.href.indexOf("captcha=1") > -1){
+				document.write('\x3Cscript src="https://www.google.com/recaptcha/api.js?onload=renderRecaptchas&render=explicit" async defer>\x3C/script>');
+			}
+		</script>
+		
+		<script>
+			if (typeof jQuery == 'undefined') {
+		        document.write(unescape("%3Cscript src='/support/jQuery.js' type='text/javascript'%3E%3C/script%3E"));
+		        document.write(unescape("%3Cscript src='/support/emoji.js' type='text/javascript'%3E%3C/script%3E"));
+		    }
+		</script>
+		<style>
+			html.mobile body .wrapper > div{ zoom:1.3; } 
+			html.mobile body > .flatSupportClose{ transform: scale(1.5); transform-origin: top right; }
+			html.mobile.tablet body > .flatSupportClose{ transform: scale(2); }
+			html.mobile.flat body > .flatSupportClose > a{ margin-top:-2px; }
+			.pointer{ cursor: pointer; }
+			
+			.clearForm{
+				height:1px;
+			}
+			
+			@media (max-height: 300px) {
+				.flatSupportClose{ display: none !important; }
+			}
+			
+			.support.desktop body{
+			    -webkit-transform: scale(0.9);
+			    -ms-transform: scale(0.9);
+			    -o-transform: scale(0.9);
+			    transform: scale(0.9);
+			    opacity: 0;
+			    -o-transition: all 150ms linear;
+				transition: all 150ms linear;
+			}
+			
+			.support.supportOpened.desktop body{
+				-webkit-transform: scale(1);
+				-ms-transform: scale(1);
+				-o-transform: scale(1);
+				transform: scale(1);
+				opacity:1;
+			}
+			
+			#rc-imageselect, .g-recaptcha {transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;}			
+		</style>
+				
+		<script type="text/javascript" src="support_data/chat.js"></script>
+	
+		<script>			
+			$(document).ready(function(){
+				setTimeout(function(){
+					$("#chatTextarea").bind("keyup",function(){
+						if (!$(this).data("keyup-was")){
+							$(this).data("keyup-was", 1);
+							$(this).css("overflow-y","auto");
+						}
+					});
+				},3000);
+			});
+			chat.init("support");
+		</script>
+		<style id="inititalStyles">
+			body{ opacity:0; filter: alpha(opacity=0); }
+		</style>
+		<style>
+			html.inlineSupportWindow.support body .flatSupportClose, html.inlineSupportWindow.support body .wrapper .supportTitle a.close{
+				display:none;
+			}
+			
+			html.mobile .mute{display: none !important;}
+			html.mobile body .wrapper{ border-radius: 0px !important; }
+			html.flat .message a{
+				text-decoration: underline;
+			}
+			
+			html.flat .message a:hover{
+				text-decoration: none;
+			}
+			.me-talk-copyright img{ border:none; }
+			
+			
+			@font-face{
+				font-family:'FontAwesome';
+				src:url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.eot?v=4.7.0');
+				src:url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),
+				url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff?vs=4.7.0') format('woff'),
+				url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype');
+				font-weight:normal;
+				font-style:normal; 
+			}			
+			ul.supportTabs > li > a span{
+				color:inherit;
+			}
+			
+			span.download-chat{ display:none; }
+			span.download-chat.show{ display:inline-block; cursor:pointer; }
+			
+			html.downloadButtonDisplayed body .chat .userHTML, html.downloadButtonDisplayed .message.first,  html.downloadButtonDisplayed .chatInfoBlock.first{
+				margin-top:30px !important;
+			}
+			
+			#uploadingImages{
+				z-index:100000000;
+				position: absolute;
+				top:0;
+				left:0;
+				right:0;
+				bottom:0;
+				background: rgba(0,0,0,.4);
+				text-align: center;
+			}
+			#uploadingImage{
+				max-height: 90%;
+				max-width: 90%;
+				min-height: 40px;
+				border-radius: 10px;
+			}
+			#uploadingImages span{
+				line-height: 30px;
+				font-size: 30px;
+				color: #fff;
+				display: block;
+				position: absolute;
+				top: 50%;
+				width: 100%;
+				text-shadow: 0px 0px 1px black;
+				margin-top: -15px;
+			}
+		</style>
+	<link type="text/css" rel="stylesheet" href="support_data/aa9b13606615c926d8d6d20ce91f9690.css"></head>
+	<body class="ha" style="-webkit-text-size-adjust:100%;">
+		<div class="wrapper">
+			<div id="uploadingImages" class="none">
+				<table style="width:100%; height:100%; text-align: center; vertical-align: middle;">
+					<tbody><tr>
+						<td class="m">
+							<img id="uploadingImage">
+						</td>
+					</tr>
+				</tbody></table>
+				<span class="icon-circle-o-notch icon-spin"></span>
+			</div>
+			<div style="height:100%;">
+				<div class="titleContainer">
+					<div class="supportTitle" onselectstart="return false">
+						<div class="ellipsis" style="width:88%;">Задать вопрос</div>
+						<a class="mute icon-volume-up" href="#" onclick="return false;" title="Звук включен"></a>
+						<a class="icon-times close" href="#" onclick="chat.clickOnClose(); return false;"></a>
+					</div>
+				</div>
+				
+				<div class="supportTabs">	
+					<div class="resultMessage"></div>		
+					<div id="tab0" data-type="chat" class="chatTab current">
+						<div class="operators none unselectable operatorsSelectBlock" style="z-index:0;"><table style="height:100%; width:100%;" cellspacing="0" cellpadding="0"><tbody><tr><td style="height:1px;"><div class="mb15 operatorsGroupSelectTitle">Выберите оператора, к которому Вы хотите обратиться:</div></td></tr><tr><td class="relative" style=""><div class="operatorsInner" style="overflow: auto; position: absolute; top: 0px; left: 0px; right: 0px; height: 0px;"><div class="operatorsGroup ha" data-id="false"><div class="groupTitle"><span class="icon icon-caret-right"></span> <span>Online</span></div><div class="operatorsOfGroup"><div operator="ydemchenko" class="operator_ydemchenko operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/da9bec6fcb0f5c2d5ed7fa836b35d6be.png"><div class="operatorNameDisplay"><div class="operatorNameString">Юлия</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="nsibileva" class="operator_nsibileva operator"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/939ba105dea232de7c40e975c2b0fda3.png"><div class="operatorNameDisplay"><div class="operatorNameString">Наталья</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="ytokman" class="operator_ytokman operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/12a06b4f56bc75a3fdb4cf73fe222ea9.png"><div class="operatorNameDisplay"><div class="operatorNameString">Юрий</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="adavydenko" class="operator_adavydenko operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/fd2270e9a16f106bfc69f64964c9041c.png"><div class="operatorNameDisplay"><div class="operatorNameString">Анастасия</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="rgovorun" class="operator_rgovorun operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/8b3c70c9e8cfd4d317dc02c7aaf1e812.png"><div class="operatorNameDisplay"><div class="operatorNameString">Раиса</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="dkazban" class="operator_dkazban operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/05de68589a7d378792c9e5b2c5184d31.png"><div class="operatorNameDisplay"><div class="operatorNameString">Дарья</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="aleksandrkaporin" class="operator_aleksandrkaporin operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/31d50e04f28dbf4ad329799e7a5bb832.png"><div class="operatorNameDisplay"><div class="operatorNameString">Александр</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="aovcharenko" class="operator_aovcharenko operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/c060e5731f4b24bd936de12b884ceedf.png"><div class="operatorNameDisplay"><div class="operatorNameString">Александр</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="akiyashko" class="operator_akiyashko operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/07c00b9a1cec9eb9031eccf89d9626c6.png"><div class="operatorNameDisplay"><div class="operatorNameString">Александра</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="aparkhomenko" class="operator_aparkhomenko operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/4db76a7eec834ebf5b01f39270ecef14.png"><div class="operatorNameDisplay"><div class="operatorNameString">Анна</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="vshatova" class="operator_vshatova operator"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/31d471f2b33e09a27fd09cd177918168.png"><div class="operatorNameDisplay"><div class="operatorNameString">Валерия</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="vlukash" class="operator_vlukash operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/dda7909760d98ea1aae884ac901ecd32.png"><div class="operatorNameDisplay"><div class="operatorNameString">Виктор</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="vitaliymendelenko" class="operator_vitaliymendelenko operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/26daf3be8aa3a21d30fbf4b89173ad15.png"><div class="operatorNameDisplay"><div class="operatorNameString">Виталий</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="dmakievskaya" class="operator_dmakievskaya operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/8734912d9710fb87e181b699be6bf17e.png"><div class="operatorNameDisplay"><div class="operatorNameString">Дарья</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="dpakhomov" class="operator_dpakhomov operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/b2159a68a580da3d5bb0cb604847ac5b.png"><div class="operatorNameDisplay"><div class="operatorNameString">Денис</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="dzaharko" class="operator_dzaharko operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/c5bf937d931396d2621bf2ceff3f2cdb.png"><div class="operatorNameDisplay"><div class="operatorNameString">Дмитрий</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="dkharchenko" class="operator_dkharchenko operator"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/449742755aebd3410b08d53ab07a73fa.png"><div class="operatorNameDisplay"><div class="operatorNameString">Дмитрий</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="ekravchenko" class="operator_ekravchenko operator"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/12c233d6db46badb31aca5a05945168b.png"><div class="operatorNameDisplay"><div class="operatorNameString">Екатерина</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="kyakovleva" class="operator_kyakovleva operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/a210565a5d71fe3ed04a3c7776487f56.png"><div class="operatorNameDisplay"><div class="operatorNameString">Екатерина</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="epron" class="operator_epron operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/c3d9a520d0e573d403a8155af077ba50.png"><div class="operatorNameDisplay"><div class="operatorNameString">Елена</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="isukhostavets" class="operator_isukhostavets operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/6c5b9eefa651d3cf8d880b0cc28266a6.png"><div class="operatorNameDisplay"><div class="operatorNameString">Ирина</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="sgorovaya" class="operator_sgorovaya operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/310ad0d8493913212637e78c365df0fe.png"><div class="operatorNameDisplay"><div class="operatorNameString">Светлана</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="sergeysimonenko" class="operator_sergeysimonenko operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/597f545552b4a2f10321320bfbbb0aa8.png"><div class="operatorNameDisplay"><div class="operatorNameString">Сергей</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="tudovichenko" class="operator_tudovichenko operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/79b65e814278d9c449d18c6edb5b070c.png"><div class="operatorNameDisplay"><div class="operatorNameString">Татьяна</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="jstorozhenko" class="operator_jstorozhenko operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/e84a981eb2fce3d64f677d0311d13cad.png"><div class="operatorNameDisplay"><div class="operatorNameString">Юлия</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="ypochkun" class="operator_ypochkun operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/75008f7ad5ac1925097c4c83e57a5ef7.png"><div class="operatorNameDisplay"><div class="operatorNameString">Юрий</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="ybokatova" class="operator_ybokatova operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/ebab967bd008d06aae0818b56c17b6d6.png"><div class="operatorNameDisplay"><div class="operatorNameString">Яна</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="ylutskovskaya" class="operator_ylutskovskaya operator" style="display: none;"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/05f7c040e3f73f70e910ed994ed3f461.png"><div class="operatorNameDisplay"><div class="operatorNameString">Яна</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div><div operator="dnikitin" class="operator_dnikitin operator"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/fe0bcc5b1730b832b99b90cb0bdc629a.png"><div class="operatorNameDisplay"><div class="operatorNameString">Дмитрий Никитин</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div></div></div></div></td></tr></tbody></table></div>
+						
+						<div class="onlineSupport">
+							
+							<div class="tabTitle tabTitleWithOperator">
+								<div class="operatorDiv"><div operator="dkharchenko" class="operator" id="currentOperatorDiv"><img class="avatar delayed-src" delayed-src="//static.me-talk.ru/uploads/avatars/717656246277f0445a9c0845dce857f9/449742755aebd3410b08d53ab07a73fa.png"><div class="operatorNameDisplay"><div class="operatorNameString">Дмитрий</div></div><div class="operatorStatus"><span class="operatorStatusDescr">Online</span><span class="changeOperator">, <a class="ajax" onclick="chat.operators.change()">сменить оператора</a></span></div></div></div>
+							</div>
+							<div class="newNotification">
+								<a class="close" ontouchstart="chat.notifications.close();" onclick="chat.notifications.close();">×</a>
+								<div class="inner"></div>
+							</div>
+							<div class="onlineSupportChatArea">
+								<div class="chat ps-container" style="overflow: hidden;">
+									<div class="chatInner" style="padding-top: 0px;">
+										<div class="newNotification"><div class="inner"></div></div>
+									</div>
+									<div class="operatorTyping none temp">
+										Печатает сообщение<span class="pencilDots">...</span>
+									</div>
+								<div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px;"><div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="margin-top: 5px; top: 0px; right: 3px;"><div class="ps-scrollbar-y" style="top: 0px; height: 0px;"></div></div></div>
+								
+										
+								<div class="onlineChatTextarea">
+									<table>
+										<tbody><tr>
+											<td class="likeInput upload firstVisible">
+											
+												<span class="icon-paperclip pointer" onclick="chat.showUploadFile('onlineChat','text');" title="Загрузить файл"></span>
+												
+											</td>
+											
+											<td class="likeInput lastVisible" style="padding:0;">
+												<div style="position:relative;">
+													
+													<div id="chatTextarea" data-prev-typing="" class="onlineChat" name="text" style="overflow: hidden;" placeholder="Ваше сообщение" contenteditable="true"></div>
+													<div class="disabled" title="Отправить сообщение" id="onlineChatSend">
+														<table>
+															<tbody><tr>
+																<td>
+																	<a>Отпр</a>
+																</td>
+															</tr>
+														</tbody></table>
+													</div>
+												</div>
+											</td>
+											
+											
+										</tr>
+									</tbody></table>
+								</div>
+							</div>
+							
+							<div class="askForContacts none feedbackContainer">
+								<div class="feedbackContainerInner">
+									
+									<div class="askForContactsInfo message from_operator">
+										<div class="text first">
+											<div class="askForContactsType askForContactsType_contacts">
+												<p>Ваш вопрос готов к отправке оператору!</p>
+												<p>Для повышения качества нашего обслуживания, просим Вас представиться и оставить контакты для обратной связи:</p>
+											</div>
+											<div class="askForContactsType askForContactsType_questionCategory none">
+												<p>Ваш вопрос готов к отправке оператору!</p>
+												<p>Для повышения качества нашего обслуживания, просим Вас указать категорию вопроса:</p>
+											</div>
+										</div>
+									</div>
+									
+									<div class="mb10 mt20 askForContactsForm feedbackForm">
+										<input name="type" value="contacts" class="askForContactsForm" type="hidden">
+												
+										<div class="mb10 questionCategory none inputContainer">
+											<span class="icon-question-circle icon"></span>
+											<select name="questionCategory" class="askForContactsForm"></select>
+										</div>
+										
+										<form onsubmit="return false;"><div class="inputContainer contacts"><span class="icon icon-user"></span><input class="text askForContactsForm collectContactField" name="descr" placeholder="Как к вам можно обратиться?" type="text"></div><div class="inputContainer contacts"><span class="icon icon-phone"></span><input class="text askForContactsForm collectContactField" name="phone" placeholder="Ваш мобильный телефон" type="text"></div><div class="inputContainer contacts"><span class="icon icon-at"></span><input class="text askForContactsForm collectContactField" name="email" placeholder="Ваш Email" type="text"></div><div class="fs11" style="line-height:1.2em;"><label><input style="width:auto;" class="askForContactsForm" name="eulaAgreement" value="1" type="checkbox"><input class="askForContactsForm" name="needEulaAgreement" value="1" type="hidden">Я соглашаюсь с <a class="nobr linkEula" onclick="chat.tabs.eula();">правилами пользования сервисом</a> и даю согласие на хранение и обработку моих персональных данных.</label></div><div class="alert-form"><div class="none"><div class="alert-text"></div></div></div><div><button class="b" onclick="chat.messages.getContactsBeforeChat.send(this);">Продолжить</button></div></form><div class="contacts_place ready" data-class="askForContactsForm" data-params="online" data-button="Продолжить" data-button-click="chat.messages.getContactsBeforeChat.send(this);"></div>
+									</div>
+									<!--
+									<button style="margin:0;" onClick="chat.messages.getContactsBeforeChat.send(this);" class="b icons nobr fr">
+										<span class="icon-comment-alt" style="margin:0px 3px;"></span> <span>Продолжить</span>
+									</button>
+									-->
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+						<div class="tabTitle tabTitleForOffline"><div class="tabTitleInner">Задать вопрос</div></div>
+						<div class="offlineSupport tabInner none" style="">
+							<div class="feedbackContainer">
+								
+								<div class="offlineSupportInner">
+									<div class="message pmFormUserHTML from_operator"><div class="text first"><p>Оставьте свой вопрос в этой форме и мы обязательно ответим!</p></div></div>
+									<div class="offlinePmLoading">
+										<span>Форма для связи загружается...</span>
+									</div>
+									<div class="pmHistory none"></div>
+									<div class="offlinePmLcab none">
+										<div class="feedbackForm">
+											<div class="inputContainer">
+												<span class="uploadIcon pointer icon-paperclip" onclick="chat.showUploadFile('lcabPM','text');" title="Загрузить файл"></span>
+												<textarea name="text" style="height:44px; padding-right:20px;" placeholder="Введите Ваш вопрос" class="lcabPM text mb10"></textarea>
+												<button onclick="chat.pm.lcab.send(this);" class="b icons"><span class="icon-comment-alt" style="margin:0px 3px;"></span> <span>Отправить</span></button>
+											</div>
+										</div>
+									</div>
+									<div class="offlinePmMetalk none">
+										<div class="feedbackForm">
+											<div class="questionCategory none inputContainer">
+												<span class="icon-question-circle icon"></span>
+												<select name="questionCategory" class="meTalkPM"></select>
+											</div>
+											
+											<form onsubmit="return false;"><div class="inputContainer contacts"><span class="icon icon-phone"></span><input class="text meTalkPM collectContactField" name="phone" placeholder="Ваш мобильный телефон" type="text"></div><div class="inputContainer contacts"><span class="icon icon-at"></span><input class="text meTalkPM collectContactField" name="email" placeholder="Ваш Email" type="text"></div><div class="inputContainer contacts"><span class="icon icon-user"></span><input class="text meTalkPM collectContactField" name="descr" placeholder="Как к вам можно обратиться?" type="text"></div></form><div class="contacts_place ready" data-class="meTalkPM" data-params="leadGen" data-allow-sms="1"></div>
+											
+											<div class="inputContainer">
+													<span class="uploadIcon pointer icon-paperclip" onclick="chat.showUploadFile('meTalkPM','text');" title="Загрузить файл"></span>
+													<textarea name="text" style="height:44px; padding-right:20px;" placeholder="Введите Ваш вопрос" class="meTalkPM text"></textarea>
+												
+											</div>
+											
+											<div class="none" id="leadgenCaptcha"></div>
+											
+											<div id="leadGenEula"><div class="fs11" style="line-height:1.2em;"><label><input style="width:auto;" class="meTalkPM" name="eulaAgreement" value="1" type="checkbox"><input class="meTalkPM" name="needEulaAgreement" value="1" type="hidden">Я соглашаюсь с <a class="nobr linkEula" onclick="chat.tabs.eula();">правилами пользования сервисом</a> и даю согласие на хранение и обработку моих персональных данных.</label></div></div>
+											
+											<div style="margin:20px 0 0;">
+												<button id="metalkPmSend" onclick="chat.pm.metalk.send();" class=" b icons nobr"><span class="icon-comment-alt" style="margin:0px 3px;"></span> <span>Отправить</span></button>
+												<a class="transparentButton compact fr" onclick="chat.closeSupport();">Отменить</a>
+												
+											</div>
+											<div class="clear"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="tab_xz8rqa0hnvwwr0pk" data-type="reviews" class="hiddenTab">
+						<div class="tabTitle"><div class="tabTitleInner">Отзывы</div></div>
+						<div class="tabInnerTitle">
+							<div class="title1">Отзывы наших клиентов</div>
+							<div class="title2">Оставьте свой отзыв!</div>
+						</div>
+						<div class="tabInner tabInnerWithTitle">
+							<div style="height:100%;" id="reviewsList">
+					
+								<div id="reviewsContainerWrapper">
+									<div id="reviewsContainer">
+										<div id="reviewsLoading">Отзывы загружаются...</div>
+									</div>
+								</div>
+								<script>
+									$(document).ready(function(){
+										var button = $("#reviewsInChatExpand");
+										$("#reviewsContainerWrapper").bind("scroll",function(){
+											var scrollTop = $(this).scrollTop();
+											var reviewsHeight = $("#reviewsContainer").height();
+											var wrapperHeight = $(this).height();
+											
+											if (scrollTop + wrapperHeight >= reviewsHeight - 30){
+												if (!button.is(":visible")){
+													button.fadeIn();
+												}
+											}
+											else{
+												if (button.is(":visible")){
+													button.fadeOut();
+												}
+											}
+										});
+									});
+								</script>
+								
+								<div id="reviewsButtons">
+									<button class="b" onclick="chat.rate.showForm();">Оставить отзыв</button>
+									<button class="fr none" id="reviewsInChatExpand">Далее</button>
+								</div>
+										
+							</div>
+							<div id="reviewsForm" class="feedbackContainer none">
+								
+								<div class="none userHTML userHTMLTop userHTMLBig" style="display: none;"></div>
+								<div class="feedbackForm">
+									<div class="inputContainer">
+										<span class="icon-star icon"></span>
+										<select name="rate" class="rateOperator" style="width:100%;">
+											<option selected="selected" value="good">У меня хороший отзыв!</option>
+											<option value="bad">У меня плохой отзыв :(</option>
+										</select>
+									</div>
+									
+									<form onsubmit="return false;"><div class="inputContainer contacts"><span class="icon icon-phone"></span><input class="text rateOperator collectContactField" name="phone" placeholder="Ваш мобильный телефон" type="text"></div><div class="inputContainer contacts"><span class="icon icon-at"></span><input class="text rateOperator collectContactField" name="email" placeholder="Ваш Email" type="text"></div></form><div class="contacts_place ready" data-eula-button="Отправить отзыв" data-class="rateOperator" data-params="rate" data-allow-sms="1"></div>
+									
+									
+									<div>
+										<div class="inputContainer">
+											<textarea name="comment" style="height:44px;" placeholder="Ваши впечатления от работы с нами" class="rateOperator text"></textarea>
+										</div>
+									</div>
+									
+									<div class="none" id="reviewsCaptcha"></div>
+									
+									<div id="reviewsEula"></div>
+									
+									<div class="nobr">
+										<button style="margin:0;" onclick="chat.rate.send(this);" class="b icons nobr"><span class="icon-comment-alt" style="margin:0px 3px;"></span> <span>Отправить отзыв</span></button>
+										<a class="transparentButton compact fr" id="hideReviewForm" onclick="chat.rate.hideForm();">Отменить</a>
+										
+										<div class="clear"></div>
+									</div>
+									
+										
+										
+										
+								</div>
+								<div class="none userHTML userHTMLFooter userHTMLBig" style="display: none;"></div>
+								<div class="clearForm"></div>
+							</div>
+						</div>
+					</div>
+					<div id="formTab" data-type="form">
+						<div class="tabTitle"></div>
+						<div class="tabInner">
+							
+							<div class="none userHTML userHTMLTop userHTMLBig"></div>
+							
+							<div class="feedbackForm"></div>
+							
+							<div class="none userHTML userHTMLFooter userHTMLBig"></div>
+							<div class="clearForm"></div>
+						</div>
+					</div>
+					
+					<div id="paymentTab" data-type="payment">
+						<div class="tabTitle"></div>
+						<div class="tabInner">
+							
+							<div class="paymentSteps">
+	<div class="step1 current">
+		<div class="none userHTML userHTMLTop userHTMLBig"></div>
+		<div class="sumForm">
+			<div class="sumType sumForm_fixed none" data-type="fixed">
+				Сумма платежа: <b class="sum">1000 руб</b>
+				<input name="sum_fixed" value="1000" type="hidden">
+			</div>
+			<div class="sumType sumForm_client none" data-type="client">
+				<input class="text fullWidth" name="sum_client" placeholder="" type="text">
+			</div>
+			<div class="sumType sumForm_list none" data-type="list">
+				<select name="sum_list">
+					
+				</select>
+			</div>
+			
+			<style>
+				.paymentSteps .sumForm .eula *{ font-size: 11px; }
+			</style>
+			
+			
+			<div class="sumForm_button">
+				<button class="b" onclick="chat.payment.step2(this);">Продолжить</button>
+			</div>
+		</div>
+		<div class="none userHTML userHTMLFooter userHTMLBig"></div>
+		<div class="clearForm"></div>
+	</div>
+	<div class="step2 none">
+		<div class="inputContainer sumInput">
+			<span class="icon sumIcon"></span><input class="text" name="sum" readonly="readonly" type="text">
+		</div>
+		
+		<div class="feedbackForm feedbackFormStep2"></div>
+		<div class="eula"></div>
+		<div class="paymentMethods">
+			
+			<div class="paymentMethodsTitle">Выберите способ оплаты:</div>
+			
+			<div class="paymentMethodsList">
+				<button class="none sample paymentType">
+					<img>
+					<span></span>
+				</button>
+				<div class="none sample paymentSystemList">
+					<p>Выберите платёжную систему:</p>
+					<ul>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="step3 none">
+		<div class="title">Всё готово к оплате</div>
+		<div class="mt15 mb30">
+			<div class="step3Button">
+				Кликните по кнопке ниже, чтобы перейти на сайт платёжной системы.
+			</div>
+			<div class="step3NoButton none">
+				Сейчас откроется окно платёжной системы.
+			</div>
+		</div>
+	</div>
+</div>							
+						</div>
+					</div>
+					
+					
+					
+					<div id="htmlTab" data-type="html">
+						<div class="tabTitle"></div>
+						<div class="tabInner"></div>
+					</div>
+					
+					<div id="modalTab">
+						
+					</div>
+
+					
+					<div id="alert-background"></div>
+					<div id="alert-message">
+						<div class="alert-title"><span>Системное сообщение</span> <i class="close">×</i></div>
+						<div class="alert-text"></div>
+					</div>
+				<div id="tab1" data-type="form">
+						<div class="tabTitle"><div class="tabTitleInner">Заказать звонок</div></div>
+						<div class="tabInner">
+							
+							<div class="userHTML userHTMLTop userHTMLBig"><div style="margin-bottom: 30px; text-align: center;">
+<div class="circle-border like-link-light-border" style="border-width: 4px; background: #ffffff; display: inline-block; text-align: center; padding: 16px 0px 0 0; width: 100px; height: 100px; box-sizing: border-box;">
+<div class="icon-phone" style="font-size: 67px;"></div>
+</div>
+</div>
+<p style="text-align: center; margin-bottom: 30px;">Введите номер мобильного телефона и&nbsp;мы перезвоним Вам!</p></div>
+							
+							<div class="feedbackForm"><form onsubmit="return false;"><div class="inputContainer contacts"><span class="icon icon-phone"></span><input class="text form_8dcth789xz8g54qn collectContactField disallowAutoFill" name="phone" placeholder="Ваш мобильный телефон" type="text"></div><div class="inputContainer contacts"><span class="icon icon-user"></span><input class="text form_8dcth789xz8g54qn collectContactField disallowAutoFill" name="descr" placeholder="Как к вам можно обратиться?" type="text"></div><div class="fs11" style="line-height:1.2em;"><label><input style="width:auto;" class="form_8dcth789xz8g54qn" name="eulaAgreement" value="1" type="checkbox"><input class="form_8dcth789xz8g54qn" name="needEulaAgreement" value="1" type="hidden">Я соглашаюсь с <a class="nobr linkEula" onclick="chat.tabs.eula();">правилами пользования сервисом</a> и даю согласие на хранение и обработку моих персональных данных.</label></div><div class="alert-form"><div class="none"><div class="alert-text"></div></div></div><div><button class="b">Перезвоните мне</button></div></form><div class="contacts_place ready"></div></div>
+							
+							<div class="none userHTML userHTMLFooter userHTMLBig" style="display: none;"></div>
+							<div class="clearForm"></div>
+						</div>
+					</div><div id="tab_eula" data-type="html" class="hiddenTab">
+						<div class="tabTitle"><div class="tabTitleInner">Правила сервиса</div></div>
+						<div class="tabInner"></div>
+					</div></div>
+				<div class="supportMenu">
+					<ul class="supportTabs" style=""><li class="tab0 current tab_rb3474wzpgsnxqcs"><a class="a_chat" style=""><span class="descr">Online-чат</span></a></li><li class="tab_xz8rqa0hnvwwr0pk none invisibleTab"><a class="a_reviews"><span class="descr">Отзывы</span></a></li><li class="tab1 tab_8dcth789xz8g54qn"><a class="a_form" style=""><span class="descr">Заказать звонок</span></a></li><li class="tab_eula none invisibleTab"><a class="a_html"><span class="descr">Правила сервиса</span></a></li></ul>
+					<div class="scrollTabsBtn scrollTabsBtnLeft none">
+						<span class="icon-caret-left"></span>
+					</div>
+					<div class="scrollTabsBtn scrollTabsBtnRight none">
+						<span class="icon-caret-right"></span>
+					</div>
+					<div class="resize"><span class="ui-icon ui-icon-gripsmall-diagonal-se"></span></div>
+				</div>
+			</div>
+			<div class="overlay"><span class="icon icon-spinner icon-spin"></span></div>
+		</div>
+		<div class="none flatSupportClose">
+			<a class=" close" href="#" onclick="chat.clickOnClose(); return false;">×</a>
+		</div>
+		<div class="none">
+			<div id="contactsNotification">
+				<div class="row descr">
+					<p>Представьтесь, пожалуйста:</p>
+					<div class="feedbackForm">
+						<form onsubmit="return false;"><div class="inputContainer contacts"><span class="icon icon-user"></span><input class="text contactsNotification collectContactField" name="descr" placeholder="Как к вам можно обратиться?" type="text"></div><div class="inputContainer contacts"><span class="icon icon-phone"></span><input class="text contactsNotification collectContactField" name="phone" placeholder="Ваш мобильный телефон" type="text"></div><div class="inputContainer contacts"><span class="icon icon-at"></span><input class="text contactsNotification collectContactField" name="email" placeholder="Ваш Email" type="text"></div><div class="fs11" style="line-height:1.2em;"><label><input style="width:auto;" class="contactsNotification" name="eulaAgreement" value="1" type="checkbox"><input class="contactsNotification" name="needEulaAgreement" value="1" type="hidden">Я соглашаюсь с <a class="nobr linkEula" onclick="chat.tabs.eula();">правилами пользования сервисом</a> и даю согласие на хранение и обработку моих персональных данных.</label></div><div class="alert-form"><div class="none"><div class="alert-text"></div></div></div><div><button class="b">Сохранить</button></div></form><div class="contacts_place ready" data-class="contactsNotification" data-params="online" data-allow-sms="1" data-button="Сохранить"></div>
+					</div>
+				</div>
+			</div>
+			<script>
+				$(".contactsNotification[name=descr]").bind("focus",function(){
+					$("#contactsNotification").children(".none").slideDown();
+				});
+			</script>
+		</div>
+	
+<style id="additionalStyles">html.support body #reviewsContainer div.ajax.greenAjax{ background:#c3f4a2; color:#333333; } html.support body #reviewsContainer div.ajax.redAjax{ background:#ffcccc; color:#333333; }</style></body></html>

@@ -1,0 +1,38 @@
+[root@nextcloud www]# pwd
+/home/nextcloud/www
+[root@nextcloud www]# letsencrypt certonly --agree-tos --rsa-key-size 4096 --renew-by-default -m admin@omnilance.com --webroot -w /home/nextcloud/www/ -d nextcloud.server.ua
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Starting new HTTPS connection (1): acme-v01.api.letsencrypt.org
+
+-------------------------------------------------------------------------------
+Would you be willing to share your email address with the Electronic Frontier
+Foundation, a founding partner of the Let's Encrypt project and the non-profit
+organization that develops Certbot? We'd like to send you email about EFF and
+our work to encrypt the web, protect its users and defend digital rights.
+-------------------------------------------------------------------------------
+(Y)es/(N)o: N
+Obtaining a new certificate
+Performing the following challenges:
+http-01 challenge for nextcloud.server.ua
+Using the webroot path /home/nextcloud/www for all unmatched domains.
+Waiting for verification...
+Cleaning up challenges
+
+IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at
+   /etc/letsencrypt/live/nextcloud.server.ua/fullchain.pem. Your cert
+   will expire on 2017-10-25. To obtain a new or tweaked version of
+   this certificate in the future, simply run certbot again. To
+   non-interactively renew *all* of your certificates, run "certbot
+   renew"
+ - Your account credentials have been saved in your Certbot
+   configuration directory at /etc/letsencrypt. You should make a
+   secure backup of this folder now. This configuration directory will
+   also contain certificates and private keys obtained by Certbot so
+   making regular backups of this folder is ideal.
+ - If you like Certbot, please consider supporting our work by:
+
+   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+   Donating to EFF:                    https://eff.org/donate-le
+
+

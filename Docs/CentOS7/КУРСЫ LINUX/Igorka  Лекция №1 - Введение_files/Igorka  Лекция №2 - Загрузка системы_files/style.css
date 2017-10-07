@@ -1,0 +1,643 @@
+/*
+Theme Name: Fluid Blue Igorka
+Theme URI: http://srinig.com/wordpress/themes/fluid-blue/
+Description: A simple two column fluid width theme. Right sidebar supports widgets. Tags and gravatars supported. Valid XHTML and CSS.
+Version: 1.6.1
+Author: Srini G
+Author URI: http://srinig.com/wordpress
+Tags: fluid width, variable width, blue, two columns, right sidebar, widgets, graphics free, simple, valid CSS, valid XHTML
+
+	The CSS, XHTML and design is released under GPL:
+	http://www.opensource.org/licenses/gpl-license.php
+
+*/
+
+body {
+	margin:0;
+	background:#fff;
+	color:#444;
+	font-size: 62.5%; /* Resets 1em to 10px */
+	font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	text-align:center;
+}
+
+a { 
+	color:#258;
+	text-decoration:none;
+}
+
+a:hover {
+	text-decoration:underline; 
+}
+
+h1, h1 a, h2, h2 a, h3, h4, h5, h6 {
+	margin-bottom:0;
+	color:#27a;
+	text-align:left;
+}
+
+h1 {font-size:2.7em;}
+h2 {font-size:2em;}
+h3 {font-size:1.6em;}
+h4 {font-size:1.2em;}
+h5 {font-size:1em;}
+h6 {font-size:0.8em;}
+
+img {
+	border:0;
+}
+
+input {
+	font-size:1.2em;
+}
+
+input[type=text], textarea{
+	background:#fff;
+	border:1px inset #aaa;
+}
+input[type=submit] {
+	background:#eee;
+	border:1px outset #aaa;
+}
+
+textarea {
+	font-size:12px;
+}
+
+pre {
+	font-size:12px;
+}
+code {
+	font-size:12px;
+	background-color:#f8f8f8;
+	color:#111;
+}
+
+/* Layout */
+#page {
+        width:1200px;
+	margin:0 auto;
+	text-align:left;
+}
+
+#wrapper {
+	margin:0;
+	/*padding-right:220px;*/
+	display: table;
+}
+
+
+
+#content{
+	/*float:left;*/
+	width:728px;
+	padding:10px 10px 10px 10px;
+	display: table-cell;
+	vertical-align: top;
+}
+
+#sidebar{
+	/*float:left;*/
+	width:307px;
+	/*margin:0 -260px 0 0;*/
+	padding:5px 10px 5px 10px;
+	/*background:transparent;*/
+	display: table-cell;
+	vertical-align: top;
+	background-color: #e6e6e6;
+	box-sizing: border-box;
+	border-right: 1px solid gray;
+	border-left: 1px solid gray;
+
+}
+
+#sidebar2{
+	/*float:left;*/
+	width:145px;
+	/*margin:0 0px 0 0;*/
+	padding:5px 4px 5px 8px;
+        display: table-cell;
+        vertical-align: top;
+        background-color: #e6e6e6;
+        box-sizing: border-box;
+        border-right: 1px solid gray;
+        border-left: 1px solid gray;
+
+
+}
+
+#footer {
+	clear:both;
+	padding:10px;
+	border-top:0.2em solid #555;
+}
+
+/* Header */
+
+#header {
+	width: 1200px;
+	background: url(pictures/header-1200.png) top center no-repeat;
+	height:7.0em;
+        padding:0.5em 0;
+	margin-top: 0;
+	color: #fff;
+}
+
+#headertitle {
+	float:left;
+        padding-right: 100px;
+	position:relative;
+	top:1.0em;
+	left:2%;
+}
+#headertitle h1 {
+	margin:0;
+}
+#headertitle h1 a {
+	background:transparent;
+	color:#fff;
+}
+#headertitle h1 a:hover {
+	text-decoration:none;
+}
+
+#headertitle p {
+	margin:0;
+	background:transparent;
+	color:#fff;
+	font-size:1.1em;
+}
+
+#header_ads {
+	float:right;
+
+}
+
+.search {
+	float:right;
+	padding:1.5em 5% 0 0;
+}
+.search form {
+        margin:0;
+	padding:0;
+}
+.search input {
+	display:inline;
+	width:260px;
+	border:1px solid #69b;
+	margin:0;
+	padding:0.2em 5px;
+	background:#38b;
+	color:#ddd;
+	font-size:1.1em;
+}
+
+
+/* Top navigation */
+
+#hmenu {
+	border-top:0.1em solid #555;
+	border-bottom:0.1em solid #555;
+	/* background:#165279; */
+        height:30px;
+        /*background: url(pictures/navBar-bl20.gif) repeat-x;*/
+	background-color: #363663;
+}
+
+#hmenu ul {
+	margin:0 2%;
+	padding:0.8em 0;
+	background:transparent;
+ 	list-style-type:none;
+	list-style-position:outside;
+	text-indent:0;
+}
+
+#hmenu ul li {
+	display:inline;
+	margin:0;
+	padding:0;
+	text-transform:uppercase;
+}
+
+#hmenu ul li:before {
+        font-size: 1.2em;
+	content: "| \0020";
+	background:transparent;
+	color:#eee;
+}
+#hmenu ul li.hmenu1:before {
+	content: "";
+}
+#hmenu ul li a {
+	padding:0.5em;
+	margin:0;
+	background:transparent;
+	color:#c6c8c9;
+	text-decoration:none;
+        font-size: 1.2em;
+}
+
+#hmenu ul li.hmenu1 a {
+	padding-left:0;
+}
+
+#hmenu ul li a:hover {
+	background:transparent;
+	color:#fff;
+}
+
+/* Sidebar */
+
+#sidebar h4 {
+	font-size: 13px;
+	font-weight: bold;
+	text-align: left;
+	padding:  3px;
+	color:  #FFFFFF;
+	background:url(pictures/sidebarbg.gif) repeat-x;
+	background-color: #285b87;
+	margin-bottom: 5px;       
+	margin-top:10px;
+	border: 1px solid #484848;
+}
+
+
+#sidebar ul {
+	padding:0;
+	margin:0;
+	list-style: none;
+	font-size:1.1em;
+}
+#sidebar ul ul {
+	font-size:1em;
+}
+
+#sidebar ul li {
+	margin:0 0 2em 0;
+}
+
+#sidebar ul ul {
+	margin:0;
+	padding:0;
+}
+
+#sidebar li li {
+	margin:0.1em 0;
+}
+
+#sidebar li li li {
+	padding-left:10px;
+}
+
+#sidebar ul h2 {
+	margin:0;
+	padding:0;
+	color:#4588c4;
+	font-size:1.2em;
+	text-transform:uppercase;
+}
+
+/* Footer */
+#footer { 
+	text-align:center;
+	font-size:1.1em;
+        height:4.0em;
+        background: url(pictures/footer.gif) top center repeat-x;
+	/* background:#165279; */
+        color: #fff;
+	/* color:#eee; */
+}
+
+#footer a {
+	color:#aac;
+}
+
+/* Post */
+.post {
+	margin:0 0 4em 0;
+	clear:both;
+}
+
+.post p, .post ol li, .post ul li{
+	margin-top:0;
+	font-size:1.2em;
+	line-height:1.5em;
+	text-align:justify;
+}
+.post li li {
+	font-size:1em;
+}
+.post blockquote {
+	padding:0 0 0 2em;
+	border-left:0.4em solid #ccc;
+	font-size:0.9em;
+}
+.post blockquote blockquote {
+	margin-left:0;
+	font-size:1em;
+}
+
+.postentry a {
+	border-bottom:1px solid #ddd;
+}
+.postentry a:hover {
+	border-bottom:1px solid #258;
+	text-decoration:none;
+}
+
+.postmetadata {
+	clear:both;
+	margin:1em 0;
+	font-size:1.1em;
+	color:#888;
+	text-align:justify;
+}
+
+div.navigation {
+	font-size:1.1em;
+}
+
+/* Comments */
+
+#comments {
+	margin:0 2em;
+}
+
+.commentlist {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+.commentlist li {
+	padding:2em 0;
+	overflow:auto;
+	border-bottom:0.1em solid #eee;
+}
+
+.commentlist p {
+	margin:0.5em 0;
+	font-size:1.1em;
+}
+
+.commentlist p a {
+	border-bottom:1px solid #ddd;
+}
+.commentlist p a:hover {
+	border-bottom:1px solid #157;
+	text-decoration:none;
+}
+.commentlist img.avatar {
+	float: right; margin: 0 0 0 10px; padding: 3px; border:1px solid #eee;
+}
+.commentlist h4 {
+	margin:0;
+}
+
+textarea#comment {
+	font-size:1.6em;
+	width:100%;
+}
+/* Comment ends */
+
+
+/* Calendar */
+#wp-calendar caption {
+	text-transform:uppercase;
+	font-weight:bold;
+	color:#27a;
+	text-align:center;
+}
+#wp-calendar thead th {
+	font-weight:normal;
+	color:#27a;
+	text-align:center;
+}
+#wp-calendar tbody td {
+	text-align:center;
+}
+#wp-calendar tbody td a {
+	font-weight:bold;
+}
+#wp-calendar tbody td.pad {
+	border:none;
+}
+/* Calendar ends */
+
+#wp-td10 td {
+           font-size:10pt;
+}
+
+#wp-td12 td {
+           font-size:12pt;
+}
+
+abbr {
+	cursor:help;
+	border-bottom: 0.1em dotted;
+}
+
+.aligncenter,
+div.aligncenter {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.alignleft {
+   float: left;
+   margin: 5px 5px 5px 0;
+   text-decoration: underline
+}
+
+.alignright {
+   float: right;
+   margin: 5px 0 5px 5px;
+   text-decoration: underline
+}
+
+.wp-caption {
+   border: 1px solid #ddd;
+   text-align: center;
+   background-color: #f3f3f3;
+   padding-top: 4px;
+   margin: 10px;
+}
+
+.wp-caption img {
+   margin: 0;
+   padding: 0;
+   border: 0 none;
+}
+
+.wp-caption p.wp-caption-text {
+   font-size: 11px;
+   line-height: 17px;
+   padding: 0 4px 5px;
+   margin: 0;
+}
+
+@media screen and (max-device-width: 721px) {
+
+body {
+	width: 100%;
+}
+
+h1 {
+	font-size: 1.6em;
+
+}
+
+#headertitle p {
+	font-size: 1em;
+}
+
+#headertitle {
+	padding-right: 0;
+        position:static;
+        margin-left: 10px;
+}
+
+#header {
+	background: none;
+	background-color: #4a4a9b;
+	width: 100%;
+	height: 6em;
+
+  }
+
+#header_ads {
+        float:none;
+	width: 100%;
+	position: absolute;
+	visibility: hidden;
+}
+
+#header_ads table {
+	width: 100%;
+}
+
+#header_ads table tr td a img {
+	width: 100%;
+}
+
+#page {
+        width:100%;
+        margin:0 auto;
+        text-align:left;
+}
+
+
+#wrapper {
+        margin:0;
+        /*padding-right:220px;*/
+        display: inline-block;
+	/*font-size: 100%;*/
+	width: 100%;
+}
+
+#content{
+        /*float:left;*/
+        width:100%;
+        padding:10px 10px 10px 10px;
+        display: inline-block;
+        vertical-align: top;
+        box-sizing: border-box;
+	font-size: 120%;
+}
+
+#sidebar{
+        /*float:left;*/
+	width:100%;
+        /*margin:0 -260px 0 0;*/
+        padding:5px 10px 5px 10px;
+        /*background:transparent;*/
+        display: inline-block;
+        vertical-align: top;
+        background-color: #e6e6e6;
+        box-sizing: border-box;
+        border-right: 1px solid gray;
+        border-left: 1px solid gray;
+	font-size: 120%;
+}
+
+#sidebar2{
+        /*float:left;*/
+        width: 100%;
+        /*margin:0 0px 0 0;*/
+        padding:5px 4px 5px 8px;
+        display: inline-block;
+        vertical-align: top;
+        background-color: #e6e6e6;
+        box-sizing: border-box;
+        border-right: 1px solid gray;
+        border-left: 1px solid gray;
+	position: absolute;
+	visibility: hidden;
+}
+
+.textwidget {
+	display: inline-block;
+}
+
+/* Top navigation */
+
+#hmenu {
+        border-top:0.1em solid #555;
+        border-bottom:0.1em solid #555;
+        /* background:#165279; */        
+        /*background: url(pictures/navBar-bl20.gif) repeat-x;*/
+        background-color: #363663;
+	height: auto;
+	font-size: 1em;
+	width: auto;
+}
+
+#hmenu ul {
+        margin:0 2%;
+        padding:0.8em 0;
+        background:transparent;
+        list-style-type:none;
+        list-style-position:outside;
+        text-indent:0;
+}
+
+#hmenu ul li {
+        display:inline-block;
+        margin:0;
+        padding:10px;
+        text-transform:uppercase;
+}
+
+#hmenu ul li:before {
+        font-size: 1.2em;
+        content: "";
+        background:transparent;
+        color:#eee;
+}
+
+#hmenu ul li.hmenu1:before {
+        content: "";
+}
+#hmenu ul li a {
+        padding:0.5em;
+        margin:0;
+        background:transparent;
+        color:#c6c8c9;
+        text-decoration:none;
+        font-size: 1.2em;
+}
+
+#hmenu ul li.hmenu1 a {
+        padding-left:0;
+}
+
+#hmenu ul li a:hover {
+        background:transparent;
+        color:#fff;
+}
+
+
+
+}

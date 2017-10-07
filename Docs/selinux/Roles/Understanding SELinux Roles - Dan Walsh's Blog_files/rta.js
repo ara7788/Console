@@ -1,0 +1,1 @@
+﻿crtg_content = ''; (function(){document.cookie = 'crtg_rta=' + escape(crtg_content) + '; path=/; expires=Fri, 03 Nov 2017 09:58:37 GMT';})();

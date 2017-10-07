@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1251">
+<title>Установка Sphinx под Linux - строим свой поисковый сервер</title>
+ <meta charset="Windows-1251">
+ <meta name="referrer" content="origin">
+ <meta name="keywords" content="sphinx install setup linux ubuntu debian">
+ <meta name="description" content="Подробно рассмотрен процесс установки и начальной настройки поискового сервера Sphinx">
+ <meta name="robots" content="index,follow">
+ <meta name="revisit-after" content="4 days">
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <link rel="shortcut icon" href="https://ph0en1x.net/favicon.ico" type="image/x-icon">
+
+ <link type="application/rss+xml" rel="alternate" href="https://ph0en1x.net/rss/">
+ <link href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/ph0en1x.css" rel="stylesheet">
+ <link href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/prism-coy.css" rel="stylesheet">
+ <link href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/star_rating.css" rel="stylesheet">
+ <link href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/style.css" rel="stylesheet">
+ <link href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/style_002.css" rel="stylesheet">
+
+ <script async="" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/analytics.js"></script><script src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/cbgapi.loaded_1" async=""></script><script src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/cbgapi.loaded_0" async=""></script><script src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/jquery.js"></script>
+ <script src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/prism.js"></script>
+ <script src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/star_rating.js"></script>
+ <script src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/markitup.js"></script>
+ <script src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/set.js"></script>
+ <script src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/ph0en1x.js"></script>
+
+<!--[if lt IE 9]><script src="/themes/ph0en1x/ie-fix.js"></script><![endif]-->
+ <script>  Prism.plugins.autoloader.languages_path = '/modules/jquery/plugins/prism/components/';  
+$(function(){$('.star_rating input').rating({callback:function(value,link){rating_vote(this.name,value);},
+required:true,
+});});  function rating_vote(name,value){$.post('/index.php?ajax&mod=rating&act=rating_vote',{name:name,value:value},function(data){if(data.msg_type=='success'){$("input[name='"+name+"']").rating('readOnly');}
+alert(data.msg_text);});};  function comment_vote(id,action){$.post('/index.php?ajax&mod=comments&act=vote',{id:id,action:action},function(data){if(data&&data.state=='ok'){if(data.text>0){data.text='+'+data.text;}
+$('#comment_'+id+'_votes span').html(data.text);}
+else{alert(data.text);}
+$('#comment_'+id+'_votes input').attr('disabled','disabled').css({'opacity':'0.3'});});};  
+$(document).ready(function(){$('#cm_text').markItUp(mySettings);});  
+function smile_insert(smile_code=''){$.markItUp({replaceWith:smile_code});return true;};
+ </script>
+</head>
+<body>
+<div id="wrapper">
+    
+    <header>
+        <div id="description">Программирование, радиоэлектроника,<br>саморазвитие и частичка из моей жизни здесь...</div>
+        <nav id="menu">
+            <ul>
+                <li><button id="mainpage">Главная</button></li>
+                <li><button id="about">О авторе</button></li>
+                <li><button id="to-categories">Категории публикаций</button></li>
+            </ul>
+        </nav>
+        <nav id="links">
+            <ul>
+                <li id="rss" title="Новости сайта по RSS"></li>
+                <li id="contacts" title="Отправить сообщение Автору"></li>
+                <li id="twitter" title="Канал в Твиттере"></li>
+                <li id="github" title="Мои репозитории на GitHub"></li>
+            </ul>
+        </nav>
+    </header>
+ 
+    <div id="main-container">
+        <div id="content-container">
+            <div id="content">
+            <div id="publication" itemscope="" itemtype="http://schema.org/TechArticle">
+<h1 itemprop="name">Установка Sphinx под Linux - строим свой поисковый сервер</h1>
+<div itemprop="articleBody"><p><img style="float: left; margin-right: 10px; margin-bottom: 10px;" title="Sphinx найдет все!" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/sphinx-can-search-anything-engine.jpg" alt="Sphinx " width="250" height="150">Sphinx
+ - поисковый сервер и открытым исходным кодом (Open Source Search 
+Server) для индексации контента из баз данных и осуществления 
+полнотекстового поиска, разработанный Андреем Аксеновым. В статье 
+пошагово рассказано как установить и настроить поисковый сервер Sphinx 
+на сервер под управлением операционной системы Linux (Ubuntu/Dedian). 
+Приведены примеры, советы и ссылки которые будут полезны как 
+администраторам так и разработчикам.</p>
+<p>Прежде чем приступить к пошаговому мануалу по установке и настройке 
+поискового сервера Sphinx хочу вам рассказать как я познакомился с 
+данной системой и что послужило толчком к ее использованию.</p>
+<p>Содержание:</p>
+<ul>
+<li><a href="#intro">Вступление</a></li>
+<li><a href="#yandex-search-an-its-minuses">Поиск от Яндекса и его минусы</a></li>
+<li><a href="#sphinx-search">Поисковый движок Sphinx</a></li>
+<li><a href="#how-it-works">Как это работает</a></li>
+<li><a href="#installing-configuring-sphinx">Установка и настройка Sphinx на Linux</a></li>
+<li><a href="#linux-start-script-sphinx-initd">Скрипт автозапуска searchd для init.d</a></li>
+<li><a href="#sphinx-start-script-linux-systemd">Скрипт автозапуска searchd для systemd</a></li>
+<li><a href="#sphinx-indexer-cron-install">Настройка автоматической переиндексации</a></li>
+<li><a href="#protecting-sphinx-net-ports">Защита служебных портов</a></li>
+<li><a href="#using-sphinx-with-php">Пример взаимодействия со Sphinx на PHP</a></li>
+<li><a href="#conclusion">Заключение</a></li>
+</ul>
+<h2><a id="intro"></a>Вступление</h2>
+<p>С самого начала, когда только начинал программировать на PHP и писал 
+несложные сайты, я использовал собственный самописный поисковый движок с
+ простой логикой. Он воспринимал одно и несколько слов в поисковой фразе
+ и выдавал те записи в которых было обнаружено вхождение. Сначала делал с
+ индексированием контента и кешированием индекса, потом делал 
+полнотекстовый поиск на PHP.</p>
+<p>Конечно же данная реализация не лишена недостатков, основной 
+недостаток - это не достаточно релевантная поисковая выдача поскольку 
+мой движок не учитывал морфологию слов, а искал только прямые вхождения 
+поисковых фраз с простым анализом распределенности по статье. Писать 
+мощный поисковый модуль со сложной логикой и оптимизациями "на 
+стероидах" у меня не было ни времени ни особого желания.</p>
+<h2><a id="yandex-search-an-its-minuses"></a>Поиск от Яндекса и его минусы</h2>
+<p>Позже я узнал про поиск от Яндекса, который без особого труда можно 
+прикрутить к своему сайту используя Yandex XML Search API. К моему 
+движку был написан модуль для осуществления поиска используя Yandex XML 
+Search API и казалось бы все просто супер но со временем меня начали не 
+устраивать некоторые ограничения и неудобства при работе с Yandex XML 
+Search.</p>
+<p>Вот что мне показалось неудобным при использовании Yandex XML Search API:</p>
+<ul>
+<li>ограничение на количество запросов в сутки, а потом еще сделали 
+график ограничений для разного времени суток. Хотите уменьшить 
+ограничения...отправьте СМС на номер...шутка, можно стать партнером 
+Яндекса, для аккаунта зарегистрироваться в партнерской сети Яндекс 
+Директ (РСЯ), связаться с поддержкой Яндекса и рассказать им зачем вам 
+нужно большое количество запросов к Yandex XML Search API.</li>
+<li>поиск производится только по контенту, который проиндексирован 
+Яндексом. Если странички нет в индексе Яндекса - ее вы никогда не 
+увидите в поисковой выдаче своего сайта.</li>
+<li>привязка сайта к стороннему сервису, зависимость поиска от него.</li>
+</ul>
+<h2><a id="sphinx-search"></a>Поисковый движок Sphinx</h2>
+<p>И тут я вспомнил что читал когда-то на <a href="https://ph0en1x.net/goto/f64eae3ab63679d26be158825387c6ce.html" target="_blank" rel="nofollow noopener noreferrer">Хабре</a>
+ и еще на каком-то блоге по HighLoad-проектам о мощном бесплатном 
+поисковом движке с расширенным анализом и множеством возможностей по 
+настройке и интеграции. Назывался этот движок <strong>Sphinx</strong>(сфинкс). Очень удачное название, хорошо запоминается и легко ищется в Google/Yandex.</p>
+<p>Основные характеристики и возможности Sphinx:</p>
+<ul>
+<li>индексирование:&nbsp; до 10-15Мб на каждое ядро микропроцессора;</li>
+<li>поиск: 150-250 поисковых запросов в секунду на каждое ядро при 1Млн документов в индексе;</li>
+<li>высокая масштабируемость;</li>
+<li>распределенный поиск;</li>
+<li>поддержка до 32 и более полей при полнотекстовом поиске;</li>
+<li>поддержка дополнительный атрибутов для каждого из индексируемых документов;</li>
+<li>возможность использовать стоп слова;</li>
+<li>поддержка однобайтовых (СЗ1251 и т.п) и двухбайтовых кодировок (UTF-8);</li>
+<li>морфологический поиск с модулями для разных языков;</li>
+<li>поддержка MySQL и PostgreSQL из коробки;</li>
+<li>поддержка других ODBC совместимых баз данных;</li>
+<li>кроссплатформенность;</li>
+<li>готовые к использованию решения API для языков PHP, Python, Java.</li>
+</ul>
+<p>Сфинкс используется на многих высоконагруженных проектах, к примеру 
+это Хабрахабр, Викимапия и другие. Система себя зарекомендовала с 
+наилучшей стороны, известно что существует поисковый кластер в котором 
+проиндексировано около 3 миллиардов документов и который осуществляет 
+более 50 миллионов поисковых запросов в сутки.</p>
+<p>Полистав документацию и прочитав бегло несколько русских/английских 
+статей по установке в уме быстро очертил себе четкий алгоритм действий. 
+Со своим опытом установки и настройки Sphinx я хочу сейчас познакомить 
+тебя, мой дорогой читатель.</p>
+<h2><a id="how-it-works"></a>Как это работает</h2>
+<p>На сервер ставится поисковый демон Sphinx, который индексирует через 
+заданный промежуток времени статьи и контент вашего сайта - создает 
+поисковый индекс.</p>
+<p>На вашем сайте подключается Sphinx API, который есть для Java, PHP, 
+Ruby (можно написать реализацию и для других языков), пишется поисковый 
+модуль который делает несложные запросы к демону(сервису) Sphinx - 
+searchd.</p>
+<p>При запросе поисковой фразы с поисковой формы сайта через Sphinx API 
+делается обращение к демону searchd, который нам возвращает ID записей с
+ нужной сортировкой и фильтрацией. Дальше имея ID публикаций мы делаем 
+один запрос к БД сайта и получаем всю информацию о наших статьях, 
+остается только красиво вывести список найденных элементов.</p>
+<h2><a id="installing-configuring-sphinx"></a>Установка и настройка Sphinx на Linux</h2>
+<p>Предполагается что у вас уже установлена ОС Linux, на которой будет 
+работать (или уже работает ) сайт или сервис, на котором нужно будет 
+использовать Sphinx Search API.</p>
+<p>Обновляем источники пакетов и ставим нужный софт:</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash"><span class="token function">apt-get</span> update
+<span class="token function">apt-get</span> <span class="token function">install</span> gcc <span class="token function">make</span> libmysqlclient15-dev libmysql++-dev g++<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>Идем по ссылке <a href="https://ph0en1x.net/goto/1401f420d50a2ac8dfb2a9183ef39965.html" target="_blank" rel="nofollow noopener noreferrer">http://sphinxsearch.com/downloads/release/</a>
+ и качаем архив с исходными кодами для последнего стабильного релиза ( 
+Get Source tarball tar.gz ). Потом распаковываем архив и переходим в 
+разархивированную папку. Вот к примеру я качал 2.1.3-release:</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash"><span class="token function">cd</span> /tmp/
+<span class="token function">wget</span> -c <span class="token string">"http://sphinxsearch.com/files/sphinx-2.1.3-release.tar.gz"</span> <span class="token operator">&amp;&amp;</span> <span class="token function">ls</span>
+<span class="token function">tar</span> -xf sphinx-2.1.3-release.tar.gz
+<span class="token function">cd</span> sphinx-2.1.3-release<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>Теперь компилируем наш Сфинкс с поддержкой MySQL (есть поддержка и 
+других БД, смотри док.), поскольку весь полезный контент сайта хранится в
+ БД MySQL:</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash">./configure --with-mysql --prefix<span class="token operator">=</span>/usr/local/sphinx 
+<span class="token function">make</span>
+<span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>Копируем шаблон файла с настройками и редактируем его содержимое под наши нужды:</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash"><span class="token function">cp</span> /usr/local/sphinx/etc/sphinx.conf.dist /usr/local/sphinx/etc/sphinx.conf
+<span class="token function">nano</span> /usr/local/sphinx/etc/sphinx.conf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>В конфигурационном файле достаточно много настроек и все они 
+заключены в секции где для каждого источника индексируемых данных 
+описываются свои специфические опции и данные для доступа.</p>
+<p>Приводить полное описание всех настроек я не буду, в шаблонном файле 
+все хорошо документировано, а также в официальной документации (смотри 
+ссылки в конце статьи) все понятно изложено. Чтобы все изначально 
+прояснить приведу здесь текст своего конфигурационного файла с 
+подробными комментариями:</p>
+<pre class="line-numbers  language-none code-toolbar"><code class=" language-none"># Настройки источника "mysqlbasename" с которого будем брать контент
+source mysqlbasename
+{
+ type = mysql # тип источника, в данном случае БД MySQL
+ sql_host = localhost # Хост MySQL
+ sql_user = dbusername # Пользователь MySQL
+ sql_pass = dbuserpassword # Пароль MySQL
+ sql_db = mysqlbasename # Название БД в MySQL
+ sql_port = 3306 # Порт сервера MySQL
+ sql_query_pre = SET NAMES CP1251 # Кодировка индексируемой таблицы
+# Запрос которым делаем выборку всех записей, которые должны быть проиндексированы
+ sql_query =  SELECT title, full_text  FROM posts WHERE publicated=1
+# Используется только в CLI (при обращении через командную строку), можно оставить пустым
+ sql_query_info = SELECT * FROM posts WHERE id=$id
+}
+
+# настройки построения индекса с использованием источника "mysqlbasename"
+index mysqlbasename
+{
+ source = mysqlbasename # Имя источника данных
+# Путь по которому будут сохранены файлы индекса, если индекс большой то можно 
+#  перенести на отдельный раздел или жесткий диск.
+ path = /usr/local/sphinx/var/data/mysqlbasename
+# Настройка хранения значений атрибутов документов, extern - хранить раздельно по ID.
+ docinfo = extern 
+ mlock = 0 # Бдокировка памяти для кеширования данных, 0 - нет.
+ morphology = stem_en, stem_ru, soundex # набор морфологическиз препроцессоров для обработки.
+ min_word_len = 3 # минисмальная длина слова для индексации
+ charset_type = sbcs #  Single Byte Character Set - кодировка, в данном случае для CP1251.
+ html_strip = 1 # Чистить или нет HTML (1 - да)
+}
+
+# настройки индексатора
+indexer
+{
+ mem_limit = 32M # лимит памяти для работы индексатора
+}
+
+# настройки поискового демона (SearchDaemon, searchD)
+searchd
+{
+ listen = 9312 # порт для работы через API
+ listen = 9306:mysql41 # порт для комуникаций с MySQL
+ log = /usr/local/sphinx/var/log/searchd.log # логи демона
+ query_log = /usr/local/sphinx/var/log/query.log # логи поисковых запросов
+ read_timeout = 5 # таймаут чтения в секундах
+ client_timeout = 300 # таймаут поддержания соединения, между запросами в секундах
+ max_children = 30 # Максимально допустимое количество порождаемых процессов
+ pid_file = /usr/local/sphinx/var/log/searchd.pid # PID(ProcessID) файл родительского процесса
+ max_matches = 1000 # Максимальное количество полученных результатов
+ seamless_rotate = 1 # предотвращает паралич search при работе с большим количеством кешируемых данных
+ preopen_indexes = 0 # Откривать все индексы при запуске, 0 - нет
+ unlink_old = 1 # чистка старых индексов, 1 - да
+ mva_updates_pool = 1M # Резервируемый размер пула в ОЗУ для обновлений
+ max_packet_size = 8M # Максимальный размер сетевого пакета для обмена данными
+ max_filters = 256 # Максимальное количество фильтров что можно использовать на один запрос
+ max_filter_values = 4096 # Макс. количество значений для одного фильтра
+}
+# --eof--
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>None</span></div></div></pre>
+<p>Запускаем индексацию наших данных:</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash">/usr/local/sphinx/bin/indexer --all --verbose<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>В случае успешного индексирования получим примерно вот такие строки:</p>
+<pre class="line-numbers  language-none code-toolbar"><code class=" language-none">Sphinx 2.1.3-dev (r4319)
+Copyright (c) 2001-2013, Andrew Aksyonoff
+Copyright (c) 2008-2013, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/usr/local/sphinx/etc/sphinx.conf'...
+indexing index 'mysqlbasename'...
+WARNING: Attribute count is 0: switching to none docinfo
+collected 518 docs, 3.2 MB
+sorted 0.4 Mhits, 100.0% done
+total 518 docs, 3195655 bytes
+total 0.637 sec, 5013995 bytes/sec, 812.74 docs/sec
+total 2 reads, 0.000 sec, 745.7 kb/call avg, 0.3 msec/call avg
+total 8 writes, 0.001 sec, 390.4 kb/call avg, 0.2 msec/call avg
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>None</span></div></div></pre>
+<p>Запускаем поискового демона:</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash">/usr/local/sphinx/bin/searchd<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>В случае успешного запуска должны увидеть примерно вот такой вывод:</p>
+<pre class="line-numbers  language-none code-toolbar"><code class=" language-none">Sphinx 2.1.3-dev (r4319)
+Copyright (c) 2001-2013, Andrew Aksyonoff
+Copyright (c) 2008-2013, Sphinx Technologies Inc (http://sphinxsearch.com)
+
+using config file '/usr/local/sphinx/etc/sphinx.conf'...
+listening on all interfaces, port=9312
+listening on all interfaces, port=9306
+precaching index 'mysqlbasename'
+precached 1 indexes in 0.000 sec
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>None</span></div></div></pre>
+<p>Делаем тестовый поисковый запрос, где YOUR_QUERY_STRING - ваша поисковая фраза:</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash">/usr/local/sphinx/bin/search --config /usr/local/sphinx/etc/sphinx.conf YOUR_QUERY_STRING<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>После запуска будет выведена длинная простыня записей что отвечают критериям поиска.</p>
+<p>Проверяем работу поиска с использованием PHP API. Внимание: PHP 
+должен быть установлен на сервере! "YOUR_QUERY_STRING" - ваш поисковый 
+запрос</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash"><span class="token function">cd</span> /tmp/sphinx-2.1.3-release/api/
+php test.php YOUR_QUERY_STRING<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>Надеюсь у вас все получилось.</p>
+<h2><a id="linux-start-script-sphinx-initd"></a>Скрипт автозапуска searchd для init.d</h2>
+<p>Теперь нужно сделать так чтобы демон searchd стартовал при 
+загрузке/перезагрузке операционной системы. Ниже приведен пример 
+создания и настройки скрипта для Debian/Ubuntu GNU/Linux без 
+использования systemd.</p>
+<p>Откроем для редактирования новый скрипт инициализации в папке "/etc/init.d":</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash"><span class="token function">nano</span> /etc/init.d/searchd<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>Копируем и вставляем следующий текст (CTRL+C, CTRL+V) в скрипт /etc/init.d/searchd :</p>
+<pre class="line-numbers  language-none code-toolbar"><code class=" language-none">#!/bin/bash
+
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          searchd
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     true
+# Short-Description: Stop/Start SphinxSearch Daemon
+### END INIT INFO
+
+case "${1:-''}" in
+
+'start')
+/usr/local/sphinx/bin/searchd
+;;
+
+'stop')
+/usr/local/sphinx/bin/searchd --stop
+;;
+
+'restart')
+/usr/local/sphinx/bin/searchd --stop
+sleep 1
+/usr/local/sphinx/bin/searchd
+;;
+
+*)
+echo "Usage: $SELF start|stop|restart"
+exit 1
+;;
+
+esac
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>None</span></div></div></pre>
+<p>Установим права на скрипт запуска и зарегистрируем его в автозапуске:</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash"><span class="token function">chmod</span> +x /etc/init.d/searchd
+update-rc.d searchd defaults
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>Для надежности можете перезагрузить свой сервер и проверить запустился ли демон searchd:</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash"><span class="token function">reboot</span>
+<span class="token function">ps</span> ax <span class="token operator">|</span> <span class="token function">grep</span> searchd<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<h2><a id="sphinx-start-script-linux-systemd"></a>Скрипт автозапуска searchd для systemd</h2>
+<p>В более новых версиях GNU/Linux уже присутствует такой мощный набор 
+управления системой как systemd. Чтобы добавить наш демон searchd в 
+автозапуск системы с использованием systemd нужно проделать несколько 
+несложных операций.</p>
+<p>Откроем для редактирования новый файл будущего скрипта для управления запуском searchd:</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash"><span class="token function">nano</span> /usr/local/sbin/systemd-searchd.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>Копируем в редактор следующий текст скрипта:</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash"><span class="token shebang important">#!/bin/sh</span>
+<span class="token comment" spellcheck="true"># Sphinx init script for searchd daemon.</span>
+
+<span class="token keyword">case</span> <span class="token variable">$1</span> <span class="token keyword">in</span>
+    start<span class="token punctuation">)</span>
+        /usr/local/sphinx/bin/searchd
+        <span class="token keyword">echo</span> <span class="token string">"Sphinx searchd started."</span>
+        <span class="token punctuation">;</span><span class="token punctuation">;</span>
+    stop<span class="token punctuation">)</span>
+        /usr/local/sphinx/bin/searchd --stop
+        <span class="token keyword">echo</span> <span class="token string">"Sphinx searchd stoped."</span>
+        <span class="token punctuation">;</span><span class="token punctuation">;</span>
+    restart<span class="token punctuation">)</span>
+        /usr/local/sphinx/bin/searchd --stop
+        <span class="token function">sleep</span> 1
+        /usr/local/sphinx/bin/searchd
+        <span class="token keyword">echo</span> <span class="token string">"Sphinx searchd restart complete."</span>
+        <span class="token punctuation">;</span><span class="token punctuation">;</span>
+    *<span class="token punctuation">)</span>
+        <span class="token keyword">echo</span> <span class="token string">"Usage: systemctl {start|stop|restart} searchd.service"</span>
+        <span class="token keyword">exit</span> 1
+esac
+ 
+<span class="token keyword">exit</span> 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>Устанавливаем права на запуск скрипта:</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash"><span class="token function">chmod</span> +x /usr/local/sbin/systemd-searchd.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>Создаем конфигурационный файл для нашее службы (демона):</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash"><span class="token function">nano</span> /etc/systemd/system/searchd.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>Копируем в редактор следующее содержимое:</p>
+<pre class="line-numbers  language-none code-toolbar"><code class=" language-none">[Unit]
+Description=Sphinx searchd daemon
+After=network.target
+ 
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/systemd-searchd.sh start
+ExecStop=/usr/local/sbin/systemd-searchd.sh stop
+ExecReload=/usr/local/sbin/systemd-searchd.sh restart
+RemainAfterExit=yes
+ 
+[Install]
+WantedBy=multi-user.target<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>None</span></div></div></pre>
+<p>Все должно работать!</p>
+<h2><a id="sphinx-indexer-cron-install"></a>Настройка автоматической переиндексации</h2>
+<p>Добавляем в системный планировщик заданий (крон, crontab) запуск индексатора через каждые сутки:</p>
+<pre class="line-numbers  language-bash code-toolbar"><code class=" language-bash"><span class="token function">nano</span> /etc/crontab<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>Bash</span></div></div></pre>
+<p>Добавляем в конец содержимого файла следующую строчку:</p>
+<pre class="line-numbers  language-none code-toolbar"><code class=" language-none">0&nbsp; 0&nbsp;&nbsp;&nbsp; * * *&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp; /usr/local/sphinx/bin/indexer --rotate --all --config /usr/local/sphinx/etc/sphinx.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>None</span></div></div></pre>
+<p>Все готово! Вы установили и настроили поисковый сервер .</p>
+<h2><a id="protecting-sphinx-net-ports"></a>Защита служебных портов</h2>
+<p>После настройки и запуска поискового сервера Sphinx важно помнить что
+ его демн открывает порты 9312, 9306 (указанные в настройках) и делает 
+их доступными на всех интерфейсах. Настоятельно рекомендую закрыть их от
+ внешнего мира при помощи файрвола на внешнем интерфейсе (интернет). Вот
+ два простых правила для IPTABLES:</p>
+<pre class="line-numbers  language-none code-toolbar"><code class=" language-none">iptables -A INPUT -p tcp -i eth0 --dport 9306 -j DROP
+iptables -A INPUT -p tcp -i eth0 --dport 9312 -j DROP<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>None</span></div></div></pre>
+<p>Где eth0 - имя сетевого интерфейса, который смотрит в интернет.</p>
+<h2><a id="using-sphinx-with-php"></a>Пример взаимодействия со Sphinx на PHP</h2>
+<p>Итак, сервер настроен все проиндексировано, работоспособность проверена. Качаем себе Sphinx API класс для работы в PHP:</p>
+<p><a href="https://ph0en1x.net/goto/7b2791d2b0f8bedec3a75bfde3399ad2.html" target="_blank" rel="nofollow noopener noreferrer">https://code.google.com/p/sphinxsearch/source/browse/trunk/api/sphinxapi.php?r=2014</a></p>
+<p>Помещаем скрипт sphinxapi.php в свой проект и подключаем этот скрипт при помощи include/require.</p>
+<p>Вот простая реализация подключения и выборки при помощи PHP(код для примера):</p>
+<pre class="line-numbers  language-php code-toolbar"><code class=" language-php"><span class="token variable">$cl</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SphinxClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$page</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// our results page number</span>
+<span class="token variable">$items_per_page</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// show 10 results per page</span>
+<span class="token variable">$index_name</span> <span class="token operator">=</span> <span class="token string">'mysqlbasename '</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Index name to fetch from</span>
+<span class="token variable">$request</span> <span class="token operator">=</span> <span class="token string">'купить носки'</span><span class="token punctuation">;</span>
+
+<span class="token variable">$cl</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">SetServer</span><span class="token punctuation">(</span> <span class="token string">"localhost"</span><span class="token punctuation">,</span> <span class="token number">9312</span> <span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// server, port</span>
+<span class="token variable">$cl</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">SetConnectTimeout</span><span class="token punctuation">(</span> <span class="token number">1</span> <span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// max connect timeout</span>
+<span class="token variable">$cl</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">SetMaxQueryTime</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// max query timeout</span>
+<span class="token variable">$cl</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">SetMatchMode</span><span class="token punctuation">(</span> <span class="token constant">SPH_MATCH_ALL</span>  <span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// ALL, ANY, PHRASE, EXTENDED...</span>
+<span class="token variable">$cl</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">SetLimits</span><span class="token punctuation">(</span><span class="token function">intval</span><span class="token punctuation">(</span><span class="token variable">$page</span><span class="token operator">*</span><span class="token variable">$items_per_page</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">intval</span><span class="token punctuation">(</span><span class="token variable">$items_per_page</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$result</span> <span class="token operator">=</span> <span class="token variable">$cl</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">Query</span><span class="token punctuation">(</span> <span class="token variable">$request</span><span class="token punctuation">,</span> <span class="token variable">$index_name</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token variable">$result</span> <span class="token operator">===</span> <span class="token boolean">false</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+ <span class="token keyword">if</span><span class="token punctuation">(</span> <span class="token variable">$cl</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">GetLastWarning</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// check for warnings</span>
+  <span class="token keyword">echo</span> <span class="token string">'WARNING: '</span><span class="token punctuation">.</span><span class="token variable">$cl</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">GetLastWarning</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  exit<span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ <span class="token comment" spellcheck="true">// no warnings found, result=FALSE</span>
+ <span class="token function">exit</span><span class="token punctuation">(</span><span class="token string">'Cannot connect etc.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">echo</span> <span class="token string">'Total results found: '</span><span class="token punctuation">.</span><span class="token variable">$result</span><span class="token punctuation">[</span><span class="token string">'total'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// Compose comma separated string with posts IDs</span>
+<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">[</span><span class="token string">'matches'</span><span class="token punctuation">]</span> <span class="token keyword">AS</span> <span class="token variable">$key</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token variable">$row</span><span class="token punctuation">)</span>
+		<span class="token variable">$ids_arr</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">intval</span><span class="token punctuation">(</span><span class="token variable">$key</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token variable">$ids_csv</span> <span class="token operator">=</span> <span class="token function">join</span><span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">,</span> <span class="token variable">$ids_arr</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// fetch posts from DB</span>
+<span class="token variable">$mysql_result</span> <span class="token operator">=</span> <span class="token function">mysql_query</span><span class="token punctuation">(</span><span class="token constant">SELECT</span> id<span class="token punctuation">,</span> title<span class="token punctuation">,</span> text <span class="token constant">FROM</span> `posts` <span class="token constant">WHERE</span> id <span class="token constant">IN</span> <span class="token punctuation">(</span><span class="token string">".$ids_csv."</span><span class="token punctuation">)</span> <span class="token keyword">AND</span> publicated<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span> <span class="token variable">$mysql_object</span> <span class="token operator">=</span> <span class="token function">mysql_fetch_object</span><span class="token punctuation">(</span><span class="token variable">$mysql_result</span><span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div class="toolbar"><div class="toolbar-item"><span>PHP</span></div></div></pre>
+<h2><a id="conclusion"></a>Заключение</h2>
+<p>Ниже привожу полезные ссылки по поисковому серверу Sphinx. Этой 
+информации с лихвой достаточно чтобы во всем разобраться и&nbsp; 
+настроить под себя.</p>
+<p>Полезные ссылки:</p>
+<ul>
+<li><a href="https://ph0en1x.net/goto/b3581cb4a6c7643d70769540d00255b2.html" target="_blank" rel="nofollow noopener noreferrer">http://sphinxsearch.com</a> - официальный сайт.</li>
+<li><a href="https://ph0en1x.net/goto/55b0041c8369bdbd6efc36cbd798bd0c.html" target="_blank" rel="nofollow noopener noreferrer">http://sphinxsearch.com/docs/</a> - документация.</li>
+<li><a href="https://ph0en1x.net/goto/29a2f004c070d79ae413b25e1f4363fc.html" target="_blank" rel="nofollow noopener noreferrer">http://sphinxsearch.com/wiki/doku.php?id=sphinx_docs</a> - Wiki документация по Sphinx на одной странице.</li>
+<li><a href="https://ph0en1x.net/goto/052fccb69ca5a094f98684f833e6648e.html" target="_blank" rel="nofollow noopener noreferrer">http://sphinxsearch.com/wiki/doku.php?id=php_api_docs</a> - Wiki документация по PHP API для Sphinx.</li>
+</ul></div>
+<meta itemprop="description" content="Sphinx - поисковый сервер и открытым исходным кодом (Open Source Search Server) для индексации контента из баз данных и осуществления полнотекстового поиска, разработанный Андреем Аксеновым. В статье пошагово рассказано как установить и настроить поисковый сервер Sphinx на сервер под управлением операционной системы Linux (Ubuntu/Dedian). Приведены примеры, советы и ссылки которые будут полезны как администраторам так и разработчикам.">
+<div id="social">
+    <div id="social-share"><span><span style="display:inline-block;margin:0 6px 6px 0;height:24px;"><a rel="nofollow" style="display:inline-block;width:24px;height:24px;margin:0;padding:0;outline:none;background:url(/themes/ph0en1x/images/img-set.png) -0px -48px no-repeat" href="#" data-count="fb" onclick="window.open('//www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fph0en1x.net%2F32-sphinx-search-server-engine-on-linux-setup.html', '_blank', 'scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0');return false" title="Поделиться в Facebook" target="_blank"></a></span><span style="display:inline-block;margin:0 6px 6px 0;height:24px;"><a rel="nofollow" style="display:inline-block;width:24px;height:24px;margin:0;padding:0;outline:none;background:url(/themes/ph0en1x/images/img-set.png) -24px -48px no-repeat" href="#" data-count="vk" onclick="window.open('//vk.com/share.php?url=https%3A%2F%2Fph0en1x.net%2F32-sphinx-search-server-engine-on-linux-setup.html&amp;title=%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80&amp;description=%D0%9F%D0%BE%D0%B4%D1%80%D0%BE%D0%B1%D0%BD%D0%BE%20%D1%80%D0%B0%D1%81%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BD%20%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B8%20%D0%B8%20%D0%BD%D0%B0%D1%87%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0%20Sphinx', '_blank', 'scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0');return false" title="Поделиться в VKontakte" target="_blank"></a></span><span style="display:inline-block;margin:0 6px 6px 0;height:24px;"><a rel="nofollow" style="display:inline-block;width:24px;height:24px;margin:0;padding:0;outline:none;background:url(/themes/ph0en1x/images/img-set.png) -48px -48px no-repeat" href="#" data-count="lnkd" onclick="window.open('//www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fph0en1x.net%2F32-sphinx-search-server-engine-on-linux-setup.html&amp;title=%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80', '_blank', 'scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=600, height=400, toolbar=0, status=0');return false" title="Поделиться в Linkedin" target="_blank"></a></span><span style="display:inline-block;margin:0 6px 6px 0;height:24px;"><a rel="nofollow" style="display:inline-block;width:24px;height:24px;margin:0;padding:0;outline:none;background:url(/themes/ph0en1x/images/img-set.png) -72px -48px no-repeat" href="https://reddit.com/submit?url=https%3A%2F%2Fph0en1x.net%2F32-sphinx-search-server-engine-on-linux-setup.html&amp;title=%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80" title="Поделиться в Reddit" target="_blank"></a></span><span style="display:inline-block;margin:0 6px 6px 0;height:24px;"><a rel="nofollow" style="display:inline-block;width:24px;height:24px;margin:0;padding:0;outline:none;background:url(/themes/ph0en1x/images/img-set.png) -96px -48px no-repeat" href="#" data-count="twi" onclick="window.open('//twitter.com/intent/tweet?text=%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80&amp;url=https%3A%2F%2Fph0en1x.net%2F32-sphinx-search-server-engine-on-linux-setup.html', '_blank', 'scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0');return false" title="Поделиться в Twitter" target="_blank"></a></span><span style="display:inline-block;margin:0 6px 6px 0;height:24px;"><a rel="nofollow" style="display:inline-block;width:24px;height:24px;margin:0;padding:0;outline:none;background:url(/themes/ph0en1x/images/img-set.png) -120px -48px no-repeat" href="#" data-count="gplus" onclick="window.open('//plus.google.com/share?url=https%3A%2F%2Fph0en1x.net%2F32-sphinx-search-server-engine-on-linux-setup.html', '_blank', 'scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0');return false" title="Поделиться в Google+" target="_blank"></a></span><span style="display:inline-block;margin:0 6px 6px 0;height:24px;"><a rel="nofollow" style="display:inline-block;width:24px;height:24px;margin:0;padding:0;outline:none;background:url(/themes/ph0en1x/images/img-set.png) -144px -48px no-repeat" href="https://www.livejournal.com/update.bml?event=https%3A%2F%2Fph0en1x.net%2F32-sphinx-search-server-engine-on-linux-setup.html&amp;subject=%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80" title="Post to LiveJournal" target="_blank"></a></span><span style="display:inline-block;margin:0 6px 6px 0;height:24px;"><a rel="nofollow" style="display:inline-block;width:24px;height:24px;margin:0;padding:0;outline:none;background:url(/themes/ph0en1x/images/img-set.png) -168px -48px no-repeat" href="#" data-count="pin" onclick="window.open('//pinterest.com/pin/create/button/?url=https%3A%2F%2Fph0en1x.net%2F32-sphinx-search-server-engine-on-linux-setup.html&amp;media=&amp;description=%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80', '_blank', 'scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=600, height=300, toolbar=0, status=0');return false" title="Поделиться в Pinterest" target="_blank"></a></span><span style="display:inline-block;margin:0 6px 6px 0;height:24px;"><a rel="nofollow" style="display:inline-block;width:24px;height:24px;margin:0;padding:0;outline:none;background:url(/themes/ph0en1x/images/img-set.png) -192px -48px no-repeat" href="" onclick="return fav(this);" title="Добавить в закладки браузера" target="_blank"></a></span></span></div>
+    <div style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent none repeat scroll 0% 0%; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 106px; height: 24px;" id="___plusone_0"><iframe ng-non-bindable="" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 106px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 24px;" tabindex="0" vspace="0" id="I0_1499874604129" name="I0_1499874604129" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/fastbutton.html" data-gapiattached="true" title="+1" width="100%" frameborder="0"></iframe></div>
+    <script src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/platform.js" async="" defer="defer" gapi_processed="true"></script>
+    <div class="clear"></div>
+</div>
+<div class="stats">
+<span class="star_rating"><span class="star-rating-control"><div class="rating-cancel" style="display: none;"><a title="Cancel Rating"></a></div><div role="text" aria-label="" class="star-rating rater-0 star-rating-applied star-rating-live"><a title="1">1</a></div><div role="text" aria-label="" class="star-rating rater-0 star-rating-applied star-rating-live"><a title="2">2</a></div><div role="text" aria-label="" class="star-rating rater-0 star-rating-applied star-rating-live"><a title="3">3</a></div><div role="text" aria-label="" class="star-rating rater-0 star-rating-applied star-rating-live"><a title="4">4</a></div><div role="text" aria-label="" class="star-rating rater-0 star-rating-applied star-rating-live"><a title="5">5</a></div></span><input name="news|item|32" value="1" class="star-rating-applied" style="display: none;" type="radio"><input name="news|item|32" value="2" class="star-rating-applied" style="display: none;" type="radio"><input name="news|item|32" value="3" class="star-rating-applied" style="display: none;" type="radio"><input name="news|item|32" value="4" class="star-rating-applied" style="display: none;" type="radio"><input name="news|item|32" value="5" class="star-rating-applied" style="display: none;" type="radio"></span><span class="vote-ico" title="Всего проголосовали"></span>0
+<span class="view-ico" title="Количество просмотров"></span> 1604
+<span class="group-ico" title="Категория публикации"></span> <a href="https://ph0en1x.net/4-linux-operating-systems-articles/" style="">Linux</a>
+</div>
+<nav class="tags">
+    Тематика:
+    <a href="https://ph0en1x.net/tags/sphinx" class="button">sphinx</a>
+    <a href="https://ph0en1x.net/tags/%EF%EE%E8%F1%EA" class="button">поиск</a>
+    <a href="https://ph0en1x.net/tags/%F1%E5%F0%E2%E5%F0" class="button">сервер</a>
+    <a href="https://ph0en1x.net/tags/%F1%E5%F0%E2%E8%F1" class="button">сервис</a>
+    <a href="https://ph0en1x.net/tags/Linux" class="button">Linux</a>
+</nav>
+<nav class="similar">
+ Читайте также:
+ <ul>
+    <li>&#8594; <a href="https://ph0en1x.net/86-raspberry-pi-znakomstvo-s-gpio-perekluchatel-i-svetodiod.html">Изучаем GPIO в Raspberry Pi, эксперимент со светодиодом и кнопкой</a></li>
+    <li>&#8594; <a href="https://ph0en1x.net/85-tiny-computers-on-linux-raspberry-pi-howto.html">Одноплатные компьютеры на Linux, первое знакомство с Raspberry Pi</a></li>
+    <li>&#8594; <a href="https://ph0en1x.net/61-multicd-script-for-multiboot-flash-drive.html">Как создать мультизагрузочную Linux флешку используя скрипт MultiCD</a></li>
+ </ul>
+</nav>
+</div>
+<div id="comments">
+<span class="block-title">Комментарии к публикации (6):</span>
+<div class="comment-container">
+  <div class="header">
+    <img class="avatar" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/noavatar.jpg" alt="fregat" title="fregat">
+    #1<span class="author">fregat</span>
+    <div>20 Ноябрь 2015 08:56</div>
+  </div>
+  <div class="clear"></div>
+ <div class="text"><p>Доброго времени суток, Total results found 
+показывает что 24, $result['matches'] отсутствует в массиве $result. Как
+ проблему побороть?</p></div>
+ <div class="votes">
+  <div id="comment_475_votes" class="comments-vote-box">
+   <span style="color:#CECECE;font-weight:bold">0</span>
+   <button onclick="comment_vote(475, 'plus');" title="Поблагодарить за комментарий">+</button>
+  </div>
+ </div>
+</div>
+<div class="comment-container">
+  <div class="header">
+    <img class="avatar" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/phoenix.jpg" alt="ph0en1x" title="ph0en1x">
+    #2<span class="author" style="color:#4f92d3">ph0en1x</span>
+    <div>20 Ноябрь 2015 11:21</div>
+  </div>
+  <div class="clear"></div>
+ <div class="text"><p>Здравствуйте. Статья писалась на момент выхода 
+версии sphinx-2.1.3-release, с этой версией все проверено и прекрасно 
+работает. Если же у вас установлена данная версия то следует 
+пересмотреть настройки сервера Sphinx, проверить все ли хорошо с 
+кодировкой для вашего текста и с кодировкой по умолчанию для версии PHP,
+ которая работает на вашем сервере приложений.</p>
+<p>Если у вас другая, более свежая версия сервера SphinxSearch (например
+ 2.2.10-release) то здесь нужно использовать более новый SphinxSearch 
+PHP API - 
+https://code.google.com/p/sphinxsearch/source/browse/trunk/api/sphinxapi.php<br>
+ Также в данном случае более целесообразно использовать новый инструмент
+ для запросов к серверу SphinxQL Query Builder for PHP, который является
+ более производительным и позволяет задавать условия выборки результатов
+ используя синтаксис подобный до языка SQL - 
+http://sphinxsearch.com/blog/2014/10/20/sphinxql-query-builder-for-php/</p></div>
+ <div class="votes">
+  <div id="comment_476_votes" class="comments-vote-box">
+   <span style="color:#CECECE;font-weight:bold">0</span>
+   <button onclick="comment_vote(476, 'plus');" title="Поблагодарить за комментарий">+</button>
+  </div>
+ </div>
+</div>
+<div class="comment-container">
+  <div class="header">
+    <img class="avatar" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/noavatar.jpg" alt="Игорь" title="Игорь">
+    #3<span class="author">Игорь</span>
+    <div>14 Июнь 2016 12:12</div>
+  </div>
+  <div class="clear"></div>
+ <div class="text"><p>добрый день,<br>
+я бы заказал у вас установку на сервер сфинкса.<br>
+бд с 3 млн товаров.<br>
+ответьте, если есть желание.</p></div>
+ <div class="votes">
+  <div id="comment_538_votes" class="comments-vote-box">
+   <span style="color:#63D15C;font-weight:bold">+1</span>
+   <button onclick="comment_vote(538, 'plus');" title="Поблагодарить за комментарий">+</button>
+  </div>
+ </div>
+</div>
+<div class="comment-container">
+  <div class="header">
+    <img class="avatar" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/phoenix.jpg" alt="ph0en1x" title="ph0en1x">
+    #4<span class="author" style="color:#4f92d3">ph0en1x</span>
+    <div>05 Апрель 2017 18:38</div>
+  </div>
+  <div class="clear"></div>
+ <div class="text"><p>Статья немножко переработана, добавлено содержание
+ с навигацией, а также пример создания скрипта автозапуска службы 
+searchd под systemd для GNU/Linux.</p></div>
+ <div class="votes">
+  <div id="comment_1019_votes" class="comments-vote-box">
+   <span style="color:#CECECE;font-weight:bold">0</span>
+   <button onclick="comment_vote(1019, 'plus');" title="Поблагодарить за комментарий">+</button>
+  </div>
+ </div>
+</div>
+<div class="comment-container">
+  <div class="header">
+    <img class="avatar" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/noavatar.jpg" alt="oO" title="oO">
+    #5<span class="author">oO</span>
+    <div>20 Июнь 2017 01:52</div>
+  </div>
+  <div class="clear"></div>
+ <div class="text"><p>На счет - Скрипт автозапуска searchd для systemd<br>
+Всего то нужно включить юнит в автозапуск<br>
+</p><pre><code>sudo systemctl enable sphinxsearch.service</code></pre><br>
+<strong>Debian 8.x Jessie - Sphinx 2.2.11</strong><p></p></div>
+ <div class="votes">
+  <div id="comment_1374_votes" class="comments-vote-box">
+   <span style="color:#CECECE;font-weight:bold">0</span>
+   <button onclick="comment_vote(1374, 'plus');" title="Поблагодарить за комментарий">+</button>
+  </div>
+ </div>
+</div>
+<div class="comment-container">
+  <div class="header">
+    <img class="avatar" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/phoenix.jpg" alt="ph0en1x" title="ph0en1x">
+    #6<span class="author" style="color:#4f92d3">ph0en1x</span>
+    <div>20 Июнь 2017 12:40</div>
+  </div>
+  <div class="clear"></div>
+ <div class="text"><p>Верно, в новых версиях Sphinx все что нужно для 
+автозапуска уже идет в комплекте если устанавливать поисковый движок из 
+пакетов (*.deb к примеру). При сборке Сфинкса из исходных кодов, скрипты
+ автозапуска придется настраивать вручную.</p></div>
+ <div class="votes">
+  <div id="comment_1375_votes" class="comments-vote-box">
+   <span style="color:#CECECE;font-weight:bold">0</span>
+   <button onclick="comment_vote(1375, 'plus');" title="Поблагодарить за комментарий">+</button>
+  </div>
+ </div>
+</div>
+</div>
+<div></div>
+
+<!--noindex-->
+<form id="comment-form" method="post">
+ <div><div id="markItUpCm_text" class="markItUp"><div class="markItUpContainer"><div class="markItUpHeader"><ul><li class="markItUpButton markItUpButton1 mkituBold"><a href="" accesskey="B" title="Bold [Ctrl+B]">Bold</a></li><li class="markItUpButton markItUpButton2 mkituItalic"><a href="" accesskey="I" title="Italic [Ctrl+I]">Italic</a></li><li class="markItUpButton markItUpButton3 mkituUnderline"><a href="" accesskey="U" title="Underline [Ctrl+U]">Underline</a></li><li class="markItUpSeparator">---------------</li><li class="markItUpButton markItUpButton4 mkituPicture"><a href="" accesskey="P" title="Picture [Ctrl+P]">Picture</a></li><li class="markItUpButton markItUpButton5 mkituLink"><a href="" accesskey="L" title="Link [Ctrl+L]">Link</a></li><li class="markItUpButton markItUpButton6 dateoftheday"><a href="" title="Date of the Day">Date of the Day</a></li><li class="markItUpSeparator">---------------</li><li class="markItUpButton markItUpButton7 mkituFonts markItUpDropMenu"><a href="" accesskey="S" title="Size [Ctrl+S]">Size</a><ul><li class="markItUpButton markItUpButton7-1 "><a href="" title="Big">Big</a></li><li class="markItUpButton markItUpButton7-2 "><a href="" title="Normal">Normal</a></li><li class="markItUpButton markItUpButton7-3 "><a href="" title="Small">Small</a></li></ul></li><li class="markItUpButton markItUpButton8 colors markItUpDropMenu"><a href="" title="Colors">Colors</a><ul><li class="markItUpButton markItUpButton8-1 col1-1"><a href="" title="Yellow">Yellow</a></li><li class="markItUpButton markItUpButton8-2 col1-2"><a href="" title="Orange">Orange</a></li><li class="markItUpButton markItUpButton8-3 col1-3"><a href="" title="Red">Red</a></li><li class="markItUpButton markItUpButton8-4 col2-1"><a href="" title="Blue">Blue</a></li><li class="markItUpButton markItUpButton8-5 col2-2"><a href="" title="Purple">Purple</a></li><li class="markItUpButton markItUpButton8-6 col2-3"><a href="" title="Green">Green</a></li><li class="markItUpButton markItUpButton8-7 col3-1"><a href="" title="White">White</a></li><li class="markItUpButton markItUpButton8-8 col3-2"><a href="" title="Gray">Gray</a></li><li class="markItUpButton markItUpButton8-9 col3-3"><a href="" title="Black">Black</a></li></ul></li><li class="markItUpSeparator">---------------</li><li class="markItUpButton markItUpButton9 mkituListB"><a href="" title="Bulleted list">Bulleted list</a></li><li class="markItUpButton markItUpButton10 mkituListN"><a href="" title="Numeric list">Numeric list</a></li><li class="markItUpButton markItUpButton11 mkituListI"><a href="" title="List item">List item</a></li><li class="markItUpSeparator">---------------</li><li class="markItUpButton markItUpButton12 mkituQuotes"><a href="" title="Quotes">Quotes</a></li><li class="markItUpButton markItUpButton13 mkituCode"><a href="" title="Code">Code</a></li><li class="markItUpSeparator">---------------</li><li class="markItUpButton markItUpButton14 clean"><a href="" title="Clean">Clean</a></li></ul></div><textarea name="cm_text" id="cm_text" rows="4" placeholder="Текст комментария" required="" class="markItUpEditor"></textarea><div class="markItUpFooter"><div class="markItUpResizeHandle"></div></div></div></div></div>
+ <div id="smilies-container"><button type="button">Смaйлики :)</button></div>
+ <!--fstart-->
+ <input class="nick" name="cm_name" placeholder="Имя, никнейм" required="" aria-required="true" type="text">
+ <input class="email" name="cm_email" placeholder="Почтовый адрес E-Mail" required="" aria-required="true" type="text">
+ <!--fend-->
+ <!--cstart-->
+ <script>document.write('<img src="/index.php?ajax&mod=system&act=captcha&' + (new Date()).getTime() + '" alt="security image"/>');</script><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/index.json" alt="security image">
+ <input name="captcha" placeholder="Символы с картинки" required="" aria-required="true" type="text">
+ <!--cend-->
+ <button type="submit">Отправить комментарий</button>
+ 
+</form>
+<!--/noindex-->
+
+            </div>
+        </div>
+        
+        <aside>
+        <div id="aside-container">
+            <!--noindex-->
+            <form id="search" method="post" action="/search/">
+            <input name="s" maxlength="128" placeholder="Что искать?" required="" aria-required="true" type="text">
+            <input value="Поиск" class="button" type="submit">
+            </form>
+            <!--/noindex-->
+            <div class="block-title">Категории публикаций:</div>
+            <nav id="categories-nav">
+            <ul>
+             <li><div></div><a href="https://ph0en1x.net/5-internet-technologies/">Интернет технологии</a> (3)
+              <ul>
+                <li><div></div><a href="https://ph0en1x.net/6-search-engines-optimization-seo/">Поисковая оптимизация (SEO)</a> (2)</li>
+                <li><div></div><a href="https://ph0en1x.net/7-services-and-partner-programs/">Сервисы и партнерки</a> (0)</li>
+                <li><div></div><a href="https://ph0en1x.net/17-xosting-i-domeny/">Хостинг и домены</a> (1)</li>
+              </ul>
+             </li>
+             <li><div></div><a href="https://ph0en1x.net/8-programming-and-coding/">Программирование</a> (28)
+              <ul>
+                <li><div></div><a href="https://ph0en1x.net/9-php-programming-language/">PHP</a> (6)</li>
+                <li><div></div><a href="https://ph0en1x.net/10-python-programming-scripts-tools/">Python</a> (3)</li>
+                <li><div></div><a href="https://ph0en1x.net/16-xhe-human-emulator/">Human Emulator</a> (2)</li>
+                <li><div></div><a href="https://ph0en1x.net/22-microcontrollers-programming/">Микроконтроллеры</a> (17)</li>
+              </ul>
+             </li>
+             <li><div></div><a href="https://ph0en1x.net/1-operating-systems/">Операционные системы</a> (11)
+              <ul>
+                <li><div></div><a href="https://ph0en1x.net/2-unix-freebsd-operating-systems-articles/">UNIX FreeBSD</a> (0)</li>
+                <li><div></div><a href="https://ph0en1x.net/4-linux-operating-systems-articles/">Linux</a> (10)</li>
+                <li><div></div><a href="https://ph0en1x.net/3-windows-operating-systems-articles/">Windows</a> (1)</li>
+              </ul>
+             </li>
+             <li><div></div><a href="https://ph0en1x.net/12-information-security-articles/">Информационная безопасность</a> (1)</li>
+             <li><div></div><a href="https://ph0en1x.net/11-radio-electronics/">Радиоэлектроника</a> (19)</li>
+             <li><div></div><a href="https://ph0en1x.net/18-information-technologies-world-news/">Новости из мира IT</a> (2)</li>
+             <li><div></div><a href="https://ph0en1x.net/23-computers-and-hardware/">Железячки</a> (10)</li>
+             <li><div></div><a href="https://ph0en1x.net/19-computer-games/">Компьютерные игры</a> (3)</li>
+             <li><div></div><a href="https://ph0en1x.net/21-self-improvement/">Самосовершенствование</a> (11)</li>
+             <li><div></div><a href="https://ph0en1x.net/20-zdorove-i-dolgoletie/">Здоровье и долголетие</a> (1)</li>
+             <li><div></div><a href="https://ph0en1x.net/14-martial-arts/">Боевые искусства</a> (0)</li>
+             <li><div></div><a href="https://ph0en1x.net/13-useful-and-necessary/">Полезное и необходимое</a> (3)</li>
+             <li><div></div><a href="https://ph0en1x.net/15-miscellaneous-publications/">Разное</a> (3)</li>
+            </ul>
+            </nav>
+            <!--noindex-->
+            <div class="block-title">Подписаться на рассылку по Email:</div> 
+            <form id="subscribe" method="post" action="/subscribe/">
+   <input id="subscribe-publications" name="content" value="news" checked="checked" type="radio"><label for="subscribe-publications">Публикации</label><br>
+   <input id="subscribe-comments" name="content" value="comments" type="radio"><label for="subscribe-comments">Комментарии</label>
+   <input name="email" placeholder="Введите ваш Email" required="" aria-required="true" type="text">
+   <input id="unsubscribe" name="unsubscribe" type="checkbox"><label for="unsubscribe">Отменить подписку</label>
+   <input class="button" value="Продолжить" type="submit">
+</form>
+            <!--/noindex-->
+            <div class="block-title">Популярные публикации:</div> 
+            <ul id="popular">
+ <li><div></div><a href="https://ph0en1x.net/16-kak-sdelat-zvukosnimatel-dlya-akusticheskoj-gitary.html">Как сделать звукосниматель для акустической гитары</a></li>
+ <li><div></div><a href="https://ph0en1x.net/11-usilitel-nizkoj-chastoty-unch-na-mikrosxeme-tda7250.html">Усилитель низкой частоты (УНЧ) на микросхеме TDA7250</a></li>
+ <li><div></div><a href="https://ph0en1x.net/10-usilitel-moshhnosti-zch-svoimi-rukami-phoenix-p400.html">Усилитель мощности ЗЧ своими руками ( Phoenix-P400 )</a></li>
+ <li><div></div><a href="https://ph0en1x.net/21-ustrojstvo-zaderzhki-vklyucheniya-i-zashhity-gromkogovoritelej.html">Устройство задержки включения и защиты громкоговорителей</a></li>
+ <li><div></div><a href="https://ph0en1x.net/19-izgotovlenie-i-sxema-bloka-pitaniya-dlya-usilitelya-phoenix-p-400.html">Изготовление и схема блока питания для усилителя Phoenix P-400</a></li>
+ <li><div></div><a href="https://ph0en1x.net/22-tube-radio-receiver-strela-50-years-and-work-again.html">Ламповый радиоприемник "Стрела" спустя пол столетия</a></li>
+ <li><div></div><a href="https://ph0en1x.net/35-regenerativnyj-batarejnyj-radiopriemnik-na-lampe-2k2m.html">Регенеративный батарейный радиоприемник на лампе 2К2М</a></li>
+ <li><div></div><a href="https://ph0en1x.net/59-multiband-sw-coil-for-one-tube-regen-receiver.html">Многодиапазонная КВ катушка для однолампового регенератора</a></li>
+ <li><div></div><a href="https://ph0en1x.net/28-chto-by-takoe-interesnoe-sobrat-na-radiolampax.html">Что бы такое интересное собрать на радиолампах?</a></li>
+ <li><div></div><a href="https://ph0en1x.net/46-one-tube-regen-radio-sw-band-coil.html">Расчет и изготовление катушки КВ диапазона для регенеративного радиоприемника</a></li>
+</ul>
+
+            <div class="block-title">Интересный опрос:</div> 
+            <script>
+function 
+pollings_show_results(id,block_id){$.post('/index.php?ajax&mod=pollings&act=showresults',{id:id},function(data){$('#'+block_id).html(data);});}
+function
+ 
+pollings_vote(block_id){$.post('/index.php?ajax&mod=pollings&act=vote',$('#pollings-form').serialize(),function(data){if(data.state=='ok'){$('#'+block_id).html(data.html);}
+alert(data.notice);});}
+</script><div id="polling">
+Вы используете криптовалюту Bitcoin?
+  <form id="pollings-form">
+    <div><input name="poll24" value="0" type="radio"><label>Да, давно использую</label></div>
+    <div><input name="poll24" value="1" type="radio"><label>Начал использовать</label></div>
+    <div><input name="poll24" value="2" type="radio"><label>Интересуюсь</label></div>
+    <div><input name="poll24" value="3" type="radio"><label>Нет, не использую</label></div>
+    <div><input name="poll24" value="4" type="radio"><label>А что такое Bitcoin?</label></div>
+  <input name="polling_id" value="24" type="hidden">
+  </form>
+  <div>
+    <button onclick="pollings_vote('polling');">Проголосовать</button>
+    <button onclick="pollings_show_results(24, 'polling');">Результаты голосования</button>
+  </div>
+</div>
+
+            <!--noindex-->
+            <div class="block-title">Поблагодарить автора:</div>
+            <div id="donate-picture"></div>
+	    <div id="donate-address">1B4ZZ2PXUd9E7AqEB82AqFnkpk2bt5hQG7</div>
+            <!--/noindex-->
+        </div>
+        </aside>
+    </div>
+        
+    <footer>
+        <!--noindex-->
+        <button title="Подняться наверх">&#8593;</button>
+        © 2012-2017, Ph0en1x.net - информационная безопасность, SEO, 
+программирование, UNIX и Linux, радиоэлектроника и саморазвитие.<br>
+        Все права защищены. Копирование информации разрешается при условии установки активной ссылки на оригинал.
+        <span>
+        </span>
+
+        <!--/noindex-->
+    </footer>
+   
+</div><iframe name="oauth2relay334716569" id="oauth2relay334716569" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Sphinx%20%D0%BF%D0%BE%D0%B4%20Linux%20-%20%D1%81%D1%82%D1%80%D0%BE%D0%B8%D0%BC%20%D1%81%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_files/postmessageRelay.html" style="width: 1px; height: 1px; position: absolute; top: -100px;" tabindex="-1" aria-hidden="true"></iframe>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-43695393-1', 'ph0en1x.net');
+  ga('send', 'pageview');
+</script>
+
+</body></html>

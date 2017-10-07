@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Модуль ngx_http_index_module</title><style type="text/css">body { background: white; color: black; font-family: sans-serif; line-height: 1.4em; text-align: center; margin: 0; padding: 0; } #banner { background: black; color: #F2F2F2; line-height: 1.2em; padding: .3em 0; box-shadow: 0 5px 10px black; } #banner a { color: #00B140; } #main { text-align: left; margin: 0 auto; min-width: 32em; max-width: 64em; } #menu { float: right; width: 11em; padding: 0 .5em 1em .5em; border-left: 2px solid #DDD; } #content { margin-right: 13.5em; padding: 0 .2em 0 1.5em; } h1 { display: block; font-size: 3em; text-align: left; height: .7em; margin: 0; margin-bottom: .5em; } h1 img { width: 100%; } h2 { text-align: center; } p { text-align: justify; } table.news p { margin-top: 0; } table.news td { vertical-align: baseline; } table.news .date { text-align: right; padding-right: 0.5em; white-space: nowrap; } table.donors td { vertical-align: baseline; } table.donors li { text-align: left; } div.directive { background: #F2F2F2; line-height: 1em; margin: 1em 0 1em -1em; padding: .7em .7em .7em 1em; border-top: 2px solid #DDD; } div.directive th { padding-left: 0; padding-right: .5em; vertical-align: baseline; text-align: left; font-weight: normal; } div.directive td { vertical-align: baseline; } div.directive pre { padding: 0; margin: 0; } div.directive p { margin: .5em 0 0 .1em; font-size: .8em; } a.notrans { color: gray; text-decoration:none; } span.initial { font-size: 200%; float: left; padding-right: 10pt;} ul, ol { margin: .5em 0 1em 1em; padding: 0 .5em; } ol { list-style-position: inside; } li { text-align: justify; padding: .5em 0 0 1px; } .compact li { padding-top: 0; } dl { margin: .5em 0 1em 0; } dt { margin: .5em 0; } .compact dt { margin-bottom: .2em; } dd { margin-left: 1.5em; padding-left: 1px; text-align: justify; } td.list { background: #F2F2F2; } blockquote { margin: 1em 0 1em 1em; padding: .5em; } li blockquote, dd blockquote { margin: .7em 0; } blockquote.note { border: 1px dotted #999; line-height: 1.2em; text-align: justify; } blockquote.example { line-height: 1em; border-left: 1px solid #BBB; } blockquote.example pre { padding: 0; margin: 0; } sup { font-size: 50%; }</style><script type="text/javascript" async="" src="%D0%9C%D0%BE%D0%B4%D1%83%D0%BB%D1%8C%20ngx_http_index_module_files/linkid.js"></script><script async="" src="%D0%9C%D0%BE%D0%B4%D1%83%D0%BB%D1%8C%20ngx_http_index_module_files/analytics.js"></script><script async="" src="%D0%9C%D0%BE%D0%B4%D1%83%D0%BB%D1%8C%20ngx_http_index_module_files/gtm.js"></script><script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-TPSP33');
+    </script></head><body><div id="banner">
+        50% off
+        <a href="https://www.nginx.com/nginxconf/?utm_source=nginxorg">nginx.conf 2017</a> in Portland, OR. Limited time and availability.<br>
+        Use code <b>OPENSOURCE</b></div><div id="main"><div id="menu"><h1><a href="https://nginx.org/"><img src="%D0%9C%D0%BE%D0%B4%D1%83%D0%BB%D1%8C%20ngx_http_index_module_files/nginx.png" alt="nginx"></a></h1><div><a href="https://nginx.org/en/docs/http/ngx_http_index_module.html">english</a><br>русский<br><br><a href="https://nginx.org/">новости</a> [en]<br><a href="https://nginx.org/ru/">об nginx</a><br><a href="https://nginx.org/ru/download.html">скачать</a><br><a href="https://nginx.org/en/security_advisories.html">безопасность</a> [en]<br><a href="https://nginx.org/ru/docs/">документация</a><br><a href="https://nginx.org/ru/docs/faq.html">faq</a><br><a href="https://nginx.org/en/books.html">книги</a> [en]<br><a href="https://nginx.org/ru/support.html">поддержка</a><br><br><a href="http://trac.nginx.org/nginx">trac</a><br><a href="http://wiki.nginx.org/">wiki</a><br><a href="http://twitter.com/nginxorg">twitter</a><br><a href="https://www.nginx.com/blog/">blog</a><br></div></div><div id="content"><h2>Модуль ngx_http_index_module</h2><table width="100%"><tbody><tr><td align="left"><a href="#example">Пример конфигурации</a><br><a href="#directives">Директивы</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#index">index</a><br></td></tr></tbody></table>
+
+<a name="summary"></a><p>
+Модуль <code>ngx_http_index_module</code> обслуживает запросы,
+оканчивающиеся слэшом (‘<code>/</code>’).
+Такие запросы также могут обслуживаться модулями
+<a href="https://nginx.org/ru/docs/http/ngx_http_autoindex_module.html">ngx_http_autoindex_module</a>
+и
+<a href="https://nginx.org/ru/docs/http/ngx_http_random_index_module.html">ngx_http_random_index_module</a>.
+</p>
+
+
+<a name="example"></a><center><h4>Пример конфигурации</h4></center><p>
+</p> <blockquote class="example"><pre>location / {
+    index index.$geo.html index.html;
+}
+</pre></blockquote><p> 
+</p>
+
+
+<a name="directives"></a><center><h4>Директивы</h4></center><a name="index"></a><div class="directive"><table cellspacing="0">
+                <tbody><tr>
+                <th>
+            Синтаксис:
+                </th>
+                <td>
+            <code><strong>index</strong> <code><i>файл</i></code> ...;</code><br>
+                </td>
+                </tr>
+            
+                <tr>
+                <th>
+            Умолчание:
+                </th>
+                <td>
+            <pre>index index.html;</pre>
+                </td>
+                </tr>
+            
+                <tr>
+                <th>
+            Контекст:
+                </th>
+                <td>
+            <code>http</code>, <code>server</code>, <code>location</code><br>
+                </td>
+                </tr>
+            </tbody></table></div><p>
+Определяет файлы, которые будут использоваться в качестве индекса.
+В имени файла можно использовать переменные.
+Наличие файлов проверяется в порядке их перечисления.
+В конце списка может стоять файл с абсолютным путём.
+Пример:
+</p> <blockquote class="example"><pre>index index.$geo.html index.0.html /index.html;
+</pre></blockquote><p> 
+</p><p>
+Необходимо иметь в виду, что при использовании индексного файла делается
+внутреннее перенаправление и запрос может быть обработан уже в другом
+location’е.
+Например, в такой конфигурации:
+</p> <blockquote class="example"><pre>location = / {
+    index index.html;
+}
+
+location / {
+    ...
+}
+</pre></blockquote><p> 
+запрос “<code>/</code>” будет фактически обработан во
+втором location’е как “<code>/index.html</code>”.
+</p>
+
+</div></div>
+<script type="text/javascript" id="">(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b;a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)};a[b].l=1*new Date;c=e.createElement(f);d=e.getElementsByTagName(f)[0];c.async=1;c.src=g;d.parentNode.insertBefore(c,d)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create","UA-27974099-2","auto");ga("require","linkid","linkid.js");ga("require","linker");ga("linker:autoLink",["nginx.com","nginx.org"]);ga("require","displayfeatures");
+ga("create","UA-27974099-5","auto",{allowLinker:!0,name:"rollup"});ga("rollup.require","displayfeatures");ga("rollup.require","linkid","linkid.js");ga("rollup.require","linker");ga("rollup.linker:autoLink",["nginx.com","nginx.org"]);ga("rollup.require","displayfeatures");ga("send","pageview");ga("rollup.send","pageview");</script><script type="text/javascript" id="">adroll_adv_id="S6T7DXYJZZBKBPLULU6XJQ";adroll_pix_id="ENFCRMZVSBGMXMPF4BGBP3";
+(function(){var a=function(){if(document.readyState&&!/loaded|complete/.test(document.readyState))setTimeout(a,10);else if(window.__adroll_loaded){var b=document.createElement("script"),c="https:"==document.location.protocol?"https://s.adroll.com":"http://a.adroll.com";b.setAttribute("async","true");b.type="text/javascript";b.src=c+"/j/roundtrip.js";((document.getElementsByTagName("head")||[null])[0]||document.getElementsByTagName("script")[0].parentNode).appendChild(b)}else __adroll_loaded=!0,setTimeout(a,
+50)};window.addEventListener?window.addEventListener("load",a,!1):window.attachEvent("onload",a)})();</script>
+</body></html>

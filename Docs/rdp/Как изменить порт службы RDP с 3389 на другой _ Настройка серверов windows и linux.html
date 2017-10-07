@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru-RU"><head><script src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/wp-embed.js"></script><script src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/jquery_004.js"></script><script src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/hoverIntent.js"></script><script src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/comment-reply.js"></script><script src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/jquery_003.js"></script><script src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/cbgapi.loaded_2" async=""></script><script src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/lab.js"></script><script src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/cbgapi.loaded_1" async=""></script><script src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/cbgapi.loaded_0" async=""></script><script type="text/javascript" async="" id="topmailru-code" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/code.gif"></script><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link type="text/css" media="screen" href="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/autoptimize_24568c571407bc3159eb1c8ab63b5d8e.css" rel="stylesheet"><link type="text/css" media=" projection" href="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/autoptimize_56d23b13c3b04bc4e4606c505c296148.css" rel="stylesheet"><link type="text/css" media="all" href="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/autoptimize_d14596f6a070885b9c85686b14483108.css" rel="stylesheet"><title>Как изменить порт службы RDP с 3389 на другой | Настройка серверов windows и linux</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="author" href="http://plus.google.com/u/0/110335863325123244560/"><meta name="description" content="изменить входящий порт службы RDP (терминального сервера) со стандартного 3389 на какой-то другой. Напоминаю, что RDP служба это функционал"><meta name="keywords" content="rdp,сервер"><link rel="canonical" href="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/a_003.html">
+<style type="text/css">.wp-pagenavi{float:left !important; }</style><style id="crp-style-rounded-thumbs-inline-css" type="text/css">.crp_related a {
+  width: 150px;
+  height: 150px;
+  text-decoration: none;
+}
+.crp_related img {
+  max-width: 150px;
+  margin: auto;
+}
+.crp_related .crp_title {
+  width: 150px;
+}</style> <script type="text/javascript" async="" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/watch.js"></script><script src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/ca-pub-6335087451079124.js"></script><script type="text/javascript" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/jquery_002.js"></script> <script type="text/javascript" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/jquery-migrate.js"></script> <script type="text/javascript" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/superfish.js"></script> <style>.pseudo-link { color: #008acf; cursor: pointer; text-decoration: underline;}.pseudo-link:hover { text-decoration: none;}</style><style type="text/css">.wp-pagenavi
+	{
+		font-size:12px !important;
+	}</style><link rel="shortcut icon" href="http://pyatilistnik.org/wp-content/uploads/2014/10/favicon.png" type="image/x-icon"><link rel="alternate" type="application/rss+xml" title="Настройка серверов windows и linux RSS Feed" href="http://pyatilistnik.org/feed/"><link rel="pingback" href="http://pyatilistnik.org/xmlrpc.php"><style type="text/css" id="custom-background-css">body.custom-background { background-image: url("http://pyatilistnik.org/wp-content/uploads/2016/11/background.jpg"); background-position: center top; background-size: auto; background-repeat: repeat-x; background-attachment: fixed; }</style><style type="text/css">.ya-share2,
+.ya-share2 * {
+  line-height: normal;
+}
+.ya-share2 :link:hover,
+.ya-share2 :visited:hover {
+  color: #000 !important;
+}
+.ya-share2 input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+  line-height: normal;
+}
+.ya-share2__container_size_m {
+  font-size: 13px;
+}
+.ya-share2__container_size_m .ya-share2__icon {
+  height: 24px;
+  width: 24px;
+  background-size: 24px 24px;
+}
+.ya-share2__container_size_m .ya-share2__title {
+  line-height: 24px;
+}
+.ya-share2__container_size_m .ya-share2__item {
+  margin: 5px 4px 5px 0;
+}
+.ya-share2__container_size_m .ya-share2__item:last-child {
+  margin-right: 0;
+}
+.ya-share2__container_size_m .ya-share2__counter {
+  font-size: 12px;
+  line-height: 24px;
+  padding: 0 8px;
+}
+.ya-share2__container_size_m .ya-share2__counter:before {
+  margin-left: -8px;
+}
+.ya-share2__container_size_m .ya-share2__icon_more:before {
+  font-size: 12px;
+  line-height: 24px;
+}
+.ya-share2__container_size_m .ya-share2__popup {
+  padding: 5px 10px;
+}
+.ya-share2__container_size_m .ya-share2__popup_direction_bottom {
+  top: 28px;
+}
+.ya-share2__container_size_m .ya-share2__popup_direction_top {
+  bottom: 28px;
+}
+.ya-share2__container_size_m .ya-share2__input_copy {
+  width: 140px;
+}
+.ya-share2__container_size_m .ya-share2__badge + .ya-share2__title {
+  margin-left: 10px;
+}
+.ya-share2__container_size_s {
+  font-size: 12px;
+}
+.ya-share2__container_size_s .ya-share2__icon {
+  height: 18px;
+  width: 18px;
+  background-size: 18px 18px;
+}
+.ya-share2__container_size_s .ya-share2__title {
+  line-height: 18px;
+}
+.ya-share2__container_size_s .ya-share2__item {
+  margin: 3px 4px 3px 0;
+}
+.ya-share2__container_size_s .ya-share2__item:last-child {
+  margin-right: 0;
+}
+.ya-share2__container_size_s .ya-share2__counter {
+  font-size: 10px;
+  line-height: 18px;
+  padding: 0 6px;
+}
+.ya-share2__container_size_s .ya-share2__counter:before {
+  margin-left: -6px;
+}
+.ya-share2__container_size_s .ya-share2__icon_more:before {
+  font-size: 10px;
+  line-height: 18px;
+}
+.ya-share2__container_size_s .ya-share2__popup {
+  padding: 3px 6px;
+}
+.ya-share2__container_size_s .ya-share2__popup_direction_bottom {
+  top: 21px;
+}
+.ya-share2__container_size_s .ya-share2__popup_direction_top {
+  bottom: 21px;
+}
+.ya-share2__container_size_s .ya-share2__input_copy {
+  width: 110px;
+}
+.ya-share2__container_size_s .ya-share2__badge + .ya-share2__title {
+  margin-left: 6px;
+}
+.ya-share2__list_direction_horizontal > .ya-share2__item {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.ya-share2__list_direction_horizontal > .ya-share2__item > .ya-share2__link > .ya-share2__title {
+  display: none;
+}
+.ya-share2__list_direction_vertical > .ya-share2__item {
+  display: block;
+  margin-right: 0;
+}
+.ya-share2__list_direction_vertical > .ya-share2__item > .ya-share2__link > .ya-share2__badge > .ya-share2__counter {
+  display: none;
+}
+.ya-share2__list {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+.ya-share2__item {
+  font-family: Arial, sans;
+  display: inline-block;
+}
+.ya-share2__item:hover {
+  opacity: 0.9;
+}
+.ya-share2__link {
+  display: inline-block;
+  vertical-align: top;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.ya-share2__badge {
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 2px;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+}
+.ya-share2__icon {
+  display: inline-block;
+  vertical-align: top;
+}
+.ya-share2__icon:active {
+  box-shadow: inset 0 2px 0 0 rgba(0,0,0,0.1);
+}
+.ya-share2__counter {
+  display: none;
+}
+.ya-share2__counter:before {
+  content: "";
+  position: absolute;
+  width: 1px;
+  top: 2px;
+  bottom: 2px;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX///+nxBvIAAAAAXRSTlMz/za5cAAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=") 0 0 repeat-y;
+}
+.ya-share2__counter_visible {
+  display: inline-block;
+}
+.ya-share2__title {
+  display: inline-block;
+  color: #000;
+  vertical-align: bottom;
+}
+.ya-share2__title:hover {
+  color: #f00;
+}
+.ya-share2__item_more {
+  position: relative;
+}
+.ya-share2__item_more:hover {
+  opacity: 1;
+}
+.ya-share2__icon_more {
+  background-color: #fff;
+  border: 1px solid #cdcdcd;
+  box-sizing: border-box;
+  position: relative;
+}
+.ya-share2__icon_more:before {
+  content: '•••';
+  color: #a0a0a0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  text-align: center;
+}
+.ya-share2__popup {
+  position: absolute;
+  display: none;
+  border: 1px solid #e6e6e6;
+  z-index: 9999;
+  background-color: #fff;
+}
+.ya-share2__popup_direction_bottom {
+  box-shadow: 0 10px 20px -5px rgba(0,0,0,0.4);
+}
+.ya-share2__popup_direction_top {
+  box-shadow: 0 0 20px -5px rgba(0,0,0,0.4);
+}
+.ya-share2__popup_list-direction_horizontal {
+  right: 0;
+}
+.ya-share2__popup_list-direction_vertical {
+  left: 0;
+}
+.ya-share2__popup_visible {
+  display: block;
+}
+.ya-share2__popup_clipboard .ya-share2__input_copy,
+.ya-share2__link_copy {
+  display: none;
+}
+.ya-share2__popup_clipboard .ya-share2__link_copy {
+  display: inline-block;
+}
+
+.ya-share2__item_service_blogger .ya-share2__badge
+{
+    background-color: #fb8f3d;
+}
+
+.ya-share2__item_service_blogger .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19.896 14.833A5.167 5.167 0 0 1 14.729 20H9.166A5.167 5.167 0 0 1 4 14.833V9.167A5.166 5.166 0 0 1 9.166 4h2.608a5.167 5.167 0 0 1 5.167 5.167l.002.011c.037.536.484.96 1.03.96l.018-.002h.872c.57 0 1.034.463 1.034 1.034l-.001 3.663zM9.038 10.176h2.926a.993.993 0 0 0 0-1.987H9.038a.994.994 0 0 0 0 1.987zm5.867 3.83H9.032a.94.94 0 0 0 0 1.879h5.873a.94.94 0 1 0 0-1.88z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_collections .ya-share2__badge
+{
+    background-color: #eb1c00;
+}
+
+.ya-share2__item_service_collections .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 18l5-2.71L17 18V6H7v12z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_delicious .ya-share2__badge
+{
+    background-color: #31a9ff;
+}
+
+.ya-share2__item_service_delicious .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 12h8v8H4zm8-8h8v8h-7.984z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_digg .ya-share2__badge
+{
+    background-color: #000;
+}
+
+.ya-share2__item_service_digg .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.555 10.814V14.1h.96s.18.005.18-.222v-3.287h-.96s-.18-.006-.18.222zm8.032 3.065v-3.287h-.96s-.18-.006-.18.222V14.1h.96s.18.006.18-.222zm-5.306 1.32c0 .227-.18.222-.18.222H4V9.497c0-.227.18-.222.18-.222h2.514V7.222c0-.227.18-.222.18-.222h1.408l-.001 8.199zm2.065 0c0 .227-.18.221-.18.221H8.761V9.496c0-.226.18-.221.18-.221h1.406v5.924zm0-7.103c0 .227-.18.222-.18.222H8.76V7.222c0-.227.18-.222.18-.222h1.408l-.001 1.096zm4.827 9.21c0 .228-.18.223-.18.223h-4.1v-1.096c0-.227.18-.222.18-.222h2.513v-.79h-2.694V9.497c0-.227.18-.222.18-.222l4.102.003v8.029zm4.826 0c0 .228-.18.223-.18.223h-4.1v-1.096c0-.227.18-.222.18-.222h2.514v-.79h-2.695V9.497c0-.227.18-.222.18-.222L20 9.279v8.028zm-1.585-3.427v-3.287h-.96s-.18-.006-.18.222V14.1h.96s.18.006.18-.222z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_evernote .ya-share2__badge
+{
+    background-color: #24d666;
+}
+
+.ya-share2__item_service_evernote .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.277 7.109h1.517c.08 0 .16-.08.16-.16V5.313c0-.28.08-.559.159-.758l.04-.12L5.2 7.348l.16-.08c.239-.12.558-.16.917-.16zm11.654-.28c-.12-.638-.479-.917-.838-1.037-.36-.12-.718-.28-1.676-.4-.759-.08-1.557-.12-2.116-.12-.16-.438-.399-.917-1.317-1.156-.638-.16-1.796-.12-2.155-.08-.559.08-.758.319-.918.479-.16.16-.28.598-.28.878v1.556c0 .48-.318.838-.877.838H6.397c-.32 0-.559.04-.758.12-.16.12-.32.28-.4.4-.2.279-.239.598-.239.957 0 0 0 .28.08.798.04.4.479 3.033.878 3.911.16.36.28.48.599.639.718.32 2.354.639 3.152.758.759.08 1.278.32 1.557-.279 0 0 .04-.16.12-.36a6.3 6.3 0 0 0 .28-1.915c0-.04.079-.04.079 0 0 .36-.08 1.557.838 1.876.36.12 1.118.24 1.876.32.678.079 1.197.358 1.197 2.114 0 1.078-.24 1.238-1.397 1.238-.958 0-1.317.04-1.317-.759 0-.598.599-.558 1.078-.558.2 0 .04-.16.04-.52 0-.398.24-.598 0-.598-1.557-.04-2.475 0-2.475 1.956 0 1.796.679 2.115 2.914 2.115 1.756 0 2.354-.04 3.073-2.275.16-.439.479-1.796.678-4.03.16-1.478-.12-5.788-.319-6.866zm-3.033 4.75c-.2 0-.32 0-.519.04h-.08s-.04 0-.04-.04v-.04c.08-.4.28-.878.878-.878.639.04.799.599.799 1.038v.04c0 .04-.04.04-.04.04-.04 0-.04 0-.04-.04-.28-.08-.599-.12-.958-.16z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_facebook .ya-share2__badge
+{
+    background-color: #3b5998;
+}
+
+.ya-share2__item_service_facebook .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.423 20v-7.298h2.464l.369-2.845h-2.832V8.042c0-.824.23-1.385 1.417-1.385h1.515V4.111A20.255 20.255 0 0 0 14.148 4c-2.183 0-3.678 1.326-3.678 3.76v2.097H8v2.845h2.47V20h2.953z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_gplus .ya-share2__badge
+{
+    background-color: #dc4e41;
+}
+
+.ya-share2__item_service_gplus .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.09 11.364v1.745h2.888c-.116.75-.873 2.196-2.887 2.196-1.738 0-3.156-1.44-3.156-3.214 0-1.775 1.418-3.215 3.156-3.215.989 0 1.65.422 2.029.786l1.382-1.331C11.615 7.5 10.465 7 9.09 7A5.087 5.087 0 0 0 4 12.09a5.087 5.087 0 0 0 5.09 5.092c2.94 0 4.888-2.066 4.888-4.975 0-.334-.036-.589-.08-.843H9.091zm10.91 0h-1.455V9.909h-1.454v1.455h-1.455v1.454h1.455v1.455h1.454v-1.455H20' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_linkedin .ya-share2__badge
+{
+    background-color: #0083be;
+}
+
+.ya-share2__item_service_linkedin .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.246 8.954h3.41v10.281h-3.41zm1.725-4.935c-1.167 0-1.929.769-1.929 1.776 0 .987.74 1.777 1.884 1.777h.022c1.19 0 1.93-.79 1.93-1.777-.023-1.007-.74-1.776-1.907-1.776zm10.052 4.715c-1.81 0-2.62.997-3.073 1.698V8.976H9.54c.045.965 0 10.281 0 10.281h3.41v-5.742c0-.307.022-.614.112-.834.246-.613.807-1.25 1.75-1.25 1.233 0 1.727.944 1.727 2.325v5.501h3.41v-5.896c0-3.158-1.683-4.627-3.926-4.627z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_lj .ya-share2__badge
+{
+    background-color: #0d425a;
+}
+
+.ya-share2__item_service_lj .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M17.815 13.3c.438 2.114.868 4.221 1.306 6.336.037.178-.148.385-.334.311-2.025-.741-4.006-1.49-6.01-2.24a.625.625 0 0 1-.318-.23l-7.39-8.903c-.067-.082-.082-.215-.06-.32.312-1.23.72-2.143 1.752-3.019C7.799 4.36 8.779 4.1 10.047 4.004c.156-.015.223.014.312.133 2.418 2.909 4.837 5.817 7.248 8.725a.888.888 0 0 1 .208.438z' fill='%23FFF'/%3E%3Cpath d='M6.175 8.462c.69-1.795 2.3-3.004 3.835-3.301l-.185-.223a4.242 4.242 0 0 0-3.85 3.272l.2.252z' fill='%230D425A'/%3E%3Cpath d='M10.53 5.792c-1.744.326-3.124 1.513-3.851 3.271l.905 1.091c.787-1.78 2.3-2.997 3.836-3.302l-.89-1.06zm2.76 7.827L9.364 8.9a6.119 6.119 0 0 0-1.269 1.87l4.89 5.89c.289-.385.867-2.359.303-3.041zM9.647 8.633l3.947 4.748c.445.542 2.456.327 3.086-.193l-4.756-5.72c-.793.156-1.587.564-2.277 1.165zm7.308 5.045c-.609.46-1.9.735-2.931.527.074.823-.096 1.892-.616 2.745l1.885.712 1.528.564c.223-.378.542-.608.913-.764l-.35-1.692-.43-2.092z' fill='%230D425A'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_moimir .ya-share2__badge
+{
+    background-color: #168de2;
+}
+
+.ya-share2__item_service_moimir .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.889 9.667a1.333 1.333 0 1 0 0-2.667 1.333 1.333 0 0 0 0 2.667zm6.222 0a1.333 1.333 0 1 0 0-2.667 1.333 1.333 0 0 0 0 2.667zm4.77 6.108l-1.802-3.028a.879.879 0 0 0-1.188-.307.843.843 0 0 0-.313 1.166l.214.36a6.71 6.71 0 0 1-4.795 1.996 6.711 6.711 0 0 1-4.792-1.992l.217-.364a.844.844 0 0 0-.313-1.166.878.878 0 0 0-1.189.307l-1.8 3.028a.844.844 0 0 0 .312 1.166.88.88 0 0 0 1.189-.307l.683-1.147a8.466 8.466 0 0 0 5.694 2.18 8.463 8.463 0 0 0 5.698-2.184l.685 1.151a.873.873 0 0 0 1.189.307.844.844 0 0 0 .312-1.166z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_odnoklassniki .ya-share2__badge
+{
+    background-color: #eb722e;
+}
+
+.ya-share2__item_service_odnoklassniki .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23FFF' fill-rule='evenodd'%3E%3Cpath d='M11.674 6.536a1.69 1.69 0 0 0-1.688 1.688c0 .93.757 1.687 1.688 1.687a1.69 1.69 0 0 0 1.688-1.687 1.69 1.69 0 0 0-1.688-1.688zm0 5.763a4.08 4.08 0 0 1-4.076-4.075 4.08 4.08 0 0 1 4.076-4.077 4.08 4.08 0 0 1 4.077 4.077 4.08 4.08 0 0 1-4.077 4.075zM10.025 15.624a7.633 7.633 0 0 1-2.367-.98 1.194 1.194 0 0 1 1.272-2.022 5.175 5.175 0 0 0 5.489 0 1.194 1.194 0 1 1 1.272 2.022 7.647 7.647 0 0 1-2.367.98l2.279 2.28a1.194 1.194 0 0 1-1.69 1.688l-2.238-2.24-2.24 2.24a1.193 1.193 0 1 1-1.689-1.689l2.279-2.279'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_pinterest .ya-share2__badge
+{
+    background-color: #c20724;
+}
+
+.ya-share2__item_service_pinterest .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9.742c0 1.58.599 2.986 1.884 3.51.21.087.4.003.46-.23.043-.16.144-.568.189-.738.06-.23.037-.31-.133-.512-.37-.436-.608-1.001-.608-1.802 0-2.322 1.74-4.402 4.53-4.402 2.471 0 3.829 1.508 3.829 3.522 0 2.65-1.174 4.887-2.917 4.887-.963 0-1.683-.795-1.452-1.77.276-1.165.812-2.421.812-3.262 0-.752-.405-1.38-1.24-1.38-.985 0-1.775 1.017-1.775 2.38 0 .867.293 1.454.293 1.454L8.69 16.406c-.352 1.487-.053 3.309-.028 3.492.015.11.155.136.22.054.09-.119 1.262-1.564 1.66-3.008.113-.409.647-2.526.647-2.526.32.61 1.254 1.145 2.248 1.145 2.957 0 4.964-2.693 4.964-6.298C18.4 6.539 16.089 4 12.576 4 8.204 4 6 7.13 6 9.742z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_pocket .ya-share2__badge
+{
+    background-color: #ee4056;
+}
+
+.ya-share2__item_service_pocket .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M17.9 5c1.159 0 2.1.948 2.1 2.117v5.862c0 .108-.008.215-.024.32.016.156.024.314.024.473 0 3.36-3.582 6.085-8 6.085s-8-2.724-8-6.085c0-.159.008-.317.024-.473a2.148 2.148 0 0 1-.024-.32V7.117C4 5.948 4.94 5 6.1 5h11.8zM8.596 9.392L12 12.795l3.404-3.403a1.063 1.063 0 0 1 1.502 1.502l-4.132 4.131c-.21.21-.486.314-.76.311-.284.01-.571-.094-.788-.31l-4.132-4.132a1.063 1.063 0 0 1 1.502-1.502z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_qzone .ya-share2__badge
+{
+    background-color: #f5b53c;
+}
+
+.ya-share2__item_service_qzone .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M17.367 14.463s-.105.148-.457.299l-.553.222.597 3.273c.062.282.25.983-.082 1.062-.17.04-.307-.067-.395-.121l-.769-.445-2.675-1.545c-.204-.122-.78-.546-1.093-.489-.205.038-.336.127-.483.216l-.77.445-2.39 1.386-.883.508c-.123.06-.301.058-.394-.025-.07-.063-.09-.253-.063-.388l.19-1.004.572-3.02c.047-.2.237-.975.166-1.137-.048-.107-.173-.196-.261-.267l-.61-.565-2.13-1.983c-.189-.153-.345-.345-.533-.496l-.235-.216c-.062-.078-.165-.235-.09-.369.142-.248.974-.218 1.335-.28l2.682-.31.82-.09c.146-.024.299-.004.413-.063.239-.123.51-.809.636-1.087l1.31-2.714c.151-.297.286-.603.431-.896.075-.15.133-.308.305-.356.162-.045.257.105.312.178.177.235.325.685.451.973l1.29 2.853c.104.238.363.964.54 1.074.266.166.858.108 1.227.172l2.841.292c.355.062 1.245.01 1.36.267.076.17-.072.314-.152.394l-.864.814-1.983 1.868c-.185.164-.77.637-.833.858-.04.14.02.414.088.722-.096-.001-.39-.007-1.182-.029-.63-.007-2.616-.17-2.713-.178l-.84-.076c-.14-.023-.326.012-.4-.076v-.02c1.727-1.168 3.407-2.416 5.142-3.578l-.006-.044c-.146-.072-.359-.059-.54-.095-.385-.077-.79-.078-1.208-.147-.75-.124-1.59-.114-2.434-.114-1.172 0-2.329.03-3.35.21-.45.079-.894.095-1.309.197-.172.042-.358.03-.49.108l.007.012c.1.027.253.02.381.02l.928.019.808.025.813.032.591.032c.486.075 1.007.036 1.475.114.404.068.804.065 1.182.14.113.022.245.015.33.064v.006c-.039.094-.336.255-.432.318l-1.055.743-2.256 1.62-1.417.992c.003.048.024.035.045.061 1.15.167 2.52.258 3.77.262 1.298.005 2.465-.094 3.118-.193.561-.086 1.082-.147 1.653-.287.325-.08.521-.148.521-.148z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_reddit .ya-share2__badge
+{
+    background-color: #ff4500;
+}
+
+.ya-share2__item_service_reddit .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.542 10.63c-1.105-.636-2.494-1.033-4.025-1.118l.808-2.393 2.182.637c0 .963.78 1.742 1.743 1.742.964 0 1.758-.779 1.758-1.742C19.008 6.78 18.214 6 17.25 6c-.609 0-1.148.326-1.459.793l-2.65-.764a.482.482 0 0 0-.61.311l-1.063 3.172c-1.516.085-2.905.482-4.01 1.119a1.987 1.987 0 0 0-1.46-.623A1.995 1.995 0 0 0 4 12.004c0 .75.425 1.403 1.035 1.742-.029.17-.043.34-.043.51 0 2.62 3.146 4.744 7.015 4.744 3.855 0 7-2.124 7-4.744 0-.17-.013-.34-.042-.51A1.974 1.974 0 0 0 20 12.004a1.995 1.995 0 0 0-1.998-1.996c-.581 0-1.091.24-1.46.623zM9.499 12.5a1.01 1.01 0 0 1 1.006 1.006.998.998 0 0 1-1.006.991.986.986 0 0 1-.992-.991c0-.553.439-1.006.992-1.006zm5.002 0a.998.998 0 0 0-.992 1.006c0 .552.44.991.992.991a.998.998 0 0 0 1.006-.991 1.01 1.01 0 0 0-1.006-1.006zm-5.3 3.597a.484.484 0 0 1-.085-.694c.156-.226.482-.255.694-.085.567.44 1.474.68 2.197.68.709 0 1.616-.24 2.197-.68a.484.484 0 0 1 .694.085.496.496 0 0 1-.085.694c-.737.58-1.885.907-2.806.907-.935 0-2.07-.326-2.806-.907zm8.05-7.59c-.411 0-.752-.34-.752-.75 0-.426.34-.752.751-.752s.752.326.752.751c0 .41-.34.75-.752.75z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_renren .ya-share2__badge
+{
+    background-color: #1760a7;
+}
+
+.ya-share2__item_service_renren .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.019 15.562l-.001-.003-.018.002a.055.055 0 0 0 .019.001zM7.71 12.398l.146-.68c.048-.205.03-.452.03-.692V9.812L7.88 8c-.139 0-.278.043-.393.076-.358.102-.666.201-.962.352-1.158.59-2.022 1.565-2.387 2.944-.343 1.297-.007 2.652.522 3.507.118.19.269.48.44.61.135-.02.272-.15.375-.217a6.06 6.06 0 0 0 .622-.452l.24-.229c.63-.506 1.075-1.346 1.373-2.193zm4.276 3.164h.02a.382.382 0 0 0-.019-.003v.003zm-3.01-.888l-.258-.575-.088-.264H8.62l-.264.498c-.176.288-.358.574-.557.839a6.5 6.5 0 0 1-.85.944l-.517.422.012.024.287.14c.206.091.43.173.657.235.788.217 1.811.177 2.545-.053.178-.055.643-.194.739-.305v-.017c-.177-.092-.324-.254-.47-.381a5.573 5.573 0 0 1-1.225-1.507zm10.884-3.302c-.365-1.379-1.23-2.354-2.387-2.944-.296-.15-.604-.25-.962-.352-.115-.033-.254-.077-.393-.076l-.005 1.812v1.214c0 .24-.019.487.029.692l.147.68c.297.847.741 1.687 1.372 2.193l.24.23c.196.164.402.309.622.45.103.067.24.198.375.218.171-.13.322-.42.44-.61.529-.855.865-2.21.522-3.507zm-3.66 3.8c-.2-.265-.381-.55-.557-.839l-.264-.498h-.011l-.088.264-.258.575a5.576 5.576 0 0 1-1.226 1.507c-.145.127-.292.29-.469.38v.018c.096.111.561.25.739.305.734.23 1.757.27 2.545.053a4.85 4.85 0 0 0 .657-.234l.287-.141a1.31 1.31 0 0 0 .012-.024l-.516-.422a6.5 6.5 0 0 1-.85-.944zm-1.653-2.727c.068-.192.097-.402.146-.61.05-.21.024-.484.024-.727V9.753l-.006-1.741c-.015-.008-.02-.01-.047-.012-.197.047-.326.05-.592.14-.357.102-.685.275-.985.44-.289.16-.53.388-.78.587-.097.077-.199.19-.308.312l.01.01a1.19 1.19 0 0 0-.01.012l.36.47c.232.359.445.763.581 1.213.326 1.079.182 2.411-.235 3.273a4.9 4.9 0 0 1-.445.75l-.258.323a.018.018 0 0 1-.003.007c.004.007.01.016.012.022h.008c.395-.215.686-.574 1.027-.844.189-.15.354-.35.504-.54.404-.514.755-1.046.997-1.73zm-2.55 3.085l-.259-.323a4.903 4.903 0 0 1-.445-.75c-.417-.862-.561-2.194-.235-3.273.136-.45.35-.854.58-1.214L12 9.501l-.01-.011.01-.01a2.791 2.791 0 0 0-.308-.313c-.25-.2-.491-.427-.78-.586-.3-.166-.628-.339-.985-.44-.266-.09-.395-.094-.592-.141-.026.001-.032.004-.047.012l-.006 1.741v1.355c0 .243-.026.517.024.727.049.208.078.418.146.61.242.684.593 1.216.997 1.73.15.19.315.39.505.54.34.27.63.629 1.026.844h.008c.001-.006.008-.015.012-.022a.019.019 0 0 1-.003-.007z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_sinaWeibo .ya-share2__badge
+{
+    background-color: #c53220;
+}
+
+.ya-share2__item_service_sinaWeibo .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EsinaWeibo%3C/title%3E%3Cpath d='M10.266 14.696c-.103.421.55.447.64.063.037-.191-.103-.332-.282-.332-.167 0-.333.128-.358.269zm-.128.945c.102-.498-.307-.869-.793-.843-.46.038-.843.358-.92.754-.115.511.307.882.793.844.46-.026.843-.345.92-.755zm3.797-3.157c-1.586-.997-3.707-1.01-5.42-.447-.857.28-1.764.818-2.301 1.495-.627.793-.882 1.815-.23 2.8.958 1.431 3.413 2.033 5.675 1.508 1.33-.307 2.749-1.048 3.35-2.326.562-1.177-.052-2.378-1.074-3.03zm-3.17.498c.945.167 1.7.755 1.827 1.739.243 1.854-2.173 3.336-4.026 2.327a1.933 1.933 0 0 1-.742-2.723c.435-.767 1.266-1.266 2.148-1.355a2.75 2.75 0 0 1 .793.012zm6.11-.37c-.268-.18-.538-.281-.856-.383-.308-.103-.359-.154-.243-.46.076-.218.14-.41.166-.666.14-1.15-.793-1.495-1.854-1.406-.498.039-.92.167-1.355.307-.281.09-.806.384-.92.205-.064-.09.013-.23.038-.32.166-.626.23-1.496-.384-1.88-.447-.28-1.227-.204-1.7-.038-2.556.87-6.455 4.552-5.663 7.479.18.664.55 1.163.908 1.521 1.061 1.061 2.71 1.65 4.231 1.866 1.112.154 2.263.14 3.375-.064 1.815-.332 3.554-1.15 4.679-2.607.754-.972.997-2.352 0-3.235a3.334 3.334 0 0 0-.422-.319zm1.623-3.682c.652 1.483-.064 2.148.166 2.66.192.421.767.46 1.023.14.191-.243.294-.959.307-1.278a4.193 4.193 0 0 0-1.125-3.12c-.984-1.073-2.276-1.444-3.694-1.303-.256.025-.46.064-.601.217-.332.358-.166.882.294.959.384.063 1.342-.23 2.416.396.498.307.971.792 1.214 1.33zm-3.45-.562c-.282.345-.078.87.408.856.294-.012.358-.05.677.051.307.103.626.448.64.857.025.268-.282.895.32 1.061a.523.523 0 0 0 .536-.166c.115-.128.166-.371.192-.575.089-.857-.333-1.598-1.01-2.02-.384-.23-1.445-.46-1.764-.064z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_skype .ya-share2__badge
+{
+    background-color: #00aff0;
+}
+
+.ya-share2__item_service_skype .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19.537 13.698c.115-.52.176-1.06.176-1.614 0-4.155-3.415-7.524-7.63-7.524-.444 0-.88.038-1.304.11A4.444 4.444 0 0 0 8.425 4C5.981 4 4 5.954 4 8.364c0 .805.222 1.56.608 2.207a7.428 7.428 0 0 0-.155 1.513c0 4.156 3.416 7.4 7.63 7.4.477 0 .944-.044 1.397-.126.623.33 1.335.642 2.092.642 2.444 0 4.425-1.953 4.425-4.364 0-.695-.166-1.354-.46-1.938zm-3.974 1.457c-.294.418-.725.747-1.293.984-.567.238-1.239.356-2.016.356-.933 0-1.702-.162-2.308-.486a2.986 2.986 0 0 1-1.047-.934c-.268-.39-.403-.768-.403-1.137 0-.213.08-.395.242-.547a.855.855 0 0 1 .615-.229c.202 0 .373.059.512.178.14.119.26.294.358.527.12.278.25.51.39.695.139.185.336.34.589.46.254.12.587.18 1 .18.566 0 1.027-.12 1.382-.364.354-.243.532-.547.532-.91a.919.919 0 0 0-.287-.702 1.88 1.88 0 0 0-.741-.412 13.21 13.21 0 0 0-1.216-.303c-.678-.146-1.247-.318-1.703-.513-.458-.196-.822-.463-1.09-.8-.269-.34-.403-.759-.403-1.26 0-.48.142-.904.426-1.275.283-.372.693-.658 1.23-.858.537-.2 1.17-.299 1.895-.299.58 0 1.082.066 1.505.198.423.133.774.309 1.053.528.28.22.484.45.612.691.13.24.194.477.194.705 0 .21-.08.4-.241.567a.8.8 0 0 1-.603.252c-.22 0-.386-.05-.5-.151-.114-.101-.237-.266-.37-.495a2.27 2.27 0 0 0-.618-.768c-.241-.184-.627-.276-1.16-.276-.494 0-.893.1-1.196.3-.303.199-.455.44-.455.72 0 .173.053.324.155.45.103.128.245.235.426.326.18.091.363.162.547.214.185.052.49.126.916.225a15.47 15.47 0 0 1 1.446.38c.432.138.8.307 1.103.503.302.198.54.45.709.752.17.302.255.673.255 1.111 0 .525-.148.998-.442 1.417z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_surfingbird .ya-share2__badge
+{
+    background-color: #30baff;
+}
+
+.ya-share2__item_service_surfingbird .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M17.315 8.49l-.214 1.987-3.436 3.382h-1.826l-.698 1.826v2.523l-2.47-.698 2.846-5.1L4 8.167l5.638.752L6.899 5l7.463 4.027 2.202-2.47h1.02L20 7.631z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_telegram .ya-share2__badge
+{
+    background-color: #64a9dc;
+}
+
+.ya-share2__item_service_telegram .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18.92 6.089L4.747 11.555c-.967.388-.962.928-.176 1.168l3.534 1.104 1.353 4.146c.164.454.083.634.56.634.368 0 .53-.168.736-.368.13-.127.903-.88 1.767-1.719l3.677 2.717c.676.373 1.165.18 1.333-.628l2.414-11.374c.247-.99-.378-1.44-1.025-1.146zM8.66 13.573l7.967-5.026c.398-.242.763-.112.463.154l-6.822 6.155-.265 2.833-1.343-4.116z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_tencentWeibo .ya-share2__badge
+{
+    background-color: #53a9d7;
+}
+
+.ya-share2__item_service_tencentWeibo .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.813 6.01a4.397 4.397 0 0 0-4.326 6.121c.087.199.312.29.511.2a.382.382 0 0 0 .206-.51 3.566 3.566 0 0 1-.286-1.668A3.616 3.616 0 0 1 8.76 6.79a3.615 3.615 0 0 1 3.366 3.84 3.615 3.615 0 0 1-4.65 3.218.39.39 0 0 0-.486.263.394.394 0 0 0 .262.485c.315.093.647.152.977.174a4.397 4.397 0 0 0 4.677-4.087A4.398 4.398 0 0 0 8.813 6.01zm-1.348 5.658a1.67 1.67 0 1 0-.46-.655c-.274.27-.565.59-.854.966-1.022 1.315-2.224 3.694-2.148 7.007.006.204.157.484.355.497l.04.002c.213.015.394-.301.391-.516-.064-2.458.6-4.662 1.955-6.423.242-.316.488-.626.72-.878zm12.388 4.106c-1.307-.48-2.302-1.27-2.95-2.352a4.873 4.873 0 0 1-.354-.71.819.819 0 0 0 .337-.36.829.829 0 0 0-.395-1.098.822.822 0 0 0-1.098.392.822.822 0 0 0 .724 1.177c.091.237.218.516.39.81.483.812 1.431 1.912 3.196 2.558a.226.226 0 0 0 .278-.113c0-.006.005-.01.007-.022a.224.224 0 0 0-.135-.282zm-3.767-1.676a2.04 2.04 0 0 1-1.707-3.042 2.039 2.039 0 0 1 2.784-.787 2.04 2.04 0 0 1 .786 2.783 1.92 1.92 0 0 1-.268.378.223.223 0 0 0 .014.314c.09.082.234.074.313-.016a2.489 2.489 0 1 0-4.017-2.89 2.493 2.493 0 0 0 2.08 3.708.224.224 0 0 0 .015-.448z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_tumblr .ya-share2__badge
+{
+    background-color: #547093;
+}
+
+.ya-share2__item_service_tumblr .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.72 7.7h3.699v2.857h-3.7v4.102c0 .928-.01 1.463.087 1.726.098.262.343.534.61.69.355.213.758.32 1.214.32.81 0 1.616-.264 2.417-.79v2.522c-.683.322-1.302.55-1.857.678a7.94 7.94 0 0 1-1.798.195 4.905 4.905 0 0 1-1.724-.276 4.215 4.215 0 0 1-1.438-.79c-.399-.343-.673-.706-.826-1.09-.154-.386-.23-.945-.23-1.676v-5.611H7V8.29c.628-.203 1.357-.496 1.804-.877.45-.382.809-.84 1.08-1.374.272-.534.459-1.214.56-2.039h2.276v3.7z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_twitter .ya-share2__badge
+{
+    background-color: #00aced;
+}
+
+.ya-share2__item_service_twitter .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 7.539a6.56 6.56 0 0 1-1.885.517 3.294 3.294 0 0 0 1.443-1.816 6.575 6.575 0 0 1-2.085.796 3.283 3.283 0 0 0-5.593 2.994A9.32 9.32 0 0 1 5.114 6.6a3.28 3.28 0 0 0 1.016 4.382 3.274 3.274 0 0 1-1.487-.41v.041a3.285 3.285 0 0 0 2.633 3.218 3.305 3.305 0 0 1-1.482.056 3.286 3.286 0 0 0 3.066 2.28A6.585 6.585 0 0 1 4 17.524 9.291 9.291 0 0 0 9.032 19c6.038 0 9.34-5 9.34-9.337 0-.143-.004-.285-.01-.425A6.672 6.672 0 0 0 20 7.538z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_viber .ya-share2__badge
+{
+    background-color: #7b519d;
+}
+
+.ya-share2__item_service_viber .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23FFF' fill-rule='evenodd'%3E%3Cpath d='M18.434 15.574c-.484-.391-1.002-.743-1.511-1.102-1.016-.718-1.945-.773-2.703.38-.426.648-1.021.677-1.644.392-1.718-.782-3.044-1.989-3.821-3.743-.344-.777-.34-1.473.465-2.022.425-.29.854-.634.82-1.268-.045-.828-2.043-3.593-2.832-3.885a1.429 1.429 0 0 0-.984 0C4.373 4.95 3.606 6.48 4.34 8.292c2.19 5.405 6.043 9.167 11.349 11.463.302.13.638.183.808.23 1.208.012 2.623-1.158 3.032-2.318.393-1.117-.438-1.56-1.096-2.093zM12.485 4.88c3.879.6 5.668 2.454 6.162 6.38.045.363-.09.909.426.919.538.01.408-.528.413-.89.045-3.699-3.163-7.127-6.888-7.253-.281.04-.863-.195-.9.438-.024.427.466.357.787.406z'/%3E%3Cpath d='M13.244 5.957c-.373-.045-.865-.222-.953.299-.09.546.458.49.811.57 2.395.538 3.23 1.414 3.624 3.802.057.349-.057.89.532.8.436-.066.278-.53.315-.802.02-2.293-1.936-4.38-4.329-4.669z'/%3E%3Cpath d='M13.464 7.832c-.249.006-.493.033-.585.3-.137.4.152.496.446.544.983.158 1.5.74 1.598 1.725.027.268.195.484.452.454.356-.043.389-.361.378-.664.017-1.106-1.227-2.385-2.289-2.359z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_vkontakte .ya-share2__badge
+{
+    background-color: #48729e;
+}
+
+.ya-share2__item_service_vkontakte .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.576-1.496c.588-.19 1.341 1.26 2.14 1.818.605.422 1.064.33 1.064.33l2.137-.03s1.117-.071.587-.964c-.043-.073-.308-.661-1.588-1.87-1.34-1.264-1.16-1.059.453-3.246.983-1.332 1.376-2.145 1.253-2.493-.117-.332-.84-.244-.84-.244l-2.406.015s-.178-.025-.31.056c-.13.079-.212.262-.212.262s-.382 1.03-.89 1.907c-1.07 1.85-1.499 1.948-1.674 1.832-.407-.267-.305-1.075-.305-1.648 0-1.793.267-2.54-.521-2.733-.262-.065-.454-.107-1.123-.114-.858-.009-1.585.003-1.996.208-.274.136-.485.44-.356.457.159.022.519.099.71.363.246.341.237 1.107.237 1.107s.142 2.11-.33 2.371c-.325.18-.77-.187-1.725-1.865-.489-.859-.859-1.81-.859-1.81s-.07-.176-.198-.272c-.154-.115-.37-.151-.37-.151l-2.286.015s-.343.01-.469.161C3.94 7.721 4.043 8 4.043 8s1.79 4.258 3.817 6.403c1.858 1.967 3.968 1.838 3.968 1.838h.957z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.ya-share2__item_service_whatsapp .ya-share2__badge
+{
+    background-color: #65bc54;
+}
+
+.ya-share2__item_service_whatsapp .ya-share2__icon
+{
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 11.794c0 4.304-3.517 7.794-7.855 7.794a7.87 7.87 0 0 1-3.796-.97L4 20l1.418-4.182a7.714 7.714 0 0 1-1.127-4.024C4.29 7.489 7.807 4 12.145 4S20 7.49 20 11.794zm-7.855-6.553c-3.641 0-6.603 2.94-6.603 6.553 0 1.434.467 2.762 1.258 3.842l-.825 2.433 2.537-.806a6.6 6.6 0 0 0 3.633 1.084c3.642 0 6.604-2.94 6.604-6.553s-2.962-6.553-6.604-6.553zm3.967 8.348c-.049-.08-.177-.128-.37-.223-.192-.095-1.139-.558-1.315-.621-.177-.064-.305-.096-.434.095a10.92 10.92 0 0 1-.61.749c-.112.128-.224.143-.416.048-.193-.096-.813-.297-1.549-.948a5.76 5.76 0 0 1-1.07-1.323c-.113-.191-.013-.295.084-.39.086-.086.192-.223.289-.334.096-.112.128-.191.192-.319s.032-.239-.016-.335c-.048-.095-.433-1.035-.594-1.418-.16-.382-.32-.318-.433-.318-.112 0-.24-.016-.369-.016a.71.71 0 0 0-.513.239c-.177.19-.674.653-.674 1.593s.69 1.848.786 1.976c.096.127 1.332 2.119 3.289 2.884 1.958.764 1.958.51 2.31.477.353-.031 1.14-.461 1.3-.908.16-.446.16-.829.113-.908z' fill='%23FFF' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+</style><style>.gc-bubbleDefault{background-color:transparent !important;text-align:left;padding:0 !important;margin:0 !important;border:0 !important;table-layout:auto !important}.gc-reset{background-color:transparent !important;border:0 !important;padding:0 !important;margin:0 !important;text-align:left}.pls-bubbleTop{border-bottom:1px solid #ccc !important}.pls-topTail,.pls-vertShimLeft,.pls-contentLeft{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/border_3.gif) !important}.pls-topTail{background-repeat:repeat-x !important;background-position:bottom !important}.pls-vertShim{background-color:#fff !important;text-align:right}.tbl-grey .pls-vertShim{background-color:#f5f5f5 !important}.pls-vertShimLeft{background-repeat:repeat-y !important;background-position:right !important;height:4px}.pls-vertShimRight{height:4px}.pls-confirm-container .pls-vertShim{background-color:#fff3c2 !important}.pls-contentWrap{background-color:#fff !important;position:relative !important;vertical-align:top}.pls-contentLeft{background-repeat:repeat-y;background-position:right;vertical-align:top}.pls-dropRight{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleDropR_3.png) !important;background-repeat:repeat-y !important;vertical-align:top}.pls-vert,.pls-tailleft,.pls-dropTR .pls-dropBR,.pls-dropBL,.pls-vert img{vertical-align:top}.pls-dropBottom{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleDropB_3.png) !important;background-repeat:repeat-x !important;width:100%;vertical-align:top}.pls-topLeft{background:inherit !important;text-align:right;vertical-align:bottom}.pls-topRight{background:inherit !important;text-align:left;vertical-align:bottom}.pls-bottomLeft{background:inherit !important;text-align:right}.pls-bottomRight{background:inherit !important;text-align:left;vertical-align:top}.pls-tailtop,.pls-tailright,.pls-tailbottom,.pls-tailleft{display:none;position:relative}.pls-tailbottom,.pls-tailtop,.pls-tailright,.pls-tailleft,.pls-dropTR,.pls-dropBR,.pls-dropBL{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleSprite_3.png) !important;background-repeat:no-repeat}.tbl-grey .pls-tailbottom,.tbl-grey .pls-tailtop,.tbl-grey .pls-tailright,.tbl-grey .pls-tailleft,.tbl-grey .pls-dropTR,.tbl-grey .pls-dropBR,.tbl-grey .pls-dropBL{background-image:url(//ssl.gstatic.com/s2/oz/images/stars/po/bubblev1/bubbleSprite-grey.png) !important}.pls-tailbottom{background-position:-23px 0}.pls-confirm-container .pls-tailbottom{background-position:-23px -10px}.pls-tailtop{background-position:-19px -20px}.pls-tailright{background-position:0 0}.pls-tailleft{background-position:-10px 0}.pls-tailtop{vertical-align:top}.gc-bubbleDefault td{line-height:0;font-size:0}.pls-topLeft img,.pls-topRight img,.pls-tailbottom{vertical-align:bottom}.pls-bottomLeft img,.bubbleDropTR,.pls-dropBottomL img,.pls-dropBottom img,.pls-dropBottomR img,.pls-bottomLeft{vertical-align:top}.pls-dropTR{background-position:0 -22px}.pls-dropBR{background-position:0 -27px}.pls-dropBL{background-position:0 -16px}.pls-spacertop,.pls-spacerright,.pls-spacerbottom,.pls-spacerleft{position:static !important}.pls-spinner{bottom:0;position:absolute;left:0;margin:auto;right:0;top:0} </style></head><body class="single custom-background"><div id="container"><div id="header"><div class="logo"><h1 class="site_title"><a href="http://pyatilistnik.org/"><img src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/pyatilistnik-3.png" alt="Virtualization блог" title="Virtualization блог"></a></h1></div><div class="header-right"></div></div><div class="clearfix"><div class="menu-secondary-container"><ul id="menu-menyu-ehost-2" class="menus menu-secondary sf-js-enabled"><li><a title="Главная страница блога" href="http://pyatilistnik.org/">Home</a></li><li><a title="Настройка Windows 10" href="http://pyatilistnik.org/windows-10/" class="sf-with-ul">Windows 10<span class="sf-sub-indicator"> »</span></a><ul class="sub-menu" style="display: none; visibility: hidden;"><li><a title="настройка системы windows 7" href="http://pyatilistnik.org/windows-7/">Windows 7</a></li><li><a title="настройка windows 8.1" href="http://pyatilistnik.org/windows-88-1/">Windows 8/8.1</a></li><li><a title="настройка windows server 2008 r2" href="http://pyatilistnik.org/windows-20082008-r2/">Windows 2008/2008 R2</a></li><li><a title="windows 2012 r2 настройка" href="http://pyatilistnik.org/windows-20122012-r2/">Windows 2012/2012 R2</a></li></ul></li><li><a title="Продукты microsoft" href="http://pyatilistnik.org/raznoe/">Продукты microsoft</a></li><li><a title="виртуализация серверов" href="http://pyatilistnik.org/virtualizatsiya/">Виртуализация</a></li><li><a title="линукс операционная система" href="http://pyatilistnik.org/linux/">Linux</a></li><li><a title="Настройка сети" href="http://pyatilistnik.org/network/" class="sf-with-ul">Сеть<span class="sf-sub-indicator"> »</span></a><ul class="sub-menu" style="display: none; visibility: hidden;"><li><a title="Настройка Juniper" href="http://pyatilistnik.org/juniper/">Juniper</a></li><li><a title="Настройка Cisco" href="http://pyatilistnik.org/cisco/">Cisco</a></li></ul></li><li><a title="скачать бесплатно iso windows" href="http://pyatilistnik.org/skachat/">Набор</a></li><li><a title="полная карта сайта" href="http://pyatilistnik.org/karta-sayta/">Все статьи</a></li><li><a title="Информация об авторе сайта" href="http://pyatilistnik.org/o-nas/">Контакты</a></li></ul></div></div><div id="main"><div id="content">
+﻿<div class="post" id="post-2617"><h2 class="title">Как изменить порт службы RDP с 3389 на другой</h2><div class="postmeta-primary">
+<span class="meta_date">26.09.2014</span>
+&nbsp; <span class="meta_categories"><a href="http://pyatilistnik.org/windows-20082008-r2/" rel="category tag">Windows 2008/2008 R2</a></span>
+&nbsp; <span class="meta_comments"><a href="http://pyatilistnik.org/kak-v-windows-izmenit-port-sluzhbyi-rdp-ili-terminalnogo-servera-s-3389-na-drugoy/#respond">No comments</a></span></div><h2 class="post-title entry-title">Как изменить порт службы RDP с 3389 на другой</h2><div class="entry clearfix"><p><img class="size-full wp-image-29487 alignright" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/port-rdp-po-umolchaniyu.png" alt="порт rdp по умолчанию" width="230" height="180"></p><p>Добрый
+ день уважаемые читатели и гости блога, сегодня у нас с вами вот такая 
+задача: изменить входящий порт службы RDP (терминального сервера) со 
+стандартного 3389 на какой-то другой. Напоминаю, что RDP служба это 
+функционал операционных систем Windows, благодаря которому вы можете по 
+сети открыть сессию на нужный вам компьютер или сервер по протоколу RDP,
+ и иметь возможность за ним работать, так как будто вы сидите за ним 
+локально.</p><div style="float:none;margin:10px 0 10px 0;text-align:center;"> <script async="" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/adsbygoogle.js"></script> 
+<ins class="adsbygoogle" style="display: block; height: 60px;" data-ad-client="ca-pub-6335087451079124" data-ad-slot="9418078891" data-ad-format="auto" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:615px;background-color:transparent;"><ins id="aswift_0_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:615px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;width:615px;height:60px;" width="615" height="60" frameborder="0"></iframe></ins></ins></ins> <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> </div><p></p><h2>Что такое&nbsp;RDP протокол</h2><p>Прежде чем, что то изменять, хорошо бы понимать, что это и как это работает, я вам об этом не перестаю повторять. RDP или&nbsp;<span xml:lang="en" lang="en">Remote
+ Desktop Protocol это&nbsp;протокол удалённого рабочего стола в 
+операционных системах Microsoft Windows, хотя его происхождение идет от 
+компании&nbsp;PictureTel (Polycom). Microsoft просто его купила. 
+Используется для удаленной работы сотрудника или пользователя с 
+удаленным сервером. Чаще всего такие сервера несут роль <a href="http://pyatilistnik.org/ustanovka-servera-terminalov-v-2008-2008r2/" target="_blank">сервер терминалов</a>,
+ на котором выделены специальные лицензии, либо на пользователе, либо на
+ устройства, CAL. Тут задумка была такой, есть очень мощный сервер, то 
+почему бы не использовать его ресурсы совместно, например под приложение
+ 1С. Особенно это становится актуальным с появлением тонких клиентов.</span></p><p>Сам
+ сервер терминалов мир увидел, аж в 1998 году в операционной 
+системе&nbsp;Windows NT 4.0 Terminal Server, я если честно тогда и не 
+знал, что такое есть, да и в России мы в то время все играли в денди или
+ сегу. Клиенты RDP соединения, на текущий момент есть во всех версиях 
+Windows, Linux, MacOS, Android. Самая современная версия RDP протокола 
+на текущий момент 8.1.</p><h3>Порт rdp по умолчанию</h3><p>Сразу напишу&nbsp;порт rdp по умолчанию 3389, я думаю все системные администраторы его знают.</p><h2>Принцип работы&nbsp;протокола rdp</h2><p>И
+ так мы с вами поняли для чего придумали&nbsp;Remote Desktop Protocol, 
+теперь логично, что нужно понять принципы его работы. Компания 
+Майкрософт выделяет два режима протокола RDP:</p><ul><li>Remote administration mode &gt; для администрирования, вы попадаете на удаленный сервер и настраиваете и администрируете его</li><li>Terminal Server mode &gt;&nbsp;для доступа к серверу приложений, Remote App или совместное использование его для работы.</li></ul><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/Printsip-rabotyi-protokola-rdp-1.png" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29488" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/Printsip-rabotyi-protokola-rdp-1.png" alt="Принцип работы протокола rdp-1" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/Printsip-rabotyi-protokola-rdp-1.png 450w, http://pyatilistnik.org/wp-content/uploads/2014/09/Printsip-rabotyi-protokola-rdp-1-300x171.png 300w" sizes="(max-width: 450px) 100vw, 450px" width="450" height="257"></a></p><p>Вообще если вы без сервера терминалов <a href="http://pyatilistnik.org/kak-ustanovit-windows-server-2008r2/" target="_blank">устанавливаете Windows Server 2008 R2</a>
+ - 2016, то там по умолчанию у него будет две лицензии, и к нему 
+одновременно смогут подключиться два пользователя, третьему придется для
+ работы кого то выкидывать. В клиентских версиях Windows, лицензий всего
+ одна, но и это можно обойти, я об этом рассказывал в статье&nbsp;<a href="http://pyatilistnik.org/kak-uvelichit-kolichestvo-terminalnyih-sessiy-v-windows-7-kak-ustanovit-terminalnyiy-server-v-windows-7/" target="_blank">сервер терминалов на windows 7</a>.
+ Так же Remote administration mode, можно кластеризировать и 
+сбалансировать нагрузку, благодаря технологии NLB и сервера сервера 
+подключений Session Directory Service. Он используется для индексации 
+пользовательских сессий, благодаря именно этому серверу у пользователя 
+получиться войти на удаленный рабочий стол терминальных серверов 
+в&nbsp;распределенной среде. Так же обязательными компонентами идут <a href="http://pyatilistnik.org/kak-ustanovit-i-nastroit-terminalnyiy-server-na-windows-server-2012r2/" target="_blank">сервер лицензирования</a>.</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/Printsip-rabotyi-protokola-rdp-2.png" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29489" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/Printsip-rabotyi-protokola-rdp-2.png" alt="Принцип работы протокола rdp-2" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/Printsip-rabotyi-protokola-rdp-2.png 450w, http://pyatilistnik.org/wp-content/uploads/2014/09/Printsip-rabotyi-protokola-rdp-2-300x171.png 300w" sizes="(max-width: 450px) 100vw, 450px" width="450" height="256"></a></p><p>RDP
+ протокол работает по TCP соединению и является прикладным протоколом. 
+Когда клиент устанавливает соединение с сервером, на транспортном уровне
+ создается&nbsp;RDP сессия, где идет согласование методов шифрования и 
+передачи данных. Когда все согласования определены и инициализация 
+окончена, сервер терминалов, передает клиенту графический вывод и 
+ожидает входные данные от клавиатуры и мыши.</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/Printsip-rabotyi-protokola-rdp-3.png" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29490" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/Printsip-rabotyi-protokola-rdp-3.png" alt="Принцип работы протокола rdp-3" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/Printsip-rabotyi-protokola-rdp-3.png 450w, http://pyatilistnik.org/wp-content/uploads/2014/09/Printsip-rabotyi-protokola-rdp-3-300x75.png 300w" sizes="(max-width: 450px) 100vw, 450px" width="450" height="112"></a></p><p>Remote
+ Desktop Protocol поддерживает несколько виртуальных каналов в рамках 
+одного соединения, благодаря этому можно использовать дополнительный 
+функционал</p><ul type="disc"><li>Передать на сервер свой принтер или COM порт</li><li>Перенаправить на сервер свои локальные диски</li><li>Буфер обмена</li><li>Аудио и видео</li></ul><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp.jpg" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29491" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/izmenit-port-rdp.jpg" alt="изменить порт rdp" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp.jpg 522w, http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-300x276.jpg 300w" sizes="(max-width: 522px) 100vw, 522px" width="522" height="481"></a></p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-2.jpg" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29492" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/izmenit-port-rdp-2.jpg" alt="изменить порт rdp-2" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-2.jpg 522w, http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-2-300x276.jpg 300w" sizes="(max-width: 522px) 100vw, 522px" width="522" height="481"></a></p><h3>Этапы RDP соединения</h3><ul><li>Установка соединения</li><li>Согласование параметров шифрования</li><li>Аутентификация серверов</li><li>Согласование параметров RDP сессии</li><li>Аутентификация клиента</li><li>Данные RDP сессии</li><li>Разрыв RDP сессии</li></ul><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/Printsip-rabotyi-protokola-rdp-4.png" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29493" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/Printsip-rabotyi-protokola-rdp-4.png" alt="Принцип работы протокола rdp-4" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/Printsip-rabotyi-protokola-rdp-4.png 450w, http://pyatilistnik.org/wp-content/uploads/2014/09/Printsip-rabotyi-protokola-rdp-4-300x179.png 300w" sizes="(max-width: 450px) 100vw, 450px" width="450" height="269"></a></p><h3>Безопасность в RDP протоколе</h3><p>Remote
+ Desktop Protocol имеет два метода аутентификации&nbsp;Standard RDP 
+Security и&nbsp;Enhanced RDP Security, ниже рассмотрим оба более 
+подробно.</p><h4>Standard RDP Security</h4><p>RDP протокол при данном 
+методе аутентификации, шифрует &nbsp;подключение средствами самого RDP 
+протокола, которые есть в нем, вот таким методом:</p><ul><li>Когда ваша операционная система запускается, то идет генерация пары&nbsp;RSA ключиков</li><li>Идет создание сертификата открытого ключа&nbsp;Proprietary Certificate</li><li>После чего&nbsp;Proprietary Certificate подписывается&nbsp;RSA ключом созданным ранее</li><li>Теперь RDP клиент подключившись к терминальному серверу получит&nbsp;Proprietary Certificate</li><li>Клиент
+ его смотрит и сверяет, далее получает открытый ключ сервера, который 
+используется на этапе согласования параметров шифрования.</li></ul><p>Если
+ рассмотреть алгоритм с помощью которого все шифруется, то 
+это&nbsp;потоковый шифр RC4. Ключи разной длины от&nbsp;40 до 168 бит, 
+все зависит от редакции операционной системы Windows, например 
+в&nbsp;Windows 2008 Server – 168 бит. Как только сервер и клиент 
+определились с длиной ключа, генерируются два новых различных ключа, для
+ шифрования данных.</p><p>Если вы спросите про целостность данных, то 
+тут она достигается за счет алгоритма MAC (Message Authentication Code) 
+базируемого на <a href="http://pyatilistnik.org/md5-hesh-i-sha-1-hesh-kto-takie/" target="_blank">SHA1 и&nbsp;MD5</a></p><h4>Enhanced RDP Security</h4><p>RDP протокол при данном методе аутентификации использует два внешних модуля безопасности:</p><div style="float:none;margin:10px 0 10px 0;text-align:center;"> <script async="" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/adsbygoogle.js"></script> 
+<ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-6335087451079124" data-ad-slot="3513890493" data-adsbygoogle-status="done"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent;"><ins id="aswift_1_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;width:336px;height:280px;" width="336" height="280" frameborder="0"></iframe></ins></ins></ins> <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> </div><ul><li>CredSSP</li><li>TLS 1.0</li></ul><p>TLS
+ поддерживается с 6 версии RDP. Когда вы используете TLS, то сертификат 
+шифрования можно создать средствами терминального сервера, самоподписный
+ сертификат или выбрать из хранилища.</p><p>Когда вы 
+задействуете&nbsp;CredSSP протокол, то это симбиоз 
+технологий&nbsp;Kerberos,&nbsp;NTLM и&nbsp;TLS. При данном протоколе 
+сама проверка, при которой проверяется разрешение на вход на 
+терминальный сервер осуществляется заранее, а не после полноценного RDP 
+подключения, и тем самым вы экономите ресурсы терминального сервера, 
+плюс тут более надежное шифрование и можно делать однократный вход в 
+систему (Single Sign On), благодаря&nbsp;NTLM 
+и&nbsp;Kerberos.&nbsp;CredSSP идет только в ОС не ниже Vista и Windows 
+Server 2008. Вот эта галка в свойствах системы</p><p></p><div class="note"><div class="notetip">разрешить подключения только с компьютеров, на которых работает удаленный рабочий стол с проверкой подлинности на уровне сети.</div></div><p></p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-4.jpg" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29494" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/izmenit-port-rdp-4.jpg" alt="изменить порт rdp-4" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-4.jpg 426w, http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-4-259x300.jpg 259w" sizes="(max-width: 426px) 100vw, 426px" width="426" height="493"></a></p><h2>Изменить порт rdp</h2><p>Для того, чтобы&nbsp;изменить порт rdp, вам потребуется:</p><ol><li>&nbsp;Открываем редактор реестра (Пуск -&gt; Выполнить -&gt; regedit.exe)</li><li>Переходим к следующему разделу:</li></ol><p></p><div class="note"><div class="notetip">HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp</div></div><p></p><p>Находим ключ PortNumber и меняем его значение на номер порта, который Вам нужен.</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-01.jpg" rel="lightbox[2617]"><img class="alignnone wp-image-2622 size-full" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo_002.jpg" alt="Как в Windows изменить порт службы RDP (или терминального сервера) с 3389 на другой-01" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-01.jpg 1138w, http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-01-300x171.jpg 300w, http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-01-1024x586.jpg 1024w, http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-01-70x40.jpg 70w" sizes="(max-width: 1138px) 100vw, 1138px" width="1138" height="652"></a></p><p>Выберите обязательно десятичное значение, я для примера поставлю порт 12345.</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-02.jpg" rel="lightbox[2617]"><img class="alignnone wp-image-2623 size-full" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-ser.jpg" alt="Как в Windows изменить порт службы RDP (или терминального сервера) с 3389 на другой-02" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-02.jpg 1138w, http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-02-300x171.jpg 300w, http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-02-1024x586.jpg 1024w, http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-02-70x40.jpg 70w" sizes="(max-width: 1138px) 100vw, 1138px" width="1138" height="652"></a></p><p>Как только вы это сделали, то перезапустите службу удаленных рабочих столов, через командную строку, вот такими командами:</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-5.jpg" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29495" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/izmenit-port-rdp-5.jpg" alt="изменить порт rdp-5" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-5.jpg 677w, http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-5-300x152.jpg 300w" sizes="(max-width: 677px) 100vw, 677px" width="677" height="343"></a></p><p>Далее
+ не забудьте в брандмауэре Windows после изменения порта RDP открыть 
+его, для этого жмем WIN+R и в окне выполнить пишем firewall.cpl.</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-6.jpg" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29496" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/izmenit-port-rdp-6.jpg" alt="изменить порт rdp-6" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-6.jpg 445w, http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-6-300x145.jpg 300w" sizes="(max-width: 445px) 100vw, 445px" width="445" height="215"></a></p><p>Далее переходим в пункт Дополнительные параметры</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-7.jpg" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29497" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/izmenit-port-rdp-7.jpg" alt="изменить порт rdp-7" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-7.jpg 849w, http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-7-300x157.jpg 300w" sizes="(max-width: 849px) 100vw, 849px" width="849" height="445"></a></p><p>И создаем новое входящее правило для нового rdp порта. Напоминаю, что&nbsp;порт rdp по умолчанию 3389.</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-8.jpg" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29498" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/izmenit-port-rdp-8.jpg" alt="изменить порт rdp-8" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-8.jpg 527w, http://pyatilistnik.org/wp-content/uploads/2014/09/izmenit-port-rdp-8-300x203.jpg 300w" sizes="(max-width: 527px) 100vw, 527px" width="527" height="357"></a></p><p>Выбираем, что правило будет для порта</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-1.jpg" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29499" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/port-rdp-po-umolchaniyu-1.jpg" alt="порт rdp по умолчанию-1" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-1.jpg 728w, http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-1-300x242.jpg 300w" sizes="(max-width: 728px) 100vw, 728px" width="728" height="588"></a></p><p>Протокол оставляем TCP и указываем новый номер RDP порта.</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-2.jpg" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29500" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/port-rdp-po-umolchaniyu-2.jpg" alt="порт rdp по умолчанию-2" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-2.jpg 728w, http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-2-300x242.jpg 300w" sizes="(max-width: 728px) 100vw, 728px" width="728" height="588"></a></p><p>Правило у нас будет разрешающее RDP соединение по не стандартному порту</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-3.jpg" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29501" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/port-rdp-po-umolchaniyu-3.jpg" alt="порт rdp по умолчанию-4" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-3.jpg 728w, http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-3-300x242.jpg 300w" sizes="(max-width: 728px) 100vw, 728px" width="728" height="588"></a></p><p>При необходимости задаем нужные сетевые профили.</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-4.jpg" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29502" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/port-rdp-po-umolchaniyu-4.jpg" alt="порт rdp по умолчанию-4" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-4.jpg 728w, http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-4-300x242.jpg 300w" sizes="(max-width: 728px) 100vw, 728px" width="728" height="588"></a></p><p>Ну и назовем правило, понятным для себя языком.</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-5.jpg" rel="lightbox[2617]"><img class="aligncenter size-full wp-image-29503" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/port-rdp-po-umolchaniyu-5.jpg" alt="порт rdp по умолчанию-5" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-5.jpg 728w, http://pyatilistnik.org/wp-content/uploads/2014/09/port-rdp-po-umolchaniyu-5-300x242.jpg 300w" sizes="(max-width: 728px) 100vw, 728px" width="728" height="588"></a></p><p>Для
+ подключения с клиентских компьютеров Windows адрес пишите с указанием 
+порта. Например, если порт Вы изменили на 12345, а адрес сервера (или 
+просто компьютера, к которому подключаетесь): myserver, то подключение 
+по MSTSC будет выглядеть так:<br>
+mstsc -v:myserver:12345</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-03.jpg" rel="lightbox[2617]"><img class="alignnone wp-image-2624 size-full" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo_003.jpg" alt="Как в Windows изменить порт службы RDP (или терминального сервера) с 3389 на другой-03" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-03.jpg 522w, http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-03-300x149.jpg 300w, http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-03-70x34.jpg 70w" sizes="(max-width: 522px) 100vw, 522px" width="522" height="260"></a></p><p>или через командную строку.</p><p><a href="http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-04.jpg" rel="lightbox[2617]"><img class="alignnone wp-image-2625 size-full" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo_004.jpg" alt="Как в Windows изменить порт службы RDP (или терминального сервера) с 3389 на другой-04" srcset="http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-04.jpg 677w, http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-04-300x151.jpg 300w, http://pyatilistnik.org/wp-content/uploads/2014/09/Kak-v-Windows-izmenit-port-sluzhbyi-RDP-ili-terminalnogo-servera-s-3389-na-drugoy-04-70x35.jpg 70w" sizes="(max-width: 677px) 100vw, 677px" width="677" height="343"></a></p><p>Как видите&nbsp;изменить порт rdp совсем не трудная задача, все тоже самое можно проделать средствами групповой политики.</p><div style="font-size:0px;height:0px;line-height:0px;margin:0;padding:0;clear:both"></div><div class="crp_related "><h4>Популярные Похожие записи:</h4><ul><li><a href="http://pyatilistnik.org/ne-udaetsya-podklyuchitsya-k-udalennomu-kompyuteru-v-windows-server-2012-r2/"><img src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/Ne-udaetsya-podklyuchitsya-k-udalennomu-kompyuteru-00-150x66.png" alt="Не удается подключиться к удаленному компьютеру в Windows Server 2012 R2" title="Не удается подключиться к удаленному компьютеру в Windows Server 2012 R2" class="crp_thumb crp_firstchild" width="150" height="150"><span class="crp_title">Не удается подключиться к удаленному компьютеру в Windows Server 2012 R2</span></a></li><li><a href="http://pyatilistnik.org/kak-nastroit-neskolko-sessiy-rdp-s-odnim-loginom-v-windows-server-2012r2/"><img src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/Kak-nastroit-neskolko-sessiy-rdp-s-odnim-loginom-v-Windows-S.png" alt="Как настроить несколько сессий rdp с одним логином в Windows Server 2012R2" title="Как настроить несколько сессий rdp с одним логином в Windows Server 2012R2" class="crp_thumb crp_firstchild" width="150" height="150"><span class="crp_title">Как настроить несколько сессий rdp с одним логином в Windows Server 2012R2</span></a></li><li><a href="http://pyatilistnik.org/kak-ustanovit-i-nastroit-terminalnyiy-server-na-windows-server-2012r2/"><img src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/Kak-ustanovit-i-nastroit-terminalnyiy-server-na-Windows-Serv.jpg" alt="Как установить и настроить терминальный сервер на Windows Server 2012R2" title="Как установить и настроить терминальный сервер на Windows Server 2012R2" class="crp_thumb crp_firstchild" width="150" height="150"><span class="crp_title">Как установить и настроить терминальный сервер на Windows Server 2012R2</span></a></li><li><a href="http://pyatilistnik.org/kak-vklyuchit-zapis-zvuka-cherez-rdp-v-windows-server-2008r2/"><img src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/default.png" alt="Как включить запись звука через RDP в windows server 2008R2" title="Как включить запись звука через RDP в windows server 2008R2" class="crp_thumb crp_default" width="150" height="150"><span class="crp_title">Как включить запись звука через RDP в windows server 2008R2</span></a></li><li><a href="http://pyatilistnik.org/terminal-server-in-windows-7/"><img src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/Kak-uvelichit-kolichestvo-terminalnyih-sessiy-v-Windows-7-01.png" alt="Как увеличить количество терминальных сессий в Windows 7 / Как установить терминальный сервер в Windows 7" title="Как увеличить количество терминальных сессий в Windows 7 / Как установить терминальный сервер в Windows 7" class="crp_thumb crp_firstchild" width="150" height="150"><span class="crp_title">Как увеличить количество терминальных сессий в Windows 7 / Как установить терминальный сервер в Windows 7</span></a></li><li><a href="http://pyatilistnik.org/kak-razreshit-rdp-dlya-polzovatelya-ne-administratora-domena-na-kontrollere-domena/"><img src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/Kak-razreshit-RDP-dlya-polzovatelya-ne-administratora-domena.png" alt="Как разрешить RDP для пользователя не администратора домена на контроллере домена" title="Как разрешить RDP для пользователя не администратора домена на контроллере домена" class="crp_thumb crp_firstchild" width="150" height="150"><span class="crp_title">Как разрешить RDP для пользователя не администратора домена на контроллере домена</span></a></li></ul><div class="crp_clear"></div></div></div> <script src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/es5-shims.js"></script><script src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/share.js" async="async"></script><div class="ya-share2 ya-share2_inited" data-services="vkontakte,facebook,gplus,twitter,blogger,skype" data-counter=""><div class="ya-share2__container ya-share2__container_size_m"><ul class="ya-share2__list ya-share2__list_direction_horizontal"><li class="ya-share2__item ya-share2__item_service_vkontakte"><a class="ya-share2__link" href="https://vk.com/share.php?url=http%3A%2F%2Fpyatilistnik.org%2Fkak-v-windows-izmenit-port-sluzhbyi-rdp-ili-terminalnogo-servera-s-3389-na-drugoy%2F&amp;title=%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux&amp;description=&amp;image=&amp;utm_source=share2" rel="nofollow" target="_blank" title="ВКонтакте"><span class="ya-share2__badge"><span class="ya-share2__icon"></span><span class="ya-share2__counter ya-share2__counter_visible">1</span></span><span class="ya-share2__title">ВКонтакте</span></a></li><li class="ya-share2__item ya-share2__item_service_facebook"><a class="ya-share2__link" href="https://www.facebook.com/sharer.php?src=sp&amp;u=http%3A%2F%2Fpyatilistnik.org%2Fkak-v-windows-izmenit-port-sluzhbyi-rdp-ili-terminalnogo-servera-s-3389-na-drugoy%2F&amp;title=%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux&amp;description=&amp;picture=&amp;utm_source=share2" rel="nofollow" target="_blank" title="Facebook"><span class="ya-share2__badge"><span class="ya-share2__icon"></span><span class="ya-share2__counter ya-share2__counter_visible">4</span></span><span class="ya-share2__title">Facebook</span></a></li><li class="ya-share2__item ya-share2__item_service_gplus"><a class="ya-share2__link" href="https://plus.google.com/share?url=http%3A%2F%2Fpyatilistnik.org%2Fkak-v-windows-izmenit-port-sluzhbyi-rdp-ili-terminalnogo-servera-s-3389-na-drugoy%2F&amp;utm_source=share2" rel="nofollow" target="_blank" title="Google+"><span class="ya-share2__badge"><span class="ya-share2__icon"></span><span class="ya-share2__counter ya-share2__counter_visible">1</span></span><span class="ya-share2__title">Google+</span></a></li><li class="ya-share2__item ya-share2__item_service_twitter"><a class="ya-share2__link" href="https://twitter.com/intent/tweet?text=%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux&amp;url=http%3A%2F%2Fpyatilistnik.org%2Fkak-v-windows-izmenit-port-sluzhbyi-rdp-ili-terminalnogo-servera-s-3389-na-drugoy%2F&amp;hashtags=&amp;utm_source=share2" rel="nofollow" target="_blank" title="Twitter"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Twitter</span></a></li><li class="ya-share2__item ya-share2__item_service_blogger"><a class="ya-share2__link" href="https://www.blogger.com/blog-this.g?t=&amp;u=http%3A%2F%2Fpyatilistnik.org%2Fkak-v-windows-izmenit-port-sluzhbyi-rdp-ili-terminalnogo-servera-s-3389-na-drugoy%2F&amp;n=%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux&amp;utm_source=share2" rel="nofollow" target="_blank" title="Blogger"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Blogger</span></a></li><li class="ya-share2__item ya-share2__item_service_skype"><a class="ya-share2__link" href="https://web.skype.com/share?url=http%3A%2F%2Fpyatilistnik.org%2Fkak-v-windows-izmenit-port-sluzhbyi-rdp-ili-terminalnogo-servera-s-3389-na-drugoy%2F&amp;utm_source=share2" rel="nofollow" target="_blank" title="Skype"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span><span class="ya-share2__title">Skype</span></a></li></ul><iframe class="ya-share2__iframe" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/frame.html" style="border: 0; display: none; position: absolute; left: -9999px;"></iframe></div></div><time datetime="2014-09-26" class="post-date updated" pubdate="">Сен 26, 2014 21:15</time><span class="vcard author">
+<span class="fn"><a href="http://pyatilistnik.org/author/seminiva/" title="Записи Иван Семин" rel="author">Иван Семин</a></span>
+</span></div><div id="respond" class="comment-respond"><h3 id="reply-title" class="comment-reply-title">Добавить комментарий <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://pyatilistnik.org/kak-v-windows-izmenit-port-sluzhbyi-rdp-ili-terminalnogo-servera-s-3389-na-drugoy/#respond" style="display:none;">Отменить ответ</a></small></h3><form action="http://pyatilistnik.org/wp-comments-post.php" method="post" id="commentform" class="comment-form"><p class="comment-notes"><span id="email-notes">Ваш e-mail не будет опубликован.</span> Обязательные поля помечены <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Комментарий</label><textarea autocomplete="nope" id="comment" name="0328b23251" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea><textarea id="318bef15758a4d3903259c7af8b9ea1e" aria-hidden="true" name="comment" autocomplete="nope" style="clip:rect(1px, 1px, 1px, 1px);position:absolute !important;white-space:nowrap;height:1px;width:1px;overflow:hidden;" tabindex="-1"></textarea><script type="text/javascript">document.getElementById("comment").setAttribute( "id", "318bef15758a4d3903259c7af8b9ea1e" );document.getElementById("c826c04da1").setAttribute( "id", "comment" );</script></p><p class="comment-form-author"><label for="author">Имя <span class="required">*</span></label> <input id="author" name="author" size="30" maxlength="245" aria-required="true" required="required" type="text"></p><p class="comment-form-email"><label for="email">E-mail <span class="required">*</span></label> <input id="email" name="email" size="30" maxlength="100" aria-describedby="email-notes" aria-required="true" required="required" type="text"></p><p class="form-submit"><input name="submit" id="submit" class="submit" value="Отправить комментарий" type="submit"> <input name="comment_post_ID" value="2617" id="comment_post_ID" type="hidden">
+<input name="comment_parent" id="comment_parent" value="0" type="hidden"></p></form></div></div><div id="sidebar-primary"><ul class="widget-container"><li id="search-3" class="widget widget_search"><h3 class="widgettitle">Поиск по сайту</h3><div id="search" title="Type and hit enter"><form method="get" id="searchform" action="http://pyatilistnik.org/">
+<input value="Search" name="s" id="s" onblur="if (this.value == '')  {this.value = 'Search';}" onfocus="if (this.value == 'Search') {this.value = '';}" type="text"></form></div></li></ul><ul class="widget-container"><li id="text-43" class="widget widget_text"><h3 class="widgettitle">Подписка на youtube канал</h3><div class="textwidget"><p><script src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/platform.js" gapi_processed="true"></script></p><div style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent none repeat scroll 0% 0%; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 181px; height: 48px;" id="___ytsubscribe_0"><iframe ng-non-bindable="" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 181px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 48px;" tabindex="0" vspace="0" id="I0_1503388722112" name="I0_1503388722112" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/subscribe_embed.html" data-gapiattached="true" width="100%" frameborder="0"></iframe></div></div></li></ul><ul class="widget-container"><li id="tag_cloud-3" class="widget widget_tag_cloud"><h3 class="widgettitle">Выберите рубрику</h3><div class="tagcloud"><a href="http://pyatilistnik.org/active-directory/" class="tag-cloud-link tag-link-31 tag-link-position-1" style="font-size: 18.170403587444pt;" aria-label="Active directory (82 элемента)">Active directory</a>
+<a href="http://pyatilistnik.org/android/" class="tag-cloud-link tag-link-122 tag-link-position-2" style="font-size: 15.470852017937pt;" aria-label="Android (30 элементов)">Android</a>
+<a href="http://pyatilistnik.org/asus/" class="tag-cloud-link tag-link-165 tag-link-position-3" style="font-size: 14.654708520179pt;" aria-label="ASUS, Sony VAIO (22 элемента)">ASUS, Sony VAIO</a>
+<a href="http://pyatilistnik.org/centos/" class="tag-cloud-link tag-link-46 tag-link-position-4" style="font-size: 16.726457399103pt;" aria-label="CentOS (48 элементов)">CentOS</a>
+<a href="http://pyatilistnik.org/cisco/" class="tag-cloud-link tag-link-79 tag-link-position-5" style="font-size: 16.349775784753pt;" aria-label="Cisco (42 элемента)">Cisco</a>
+<a href="http://pyatilistnik.org/debian/" class="tag-cloud-link tag-link-48 tag-link-position-6" style="font-size: 17.479820627803pt;" aria-label="Debian (64 элемента)">Debian</a>
+<a href="http://pyatilistnik.org/dns/" class="tag-cloud-link tag-link-32 tag-link-position-7" style="font-size: 15.470852017937pt;" aria-label="DNS (30 элементов)">DNS</a>
+<a href="http://pyatilistnik.org/exchange/" class="tag-cloud-link tag-link-57 tag-link-position-8" style="font-size: 13.838565022422pt;" aria-label="Exchange, Power Shell (16 элементов)">Exchange, Power Shell</a>
+<a href="http://pyatilistnik.org/freebsd/" class="tag-cloud-link tag-link-50 tag-link-position-9" style="font-size: 11.013452914798pt;" aria-label="FreeBSD (5 элементов)">FreeBSD</a>
+<a href="http://pyatilistnik.org/hp-3com/" class="tag-cloud-link tag-link-84 tag-link-position-10" style="font-size: 17.291479820628pt;" aria-label="HP/3Com (59 элементов)">HP/3Com</a>
+<a href="http://pyatilistnik.org/hyper-v/" class="tag-cloud-link tag-link-44 tag-link-position-11" style="font-size: 16.349775784753pt;" aria-label="Hyper-V (42 элемента)">Hyper-V</a>
+<a href="http://pyatilistnik.org/ibm/" class="tag-cloud-link tag-link-117 tag-link-position-12" style="font-size: 17.730941704036pt;" aria-label="IBM (69 элементов)">IBM</a>
+<a href="http://pyatilistnik.org/iis-i-ftp/" class="tag-cloud-link tag-link-169 tag-link-position-13" style="font-size: 15.408071748879pt;" aria-label="IIS и FTP, web и seo (29 элементов)">IIS и FTP, web и seo</a>
+<a href="http://pyatilistnik.org/juniper/" class="tag-cloud-link tag-link-115 tag-link-position-14" style="font-size: 16.349775784753pt;" aria-label="Juniper (42 элемента)">Juniper</a>
+<a href="http://pyatilistnik.org/kali/" class="tag-cloud-link tag-link-132 tag-link-position-15" style="font-size: 8pt;" aria-label="Kali (1 элемент)">Kali</a>
+<a href="http://pyatilistnik.org/lenovo-intel-emc/" class="tag-cloud-link tag-link-186 tag-link-position-16" style="font-size: 13.52466367713pt;" aria-label="Lenovo, intel, EMC (14 элементов)">Lenovo, intel, EMC</a>
+<a href="http://pyatilistnik.org/microsoft-office/" class="tag-cloud-link tag-link-51 tag-link-position-17" style="font-size: 16.349775784753pt;" aria-label="Microsoft Office (42 элемента)">Microsoft Office</a>
+<a href="http://pyatilistnik.org/microsoft-sql-server/" class="tag-cloud-link tag-link-89 tag-link-position-18" style="font-size: 14.27802690583pt;" aria-label="Microsoft SQL server, Oracle (19 элементов)">Microsoft SQL server, Oracle</a>
+<a href="http://pyatilistnik.org/microsoft-system-center/" class="tag-cloud-link tag-link-56 tag-link-position-19" style="font-size: 15.094170403587pt;" aria-label="Microsoft System Center (26 элементов)">Microsoft System Center</a>
+<a href="http://pyatilistnik.org/netapp/" class="tag-cloud-link tag-link-81 tag-link-position-20" style="font-size: 17.982062780269pt;" aria-label="NetApp (77 элементов)">NetApp</a>
+<a href="http://pyatilistnik.org/network/" class="tag-cloud-link tag-link-78 tag-link-position-21" style="font-size: 17.354260089686pt;" aria-label="Network, Телефония (61 элемент)">Network, Телефония</a>
+<a href="http://pyatilistnik.org/news/" class="tag-cloud-link tag-link-14 tag-link-position-22" style="font-size: 20.869955156951pt;" aria-label="News (224 элемента)">News</a>
+<a href="http://pyatilistnik.org/raid/" class="tag-cloud-link tag-link-93 tag-link-position-23" style="font-size: 17.982062780269pt;" aria-label="Raid (76 элементов)">Raid</a>
+<a href="http://pyatilistnik.org/supermicro/" class="tag-cloud-link tag-link-166 tag-link-position-24" style="font-size: 12.896860986547pt;" aria-label="Supermicro (11 элементов)">Supermicro</a>
+<a href="http://pyatilistnik.org/ubuntu/" class="tag-cloud-link tag-link-47 tag-link-position-25" style="font-size: 17.165919282511pt;" aria-label="Ubuntu (56 элементов)">Ubuntu</a>
+<a href="http://pyatilistnik.org/network-utilities/" class="tag-cloud-link tag-link-42 tag-link-position-26" style="font-size: 20.116591928251pt;" aria-label="Utilities (168 элементов)">Utilities</a>
+<a href="http://pyatilistnik.org/veeam-backup-amp-replication/" class="tag-cloud-link tag-link-71 tag-link-position-27" style="font-size: 14.905829596413pt;" aria-label="Veeam Backup &amp; Replication (24 элемента)">Veeam Backup &amp; Replication</a>
+<a href="http://pyatilistnik.org/vmware/" class="tag-cloud-link tag-link-43 tag-link-position-28" style="font-size: 22pt;" aria-label="Vmware (337 элементов)">Vmware</a>
+<a href="http://pyatilistnik.org/windows-7/" class="tag-cloud-link tag-link-11 tag-link-position-29" style="font-size: 18.860986547085pt;" aria-label="Windows 7 (105 элементов)">Windows 7</a>
+<a href="http://pyatilistnik.org/windows-88-1/" class="tag-cloud-link tag-link-12 tag-link-position-30" style="font-size: 19.237668161435pt;" aria-label="Windows 8/8.1 (122 элемента)">Windows 8/8.1</a>
+<a href="http://pyatilistnik.org/windows-10/" class="tag-cloud-link tag-link-99 tag-link-position-31" style="font-size: 20.430493273543pt;" aria-label="Windows 10 (191 элемент)">Windows 10</a>
+<a href="http://pyatilistnik.org/windows-20082008-r2/" class="tag-cloud-link tag-link-7 tag-link-position-32" style="font-size: 19.739910313901pt;" aria-label="Windows 2008/2008 R2 (148 элементов)">Windows 2008/2008 R2</a>
+<a href="http://pyatilistnik.org/windows-20122012-r2/" class="tag-cloud-link tag-link-8 tag-link-position-33" style="font-size: 18.67264573991pt;" aria-label="Windows 2012/2012 R2 (98 элементов)">Windows 2012/2012 R2</a>
+<a href="http://pyatilistnik.org/windows-server-2016/" class="tag-cloud-link tag-link-171 tag-link-position-34" style="font-size: 11.766816143498pt;" aria-label="Windows Server 2016 (7 элементов)">Windows Server 2016</a>
+<a href="http://pyatilistnik.org/wordpress/" class="tag-cloud-link tag-link-120 tag-link-position-35" style="font-size: 15.219730941704pt;" aria-label="Wordpress (27 элементов)">Wordpress</a>
+<a href="http://pyatilistnik.org/bezopasnost/" class="tag-cloud-link tag-link-118 tag-link-position-36" style="font-size: 17.291479820628pt;" aria-label="Безопасность (59 элементов)">Безопасность</a>
+<a href="http://pyatilistnik.org/bez-rubriki/" class="tag-cloud-link tag-link-1 tag-link-position-37" style="font-size: 14.780269058296pt;" aria-label="Без рубрики (23 элемента)">Без рубрики</a>
+<a href="http://pyatilistnik.org/bitriks/" class="tag-cloud-link tag-link-119 tag-link-position-38" style="font-size: 13.838565022422pt;" aria-label="Битрикс (16 элементов)">Битрикс</a>
+<a href="http://pyatilistnik.org/shd/" class="tag-cloud-link tag-link-80 tag-link-position-39" style="font-size: 16.224215246637pt;" aria-label="СХД (40 элементов)">СХД</a>
+<a href="http://pyatilistnik.org/sertifikatsiya/" class="tag-cloud-link tag-link-6 tag-link-position-40" style="font-size: 13.336322869955pt;" aria-label="Сертификация (13 элементов)">Сертификация</a>
+<a href="http://pyatilistnik.org/knigi-po-administrirovaniyu/" class="tag-cloud-link tag-link-170 tag-link-position-41" style="font-size: 18.358744394619pt;" aria-label="перед сном (89 элементов)">перед сном</a></div></li></ul><ul class="widget-container"><li id="recent-posts-2" class="widget widget_recent_entries"><h3 class="widgettitle">Последние записи</h3><ul><li>
+<a href="http://pyatilistnik.org/error-806-and-code-20255/">Ошибка 806 и код 20255 при подключении VPN</a></li><li>
+<a href="http://pyatilistnik.org/error-8024a000/">Ошибка 8024a000 при обновлении Windows 8.1</a></li><li>
+<a href="http://pyatilistnik.org/proverka-podlinnosti-kerberos-v-active-directory/">Проверка подлинности kerberos в Active Directory</a></li><li>
+<a href="http://pyatilistnik.org/finding-information-about-companies/">Поиск информации о компаниях за минуту</a></li><li>
+<a href="http://pyatilistnik.org/configuring-outlook-archiving/">Настройка архивации outlook за минуту</a></li></ul></li></ul><ul class="widget-container q2w3-fixed-widget-container" style="height: 605px;"><li id="text-42_clone" class="widget widget_text q2w3-widget-clone-sidebar_primary" style="top: 0px; width: 300px; height: 605px; visibility: hidden;"></li><li id="text-42" class="widget widget_text" style="top: 0px; width: 300px; position: fixed;"><div class="textwidget"><script async="" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-6335087451079124" data-ad-slot="3460394494" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent;"><ins id="aswift_2_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent;"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;width:300px;height:600px;" width="300" height="600" frameborder="0"></iframe></ins></ins></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({});</script></div></li></ul></div></div>
+﻿<div id="footer"><div id="copyrights">© 2017 Property Pyatilistnik Inc. <a href="http://pyatilistnik.org/privacy-policy/" rel="nofollow" target="_blank">Политика конфиденциальности и условия использования</a></div>
+<script type="text/javascript">new Image().src = "//counter.yadro.ru/hit?r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random();</script>
+<script type="text/javascript">(function(d,w,c){(w[c]=w[c]||[]).push(function(){try{w.yaCounter25954549=new
+ 
+Ya.Metrika({id:25954549,clickmap:true,trackLinks:true,accurateTrackBounce:true})}catch(e){}});var
+ 
+n=d.getElementsByTagName("script")[0],s=d.createElement("script"),f=function(){n.parentNode.insertBefore(s,n)};s.type="text/javascript";s.async=true;s.src="https://mc.yandex.ru/metrika/watch.js";if(w.opera=="[object
+ 
+Opera]"){d.addEventListener("DOMContentLoaded",f,false)}else{f()}})(document,window,"yandex_metrika_callbacks");</script><noscript><div><img
+src="//mc.yandex.ru/watch/25954549" style="position:absolute; left:-9999px;" alt=""/></div></noscript><div style="position:absolute;top:-100px;left:-100px"><script id="top100Counter" type="text/javascript" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/top100.bin"></script><a href="https://top100.rambler.ru/home?id=4438858" target="_blank"><img src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/a.gif" title="Rambler's Top100" alt="Rambler's Top100" border="0"></a></div>
+<script type="text/javascript">var 
+_tmr=_tmr||[];_tmr.push({id:"2613655",type:"pageView",start:(new 
+Date()).getTime()});(function(d,w,id){if(d.getElementById(id))return;var
+ 
+ts=d.createElement("script");ts.type="text/javascript";ts.async=true;ts.id=id;ts.src=(d.location.protocol=="https:"?"https:":"http:")+"//top-fwz1.mail.ru/js/code.js";var
+ f=function(){var 
+s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(ts,s)};if(w.opera=="[object
+ 
+Opera]"){d.addEventListener("DOMContentLoaded",f,false)}else{f()}})(document,window,"topmailru-code");</script><noscript><div
+style="position:absolute;left:-10000px;"><img
+src="//top-fwz1.mail.ru/counter?id=2613655;js=na" style="border:0;" height="1" width="1" alt="Рейтинг@Mail.ru"/></div></noscript></div>
+ <script>/*<![CDATA[*/window.__bp_session_timeout = '900';
+				window.__bp_session_freezing = 0;
+				!function() {
+					window.bizpanda || (window.bizpanda = {}), 
+window.bizpanda.bp_can_store_localy = function() {
+						return !1
+					}, window.bizpanda.bp_ut_get_cookie = function(e) {
+						for( var n = e + "=", i = document.cookie.split(";"), o = 0; o < 
+i.length; o++ ) {
+							for( var t = i[o]; " " == t.charAt(0); ) {
+								t = t.substring(1);
+							}
+							if( 0 == t.indexOf(n) ) {
+								return decodeURIComponent(t.substring(n.length, t.length))
+							}
+						}
+						return !1
+					}, window.bizpanda.bp_ut_set_cookie = function(e, n, i) {
+						var o = new Date;
+						o.setTime(o.getTime() + 24 * i * 60 * 60 * 1e3);
+						var t = "expires=" + o.toUTCString();
+						document.cookie = e + "=" + encodeURIComponent(n) + "; " + t + "; 
+path=/"
+					}, window.bizpanda.bp_ut_get_obj = function(e) {
+						var n = null;
+						return (n = window.bizpanda.bp_can_store_localy()
+							? window.localStorage.getItem("bp_ut_session")
+							: window.bizpanda.bp_ut_get_cookie("bp_ut_session"))
+							? (n = JSON.parse(n), n.started + 1e3 * e < (new Date).getTime() 
+&& (n = null), n)
+							: !1
+					}, window.bizpanda.bp_ut_set_obj = function(e) {
+						e.started && window.__bp_session_freezing || (e.started = (new 
+Date).getTime());
+						var e = JSON.stringify(e);
+						window.bizpanda.bp_can_store_localy()
+							? window.localStorage.setItem("bp_ut_session", e)
+							: window.bizpanda.bp_ut_set_cookie("bp_ut_session", e, 5e3)
+					}, window.bizpanda.bp_ut_count_pageview = function() {
+						var e = 
+window.bizpanda.bp_ut_get_obj(window.__bp_session_timeout);
+						e || (e = {}), e.pageviews || (e.pageviews = 0), 0 === e.pageviews
+ && (e.referrer = document.referrer, e.landingPage = 
+window.location.href, e.pageviews = 0), e.pageviews++, 
+window.bizpanda.bp_ut_set_obj(e)
+					}, window.bizpanda.bp_ut_count_locker_pageview = function() {
+						var e = window.bizpanda.bp_ut_get_obj(window.__bp_timeout);
+						e || (e = {}), e.lockerPageviews || (e.lockerPageviews = 0), 
+e.lockerPageviews++, window.bizpanda.bp_ut_set_obj(e)
+					}, window.bizpanda.bp_ut_count_pageview()
+				}();/*]]>*/</script>  <script type="text/javascript">jQuery(function($) { $(document).on("click", ".pseudo-link", function(){ window.open($(this).data("uri")); });});</script><script type="text/javascript">var
+ q2w3_sidebar_options = new Array();
+q2w3_sidebar_options[0] = { "sidebar" : "sidebar_primary", "margin_top" :
+ 0, "margin_bottom" : 0, "stop_id" : "", "screen_max_width" : 0, 
+"screen_max_height" : 0, "width_inherit" : false, "refresh_interval" : 
+1500, "window_load_hook" : true, "disable_mo_api" : false, "widgets" : 
+['text-42'] };</script> <script type="text/javascript" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/q2w3-fixed-widget.js"></script> <script type="text/javascript">/*
+  */
+var JQLBSettings = 
+{"showTitle":"1","showCaption":"1","showNumbers":"1","fitToScreen":"1","resizeSpeed":"400","showDownload":"0","navbarOnTop":"0","marginSize":"0","slideshowSpeed":"4000","prevLinkTitle":"\u043f\u0440\u0435\u0434\u044b\u0434\u0443\u0449\u0435\u0435
+ 
+\u0438\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435","nextLinkTitle":"\u0441\u043b\u0435\u0434\u0443\u044e\u0449\u0435\u0435
+ 
+\u0438\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435","closeTitle":"\u0437\u0430\u043a\u0440\u044b\u0442\u044c
+ 
+\u0433\u0430\u043b\u0435\u0440\u0435\u044e","image":"\u0418\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435
+ ","of":" \u0438\u0437 ","download":"Download","pause":"(pause 
+slideshow)","play":"(play slideshow)"};
+/*  */</script> <script type="text/javascript" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/jquery.js"></script> <script type="text/javascript">/*<![CDATA[*//*
+  */
+(function(g,b,d){var 
+c=b.head||b.getElementsByTagName("head"),D="readyState",E="onreadystatechange",F="DOMContentLoaded",G="addEventListener",H=setTimeout;function
+ 
+f(){$LAB.script("http://pyatilistnik.org/wp-content/themes/AdsMarketing/lib/js/jquery.mobilemenu.js").script("http://pyatilistnik.org/wp-includes/js/comment-reply.min.js").script("http://pyatilistnik.org/wp-includes/js/hoverIntent.min.js").script("http://pyatilistnik.org/wp-content/plugins/wp-jquery-lightbox/jquery.touchwipe.min.js").script("http://pyatilistnik.org/wp-includes/js/wp-embed.min.js");}H(function(){if("item"in
+ c){if(!c[0]){H(arguments.callee,25);return}c=c[0]}var 
+a=b.createElement("script"),e=false;a.onload=a[E]=function(){if((a[D]&&a[D]!=="complete"&&a[D]!=="loaded")||e){return
+ 
+false}a.onload=a[E]=null;e=true;f()};a.src="http://pyatilistnik.org/wp-content/plugins/wp-deferred-javascripts/assets/js/lab.min.js?ver=2.0.3";c.insertBefore(a,c.firstChild)},0);if(b[D]==null&&b[G]){b[D]="loading";b[G](F,d=function(){b.removeEventListener(F,d,false);b[D]="complete"},false)}})(this,document);
+/*
+  *//*]]>*/</script> <script type="text/javascript">/*<![CDATA[*//*  */
+jQuery.noConflict();
+jQuery(function(){ 
+	jQuery('ul.menu-secondary').superfish({ 
+	animation: {opacity:'show'},
+autoArrows:  true,
+                dropShadows: false, 
+                speed: 200,
+                delay: 800
+                });
+            });
+jQuery('.menu-secondary-container').mobileMenu({
+                defaultText: 'Navigation',
+                className: 'menu-secondary-responsive',
+                containerClass: 'menu-secondary-responsive-container',
+                subMenuDash: '&ndash;'
+            });
+
+/*  *//*]]>*/</script> </div><iframe name="oauth2relay777964316" id="oauth2relay777964316" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/postmessageRelay.html" style="width: 1px; height: 1px; position: absolute; top: -100px;" tabindex="-1" aria-hidden="true"></iframe><div style="display: block; visibility: hidden; position: absolute; width: 106px; left: -10000px; top: -10000px;"><table dir="ltr" style="width:106px;" frame="void" rules="none" class=" gc-bubbleDefault pls-container" cellspacing="0" cellpadding="0"><tbody><tr class="gc-reset"><td class="pls-topLeft gc-reset"><img class="gc-reset" style="width:1px !important; height:1px !important; max-width: 1px !important; max-height: 1px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/border_3.gif"></td><td class="pls-topTail gc-reset"><img class="pls-tailbottom gc-reset" style="width:15px !important; height:9px !important; max-width: 15px !important; max-height: 9px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/spacer.gif"><img class="pls-spacerbottom gc-reset" style="width:1px !important; height:1px !important; max-width: 1px !important; max-height: 1px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/spacer.gif"></td><td class="pls-topRight gc-reset"><img class="gc-reset" style="width:1px !important; height:1px !important; max-width: 1px !important; max-height: 1px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/border_3.gif"></td></tr><tr class="gc-reset"><td class="pls-vertShimLeft gc-reset"><img class="gc-reset" style="width:1px !important; height:4px !important; max-width: 1px !important; max-height: 4px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/spacer.gif"></td><td class="pls-vertShim gc-reset"><img class="gc-reset" style="width:1px !important; height:4px !important; max-width: 1px !important; max-height: 4px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/spacer.gif"></td><td class="pls-vertShimRight gc-reset"><img class="pls-dropTR gc-reset" style="width:5px !important; height:4px !important; max-width: 5px !important; max-height: 4px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/spacer.gif"></td></tr><tr class="gc-reset"><td class="pls-contentLeft gc-reset"><img class="pls-tailright gc-reset" style="width:9px !important; height:15px !important; max-width: 9px !important; max-height: 15px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/spacer.gif"><img class="pls-spacerright gc-reset" style="width:1px !important; height:1px !important; max-width: 1px !important; max-height: 1px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/spacer.gif"></td><td class="pls-contentWrap gc-reset"><div class="goog-bubble-content gc-reset"><iframe ng-non-bindable="" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="margin:0px;position:absolute;z-index:1;border-style:none;outline:none;width:100px;" tabindex="0" vspace="0" id="I0_1503388724066" name="I0_1503388724066" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/subscribe_embed_002.html" width="100%" frameborder="0"></iframe></div></td><td class="pls-dropRight gc-reset"><img class="pls-tailleft gc-reset" style="width:12px !important; height:19px !important; max-width: 12px !important; max-height: 19px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/spacer.gif"><img class="pls-spacerleft gc-reset" style="width:1px !important; height:1px !important; max-width: 1px !important; max-height: 1px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/spacer.gif"></td></tr><tr class="gc-reset"><td class="pls-bottomLeft gc-reset"><img class="gc-reset" style="width:1px !important; height:1px !important; max-width: 1px !important; max-height: 1px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/border_3.gif"></td><td class="gc-reset"><table style="width:100%" class="gc-reset" cellspacing="0" cellpadding="0"><tbody><tr class="gc-reset"><td class="pls-vert gc-reset"><img class="pls-dropBL gc-reset" style="width:4px !important; height:5px !important; max-width: 4px !important; max-height: 5px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/spacer.gif"></td><td class="pls-dropBottom gc-reset"><img class="pls-tailtop gc-reset" style="width:19px !important; height:13px !important; max-width: 19px !important; max-height: 13px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/spacer.gif"><img class="pls-spacertop gc-reset" style="width:1px !important; height:1px !important; max-width: 1px !important; max-height: 1px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/spacer.gif"></td></tr></tbody></table></td><td class="pls-vert gc-reset"><img class="pls-dropBR gc-reset" style="width:5px !important; height:5px !important; max-width: 5px !important; max-height: 5px !important;" src="%D0%9A%D0%B0%D0%BA%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D1%80%D1%82%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D1%8B%20RDP%20%D1%81%203389%20%D0%BD%D0%B0%20%D0%B4%D1%80%D1%83%D0%B3%D0%BE%D0%B9%20%7C%20%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%BE%D0%B2%20windows%20%D0%B8%20linux_files/spacer.gif"></td></tr></tbody></table></div></body></html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="icon" href="http://valynkin.ru/static/blog/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="SELinux%20-%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8%20%D0%B4%D0%BB%D1%8F%20Apache_files/style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="SELinux%20-%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8%20%D0%B4%D0%BB%D1%8F%20Apache_files/bw.css" type="text/css" media="screen">
+
+<!-- <link rel="alternate" type="application/rss+xml" title="RSS 0.92" href="/?rss=1&#38;section=article" />
+<link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="/?atom=1&#38;section=article" /> -->
+
+<script src="SELinux%20-%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8%20%D0%B4%D0%BB%D1%8F%20Apache_files/analytics.js" async=""></script><script src="SELinux%20-%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8%20%D0%B4%D0%BB%D1%8F%20Apache_files/watch.js" async="" type="text/javascript"></script><script src="SELinux%20-%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8%20%D0%B4%D0%BB%D1%8F%20Apache_files/jquery_002.js"></script>
+<script src="SELinux%20-%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8%20%D0%B4%D0%BB%D1%8F%20Apache_files/bootstrap.js"></script>
+
+<!-- Colorbox (see http://www.jacklmoore.com/colorbox/) -->
+<script src="SELinux%20-%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8%20%D0%B4%D0%BB%D1%8F%20Apache_files/jquery.js"></script>
+<link rel="stylesheet" href="SELinux%20-%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8%20%D0%B4%D0%BB%D1%8F%20Apache_files/colorbox.css">
+<script>
+            jQuery(document).ready(function () {
+                jQuery('a[href$=".jpg"]').colorbox({rel:'gal',maxWidth:"95%",maxHeight:"95%"});
+            });
+</script>
+<!-- End of Colorbox -->
+
+
+<title>
+    SELinux - настройки для Apache (httpd)
+</title>
+</head>
+
+<body>
+
+<div id="accessibility">
+<a href="#content" title="Go to content">Go to content</a> 
+<a href="#sidebar" title="Go to menu">Go to menu</a> 
+<a href="#sidebar-2" title="Go to search">Go to search</a> 
+</div> <!-- close accessibility -->
+
+<div id="container">
+
+
+	<!-- head -->
+<div id="headerBox">
+<div id="headerLeft">
+<!--  
+<div class="verticalSpacer">&nbsp;</div>-->
+<a href="http://valynkin.ru/">VALYNKIN.RU</a>
+</div> <!-- close headerLeft -->
+<div id="headerRight">
+
+<!-- to fix vertical position of top_nav 
+<div class="verticalSpacer">&nbsp;</div>--> 
+
+<!-- home link -->
+
+<a href="http://valynkin.ru/" title="home" class="home">home</a> <span class="noDisplay"> | </span>
+
+
+<!-- gallery link
+
+<a href="<txp:site_url />gallery" title="gallery" class="gallery">gallery</a> <span class="noDisplay"> | </span>
+
+-->
+
+<!-- about link -->
+
+<a href="http://valynkin.ru/about.html" title="about" class="about">about</a> <span class="noDisplay"> | </span>
+
+
+<!-- links link -->
+
+<a href="http://valynkin.ru/links.html" title="links" class="links">links</a> <span class="noDisplay"> | </span>
+
+
+<!-- contact link -->
+
+<a href="http://valynkin.ru/contact.html" title="contact" class="contact">contact</a>
+
+
+</div> <!-- close headerRight -->
+
+
+</div> <!-- close headerBox -->
+
+
+
+<div id="contentBox">
+
+
+	<!-- sidebar -->
+	<div id="sidebar">
+	<div class="sidebarBox">
+		<form method="get" action="/search/">
+			<label for="id_q">Поиск:</label>
+			<input name="q" id="id_q" type="text">
+			<input value="OK" type="submit">
+        </form>
+        <div class="verticalSpacer">&nbsp;</div>
+	</div>
+
+	<div class="sidebarBox">
+		<h3>Разделы</h3>
+		<ul>
+			
+			<li><a href="http://valynkin.ru/category/raznoe.html">Разное</a></li>
+			
+			<li><a href="http://valynkin.ru/category/zabbix.html">Zabbix</a></li>
+			
+			<li><a href="http://valynkin.ru/category/virtualizaciya.html">Виртуализация</a></li>
+			
+			<li><a href="http://valynkin.ru/category/turizm.html">Туризм</a></li>
+			
+			<li><a href="http://valynkin.ru/category/sistemnoe-administrirovanie.html">Системное Администрирование</a></li>
+			
+			<li><a href="http://valynkin.ru/category/shpargalki.html">Шпаргалки</a></li>
+			
+			<li><a href="http://valynkin.ru/category/shell.html">Shell</a></li>
+			
+			<li><a href="http://valynkin.ru/category/programmirovanie.html">Программирование</a></li>
+			
+			<li><a href="http://valynkin.ru/category/perl.html">Perl</a></li>
+			
+			<li><a href="http://valynkin.ru/category/avtomobili.html">Автомобили</a></li>
+			
+		<txp:linklist form="plainlinks" category="textpattern" sort="linksort">
+		</txp:linklist></ul>
+	</div>
+	
+	<div class="sidebarBox">
+		<h3>Все статьи в разделе Шпаргалки</h3>
+		<ul>
+			
+			<li><a href="http://valynkin.ru/shpargalka-po-mysql.html">Шпаргалка по MySQL</a></li>
+			
+			<li><a href="http://valynkin.ru/nastrojka-istorii-komand-v-bash.html">Настройка истории команд в bash</a></li>
+			
+			<li><a href="http://valynkin.ru/kak-posmotret-konfiguraciyu-zheleza-v-kompyutere-pod-linux.html">Как посмотреть конфигурацию железа в компьютере под Linux</a></li>
+			
+			<li><a href="http://valynkin.ru/kak-posmotret-skolko-svobodno-i-zanyato-pamyati-v-linux.html">Как посмотреть сколько свободно и занято памяти в linux</a></li>
+			
+			<li><a href="http://valynkin.ru/selinux-nastrojki-dlya-apache-httpd.html">SELinux - настройки для Apache (httpd)</a></li>
+			
+			<li><a href="http://valynkin.ru/reverse-proxy-nginx-i-web-socket.html">Reverse-Proxy Nginx и web-socket</a></li>
+			
+			<li><a href="http://valynkin.ru/shpargalka-po-nfs.html">Шпаргалка по NFS</a></li>
+			
+			<li><a href="http://valynkin.ru/odnostrochnye-shell-skripty-awk-sed.html">Однострочные и простые shell скрипты awk, sed</a></li>
+			
+			<li><a href="http://valynkin.ru/poleznye-melochi-kotorye-byvayut-chasto-nuzhny.html">Полезные мелочи, которые бывают часто нужны</a></li>
+			
+			<li><a href="http://valynkin.ru/primery-ispolzovaniya-komandy-find.html">Примеры использования команды find</a></li>
+			
+			<li><a href="http://valynkin.ru/problema-s-dostupom-k-vsftpd-cherez-nat.html">Проблема с доступом к vsftpd через NAT</a></li>
+			
+			<li><a href="http://valynkin.ru/proxypass-reverse-proxy-v-apache-i-nginx.html">ProxyPass (reverse proxy) в Apache и Nginx</a></li>
+			
+			<li><a href="http://valynkin.ru/rabota-s-lvm-shpargalka.html">Работа с LVM (шпаргалка)</a></li>
+			
+			<li><a href="http://valynkin.ru/rabota-s-sertifikatami-ssl-v-linux.html">Работа с сертификатами SSL в Linux</a></li>
+			
+			<li><a href="http://valynkin.ru/sbros-parolya-dlya-admina-v-cms-datalife-engine-dle.html">Сброс пароля для админа в CMS DataLife Engine (DLE)</a></li>
+			
+			<li><a href="http://valynkin.ru/shpargalka-po-mdraid.html">Шпаргалка по MDRAID</a></li>
+			
+			<li><a href="http://valynkin.ru/shpargalka-po-zimbra.html">Шпаргалка по Zimbra</a></li>
+			
+			<li><a href="http://valynkin.ru/shpargalka-po-cisco.html">Шпаргалка по CISCO</a></li>
+			
+			<li><a href="http://valynkin.ru/tipovoj-screenrc.html">Стандартный конфиг для screen (~/.screenrc)</a></li>
+			
+			<li><a href="http://valynkin.ru/reshenie-problemy-s-zagruzkoj-ubuntu-1404-s-bitogo-md-raid.html">Решение проблемы с загрузкой Ubuntu 14.04 с битого md-raid</a></li>
+			
+			<li><a href="http://valynkin.ru/shpargalka-po-postgresql.html">Шпаргалка по PostgreSQL</a></li>
+			
+			<li><a href="http://valynkin.ru/shpargalka-po-cbpolicyd-i-zimbra.html">Шпаргалка по cbpolicyd и zimbra</a></li>
+			
+			<li><a href="http://valynkin.ru/nastrojka-otobrazheniya-realnyh-ip-v-logah-tomcat.html">Настройка отображения реальных IP в логах Tomcat</a></li>
+			
+			<li><a href="http://valynkin.ru/zashita-wordpress.html">Защита wordpress</a></li>
+			
+			<li><a href="http://valynkin.ru/kak-proverit-vzlomali-li-wordpress.html">Как проверить взломали ли wordpress</a></li>
+			
+		<txp:linklist form="plainlinks" category="textpattern" sort="linksort">
+		</txp:linklist></ul>
+	</div>
+	
+
+
+	<div class="sidebarBox">
+		<h3>Ссылки</h3>
+		<ul>
+		    <!-- <li><a href="http://AdultyToys.ru">AdultyToys.ru</a></li> -->
+            <li><a href="http://proxmox.com/">Proxmox.com</a></li>
+            <li><a href="http://webmaster.yandex.ru/spellcheck.xml">Yandex SpellCheck</a></li>
+            <li><a href="https://www.djangopackages.com/">Django Packages directory</a></li>
+            <li><a href="http://djbook.ru/">Документация Django на русском</a></li>
+            <li><a href="http://valynkin.ru/markdown_cheat_sheet.html">Markdown tags cheat sheet</a></li>
+            <li><a href="http://daringfireball.net/projects/markdown/dingus">Markdown dingus</a></li>
+		</ul>
+	</div>
+
+	<div class="sidebarBox">
+		<h3>Feeds</h3>
+		<ul>
+		<li><txp:feed_link label="RSS 0.92" section="article" flavor="rss" limit="10" title="Article Feed"></txp:feed_link></li>
+		<li><txp:feed_link label="Atom 1.0" section="article" flavor="atom" limit="10" title="Article Feed"></txp:feed_link></li>
+		</ul>
+	</div>
+
+</div> <!-- close sidebar -->
+
+
+
+<div id="content">
+
+
+<div class="post">
+        <h2 class="singleposttitle">SELinux - настройки для Apache (httpd)</h2>
+    <div id="content_body">
+        <p></p><h3>Установить утилиты в CentOS</h3>
+<div class="codehilite"><pre>yum install policycoreutils-python
+</pre></div>
+
+
+<h3>Установить утилиты в Debian</h3>
+<div class="codehilite"><pre>sudo apt-get install selinux-utils
+</pre></div>
+
+
+<h3>Посмотреть состояние переменных в SELinux</h3>
+<div class="codehilite"><pre>getsebool -a | grep http
+</pre></div>
+
+
+<h3>Ограничить/разрешить отправку через sendmail</h3>
+<div class="codehilite"><pre>setsebool -P httpd_can_sendmail off
+</pre></div>
+
+
+<h3>Ограничить/разрешить внешние коннекты по сети</h3>
+<div class="codehilite"><pre>setsebool -P httpd_can_network_connect off
+</pre></div>
+
+
+<h3>Посмотреть настройки контекста для httpd:</h3>
+<div class="codehilite"><pre>semanage fcontext -l | grep httpd
+</pre></div>
+
+
+<h3>Дать права апачу на запись в каталог:</h3>
+<div class="codehilite"><pre>semanage fcontext -a -t httpd_sys_rw_content_t '/var/www(/.*)?/uploads(/.*)?'
+restorecon -R -v /var/www/
+</pre></div>
+
+
+<h3>Добавить нестандартный порт в число разрешенных</h3>
+<p>Посмотреть какие порты сейчас разрешены: </p>
+<div class="codehilite"><pre>semanage port -l | grep http_port_t
+</pre></div>
+
+
+<p>Добавить порт:</p>
+<div class="codehilite"><pre>semanage port -a -t http_port_t  -p tcp 10061
+</pre></div>
+
+
+<h3>Отключить SELinux временно:</h3>
+<p>отключение</p>
+<div class="codehilite"><pre>setenforce 0
+</pre></div>
+
+
+<p>включение</p>
+<div class="codehilite"><pre>setenforce 1
+</pre></div>
+
+
+<h3>Отключить SELinux навсегда:</h3>
+<p>В файле <code>/etc/selinux/config</code>:</p>
+<div class="codehilite"><pre>SELINUX=disabled
+</pre></div>
+
+
+<h3>Для работы wp-cron требуются права domain_kernel_load_modules</h3>
+<div class="codehilite"><pre>setsebool -P domain_kernel_load_modules on
+</pre></div>
+
+
+<h3>Создание политики с нуля:</h3>
+<p>Для того, что бы сделать политику на основе ошибок аудита в логах или
+ узнать какие переменные нужно выставить можно использовать утилиту <code>audit2allow</code> для этого следует поставить пакет <code>policycoreutils-python</code></p>
+<div class="codehilite"><pre>yum install policycoreutils-python
+grep ftpd /var/log/audit/audit.log | audit2allow -v
+</pre></div>
+
+
+<h3>Документация:</h3>
+<p>man по selinux-httpd: <a href="http://linux.die.net/man/8/httpd_selinux">httpd_selinux(8) – Linux man page</a></p>
+<p>MUST READ: Презентация по SE-Linux с 2012 Red Hat Summit: <a href="http://valynkin.ru/uploads/selinux-nastrojki-dlya-apache-httpd/SELinuxMereMortals.pdf">SELinux For Mere Mortals (3.8Мб)</a></p><p></p>
+    </div>
+</div>
+
+
+<hr class="clearing">
+
+</div> <!-- close contentBox -->
+
+
+<!-- footer -->
+	<div id="footerBox">
+	<div id="footerLeft">
+		при публикации материалов с данного сайта обратная ссылка на сайт обязательна.
+	</div> <!-- close footerLeft -->
+	<div id="footerRight">
+		valynkin.ru © no rights reserved
+	</div> <!-- close footerRight -->
+</div> <!-- close footerBox -->
+
+
+
+</div> <!-- close container -->
+<!-- Yandex.Metrika counter --><script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter24810062 = new Ya.Metrika({ id:24810062, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="https://mc.yandex.ru/watch/24810062" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+<!-- Google analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69586719-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- /Google analytics -->
+
+
+</div><div style="display: none;" id="cboxOverlay"></div><div style="display: none;" tabindex="-1" role="dialog" class="" id="colorbox"><div id="cboxWrapper"><div><div style="float: left;" id="cboxTopLeft"></div><div style="float: left;" id="cboxTopCenter"></div><div style="float: left;" id="cboxTopRight"></div></div><div style="clear: left;"><div style="float: left;" id="cboxMiddleLeft"></div><div style="float: left;" id="cboxContent"><div style="float: left;" id="cboxTitle"></div><div style="float: left;" id="cboxCurrent"></div><button id="cboxPrevious" type="button"></button><button id="cboxNext" type="button"></button><button id="cboxSlideshow"></button><div style="float: left;" id="cboxLoadingOverlay"></div><div style="float: left;" id="cboxLoadingGraphic"></div></div><div style="float: left;" id="cboxMiddleRight"></div></div><div style="clear: left;"><div style="float: left;" id="cboxBottomLeft"></div><div style="float: left;" id="cboxBottomCenter"></div><div style="float: left;" id="cboxBottomRight"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none; max-width: none;"></div></div></body><div data="{&quot;a&quot;:&quot;setShowingSafe&quot;,&quot;f&quot;:false}" style="display:none" id="sp_console_event"></div></html>

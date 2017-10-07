@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html ng-app="content" ng-strict-di="" ng-controller="PageController" xml:lang="en-us" dir="ltr" class="ng-scope js" lang="en-us"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script async="" charset="UTF-8" src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/meCore.js"></script><script async="" charset="UTF-8" src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/meBoot.js"></script><style type="text/css">[uib-typeahead-popup].dropdown-menu{display:block;}</style><style type="text/css">.uib-time input{width:50px;}</style><style type="text/css">[uib-tooltip-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-bottom > .tooltip-arrow,[uib-popover-popup].popover.top-left > .arrow,[uib-popover-popup].popover.top-right > .arrow,[uib-popover-popup].popover.bottom-left > .arrow,[uib-popover-popup].popover.bottom-right > .arrow,[uib-popover-popup].popover.left-top > .arrow,[uib-popover-popup].popover.left-bottom > .arrow,[uib-popover-popup].popover.right-top > .arrow,[uib-popover-popup].popover.right-bottom > .arrow,[uib-popover-html-popup].popover.top-left > .arrow,[uib-popover-html-popup].popover.top-right > .arrow,[uib-popover-html-popup].popover.bottom-left > .arrow,[uib-popover-html-popup].popover.bottom-right > .arrow,[uib-popover-html-popup].popover.left-top > .arrow,[uib-popover-html-popup].popover.left-bottom > .arrow,[uib-popover-html-popup].popover.right-top > .arrow,[uib-popover-html-popup].popover.right-bottom > .arrow,[uib-popover-template-popup].popover.top-left > .arrow,[uib-popover-template-popup].popover.top-right > .arrow,[uib-popover-template-popup].popover.bottom-left > .arrow,[uib-popover-template-popup].popover.bottom-right > .arrow,[uib-popover-template-popup].popover.left-top > .arrow,[uib-popover-template-popup].popover.left-bottom > .arrow,[uib-popover-template-popup].popover.right-top > .arrow,[uib-popover-template-popup].popover.right-bottom > .arrow{top:auto;bottom:auto;left:auto;right:auto;margin:0;}[uib-popover-popup].popover,[uib-popover-html-popup].popover,[uib-popover-template-popup].popover{display:block !important;}</style><style type="text/css">.uib-datepicker-popup.dropdown-menu{display:block;float:none;margin:0;}.uib-button-bar{padding:10px 9px 2px;}</style><style type="text/css">.uib-position-measure{display:block !important;visibility:hidden !important;position:absolute !important;top:-9999px !important;left:-9999px !important;}.uib-position-scrollbar-measure{position:absolute !important;top:-9999px !important;width:50px !important;height:50px !important;overflow:scroll !important;}.uib-position-body-scrollbar-measure{overflow:scroll !important;}</style><style type="text/css">.uib-datepicker .uib-title{width:100%;}.uib-day button,.uib-month button,.uib-year button{min-width:100%;}.uib-left,.uib-right{width:100%}</style><style type="text/css">.ng-animate.item:not(.left):not(.right){-webkit-transition:0s ease-in-out left;transition:0s ease-in-out left}</style><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="ms.refView" content="">
+    <meta name="ms.pageType" content="https://support.microsoft.com/en-us/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your">
+    <meta name="ms.Nav1" content="">
+    <meta name="ms.auth" content="0">
+    <meta name="ms.ssversion" content="200">
+    <meta name="ms.flightId" content="premiervolta-1|mlc-1|commercial-incident-mgmt-1|odc-1|dad-1|pslc-1|vac-common-control-0|aad-1|mnb-1|eol-1|vm-1|vafx-entry-point-1|vafx-replay-1|edad-2|cqpm-1|hiva-1|hucsu-1|sfe-1|sds-1|spc-1|vatheme-1|vafx-actions-1|vafx-pi-classify-all-1|delegatedauth-1|csa-nonenus-1|csa-themes-1|csa-enterprise-1|smc-survey-feat-1|smc-survey-elg-1|vafx-inline-1|vafx-usvc-1|dbscp-1|legie-1|smc-clicktale-0|smc-ci-4">
+    <meta name="ms.partnerId" content="smc">
+    <meta name="ms.cV" content="">
+    <meta name="ms.muid" content="04C7506CAB8264D11AB75AD7AF826792">
+    <meta name="msvalidate.01" content="B79672A77B167E030BC40D0D0A4D372A">
+    <!-- ngIf: noIndex -->
+    <!-- ngRepeat: metaTag in metaTags --><meta ng-repeat="metaTag in metaTags" name="ms.contentLocale" content="en" class="ng-scope"><!-- end ngRepeat: metaTag in metaTags --><meta ng-repeat="metaTag in metaTags" name="keywords" content="kbsecurity,kbexpertiseinter,kbhowto,kbinfo,kb" class="ng-scope"><!-- end ngRepeat: metaTag in metaTags --><meta ng-repeat="metaTag in metaTags" name="search.keywords" content="kbsecurity,kbexpertiseinter,kbhowto,kbinfo,kb" class="ng-scope"><!-- end ngRepeat: metaTag in metaTags --><meta ng-repeat="metaTag in metaTags" name="description" content="Describes the requirements for using hardware-enforced DEP. Also describes how to confirm that hardware DEP is working in Windows." class="ng-scope"><!-- end ngRepeat: metaTag in metaTags --><meta ng-repeat="metaTag in metaTags" name="search.description" content="Describes the requirements for using hardware-enforced DEP. Also describes how to confirm that hardware DEP is working in Windows." class="ng-scope"><!-- end ngRepeat: metaTag in metaTags --><meta ng-repeat="metaTag in metaTags" name="msh.id" content="912923" class="ng-scope"><!-- end ngRepeat: metaTag in metaTags -->
+    <!-- base href="https://support.microsoft.com/" -->
+
+    <script type="text/javascript">
+        var supportWindowsHistory = !!(window.history && window.history.pushState);
+        // In downgraded browsers we need to use the hash in order to reach the angular routes
+        if (!supportWindowsHistory) {
+            if (window.location.hash.charAt(1) !== "!") {
+                var baseHref = document.getElementsByTagName('base')[0].href;
+                var hashRoute = location.href.replace(baseHref, "").replace(location.hash, "");
+                window.location.replace(window.location.pathname + '#!' + hashRoute + window.location.search + window.location.hash);
+            }
+        }
+    </script>
+    <title ng-bind="title" class="ng-binding">How to determine that hardware DEP is available and configured on your computer</title>
+
+    <link href="https://www.microsoft.com/favicon.ico?v2" rel="shortcut icon">
+    <link rel="canonical" ng-href="https://support.microsoft.com/en-us/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" href="https://support.microsoft.com/en-us/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your">
+    <!-- ngRepeat: lang in languages --><link rel="alternate" hreflang="ar-ae" ng-href="https://support.microsoft.com/ar-ae/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/ar-ae/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="ar-eg" ng-href="https://support.microsoft.com/ar-eg/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/ar-eg/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="ar-sa" ng-href="https://support.microsoft.com/ar-sa/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/ar-sa/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="he-il" ng-href="https://support.microsoft.com/he-il/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/he-il/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="bg-bg" ng-href="https://support.microsoft.com/bg-bg/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/bg-bg/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="cs-cz" ng-href="https://support.microsoft.com/cs-cz/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/cs-cz/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="da-dk" ng-href="https://support.microsoft.com/da-dk/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/da-dk/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="de-de" ng-href="https://support.microsoft.com/de-de/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/de-de/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="de-at" ng-href="https://support.microsoft.com/de-at/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/de-at/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="de-ch" ng-href="https://support.microsoft.com/de-ch/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/de-ch/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="el-gr" ng-href="https://support.microsoft.com/el-gr/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/el-gr/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="en-au" ng-href="https://support.microsoft.com/en-au/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/en-au/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="en-ca" ng-href="https://support.microsoft.com/en-ca/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/en-ca/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="en-gb" ng-href="https://support.microsoft.com/en-gb/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/en-gb/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="en-hk" ng-href="https://support.microsoft.com/en-hk/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/en-hk/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="en-ie" ng-href="https://support.microsoft.com/en-ie/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/en-ie/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="en-in" ng-href="https://support.microsoft.com/en-in/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/en-in/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="en-my" ng-href="https://support.microsoft.com/en-my/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/en-my/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="en-nz" ng-href="https://support.microsoft.com/en-nz/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/en-nz/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="en-ph" ng-href="https://support.microsoft.com/en-ph/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/en-ph/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="en-sg" ng-href="https://support.microsoft.com/en-sg/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/en-sg/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="en-us" ng-href="https://support.microsoft.com/en-us/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/en-us/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="en-za" ng-href="https://support.microsoft.com/en-za/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/en-za/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-ar" ng-href="https://support.microsoft.com/es-ar/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-ar/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-bo" ng-href="https://support.microsoft.com/es-bo/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-bo/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-cl" ng-href="https://support.microsoft.com/es-cl/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-cl/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-co" ng-href="https://support.microsoft.com/es-co/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-co/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-cr" ng-href="https://support.microsoft.com/es-cr/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-cr/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-do" ng-href="https://support.microsoft.com/es-do/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-do/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-ec" ng-href="https://support.microsoft.com/es-ec/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-ec/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-es" ng-href="https://support.microsoft.com/es-es/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-es/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-gt" ng-href="https://support.microsoft.com/es-gt/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-gt/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-mx" ng-href="https://support.microsoft.com/es-mx/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-mx/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-pa" ng-href="https://support.microsoft.com/es-pa/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-pa/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-pe" ng-href="https://support.microsoft.com/es-pe/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-pe/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-pr" ng-href="https://support.microsoft.com/es-pr/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-pr/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-py" ng-href="https://support.microsoft.com/es-py/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-py/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-sv" ng-href="https://support.microsoft.com/es-sv/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-sv/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-us" ng-href="https://support.microsoft.com/es-us/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-us/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-uy" ng-href="https://support.microsoft.com/es-uy/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-uy/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="es-ve" ng-href="https://support.microsoft.com/es-ve/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/es-ve/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="et-ee" ng-href="https://support.microsoft.com/et-ee/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/et-ee/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="fi-fi" ng-href="https://support.microsoft.com/fi-fi/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/fi-fi/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="fr-fr" ng-href="https://support.microsoft.com/fr-fr/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/fr-fr/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="fr-dz" ng-href="https://support.microsoft.com/fr-dz/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/fr-dz/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="fr-be" ng-href="https://support.microsoft.com/fr-be/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/fr-be/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="fr-ca" ng-href="https://support.microsoft.com/fr-ca/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/fr-ca/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="fr-ch" ng-href="https://support.microsoft.com/fr-ch/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/fr-ch/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="fr-lu" ng-href="https://support.microsoft.com/fr-lu/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/fr-lu/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="fr-ma" ng-href="https://support.microsoft.com/fr-ma/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/fr-ma/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="fr-tn" ng-href="https://support.microsoft.com/fr-tn/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/fr-tn/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="hi-in" ng-href="https://support.microsoft.com/hi-in/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/hi-in/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="hr-hr" ng-href="https://support.microsoft.com/hr-hr/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/hr-hr/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="hr-ba" ng-href="https://support.microsoft.com/hr-ba/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/hr-ba/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="hu-hu" ng-href="https://support.microsoft.com/hu-hu/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/hu-hu/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="id-id" ng-href="https://support.microsoft.com/id-id/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/id-id/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="is-is" ng-href="https://support.microsoft.com/is-is/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/is-is/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="it-it" ng-href="https://support.microsoft.com/it-it/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/it-it/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="ja-jp" ng-href="https://support.microsoft.com/ja-jp/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/ja-jp/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="ru-kz" ng-href="https://support.microsoft.com/ru-kz/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/ru-kz/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="ko-kr" ng-href="https://support.microsoft.com/ko-kr/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/ko-kr/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="lt-lt" ng-href="https://support.microsoft.com/lt-lt/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/lt-lt/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="lv-lv" ng-href="https://support.microsoft.com/lv-lv/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/lv-lv/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="nl-nl" ng-href="https://support.microsoft.com/nl-nl/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/nl-nl/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="nl-be" ng-href="https://support.microsoft.com/nl-be/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/nl-be/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="nb-no" ng-href="https://support.microsoft.com/nb-no/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/nb-no/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="pl-pl" ng-href="https://support.microsoft.com/pl-pl/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/pl-pl/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="pt-pt" ng-href="https://support.microsoft.com/pt-pt/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/pt-pt/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="pt-br" ng-href="https://support.microsoft.com/pt-br/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/pt-br/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="ro-ro" ng-href="https://support.microsoft.com/ro-ro/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/ro-ro/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="ru-ru" ng-href="https://support.microsoft.com/ru-ru/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/ru-ru/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="sk-sk" ng-href="https://support.microsoft.com/sk-sk/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/sk-sk/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="sl-si" ng-href="https://support.microsoft.com/sl-si/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/sl-si/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="sr-latn-rs" ng-href="https://support.microsoft.com/sr-latn-rs/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/sr-latn-rs/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="sr-Latn-me" ng-href="https://support.microsoft.com/sr-Latn-me/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/sr-Latn-me/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="sv-se" ng-href="https://support.microsoft.com/sv-se/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/sv-se/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="th-th" ng-href="https://support.microsoft.com/th-th/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/th-th/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="tr-tr" ng-href="https://support.microsoft.com/tr-tr/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/tr-tr/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="uk-ua" ng-href="https://support.microsoft.com/uk-ua/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/uk-ua/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="vi-vn" ng-href="https://support.microsoft.com/vi-vn/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/vi-vn/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="zh-cn" ng-href="https://support.microsoft.com/zh-cn/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/zh-cn/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="zh-hk" ng-href="https://support.microsoft.com/zh-hk/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/zh-hk/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages --><link rel="alternate" hreflang="zh-tw" ng-href="https://support.microsoft.com/zh-tw/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" ng-repeat="lang in languages" class="ng-scope" href="https://support.microsoft.com/zh-tw/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your"><!-- end ngRepeat: lang in languages -->
+
+    <link rel="stylesheet" type="text/css" href="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/WebCore.css">
+    <link href="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/css.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/1a-c40efe.css" type="text/css" media="all">    
+<meta content="f529b2fa-a05e-4369-8213-baf87262c149" name="ms.dqid"><script async="" src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/t.js"></script><meta name="ms.vlid" content="f7f11eb4-8807-4f57-862e-d0443da94df7"><meta name="ms.dqp0" content="false"><link rel="stylesheet" type="text/css" href="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/blue.css"><style type="text/css">.msame_TxtTrunc{white-space:nowrap;text-overflow:ellipsis;overflow:hidden;word-break:break-all}.msame_Header{display:inline-block;cursor:pointer;font-size:14px;border-width:1px;border-style:solid;border-bottom-style:none;border-color:transparent;width:100%}.msame_Header_name{padding-left:12px;max-width:160px;display:inline-block;line-height:64px;vertical-align:top;font-family:"Segoe UI","Segoe UI Web Regular","Segoe UI Symbol","Helvetica Neue","BBAlpha Sans","S60 Sans",Arial,sans-serif;font-size:86%;color:#505050}.msame_unauth .msame_Header_name{padding-right:12px}.msame_unauth .msame_Header_name:hover{color:#0078d7}.msame_Drop_AI_pic,.msame_Drop_active_pic,.msame_Header_pic{display:inline-block}.msame_Header_piccont{padding-top:14px;padding-bottom:14px;padding-right:12px;padding-left:8px}.msame_Mobile .msame_Header_piccont{padding-top:10px;padding-bottom:10px}.msame_Short .msame_Header_piccont{padding-left:12px}.msame_Header_picframe{width:36px;height:36px;border-radius:50%;overflow:hidden}.msame_Mobile .msame_Header_picframe{width:48px;height:48px}.msame_open .msame_Header_picframe{z-index:3000001;position:relative}.msame_Header_chev{display:none}.msame_Mobile .msame_Header_piccont{padding-right:8px;padding-left:10px}.msame_Mobile .msame_Header_name{line-height:3;font-size:114%;padding-left:10px;padding-right:10px;display:inline-block;vertical-align:top;padding-top:14px}.msame_Mobile.msame_3row .msame_Header_name{padding-top:6px}.msame_Mobile .msame_Header_chev{display:inline-block;line-height:64px;vertical-align:top;padding-right:16px;padding-left:8px;float:right}.msame_open .msame_Header_chev img{-moz-transform:scaleY(-1);-o-transform:scaleY(-1);-webkit-transform:scaleY(-1);transform:scaleY(-1);filter:FlipV;-ms-filter:FlipV}.msame_Drop_root .msame_Drop_AI:focus,.msame_Drop_root .msame_Drop_AI_remove:focus,.msame_Drop_root a:focus,.msame_Header:focus{outline-style:dotted;outline-color:#000;outline-width:1px}.msame_Header .msame_Header_piccont img{width:36px;height:36px;line-height:normal;vertical-align:baseline}.msame_Mobile .msame_Header_piccont img{width:48px;height:48px}.msame_Mobile .msame_Header_fullName{font-size:100%;color:#000;line-height:1.333}.msame_Drop_AI_email,.msame_Drop_AI_status,.msame_Mobile .msame_Header_email,.msame_Mobile .msame_Header_nickName{font-family:"Segoe UI","Segoe UI Web Regular","Segoe UI Symbol","Helvetica Neue","BBAlpha Sans","S60 Sans",Arial,sans-serif;font-size:86%;color:rgba(0,0,0,.54);line-height:1.333333}.msaie8 .msame_Drop_AI_pic,.msaie8 .msame_Drop_AI_right,.msaie8 .msame_Drop_active_pic,.msaie8 .msame_Drop_active_right,.msaie8 .msame_Header,.msaie8 .msame_Header_name,.msaie8 .msame_Header_pic{zoom:1}</style><style type="text/css">.msame_open .msame_Header{border-color:#e6e6e6;background-color:#fff}.msame_open .msame_Header.msame_Mobile{border-color:transparent;background-color:transparent}.msame_ClickStart.msame_Drop_root .msame_Drop_AI:focus,.msame_ClickStart.msame_Drop_root .msame_Drop_AI_remove:focus,.msame_ClickStart.msame_Drop_root a:focus{outline-style:none}.msame_Drop_root a,.msame_Drop_root a:active,.msame_Drop_root a:focus,.msame_Drop_root a:hover,.msame_Drop_root a:visited{text-decoration:none}.msame_Drop_topb{border-top-color:#e6e6e6;border-top-style:solid;border-top-width:1px}.msame_Mobile .msame_Drop_topb{width:100%!important}.msame_Drop_active{padding-bottom:8px}.msame_Drop_AI_picframe{width:44px;height:44px;border-radius:50%;overflow:hidden}.msame_Drop_AI_piccont img{width:44px;height:44px}.msame_Drop_root{border-width:1px;border-color:#e6e6e6;border-style:solid;border-top-style:none;position:absolute;width:360px;z-index:3000000;background-color:#fff;font-size:14px}.msame_Drop_sep{border-top-width:1px;border-top-color:#e6e6e6;border-top-style:solid;width:100%;height:0;display:block}.msame_Mobile.msame_Drop_root{left:0!important;right:0;bottom:0;width:100%;border-right-width:0;border-left-width:0}.msame_Mobile .msame_Drop_content{overflow-y:auto;position:absolute;left:0;right:0;bottom:0;top:0}.msame_Drop_root a{text-decoration:none}.msame_Drop_content{overflow:hidden}.msame_Mobile .msame_Drop_active{display:none}.msame_Drop_AI{cursor:pointer}.disabled .msame_Drop_AI_pic,.disabled .msame_Drop_AI_right{opacity:.4;cursor:default}.disabled .msame_Drop_AI_email,.disabled .msame_Drop_AI_name,.disabled .msame_Drop_AI_status{color:#000}.msame_Drop_active_piccont{padding:5px}.msame_Drop_AI_piccont{padding:10px}.msame_Drop_active_picframe{width:74px;height:74px;border-radius:50%;overflow:hidden}.msame_Drop_active_picborder,.msame_Drop_active_piccont a{display:block;padding:4px;border:1px dotted transparent;border-radius:50%}.msame_Drop_active_piccont a:focus{border:1px dotted #000}.msame_Drop_active_piccont img{width:64px;height:64px;border-radius:50%}.msame_Drop_active_name{display:block;line-height:1.3;font-size:150%;color:#000;font-family:"Segoe UI Light","Segoe UI Web Light","Segoe UI Web Regular","Segoe UI","Segoe UI Symbol",HelveticaNeue-Light,"Helvetica Neue",Arial,sans-serif}.msame_Drop_active_email{display:block;line-height:1.42857;font-size:100%;color:rgba(0,0,0,.54);font-family:"Segoe UI","Segoe UI Web Regular","Segoe UI Symbol","Helvetica Neue","BBAlpha Sans","S60 Sans",Arial,sans-serif}.msame_Drop_active_right{display:inline-block;width:216px;vertical-align:top;padding-top:12px;padding-right:12px;padding-left:12px}.msame_Drop_SI a{line-height:2;font-size:114%;font-family:"Segoe UI","Segoe UI Web Regular","Segoe UI Symbol","Helvetica Neue","BBAlpha Sans","S60 Sans",Arial,sans-serif;padding-left:12px;padding-right:12px;display:block;color:#000}.msame_Mobile .msame_Drop_SI a{line-height:2.75}.msame_Drop_AI.switch:hover,.msame_Drop_AI_remove:hover,.msame_Drop_SI a:hover{color:#000;background-color:rgba(0,0,0,.12)}.msame_Drop_AI.switch:active,.msame_Drop_AI.switch:active div,.msame_Drop_AI_remove:active,.msame_Drop_SI a:active{color:#fff!important;background-color:#000}.msame_Drop_SI a:link,.msame_Drop_SI a:visited{color:#000}.msame_Drop_active_link a,.msame_Drop_active_link a:active,.msame_Drop_active_link a:hover,.msame_Drop_active_link a:link,.msame_Drop_active_link a:visited{line-height:1.333333;font-size:86%;font-family:"Segoe UI","Segoe UI Web Regular","Segoe UI Symbol","Helvetica Neue","BBAlpha Sans","S60 Sans",Arial,sans-serif;color:#0078d7}.msame_Drop_AL{padding-bottom:24px}.msame_Drop_AI_right{display:inline-block;width:252px;vertical-align:top;padding-left:8px;padding-top:5px}.msame_Mobile .msame_Drop_AI_right{width:100px}.msame_Drop_AI_name{font-family:"Segoe UI","Segoe UI Web Regular","Segoe UI Symbol","Helvetica Neue","BBAlpha Sans","S60 Sans",Arial,sans-serif;font-size:114%;color:#000;line-height:1.25}.msame_Drop_AI_remove{float:right;margin-top:6px;padding-top:12px;padding-bottom:12px;padding-left:12px;padding-right:12px;text-align:center;cursor:pointer}.msame_Drop_AI_remove img{display:block}.msame_auto_frame{display:none;position:absolute;top:0;left:-4000px;width:0}</style><style type="text/css">.msame_TxtTrunc{white-space:nowrap;text-overflow:ellipsis;overflow:hidden;word-break:break-all}.msame_Header{display:inline-block;cursor:pointer;font-size:14px;border-width:1px;border-style:solid;border-bottom-style:none;border-color:transparent;width:100%}.msame_Header_name{padding-left:12px;max-width:160px;display:inline-block;line-height:64px;vertical-align:top;font-family:"Segoe UI","Segoe UI Web Regular","Segoe UI Symbol","Helvetica Neue","BBAlpha Sans","S60 Sans",Arial,sans-serif;font-size:86%;color:#505050}.msame_unauth .msame_Header_name{padding-right:12px}.msame_unauth .msame_Header_name:hover{color:#0078d7}.msame_Drop_AI_pic,.msame_Drop_active_pic,.msame_Header_pic{display:inline-block}.msame_Header_piccont{padding-top:14px;padding-bottom:14px;padding-right:12px;padding-left:8px}.msame_Mobile .msame_Header_piccont{padding-top:10px;padding-bottom:10px}.msame_Short .msame_Header_piccont{padding-left:12px}.msame_Header_picframe{width:36px;height:36px;border-radius:50%;overflow:hidden}.msame_Mobile .msame_Header_picframe{width:48px;height:48px}.msame_open .msame_Header_picframe{z-index:3000001;position:relative}.msame_Header_chev{display:none}.msame_Mobile .msame_Header_piccont{padding-right:8px;padding-left:10px}.msame_Mobile .msame_Header_name{line-height:3;font-size:114%;padding-left:10px;padding-right:10px;display:inline-block;vertical-align:top;padding-top:14px}.msame_Mobile.msame_3row .msame_Header_name{padding-top:6px}.msame_Mobile .msame_Header_chev{display:inline-block;line-height:64px;vertical-align:top;padding-right:16px;padding-left:8px;float:right}.msame_open .msame_Header_chev img{-moz-transform:scaleY(-1);-o-transform:scaleY(-1);-webkit-transform:scaleY(-1);transform:scaleY(-1);filter:FlipV;-ms-filter:FlipV}.msame_Drop_root .msame_Drop_AI:focus,.msame_Drop_root .msame_Drop_AI_remove:focus,.msame_Drop_root a:focus,.msame_Header:focus{outline-style:dotted;outline-color:#000;outline-width:1px}.msame_Header .msame_Header_piccont img{width:36px;height:36px;line-height:normal;vertical-align:baseline}.msame_Mobile .msame_Header_piccont img{width:48px;height:48px}.msame_Mobile .msame_Header_fullName{font-size:100%;color:#000;line-height:1.333}.msame_Drop_AI_email,.msame_Drop_AI_status,.msame_Mobile .msame_Header_email,.msame_Mobile .msame_Header_nickName{font-family:"Segoe UI","Segoe UI Web Regular","Segoe UI Symbol","Helvetica Neue","BBAlpha Sans","S60 Sans",Arial,sans-serif;font-size:86%;color:rgba(0,0,0,.54);line-height:1.333333}.msaie8 .msame_Drop_AI_pic,.msaie8 .msame_Drop_AI_right,.msaie8 .msame_Drop_active_pic,.msaie8 .msame_Drop_active_right,.msaie8 .msame_Header,.msaie8 .msame_Header_name,.msaie8 .msame_Header_pic{zoom:1}</style><style type="text/css">.msame_open .msame_Header{border-color:#e6e6e6;background-color:#fff}.msame_open .msame_Header.msame_Mobile{border-color:transparent;background-color:transparent}.msame_ClickStart.msame_Drop_root .msame_Drop_AI:focus,.msame_ClickStart.msame_Drop_root .msame_Drop_AI_remove:focus,.msame_ClickStart.msame_Drop_root a:focus{outline-style:none}.msame_Drop_root a,.msame_Drop_root a:active,.msame_Drop_root a:focus,.msame_Drop_root a:hover,.msame_Drop_root a:visited{text-decoration:none}.msame_Drop_topb{border-top-color:#e6e6e6;border-top-style:solid;border-top-width:1px}.msame_Mobile .msame_Drop_topb{width:100%!important}.msame_Drop_active{padding-bottom:8px}.msame_Drop_AI_picframe{width:44px;height:44px;border-radius:50%;overflow:hidden}.msame_Drop_AI_piccont img{width:44px;height:44px}.msame_Drop_root{border-width:1px;border-color:#e6e6e6;border-style:solid;border-top-style:none;position:absolute;width:360px;z-index:3000000;background-color:#fff;font-size:14px}.msame_Drop_sep{border-top-width:1px;border-top-color:#e6e6e6;border-top-style:solid;width:100%;height:0;display:block}.msame_Mobile.msame_Drop_root{left:0!important;right:0;bottom:0;width:100%;border-right-width:0;border-left-width:0}.msame_Mobile .msame_Drop_content{overflow-y:auto;position:absolute;left:0;right:0;bottom:0;top:0}.msame_Drop_root a{text-decoration:none}.msame_Drop_content{overflow:hidden}.msame_Mobile .msame_Drop_active{display:none}.msame_Drop_AI{cursor:pointer}.disabled .msame_Drop_AI_pic,.disabled .msame_Drop_AI_right{opacity:.4;cursor:default}.disabled .msame_Drop_AI_email,.disabled .msame_Drop_AI_name,.disabled .msame_Drop_AI_status{color:#000}.msame_Drop_active_piccont{padding:5px}.msame_Drop_AI_piccont{padding:10px}.msame_Drop_active_picframe{width:74px;height:74px;border-radius:50%;overflow:hidden}.msame_Drop_active_picborder,.msame_Drop_active_piccont a{display:block;padding:4px;border:1px dotted transparent;border-radius:50%}.msame_Drop_active_piccont a:focus{border:1px dotted #000}.msame_Drop_active_piccont img{width:64px;height:64px;border-radius:50%}.msame_Drop_active_name{display:block;line-height:1.3;font-size:150%;color:#000;font-family:"Segoe UI Light","Segoe UI Web Light","Segoe UI Web Regular","Segoe UI","Segoe UI Symbol",HelveticaNeue-Light,"Helvetica Neue",Arial,sans-serif}.msame_Drop_active_email{display:block;line-height:1.42857;font-size:100%;color:rgba(0,0,0,.54);font-family:"Segoe UI","Segoe UI Web Regular","Segoe UI Symbol","Helvetica Neue","BBAlpha Sans","S60 Sans",Arial,sans-serif}.msame_Drop_active_right{display:inline-block;width:216px;vertical-align:top;padding-top:12px;padding-right:12px;padding-left:12px}.msame_Drop_SI a{line-height:2;font-size:114%;font-family:"Segoe UI","Segoe UI Web Regular","Segoe UI Symbol","Helvetica Neue","BBAlpha Sans","S60 Sans",Arial,sans-serif;padding-left:12px;padding-right:12px;display:block;color:#000}.msame_Mobile .msame_Drop_SI a{line-height:2.75}.msame_Drop_AI.switch:hover,.msame_Drop_AI_remove:hover,.msame_Drop_SI a:hover{color:#000;background-color:rgba(0,0,0,.12)}.msame_Drop_AI.switch:active,.msame_Drop_AI.switch:active div,.msame_Drop_AI_remove:active,.msame_Drop_SI a:active{color:#fff!important;background-color:#000}.msame_Drop_SI a:link,.msame_Drop_SI a:visited{color:#000}.msame_Drop_active_link a,.msame_Drop_active_link a:active,.msame_Drop_active_link a:hover,.msame_Drop_active_link a:link,.msame_Drop_active_link a:visited{line-height:1.333333;font-size:86%;font-family:"Segoe UI","Segoe UI Web Regular","Segoe UI Symbol","Helvetica Neue","BBAlpha Sans","S60 Sans",Arial,sans-serif;color:#0078d7}.msame_Drop_AL{padding-bottom:24px}.msame_Drop_AI_right{display:inline-block;width:252px;vertical-align:top;padding-left:8px;padding-top:5px}.msame_Mobile .msame_Drop_AI_right{width:100px}.msame_Drop_AI_name{font-family:"Segoe UI","Segoe UI Web Regular","Segoe UI Symbol","Helvetica Neue","BBAlpha Sans","S60 Sans",Arial,sans-serif;font-size:114%;color:#000;line-height:1.25}.msame_Drop_AI_remove{float:right;margin-top:6px;padding-top:12px;padding-bottom:12px;padding-left:12px;padding-right:12px;text-align:center;cursor:pointer}.msame_Drop_AI_remove img{display:block}.msame_auto_frame{display:none;position:absolute;top:0;left:-4000px;width:0}</style><meta name="ms.dqp0" content="false"></head>
+<body style="overflow-y: auto;">
+
+    <!-- Content Vertical -->
+    <!-- assembly version 1.0.17200.3, built on 7/24/2017 9:49:17 AM -->
+
+    
+<!-- Style for error content in the case that css + js files fail to download -->
+<style type="text/css">
+    .ng-hide .error-content {
+        display: none;
+        text-align: center;
+        font-family: 'Segoe UI';
+        padding-bottom: 12px;
+    }
+
+    .error-content h2 {
+        margin-top: 8px;
+        margin-bottom: 24px;
+        color: black;
+    }
+</style>
+
+<!-- Downloads theMicrosoft.Support.Portal.Config object from the server -->
+<script type="text/javascript" src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/clientconfig.json"></script>
+
+<!--“Third party scripts or code, linked to, called or referenced from this web site, online service or product, are licensed to you by the third parties that own such code, not by Microsoft, see ASP.NET Ajax CDN Terms of Use – http://www.asp.net/ajaxlibrary/CDN.ashx.”-->
+<script src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/jslibraries"></script>
+
+<script src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/application"></script>
+
+
+
+<script type="text/javascript">
+    if (!window.angular) {
+        document.onreadystatechange = function () {
+            if (document.readyState == "complete") {
+                document.getElementById('error500').style.display = "block";
+            }
+        }
+    }
+</script>
+
+    <iframe id="silent-signin-frame" ng-src="/api/content/silentauth" tabindex="-1" aria-hidden="true" src="/api/content/silentauth"></iframe>
+    <!-- ngIf: !online -->
+
+
+    <!-- ngIf: alertBanner -->
+    
+
+
+
+
+
+<script src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/a1-be3be0"></script><script src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/meversion.js"></script>
+    <!--Angular 1.2 does not certain locale, so we map to a locale that angular support until we upgrade to a higher version -->
+
+    <script src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/angular-locale_en-us.js"></script>
+
+    <!-- ngIf: !noChrome --><div role="navigation" class="header-section ng-scope" ng-if="!noChrome">
+            <div ng-controller="L0HeaderController" class="ng-scope"></div>
+    <section id="headerArea" data-m="{&quot;cN&quot;:&quot;headerArea&quot;,&quot;cT&quot;:&quot;Area_coreuiArea&quot;,&quot;id&quot;:&quot;a1Body&quot;,&quot;sN&quot;:1,&quot;aN&quot;:&quot;Body&quot;}">
+                    <div id="headerRegion" data-region-key="headerregion" data-m="{&quot;cN&quot;:&quot;headerRegion&quot;,&quot;cT&quot;:&quot;Region_coreui-region&quot;,&quot;id&quot;:&quot;r1a1&quot;,&quot;sN&quot;:1,&quot;aN&quot;:&quot;a1&quot;}">
+
+    <div id="headerUniversalHeader" data-m="{&quot;cN&quot;:&quot;headerUniversalHeader&quot;,&quot;cT&quot;:&quot;Module_coreui-universalheader&quot;,&quot;id&quot;:&quot;m1r1a1&quot;,&quot;sN&quot;:1,&quot;aN&quot;:&quot;r1a1&quot;}" data-module-id="Category|headerRegion|headerRegion|headerUniversalHeader|coreui-universalheader">
+        
+
+
+
+        <div id="epb" class="x-hidden x-hidden-vp1 x-hidden-vp2 uhfc-universal-context context-uhf" ms.cmpgrp="epb">
+
+    <div class="m-alert f-information epb-container epb-default-color" role="alert" ms.pgarea="Epb v2">
+        <div>
+            <p class="c-paragraph">
+                    <img aria-label="A fast and secure browser that's designed for Windows 10" src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/REZlo1.png">
+
+                <span class="c-text-group">
+                    <span class="epb-launch">Try Microsoft Edge</span>
+                    <span class="epb-text">A fast and secure browser that's designed for Windows 10</span>
+                </span>
+                <span class="c-group">
+                    <button id="close-epb" class="c-action-trigger c-action-cancel glyph-cancel" ms.title="EPB-dismiss">No thanks</button>
+                    <a id="epbTryNow" aria-label="A fast and secure browser that's designed for Windows 10" class="epb-launch c-action-trigger c-action-open" ms.title="EPB-launch">Get started</a>
+                </span>
+
+            </p>
+        </div>
+    </div>
+    <style>
+        #epb .m-alert {margin-top: 0 }
+
+        #epb .epb-container.epb-brand-color{background-color:#0078D7;color:#FFF;height:72px}.epb-container.epb-brand-color>div .c-paragraph>img{height:40px;float:left;margin-right:12px;padding:0;width:40px}.epb-container.epb-brand-color .c-text-group{float:left;margin-top:-2px}.epb-container.epb-brand-color .c-text-group .epb-text{display:block;line-height:2}.epb-container.epb-brand-color .c-text-group .epb-launch{font-size:16px;font-weight:700}.epb-container.epb-brand-color .c-group{margin-top:10px;margin-right:-36px}.epb-container.epb-brand-color>div{padding:16px 0}.epb-container.epb-brand-color>div .c-paragraph .c-group .c-action-trigger{min-width:120px;text-align:center}.epb-container.epb-brand-color>div .c-paragraph .c-group .c-action-cancel{text-decoration:underline;color:#FFF}.epb-container.epb-brand-color>div .c-paragraph .c-group .c-action-cancel:hover{background-color:#0060ac}.epb-container.epb-brand-color>div .c-paragraph .c-group .c-action-open{background-color:#FFF;color:#262626}.epb-container.epb-brand-color>div .c-paragraph .c-group .c-action-open:hover{background-color:#ccc}.epb-container.epb-default-color{background-color:#f2f2f2;height:72px}.epb-container.epb-default-color>div .c-paragraph>img{height:40px;float:left;margin-right:12px;padding:0;width:40px}.epb-container.epb-default-color .c-text-group{float:left;margin-top:-2px}.epb-container.epb-default-color .c-text-group .epb-text{color:#262626;display:block;opacity:.7;line-height:2}.epb-container.epb-default-color .c-text-group .epb-launch{color:#262626;font-size:16px;font-weight:700}.epb-container.epb-default-color .c-group{margin-top:10px;margin-right:-36px}.epb-container.epb-default-color>div{padding:16px 0}.epb-container.epb-default-color>div .c-paragraph .c-group .c-action-trigger{min-width:120px;text-align:center}.epb-container.epb-default-color>div .c-paragraph .c-group .c-action-cancel{text-decoration:underline;color:#006CC1}.epb-container.epb-default-color>div .c-paragraph .c-group .c-action-cancel:hover{background-color:#c1c1c1}.epb-container.epb-default-color>div .c-paragraph .c-group .c-action-open{background-color:#0078D7;color:#FFF}.epb-container.epb-default-color>div .c-paragraph .c-group .c-action-open:hover{background-color:#0060ac}html[dir="rtl"] .epb-container.epb-brand-color>div .c-paragraph>img{float:right;margin-right:0;margin-left:12px}html[dir="rtl"] .epb-container.epb-brand-color .c-text-group{float:right}html[dir="rtl"] .epb-container.epb-default-color>div .c-paragraph>img{float:right;margin-right:0;margin-left:12px}html[dir="rtl"] .epb-container.epb-default-color .c-text-group{float:right} .epb-container>div .c-paragraph{display:block!important}
+    </style>
+
+            
+        </div>
+        <style>
+            #epb .m-alert {
+                margin-top: 0;
+            }
+
+            #epb .m-alert {
+                margin-top: 0;
+            }
+
+            @media (min-width: 768px) and (max-width:1084px) {
+                #epb .m-alert[role="alert"] > div {
+                    width: 94%;
+                    margin: 0 auto;
+                }
+            }
+
+            @media (min-width: 1084px) {
+                #epb .m-alert[role="alert"] > div {
+                    width: 90%;
+                    margin: 0 auto;
+                }
+            }
+        </style>
+    
+        <style>
+            #epb {animation:slidedown .5s ease-in; overflow:hidden;}
+            #epb.epb-rollup {animation:slideup .5s ease-in;}
+            @keyframes slideup {from {height:50px}to{height:0}}
+            @keyframes slidedown {from {height:0}to{height:54px}}
+        </style>
+    
+
+
+
+
+<header role="banner" class="c-universal-header context-uhf js" itemscope="itemscope" data-header-footprint="en-us/smc/onesite-l0-header" itemtype="http://schema.org/Organization">
+    <div class="theme-light js-global-head f-closed " ms.pgarea="Universal Header">
+        <div>
+            <button class="c-action-trigger c-glyph glyph-global-nav-button" aria-label="Toggle menu" aria-expanded="false" ms.title="Mobile menu button"></button>
+            <button class="c-action-trigger c-glyph glyph-arrow-htmllegacy" aria-expanded="false" ms.title="Close Search"></button>
+                    <a id="uhfLogo" class="c-logo" itemprop="url" href="https://www.microsoft.com/" aria-label="Microsoft" ms.cmpgrp="logo">
+                        <img itemprop="logo" itemscope="itemscope" class="c-image" alt="Microsoft" src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/microsoft-gray.png">
+                        <span>Microsoft</span>
+                    </a>
+            <div class="f-mobile-title">
+                <button class="c-action-trigger c-glyph glyph-chevron-left" aria-label="See more menu options" ms.title="Mobile back button"></button>
+                <span data-global-title="Microsoft home" class="js-mobile-title"></span>
+                <button class="c-action-trigger c-glyph glyph-chevron-right" aria-label="See more menu options" ms.title="Mobile forward button"></button>
+            </div>
+                    <nav id="uhf-g-nav" aria-labelledby="uhfLogo" role="navigation" ms.cmpgrp="nav">
+            <ul>
+                        <li>
+                            <div class="c-uhf-menu js-nav-menu">
+
+                                <button id="Store-navigation" aria-expanded="false" aria-haspopup="true" ms.title="Store" ms.interactiontype="14" style="white-space:nowrap">Store</button>
+                                <ul aria-labelledby="Store-navigation" aria-hidden="true" ms.cmpnm="Store">
+    <li ms.cmpnm="Store_StoreHome">
+        <a id="shellmenu_1" href="https://www.microsoft.com/en-us/store/b/home" ms.title="Store_StoreHome">Store home</a>
+        
+    </li>
+    <li class="f-sub-menu js-nav-menu" ms.cmpnm="Store_Devices">
+
+        <button id="Devices-navigation" aria-expanded="false" ms.title="Store_Devices" ms.interactiontype="14">Devices</button>
+        <ul aria-labelledby="Devices-navigation" aria-hidden="true">
+    <li ms.cmpnm="Store_Device_MicrosoftSurface">
+        <a id="shellmenu_3" href="https://www.microsoft.com/en-us/store/b/surface?icid=TopNavDevicesSurface" ms.title="Store_Device_MicrosoftSurface">Microsoft Surface</a>
+        
+    </li>
+    <li ms.cmpnm="Store_Devices_PCsandTablets">
+        <a id="shellmenu_4" href="https://www.microsoft.com/en-us/store/b/pc?icid=TopNavDevicesPC" ms.title="Store_Devices_PCsandTablets">PCs &amp; tablets</a>
+        
+    </li>
+    <li ms.cmpnm="Store_Device_Xbox">
+        <a id="shellmenu_5" href="https://www.microsoft.com/en-us/store/b/xbox?icid=TopNavDevicesXbox" ms.title="Store_Device_Xbox">Xbox</a>
+        
+    </li>
+    <li ms.cmpnm="Store_Devices_Virtualreality">
+        <a id="shellmenu_6" href="https://www.microsoft.com/en-us/store/b/virtualreality?icid=TopNavVirtualReality" ms.title="Store_Devices_Virtualreality">Virtual reality</a>
+        
+    </li>
+    <li ms.cmpnm="Store_Device_Accessories">
+        <a id="shellmenu_7" href="https://www.microsoft.com/en-us/store/b/accessories?icid=TopNavDevicesAccessories" ms.title="Store_Device_Accessories">Accessories</a>
+        
+    </li>
+    <li ms.cmpnm="Store_Devices_WindowsPhone">
+        <a id="shellmenu_8" href="https://www.microsoft.com/en-us/store/b/mobile?icid=TopNavDevicesWindowsPhone" ms.title="Store_Devices_WindowsPhone">Windows phone</a>
+        
+    </li>
+        </ul>
+        
+    </li>   
+    <li class="f-sub-menu js-nav-menu" ms.cmpnm="Store_SoftwareAndApps">
+
+        <button id="Software&amp;Apps-navigation" aria-expanded="false" ms.title="Store_SoftwareAndApps" ms.interactiontype="14">Software &amp; Apps</button>
+        <ul aria-labelledby="Software&amp;Apps-navigation" aria-hidden="true">
+    <li ms.cmpnm="Store_SoftwareAndApps_Office">
+        <a id="shellmenu_10" href="https://www.microsoft.com/en-us/store/b/office?icid=TopNavSoftwareOffice" ms.title="Store_SoftwareAndApps_Office">Office</a>
+        
+    </li>
+    <li ms.cmpnm="Store_SoftwareAndApps_Windows">
+        <a id="shellmenu_11" href="https://www.microsoft.com/en-us/store/b/windows?icid=TopNavSoftwareWindows" ms.title="Store_SoftwareAndApps_Windows">Windows</a>
+        
+    </li>
+    <li ms.cmpnm="Store_SoftwareAndApps_Windows">
+        <a id="shellmenu_12" href="https://www.microsoft.com/en-us/store/b/software?icid=TopNavSoftwareAdditionalSoftware" ms.title="Store_SoftwareAndApps_Windows">Professional software</a>
+        
+    </li>
+    <li ms.cmpnm="Store_SoftwareAndApps_WindowsApps">
+        <a id="shellmenu_13" href="https://www.microsoft.com/en-us/store/apps/windows?icid=TopNavSoftwareWindowsApps" ms.title="Store_SoftwareAndApps_WindowsApps">Windows apps</a>
+        
+    </li>
+    <li ms.cmpnm="Store_SoftwareAndApps_WindowsApps">
+        <a id="shellmenu_14" href="https://www.microsoft.com/en-us/store/apps/windows-phone?icid=TopNavSoftwareWindowsPhoneApps" ms.title="Store_SoftwareAndApps_WindowsApps">Windows phone apps</a>
+        
+    </li>
+        </ul>
+        
+    </li>   
+    <li class="f-sub-menu js-nav-menu" ms.cmpnm="Store_GamesandEntertainment">
+
+        <button id="Games&amp;Entertainment-navigation" aria-expanded="false" ms.title="Store_GamesandEntertainment" ms.interactiontype="14">Games &amp; Entertainment</button>
+        <ul aria-labelledby="Games&amp;Entertainment-navigation" aria-hidden="true">
+    <li ms.cmpnm="GamesandEntertainment_XboxGamesDisc">
+        <a id="shellmenu_16" href="https://www.microsoft.com/en-us/store/collections/xboxgames/pc?icid=TopNavXboxGamesDisc" ms.title="GamesandEntertainment_XboxGamesDisc">Xbox Games (disc)</a>
+        
+    </li>
+    <li ms.cmpnm="GamesandEntertainment_XboxGamesDownload">
+        <a id="shellmenu_17" href="https://www.microsoft.com/en-us/store/top-paid/games/xbox?icid=TopNavXboxGamesDownload" ms.title="GamesandEntertainment_XboxGamesDownload">Xbox Games Download</a>
+        
+    </li>
+    <li ms.cmpnm="Games&amp;Entertainment _PCgames">
+        <a id="shellmenu_18" href="https://www.microsoft.com/en-us/store/collections/pcgames/pc?icid=TopNavGamesPCGames" ms.title="Games&amp;Entertainment _PCgames">PC games (disc)</a>
+        
+    </li>
+    <li ms.cmpnm="Store_GamesAndEntertainment_WindowsDigitalGames">
+        <a id="shellmenu_19" href="https://www.microsoft.com/en-us/store/games/windows?icid=TopNavGamesWindowsGames" ms.title="Store_GamesAndEntertainment_WindowsDigitalGames">Windows digital games</a>
+        
+    </li>
+    <li ms.cmpnm="Store_GamesAndEntertainment_WindowsPhoneGames">
+        <a id="shellmenu_20" href="https://www.microsoft.com/en-us/store/games/windows-phone?icid=TopNavGamesWindowsPhoneGames" ms.title="Store_GamesAndEntertainment_WindowsPhoneGames">Windows phone games</a>
+        
+    </li>
+    <li ms.cmpnm="Games&amp;Entertainment _MoviesandTV">
+        <a id="shellmenu_21" href="https://www.microsoft.com/en-us/store/movies-and-tv?icid=TopNavMoviesAndTv" ms.title="Games&amp;Entertainment _MoviesandTV">Movies &amp; TV</a>
+        
+    </li>
+    <li ms.cmpnm="Games&amp;Entertainment _Music">
+        <a id="shellmenu_22" href="https://www.microsoft.com/en-us/store/music?icid=TopNavMusicFrCa" ms.title="Games&amp;Entertainment _Music">Music</a>
+        
+    </li>
+        </ul>
+        
+    </li>   
+    <li class="f-sub-menu js-nav-menu" ms.cmpnm="Store_Deals">
+
+        <button id="Deals-navigation" aria-expanded="false" ms.title="Store_Deals" ms.interactiontype="14">Deals</button>
+        <ul aria-labelledby="Deals-navigation" aria-hidden="true">
+    <li ms.cmpnm="Store_Deals_Sale">
+        <a id="shellmenu_24" href="https://www.microsoft.com/en-us/store/b/sale?icid=TopNavDealsSale" ms.title="Store_Deals_Sale">Sale</a>
+        
+    </li>
+    <li ms.cmpnm="Deals_BacktoSchool">
+        <a id="shellmenu_25" href="https://www.microsoft.com/en-us/store/b/backtoschool?icid=en_US_Store_UH_gm_fy18_backtoschool" ms.title="Deals_BacktoSchool">Back to school deals</a>
+        
+    </li>
+    <li ms.cmpnm="Deals_SurfaceDeals">
+        <a id="shellmenu_26" href="https://www.microsoft.com/en-us/store/collections/microsoftsurfacedeals/pc?icid=TopNavSurfaceDeals" ms.title="Deals_SurfaceDeals">Microsoft Surface deals</a>
+        
+    </li>
+    <li ms.cmpnm="Deals_PCDeals">
+        <a id="shellmenu_27" href="https://www.microsoft.com/en-us/store/collections/pcdeals/pc?icid=TopNavDevicesPCDeals" ms.title="Deals_PCDeals">PC deals</a>
+        
+    </li>
+    <li ms.cmpnm="Deals_XboxDeals">
+        <a id="shellmenu_28" href="https://www.microsoft.com/en-us/store/collections/xboxdeals/pc?Icid=TopNavXboxDeals" ms.title="Deals_XboxDeals">Xbox deals</a>
+        
+    </li>
+        </ul>
+        
+    </li>   
+    <li class="f-sub-menu js-nav-menu" ms.cmpnm="Store_More">
+
+        <button id="More-navigation" aria-expanded="false" ms.title="Store_More" ms.interactiontype="14">More</button>
+        <ul aria-labelledby="More-navigation" aria-hidden="true">
+    <li ms.cmpnm="Store_More_Business">
+        <a id="shellmenu_30" href="https://www.microsoft.com/en-us/store/b/business?icid=TopNavBusinessStore" ms.title="Store_More_Business">Business</a>
+        
+    </li>
+    <li ms.cmpnm="Store_More_StudentandFaculty Store">
+        <a id="shellmenu_31" href="https://www.microsoft.com/en-us/store/b/student?icid=TopNavEduStore" ms.title="Store_More_StudentandFaculty Store">Students &amp; educators</a>
+        
+    </li>
+    <li ms.cmpnm="Store_More_Developer">
+        <a id="shellmenu_32" href="https://www.microsoft.com/en-us/store/b/developer?icid=CNavDeveloper" ms.title="Store_More_Developer">Developer</a>
+        
+    </li>
+    <li ms.cmpnm="Store_More_GiftCards">
+        <a id="shellmenu_33" href="https://www.microsoft.com/en-us/store/b/gift-cards" ms.title="Store_More_GiftCards">Gift cards</a>
+        
+    </li>
+        </ul>
+        
+    </li>   
+                                    
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="c-uhf-menu js-nav-menu">
+
+                                <button id="Products-navigation" aria-expanded="false" aria-haspopup="true" ms.title="Products" ms.interactiontype="14" style="white-space:nowrap">Products</button>
+                                <ul aria-labelledby="Products-navigation" aria-hidden="true" ms.cmpnm="Products">
+    <li class="f-sub-menu js-nav-menu" ms.cmpnm="Products_SoftwareAndServices">
+
+        <button id="Software&amp;services-navigation" aria-expanded="false" ms.title="Products_SoftwareAndServices" ms.interactiontype="14">Software &amp; services</button>
+        <ul aria-labelledby="Software&amp;services-navigation" aria-hidden="true">
+    <li ms.cmpnm="Products_SoftwareAndServices_Windows">
+        <a id="shellmenu_36" href="https://www.microsoft.com/en-us/windows" ms.title="Products_SoftwareAndServices_Windows">Windows</a>
+        
+    </li>
+    <li ms.cmpnm="Products_SoftwareAndServices_Office">
+        <a id="shellmenu_37" href="https://products.office.com/en-us/home" ms.title="Products_SoftwareAndServices_Office">Office</a>
+        
+    </li>
+    <li ms.cmpnm="Products_SoftwareAndServices_FreeDownloadsAndSecurity">
+        <a id="shellmenu_38" href="https://www.microsoft.com/en-us/download/default.aspx" ms.title="Products_SoftwareAndServices_FreeDownloadsAndSecurity">Free downloads &amp; security</a>
+        
+    </li>
+    <li ms.cmpnm="Products_SoftwareAndServices_InternetExplorer">
+        <a id="shellmenu_39" href="https://windows.microsoft.com/en-us/internet-explorer/download-ie" ms.title="Products_SoftwareAndServices_InternetExplorer">Internet Explorer</a>
+        
+    </li>
+    <li ms.cmpnm="Products_SoftwareAndServices_MicrosoftEdge">
+        <a id="shellmenu_40" href="https://www.microsoft.com/en-us/windows/microsoft-edge" ms.title="Products_SoftwareAndServices_MicrosoftEdge">Microsoft Edge</a>
+        
+    </li>
+    <li ms.cmpnm="Products_SoftwareAndServices_Skype">
+        <a id="shellmenu_41" href="https://www.skype.com/en/" ms.title="Products_SoftwareAndServices_Skype">Skype</a>
+        
+    </li>
+    <li ms.cmpnm="Products_SoftwareAndServices_OneNote">
+        <a id="shellmenu_42" href="https://www.onenote.com/" ms.title="Products_SoftwareAndServices_OneNote">OneNote</a>
+        
+    </li>
+    <li ms.cmpnm="Products_SoftwareAndServices_OneDrive">
+        <a id="shellmenu_43" href="https://onedrive.live.com/about/en-us/" ms.title="Products_SoftwareAndServices_OneDrive">OneDrive</a>
+        
+    </li>
+    <li ms.cmpnm="Products_SoftwareAndServices_MicrosoftHealth">
+        <a id="shellmenu_44" href="https://www.microsoft.com/microsoft-health/en-us" ms.title="Products_SoftwareAndServices_MicrosoftHealth">Microsoft Health</a>
+        
+    </li>
+    <li ms.cmpnm="Products_SoftwareAndServices_MSN">
+        <a id="shellmenu_45" href="https://www.msn.com/?ocid=HEA000" ms.title="Products_SoftwareAndServices_MSN">MSN</a>
+        
+    </li>
+    <li ms.cmpnm="Products_SoftwareAndServices_Bing">
+        <a id="shellmenu_46" href="https://www.bing.com/" ms.title="Products_SoftwareAndServices_Bing">Bing</a>
+        
+    </li>
+    <li ms.cmpnm="Products_SoftwareAndServices_MicrosoftGroove">
+        <a id="shellmenu_47" href="https://www.microsoft.com/en-us/groove" ms.title="Products_SoftwareAndServices_MicrosoftGroove">Microsoft Groove</a>
+        
+    </li>
+    <li ms.cmpnm="Products_SoftwareAndServices_MicrosoftMoviesandTV">
+        <a id="shellmenu_48" href="https://www.microsoft.com/en-us/movies-and-tv" ms.title="Products_SoftwareAndServices_MicrosoftMoviesandTV">Microsoft Movies &amp; TV</a>
+        
+    </li>
+        </ul>
+        
+    </li>   
+    <li class="f-sub-menu js-nav-menu" ms.cmpnm="Products_DevicesAndXbox">
+
+        <button id="Devices&amp;Xbox-navigation" aria-expanded="false" ms.title="Products_DevicesAndXbox" ms.interactiontype="14">Devices &amp; Xbox</button>
+        <ul aria-labelledby="Devices&amp;Xbox-navigation" aria-hidden="true">
+    <li ms.cmpnm="Products_DevicesAndXbox">
+        <a id="shellmenu_50" href="https://www.microsoft.com/devices/en-us" ms.title="Products_DevicesAndXbox">All Microsoft devices</a>
+        
+    </li>
+    <li ms.cmpnm="Products_DevicesAndXbox_Surface">
+        <a id="shellmenu_51" href="https://www.microsoft.com/surface/en-us" ms.title="Products_DevicesAndXbox_Surface">Microsoft Surface</a>
+        
+    </li>
+    <li ms.cmpnm="Products_DevicesAndXbox_AllPCsAndTablets">
+        <a id="shellmenu_52" href="https://www.microsoft.com/en-us/store/b/pc?icid=TopNavDevicesPC" ms.title="Products_DevicesAndXbox_AllPCsAndTablets">All Windows PCs &amp; tablets</a>
+        
+    </li>
+    <li ms.cmpnm="Products_PCAccessories">
+        <a id="shellmenu_53" href="https://www.microsoft.com/accessories/en-us" ms.title="Products_PCAccessories">PC accessories</a>
+        
+    </li>
+    <li ms.cmpnm="Products_DevicesAndXbox_XboxAndGames">
+        <a id="shellmenu_54" href="https://www.xbox.com/" ms.title="Products_DevicesAndXbox_XboxAndGames">Xbox &amp; games</a>
+        
+    </li>
+    <li ms.cmpnm="Products_MicrosoftLumia">
+        <a id="shellmenu_55" href="https://www.microsoft.com/en-us/mobile/" ms.title="Products_MicrosoftLumia">Microsoft Lumia</a>
+        
+    </li>
+    <li ms.cmpnm="Products_DevicesAndXbox_AllWindowsPhones">
+        <a id="shellmenu_56" href="https://www.microsoft.com/en-us/windows/phones" ms.title="Products_DevicesAndXbox_AllWindowsPhones">All Windows phones</a>
+        
+    </li>
+    <li ms.cmpnm="Products_DevicesAndXbox_MicrosoftHololens">
+        <a id="shellmenu_57" href="https://www.microsoft.com/microsoft-hololens/en-us" ms.title="Products_DevicesAndXbox_MicrosoftHololens">Microsoft HoloLens</a>
+        
+    </li>
+        </ul>
+        
+    </li>   
+    <li class="f-sub-menu js-nav-menu" ms.cmpnm="Products_ForBusiness">
+
+        <button id="Forbusiness-navigation" aria-expanded="false" ms.title="Products_ForBusiness" ms.interactiontype="14">For business</button>
+        <ul aria-labelledby="Forbusiness-navigation" aria-hidden="true">
+    <li ms.cmpnm="Products_ForBusiness_CloudPlatform">
+        <a id="shellmenu_59" href="https://www.microsoft.com/en-us/server-cloud/" ms.title="Products_ForBusiness_CloudPlatform">Cloud Platform</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForBusiness_MicrosoftAzure">
+        <a id="shellmenu_60" href="https://azure.microsoft.com/" ms.title="Products_ForBusiness_MicrosoftAzure">Microsoft Azure</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForBusiness_MicrosoftDynamics">
+        <a id="shellmenu_61" href="https://www.microsoft.com/en-us/dynamics365/home" ms.title="Products_ForBusiness_MicrosoftDynamics">Microsoft Dynamics 365</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForBusiness_WindowsForBusiness">
+        <a id="shellmenu_62" href="https://www.microsoft.com/en-us/windowsforbusiness" ms.title="Products_ForBusiness_WindowsForBusiness">Windows for business</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForBusiness_OfficeForBusiness">
+        <a id="shellmenu_63" href="https://products.office.com/en-us/business/office" ms.title="Products_ForBusiness_OfficeForBusiness">Office for business</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForBusiness_SkypeForBusiness">
+        <a id="shellmenu_64" href="https://products.office.com/en-us/skype-for-business" ms.title="Products_ForBusiness_SkypeForBusiness">Skype for business</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForBusiness_SurfaceForBusiness">
+        <a id="shellmenu_65" href="https://www.microsoft.com/surface/en-us/business/overview" ms.title="Products_ForBusiness_SurfaceForBusiness">Surface for business</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForBusiness_EnterpriseSolutions">
+        <a id="shellmenu_66" href="https://enterprise.microsoft.com/en-us/" ms.title="Products_ForBusiness_EnterpriseSolutions">Enterprise solutions</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForBusiness_SmallBusinessSolutions">
+        <a id="shellmenu_67" href="https://business.microsoft.com/en-us/" ms.title="Products_ForBusiness_SmallBusinessSolutions">Small business solutions</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForBusiness_FindASolutionsProvider">
+        <a id="shellmenu_68" href="https://partnercenter.microsoft.com/en-us/pcv/search" ms.title="Products_ForBusiness_FindASolutionsProvider">Find a solutions provider</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForBusiness_VolumeLicensing">
+        <a id="shellmenu_69" href="https://www.microsoft.com/en-us/licensing/default.aspx" ms.title="Products_ForBusiness_VolumeLicensing">Volume licensing</a>
+        
+    </li>
+        </ul>
+        
+    </li>   
+    <li class="f-sub-menu js-nav-menu" ms.cmpnm="Products_ForDevelopersAndITPros">
+
+        <button id="Fordevelopers&amp;ITpros-navigation" aria-expanded="false" ms.title="Products_ForDevelopersAndITPros" ms.interactiontype="14">For developers &amp; IT pros</button>
+        <ul aria-labelledby="Fordevelopers&amp;ITpros-navigation" aria-hidden="true">
+    <li ms.cmpnm="Products_DeveloperAndITPro_DevelopWindowsApps">
+        <a id="shellmenu_71" href="https://developer.microsoft.com/en-us/windows" ms.title="Products_DeveloperAndITPro_DevelopWindowsApps">Develop Windows apps</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForDevelopersAndITPros_Azure">
+        <a id="shellmenu_72" href="https://azure.microsoft.com/en-us/" ms.title="Products_ForDevelopersAndITPros_Azure">Microsoft Azure</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForDevelopersAndITPros">
+        <a id="shellmenu_73" href="https://msdn.microsoft.com/en-us/" ms.title="Products_ForDevelopersAndITPros">MSDN</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForDevelopersAndITPros_TechNet">
+        <a id="shellmenu_74" href="https://technet.microsoft.com/en-us/" ms.title="Products_ForDevelopersAndITPros_TechNet">TechNet</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForDevelopersAndITPros_VisualStudio">
+        <a id="shellmenu_75" href="https://www.visualstudio.com/" ms.title="Products_ForDevelopersAndITPros_VisualStudio">Visual Studio</a>
+        
+    </li>
+        </ul>
+        
+    </li>   
+    <li class="f-sub-menu js-nav-menu" ms.cmpnm="Products_ForStudentsAndEducators">
+
+        <button id="Forstudents&amp;educators-navigation" aria-expanded="false" ms.title="Products_ForStudentsAndEducators" ms.interactiontype="14">For students &amp; educators</button>
+        <ul aria-labelledby="Forstudents&amp;educators-navigation" aria-hidden="true">
+    <li ms.cmpnm="Products_ForStudentsAndEducators_OfficeForStudents">
+        <a id="shellmenu_77" href="https://www.microsoft.com/en-us/education/products/office/default.aspx" ms.title="Products_ForStudentsAndEducators_OfficeForStudents">Office for students</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForStudentsAndEducators_OneNoteInClassroom">
+        <a id="shellmenu_78" href="https://www.microsoft.com/en-us/education/products/onenote/default.aspx" ms.title="Products_ForStudentsAndEducators_OneNoteInClassroom">OneNote in classroom</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForStudentsAndEducators_ShopPCsAndTablets">
+        <a id="shellmenu_79" href="https://www.microsoft.com/en-us/store/b/student" ms.title="Products_ForStudentsAndEducators_ShopPCsAndTablets">Shop PCs &amp; tablets perfect for students</a>
+        
+    </li>
+    <li ms.cmpnm="Products_ForStudentsAndEducators_MicrosoftInEducation">
+        <a id="shellmenu_80" href="https://www.microsoft.com/en-us/education" ms.title="Products_ForStudentsAndEducators_MicrosoftInEducation">Microsoft in Education</a>
+        
+    </li>
+        </ul>
+        
+    </li>   
+                                    
+                                </ul>
+                            </div>
+                        </li>
+                    <li>
+                        <a id="l1_support" hello="world" class="c-uhf-nav-link" href="https://support.microsoft.com/en-us" ms.title="Support">Support</a>
+                    </li>
+            </ul>
+            
+        </nav>
+
+                <div ms.cmpgrp="Header actions">
+                    
+                            <a class="c-action-trigger c-glyph glyph-shopping-cart" href="https://www.microsoft.com/en-us/store/buy" ms.title="Shopping cart">
+            <span class="shopping-cart-amount">0</span>
+            <span class="x-screen-reader">&nbsp;items in shopping cart</span>
+        </a>
+            <iframe id="shell-cart-count" data-src="//www.microsoft.com/store/buy/cartcount" style="display: none" src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/cartcount.html"></iframe>
+
+                    
+                            <div id="meControl" class="c-me" data-signinsettings="{&quot;containerId&quot;:&quot;meControl&quot;,&quot;enabled&quot;:true,&quot;headerHeight&quot;:48,&quot;debug&quot;:false,&quot;extensibleLinks&quot;:[],&quot;userData&quot;:{&quot;idp&quot;:&quot;msa&quot;,&quot;firstName&quot;:&quot;&quot;,&quot;lastName&quot;:&quot;&quot;,&quot;memberName&quot;:&quot;&quot;,&quot;cid&quot;:&quot;&quot;,&quot;authenticatedState&quot;:&quot;3&quot;},&quot;rpData&quot;:{&quot;preferredIdp&quot;:&quot;msa&quot;,&quot;msaInfo&quot;:{&quot;signInUrl&quot;:&quot;SMC-Sign-In-URL&quot;,&quot;signOutUrl&quot;:&quot;SMC-Sign-Out-URL&quot;,&quot;meUrl&quot;:&quot;https://login.live.com/me.srf?wa=wsignin1.0&quot;},&quot;aadInfo&quot;:{&quot;signOutUrl&quot;:&quot;SMC-Sign-Out-URL&quot;,&quot;appId&quot;:null,&quot;siteUrl&quot;:null,&quot;blockMsaFed&quot;:true}}}" ms.cmpgrp="Me Control"><div class="msame_Header msame_unauth" role="link" tabindex="0" style="height: 48px;"><div class="msame_Header_name msame_TxtTrunc" style="line-height: 48px;">Sign in</div><div class="msame_Header_chev"></div></div></div>
+
+                    
+                </div>
+        </div>
+        
+        
+    </div>
+    
+    
+</header>
+
+
+    </div>
+            </div>
+
+    </section>
+    </div><!-- end ngIf: !noChrome -->
+
+    
+    <div comscore=""></div>
+    <main role="main" class="main-section">
+        <!-- ngIf: !noChrome && !hideSearch --><div ng-if="!noChrome &amp;&amp; !hideSearch" class="ng-scope">
+            <!-- ngInclude: '/PartialViews/Search/SearchContainer.html' --><div ng-include="'/PartialViews/Search/SearchContainer.html'" class="ng-scope"><div id="search-box" ng-controller="SearchController" class="ng-scope">
+    <!-- ngIf: bannerPlacement=='above-search' -->
+    <div ng-show="!userInSMCNavFlight" aria-hidden="false">
+        <div ng-hide="isEnterprisePage || isCommercial" class="search-container other" ng-class="{'jumbotron jumbotron-centered jumbotron-search home' : displayAllContent &amp;&amp; !errorStatus &amp;&amp; !isSkylightNavFlight, 'other' : (!displayAllContent || errorStatus) &amp;&amp; !isSkylightNavFlight }" aria-hidden="false">
+            <div class="container">
+                <div class="row">
+                    <div class="centering-col col-xl-14 col-xl-offset-5 col-lg-16 col-lg-offset-4 col-md-20 col-md-offset-2 col-xs-24">
+                        <div class="centered-content" ng-hide="isSkylightNavFlight" aria-hidden="false">
+                            <!-- ngIf: displayAllContent && !errorStatus -->
+                            <form class="search-form ng-pristine ng-valid" novalidate="" role="form" ng-submit="primarySearchClicked();">
+                                <div class="has-feedback">
+                                    <input class="form-control search-text ng-pristine ng-untouched ng-valid ng-empty" id="search-text" ng-attr-placeholder="{{ view.searchPlaceholder }}" ng-model="userQuery" autocomplete="off" placeholder="Search for help" aria-invalid="false" type="text">
+                                    <span class="win-icon primary-search form-control-feedback" type="button" aria-label="" ng-click="primarySearchClicked();" tabindex="-1" role="button">  </span>
+                                    <div class="auto-suggest-results ng-isolate-scope" auto-suggest="" data-template-url="/PartialViews/Search/BingAutoSuggest.html" data-input-source="#search-text" data-input-query="userQuery" data-selected-suggestion="selectedSuggestion" data-minimum-letters="0" data-telemetry-event-name="AutoSuggestSelected" data-query-model-mapper="getCompleteText(suggestion)" data-query-function="getSuggestions(query)" data-submit-handler="primarySearchClicked()" data-suggestion-html-generator="generateSuggestionHtml(query, suggestion)"><ul ng-show="result.suggestions.length &amp;&amp; isVisible" aria-hidden="true" class="ng-hide">
+    <!-- ngRepeat: suggestion in result.suggestions -->
+</ul>
+<div class="sr-only ng-binding" aria-live="polite" role="status"></div></div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                    <div class="centering-col col-xl-12 col-xl-offset-6 col-lg-14 col-lg-offset-5 col-md-18 col-md-offset-3 col-xs-24">
+                        <div ng-hide="!isSkylightNavFlight" aria-hidden="true" class="ng-hide">
+                            <virtual-agent-nav-entry data-view="view.virtualAgentNav" data-collapsed="!displayAllContent" class="ng-isolate-scope"><div class="skylight-nav-entry hidden-xs skylight-nav-collapsed" ng-class="{'skylight-nav-collapsed': $ctrl.collapsed}">
+    <div class="skylight-image-container ng-hide" ng-show="!$ctrl.collapsed" aria-hidden="true">
+        <img ng-src="https://compass-ssl.microsoft.com/assets/2e/28/2e286c40-eee9-4826-bcac-98e294c457ee.svg?n=skylight_nav_avatar.svg" src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/2e286c40-eee9-4826-bcac-98e294c457ee.svg">
+    </div>
+    <div class="skylight-nav-details text-align-center" ng-class="{'text-align-center': $ctrl.collapsed}">
+        <!-- ngIf: !$ctrl.collapsed -->
+        <button id="skylight-entry-nav" class="btn btn-primary skylight-nav-btn ng-binding" ng-click="$ctrl.openVirtualAgent()"> 
+            <img class="skylight-head-icon" ng-src="https://compass-ssl.microsoft.com/assets/2e/28/2e286c40-eee9-4826-bcac-98e294c457ee.svg?n=skylight_nav_avatar.svg" src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/2e286c40-eee9-4826-bcac-98e294c457ee.svg">  ASK VIRTUAL AGENT <span class="win-icon win-icon-ChevronRight"></span> 
+        </button>
+    </div>
+</div>
+</virtual-agent-nav-entry>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ngIf: !isCommercial --><!-- ngInclude: '/PartialViews/Search/HelpLinks.html' --><div ng-hide="isEnterprisePage" ng-if="!isCommercial" ng-include="'/PartialViews/Search/HelpLinks.html'" class="ng-scope" aria-hidden="false"><div class="container quick-nav ng-scope other" ng-class="{'home' : displayAllContent &amp;&amp; !errorStatus, 'other' : !displayAllContent || errorStatus}">
+    <div class="row">
+        <!-- ngRepeat: quickNavLink in view.quickNavLinks --><div class="help-link ng-scope" ng-hide="checkVisibility(quickNavLink)" ng-repeat="quickNavLink in view.quickNavLinks" aria-hidden="false">
+            <a href="https://account.microsoft.com/?lang=en-us" ng-attr-id="{{quickNavLink.key}}" ng-href="https://account.microsoft.com/?lang=en-us" ng-click="linkClick($event, quickNavLink.key)" target="_self" id="microsoft-account">
+                <span class="win-icon ng-binding" aria-hidden="true"></span>
+                <span class="text-body ng-binding">Manage my account</span>
+            </a>
+        </div><!-- end ngRepeat: quickNavLink in view.quickNavLinks --><div class="help-link ng-scope ng-hide" ng-hide="checkVisibility(quickNavLink)" ng-repeat="quickNavLink in view.quickNavLinks" aria-hidden="true">
+            <a href="https://portal.office.com/account/" ng-attr-id="{{quickNavLink.key}}" ng-href="https://portal.office.com/account/" ng-click="linkClick($event, quickNavLink.key)" target="_self" id="work-account">
+                <span class="win-icon ng-binding" aria-hidden="true"></span>
+                <span class="text-body ng-binding">Manage my account</span>
+            </a>
+        </div><!-- end ngRepeat: quickNavLink in view.quickNavLinks --><div class="help-link ng-scope" ng-hide="checkVisibility(quickNavLink)" ng-repeat="quickNavLink in view.quickNavLinks" aria-hidden="false">
+            <a href="https://answers.microsoft.com/en-us" ng-attr-id="{{quickNavLink.key}}" ng-href="https://answers.microsoft.com/en-us" ng-click="linkClick($event, quickNavLink.key)" target="_self" id="ask-community">
+                <span class="win-icon ng-binding" aria-hidden="true"></span>
+                <span class="text-body ng-binding">Ask the community</span>
+            </a>
+        </div><!-- end ngRepeat: quickNavLink in view.quickNavLinks --><div class="help-link ng-scope ng-hide" ng-hide="checkVisibility(quickNavLink)" ng-repeat="quickNavLink in view.quickNavLinks" aria-hidden="true">
+            <a href="#" ng-attr-id="{{quickNavLink.key}}" ng-href="#" ng-click="linkClick($event, quickNavLink.key)" target="_self" id="contact-support">
+                <span class="win-icon ng-binding" aria-hidden="true"></span>
+                <span class="text-body ng-binding">Contact us</span>
+            </a>
+        </div><!-- end ngRepeat: quickNavLink in view.quickNavLinks --><div class="help-link ng-scope" ng-hide="checkVisibility(quickNavLink)" ng-repeat="quickNavLink in view.quickNavLinks" aria-hidden="false">
+            <a ng-attr-id="{{quickNavLink.key}}" ng-href="" ng-click="linkClick($event, quickNavLink.key)" target="_self" id="contact-us-next">
+                <span class="win-icon ng-binding" aria-hidden="true"></span>
+                <span class="text-body ng-binding">Contact us</span>
+            </a>
+        </div><!-- end ngRepeat: quickNavLink in view.quickNavLinks --><div class="help-link ng-scope" ng-hide="checkVisibility(quickNavLink)" ng-repeat="quickNavLink in view.quickNavLinks" aria-hidden="false">
+            <a href="https://www.microsoft.com/en-us/download/" ng-attr-id="{{quickNavLink.key}}" ng-href="https://www.microsoft.com/en-us/download/" ng-click="linkClick($event, quickNavLink.key)" target="_self" id="download-center">
+                <span class="win-icon ng-binding" aria-hidden="true"></span>
+                <span class="text-body ng-binding">Find downloads</span>
+            </a>
+        </div><!-- end ngRepeat: quickNavLink in view.quickNavLinks -->
+    </div>
+</div></div><!-- end ngIf: !isCommercial -->
+        <!-- ngIf: isCommercial -->
+    </div>
+    <survey-invitation class="ng-isolate-scope"><!-- ngIf: $ctrl.isElibigleForSurvey --><div ng-if="$ctrl.isElibigleForSurvey" class="ng-scope">
+    <div class="survey-tab survey-invite survey-invite-slide-in" ng-class="$ctrl.inviteClass">
+        <!-- ngIf: !$ctrl.showInternalFeedback --><button id="smc-survey-external-feedback-button" class="btn-primary ng-binding ng-scope" ng-if="!$ctrl.showInternalFeedback" ng-click="$ctrl.showPopupSurvey()">Site feedback</button><!-- end ngIf: !$ctrl.showInternalFeedback -->
+        <!-- ngIf: $ctrl.showInternalFeedback -->
+    </div>
+    <div class="container-fluid survey-banner survey-invite survey-invite-slide-in" ng-class="$ctrl.inviteClass">
+        <div class="row padded-row win-color-bg-10">
+            <!-- ngIf: !$ctrl.showInternalFeedback --><div class="col-xs-18 ng-scope" ng-if="!$ctrl.showInternalFeedback">
+                <button id="smc-survey-external-feedback-button-mobile" class="btn text-align-left win-color-fg-accent win-color-bg-10 feedback-buttonlink ng-binding" ng-click="$ctrl.showPopupSurvey()">Tell us about your experience with our site</button>
+            </div><!-- end ngIf: !$ctrl.showInternalFeedback -->
+            <!-- ngIf: $ctrl.showInternalFeedback -->
+            <div class="col-xs-6">
+                <button id="smc-survey-feedback-dismiss-mobile" aria-label="" ng-click="$ctrl.mobileInviteDismiss()" class="btn win-color-bg-10"><span aria-hidden="true" tabindex="-1" id="smc-survey-mobile-invite-dismiss" class="win-icon win-icon-Clear"></span></button>
+            </div>
+        </div>
+    </div>
+</div><!-- end ngIf: $ctrl.isElibigleForSurvey --></survey-invitation>
+    <!-- ngIf: bannerPlacement=='below-search' -->
+</div></div>
+            
+            
+
+            
+            <!-- ngIf: hasSkylightEntry && !noChrome --><virtual-agent-entry ng-if="hasSkylightEntry &amp;&amp; !noChrome" data-view="skylightEntryView" data-name="smc-entry-chrome" data-flow="smc-virtual-agent" data-message-delay="isMobile ? '' : 2000" data-message-duration="isMobile ? '' : 10000" data-on-seen="onEntrySeen(name)" data-on-clicked="onEntryClicked()" class="ng-scope ng-isolate-scope"><div class="skylight-entry">
+    <!-- ngIf: $ctrl.view.messageText --><div ng-if="$ctrl.view.messageText" ng-show="$ctrl.isMessageVisible" ng-class="{ 'full-width': $ctrl.isSlidOut }" class="message-bubble bubble-content bubble-below ng-scope full-width ng-hide" aria-hidden="true">
+        <message-animation ng-show="$ctrl.isThinking" class="ng-isolate-scope ng-hide" aria-hidden="true"><div class="message-animation">
+    <div class="dot" ng-style="$ctrl.dot1Style" style="animation-delay: 1200ms; animation-duration: 700ms;"></div>
+    <div class="dot" ng-style="$ctrl.dot2Style" style="animation-delay: 600ms; animation-duration: 700ms;"></div>
+    <div class="dot" ng-style="$ctrl.dot3Style" style="animation-duration: 700ms;"></div>
+</div></message-animation>
+        <div class="message-bubble-content visible" ng-hide="$ctrl.isThinking" ng-class="{ 'visible': $ctrl.isMessageTextVisible }" aria-hidden="false">
+            <!-- ngIf: $ctrl.view.entryHeader --><div class="message-bubble-header ng-binding ng-scope" ng-if="$ctrl.view.entryHeader">Hi, I’m your virtual agent</div><!-- end ngIf: $ctrl.view.entryHeader -->
+            <div class="message-bubble-text ng-binding">Tell me about the issue and I’ll help you find the solution you need.</div>
+        </div>
+    </div><!-- end ngIf: $ctrl.view.messageText -->
+    <button ng-click="$ctrl.openVirtualAgent()" ng-mouseenter="$ctrl.toggleBubble(true)" ng-mouseleave="$ctrl.toggleBubble(false)" id="skylight-entry-chrome">
+        <img ng-src="https://compass-ssl.microsoft.com/assets/99/df/99df2279-5807-45b0-908d-0cb17c89717e.svg?n=skylight-header-icon.svg" src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/99df2279-5807-45b0-908d-0cb17c89717e.svg">
+        <span class="ng-binding">Try the Virtual Agent (PREVIEW)</span>
+    </button>
+</div></virtual-agent-entry><!-- end ngIf: hasSkylightEntry && !noChrome -->
+        </div><!-- end ngIf: !noChrome && !hideSearch -->
+
+            <noscript>
+        <div class="error-content text-center">
+            <div><span class="win-icon warning-symbol win-icon-EmojiNeutral"></span></div>
+            <h2> Javascript is disabled </h2>
+            <p> Please enable javascript and refresh the page </p>
+        </div>
+    </noscript>
+    <!-- ngIf: errorStatus -->
+    <div class="error-content text-center text-muted ng-hide" ng-show="errorStatus" aria-hidden="true">
+        <p class="ng-binding">CV: </p>
+    </div>
+
+
+
+        <div ng-class="{'container': !noChrome &amp;&amp; !fluidContainer, 'container-fluid': fluidContainer}" class="container">
+            <div class="row">
+                <div class="col-xs-24">
+                    <!-- ngView:  --><div ng-view="" role="presentation" ng-show="!errorStatus" scroll-track="" class="ng-scope" aria-hidden="false"><!-- ngIf: isGwt -->
+<!-- ngIf: isGenericArticle --><div ng-if="isGenericArticle" class="ng-scope">
+    <!-- ngInclude: '/app/content/PartialViews/GenericArticle/Index.html' --><div ng-include="'/app/content/PartialViews/GenericArticle/Index.html'" class="ng-scope"><!-- ngIf: article --><div class="content-article spacer-32-top col-lg-16 col-lg-offset-4 col-md-20 col-md-offset-2 ng-scope" ng-if="article">
+    <div generic-article="" article="article" iframe="iFrame" class="ng-isolate-scope"><div class="content-article">
+    <div class="container">
+        <div class="row">
+            <header class="page-title-header">
+                <!-- ngIf: article.details.heading --><h1 class="page-title col-xl-20 col-md-18 ng-binding ng-scope" ng-if="article.details.heading" ng-bind-html="article.details.heading">How to determine that hardware DEP is available and configured on your computer</h1><!-- end ngIf: article.details.heading -->
+                <!-- ngIf: !article.details.heading -->
+                <div ng-hide="iframe" media-widget="" data-title="How to determine that hardware DEP is available and configured on your computer" class="ng-isolate-scope" aria-hidden="false"><div class="content-media row">
+    <ul class="list-unstyled col-md-6 col-xl-4 media-widget">
+        <li>
+            <a id="media-email" translate="no" ng-href="mailto:?subject=I think you'd be interested in this article: How to determine that hardware DEP is available and configured on your computer&amp;body=How to determine that hardware DEP is available and configured on your computer - https://support.microsoft.com/en-us/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your" class="ng-binding" href="mailto:?subject=I%20think%20you%27d%20be%20interested%20in%20this%20article:%20How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer&amp;body=How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer%20-%20https://support.microsoft.com/en-us/help/912923/how-to-determine-that-hardware-dep-is-available-and-configured-on-your">
+                <span class="win-icon" aria-hidden="true">  </span>Email
+            </a>
+        </li>
+        <li>
+            <a id="media-print" translate="no" href="javascript:window.print();" class="ng-binding">
+                <span class="win-icon" aria-hidden="true">  </span>Print
+            </a>
+        </li>
+    </ul>
+</div></div>
+            </header>
+        </div>
+    </div>
+    <!-- ngIf: iframe -->
+
+    <!-- ngIf: hotfixLink -->
+
+    <!-- ngIf: article.details.isMachineTranslated === true || article.details.isMachineTranslated === 'true' -->
+    <!-- ngIf: article.details.isInternalContent === true || article.details.isInternalContent === 'true' -->
+
+    <!-- ngIf: article.gdsProducts.length > 0 -->
+    <!-- ngIf: caseInsensitiveIndexOf(article.details.keywords, 'kbretire') > -1 -->
+
+    <div product-picker="article.details.products" article-sections="article.details.body" class="ng-isolate-scope"><div class="dropdown ng-hide" ng-show="hasPicker()" aria-hidden="true">
+    <div>
+        <label for="combobox" class="ng-binding">Select Product Version</label>
+    </div>
+    <br>
+    <div>
+        <select id="combobox" ng-model="selectedProduct" ng-options="product.id as product.name for product in products" class="spacer-32-bottom ng-pristine ng-untouched ng-valid ng-empty" aria-invalid="false"><option value="" class="ng-binding" selected="selected">All Products</option></select>
+    </div>
+</div></div>
+    <!-- ngIf: article.details.kbProductPicker -->
+
+    <!-- ngInclude: getTemplateUrl() --><div ng-include="getTemplateUrl()" class="ng-scope"><div content-section-list="article.details.body" class="ng-scope ng-isolate-scope"><!-- ngRepeat: section in contentSectionList track by $index --><!-- ngIf: !isString && hasContent() --><div ng-repeat="section in contentSectionList track by $index" ng-if="!isString &amp;&amp; hasContent()" class="ng-scope">
+    <div content-section="section" class="ng-isolate-scope"><!-- ngIf: typeof(contentSection) !== 'string' --><section class="section ng-scope" ng-if="typeof(contentSection) !== 'string'" applies-to-products="[]" ng-attr-id="{{contentSection.meta.id}}" ng-class="{'internal-content': isInternalSection() }">
+    <!-- ngIf: isInternalSection() -->
+    <!-- ngIf: contentSection.title --><header class="section-header ng-scope" ng-if="contentSection.title">
+        <h3 class="section-title ng-binding" ng-bind-html="contentSection.title">INTRODUCTION </h3>
+        <!-- ngIf: contentSection.subtitle -->
+    </header><!-- end ngIf: contentSection.title -->
+    <!-- ngIf: contentSection.content && contentSection.content.length > 0 --><div class="container section-body ng-scope" ng-if="contentSection.content &amp;&amp; contentSection.content.length &gt; 0">
+        <div class="row">
+            <!-- ngRepeat: content in contentSection.content track by $index --><div ng-class="getStyleClass()" ng-repeat="content in contentSection.content track by $index" class="ng-scope col-xs-24">
+                <div compile="content" class="ng-isolate-scope"><div class="kb-summary-section section ng-scope">Data
+ Execution Prevention (DEP) is a set of hardware and software 
+technologies that perform additional checks on memory to help protect 
+against malicious code exploits.<br><br>Hardware-enforced DEP marks all 
+memory locations in a process as non-executable unless the location 
+explicitly contains executable code. One kind of malicious code attacks 
+tries to insert and run code from non-executable memory locations. DEP 
+helps prevent these attacks by intercepting them and raising an 
+exception.<br><br>This article describes the requirements  for using 
+hardware-enforced DEP. This article also describes how to confirm that 
+hardware DEP is working in Windows.</div></div>
+            </div><!-- end ngRepeat: content in contentSection.content track by $index -->
+        </div>
+    </div><!-- end ngIf: contentSection.content && contentSection.content.length > 0 -->
+</section><!-- end ngIf: typeof(contentSection) !== 'string' --></div>
+</div><!-- end ngIf: !isString && hasContent() --><!-- end ngRepeat: section in contentSectionList track by $index --><!-- ngIf: !isString && hasContent() --><div ng-repeat="section in contentSectionList track by $index" ng-if="!isString &amp;&amp; hasContent()" class="ng-scope">
+    <div content-section="section" class="ng-isolate-scope"><!-- ngIf: typeof(contentSection) !== 'string' --><section class="section ng-scope" ng-if="typeof(contentSection) !== 'string'" applies-to-products="[]" ng-attr-id="{{contentSection.meta.id}}" ng-class="{'internal-content': isInternalSection() }">
+    <!-- ngIf: isInternalSection() -->
+    <!-- ngIf: contentSection.title --><header class="section-header ng-scope" ng-if="contentSection.title">
+        <h3 class="section-title ng-binding" ng-bind-html="contentSection.title"> More Information</h3>
+        <!-- ngIf: contentSection.subtitle -->
+    </header><!-- end ngIf: contentSection.title -->
+    <!-- ngIf: contentSection.content && contentSection.content.length > 0 --><div class="container section-body ng-scope" ng-if="contentSection.content &amp;&amp; contentSection.content.length &gt; 0">
+        <div class="row">
+            <!-- ngRepeat: content in contentSection.content track by $index --><div ng-class="getStyleClass()" ng-repeat="content in contentSection.content track by $index" class="ng-scope col-xs-24">
+                <div compile="content" class="ng-isolate-scope"><div class="kb-moreinformation-section section ng-scope"><h3 class="sbody-h3">Requirements for using hardware-enforced DEP</h3> To use hardware-enforced DEP, you must meet all the following conditions:<br><br><ol class="sbody-num_list"><li>The computer's processor must support hardware-enforced DEP.<br><br>Many
+ recent processors support hardware-enforced DEP. Both Advanced Micro 
+Devices (AMD) and Intel Corporation have defined and shipped 
+Windows-compatible architectures that are compatible with DEP.  This 
+processor support may be known as NX (no-execute) or XD (execute 
+disable) technology. To determine whether your computer's processor 
+supports hardware-enforced DEP, contact the manufacturer of your 
+computer.</li><li>Hardware-enforced DEP must be enabled in the BIOS.<br><br>On
+ some computers, you can disable processor support for hardware-enforced
+ DEP in the BIOS. You must not disable this support.  Depending on your 
+computer manufacturer, the option to disable this support may be labeled
+ "Data Execution Prevention," "XD," "Execute Disable," or "NX."</li><li>The computer must have Windows XP with Service Pack 2 or Windows Server 2003 with Service Pack 1 installed.<br><br><span class="text-base">Note</span>
+ Both 32-bit versions and 64-bit versions of Windows support 
+hardware-enforced DEP. Windows XP Media Center Edition 2005  and 
+Microsoft Windows XP Tablet PC Edition 2005 include all the features and
+ components of Windows XP SP2.</li><li>Hardware-enforced DEP must be enabled for programs on the computer.<br><br>In
+ 64-bit versions of Windows, hardware-enforced DEP is always enabled for
+ 64-bit native programs. However, depending on your configuration, 
+hardware-enforced DEP may be disabled for 32-bit programs.</li></ol><span>For
+ more information about DEP,  about DEP configuration, and for a list of
+ Windows Operating Systems that support hardware DEP, click the 
+following article number to view the article in the Microsoft Knowledge 
+Base:<br><br><div class="indent"><a id="kb-link-1" href="https://support.microsoft.com/en-us/help/875352">875352 </a>
+ A detailed description of the Data Execution Prevention (DEP) feature 
+in Windows XP Service Pack 2, Windows XP Tablet PC Edition 2005, and 
+Windows Server 2003<br><br></div></span>For information about how to 
+configure memory protection in Windows XP with Service Pack 2,  visit 
+the following Microsoft Web site:<div class="indent"><a id="kb-link-2" href="http://technet.microsoft.com/en-us/library/cc700810.aspx" target="_self">http://technet.microsoft.com/en-us/library/cc700810.aspx</a></div><h3 class="sbody-h3">How to confirm that hardware DEP is working in Windows</h3>To confirm that hardware DEP is working in Windows, use one of the following methods.<h4 class="sbody-h4">Method 1: Use the Wmic command-line tool</h4>You
+ can use the Wmic command-line tool to examine the DEP settings. To 
+determine whether hardware-enforced DEP is available, follow these 
+steps:<ol class="sbody-num_list"><li>Click <strong class="uiterm">Start</strong>, click <strong class="uiterm">Run</strong>, type <span class="sbody-userinput">cmd</span> in the <strong class="uiterm">Open</strong> box, and then click <strong class="uiterm">OK</strong>.</li><li>At the command prompt, type the following command,  and then press ENTER:<div class="indent"><span class="sbody-userinput">wmic OS Get DataExecutionPrevention_Available</span></div>If the output is "TRUE," hardware-enforced DEP is available.</li></ol>To determine the current DEP support policy, follow these steps.<ol class="sbody-num_list x-hidden-focus"><li>Click <strong class="uiterm">Start</strong>, click <strong class="uiterm">Run</strong>, type <span class="sbody-userinput">cmd</span> in the <strong class="uiterm">Open</strong> box, and then click <strong class="uiterm">OK</strong>.</li><li class="">At the command prompt, type the following command, and then press ENTER:<div class="indent"><span class="sbody-userinput">wmic OS Get DataExecutionPrevention_SupportPolicy</span></div>The
+ value returned will be 0, 1, 2 or 3. This value corresponds to one of 
+the DEP support policies that are described in the following table.</li></ol><div class="table-responsive"><table class="sbody-table table"><tbody><tr class="sbody-tr"><td class="sbody-td"><span class="text-base">DataExecutionPrevention_SupportPolicy property value</span></td><td class="sbody-td"><span class="text-base">Policy Level</span></td><td class="sbody-td"><span class="text-base">Description</span></td></tr><tr class="sbody-tr"><td class="sbody-td">2</td><td class="sbody-td">OptIn (default configuration)</td><td class="sbody-td">Only Windows system components and services have DEP applied</td></tr><tr class="sbody-tr"><td class="sbody-td">3</td><td class="sbody-td">OptOut</td><td class="sbody-td">DEP
+ is enabled for all processes. Administrators can manually create a list
+ of specific applications which do not have DEP applied</td></tr><tr class="sbody-tr"><td class="sbody-td">1</td><td class="sbody-td">AlwaysOn</td><td class="sbody-td">DEP is enabled for all processes</td></tr><tr class="sbody-tr"><td class="sbody-td">0</td><td class="sbody-td">AlwaysOff</td><td class="sbody-td">DEP is not enabled for any processes</td></tr></tbody></table></div><span class="text-base">Note</span> To verify that Windows is running with hardware DEP enabled, examine the <span class="text-base">DataExecutionPrevention_Drivers</span> property of the <span class="text-base">Win32_OperatingSystem</span> class. In some system configurations, hardware DEP may be disabled by using the <span class="text-base">/nopae</span> or <span class="text-base">/execute</span> switches in the Boot.ini file. To examine this property, type the following command at a command prompt:<div class="indent"><span class="sbody-userinput">wmic OS Get DataExecutionPrevention_Drivers</span></div><h4 class="sbody-h4">Method 2: Use the graphical user interface</h4>To use the graphical user interface to determine whether DEP is available, follow these steps:<ol class="sbody-num_list"><li class="">Click <strong class="uiterm">Start</strong>, click <strong class="uiterm">Run</strong>, type <span class="sbody-userinput">wbemtest</span> in the <strong class="uiterm">Open</strong> box, and then click <strong class="uiterm">OK</strong>.</li><li>In the <strong class="uiterm">Windows Management Instrumentation Tester</strong> dialog box, click <strong class="uiterm">Connect</strong>.</li><li>In the box at the top of the <strong class="uiterm">Connect</strong> dialog box, type <span class="sbody-userinput">root\cimv2</span>, and then click <strong class="uiterm">Connect</strong>.</li><li class="">Click <strong class="uiterm">Enum Instances</strong>.</li><li class="">In the <strong class="uiterm">Class Info</strong> dialog box, type <span class="sbody-userinput">Win32_OperatingSystem</span> <br>in the <strong class="uiterm">Enter superclass name</strong> box, and then click <strong class="uiterm">OK</strong>.</li><li class=""> In the <strong class="uiterm">Query Result</strong> dialog box, double-click the top item.<br><br><span class="text-base">Note</span> This item starts with "Win32_OperatingSystem.Name=Microsoft..."</li><li>In the <strong class="uiterm">Object editor</strong> dialog box, locate the <span class="text-base">DataExecutionPrevention_Available</span> property in the <strong class="uiterm">Properties</strong> area.</li><li>Double-click <strong class="uiterm">DataExecutionPrevention_Available</strong>.</li><li>In the <strong class="uiterm">Property Editor</strong> dialog box, note the value in the <strong class="uiterm">Value</strong> box.</li></ol>If the value is TRUE, hardware DEP is available.<h5 class="sbody-h5 text-subtitle">Notes</h5><ul class="sbody-free_list"><li>To determine the  mode in which DEP is running, examine the <span class="text-base">DataExecutionPrevention_SupportPolicy</span> property of the <span class="text-base">Win32_OperatingSystem</span> class.  The table at the end of Method 1 describes each support policy value.</li><li>To verify that hardware DEP is enabled in Windows, examine the <span class="text-base">DataExecutionPrevention_Drivers</span> property of the <span class="text-base">Win32_OperatingSystem</span> class. In some system configurations, hardware DEP may be disabled by using the <span class="text-base">/nopae</span> or <span class="text-base">/execute</span> switches in the Boot.ini file.</li></ul><span>The
+ third-party products that this article discusses are manufactured by 
+companies that are independent of Microsoft. Microsoft makes no 
+warranty, implied or otherwise, regarding the performance or reliability
+ of these products.<br><br></span></div></div>
+            </div><!-- end ngRepeat: content in contentSection.content track by $index -->
+        </div>
+    </div><!-- end ngIf: contentSection.content && contentSection.content.length > 0 -->
+</section><!-- end ngIf: typeof(contentSection) !== 'string' --></div>
+</div><!-- end ngIf: !isString && hasContent() --><!-- end ngRepeat: section in contentSectionList track by $index -->
+<!-- ngIf: !isString --><div ng-if="!isString" class="ng-scope">
+    <div compile="contentSectionList" class="ng-isolate-scope"></div>
+</div><!-- end ngIf: !isString --></div>
+</div>
+
+</div></div>
+</div><!-- end ngIf: article -->
+<!-- ngInclude: '/app/content/PartialViews/Content/ArticleFooter.html' --><div ng-include="'/app/content/PartialViews/Content/ArticleFooter.html'" class="ng-scope"><!-- ngIf: article --><div class="spacer-32-top col-lg-16 col-lg-offset-4 col-md-20 col-md-offset-2 ng-scope" ng-if="article">
+    <div content-properties="" article-id="912923" last-modified="2009-03-11T00:00:00" revision="1" products="[]" class="ng-isolate-scope"><div class="section" ng-show="contentProperties" aria-hidden="false">
+    <header class="section-header">
+        <h5 class="section-title ng-binding">Properties</h5>
+    </header>
+    <p class="ng-binding">Article ID: 912923 - Last Review: Mar 11, 2009 - Revision: 1</p>
+
+    <!-- ngIf: appliesTo.length > 0 -->
+    <!-- ngIf: keywords -->
+</div></div>
+</div><!-- end ngIf: article -->
+
+<div class="spacer-32-top col-lg-16 col-lg-offset-4 col-md-20 col-md-offset-2 ng-scope" ng-show="article &amp;&amp; !iFrame" aria-hidden="false">
+    <div content-survey="" class="ng-isolate-scope"><section class="section content-survey" ng-show="contentSurvey" aria-hidden="false">
+    <header class="section-header">
+        <h5 class="section-title ng-binding">Feedback</h5>
+    </header>
+    <form ng-submit="OnSubmit()" class="ng-pristine ng-valid ng-valid-minlength ng-valid-maxlength">
+        <div ng-show="showSurvey" aria-hidden="false">
+            <div class="choices" ng-show="showButtons" aria-hidden="false">
+                <label ng-class="choiceCaptionClass" class="ng-binding choice-caption">Was this information helpful?</label>
+                <div class="form-group">
+                    <span class="button">
+                        <label class="button-inline">
+                            <button id="content-survey-yes" class="btn btn-primary ng-binding" type="button" ng-click="onYesNoSomewhatClick('yes')" value="yes"> Yes </button>
+                        </label>
+                    </span>
+                    <span class="button">
+                        <label class="button-inline">
+                            <button id="content-survey-somewhat" class="btn btn-primary ng-binding" type="button" ng-click="onYesNoSomewhatClick('somewhat')" value="somewhat"> Somewhat </button>
+                        </label>
+                    </span>
+                    <span class="button">
+                        <label class="button-inline">
+                            <button id="content-survey-no" class="btn btn-primary ng-binding" type="button" ng-click="onYesNoSomewhatClick('no')" value="no"> No </button>
+                        </label>
+                    </span>
+                </div>
+            </div>
+            <div ng-show="showTextBox" aria-hidden="true" class="ng-hide">
+                <div class="form-group">
+                    <label class="suggestion ng-binding">
+                        Tell us what we can do to improve the article
+                    </label>
+                    <textarea id="survey-verbatim" class="form-control ng-pristine ng-untouched ng-valid ng-empty ng-valid-minlength ng-valid-maxlength" aria-label="Tell us what we can do to improve the article" name="suggestion" ng-model="suggestion" ng-minlength="1" ng-maxlength="400" aria-invalid="false"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary pull-right ng-binding" type="submit">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div ng-show="!showSurvey" class="ng-binding ng-hide" aria-hidden="true">
+            Thanks! Your feedback will help us improve the support experience.
+        </div>
+    </form>
+</section></div>
+</div>
+
+<!-- ngIf: !article -->
+</div></div>
+</div><!-- end ngIf: isGenericArticle -->
+<!-- ngIf: isInstantAnswer -->
+
+<!-- ngIf: !article -->
+</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- ngIf: !noChrome --><div role="contentinfo" class="win-color-bg-10 footer-section ng-scope footer-padding" ng-class="{ 'footer-padding': !isMobile &amp;&amp; hasSkylightEntry }" ng-if="!noChrome">
+        <!-- ngInclude: '/PartialViews/Common/F1Footer.html' --><div ng-include="'/PartialViews/Common/F1Footer.html'" class="ng-scope"><div class="f1-footer ng-scope" ng-controller="F1FooterController">
+    <!-- Needed to span the full page -->
+    <div class="container">
+        <div class="row">
+            <!-- ngRepeat: section in viewlinkfarm.sectionList --><section class="col-sm-24 col-md-8 section remove-header-rule ng-scope" ng-repeat="section in viewlinkfarm.sectionList">
+                <div class="section-header dropdown-no-toggle-header collapsed">
+                    <h3 class="text-base ng-binding">Support</h3>
+                </div>
+                <div class="section-header dropdown-toggle-header collapsed">
+                    <h3 class="text-base ng-binding">Support<a href="" aria-label="Support" aria-expanded="false"  role="button" data-toggle="collapse" class="text-title pull-right dropdown-toggle win-icon" data-target="#link-section-footer-0"></a></h3>
+                </div>
+
+                <ul id="link-section-footer-0" class="list-unstyled section-body collapse landing-section-content">
+                    <!-- ngRepeat: link in section.links --><li ng-repeat="link in section.links" class="ng-scope"><a id="f1footer-account-support" ng-href="/en-us/products/microsoft-account/" target="_self" class="ng-binding" href="https://support.microsoft.com/en-us/products/microsoft-account/">Account support</a></li><!-- end ngRepeat: link in section.links --><li ng-repeat="link in section.links" class="ng-scope"><a id="f1footer-supported-products-list" ng-href="/en-us/allproducts" target="_self" class="ng-binding" href="https://support.microsoft.com/en-us/allproducts">Supported products list</a></li><!-- end ngRepeat: link in section.links --><li ng-repeat="link in section.links" class="ng-scope"><a id="f1footer-product-support-lifecycle" ng-href="http://support.microsoft.com/en-us/lifecycle" target="_self" class="ng-binding" href="http://support.microsoft.com/en-us/lifecycle">Microsoft Lifecycle Policy</a></li><!-- end ngRepeat: link in section.links -->
+                </ul>
+            </section><!-- end ngRepeat: section in viewlinkfarm.sectionList --><section class="col-sm-24 col-md-8 section remove-header-rule ng-scope" ng-repeat="section in viewlinkfarm.sectionList">
+                <div class="section-header dropdown-no-toggle-header collapsed">
+                    <h3 class="text-base ng-binding">Security</h3>
+                </div>
+                <div class="section-header dropdown-toggle-header collapsed">
+                    <h3 class="text-base ng-binding">Security<a href="" aria-label="Security" aria-expanded="false"  role="button" data-toggle="collapse" class="text-title pull-right dropdown-toggle win-icon" data-target="#link-section-footer-1"></a></h3>
+                </div>
+
+                <ul id="link-section-footer-1" class="list-unstyled section-body collapse landing-section-content">
+                    <!-- ngRepeat: link in section.links --><li ng-repeat="link in section.links" class="ng-scope"><a id="f1footer-safety-and-security-center" ng-href="/en-us/products/security" target="_self" class="ng-binding" href="https://support.microsoft.com/en-us/products/security">Safety &amp; Security Center</a></li><!-- end ngRepeat: link in section.links --><li ng-repeat="link in section.links" class="ng-scope"><a id="f1footer-download-security-essentials" ng-href="/en-us/help/14210" target="_self" class="ng-binding" href="https://support.microsoft.com/en-us/help/14210">Download Security Essentials</a></li><!-- end ngRepeat: link in section.links --><li ng-repeat="link in section.links" class="ng-scope"><a id="f1footer-malicious-software-removal-tool" ng-href="https://www.microsoft.com/en-us/download/malicious-software-removal-tool-details.aspx" target="_self" class="ng-binding" href="https://www.microsoft.com/en-us/download/malicious-software-removal-tool-details.aspx">Malicious Software Removal Tool</a></li><!-- end ngRepeat: link in section.links -->
+                </ul>
+            </section><!-- end ngRepeat: section in viewlinkfarm.sectionList --><section class="col-sm-24 col-md-8 section remove-header-rule ng-scope" ng-repeat="section in viewlinkfarm.sectionList">
+                <div class="section-header dropdown-no-toggle-header collapsed">
+                    <h3 class="text-base ng-binding">Contact us</h3>
+                </div>
+                <div class="section-header dropdown-toggle-header collapsed">
+                    <h3 class="text-base ng-binding">Contact us<a href="" aria-label="Contact us" aria-expanded="false"  role="button" data-toggle="collapse" class="text-title pull-right dropdown-toggle win-icon" data-target="#link-section-footer-2"></a></h3>
+                </div>
+
+                <ul id="link-section-footer-2" class="list-unstyled section-body collapse landing-section-content">
+                    <!-- ngRepeat: link in section.links --><li ng-repeat="link in section.links" class="ng-scope"><a id="f1footer-report-support-scam" ng-href="https://www.microsoft.com/reportascam/" target="_self" class="ng-binding" href="https://www.microsoft.com/reportascam/">Report a support scam</a></li><!-- end ngRepeat: link in section.links --><li ng-repeat="link in section.links" class="ng-scope"><a id="f1footer-footer-contact-microsoft-support " ng-href="https://support.microsoft.com/en-us/contactus/" target="_self" class="ng-binding" href="https://support.microsoft.com/en-us/contactus/">Contact Microsoft Support</a></li><!-- end ngRepeat: link in section.links --><li ng-repeat="link in section.links" class="ng-scope"><a id="f1footer-locate-microsoft-office-worldwide" ng-href="https://www.microsoft.com/worldwide" target="_self" class="ng-binding" href="https://www.microsoft.com/worldwide">Locate Microsoft addresses worldwide</a></li><!-- end ngRepeat: link in section.links -->
+                </ul>
+            </section><!-- end ngRepeat: section in viewlinkfarm.sectionList -->
+        </div>
+    </div>
+</div></div>
+        <!-- ngInclude: '/PartialViews/Common/Locale.html' --><div ng-include="'/PartialViews/Common/Locale.html'" class="ng-scope"><div class="language-selector-section ng-scope ng-hide" id="language-selector" ng-controller="LanguageController" ng-show="displayLanguageSelector" aria-hidden="true">
+    <div class="container">
+        <div class="clearfix text-title spacer-20-top spacer-32-bottom language-selector-section ng-binding">
+            This site in other countries/regions
+            <a class="win-icon win-icon-Cancel pull-right" ng-click="closeClick()"></a>
+        </div>
+        <div class="row spacer-12-bottom hidden-sm hidden-md hidden-lg hidden-xl">
+            <!-- ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-fr-dz">Algérie - Français</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-ar">Argentina - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-en-au">Australia - English</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-fr-be">Belgique - Français</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-nl-be">België - Nederlands</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-bo">Bolivia - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-hr-ba">Bosna i Hercegovina  - Hrvatski</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-pt-br">Brasil - Português</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-en-ca">Canada - English</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-fr-ca">Canada - Français</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-cl">Chile - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-co">Colombia - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-cr">Costa Rica - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-sr-Latn-me">Crna Gora - Srpski</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-da-dk">Danmark - Dansk</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-de-de">Deutschland - Deutsch</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-do">Dominican Republic - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-ec">Ecuador - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-et-ee">Eesti - Eesti</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-sv">El Salvador - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-es">España - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-us">Estados Unidos - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-fr-fr">France - Français</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-gt">Guatemala - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-en-hk">Hong Kong SAR - English</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-hr-hr">Hrvatska - Hrvatski</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-en-in">India - English</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-id-id">Indonesia (Bahasa) - Bahasa</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-en-ie">Ireland - English</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-it-it">Italia - Italiano</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-lv-lv">Latvija - Latviešu</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-lt-lt">Lietuva - Lietuvių</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-fr-lu">Luxembourg - Français</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-hu-hu">Magyarország - Magyar</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-en-my">Malaysia - English</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-fr-ma">Maroc - Français</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-mx">México - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-nl-nl">Nederland - Nederlands</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-en-nz">New Zealand - English</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-nb-no">Norge - Bokmål</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-pa">Panamá - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-py">Paraguay - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-pe">Perú - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-en-ph">Philippines - English</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-pl-pl">Polska - Polski</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-pt-pt">Portugal - Português</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-pr">Puerto Rico - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-ro-ro">România - Română</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-de-ch">Schweiz - Deutsch</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-en-sg">Singapore - English</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-sl-si">Slovenija - Slovenščina</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-sk-sk">Slovensko - Slovenčina</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-en-za">South Africa - English</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-sr-latn-rs">Srbija - Srpski</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-fr-ch">Suisse - Français</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-fi-fi">Suomi - Suomi</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-sv-se">Sverige - Svenska</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-fr-tn">Tunisie - Français</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-tr-tr">Türkiye - Türkçe</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-en-gb">United Kingdom - English</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-en-us">United States - English</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-uy">Uruguay - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-es-ve">Venezuela - Español</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-vi-vn">Việt Nam - Tiếng việt</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-is-is">Ísland - Íslenska</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-de-at">Österreich - Deutsch</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-cs-cz">Česká Republika - Čeština</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-el-gr">Ελλάδα - Ελληνικά</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-bg-bg">България - Български</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-ru-kz">Казахстан - Русский</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-ru-ru">Россия - Русский</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-uk-ua">Україна - Українська</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-he-il">ישראל - עברית</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-ar-ae">الإمارات العربية المتحدة - العربية</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-ar-sa">المملكة العربية السعودية - العربية</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-ar-eg">مصر - العربية</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-hi-in">भारत - हिंदी</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-th-th">ไทย - ไทย</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-zh-cn">中国  - 简体中文</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-zh-tw">台灣 - 繁體中文</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-ja-jp">日本 - 日本語</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-zh-hk">香港特別行政區 - 繁體中文</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' --><div ng-repeat="language in languages | objectOrderBy:'displayName'" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'mobile-language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="mobile-language-ko-kr">대한민국 - 한국어</a>
+            </div><!-- end ngRepeat: language in languages | objectOrderBy:'displayName' -->
+        </div>
+        <div class="row spacer-12-bottom hidden-xs">
+            <!-- ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-fr-dz">Algérie - Français</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-us">Estados Unidos - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-pe">Perú - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-vi-vn">Việt Nam - Tiếng việt</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-ar">Argentina - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-fr-fr">France - Français</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-en-ph">Philippines - English</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-is-is">Ísland - Íslenska</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-en-au">Australia - English</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-gt">Guatemala - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-pl-pl">Polska - Polski</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-de-at">Österreich - Deutsch</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-fr-be">Belgique - Français</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-en-hk">Hong Kong SAR - English</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-pt-pt">Portugal - Português</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-cs-cz">Česká Republika - Čeština</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-nl-be">België - Nederlands</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-hr-hr">Hrvatska - Hrvatski</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-pr">Puerto Rico - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-el-gr">Ελλάδα - Ελληνικά</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-bo">Bolivia - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-en-in">India - English</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-ro-ro">România - Română</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-bg-bg">България - Български</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-hr-ba">Bosna i Hercegovina  - Hrvatski</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-id-id">Indonesia (Bahasa) - Bahasa</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-de-ch">Schweiz - Deutsch</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-ru-kz">Казахстан - Русский</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-pt-br">Brasil - Português</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-en-ie">Ireland - English</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-en-sg">Singapore - English</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-ru-ru">Россия - Русский</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-en-ca">Canada - English</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-it-it">Italia - Italiano</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-sl-si">Slovenija - Slovenščina</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-uk-ua">Україна - Українська</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-fr-ca">Canada - Français</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-lv-lv">Latvija - Latviešu</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-sk-sk">Slovensko - Slovenčina</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-he-il">ישראל - עברית</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-cl">Chile - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-lt-lt">Lietuva - Lietuvių</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-en-za">South Africa - English</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-ar-ae">الإمارات العربية المتحدة - العربية</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-co">Colombia - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-fr-lu">Luxembourg - Français</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-sr-latn-rs">Srbija - Srpski</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-ar-sa">المملكة العربية السعودية - العربية</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-cr">Costa Rica - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-hu-hu">Magyarország - Magyar</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-fr-ch">Suisse - Français</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-ar-eg">مصر - العربية</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-sr-Latn-me">Crna Gora - Srpski</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-en-my">Malaysia - English</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-fi-fi">Suomi - Suomi</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-hi-in">भारत - हिंदी</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-da-dk">Danmark - Dansk</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-fr-ma">Maroc - Français</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-sv-se">Sverige - Svenska</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-th-th">ไทย - ไทย</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-de-de">Deutschland - Deutsch</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-mx">México - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-fr-tn">Tunisie - Français</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-zh-cn">中国  - 简体中文</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-do">Dominican Republic - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-nl-nl">Nederland - Nederlands</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-tr-tr">Türkiye - Türkçe</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-zh-tw">台灣 - 繁體中文</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-ec">Ecuador - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-en-nz">New Zealand - English</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-en-gb">United Kingdom - English</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-ja-jp">日本 - 日本語</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-et-ee">Eesti - Eesti</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-nb-no">Norge - Bokmål</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-en-us">United States - English</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-zh-hk">香港特別行政區 - 繁體中文</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-sv">El Salvador - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-pa">Panamá - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-uy">Uruguay - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-ko-kr">대한민국 - 한국어</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-es">España - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-py">Paraguay - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-es-ve">Venezuela - Español</a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index --><div ng-repeat="language in languagesListForLargeScreens track by $index" class="col-sm-6 col-xs-24 ng-scope">
+                <a ng-attr-id="{{'language-'+language.locale}}" href="" ng-click="setLanguage(language);" class="ng-binding" id="language-"></a>
+            </div><!-- end ngRepeat: language in languagesListForLargeScreens track by $index -->
+        </div>
+    </div>
+</div></div>
+
+    <section id="footerArea" data-m="{&quot;cN&quot;:&quot;footerArea&quot;,&quot;cT&quot;:&quot;Area_coreuiArea&quot;,&quot;id&quot;:&quot;a2Body&quot;,&quot;sN&quot;:2,&quot;aN&quot;:&quot;Body&quot;}">
+                    <div id="footerRegion" data-region-key="footerregion" data-m="{&quot;cN&quot;:&quot;footerRegion&quot;,&quot;cT&quot;:&quot;Region_coreui-region&quot;,&quot;id&quot;:&quot;r1a2&quot;,&quot;sN&quot;:1,&quot;aN&quot;:&quot;a2&quot;}">
+
+    <div id="footerUniversalFooter" data-m="{&quot;cN&quot;:&quot;footerUniversalFooter&quot;,&quot;cT&quot;:&quot;Module_coreui-universalfooter&quot;,&quot;id&quot;:&quot;m1r1a2&quot;,&quot;sN&quot;:1,&quot;aN&quot;:&quot;r1a2&quot;}" data-module-id="Category|footerRegion|footerRegion|footerUniversalFooter|coreui-universalfooter">
+        
+
+
+
+
+
+<footer id="uhf-footer" class="c-universal-footer context-uhf" data-uhf-greenid="false" data-footer-footprint="en-us/smc/onesite-l0-footer" ms.pgarea="Uhf footer">
+    <section>
+                <a id="locale-picker-link" class="c-hyperlink c-glyph glyph-world" href="javascript:function%20smcLanguageSelector()%20{%20return%20undefined;%20}%20smcLanguageSelector();" ms.title="locale_picker(US)">English (United States)</a>
+
+        <ul role="contentinfo" class="c-list f-bare" ms.cmpgrp="Corp links">
+                            <li>
+                    <a class="c-hyperlink" href="http://go.microsoft.com/fwlink/?LinkID=206977" ms.title="Footer_TermsOfUse">Terms of use</a>
+                </li>
+                <li>
+                    <a class="c-hyperlink" href="http://go.microsoft.com/fwlink/?LinkID=521839" ms.title="Footer_Privacy&amp;cookies">Privacy &amp; cookies</a>
+                </li>
+                <li>
+                    <a class="c-hyperlink" href="http://www.microsoft.com/trademarks" ms.title="Footer_Trademarks">Trademarks</a>
+                </li>
+
+            <li>© Microsoft 2017</li>
+            
+        </ul>
+    </section>
+    
+</footer>
+
+
+
+
+
+<style>
+    .c-modal-link{cursor: pointer;}
+</style>
+    </div>
+            </div>
+
+    </section>
+    </div><!-- end ngIf: !noChrome -->
+
+    
+    <div languaugeselector=""></div>
+
+    
+    <noscript>
+        <img alt="" width="1" height="1" src="https://c.microsoft.com/trans_pixel.aspx">
+    </noscript>
+
+    
+    <div metatags=""></div>
+
+    
+    <script type="text/javascript">var guid = ("xxxxxxxx-xxxx-4xxx-Rxxx-xxxxxxxxxxxx".replace(/x/g, function () { return Math.floor(Math.random() * 16).toString(16); })).replace("R", (8 | Math.floor(Math.random() * 3)).toString(16)); var m = document.createElement("meta"); m.content = guid; m.name = "ms.dqid"; document.getElementsByTagName("head")[0].appendChild(m);</script>
+    <img style="display:none;" onerror="var m=document.createElement('meta');m.name='ms.dqp0';m.content='true';document.getElementsByTagName('head')[0].appendChild(m);" onload="var m=document.createElement('meta');m.name='ms.dqp0';m.content='false';document.getElementsByTagName('head')[0].appendChild(m);" src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/c_003.gif">
+
+    
+    <script type="text/javascript">
+        // JSLL initialization. See reference documentation at https://osgwiki.com/wiki/JSLLv4
+        // Initialize JSLL with all defaults.
+        awa.init();
+    </script>
+
+    <script type="text/JavaScript" async="">
+        var varAutoFirePV = 0;
+        var varClickTracking = 1;
+        var varCustomerTracking = 1;
+        var Route = "76500";
+        var Ctrl = "";
+        document.write("<script type='text/javascript' src='" + (window.location.protocol) + "//c.microsoft.com/ms.js'><\/script>");
+    </script><script type="text/javascript" src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/ms.js"></script><iframe id="_msnFrame" src="How%20to%20determine%20that%20hardware%20DEP%20is%20available%20and%20configured%20on%20your%20computer_files/c_002.gif" style="z-index:-1;height:1px;width:1px;display:none;visibility:hidden;"></iframe>
+
+<iframe id="adalIdTokenFrame" style="visibility: hidden; position: absolute; height: 0px; width: 0px;" src="https://login.microsoftonline.com/common/oauth2/authorize?response_type=id_token&amp;client_id=fdf9885b-dd37-42bf-82e5-c3129ef5a302&amp;redirect_uri=https%3A%2F%2Fsupport.microsoft.com%2Fsilentauth&amp;state=c3a07aaa-656c-4325-bfde-87e20ea24635%7Cfdf9885b-dd37-42bf-82e5-c3129ef5a302&amp;client-request-id=ce4724a7-3c4f-4796-9616-7ff7e56827e3&amp;x-client-SKU=Js&amp;x-client-Ver=1.0.11&amp;prompt=none&amp;nonce=79e665b3-e6c4-4857-9a75-e5d4387feef5"></iframe><div id="meControlDropdown" class="msame_Drop_root" style="display: none;" aria-expanded="false"><div class="msame_Drop_topb"></div><div class="msame_Drop_content"><div class="msame_Drop_active"></div><div class="msame_Drop_rewards" style="display: none;"></div><div class="msame_Drop_account"></div><div class="msame_Drop_links" style="display: none;"><div class="msame_Drop_links_list"></div></div><div class="msame_Drop_signIn"></div><div class="msame_Drop_signOut"></div><div class="msame_Drop_accts" style="display: none;"><div class="msame_Drop_sep"></div><div class="msame_Drop_accts_list"></div></div></div></div></body></html>

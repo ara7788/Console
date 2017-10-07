@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html class=" ya-page_js_yes" lang="ru-RU"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><link rel="profile" href="http://gmpg.org/xfn/11"><link rel="pingback" href="http://adminunix.ru/xmlrpc.php"><link rel="shortcut icon" href="http://adminunix.ru/favicon.ico" type="image/x-icon"><link rel="icon" href="http://adminunix.ru/favicon.ico" type="image/x-icon"> <!-- This site is optimized with the Yoast SEO plugin v4.9 - https://yoast.com/wordpress/plugins/seo/ --><title>Установка NextСloud на Ubuntu 16.04 server</title><meta name="description" content="Установка Nextcloud - системы для организации хранения, синхронизации и обмена данными, размещенными на внешних серверах"><link rel="canonical" href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/"> <!-- / Yoast SEO plugin. --><link rel="dns-prefetch" href="http://fonts.googleapis.com/"><link rel="dns-prefetch" href="http://s.w.org/"><style type="text/css">img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}</style><link rel="stylesheet" id="yarppWidgetCss-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/widget.css" type="text/css" media="all"><link rel="stylesheet" id="wp-postratings-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/postratings-css.css" type="text/css" media="all"><link rel="stylesheet" id="wp-pagenavi-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/pagenavi-css.css" type="text/css" media="all"><link rel="stylesheet" id="fonts-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/css.css" type="text/css" media="all"><link rel="stylesheet" id="font-awesome-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/font-awesome.css" type="text/css" media="all"><link rel="stylesheet" id="bootstrap-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/bootstrap.css" type="text/css" media="all"><link rel="stylesheet" id="style-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/style.css" type="text/css" media="all"><link rel="stylesheet" id="tw-pagination-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/tw-pagination.css" type="text/css" media="screen"> <script type="text/javascript" async="" id="topmailru-code" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/code.gif"></script><script type="text/javascript" async="" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/watch.js"></script><script type="text/javascript" async="" charset="utf-8" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/all.js"></script><script async="" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/analytics.js"></script><script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/jquery.js"></script> <script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/jquery-migrate.js"></script> <link rel="alternate" type="application/json+oembed" href="http://adminunix.ru/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fadminunix.ru%2Fustanovka-nextcloud-na-ubuntu-16-04-server%2F"><link rel="alternate" type="text/xml+oembed" href="http://adminunix.ru/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fadminunix.ru%2Fustanovka-nextcloud-na-ubuntu-16-04-server%2F&amp;format=xml"> <script type="text/javascript">window._wp_rp_static_base_url = 'https://rp.zemanta.com/static/';
+	window._wp_rp_wp_ajax_url = "http://adminunix.ru/wp-admin/admin-ajax.php";
+	window._wp_rp_plugin_version = '3.6.1';
+	window._wp_rp_post_id = '2172';
+	window._wp_rp_num_rel_posts = '10';
+	window._wp_rp_thumbnails = true;
+	window._wp_rp_post_title = '%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0+Next%D0%A1loud+%D0%BD%D0%B0+Ubuntu+16.04+server';
+	window._wp_rp_post_tags = ['owncloud', 'server', 'type', 'ubuntu', 'file', 'download', 'miss', 'apach', 'a', 'instal', 'creat'];</script> <link rel="stylesheet" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/vertical-m.css"><style type="text/css">.broken_link, a.broken_link {
+	text-decoration: line-through;
+}</style><style type="text/css">/* Custom style output by Modern WP Themes */</style><link rel="stylesheet" type="text/css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/blocks.css"><script src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/wp-emoji-release.js" type="text/javascript" defer="defer"></script><style type="text/css">#ya-site-form0,#ya-site-form0 .ya-site-form__form,#ya-site-form0 .ya-site-form__input,#ya-site-form0 .ya-site-form__input-text,#ya-site-form0 .ya-site-form__submit,#ya-site-form0 .ya-site-form__search-precise{font-size:12px!important;color:#000!important}#ya-site-form0 .ya-site-form__form-form{display:block}#ya-site-form0 .ya-site-form__form-form,#ya-site-form0 .ya-site-form__input,#ya-site-form0 .ya-site-form__search-precise,#ya-site-form0 .ya-site-form__search-precise__radio,#ya-site-form0 .ya-site-form__gap,#ya-site-form0 .ya-site-form__gap-i,#ya-site-form0 .ya-site-form__logo-img{margin:0;padding:0}#ya-site-form0{margin:0!important;padding:0!important}#ya-site-form0 .ya-site-form__logo-wrap{width:65px;vertical-align:top;border-collapse:collapse}#ya-site-form0 .ya-site-form__logo{display:block;width:52px;margin:0;padding:0 6px 0 0;text-decoration:none}#ya-site-form0 .ya-site-form__logo-img{width:52px;height:21px;border:0!important}#ya-site-form0 .ya-site-form__search-wrap{border-collapse:collapse}#ya-site-form0 .ya-site-form__search{font-size:12px!important;width:100%}#ya-site-form0 .ya-site-form__search-input,#ya-site-form0 .ya-site-form__search-precise,{border:0}#ya-site-form0 .ya-site-form__search-input{padding:6px}#ya-site-form0 .ya-site-form__search-input-layout,#ya-site-form0 .ya-site-form__search-input-layout-l,#ya-site-form0 .ya-site-form__search-input-layout-r{font-size:12px!important;padding:0;vertical-align:middle;border:0;border-collapse:collapse}#ya-site-form0 .ya-site-form__search-input-layout,#ya-site-form0 .ya-site-form__search-input-layout-l{width:100%}#ya-site-form0 .ya-site-form__search-precise{padding:0 18px 5px 6px;text-align:left;vertical-align:top}#ya-site-form0 .ya-site-form__search-precise-i{white-space:nowrap}#ya-site-form0 .ya-site-form__search-precise__radio{width:auto;margin:0 .3em 0 0;vertical-align:middle;background:none}#ya-site-form0 .ya-site-form__search-precise__label{margin:0 .4em 0 0;padding:0;vertical-align:middle}#ya-site-form0 .ya-site-form__input-text{width:100%;margin:0!important;cursor:text;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;background-color:#fff;border:1px solid #7f9db9;outline-style:none;-webkit-appearance:textfield}#ya-site-form0 .ya-site-form__input-text_type_hint{background-repeat:no-repeat;background-position:.2em 50%}#ya-site-form0 .ya-site-form__submit{display:block;width:auto;margin:0 0 0 5px}#ya-site-form0 .ya-site-form__arrow-wrap{overflow:hidden;width:30px;padding:0;vertical-align:middle}#ya-site-form0 .ya-site-form__arrow{position:relative}#ya-site-form0 .ya-site-form__arrow-a{position:absolute;top:50%;right:0;width:0;height:0;margin-top:-59px;border:solid transparent;border-width:59px 0 59px 30px;-moz-border-end-style:dotted}#ya-site-form0 .ya-site-form__wrap{width:100%;table-layout:fixed;border-collapse:collapse}#ya-site-form0 .ya-site-form__gap{border:0}#ya-site-form0 .ya-site-form__gap-i{width:9em}#ya-site-form0.ya-site-form_arrow_yes .ya-site-form__search-input{padding-right:0}#ya-site-form0.ya-site-form_logo_left .ya-site-form__logo{margin-top:4px;margin-left:5px}#ya-site-form0.ya-site-form_logo_top .ya-site-form__logo{display:block;margin:6px 0 0 6px}#ya-site-form0 .ya-site-form__submit_type_image{width:19px;height:15px;outline:none;cursor:pointer;border:0}#ya-site-form0 .ya-site-form__submit_type_image { background: url(https://site.yandex.net/v2.0/i/search.png) no-repeat }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text::-webkit-input-placeholder{color:#000000;}#ya-site-form0 .ya-site-form__form .ya-site-form__input-text:-moz-placeholder{color:#000000;}#ya-site-form0 .ya-site-form__form .ya-site-form__input-text::-moz-placeholder{color:#000000;}#ya-site-form0 .ya-site-form__form .ya-site-form__input-text:-ms-input-placeholder{color:#000000;}#ya-site-form0 .ya-site-form__form * { font-size: 14px !important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { font-style: normal!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { font-weight: normal!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { color: #000000!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { border-color: #88bf8a!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text:focus { border-color: #88bf8a!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { background-color: #ffffff!important }#ya-site-form0 .ya-site-form__search, #ya-site-form0 .ya-site-form__search td, #ya-site-form0 .yaform__precise-i { background-color: transparent !important }#ya-site-form0 .ya-site-form__search-precise__label { color:#000000 !important }#ya-site-form0 .ya-site-form__arrow-a { border-left-color: transparent }</style><link title="adminunix.ru" rel="search" type="application/opensearchdescription+xml" href="https://yandex.ru/search/site/opensearch.xml?ShortName=adminunix.ru&amp;InputEncoding=utf-8&amp;Image=&amp;Url-results=http%3A%2F%2Fadminunix.ru%2Fsearch%3Fsearchid%3D2234651%26web%3D0%26text%3D%7BsearchTerms%7D&amp;Url-suggest=https%3A%2F%2Fsitesearch-suggest.yandex.ru%2Fv1%2Fsuggest%3F%26site%3D2234651%26lang%3Dru%26part%3D%7BsearchTerms%7D&amp;Url-opensearchdescr=https%3A%2F%2Fyandex.ru%2Fsearch%2Fsite%2Fopensearch.xml%3FShortName%3Dadminunix.ru%26InputEncoding%3Dutf-8%26Image%3D%26Url-results%3Dhttp%253A%252F%252Fadminunix.ru%252Fsearch%253Fsearchid%253D2234651%2526web%253D0%2526text%253D%257BsearchTerms%257D%26Url-suggest%3Dhttps%253A%252F%252Fsitesearch-suggest.yandex.ru%252Fv1%252Fsuggest%253F%2526site%253D2234651%2526lang%253Dru%2526part%253D%257BsearchTerms%257D"><style type="text/css">#ya-site-form0 .ya-site-suggest{position:relative;margin:0}#ya-site-form0 .ya-site-suggest-popup{position:absolute;width:100%}#ya-site-form0 .ya-site-suggest__opera-gap{position:absolute;height:25em;border:1px solid transparent}#ya-site-form0 .ya-site-suggest-list{position:absolute;z-index:9999;overflow:hidden;min-width:25em;width:100%;margin-top:-1px;border-collapse:separate;-webkit-box-shadow:0 1px 7px #9a9a9a;-moz-box-shadow:0 1px 7px #9a9a9a;box-shadow:0 1px 7px #9a9a9a;border:1px solid #dedede;border-color:rgba(154,154,154,0.5);border-top-color:rgba(154,154,154,0.4);border-bottom-color:rgba(154,154,154,0.6)}#ya-site-form0 .ya-site-suggest-list{box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}#ya-site-form0 .ya-site-suggest__iframe{position:absolute;z-index:-1;min-width:25em;width:100%;height:100%;background:#fff}#ya-site-form0 .ya-site-suggest-items{font-size:16px;min-width:25em;width:100%;margin:0;padding:0 1px 0 0;list-style:none}#ya-site-form0 .ya-site-suggest-items li{margin:0;padding:0;line-height:normal}#ya-site-form0 .ya-site-suggest-elem{display:block;padding:.25em .3em;cursor:pointer;background:url()}#ya-site-form0 a.ya-site-suggest-elem:link,#ya-site-form0 a.ya-site-suggest-elem:visited{text-decoration:none}html body #ya-site-form0 .ya-site-suggest-elem:link,html body #ya-site-form0 .ya-site-suggest-elem-link{color:#000!important}#ya-site-form0 .ya-site-suggest-elem:hover,html body #ya-site-form0 .ya-site-suggest-elem_state_hover{background:#fef6d7}#ya-site-form0 .ya-site-suggest-elem_nav:hover,#ya-site-form0 .ya-site-suggest-elem_translate:hover{text-decoration:none;color:#000!important}#ya-site-form0 .ya-site-suggest-elem_nav .ya-site-suggest__link{text-decoration:underline;color:#1a3dc1}#ya-site-form0 .ya-site-suggest-elem_translate .ya-site-suggest__link{text-decoration:underline;color:#000}#ya-site-form0 .ya-site-suggest-elem .ya-site-suggest__info{white-space:nowrap;color:#666}#ya-site-form0 .ya-site-suggest-elem_selected{background:#fdedaf}#ya-site-form0 .ya-site-suggest__fact{color:#555}#ya-site-form0 .ya-site-suggest__highlight{font-weight:bold}</style><script async="" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/kb.js" type="text/javascript"></script><script async="" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/adcm.js" type="text/javascript"></script><script async="" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/s.js" type="text/javascript"></script><script src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/processor.js"></script></head><body class="post-template-default single single-post postid-2172 single-format-standard"><script async="" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/collect_pluso.js"></script><header id="masthead" class="site-header" role="banner"><div class="site-header__overlay"><div class="clearfix container"><div class="site-branding"><div class="site-title site-branding__title"> <a class="site-branding__title-link" href="http://adminunix.ru/" title="adminunix.ru" rel="home"> adminunix.ru </a></div><div class="site-description site-branding__description">сопровождение и администрирование UNIX  систем</div> <!-- .site-branding --></div><nav id="main-navigation" class="main-navigation" role="navigation"> <a href="#main-navigation" class="nav-open">Menu</a> <a href="#" class="nav-close">Close</a><div class="main-navigation__links clearfix sf-menu"><ul id="menu-mobile" class="menu sf-js-enabled"><li id="menu-item-1782" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1782"><a href="http://adminunix.ru/">Главная</a></li><li id="menu-item-1781" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1781"><a href="http://adminunix.ru/vse-stat-i/">Все статьи</a></li></ul></div> <!-- #main-navigation --></nav></div></div><!-- /site-header__overlay --> <!-- #masthead --></header><div id="main" class="site-main"><div class="clearfix container"><div id="primary" class="content-area"><div id="content" class="site-content" role="main" itemscope="" itemtype="http://schema.org/Article"><nav class="breadcrumbs"> <a href="http://adminunix.ru/">Главная</a> » <a href="http://adminunix.ru/category/owncloud/" rel="category tag">ownCloud</a> » Вы здесь ↓</nav><!-- /breadcrumbs --><article id="post-2172" class="post-2172 post type-post status-publish format-standard category-owncloud"><meta itemscope="" itemprop="mainEntityOfPage" content="" itemtype="https://schema.org/WebPage" itemid="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/"><meta itemprop="dateModified" content="2017-01-17"><div itemprop="publisher" itemscope="" itemtype="https://schema.org/Organization"><link itemprop="url" href="http://www.your-company-site.com/"><link itemprop="sameAs" href="https://plus.google.com/105212547289033109683"><div itemprop="logo" itemscope="" itemtype="https://schema.org/ImageObject"> <a itemprop="image" href="http://adminunix.ru/favicon.jpg"> </a> <a itemprop="url" href="http://adminunix.ru/favicon.jpg"> </a><meta itemprop="width" content="60"><meta itemprop="height" content="60"></div><meta itemprop="name" content="Николай"><meta itemprop="address" content="Пермь"><meta itemprop="telephone" content="null"></div><header class="entry-header"><h1 itemprop="headline">Установка NextСloud на Ubuntu 16.04 server</h1><div> <span class="posted-on">Опубликовано: <a href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/" title="15:24" rel="bookmark"><time class="entry-date published" itemprop="datePublished" datetime="2017-01-17T15:24:02+00:00">17.01.2017</time></a></span><span class="byline"> | Автор: <span class="author" itemprop="author" itemscope="" itemtype="https://schema.org/Person"><a class="" href="http://adminunix.ru/author/usersrssh/" title="Показать все записи автора: Николай"> <span itemprop="name">Николай</span></a></span></span> <!-- .entry-meta --></div> <!-- .entry-header --></header><div class="entry-thumb-full"><div itemprop="image" itemscope="" itemtype="https://schema.org/ImageObject"> <a itemprop="contentUrl" href=""> </a> <a itemprop="url" href=""> </a><meta itemprop="width" content=""><meta itemprop="height" content=""></div></div><div class="clearfix" itemprop="description"><p><strong>NextCloud</strong>
+ — это версия OwnCloud от разработчика, предоставляет расширенный 
+функционал в открытой версии. Установка практически ни чем не отличается
+ от установки<br> <a href="http://adminunix.ru/ustanovka-own%D1%81loud-na-ubuntu-16-04-server/">OwnCloud</a> .</p><h3>Установка необходимых компонентов</h3><p>Для установки NextCloud нам потребуется:</p><p>Apache, MySQL/MariaDB</p><pre>apt-get install apache2 mariadb-server libapache2-mod-php</pre><p>и дополнительные модули</p><pre>apt-get install php-gd php-json php-mysql php-curl php-zip php-bz2 libxml2-dev  php-dom php-xmlwriter php-xmlreader php-xml php-mbstring php-ldap</pre><pre>apt-get install php-intl php-mcrypt php-imagick</pre><p>Далее загружаем архив последней версии NextCloud:</p><p>Переходим по ссылке <a href="https://nextcloud.com/install/">NextCloud Download Page</a></p><p>Скачиваем файл с именем nextcloud-x.y.z.zip или nextcloud-x.y.z.tar.bz2 (где хуz это номер версии).</p><pre>#wget https://download.nextcloud.com/server/prereleases/nextcloud-11.0.1RC1.tar.bz2</pre><p>или</p><pre>#wget https://download.nextcloud.com/server/releases/nextcloud-11.0.1.zip</pre><p>Извлекаем содержимое архива.</p><p>Запускаем соответствующую команду для разархивирования скачанного типа архива:</p><pre>#tar -xjf nextcloud-xyztar.bz2</pre><p>или</p><pre>#unzip nextcloud-xyztar.zip</pre><p>Архив распакуется текущей директории в каталог NextCloud. Далее скопируем каталог NextCloud в корневой каталог сервера Apache.</p><pre>#cp -r nextcloud /var/www</pre><p>Для настройки разрешении на наши файлы и каталоги создадим скрипт:</p><pre>nano /tmp/nextcloud.sh</pre><pre>#!/bin/bash
+ocpath='/var/www/nextcloud'
+htuser='www-data'
+htgroup='www-data'
+rootuser='root'
+
+printf "Creating possible missing Directories\n"
+mkdir -p $ocpath/data
+mkdir -p $ocpath/assets
+mkdir -p $ocpath/updater
+
+printf "chmod Files and Directories\n"
+find ${ocpath}/ -type f -print0 | xargs -0 chmod 0640
+find ${ocpath}/ -type d -print0 | xargs -0 chmod 0750
+chmod 755 ${ocpath}
+
+printf "chown Directories\n"
+chown -R ${rootuser}:${htgroup} ${ocpath}/
+chown -R ${htuser}:${htgroup} ${ocpath}/apps/
+chown -R ${htuser}:${htgroup} ${ocpath}/assets/
+chown -R ${htuser}:${htgroup} ${ocpath}/config/
+chown -R ${htuser}:${htgroup} ${ocpath}/data/
+chown -R ${htuser}:${htgroup} ${ocpath}/themes/
+chown -R ${htuser}:${htgroup} ${ocpath}/updater/
+
+chmod +x ${ocpath}/occ
+printf "chmod/chown .htaccess\n"
+if [ -f ${ocpath}/.htaccess ]
+ then
+  chmod 0644 ${ocpath}/.htaccess
+  chown ${rootuser}:${htgroup} ${ocpath}/.htaccess
+fi
+if [ -f ${ocpath}/data/.htaccess ]
+ then
+  chmod 0644 ${ocpath}/data/.htaccess
+  chown ${rootuser}:${htgroup} ${ocpath}/data/.htaccess
+fi
+</pre><p>и запустим его</p><pre>sudo bash /tmp/nextcloud.sh</pre><h3>Конфигурируем web сервер Apache</h3><p>Создаем конфигурационный файл Apache для запуска NextCloud.</p><pre># nano /etc/apache2/sites-available/nextcloud.conf</pre><p>со следующим содержимым</p><pre>Alias /nextcloud "/var/www/nextcloud/"
+&lt;Directory /var/www/nextcloud/&gt;
+   Options +FollowSymlinks
+   AllowOverride All
+&lt;IfModule mod_dav.c&gt;
+   Dav off
+&lt;/IfModule&gt;
+   SetEnv HOME /var/www/nextcloud
+   SetEnv HTTP_HOME /var/www/nextcloud
+&lt;/Directory&gt;
+</pre><p>Чтобы включить веб-сайт в загрузку используем команду  a2ensite:</p><pre>sudo a2ensite nextcloud</pre><p>или создаем символьную ссылку в /etc/apache2/sites-enabled:</p><pre>#ln -s /etc/apache2/sites-available/nextcloud.conf /etc/apache2/sites-enabled/nextcloud.conf</pre><h3>Дополнительные настройки Apache</h3><p>Для корректной работы NextCloud, включаем модуль mod_rewrite</p><pre>#a2enmod rewrite</pre><p>Дополнительно рекомендованные модули mod_headers, mod_env, mod_dir and mod_mime:</p><pre>#a2enmod headers env dir mime</pre><p>Также можно использовать mod_fcgi вместо стандартного mod_php</p><pre>#a2enmod setenvif</pre><p>Вы
+ должны отключить проверку подлинности сервера для NextCloud, так как 
+используется обычная проверка подлинности для DAV услуг. Если вы 
+включили проверку подлинности на родительской папке (например , с 
+помощью директивы AuthType Basic), вы можете отключить проверку 
+подлинности специально для записи NextCloud. После файла конфигурации 
+Приведенный выше пример, добавьте следующую строку в секцию  Directory</p><pre> Satisfy Any</pre><p>При
+ использовании SSL, обратите особое внимание на запись ServerName. Вы 
+должны указать такое же имя в конфигурации сервера, а также в поле 
+CommonName сертификата.<br> Теперь перезапустите Apache:</p><p>Работу 
+php тоже нужно немного настроить чтобы установка NextCloud ubuntu 16.04 
+была выполнена правильно. По умолчанию размер загружаемых файлов 
+ограничен, поэтому нужно эти ограничения снять.</p><p>Откроем файл /etc/php/apache/php.ini и измените строчки upload_max_filesize и post_upload_filesize:</p><pre>nano /etc/php/7.0/apache2/php.ini</pre><pre>upload_max_filesize=100M
+post_max_filesize=100M</pre><pre>#service apache2 restart</pre><p>Если 
+вы используете NextCloud в подкаталоге и хотите использовать CalDAV или 
+CardDAV для клиентов убедитесь , что вы настроили правильно сервис 
+обнаружения URL</p><h3>Включение SSL</h3><p>Вы можете использовать 
+NextCloud через обычный HTTP, но настоятельно рекомендуется использовать
+ SSL / TLS для шифрования всего трафика сервера, а также для защиты 
+учетных записей пользователя и данных в процессе передачи.</p><p>Apache 
+установленный под Ubuntu поставляется уже с настроенным простым 
+самоподписанным сертификатом. Все, что вам нужно сделать, это включить 
+модуль SSL и узел по умолчанию. Откройте терминал и выполните команду:</p><pre>#a2enmod ssl</pre><pre>#a2ensite default-ssl</pre><p>Перезагрузим сервис Apache</p><pre>#service apache2 reload</pre><h3>Настройка MySQL/MariaDB и создаем базу данных MySQL</h3><p>Устанавливаем пароль root пользователя MariaDB</p><pre>mysql_secure_installation</pre><p>Задаем новый пароль и изменяем настройки базы данных установленные по умолчанию.</p><pre>NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
+      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+
+In order to log into MariaDB to secure it, we'll need the current
+password for the root user.  If you've just installed MariaDB, and
+you haven't set the root password yet, the password will be blank,
+so you should just press enter here.
+
+Enter current password for root (enter for none):
+OK, successfully used password, moving on...
+
+Setting the root password ensures that nobody can log into the MariaDB
+root user without the proper authorisation.
+<strong>Set root password? [Y/n] y</strong>
+<strong>New password: </strong>
+<strong>Re-enter new password:</strong>
+Password updated successfully!
+Reloading privilege tables..
+ ... Success!
+By default, a MariaDB installation has an anonymous user, allowing anyone
+to log into MariaDB without having to have a user account created for
+them.  This is intended only for testing, and to make the installation
+go a bit smoother.  You should remove them before moving into a
+production environment.
+<strong>Remove anonymous users? [Y/n] y</strong>
+ ... Success!
+Normally, root should only be allowed to connect from 'localhost'.  This
+ensures that someone cannot guess at the root password from the network.
+<strong>Disallow root login remotely? [Y/n] y</strong>
+ ... Success!
+By default, MariaDB comes with a database named 'test' that anyone can
+access.  This is also intended only for testing, and should be removed
+before moving into a production environment.
+<strong>Remove test database and access to it? [Y/n] y</strong>
+ - Dropping test database...
+ ... Success!
+ - Removing privileges on test database...
+ ... Success!
+Reloading the privilege tables will ensure that all changes made so far
+will take effect immediately.
+<strong>Reload privilege tables now? [Y/n] y</strong>
+ ... Success!
+Cleaning up...
+All done!  If you've completed all of the above steps, your MariaDB
+installation should now be secure.
+Thanks for using MariaDB!
+</pre><p>Протестируем подключение к MySQL/MariaDB</p><pre>mysql -u root -p</pre><pre>Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 51
+Server version: 10.0.28-MariaDB-0ubuntu0.16.04.1 Ubuntu 16.04
+
+Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+MariaDB [(none)]&gt; </pre><p>Пароль пользователя root изменен.</p><p>Теперь создаем базу данных MySQL и учетную запись пользователя для настройки NextCloud. Для этого выполняем такие команды:</p><pre>#mysql -u root -p
+Enter password:</pre><pre>mysql&gt; CREATE DATABASE nextcloud;</pre><pre>mysql&gt; GRANT ALL ON nextcloud.* to 'nextcloud'@'localhost' IDENTIFIED BY '_password_';</pre><pre>mysql&gt; FLUSH PRIVILEGES;</pre><pre>mysql&gt; quit</pre><h3>Установка NextCloud 11</h3><p>Запускаем браузер и вводим http://ip-server/nextcloud</p><p>Задаем логин — Администратора NextCloud сервера</p><p>Вводим пароль администратора NextCloud сервера</p><p>Указываем место хранения данных, можно оставить по умолчанию и потом изменить.</p><p>Пользователь базы данных — NextCloud</p><p>Пароль пользователя базы данных (тот, что мы задавали выше при настройке базы данных)</p><p>Далее — Завершить установку</p><p>NextCloud-setup-1</p><p>Теперь полистайте страницу вниз и введите данные для подключения к базе данных, которую мы только-что настроили:</p><p>NextCloud-setup-2</p><p>После
+ завершения настройки откроется панель администратора, где вы можете 
+создавать пользователей, группы и назначать им права доступа:</p><p>NextCloud-after-login</p><h3>Настройка Fail2ban</h3> Устанавливаем  fail2ban<pre>apt install fail2ban</pre><p>Настраиваем фильтр fail2ban</p><pre>nano /etc/fail2ban/filter.d/NextCloud.conf</pre><p>Добавляем в него следующую строку</p><pre>[Definition]
+failregex={"reqId":".*","remoteAddr":"&lt;HOST&gt;","app":"core","message":"Login failed:.*","level":2,"time":".*"}</pre><p>Настроим 'jail' для fail2ban при авторизации в NextCloud</p><pre>nano /etc/fail2ban/jail.d/NextCloud.conf</pre><p>Добавляем в него следующую строки:</p><pre>[NextCloud]
+enabled = true
+filter = NextCloud
+port = https
+bantime = 21600
+findtime = 3600
+maxretry = 3
+logpath = /var/www/NextCloud/data/NextCloud.log</pre><p>Перезагружаем fail2ban</p><pre>service fail2ban restart</pre><h3>Настройка Memcached</h3><p>Устанавливаем  Memcached</p><pre>apt install php-memcached memcached</pre><p>Проверим запустился ли демон</p><pre># netstat -tap | grep memcached
+tcp 0 0 localhost:11211 *:* LISTEN 13300/memcached </pre><p>или так</p><pre># ps ax | grep memcached
+13300 ?        Ssl    0:00 /usr/bin/memcached -m 64 -p 11211 -u memcache -l 127.0.0.1
+13424 pts/3    S+     0:00 grep --color=auto memcached</pre><p>Добавляем настройки для работы с Memcached в конфигурационный файл NextCloud</p><pre>nano /var/www/NextCloud/config/config.php</pre><p>следующую строки:</p><pre> 'memcache.distributed' =&gt; '\OC\Memcache\Memcached',
+  'memcache.local' =&gt; '\OC\Memcache\Memcached',
+  'memcached_servers' =&gt; array(
+      array('localhost', 11211),
+   ),
+  'memcached_options' =&gt; array(
+        \Memcached::OPT_CONNECT_TIMEOUT =&gt; 50,
+        \Memcached::OPT_RETRY_TIMEOUT =&gt;   50,
+        \Memcached::OPT_SEND_TIMEOUT =&gt;    50,
+        \Memcached::OPT_RECV_TIMEOUT =&gt;    50,
+        \Memcached::OPT_POLL_TIMEOUT =&gt;    50,
+        // Enable compression
+        \Memcached::OPT_COMPRESSION =&gt;          true,
+        // Turn on consistent hashing
+        \Memcached::OPT_LIBKETAMA_COMPATIBLE =&gt; true,
+        // Enable Binary Protocol
+        \Memcached::OPT_BINARY_PROTOCOL =&gt;      true,
+   ),</pre><p>Перезагрузим сервис Apache</p><pre>#service apache2 restart</pre><h3>Выводы</h3><p>Вот и все, установка NextCloud ubuntu 16.04 завершена. Теперь вы можете обмениваться своими файлами с другими компьютерами.</p><div class="wp_rp_wrap  wp_rp_vertical_m" id="wp_rp_first"><div class="wp_rp_content"><h3 class="related_post_title">Читайте другие интересные статьи</h3><ul class="related_post wp_rp"><li data-position="0" data-poid="in-2169" data-post-type="none"><a href="http://adminunix.ru/ustanovka-owncloud-na-ubuntu-16-04-server/" class="wp_rp_thumbnail"><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/9.jpg" alt="Установка ownСloud на Ubuntu 16.04 server" width="150" height="150"></a><a href="http://adminunix.ru/ustanovka-owncloud-na-ubuntu-16-04-server/" class="wp_rp_title">Установка ownСloud на Ubuntu 16.04 server</a></li><li data-position="1" data-poid="in-2179" data-post-type="none"><a href="http://adminunix.ru/obnovlenie-nextcloud-iz-komandnoj-stroki/" class="wp_rp_thumbnail"><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/27.jpg" alt="Обновление Nextcloud  из командной строки" width="150" height="150"></a><a href="http://adminunix.ru/obnovlenie-nextcloud-iz-komandnoj-stroki/" class="wp_rp_title">Обновление Nextcloud  из командной строки</a></li><li data-position="2" data-poid="in-1078" data-post-type="none"><a href="http://adminunix.ru/mysql-access-denied-for-user-debian-sys-maintlocalhost/" class="wp_rp_thumbnail"><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/25.jpg" alt="MySQL: “Access denied for user ‘debian-sys-maint’@’localhost’”" width="150" height="150"></a><a href="http://adminunix.ru/mysql-access-denied-for-user-debian-sys-maintlocalhost/" class="wp_rp_title">MySQL: “Access denied for user ‘debian-sys-maint’@’localhost’”</a></li><li data-position="3" data-poid="in-346" data-post-type="none"><a href="http://adminunix.ru/installing-eclipse-in-ubuntu-14-04/" class="wp_rp_thumbnail"><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/30.jpg" alt="Installing eclipse in ubuntu 14.04" width="150" height="150"></a><a href="http://adminunix.ru/installing-eclipse-in-ubuntu-14-04/" class="wp_rp_title">Installing eclipse in ubuntu 14.04</a></li><li data-position="4" data-poid="in-728" data-post-type="none"><a href="http://adminunix.ru/ogranichenie-dostupa-sredstvami-nginx/" class="wp_rp_thumbnail"><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/11.jpg" alt="Ограничение доступа средствами Nginx" width="150" height="150"></a><a href="http://adminunix.ru/ogranichenie-dostupa-sredstvami-nginx/" class="wp_rp_title">Ограничение доступа средствами Nginx</a></li><li data-position="5" data-poid="in-1218" data-post-type="none"><a href="http://adminunix.ru/konvertirovanie-m4a-v-mp3/" class="wp_rp_thumbnail"><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/15.jpg" alt="Конвертирование m4a в  MP3" width="150" height="150"></a><a href="http://adminunix.ru/konvertirovanie-m4a-v-mp3/" class="wp_rp_title">Конвертирование m4a в  MP3</a></li><li data-position="6" data-poid="in-871" data-post-type="none"><a href="http://adminunix.ru/ustanovka-i-nastrojka-patcha-bezopasn/" class="wp_rp_thumbnail"><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/4.jpg" alt="Установка и настройка патча безопасности php5-suhosin" width="150" height="150"></a><a href="http://adminunix.ru/ustanovka-i-nastrojka-patcha-bezopasn/" class="wp_rp_title">Установка и настройка патча безопасности php5-suhosin</a></li><li data-position="7" data-poid="in-332" data-post-type="none"><a href="http://adminunix.ru/install-hylafax-and-iaxmodem-on-rhelcentos-6-5-x64/" class="wp_rp_thumbnail"><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/14.jpg" alt="Install Hylafax and IAXModem on RHEL/Centos 6.5 x64" width="150" height="150"></a><a href="http://adminunix.ru/install-hylafax-and-iaxmodem-on-rhelcentos-6-5-x64/" class="wp_rp_title">Install Hylafax and IAXModem on RHEL/Centos 6.5 x64</a></li><li data-position="8" data-poid="in-597" data-post-type="none"><a href="http://adminunix.ru/monitoring-s-pomoshh-yu-zabbix-ustanovka-zabbix-freebsd/" class="wp_rp_thumbnail"><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/13.jpg" alt="Мониторинг с помощью Zabbix: установка Zabbix (FreeBSD)" width="150" height="150"></a><a href="http://adminunix.ru/monitoring-s-pomoshh-yu-zabbix-ustanovka-zabbix-freebsd/" class="wp_rp_title">Мониторинг с помощью Zabbix: установка Zabbix (FreeBSD)</a></li><li data-position="9" data-poid="in-1438" data-post-type="none"><a href="http://adminunix.ru/nastrojka-i-oshibki-zabbix/" class="wp_rp_thumbnail"><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/25.jpg" alt="Ошибки при настройке Zabbix" width="150" height="150"></a><a href="http://adminunix.ru/nastrojka-i-oshibki-zabbix/" class="wp_rp_title">Ошибки при настройке Zabbix</a></li></ul></div></div><div class="yarpp-related yarpp-related-none"><p>No related posts.</p></div> <!-- .entry-content --></div><footer class="entry-meta entry-footer"><!-- begin SOCIALS --><div class="socials"><p class="socials__caption">Понравилась статья, расскажи о ней друзьям, нажми кнопку!</p><div class="socials__buttons pluso" data-background="transparent" data-options="big,round,line,horizontal,nocounter,theme=04" data-services="vkontakte,odnoklassniki,facebook,twitter,google,yandex,moimir,livejournal,blogger,moikrug,bookmark,email,print" data-user="216853365"><div class="pluso-010010100110-04"><span class="pluso-wrap" style="background:transparent"><a href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/" title="ВКонтакте" class="pluso-vkontakte"></a><a href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/" title="Одноклассники" class="pluso-odnoklassniki"></a><a href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/" title="Facebook" class="pluso-facebook"></a><a href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/" title="Twitter" class="pluso-twitter"></a><a href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/" title="Google+" class="pluso-google"></a><a href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/" title="Я.ру" class="pluso-yandex"></a><a href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/" title="Мой Мир@Mail.Ru" class="pluso-moimir"></a><a href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/" title="LiveJournal" class="pluso-livejournal"></a><a href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/" title="Blogger" class="pluso-blogger"></a><a href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/" title="МойКруг" class="pluso-moikrug"></a><a href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/" title="В закладки" class="pluso-bookmark" rel="sidebar"></a><a href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/" title="Отправить на email" class="pluso-email"></a><a href="http://adminunix.ru/ustanovka-nextcloud-na-ubuntu-16-04-server/" title="Печатать" class="pluso-print"></a><a href="http://pluso.ru/" class="pluso-more"></a></span></div></div></div> <!--   end SOCIALS --><!-- begin Category & Tags --> <!--
+<span class="cat-links"> <i class="fa-folder-open"></i> <a href="http://adminunix.ru/category/owncloud/" rel="category tag">ownCloud</a> </span> --> <!--   end Category & Tags --><!-- .entry-meta --></footer><!-- begin SUBSCRIBE --><form class="subscribe subscribe_place_after-article" action="http://feedburner.google.com/fb/a/mailverify" method="post" onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri=viktor-berezyuk/EIlT', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true" target="popupwindow"><p class="subscribe__caption">Узнавай первым о новых статьях, получай их на свой E-mail</p><p class="subscribe__description">Укажите свой E-mail куда их нужно высылать:</p><input class="subscribe__input subscribe__input_type_email" name="email" placeholder="Введите Ваш E-mail..." type="text"> <input class="subscribe__input subscribe_input_type_submit" value="Присылать мне статьи" type="submit"> <input name="uri" value="viktor-berezyuk/EIlT" type="hidden"> <input name="loc" value="ru_RU" type="hidden"> <!--
+<a class="subscribe__links1" target="_blank" href="http://feeds.feedburner.com/viktor-berezyuk/EIlT"> <span class="subscribe__rss">RSS-подписка</span> <span class="subscribe__counter"><img src="http://feeds.feedburner.com/~fc/viktor-berezyuk/EIlT?bg=9EE489&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" /></span> </a> --></form> <!--   end SUBSCRIBE --><!-- #post-2172 --></article><nav id="nav-below" class="post-navigation"><p class="screen-reader-text">Post navigation</p><div class="nav-previous"><a href="http://adminunix.ru/ustanovka-owncloud-na-ubuntu-16-04-server/" rel="prev"><i class="fa-chevron-left"></i><span class="meta-nav"> Установка ownСloud на Ubuntu 16.04 server </span></a></div><div class="nav-next"><a href="http://adminunix.ru/obnovlenie-nextcloud-iz-komandnoj-stroki/" rel="next"><i class="fa-chevron-right"></i><span class="meta-nav">Обновление Nextcloud  из командной строки</span></a></div></nav><!-- #nav-below --><div class="clearfix author-info author-greeting"><div class="author-photo"> <!--
+<img alt="" src="/wp-content/themes/custom/author-greeting/author-photo.jpg" class="avatar avatar-75 photo" height="75" width="75"> --></div><div class="author-content"> <!--<h3>Николай</h3>--><p class="author-greeting__description"></p> <!--<div class="author-links"> <a href="http://adminunix.ru/author/usersrssh/" rel="me">Еще статьи этого автора</a></div> --></div> <!-- .author-info --></div></div><!-- #content --></div><!-- #primary --><div id="widget-area-2" class="site-sidebar widget-area" role="complementary"><div><div class="ya-site-form ya-site-form_bg_transparent ya-site-form_inited_yes" id="ya-site-form0"><div class="ya-site-form__form"><table class="ya-site-form__wrap" cellspacing="0" cellpadding="0"><tbody><tr><td class="ya-site-form__search-wrap"><table class="ya-site-form__search" cellspacing="0" cellpadding="0"><tbody><tr><td class="ya-site-form__search-input"><table class="ya-site-form__search-input-layout"><tbody><tr><td class="ya-site-form__search-input-layout-l"><div class="ya-site-form__input"><input name="text" class="ya-site-form__input-text" placeholder="Найти..." autocomplete="off" type="search"><div class="ya-site-suggest"><div class="ya-site-suggest-popup" style="display: none;"><i class="ya-site-suggest__opera-gap"></i><div class="ya-site-suggest-list"><div class="ya-site-suggest__iframe"></div><ul class="ya-site-suggest-items"></ul></div></div></div></div></td><td class="ya-site-form__search-input-layout-r"><input class="ya-site-form__submit" value="Найти" type="button"></td></tr></tbody></table></td></tr><tr><td class="ya-site-form__gap"><div class="ya-site-form__gap-i"></div></td></tr></tbody></table></td></tr></tbody></table></div></div><style type="text/css">.ya-page_js_yes .ya-site-form_inited_no { display: none; }</style></div><aside id="categories-2" class="widget widget_categories"><h3 class="widget-title"><span>Рубрики</span></h3><ul><li class="cat-item cat-item-2"><a href="http://adminunix.ru/category/asterisk/">Asterisk</a> (10)<ul class="children"><li class="cat-item cat-item-7"><a href="http://adminunix.ru/category/asterisk/fax/">Fax</a> (8)</li></ul></li><li class="cat-item cat-item-3"><a href="http://adminunix.ru/category/bash/">bash</a> (3)</li><li class="cat-item cat-item-4"><a href="http://adminunix.ru/category/debian/">Debian</a> (81)<ul class="children"><li class="cat-item cat-item-47"><a href="http://adminunix.ru/category/debian/apache/">Apache</a> (7)</li><li class="cat-item cat-item-48"><a href="http://adminunix.ru/category/debian/backup/">backup</a> (2)</li><li class="cat-item cat-item-49"><a href="http://adminunix.ru/category/debian/ddos/">DDoS</a> (1)</li><li class="cat-item cat-item-9"><a href="http://adminunix.ru/category/debian/git/">GIT</a> (1)</li><li class="cat-item cat-item-11"><a href="http://adminunix.ru/category/debian/iptables/">iptables</a> (10)</li><li class="cat-item cat-item-18"><a href="http://adminunix.ru/category/debian/munin/">Munin</a> (2)</li><li class="cat-item cat-item-21"><a href="http://adminunix.ru/category/debian/nginx/">NGINX</a> (22)</li><li class="cat-item cat-item-25"><a href="http://adminunix.ru/category/debian/openvpn-debian/">OpenVPN</a> (2)</li><li class="cat-item cat-item-27"><a href="http://adminunix.ru/category/debian/php/">PHP</a> (1)</li><li class="cat-item cat-item-29"><a href="http://adminunix.ru/category/debian/raid-debian/">RAID</a> (6)</li><li class="cat-item cat-item-31"><a href="http://adminunix.ru/category/debian/sams/">SAMS</a> (1)</li></ul></li><li class="cat-item cat-item-5"><a href="http://adminunix.ru/category/dns/">DNS</a> (1)</li><li class="cat-item cat-item-59"><a href="http://adminunix.ru/category/exim/">Exim</a> (17)<ul class="children"><li class="cat-item cat-item-17"><a href="http://adminunix.ru/category/exim/mailman/">mailman</a> (3)</li><li class="cat-item cat-item-32"><a href="http://adminunix.ru/category/exim/spamassassin/">Spamassassin</a> (1)</li></ul></li><li class="cat-item cat-item-8"><a href="http://adminunix.ru/category/freebsd/">FreeBSD</a> (57)<ul class="children"><li class="cat-item cat-item-20"><a href="http://adminunix.ru/category/freebsd/nfs/">NFS</a> (4)</li><li class="cat-item cat-item-24"><a href="http://adminunix.ru/category/freebsd/openvpn/">OpenVPN</a> (1)</li><li class="cat-item cat-item-26"><a href="http://adminunix.ru/category/freebsd/pf/">PF</a> (13)</li><li class="cat-item cat-item-30"><a href="http://adminunix.ru/category/freebsd/samba/">SAMBA</a> (8)</li><li class="cat-item cat-item-43"><a href="http://adminunix.ru/category/freebsd/zfs/">ZFS</a> (2)</li></ul></li><li class="cat-item cat-item-10"><a href="http://adminunix.ru/category/html/">HTML</a> (2)</li><li class="cat-item cat-item-12"><a href="http://adminunix.ru/category/java/">Java</a> (11)</li><li class="cat-item cat-item-13"><a href="http://adminunix.ru/category/kvm/">KVM</a> (6)</li><li class="cat-item cat-item-14"><a href="http://adminunix.ru/category/lvm/">LVM</a> (6)</li><li class="cat-item cat-item-15"><a href="http://adminunix.ru/category/mac-os/">MAC OS</a> (3)</li><li class="cat-item cat-item-16"><a href="http://adminunix.ru/category/mail/">MAIL</a> (1)</li><li class="cat-item cat-item-19"><a href="http://adminunix.ru/category/mysql/">MySQL</a> (24)<ul class="children"><li class="cat-item cat-item-56"><a href="http://adminunix.ru/category/mysql/percona/">Percona</a> (1)</li></ul></li><li class="cat-item cat-item-23"><a href="http://adminunix.ru/category/openbsd/">openbsd</a> (1)</li><li class="cat-item cat-item-63"><a href="http://adminunix.ru/category/owncloud/">ownCloud</a> (3)</li><li class="cat-item cat-item-28"><a href="http://adminunix.ru/category/pyton/">Pyton</a> (4)</li><li class="cat-item cat-item-33"><a href="http://adminunix.ru/category/ssh/">SSH</a> (3)</li><li class="cat-item cat-item-34"><a href="http://adminunix.ru/category/tar/">TAR</a> (1)</li><li class="cat-item cat-item-35"><a href="http://adminunix.ru/category/ubuntu/">Ubuntu</a> (45)<ul class="children"><li class="cat-item cat-item-50"><a href="http://adminunix.ru/category/ubuntu/ltsp/">LTSP</a> (1)</li><li class="cat-item cat-item-51"><a href="http://adminunix.ru/category/ubuntu/rsync/">RSYNC</a> (2)</li><li class="cat-item cat-item-37"><a href="http://adminunix.ru/category/ubuntu/virtualbox/">VirtualBox</a> (1)</li><li class="cat-item cat-item-45"><a href="http://adminunix.ru/category/ubuntu/nastrojka/">Настройка</a> (6)</li></ul></li><li class="cat-item cat-item-36"><a href="http://adminunix.ru/category/uncategorized/">Uncategorized</a> (21)</li><li class="cat-item cat-item-38"><a href="http://adminunix.ru/category/vlc/">VLC</a> (4)</li><li class="cat-item cat-item-60"><a href="http://adminunix.ru/category/windows/">Windows</a> (2)<ul class="children"><li class="cat-item cat-item-62"><a href="http://adminunix.ru/category/windows/instruktsii/">Инструкции</a> (1)</li></ul></li><li class="cat-item cat-item-41"><a href="http://adminunix.ru/category/worldpress/">WorldPress</a> (3)</li><li class="cat-item cat-item-42"><a href="http://adminunix.ru/category/zabbix/">Zabbix</a> (4)</li><li class="cat-item cat-item-46"><a href="http://adminunix.ru/category/proverka/">Проверка</a> (9)</li></ul></aside><!-- #widget-area-2 --></div></div> <!-- #main --></div><footer id="colophon" class="site-footer" role="contentinfo"><div class="clearfix container"><div class="site-info"> © 2017 adminunix.ru. Все права защищены.</div><!-- .site-info --><div class="site-credit"> <!--
+<a href="http://adminunix.ru/themes/themesgreen/">Theme by Modern WP Themes</a> --> <a href="http://adminunix.ru/">сопровождение и администрирование UNIX  систем</a></div><!-- .site-credit --></div> <!-- #colophon --></footer><p id="back-top" style="display: none;"><a href="#top"></a></p><link rel="stylesheet" id="yarppRelatedCss-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/related.css" type="text/css" media="all"><!-- begin Metrics --><!-- Yandex.Metrika counter --><noscript><div><img src="https://mc.yandex.ru/watch/32399060" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter --><!--LiveInternet counter--><script type="text/javascript">document.write("<a href='//www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t26.6;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число посетителей за"+
+" сегодня' "+
+"border='0' width='88' height='15'><\/a>")</script><a href="http://www.liveinternet.ru/click" target="_blank"><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/hit.gif" alt="" title="LiveInternet: показано число посетителей за сегодня" width="88" height="15" border="0"></a><!--/LiveInternet--><!-- Rating@Mail.ru counter --> <noscript><div
+ style="position:absolute;left:-10000px;"> <img 
+src="//top-fwz1.mail.ru/counter?id=2690697;js=na" style="border:0;" 
+height="1" width="1" alt="Рейтинг@Mail.ru" /></div></noscript> <!-- //Rating@Mail.ru counter --><!-- Google.Analytics counter --> <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-60318262-1', 'auto');
+  ga('send', 'pageview');</script> <!-- //Google.Analytics counter --><!--   end Metrics -->Запросов 56, за 0,236 секунды. <script type="text/javascript" defer="defer" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/autoptimize_59f8d5bafd000e47d81e02ed242662db.js"></script><script type="text/javascript" charset="UTF-8" async="" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/pluso-like.js"></script><style type="text/css">.pluso{position:relative;z-index:1;display:inline-block;padding:0;-webkit-border-radius:22px;-moz-border-radius:22px;border-radius:22px;background:transparent;text-align:left;font-size:0;line-height:0;*display:inline;*zoom:1;}
+.pluso
+ span{float:none;}
+.pluso-010010100110-04 a:active{ opacity:.6; }
+.pluso-010010100110-04 .pluso-wrap 
+a{display:inline-block;vertical-align:inherit;margin:5px 0 0 
+5px;padding:0;width:40px;height:40px;background:url(http://share.pluso.ru/img/pluso-like/round/big/04.png)
+ 0 0 transparent no-repeat;}
+.pluso-wrap{margin:0px !important;}
+.pluso-010010100110-04 
+.pluso-wrap{position:relative;z-index:1;display:inline-block;padding:0 
+5px 5px 
+0;-webkit-border-radius:6px;-moz-border-radius:6px;border-radius:6px;background:transparent;text-align:left;font-size:0;line-height:0;*display:inline;*zoom:1;}
+.pluso-010010100110-04
+ 
+.pluso-wrap{-webkit-border-radius:22px;-moz-border-radius:22px;border-radius:22px;}
+.pluso-010010100110-04
+ 
+a.pluso-more{width:40px;height:40px;background:url(http://share.pluso.ru/img/plus.png)
+ 0 -60px no-repeat!important;position:relative;}
+.pluso-010010100110-04 a.pluso-more{margin-right:-22px;*left:5px;}
+.pluso-010010100110-04 .pluso-counter b{position:relative;padding:8px 
+12px;-webkit-border-radius: 22px;-moz-border-radius: 22px;border-radius:
+ 122px;background:#eaeaeb;box-shadow:0 0 3px 
+rgba(0,0,0,.3);color:#707070;white-space:nowrap;font:16px/40px Tahoma, 
+Geneva, sans-serif!important;}
+.pluso-010010100110-04 
+.pluso-counter{position:relative;padding-right:28px;}
+.pluso-010010100110-04 .pluso-counter b{top:-14px;left:28px;}
+.pluso-010010100110-04 .pluso-counter b:after{position: absolute;top: 
+13px;left: -8px;z-index: 0;display: block;width: 0;border-width: 5px 9px
+ 5px 0;border-style: solid;border-color: transparent #eaeaeb;content: 
+'';}
+.pluso-010010100110-04 br{ display:none; }
+.pluso-010010100110-04 .pluso-counter{ display:none; }
+.pluso-box{position:absolute;border:4px solid 
+#eaebea;width:310px;height:225px;overflow:hidden;z-index: 
+777;background:#f2f2f2;font:normal normal 12px/25px Tahoma, Geneva, 
+sans-serif;box-shadow:0 4px 10px rgba(0, 0, 0, 
+0.4);text-align:left;-webkit-border-radius:14px;-moz-border-radius:14px;border-radius:14px;}
+.pluso-box
+ a b{width:20px;height:20px;position:absolute;left:0;top:2px;}
+.pluso-box a:visited,.pluso-box a:hover,.pluso-box a{font:normal normal 
+12px/25px Tahoma, Geneva, 
+sans-serif;color:#7f7f7f;text-decoration:none;white-space:nowrap;padding:0
+ 0 0 25px;margin:0 0 0 
+5px;border:0;position:relative;width:115px;float:left;}
+.pluso-box 
+.pluso-list{background:#ffffff;border-radius:14px;width:100%;height:200px;overflow:auto;position:absolute;left:0;top:25px;}
+.pluso-box
+ 
+a.pluso-logo{background:url(http://share.pluso.ru/img/pluso-like/logo-mini.png)
+ 0 5px 
+no-repeat;width:66px;height:19px;border:0;text-indent:-600em;padding:0 0
+ 0 12px;margin:0 0 0 9px;}
+.pluso-box 
+a.pluso-go{color:#4c4c4c;text-decoration:underline;padding-left:0;}
+.pluso-box a.pluso-close,.pluso-box a.pluso-close:hover,.pluso-box 
+a.pluso-close:visited{float:right;width:20px;text-align:center;font-size:12px;line-height:20px;width:20px;margin:1px
+ 1px 0 
+0;padding:0;font-weight:bold;color:#4c4c4c;text-decoration:none;background:#ffffff;border-radius:15px;border:1px
+ solid #eaebea;}
+.pluso-box 
+a.pluso-close:hover{background:#7f7f7f;color:#ffffff;border-color:transparent}
+.pluso-tip{cursor:pointer;position:absolute;padding:10px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;white-space:nowrap;font:bold
+ 14px/12px Tahoma, Geneva, 
+sans-serif!important;color:#fff;background:#f78d1d;background:-webkit-gradient(linear,
+ left top, left bottom, from(#7ed263), 
+to(#3d9530));background:-webkit-linear-gradient(top,#7ed263,#3d9530);background:-moz-linear-gradient(top,#7ed263,#3d9530);background:-ms-linear-gradient(top,#7ed263,#3d9530);background:-o-linear-gradient(top,#7ed263,#3d9530);background:linear-gradient(top,#7ed263,#3d9530);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#7ed263,
+ endColorstr=#3d9530);box-shadow:0 0 5px rgba(0,0,0,.5), inset 0 0 0px 
+1px rgba(0,0,0,.3)}
+.pluso-tip:after{position:absolute;z-index:0;display:block;width:0;height:0;border-style:
+ solid;content:''}
+.pluso-tip.pluso-left-arrow:after{top:40%;right:-6px;border-color:transparent
+ #447b36;border-width:6px 0px 6px 6px}
+.pluso-tip.pluso-top-arrow:after{bottom:-6px;border-color:#27601f 
+transparent;border-width:6px 6px 0px 6px}
+.pluso-tip.pluso-bottom-arrow:after{top:-6px;border-color:#447b36 
+transparent;border-width:0px 6px 6px 6px}
+@keyframes pluso-market-animate{0% { opacity:1 } 50%{ opacity:.3} 100% {
+ opacity:1}}
+@-webkit-keyframes pluso-market-animate{0% { opacity:1 } 50%{ 
+opacity:.3} 100% { opacity:1}}
+.pluso-overlay-background{height:100%;width:100%;position:fixed;left:0;top:0;z-index:999999999;background-color:
+ rgb(0, 0, 0);background-color: rgba(0, 0, 0, 
+0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,
+ endColorstr=#99000000);-ms-filter: 
+"progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, 
+endColorstr=#99000000)";padding:0;margin:0;}
+.pluso-overlay-box{width:910px;margin: 50px auto 
+0;overflow:hidden;height:85%;background-color: #f5f5f5;border:1px solid 
+#c4c4c4;padding:0!important;text-align:left;box-shadow:0 4px 12px 
+rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.5) 
+inset;border-radius:10px;}
+a.pluso-overlay-close,a.pluso-overlay-close:hover,a.pluso-overlay-close:visited{position:absolute;left:50%;margin:0
+ 0 0 442px;top:38px;width:26px;height:26px;text-align:center;font:normal
+ 20px/22px 
+Arial;padding:0;color:#878787;text-decoration:none;background:#ffffff;border-radius:26px;border:2px
+ solid #c4c4c4;-webkit-box-sizing: border-box;-moz-box-sizing: 
+border-box;box-sizing: border-box;}
+a.pluso-overlay-close:hover{background:#7f7f7f;color:#ffffff;border-color:transparent}
+.pluso-overlay-box
+ div{margin:20px 0 0 0;padding:0 0 12px 0;border-bottom:1px solid 
+#c4c4c4;}
+.pluso-overlay-box ul{list-style:none;margin:10px 0 10px 
+0px;padding:0;height:85%;overflow:auto;}
+.pluso-overlay-box 
+li{width:210px;height:260px;background:#ffffff;border-radius:10px;border:none;float:left;padding:0;margin:0
+ 0px 10px 10px;}
+.pluso-overlay-box li 
+a{display:block;text-decoration:none;margin:0;padding:0;height:100%;overflow:hidden;position:relative;}
+.pluso-overlay-box
+ li a span, .pluso-overlay-box li a:hover span{position: relative;width:
+ 190px;height:150px;border:1px solid #c4c4c4;overflow:hidden;margin:10px
+ auto 5px auto;padding:0;text-align:center;display:block;}
+.pluso-overlay-box li a:hover span{box-shadow:0 0 5px 
+#c4c4c4;-webkit-box-shadow:0 0 5px #c4c4c4;border:1px solid #c4c4c4}
+.pluso-overlay-box li a em{font:normal bold 15px/20px 
+Arial;float:left;color:#e86340;padding:0px 0 0 10px;margin:0;}
+.pluso-overlay-box li a em u{font:normal normal 12px/12px 
+Arial;text-decoration:none;display:block;color:#eb6338;padding:0;margin:0;}
+.pluso-overlay-box
+ li a strong{font:normal 11px/14px Arial;display:block;padding:0 
+10px;color:#454545;position:relative;bottom:auto;height:42px;width:180px;overflow:hidden;margin:0
+ 0 5px 0;border:0;}
+.pluso-overlay-box li a:hover strong{height:42px;overflow:auto;padding:0
+ 10px;border:0;}
+.pluso-overlay-box li a b, .pluso-overlay-box li a b:hover, 
+.pluso-overlay-box li a b:active{font:bold normal 15px/18px Arial, 
+sans-serif;color: #ffffff;padding-top: 7px;padding-right: 
+12px;padding-bottom: 7px;padding-left: 12px;text-decoration: 
+none;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 
+5px;-webkit-box-shadow: inset 0px -1px 2px 
+rgba(255,255,255,.5);-moz-box-shadow: inset 0px -1px 2px 
+rgba(255,255,255,.5);box-shadow: inset 0px -1px 2px 
+rgba(255,255,255,.5);text-shadow: 0px 1px 2px #3d8a33;border:solid 
+#4bb543 1px;background:-webkit-gradient(linear, 0 0, 0 100%, 
+from(#95e488), to(#20a517));background: -moz-linear-gradient(top, 
+#95e488, #20a517);background: -o-linear-gradient(top, #95e488, 
+#20a517);-ms-filter: 
+progid:DXImageTransform.Microsoft.gradient(startColorStr=#95e488, 
+endColorStr=#20a517);filter: 
+progid:DXImageTransform.Microsoft.gradient(startColorStr=#95e488, 
+endColorStr=#20a517);display:inline-block;float:right;bottom:auto;right:10px;position:relative;}
+.pluso-overlay-box
+ li a b:hover{background:-webkit-gradient(linear, 0 0, 0 100%, 
+from(#b1f4a3), to(#27c21c));background: -moz-linear-gradient(top, 
+#b1f4a3, #27c21c);background:-o-linear-gradient(top, #b1f4a3, 
+#27c21c);-ms-filter: 
+progid:DXImageTransform.Microsoft.gradient(startColorStr=#b1f4a3, 
+endColorStr=#27c21c);filter: 
+progid:DXImageTransform.Microsoft.gradient(startColorStr=#b1f4a3, 
+endColorStr=#27c21c);}
+.pluso-overlay-box li a b:active{background:-webkit-gradient(linear, 0 
+0, 0 100%, from(#20a517), to(#95e488));background: 
+-moz-linear-gradient(top, #20a517, 
+#95e488);background:-o-linear-gradient(top, #20a517, 
+#95e488);-ms-filter: 
+progid:DXImageTransform.Microsoft.gradient(startColorStr=#20a517, 
+endColorStr=#95e488);filter: 
+progid:DXImageTransform.Microsoft.gradient(startColorStr=#20a517, 
+endColorStr=#95e488);}
+.pluso-010010100110-04 .pluso-wrap a{ 
+background-image:url(http://share.pluso.ru/img/pluso-like/round/big/04.png)
+ }.pluso-010010100110-04 .pluso-wrap a.pluso-market-cart, 
+.pluso-010010100110-04 .pluso-wrap a.pluso-market-cart-animate{ 
+background:url(http://share.pluso.ru/img/pluso-like/round/big/market.png)
+ -0px 0}.pluso-010010100110-04 .pluso-wrap 
+a.pluso-market-cart-animate{animation: pluso-market-animate 3s linear 
+infinite alternate;-webkit-animation: pluso-market-animate 3s linear 
+infinite alternate;}.pluso-010010100110-04 .pluso-wrap 
+a.pluso-market-dollar, .pluso-010010100110-04 .pluso-wrap 
+a.pluso-market-dollar-animate{ 
+background:url(http://share.pluso.ru/img/pluso-like/round/big/market.png)
+ -42px 0}.pluso-010010100110-04 .pluso-wrap 
+a.pluso-market-dollar-animate{animation: pluso-market-animate 3s linear 
+infinite alternate;-webkit-animation: pluso-market-animate 3s linear 
+infinite alternate;}.pluso-010010100110-04 .pluso-wrap 
+a.pluso-market-bulb, .pluso-010010100110-04 .pluso-wrap 
+a.pluso-market-bulb-animate{ 
+background:url(http://share.pluso.ru/img/pluso-like/round/big/market.png)
+ -84px 0}.pluso-010010100110-04 .pluso-wrap 
+a.pluso-market-bulb-animate{animation: pluso-market-animate 3s linear 
+infinite alternate;-webkit-animation: pluso-market-animate 3s linear 
+infinite alternate;}.pluso-010010100110-04 .pluso-wrap 
+a.pluso-market-quest, .pluso-010010100110-04 .pluso-wrap 
+a.pluso-market-quest-animate{ 
+background:url(http://share.pluso.ru/img/pluso-like/round/big/market.png)
+ -126px 0}.pluso-010010100110-04 .pluso-wrap 
+a.pluso-market-quest-animate{animation: pluso-market-animate 3s linear 
+infinite alternate;-webkit-animation: pluso-market-animate 3s linear 
+infinite alternate;}.pluso-010010100110-04 .pluso-wrap 
+a.pluso-market-tag, .pluso-010010100110-04 .pluso-wrap 
+a.pluso-market-tag-animate{ 
+background:url(http://share.pluso.ru/img/pluso-like/round/big/market.png)
+ -168px 0}.pluso-010010100110-04 .pluso-wrap 
+a.pluso-market-tag-animate{animation: pluso-market-animate 3s linear 
+infinite alternate;-webkit-animation: pluso-market-animate 3s linear 
+infinite alternate;}.pluso-box a b{ 
+background-image:url(http://share.pluso.ru/img/pluso-like/round/small/04.png)
+ }.pluso-box a.pluso-market b{ 
+background:url(http://share.pluso.ru/img/pluso-like/round/small/market.png)
+ -21px 0}.pluso-box a.pluso-vkontakte b{ background-position: -84px 
+0}.pluso-box a.pluso-odnoklassniki b{ background-position: -63px 
+0}.pluso-box a.pluso-facebook b{ background-position: -0px 0}.pluso-box 
+a.pluso-twitter b{ background-position: -21px 0}.pluso-box 
+a.pluso-google b{ background-position: -126px 0}.pluso-box 
+a.pluso-moimir b{ background-position: -147px 0}.pluso-box 
+a.pluso-pinterest b{ background-position: -105px 0}.pluso-box 
+a.pluso-livejournal b{ background-position: -168px 0}.pluso-box 
+a.pluso-tumblr b{ background-position: -42px 0}.pluso-box 
+a.pluso-liveinternet b{ background-position: -189px 0}.pluso-box 
+a.pluso-springpad b{ background-position: -210px 0}.pluso-box 
+a.pluso-stumbleupon b{ background-position: -231px 0}.pluso-box 
+a.pluso-myspace b{ background-position: -252px 0}.pluso-box 
+a.pluso-formspring b{ background-position: -273px 0}.pluso-box 
+a.pluso-blogger b{ background-position: -294px 0}.pluso-box a.pluso-digg
+ b{ background-position: -315px 0}.pluso-box a.pluso-surfingbird b{ 
+background-position: -336px 0}.pluso-box a.pluso-bobrdobr b{ 
+background-position: -357px 0}.pluso-box a.pluso-readability b{ 
+background-position: -378px 0}.pluso-box a.pluso-instapaper b{ 
+background-position: -399px 0}.pluso-box a.pluso-evernote b{ 
+background-position: -420px 0}.pluso-box a.pluso-delicious b{ 
+background-position: -525px 0}.pluso-box a.pluso-vkrugu b{ 
+background-position: -504px 0}.pluso-box a.pluso-pinme b{ 
+background-position: -546px 0}.pluso-box a.pluso-yandex b{ 
+background-position: -567px 0}.pluso-box a.pluso-yazakladki b{ 
+background-position: -588px 0}.pluso-box a.pluso-moikrug b{ 
+background-position: -609px 0}.pluso-box a.pluso-googlebookmark b{ 
+background-position: -630px 0}.pluso-box a.pluso-yahoo b{ 
+background-position: -651px 0}.pluso-box a.pluso-moemesto b{ 
+background-position: -672px 0}.pluso-box a.pluso-memori b{ 
+background-position: -693px 0}.pluso-box a.pluso-juick b{ 
+background-position: -735px 0}.pluso-box a.pluso-linkedin b{ 
+background-position: -756px 0}.pluso-box a.pluso-webdiscover b{ 
+background-position: -798px 0}.pluso-box a.pluso-bookmark b{ 
+background-position: -441px 0}.pluso-box a.pluso-email b{ 
+background-position: -462px 0}.pluso-box a.pluso-print b{ 
+background-position: -483px 0}.pluso-box a.pluso-webmoney b{ 
+background-position: -924px 0}.pluso-box a.pluso-misterwong b{ 
+background-position: -903px 0}.pluso-box a.pluso-friendfeed b{ 
+background-position: -882px 0}.pluso-box a.pluso-market b{ 
+background-position: --21px 0}.pluso-010010100110-04 .pluso-wrap 
+a.pluso-vkontakte{ background-position: -168px 0}.pluso-010010100110-04 
+.pluso-wrap a.pluso-odnoklassniki{ background-position: -126px 
+0}.pluso-010010100110-04 .pluso-wrap a.pluso-facebook{ 
+background-position: -0px 0}.pluso-010010100110-04 .pluso-wrap 
+a.pluso-twitter{ background-position: -42px 0}.pluso-010010100110-04 
+.pluso-wrap a.pluso-google{ background-position: -252px 
+0}.pluso-010010100110-04 .pluso-wrap a.pluso-yandex{ 
+background-position: -1134px 0}.pluso-010010100110-04 .pluso-wrap 
+a.pluso-moimir{ background-position: -294px 0}.pluso-010010100110-04 
+.pluso-wrap a.pluso-livejournal{ background-position: -336px 
+0}.pluso-010010100110-04 .pluso-wrap a.pluso-blogger{ 
+background-position: -588px 0}.pluso-010010100110-04 .pluso-wrap 
+a.pluso-moikrug{ background-position: -1218px 0}.pluso-010010100110-04 
+.pluso-wrap a.pluso-bookmark{ background-position: -882px 
+0}.pluso-010010100110-04 .pluso-wrap a.pluso-email{ background-position:
+ -924px 0}.pluso-010010100110-04 .pluso-wrap a.pluso-print{ 
+background-position: -966px 0}</style><script type="text/javascript" charset="UTF-8" async="" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/process.js"></script><iframe style="position: absolute; width: 0px; height: 0px; left: -9999px; border: medium none; top: 0px;" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/crossdnf_pluso_iframe.html"></iframe><iframe style="padding: 0px; margin: 0px; width: 0px; height: 0px; position: absolute; left: -9999px; border: medium none; top: 0px;" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Next%D0%A1loud%20%D0%BD%D0%B0%20Ubuntu%2016.04%20server_files/a.html"></iframe></body></html>

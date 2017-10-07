@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" type="text/css" href="Centos%20SELinux%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D1%8B%D0%B5%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B_files/it-it.css">
+  <link rel="shortcut icon" type="image/png" href="http://it-it.ru/static/media/home/favicon.ico">
+  <meta charset="UTF-8">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:type" content="article">
+  <meta name="rights" content="Copyright it-it.ru. Contact it@it-it.ru">
+  <meta name="author" content="IT Guru">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  
+<meta name="keywords" content="centos, selinux">
+<meta name="description" content="SELinux в Centos, шпаргалка по основным командам, просмотр состояния.">
+<title>Centos SELinux - основные команды, отключить, просмотр политик</title>
+
+<meta class="foundation-mq"></head>
+
+<body data-whatinput="mouse">
+<div class="top-bar">
+<div class="top-bar-left">
+<ul class="menu">
+<li class="menu-text">it-it.ru</li>
+<li><a href="http://it-it.ru/">Домой</a></li>
+</ul>
+</div>
+<div class="top-bar-right">
+<ul role="menubar" class="dropdown menu" data-dropdown-menu="gzpo13-dropdown-menu">
+  <li aria-label="Анализ сайта" aria-expanded="false" aria-haspopup="true" class="is-dropdown-submenu-parent opens-left" role="menuitem">
+    <a tabindex="0" href="#">Анализ сайта</a>
+    <ul role="menu" aria-hidden="true" data-submenu="" class="menu submenu is-dropdown-submenu first-sub vertical">
+      <li class="is-submenu-item is-dropdown-submenu-item" role="menuitem"><a href="http://it-it.ru/analyze/scaner/">Сканер</a></li>
+    </ul>
+</li><li role="menuitem"><a href="http://it-it.ru/blog/">Блог</a></li>
+<li role="menuitem"><a href="http://it-it.ru/contacts/">Контакты</a></li>
+</ul>
+</div>
+</div>
+
+
+
+<div class="medium-8 columns">
+  <br>
+    <nav aria-label="You are here:" role="navigation">
+      <ul class="breadcrumbs" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+
+      <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+      <a itemprop="item" href="http://it-it.ru/"><span itemprop="name">it-it.ru</span></a>
+      <meta itemprop="position" content="1">
+      </li>
+
+      <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+      <a itemprop="item" href="http://it-it.ru/blog/"><span itemprop="name">Блог</span></a>
+      <meta itemprop="position" content="2">
+      </li>
+
+      <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+      <span class="show-for-sr">Current: </span>
+      <span itemprop="name">Шпаргалка по SELinux в Centos</span>
+      <meta itemprop="position" content="3">
+      </li>
+
+      </ul>
+    </nav>
+  </div>
+
+<div class="row" id="content">
+  <div class="medium-8 columns">
+    <div class="blog-post">
+      <hr>
+      <h1>Шпаргалка по SELinux в Centos</h1>
+      <hr>
+      <p>July 3, 2016, 3:59 p.m.</p>
+      <img class="thumbnail" src="Centos%20SELinux%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D1%8B%D0%B5%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B_files/centos-selinux.jpg" alt="centos selinux" title="SELinux отключить">
+      <p></p><p>SELinux — система дополнительного контроля доступа и 
+надстройка безопасности, работает на уровне ядра, реализована как 
+надстройка над основной системой прав Unix. Предоставлена на публику в 
+Centos 4, а в более старших версиях 5-7, существенно переработана и 
+дополнена. Она применяется к событиям, которые успешно прошли проверку 
+правилами основной системы. Часто, первым делом, администраторы сразу 
+отключают SELinux, т.к, не знают или не хотят изучать работу 
+дополнительных правил безопасности.</p>
+
+<p>Основные термины:</p>
+
+<p><strong>Домен</strong>&nbsp;— правила определяющие действия, разрешенные процессу.</p>
+
+<p><strong>Роль</strong>&nbsp;— список доменов.</p>
+
+<p><strong>Тип</strong>&nbsp;— действия, разрешенные применять к 
+объекту. Применяется к каталогам, файлам или сокетам, в отличии от 
+доменов которые работают с процессами.</p>
+
+<p><strong>Контекст безопасности</strong>&nbsp;— SELinux атрибуты (роли, домены и типы).</p>
+
+<p>Режимы работы SELinux</p>
+
+<p><em>Enforcing</em>&nbsp;— действия, нарушающие политику безопасности системы, блокируются, и фиксируются в журнале безопасности.</p>
+
+<p><em>Permissive</em>&nbsp;— действия записываются в журнал безопасности, но не блокируются.</p>
+
+<p><em>Disabled</em>&nbsp;— действия не фиксируются и не блокируются.</p>
+
+<p>Информацию о текущим статусе SELinux, можно вывести в консоль командой sestatus (пример из Centos 7):</p>
+
+<p><code># sestatus<br>SELinux status: enabled<br>SELinuxfs mount: /sys/fs/selinux<br>SELinux root directory: /etc/selinux<br>Loaded policy name: targeted<br>Current mode: enforcing&nbsp;<br>Mode from config file: enforcing<br>Policy MLS status: enabled<br>Policy deny_unknown status: allowed<br>Max kernel policy version: 28</code></p>
+
+<p>SELinux можно отключить изменив конфигурационный файл 
+/etc/selinux/config, найдите строчку содержащую  измените параметр на 
+disabled, после этого необходимо перегрузить компьютер:</p>
+
+<p><code>SELINUX= enforcing </code></p>
+
+<p>Если нужно временно отключить систему безопасности, отключение selinux пройдет мгновенно:</p>
+
+<p><code>setenforce 0</code></p>
+
+<p>Включить обратно:</p>
+
+<p><code>setenforce 1</code></p>
+
+<p>Дополнительные права на каталоги можно просматривать командой ls  c параметром -Z:</p>
+
+<p><code># ls -Z /var/www/ drwxr-xr-x. nginx nginx 
+unconfined_u:object_r:httpd_sys_content_t:s0 files drwxr-xr-x. nginx 
+nginx unconfined_u:object_r:httpd_sys_content_t:s0 images</code></p>
+
+<p>Просмотр контекста безопасности SELinux для процесса ‘nginx’:</p>
+
+<p><code># ps axZ | grep nginxsystem_u:system_r:httpd_t:s0 7604 ? Ss 
+0:00 nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf 
+system_u:system_r:httpd_t:s0 7605 ? S 0:23 nginx: worker process</code></p>
+
+<p>Изменение контекста безопасности:</p>
+
+<p><code># chcon -v --type=httpd_sys_content_t /var/www context of /var/www changed to user_u:object_r:httpd_sys_content_t</code></p>
+
+<p>Рекурсивное изменение контекста безопасности:</p>
+
+<p><code># chcon -Rv --type=httpd_sys_content_t /var/www</code></p>
+
+<p>Сброс всех правил и восстановление дефолтного контекста безопасности для определенного каталога:</p>
+
+<p><code># restorecon -v /var/www</code></p>
+
+<p>Посмотреть список портов открытых для доступа:</p>
+
+<p><code># semanage port -l</code></p>
+
+<p>Открыть доступ к портам:</p>
+
+<p><code># semanage port -a -t http_port_t -p tcp 81</code></p>
+
+<p>Просмотр всех параметров и доступные для системы функции:</p>
+
+<p><code># getsebool -a</code></p>
+
+<p>Изменить любой параметр безопасности:</p>
+
+<p><code># setsebool -P httpd_can_network_connect on</code></p><p></p>
+      <div class="callout">
+        <ul class="menu simple">
+          <li>Автор: BlogWriter</li>
+          <li>Comments: 3</li>
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+ 
+
+
+
+<div class="callout large secondary">
+  <div class="row">
+    <div class="large-4 columns">
+      <h2 style="font-size: 24px">it-it.ru</h2>
+      <p>Copyright © 2016 </p>
+    </div>
+    <div class="large-6 large-offset-2 columns">
+      <ul class="menu vertical">
+        <li><p>По вопросам работы сайта обращайтесь на <a href="mailto:it@it-it.ru">it@it-it.ru</a></p></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- Yandex.Metrika counter -->
+<script src="Centos%20SELinux%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D1%8B%D0%B5%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B_files/watch.js" async="" type="text/javascript"></script><script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter38296325 = new Ya.Metrika({
+                    id:38296325,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/38296325" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+  <script src="Centos%20SELinux%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D1%8B%D0%B5%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B_files/jquery.js"></script>
+  <script src="Centos%20SELinux%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D1%8B%D0%B5%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B_files/what-input.js"></script>
+  <script src="Centos%20SELinux%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D1%8B%D0%B5%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B_files/foundation.js"></script>
+  <script>$(document).foundation();</script>
+
+
+</body><div data="{&quot;a&quot;:&quot;setShowingSafe&quot;,&quot;f&quot;:false}" style="display:none" id="sp_console_event"></div></html>

@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="ru-RU" prefix="og: http://ogp.me/ns#" prefix="og: http://ogp.me/ns#">
+<head>
+<meta charset="UTF-8" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://serveradmin.ru/xmlrpc.php" />
+<title>Базовая настройка роутера mikrotik</title>
+
+<!-- This site is optimized with the Yoast SEO plugin v5.4.2 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Подробное описание настройки роутера mikrotik, шаг за шагом описывается каждый этап на примере модели RB951G-2HnD"/>
+<link rel="canonical" href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/" />
+<meta property="og:locale" content="ru_RU" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Базовая настройка роутера mikrotik" />
+<meta property="og:description" content="Подробное описание настройки роутера mikrotik, шаг за шагом описывается каждый этап на примере модели RB951G-2HnD" />
+<meta property="og:url" content="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/" />
+<meta property="og:site_name" content="Системное администрирование" />
+<meta property="article:tag" content="mikrotik" />
+<meta property="article:section" content="Mikrotik" />
+<meta property="article:published_time" content="2015-12-20T00:51:50+00:00" />
+<meta property="og:image" content="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings.png" />
+<meta property="og:image:secure_url" content="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings.png" />
+<meta property="og:image:width" content="660" />
+<meta property="og:image:height" content="330" />
+<script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"WebSite","@id":"#website","url":"https:\/\/serveradmin.ru\/","name":"\u0421\u0438\u0441\u0442\u0435\u043c\u043d\u043e\u0435 \u0430\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435","potentialAction":{"@type":"SearchAction","target":"https:\/\/serveradmin.ru\/?s={search_term_string}","query-input":"required name=search_term_string"}}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Системное администрирование &raquo; Лента" href="https://serveradmin.ru/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Системное администрирование &raquo; Лента комментариев" href="https://serveradmin.ru/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Системное администрирование &raquo; Лента комментариев к &laquo;Как настроить микротик routerboard RB951G-2HnD&raquo;" href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/serveradmin.ru\/wp-includes\/js\/wp-emoji-release.min.js"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b!==c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='toc-screen-css'  href='https://serveradmin.ru/wp-content/plugins/table-of-contents-plus/screen.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wpforo-widgets-css'  href='https://serveradmin.ru/wp-content/plugins/wpforo/wpf-themes/classic/widgets.css' type='text/css' media='all' />
+<link rel='stylesheet' id='tie-style-css'  href='https://serveradmin.ru/wp-content/themes/sahifa/style.css' type='text/css' media='all' />
+<link rel='stylesheet' id='tie-ilightbox-skin-css'  href='https://serveradmin.ru/wp-content/themes/sahifa/css/ilightbox/dark-skin/skin.css' type='text/css' media='all' />
+<link rel='stylesheet' id='Droid+Sans-css'  href='https://fonts.googleapis.com/css?family=Droid+Sans%3Aregular%2C700' type='text/css' media='all' />
+<script type='text/javascript' src='https://serveradmin.ru/wp-includes/js/jquery/jquery.js'></script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-includes/js/jquery/jquery-migrate.min.js'></script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-content/plugins/duracelltomi-google-tag-manager/js/gtm4wp-form-move-tracker.js'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var tieViewsCacheL10n = {"admin_ajax_url":"https:\/\/serveradmin.ru\/wp-admin\/admin-ajax.php","post_id":"2469"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-content/themes/sahifa/js/postviews-cache.js'></script>
+<link rel='https://api.w.org/' href='https://serveradmin.ru/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://serveradmin.ru/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://serveradmin.ru/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.8.2" />
+<link rel='shortlink' href='https://serveradmin.ru/?p=2469' />
+<link rel="alternate" type="application/json+oembed" href="https://serveradmin.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fserveradmin.ru%2Fbazovaya-nastroyka-routera-mikrotik%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://serveradmin.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fserveradmin.ru%2Fbazovaya-nastroyka-routera-mikrotik%2F&#038;format=xml" />
+<style type="text/css">div#toc_container {background: #f9f9f9;border: 1px solid #aaaaaa;width: 100%;}div#toc_container ul li {font-size: 15px;}</style>		<script type="text/javascript">
+			jQuery(document).ready(function($){
+				$(document).on('click','.attach_cant_view', function(){
+					$("#wpf-msg-box").hide();
+					$('#wpforo-load').visible();
+					$("#wpf-msg-box p.wpf-msg-box-triangle-right").removeClass("error").removeClass("success");
+					$("#wpf-msg-box p.wpf-msg-box-triangle-right").html("<span>Пожалуйста, <a href=\"https://serveradmin.ru/forum/?wpforo=signin\" rel=\"nofollow\">Вход</a> или <a href=\"https://serveradmin.ru/forum/?wpforo=signup\" rel=\"nofollow\">Зарегистрироваться</a></span>");
+					$("#wpf-msg-box").show(150).delay(1000);
+					$('#wpforo-load').invisible();
+				});
+			});
+		</script>
+		
+<!-- Google Tag Manager for WordPress by DuracellTomi - http://duracelltomi.com -->
+<script data-cfasync="false" type="text/javascript">
+	var gtm4wp_datalayer_name = "dataLayer";
+	var dataLayer = dataLayer || [];
+	dataLayer.push({"pagePostType":"post","pagePostType2":"single-post","pageCategory":["mikrotik"],"pageAttributes":["mikrotik"],"pagePostAuthor":"Zerox"});
+</script>
+<script data-cfasync="false">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.'+'js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N32MZXJ');</script>
+<!-- End Google Tag Manager -->
+<!-- End Google Tag Manager for WordPress by DuracellTomi --><link rel="shortcut icon" href="https://serveradmin.ru/wp-content/uploads/2015/08/favicon.ico" title="Favicon" />	
+<!--[if IE]>
+<script type="text/javascript">jQuery(document).ready(function (){ jQuery(".menu-item").has("ul").children("a").attr("aria-haspopup", "true");});</script>
+<![endif]-->	
+<!--[if lt IE 9]>
+<script src="https://serveradmin.ru/wp-content/themes/sahifa/js/html5.js"></script>
+<script src="https://serveradmin.ru/wp-content/themes/sahifa/js/selectivizr-min.js"></script>
+<![endif]-->
+<!--[if IE 9]>
+<link rel="stylesheet" type="text/css" media="all" href="https://serveradmin.ru/wp-content/themes/sahifa/css/ie9.css" />
+<![endif]-->
+<!--[if IE 8]>
+<link rel="stylesheet" type="text/css" media="all" href="https://serveradmin.ru/wp-content/themes/sahifa/css/ie8.css" />
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" media="all" href="https://serveradmin.ru/wp-content/themes/sahifa/css/ie7.css" />
+<![endif]-->
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+< meta name="referrer" content="origin">
+
+<style type="text/css" media="screen"> 
+
+	
+body {
+	background-image : url(https://serveradmin.ru/wp-content/themes/sahifa/images/patterns/body-bg15.png);
+	background-position: top center;
+}
+
+body.single .post .entry a, body.page .post .entry a {
+	color: #e6773c;
+}
+		
+</style> 
+
+
+<!-- BEGIN recaptcha, injected by plugin wp-recaptcha-integration  -->
+
+<!-- END recaptcha -->
+</head>
+<body id="top" class="post-template-default single single-post postid-2469 single-format-standard">
+
+<div class="wrapper-outer">
+
+	<div class="background-cover"></div>
+
+	<aside id="slide-out">
+	
+			<div class="search-mobile">
+			<form method="get" id="searchform-mobile" action="https://serveradmin.ru/">
+				<button class="search-button" type="submit" value="Поищем"><i class="fa fa-search"></i></button>	
+				<input type="text" id="s-mobile" name="s" title="Поищем" value="Поищем" onfocus="if (this.value == 'Поищем') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Поищем';}"  />
+			</form>
+		</div><!-- .search-mobile /-->
+		
+		
+		<div id="mobile-menu" ></div>
+	</aside><!-- #slide-out /-->
+
+		<div id="wrapper" class="boxed-all">
+		<div class="inner-wrapper">
+
+		<header id="theme-header" class="theme-header">
+						<div id="top-nav" class="top-nav">
+				<div class="container">
+
+								
+				<div class="top-menu"><ul id="menu-menyu-1" class="menu"><li id="menu-item-522" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-522"><a href="//serveradmin.ru/">Главная</a></li>
+<li id="menu-item-636" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-636"><a href="https://serveradmin.ru/karta-sayta/">Карта сайта</a></li>
+<li id="menu-item-1183" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1183"><a href="https://serveradmin.ru/zakazat-statyu/">Заказать статью</a></li>
+<li id="menu-item-2592" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2592"><a href="https://serveradmin.ru/uslugi/">Услуги</a></li>
+<li id="menu-item-2593" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2593"><a href="https://serveradmin.ru/kontaktyi/">Контакты</a></li>
+</ul></div>
+						<div class="search-block">
+						<form method="get" id="searchform-header" action="https://serveradmin.ru/">
+							<button class="search-button" type="submit" value="Поищем"><i class="fa fa-search"></i></button>	
+							<input class="search-live" type="text" id="s-header" name="s" title="Поищем" value="Поищем" onfocus="if (this.value == 'Поищем') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Поищем';}"  />
+						</form>
+					</div><!-- .search-block /-->
+			<div class="social-icons">
+		<a class="ttip-none" title="Rss" href="https://serveradmin.ru/feed/" target="_blank"><i class="fa fa-rss"></i></a>		
+			</div>
+
+		
+	
+				</div><!-- .container /-->
+			</div><!-- .top-menu /-->
+			
+		<div class="header-content">
+		
+					<a id="slide-out-open" class="slide-out-open" href="#"><span></span></a>
+				
+			<div class="logo">
+			<h2>								<a title="Системное администрирование" href="https://serveradmin.ru/">
+					<img src="https://serveradmin.ru/wp-content/uploads/2015/12/logo-new.png" alt="Системное администрирование"  /><strong>Системное администрирование Сайт содержит статьи, обзоры, инструкции по установке, настройке и администрированию различных информационных систем</strong>
+				</a>
+			</h2>			</div><!-- .logo /-->
+			<div class="e3lan e3lan-top">			
+			<a href="https://www.keyweb.ru/products/server/root-virtual-server" title="Виртуальные серверы в Германии" target="_blank">
+				<img src="https://serveradmin.ru/wp-content/uploads/2017/07/server_vds.gif" alt="Виртуальные серверы в Германии" />
+			</a>
+				</div>			<div class="clear"></div>
+			
+		</div>	
+													<nav id="main-nav">
+				<div class="container">
+				
+				
+					<div class="main-menu"><ul id="menu-osnovnoe" class="menu"><li id="menu-item-1934" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1934"><a href="//serveradmin.ru">Главная</a></li>
+<li id="menu-item-3761" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3761"><a target="_blank" href="https://serveradmin.ru/forum/"><i class="fa fa-comments-o"></i>Форум</a></li>
+<li id="menu-item-1921" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1921"><a><i class="fa fa-server"></i>Системы</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-1932" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1932"><a href="https://serveradmin.ru/category/freebsd/">Freebsd</a></li>
+	<li id="menu-item-1922" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1922"><a href="https://serveradmin.ru/category/linux/centos/">CentOS</a></li>
+	<li id="menu-item-1923" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1923"><a href="https://serveradmin.ru/category/linux/debian/">Debian</a></li>
+	<li id="menu-item-1924" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1924"><a href="https://serveradmin.ru/category/windows/">Windows</a></li>
+	<li id="menu-item-1925" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1925"><a href="https://serveradmin.ru/category/synology/">Synology</a></li>
+</ul>
+</li>
+<li id="menu-item-5106" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-5106"><a><i class="fa fa-list-ul"></i>Сервисы</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-5112" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5112"><a href="https://serveradmin.ru/tag/gate/">Шлюз</a></li>
+	<li id="menu-item-5110" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5110"><a href="https://serveradmin.ru/tag/webserver/">Веб сервер</a></li>
+	<li id="menu-item-5107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5107"><a href="https://serveradmin.ru/tag/mailserver">Почтовый сервер</a></li>
+	<li id="menu-item-5114" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5114"><a href="https://serveradmin.ru/tag/sysconfig/">Настройка системы</a></li>
+	<li id="menu-item-5113" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5113"><a href="https://serveradmin.ru/tag/backup/">Бэкап</a></li>
+</ul>
+</li>
+<li id="menu-item-1927" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-1927"><a href="https://serveradmin.ru/category/virtual/"><i class="fa fa-cloud"></i>Виртуализация</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-1928" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1928"><a href="https://serveradmin.ru/category/virtual/hyperv/">Hyper-V</a></li>
+	<li id="menu-item-1929" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1929"><a href="https://serveradmin.ru/category/virtual/vmware/">VMware</a></li>
+	<li id="menu-item-1972" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1972"><a href="https://serveradmin.ru/category/virtual/xenserver/">XenServer</a></li>
+	<li id="menu-item-3700" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3700"><a href="https://serveradmin.ru/category/virtual/proxmox/">Proxmox</a></li>
+	<li id="menu-item-4903" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-4903"><a href="https://serveradmin.ru/category/virtual/kvm/">KVM</a></li>
+</ul>
+</li>
+<li id="menu-item-1926" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-1926"><a href="https://serveradmin.ru/category/mikrotik/"><i class="fa fa-maxcdn"></i>Mikrotik</a></li>
+<li id="menu-item-2272" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2272"><a><i class="fa fa-binoculars"></i>Мониторинг</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-2273" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2273"><a href="https://serveradmin.ru/category/zabbix/">Zabbix</a></li>
+</ul>
+</li>
+<li id="menu-item-3340" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3340"><a href="https://serveradmin.ru/category/asterisk/"><i class="fa fa-phone-square"></i>Asterisk</a></li>
+<li id="menu-item-4832" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-4832"><a href="https://serveradmin.ru/category/1c/"><i class="fa fa-copyright"></i>1C</a></li>
+<li id="menu-item-1930" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1930"><a href="https://serveradmin.ru/category/virus/"><i class="fa fa-exclamation-circle"></i>Осторожно, вирус!</a></li>
+<li id="menu-item-1931" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1931"><a href="https://serveradmin.ru/category/poleznyie-sovetyi/"><i class="fa fa-cogs"></i>Советы</a></li>
+<li id="menu-item-2803" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2803"><a href="https://serveradmin.ru/category/errors/"><i class="fa fa-times-circle"></i>Ошибки</a></li>
+<li id="menu-item-3205" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3205"><a href="https://serveradmin.ru/category/lichnoe/"><i class="fa fa-android"></i>Личное</a></li>
+</ul></div>					
+					
+				</div>
+			</nav><!-- .main-nav /-->
+					</header><!-- #header /-->
+	
+		
+	
+	
+	<div id="main-content" class="container">
+			
+		
+	
+	
+		
+	<div class="content">
+	
+				
+		<div xmlns:v="http://rdf.data-vocabulary.org/#"  id="crumbs"><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" class="crumbs-home" href="https://serveradmin.ru">Home</a></span> <span class="delimiter">&raquo;</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="https://serveradmin.ru/category/mikrotik/">Mikrotik</a></span> <span class="delimiter">&raquo;</span> <span class="current">Как настроить микротик routerboard RB951G-2HnD</span></div>
+					
+				
+						
+		<article class="post-listing post-2469 post type-post status-publish format-standard has-post-thumbnail hentry category-mikrotik tag-mikrotik" id="the-post">
+			
+			<div class="post-inner">
+			
+							<h1 class="name post-title entry-title" itemprop="itemReviewed" itemscope itemtype="http://schema.org/Thing"><span itemprop="name">Как настроить микротик routerboard RB951G-2HnD</span></h1>
+
+						
+<p class="post-meta">
+	
+		
+	<span class="tie-date"><i class="fa fa-clock-o"></i>Обновлено: 20.12.2015</span>	
+	<span class="post-cats"><i class="fa fa-folder"></i><a href="https://serveradmin.ru/category/mikrotik/" rel="category tag">Mikrotik</a></span>
+	
+	<span class="post-comments"><i class="fa fa-comments"></i><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comments">41 комментарий</a></span>
+<span class="post-views"><i class="fa fa-eye"></i>214,620 Views</span> </p>
+<div class="clear"></div>
+			
+				<div class="entry">
+					
+					
+					<p style="text-align: justify;">Продолжаю рассказ про замечательную серию устройств из Латвии, которые зарекомендовали себя как функциональные и надежные девайсы. В данной статье я подробно рассмотрю вопрос базовой настройки роутеров mikrotik на примере бюджетной и самой популярной модели RB951G-2HnD. Данная инструкция подойдет практически к любой модели, так как все они сделаны на базе одной и той же операционной системы.</p>
+<p><span id="more-2469"></span></p>
+<div class="box note  "><div class="box-inner-block"><i class="fa tie-shortcode-boxicon"></i>
+			Если у вас есть желание научиться работать с роутерами микротик и стать специалистом в этой области, рекомендую <a href="http://курсы-по-ит.рф/lp-mikrotik-mtcna?utm_source=serveradminru&amp;utm_medium=special" target="_blank" rel="noopener noreferrer">пройти курсы</a> по программе, основанной на информации из официального курса MikroTik Certified Network Associate. Все подробности читайте <a href="https://serveradmin.ru/nastroyka-openvpn-client-na-mikrotik-s-zamenoy-shlyuza/#_Mikrotik">ниже</a>.
+			</div></div>
+<div id="toc_container" class="no_bullets"><p class="toc_title">Содержание:</p><ul class="toc_list"><li><a href="#i"><span class="toc_number toc_depth_1">1</span> Введение</a></li><li><a href="#_Mikrotik_RB951G-2HnD"><span class="toc_number toc_depth_1">2</span> Описание Mikrotik RB951G-2HnD</a></li><li><a href="#i-2"><span class="toc_number toc_depth_1">3</span> Сброс настроек роутера</a></li><li><a href="#i-3"><span class="toc_number toc_depth_1">4</span> Обновление прошивки</a></li><li><a href="#i-4"><span class="toc_number toc_depth_1">5</span> Объединение портов в бридж</a></li><li><a href="#_IP"><span class="toc_number toc_depth_1">6</span> Настройка статического IP</a></li><li><a href="#i-5"><span class="toc_number toc_depth_1">7</span> Настройка интернета в микротик</a></li><li><a href="#_dhcp"><span class="toc_number toc_depth_1">8</span> Настройка dhcp сервера</a></li><li><a href="#NAT"><span class="toc_number toc_depth_1">9</span> Настройка NAT</a></li><li><a href="#_wifi__mikrotik"><span class="toc_number toc_depth_1">10</span> Настройка wifi точки доступа в mikrotik</a></li><li><a href="#i-6"><span class="toc_number toc_depth_1">11</span> Смена пароля администратора по-умолчанию</a></li><li><a href="#i-7"><span class="toc_number toc_depth_1">12</span> Настройка времени</a></li><li><a href="#i-8"><span class="toc_number toc_depth_1">13</span> Заключение</a></li><li><a href="#i-9"><span class="toc_number toc_depth_1">14</span> Видео</a></li><li><a href="#_Mikrotik"><span class="toc_number toc_depth_1">15</span> Онлайн курсы по Mikrotik</a></li></ul></div>
+
+<h2><span id="i">Введение</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p style="text-align: justify;">Роутеры Mikrotik routerboard достаточно давно появились на рынке, но так до сих пор и не завоевали большую популярность. Хотя свою нишу заняли. Лично я считаю, что это отличный роутер для дома, по надежности у него нет конкурентов. Это действительно маршрутизатор, который можно один раз настроить и забыть. Лично мне еще ни разу не попадалось устройство, которое бы приходилось принудительно перезагружать, чтобы вывести его из комы, как это часто бывает с другими бюджетными железками.</p>
+<p style="text-align: justify;">Распространение среди домашних пользователей сдерживает в первую очередь сложность настройки. И хотя более ли менее продвинутому пользователю может показаться, что ничего тут сложного нет. Но на самом деле есть. И я часто сталкивался с просьбами настроить роутер дома для раздачи интернета по wifi, так как купившие по чьей-нибудь рекомендации пользователи сами не могли полностью настроить нужный функционал, хотя инструкций в интернете хватает.</p>
+<p style="text-align: justify;">Этот пробел я хочу восполнить и написать подробную пошаговую инструкцию по настройке микротика с нуля для чайников на примере самой подходящей для дома модели RB951G-2HnD. У меня давно подготовлена личная шпаргалка в виде текстового файла. По ней я буквально за 10 минут настраиваю роутер и отдаю пользователю. То есть реально ничего сложного нет, если знаешь, что делаешь. На основе этой шпаргалки я и напишу материал.</p>
+<p style="text-align: justify;">Возможно опытному пользователю нечего будет тут почерпнуть, а может быть я сам что-то делаю не совсем правильно или не оптимально. Прошу сделать подсказку или замечание в комментарии, если это действительно так. Я пишу статьи в том числе и для того, чтобы самому научиться чему-то новому. Как гласит одна восточная мудрость &#8212; чтобы получить новые знания, нужно поделиться теми, что есть у тебя с другими. Именно этим я и занимаюсь на страницах данного сайта.</p>
+<h2><span id="_Mikrotik_RB951G-2HnD">Описание Mikrotik RB951G-2HnD</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p style="text-align: justify;">Вот он, герой сегодняшней статьи &#8212; <a href="http://mikrotik.ru/katalog/katalog/hardware/wireless_soho/routerboard-951g-2hnd" target="_blank" rel="noopener noreferrer">Mikrotik RB951G-2HnD</a>. Его описание, отзывы и стоимость можно быстро проверить на <a href="https://market.yandex.ru/product/9263634?hid=723087" target="_blank" rel="noopener noreferrer">Яндекс.Маркете</a>. По количеству отзывов уже можно сделать вывод об определенной популярности этого роутера.</p>
+<p>Внешний вид устройства.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/RB951G-2HnD.jpg" rel="attachment wp-att-2472"><img class="aligncenter size-full wp-image-2472" src="//serveradmin.ru/wp-content/uploads/2015/12/RB951G-2HnD.jpg" alt="Mikrotik RB951G-2HnD" width="885" height="723" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/RB951G-2HnD.jpg 885w, https://serveradmin.ru/wp-content/uploads/2015/12/RB951G-2HnD-300x245.jpg 300w, https://serveradmin.ru/wp-content/uploads/2015/12/RB951G-2HnD-768x627.jpg 768w" sizes="(max-width: 885px) 100vw, 885px" /></a></p>
+<p style="text-align: justify;">Важной особенностью этого роутера, которой лично я активно пользуюсь, является возможность запитать его с помощью специального <a href="http://mikrotik.ru/katalog/katalog/components/kabeli-i-razemy/gigabit-poe" target="_blank" rel="noopener noreferrer">poe адаптера</a>.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-power.jpg" rel="attachment wp-att-2473"><img class="aligncenter size-full wp-image-2473" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-power.jpg" alt="MikroTik Gigabit PoE адаптер" width="957" height="627" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-power.jpg 957w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-power-300x197.jpg 300w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-power-768x503.jpg 768w" sizes="(max-width: 957px) 100vw, 957px" /></a></p>
+<p style="text-align: justify;">На изображении он справа. Берется стандартный блок питания от роутера и poe адаптер. Блок питания подключается к адаптеру, а от адаптера уже идет патч корд в первый порт routerboard. Маршрутизатор можно повесить на стену в любое место, нет необходимости привязываться к розетке. Сразу отмечу, что запитать роутер можно только poe адаптером микротика. У него другой стандарт и привычные poe свитчи 802.3af не подойдут.</p>
+<p style="text-align: justify;">Существует похожая модель <a href="http://mikrotik.ru/katalog/katalog/hardware/wireless_soho/routerboard-951ui-2hnd-318" target="_blank" rel="noopener noreferrer">RB951Ui-2HnD</a>. Она отличается от описываемой мной только тем, что у нее <strong>100Mb</strong> порт, а у RB951G-2HnD <strong>1Gb</strong>. Если для вас эти отличия не принципиальны, то можете покупать более дешевую модель. В остальном они идентичны.</p>
+<p style="text-align: justify;">Будем потихонечку двигаться дальше. Как проще всего настроить микротик? Я для этого использую стандартную утилиту <a href="http://download2.mikrotik.com/routeros/winbox/3.0/winbox.exe" target="_blank" rel="noopener noreferrer">winbox</a>. Можно пользоваться и web интерфейсом, но лично мне намного удобнее winbox. Так что для продолжения настройки скачивайте ее на компьютер.</p>
+<h2><span id="i-2">Сброс настроек роутера</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p style="text-align: justify;">Подключаем роутер к сети, подаем питание и запускаем на компьютере winbox. Переходим на вкладку <strong>Neighbors</strong> и ждем, когда утилита найдет наш микротик. Это может занять какое-то время. На всякий случай можно нажать <strong>Refresh</strong>, если роутер долго не обнаруживается.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-01.png" rel="attachment wp-att-2478"><img class="aligncenter wp-image-2478 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-01.png" alt="подключение через winbox" width="813" height="694" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-01.png 813w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-01-300x256.png 300w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-01-768x656.png 768w" sizes="(max-width: 813px) 100vw, 813px" /></a></p>
+<p style="text-align: justify;">Нажимаем на мак адрес устройства, он должен будет скопироваться в поле <strong>Connect To</strong>. Пароль по-умолчанию для входа в роутеры mikrotik &#8212; <strong>пустой, </strong>а пользователь &#8212;<strong> admin</strong>. Вводим имя пользователя, поле с паролем оставляем не заполненным. Нажимаем connect. Нас встречает информационное окно, в котором приведено описание стандартных настроек.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-02.png" rel="attachment wp-att-2479"><img class="aligncenter wp-image-2479 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-02.png" alt="сброс настроек по-умолчанию" width="498" height="374" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-02.png 498w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-02-300x225.png 300w" sizes="(max-width: 498px) 100vw, 498px" /></a></p>
+<p style="text-align: justify;">Здесь их можно либо оставить, либо удалить. Я всегда удаляю, так как стандартные настройки чаще всего не подходят под конкретную ситуацию. Приведу несколько примеров, почему это так:</p>
+<ol>
+<li>Я запитал свой роутер по первому порту через poe адаптер и поэтому вынужден использовать этот порт как локальный. В настройках по-умолчанию этот порт используется как wan порт для получения интернета от провайдер.</li>
+<li>В настройках по-умолчанию установлено автоматическое получение настроек от провайдера по dhcp. Если у вас другой тип подключения, то вам стандартная настройка не подходит.</li>
+<li>По-умолчанию устанавливается адресное пространство 192.168.88.0/24. Мне лично не нравятся сетки по-умолчанию, так как если в них случайно воткнуть новое устройство, где будет так же забит умолчательный адрес, то в сети начнутся проблемы. Дома может это и не актуально, но в коммерческих организациях мне приходилось с этим сталкиваться. Поэтому я на всякий случай сетку всегда меняю.</li>
+</ol>
+<p style="text-align: justify;">Так что мы нажимаем <strong>Remove Configuration</strong>, чтобы удалить настройки. После этого роутер перезагрузится. Ждем примерно минуту и подключаемся к нему снова.</p>
+<p style="text-align: justify;">Если вы по какой-то причине не удалили сразу предустановки, то выполнить сброс настроек в mikrotik на заводские можно позже. Для этого надо в терминале набрать сначала <strong>system</strong>, а затем <strong>reset</strong>. У вас спросят подтверждение и после этого routerboard перезагрузится с заводскими настройками.</p>
+<h2><span id="i-3">Обновление прошивки</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p style="text-align: justify;">После очистки настроек я рекомендую сразу выполнить обновление прошивки роутера Mikrotik. Для этого идем в раздел <a href="http://www.mikrotik.com/download" target="_blank" rel="noopener noreferrer">Download</a> официального сайта и скачиваем нужный файл. В данном случае это платформа <strong>mipsbe</strong>, пакет для загрузки <strong>Main package</strong>. Загружаем его на компьютер и подключаемся к роутеру с помощью winbox. Выбираем слева раздел <strong>Files</strong>. Затем открываем рядом два окна &#8212; один с файлом прошивки, второй с winbox и перетаскиваем мышкой файл из папки в winbox в список файлов.</p>
+<p style="text-align: justify;"><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-03.png" rel="attachment wp-att-2522"><img class="aligncenter wp-image-2522 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-03.png" alt="обновление прошивки mikrotik" width="1183" height="676" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-03.png 1183w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-03-300x171.png 300w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-03-768x439.png 768w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-03-1024x585.png 1024w" sizes="(max-width: 1183px) 100vw, 1183px" /></a></p>
+<p>Дожидаемся окончания загрузки прошивки и перезагружаем микротик. Прошивка обновится во время загрузки роутера. Подождать придется минуты 3. Поле этого снова подключаемся к устройству. После обновления прошивки, нужно обновить загрузчик. Делается это в пункте меню <strong>System &#8212; RouterBoard</strong>. Заходите туда, проверяете строки <em>Current Firmware</em> и <em>Upgrade Firmware</em>. Если они отличаются, то жмете кнопку <strong>Upgrade</strong>. Если одинаковые, то можно ничего не делать.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-04.png" rel="attachment wp-att-2481"><img class="aligncenter wp-image-2481 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-04.png" alt="обновление firmware" width="747" height="624" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-04.png 747w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-04-300x251.png 300w" sizes="(max-width: 747px) 100vw, 747px" /></a></p>
+<p>Проверить версию установленной прошивки можно в разделе <strong>System &#8212; Packages</strong>.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-05.png" rel="attachment wp-att-2482"><img class="aligncenter wp-image-2482 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-05.png" alt="проверка обновлений" width="695" height="623" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-05.png 695w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-05-300x269.png 300w" sizes="(max-width: 695px) 100vw, 695px" /></a></p>
+<p>В моем случае версия прошивки &#8212; 6.33.3. В будущем, когда на роутере будет настроен интернет, обновляться можно автоматически в этом разделе, нажимая на <strong>Check For Updates</strong>.</p>
+<p>Прошивку обновили, можно приступать к настройке.</p>
+<h2><span id="i-4">Объединение портов в бридж</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p style="text-align: justify;">Одной из особенностей роутеров mikrotik routerboard является отсутствие предустановленных настроек портов. Объясняю на пальцах, что это такое. Покупая обычный бюджетный роутер, вы увидите подписи к портам. На одном из них обязательно будет написано WAN, на других либо ничего не будет написано, либо LAN. То есть у вас уже будет один порт настроен определенным образом для подключения интернета и остальные порты будут объединены в switch для удобства подключения оборудования.</p>
+<p style="text-align: justify;">В Mikrotik не так. Там все порты равнозначны и WAN портом может стать абсолютно любой, какой пожелаете. Так как я 1-й порт использую для подключения питания, в качестве WAN у меня будет выступать 5-й порт. А все остальные я объединю в единую сеть с помощью bridge и добавлю к ним wifi интерфейс.</p>
+<p style="text-align: justify;">Будем считать, что 1-й порт у нас мастер-порт, хотя это не обязательно, мастер портом может стать любой свободный порт. Укажем всем остальным портам использовать его в качестве мастера. Для этого в winbox идем в раздел <strong>Interfaces</strong>, выбираем <em>ether2</em>, два раза нажимаем на него мышкой и попадаем в его настройки. Там ищем поле <em>Master Port</em>, в выпадающем списке выбираем <em>ether1</em>.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-06.png" rel="attachment wp-att-2494"><img class="aligncenter wp-image-2494 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-06.png" alt="объединение портов" width="960" height="721" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-06.png 960w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-06-300x225.png 300w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-06-768x577.png 768w" sizes="(max-width: 960px) 100vw, 960px" /></a></p>
+<p style="text-align: justify;">Сохраняем настройку. То же самое проделываем для всех остальных портов, кроме 5-го. Напротив настроенного порта должна появиться буква <strong>S</strong>.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-07.png" rel="attachment wp-att-2495"><img class="aligncenter wp-image-2495 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-07.png" alt="slave порты" width="812" height="364" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-07.png 812w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-07-300x134.png 300w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-07-768x344.png 768w" sizes="(max-width: 812px) 100vw, 812px" /></a></p>
+<p style="text-align: justify;">Мы объединили порты с 1 по 4 в свитч, теперь объединим их с wifi интерфейсом в bridge. Для этого идем в раздел <strong>Bridge</strong>, нажимаем на плюсик и жмем ОК. Все настройки оставляем по-умолчанию.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-08.png" rel="attachment wp-att-2496"><img class="aligncenter wp-image-2496 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-08.png" alt="создание bridge" width="959" height="721" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-08.png 959w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-08-300x226.png 300w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-08-768x577.png 768w" sizes="(max-width: 959px) 100vw, 959px" /></a></p>
+<p>У нас появился bridge1. Переходим на вкладку ports и жмем плюсик. Выбираем <em>ether1</em> и жмем ОК.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-09.png" rel="attachment wp-att-2497"><img class="aligncenter wp-image-2497 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-09.png" alt="добавление портов в bridge" width="688" height="507" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-09.png 688w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-09-300x221.png 300w" sizes="(max-width: 688px) 100vw, 688px" /></a></p>
+<p style="text-align: justify;">Вас отключит от роутера. Так и должно быть, подключайтесь снова. Идем в тот же раздел и еще раз нажимаем плюс и добавляем интерфейс <em>wlan1</em>. Должно получиться вот так:</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-10.png" rel="attachment wp-att-2498"><img class="aligncenter wp-image-2498 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-10.png" alt="список портов в бридже" width="599" height="373" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-10.png 599w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-10-300x187.png 300w" sizes="(max-width: 599px) 100vw, 599px" /></a></p>
+<p>Мы объединили все необходимые интерфейсы в бридж для организации единого пространства для всех подключенных устройств.</p>
+<h2><span id="_IP">Настройка статического IP</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p>До этого мы подключались к роутеру по МАК адресу. Сейчас можно ему назначить статический локальный ip адрес, по которому он будет доступен в сети. Для этого идем в раздел <strong>IP -&gt; Addresses</strong> и жмем плюсик.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-11.png" rel="attachment wp-att-2499"><img class="aligncenter wp-image-2499 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-11.png" alt="настройка статического ip в mikrotik" width="959" height="723" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-11.png 959w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-11-300x226.png 300w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-11-768x579.png 768w" sizes="(max-width: 959px) 100vw, 959px" /></a></p>
+<p style="text-align: justify;">Указываете в разделе Address любую подсеть. Я выбрал <em>192.168.9.0</em>. Соответственно микротику мы назначаем адрес  <em>192.168.9.1/24</em>. В качестве интерфейса выбираем <em>bridge1</em>. Поле Network можно не заполнять, оно заполнится автоматически. Теперь наш роутер доступен и по локальным интерфейсам, и по wifi (который еще предстоит настроить) по адресу 192.168.9.1.</p>
+<h2><span id="i-5">Настройка интернета в микротик</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p style="text-align: justify;">Сейчас самое время подключиться к провайдеру и настроить интернет. Тут трудно охватить все возможные варианты подключения. Их может быть много. Я рассмотрю два самых популярных способа:</p>
+<ol style="text-align: justify;">
+<li>Вы получаете настройки от провайдера автоматически по dhcp.</li>
+<li>Провайдер дал вам готовые настройки и вы их вводите вручную.</li>
+</ol>
+<p style="text-align: justify;">Как я уже писал ранее, для подключения к провайдеру мы будем использовать 5-й порт. Подключайте провод провайдера.</p>
+<p style="text-align: justify;">Для получения настроек по dhcp переходите в winbox в раздел <strong>IP -&gt; DHCP Client</strong> и жмите плюсик. Выбираете интерфейс <em>ether5</em> и жмете ОК.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-12.png" rel="attachment wp-att-2500"><img class="aligncenter wp-image-2500 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-12.png" alt="получение настроек по dhcp" width="959" height="720" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-12.png 959w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-12-300x225.png 300w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-12-768x577.png 768w" sizes="(max-width: 959px) 100vw, 959px" /></a></p>
+<p>Если вы все сделали правильно, то увидите, какой IP адрес получили. В разделе <strong>IP -&gt; Addresses</strong> будет информация о настройках.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-13.png" rel="attachment wp-att-2501"><img class="aligncenter wp-image-2501 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-13.png" alt="информация об ip" width="656" height="433" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-13.png 656w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-13-300x198.png 300w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-13-310x205.png 310w" sizes="(max-width: 656px) 100vw, 656px" /></a></p>
+<p style="text-align: justify;">Рассмотрим вариант, когда провайдер выдал все настройки и вам нужно самим их задать. Будем считать, что наши настройки интернета следующие:</p>
+<table>
+<tbody>
+<tr>
+<td>IP адрес</td>
+<td>192.168.1.104</td>
+</tr>
+<tr>
+<td>Маска</td>
+<td>255.255.255.0</td>
+</tr>
+<tr>
+<td>Шлюз</td>
+<td>192.168.1.1</td>
+</tr>
+<tr>
+<td>DNS</td>
+<td>192.168.1.1</td>
+</tr>
+</tbody>
+</table>
+<p style="text-align: justify;">Сначала укажем IP адрес. Делаем все то же самое, что и в предыдущем пункте при настройке статического IP. Только теперь вместо интерфейса <em>bridge1</em> указываем <em>ether5</em> и вводим соответствующий адрес &#8212; <em>192.168.1.104/24</em>. Тут мы сразу указали и адрес и маску подсети.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-14.png" rel="attachment wp-att-2502"><img class="aligncenter wp-image-2502 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-14.png" alt="установка ip провайдера" width="453" height="294" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-14.png 453w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-14-300x195.png 300w" sizes="(max-width: 453px) 100vw, 453px" /></a></p>
+<p style="text-align: justify;">Дальше нам нужно установить шлюз по-умолчанию. Без этого обязательного шага интернет не заработает. Идем в раздел <strong>IP -&gt; Routes</strong> и жмем плюсик для добавления шлюза по-умолчанию. В <em>Dst. Address</em> оставляем как есть <em>0.0.0.0/0</em>, а в поле <em>Gateway</em> вписываем шлюз провайдера и жмем ОК.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-15.png" rel="attachment wp-att-2503"><img class="aligncenter wp-image-2503 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-15.png" alt="установка шлюза по-умолчанию в mikrotik" width="959" height="724" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-15.png 959w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-15-300x226.png 300w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-15-768x580.png 768w" sizes="(max-width: 959px) 100vw, 959px" /></a></p>
+<p style="text-align: justify;">Уже сейчас интернет должен заработать, но без указания DNS сервера обращаться можно только по прямым ip адресам. Например можно пропинговать ip адрес серверов гугла. Открываем New Terminal и проверяем.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-16.png" rel="attachment wp-att-2504"><img class="aligncenter wp-image-2504 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-16.png" alt="ping dns сервера гугла" width="627" height="362" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-16.png 627w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-16-300x173.png 300w" sizes="(max-width: 627px) 100vw, 627px" /></a></p>
+<p style="text-align: justify;">Теперь установим DNS сервер. Для этого идем в <strong>IP -&gt; DNS</strong>, в поле <em>Servers</em> вводим адрес dns сервера провайдера. Если у вас их два, то нажав на треугольничек, направленной вершиной вниз, вы можете ввести еще одно значение. Обязательно ставите галочку напротив <em>Allow Remote Requests</em>.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-17.png" rel="attachment wp-att-2505"><img class="aligncenter wp-image-2505 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-17.png" alt="установка dns сервера провайдера" width="728" height="483" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-17.png 728w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-17-300x199.png 300w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-17-310x205.png 310w" sizes="(max-width: 728px) 100vw, 728px" /></a></p>
+<p style="text-align: justify;">На этом все, мы полностью установили настройки интернета провайдера. Можно проверить и пропинговать привычный адрес сайта.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-18.png" rel="attachment wp-att-2506"><img class="aligncenter wp-image-2506 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-18.png" alt="ping ya.ru" width="628" height="358" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-18.png 628w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-18-300x171.png 300w" sizes="(max-width: 628px) 100vw, 628px" /></a></p>
+<p style="text-align: justify;">На самом маршрутизаторе уже есть выход в интернет. На нам нужно его настроить для пользователей. Для этого продолжаем настройку mikrotik.</p>
+<h2><span id="_dhcp">Настройка dhcp сервера</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p style="text-align: justify;">Для того, чтобы подключенные устройства могли получать сетевые настройки автоматически с роутера, на нем необходимо настроить DHCP сервер. Делается это не сложно, я сейчас по шагам все распишу. Идем в <strong>IP -&gt; DHCP</strong>, переходим на вкладку DHCP и нажимаем <em>DHCP Setup</em>. Нам предлагают выбрать интерфейс, на котором будет работать сервер. Выбираем <em>bridge1</em>.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-19.png" rel="attachment wp-att-2507"><img class="aligncenter wp-image-2507 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-19.png" alt="настройка dhcp сервера в микротик" width="867" height="372" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-19.png 867w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-19-300x129.png 300w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-19-768x330.png 768w" sizes="(max-width: 867px) 100vw, 867px" /></a></p>
+<p style="text-align: justify;">Жмем next. Теперь нужно выбрать адресное пространство, из которого будут выдаваться ip адреса. По-умолчанию указана подсеть, в которую входит ip адрес роутера. На это подходит, оставляем значение по-умолчанию <em>192.168.9.0/24</em>.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-20.png" rel="attachment wp-att-2508"><img class="aligncenter wp-image-2508 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-20.png" alt="установка сети для dhcp" width="594" height="348" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-20.png 594w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-20-300x176.png 300w" sizes="(max-width: 594px) 100vw, 594px" /></a></p>
+<p style="text-align: justify;">Дальше нужно указать адрес шлюза, который будут получать клиенты. Так как для них шлюзом будет выступать сам микротик, оставляем его адрес, который уже предложен.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-21.png" rel="attachment wp-att-2509"><img class="aligncenter wp-image-2509 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-21.png" alt="установка шлюза для dhcp" width="594" height="347" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-21.png 594w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-21-300x175.png 300w" sizes="(max-width: 594px) 100vw, 594px" /></a></p>
+<p style="text-align: justify;">Теперь нужно указать диапазон адресов, которые будут выдаваться клиентам. Если вам не принципиально и вы не знаете, зачем его нужно менять, то оставляйте как есть. Будут использованы все свободные адреса подсети.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-22.png" rel="attachment wp-att-2510"><img class="aligncenter wp-image-2510 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-22.png" alt="список ip адресов для dhcp" width="595" height="347" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-22.png 595w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-22-300x175.png 300w" sizes="(max-width: 595px) 100vw, 595px" /></a></p>
+<p style="text-align: justify;">На последнем этапе вводим адрес dns сервера, который будет выдаваться клиентам. Это может быть как сам микротик, так и dns сервер провайдера. Это не принципиально, но лучше указать сам роутер. Так что пишем туда локальный адрес <em>192.168.9.1</em>.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-23.png" rel="attachment wp-att-2511"><img class="aligncenter wp-image-2511 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-23.png" alt="dns сервер для dhcp" width="593" height="346" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-23.png 593w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-23-300x175.png 300w" sizes="(max-width: 593px) 100vw, 593px" /></a></p>
+<p style="text-align: justify;">Следующий параметр оставляем по-умолчанию и жмем Next. На этом настройка dhcp сервера для локальной сети закончена.</p>
+<p style="text-align: justify;">Если мы сейчас проводом подключим любого клиента к mikrotik, то он получит сетевые настройки, но в интернет выйти не сможет. Не хватает еще одной важной настройки &#8212; NAT.</p>
+<h2><span id="NAT">Настройка NAT</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p style="text-align: justify;">NAT это преобразование, или как еще говорят трансляция сетевых адресов. Я не буду рассказывать, что это такое, можно самим почитать в интернете. Все современные роутеры имеют функцию NAT для обеспечения доступа к интернету абонентов. Так что мы тоже настроим NAT в mikrotik.</p>
+<p style="text-align: justify;">Идем в раздел <strong>IP -&gt; Firewall</strong>, открываем вкладку NAT и жмем плюсик. На вкладке General указываем только один параметр <em>Out. Interface &#8212; ether5</em> (интерфейс подключения к провайдеру), все остальное не трогаем.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-24.png" rel="attachment wp-att-2512"><img class="aligncenter wp-image-2512 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-24.png" alt="настройка nat в mikrotik" width="957" height="623" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-24.png 957w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-24-300x195.png 300w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-24-768x500.png 768w" sizes="(max-width: 957px) 100vw, 957px" /></a></p>
+<p>Переходим на вкладку Action, выбираем в выпадающем списке <em>masquerade</em>. Остальное не трогаем и жмем ОК.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-25.png" rel="attachment wp-att-2513"><img class="aligncenter wp-image-2513 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-25.png" alt="установка masquerade" width="563" height="326" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-25.png 563w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-25-300x174.png 300w" sizes="(max-width: 563px) 100vw, 563px" /></a></p>
+<p style="text-align: justify;">Все, NAT настроили. Теперь если подключить клиента проводом в один из портов, то он получит сетевые настройки по DHCP и будет иметь доступ к интернету. Нам осталось самая малость &#8212; настроить wifi для подключения беспроводных клиентов.</p>
+<h2><span id="_wifi__mikrotik">Настройка wifi точки доступа в mikrotik</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p style="text-align: justify;">Наш роутер почти готов к работе. Осталось только настроить wi fi точку доступа и можно про него забывать :). Настройка wifi в микротике заслуживает отдельной статьи. Там очень много нюансов и возможностей. Мы сейчас сделаем самую простую настройку, которая подойдет и полностью удовлетворит потребности домашнего wifi роутера. А для более глубоких познаний можно будет воспользоваться отдельным материалом на эту тему.</p>
+<p style="text-align: justify;">Первым делом активируем беспроводной интерфейс. По-умолчанию он выключен. Идем в раздел <strong>Wireless</strong>, выбираем wlan1 и жмем синюю галочку.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-26.png" rel="attachment wp-att-2514"><img class="aligncenter wp-image-2514 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-26.png" alt="активация wlan интерфейса" width="512" height="306" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-26.png 512w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-26-300x179.png 300w" sizes="(max-width: 512px) 100vw, 512px" /></a></p>
+<p style="text-align: justify;">Интерфейс из серого станет светлым. Переходим на вкладку Security profiles, два раза жмем мышкой на строчку с профилем default. В поле <em>Mode</em> выбираем <em>dynamic keys</em>. Ставим галочки напротив <em>WPA PSK</em> и <em>WPA2 PSK</em> и <em>aes ccm</em>. В поля <em>WPA Pre-Shared Key</em> и <em>WPA2 Pre-Shares Key</em> вводим пароль от будущей беспроводной сети.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-27.png" rel="attachment wp-att-2515"><img class="aligncenter wp-image-2515 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-27.png" alt="настройка профиля безопасности" width="814" height="532" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-27.png 814w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-27-300x196.png 300w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-27-768x502.png 768w" sizes="(max-width: 814px) 100vw, 814px" /></a></p>
+<p style="text-align: justify;">Сохраняем настройки. Возвращаемся на вкладку <strong>Interfaces </strong>и два раза жмем на wlan1, открываются настройки wifi интерфейса микротика. Переходим на вкладку Wireless. Выставляем настройки как у меня на скриншоте.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-28.png" rel="attachment wp-att-2516"><img class="aligncenter wp-image-2516 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-28.png" alt="настройка wifi в mikrotik" width="588" height="774" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-28.png 588w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-28-228x300.png 228w" sizes="(max-width: 588px) 100vw, 588px" /></a></p>
+<p>Обращаю внимание на следующие настройки:</p>
+<ul>
+<li><strong>SSID</strong> &#8212; имя вашей беспроводной сети. Пишите то, что хочется.</li>
+<li><strong>Frequency</strong> &#8212; частота, соответствующая одному из 12-ти каналов. Самое первое значение это первый канал и так далее. Тут рекомендуется выбрать тот канал, который в вашем конкретном случае менее всего занят другими точками доступа. Если вы не знаете что это за каналы и как их проверить, то не обращайте внимания, может выбрать любое значение из списка.</li>
+</ul>
+<p style="text-align: justify;">Сохраняете настройки, нажимая ОК. Все, wifi  точка доступа на mikrotik настроена, можно проверять. Запускаете любое устройство, ищете вашу сеть, вводите пароль доступа и проверяете интернет. Все должно работать.</p>
+<p style="text-align: justify;">На этом основная настройка микротика закончена, но я рекомендую выполнить еще несколько настроек для удобства и безопасности.</p>
+<h2><span id="i-6">Смена пароля администратора по-умолчанию</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p style="text-align: justify;">Как я уже писал ранее, пароль администратора по-умолчанию в mikrotik не задан, он пустой. Имя пользователя &#8212; <em>admin</em>. Давайте установим свой пароль для ограничения доступа посторонних к настройкам. Для этого идем в раздел <strong>System -&gt; Users</strong>. Выбираем единственного пользователя <em>admin</em>, жмем правой кнопкой мыши и выбираем самый последний пункт password.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-29.png" rel="attachment wp-att-2517"><img class="aligncenter wp-image-2517 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-29.png" alt="смена пароля по-умолчанию" width="615" height="470" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-29.png 615w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-29-300x229.png 300w" sizes="(max-width: 615px) 100vw, 615px" /></a></p>
+<p style="text-align: justify;">В открывшемся окошке 2 раза вводим свой пароль и сохраняем его. Теперь, чтобы подключиться через winbox нужно будет указать не только пользователя admin, но и установленный пароль.</p>
+<h2><span id="i-7">Настройка времени</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p style="text-align: justify;">Я рекомендую устанавливать правильное время и включать его автоматическую синхронизацию. Это может пригодиться, если вам понадобится посмотреть какие-нибудь логи и сопоставить время. Если оно не будет установлено, то это трудно сделать. Так что настроим его. Идем в <strong>System -&gt; Clock</strong>, устанавливаем вручную время, дату и часовой пояс.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-30.png" rel="attachment wp-att-2518"><img class="aligncenter wp-image-2518 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-30.png" alt="настройка времени" width="341" height="265" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-30.png 341w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-30-300x233.png 300w" sizes="(max-width: 341px) 100vw, 341px" /></a></p>
+<p style="text-align: justify;">Сделаем так, чтобы время автоматически обновлялось через интернет. Идем в раздел <strong>System -&gt; SNTP Client</strong>. Ставим галочку <em>Enabled</em>, в поле с адресами серверов вводим <em>193.171.23.163</em> и <em>85.114.26.194</em>. Жмем Apply и наблюдаем результат синхронизации.</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-31.png" rel="attachment wp-att-2519"><img class="aligncenter wp-image-2519 size-full" src="//serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-31.png" alt="автообновление времени" width="410" height="429" srcset="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-31.png 410w, https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-31-287x300.png 287w" sizes="(max-width: 410px) 100vw, 410px" /></a></p>
+<p style="text-align: justify;">Теперь часы роутера всегда будут иметь актуальное время.</p>
+<p style="text-align: justify;">На этом базовая настройка роутера mikrotik для домашнего пользования закончена. Можно устанавливать его на место и пользоваться.</p>
+<h2><span id="i-8">Заключение</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p style="text-align: justify;">Я привел пример настройки микротика для домашнего пользователя в качестве замены другим популярным бюджетным роутерам. Для более сложной и осмысленной настройки можно воспользоваться моими статьями на эту тему:</p>
+<ul>
+<li><a href="//serveradmin.ru/mikrotik-nastroyka-prostogo-firewall/" target="_blank" rel="noopener noreferrer">Настройка firewall</a>  &#8212; рекомендую для всех, кто чувствует в себе способность разобраться дальше и повысить безопасность своей сети. Это может быть полезно даже дома. Собственно, статья и написана на примере ситуации, которая ложилась у меня в квартире. С помощью фаервола я отсек паразитный траффик и избавил маршрутизатор от тормозов.</li>
+<li><a href="//serveradmin.ru/blokirovka-sayta-v-mikrotik/" target="_blank" rel="noopener noreferrer">Запрет на доступ к сайтам</a> &#8212; может быть актуально для тех, кто хочет, к примеру, ограничить доступ с компьютера ребенка к каким-то ресурсам в интернете.</li>
+<li><a href="//serveradmin.ru/mikrotik-951ui-2hnd-2-wan-interfeysa-dlya-rezervirovaniya-kanala/" target="_blank" rel="noopener noreferrer">Настройка двух каналов в интернет для резервирования</a> &#8212; статья о том, как подключить двух провайдеров интернета и автоматически переключать доступ с одного на другого в случае проблем со связью у одного из них. Ситуация взята из реального примера загородного дома с двумя каналами в интернет.</li>
+<li><a href="//serveradmin.ru/nastroyka-mikrotik-kontrollera-capsman-dlya-besshovnogo-wifi-rouminga-na-primere-routerboard-2011uias-2hnd-in/" target="_blank" rel="noopener noreferrer">Настройка бесшовного wifi роуминга</a> &#8212; популярный материал на тему организации единой сети wifi, состоящей из множества точек доступа для покрытия большой площади. Это может быть актуально как домашним пользователям (загородный дом) так и корпоративным пользователям.</li>
+<li><a href="//serveradmin.ru/mikrotik-logirovanie-na-udalennyiy-server-rsyslog/" target="_blank" rel="noopener noreferrer">Настройка хранения логов на mikrotik</a> &#8212; рассказ о том, как централизованно хранить логи с микротиков. Для дома это совершенно не актуально, а для корпоративного сектора, где важно хранить информацию о том, кто, куда и зачем.</li>
+</ul>
+<p>Я заканчиваю свой рассказ. Буду рад любым замечания и комментариям на данную тему.</p>
+<h2><span id="i-9">Видео</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p><iframe width="200" height="113" src="https://www.youtube.com/embed/iVm88HgNfdc?feature=oembed" frameborder="0" allowfullscreen></iframe></p>
+<!-- Start shortcoder --><h2><span id="_Mikrotik">Онлайн курсы по Mikrotik</span></h2>
+<p style="text-align: justify;">Если у вас есть желание научиться работать с роутерами микротик и стать специалистом в этой области, рекомендую пройти курсы по программе, основанной на информации из официального курса MikroTik Certified Network Associate. Помимо официальной программы, в курсах будут лабораторные работы, в которых вы на практике сможете проверить и закрепить полученные знания. Все подробности на сайте <a href="http://курсы-по-ит.рф/lp-mikrotik-mtcna?utm_source=serveradminru&utm_medium=special" target="_blank">Курсы по ИТ</a>. Стоимость обучения весьма демократична, хорошая возможность получить новые знания в актуальной на сегодняшний день предметной области.</p><!-- End shortcoder v4.1.1-->
+<!-- Start shortcoder --><hr />
+
+<h4 style="text-align: center;">Помогла статья? Есть возможность отблагодарить автора</h4>
+<p style="text-align: center;"><iframe src="https://money.yandex.ru/quickpay/shop-widget?account=4100198746754&amp;quickpay=shop&amp;payment-type-choice=on&amp;mobile-payment-type-choice=on&amp;writer=seller&amp;targets=%D0%A1%D0%BF%D0%B0%D1%81%D0%B8%D0%B1%D0%BE+%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D1%83+%D0%B7%D0%B0+%D0%BF%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%83%D1%8E+%D1%81%D1%82%D0%B0%D1%82%D1%8C%D1%8E&amp;targets-hint=&amp;default-sum=&amp;button-text=03&amp;comment=on&amp;hint=&amp;successURL=" width="450" height="258" frameborder="0" scrolling="no"></iframe></p><!-- End shortcoder v4.1.1-->
+										
+									</div><!-- .entry /-->
+				<span style="display:none"><a href="https://serveradmin.ru/tag/mikrotik/" rel="tag">mikrotik</a></span>				<span style="display:none" class="updated">2015-12-20</span>
+								<div style="display:none" class="vcard author" itemprop="author" itemscope itemtype="http://schema.org/Person"><strong class="fn" itemprop="name"><a href="https://serveradmin.ru/author/zerox/" title="Записи Zerox" rel="author">Zerox</a></strong></div>
+								
+								<div class="clear"></div>
+			</div><!-- .post-inner -->
+		</article><!-- .post-listing -->
+		
+		
+		<div class="e3lan e3lan-post">			<!-- Yandex.RTB R-A-184428-1 -->
+<div id="yandex_rtb_R-A-184428-1"></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-184428-1",
+                renderTo: "yandex_rtb_R-A-184428-1",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>				</div>		
+				
+		
+			
+			<section id="related_posts">
+		<div class="block-head">
+			<h3>Похожие записи</h3><div class="stripe-line"></div>
+		</div>
+		<div class="post-listing">
+						<div class="related-item">
+							
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/nastroyka-interneta-v-zagorodnom-dome-mikrotik-usb-4g-lte-modem-antenna-mimo-dlya-usileniya-signala-yota/">
+						<img width="310" height="165" src="https://serveradmin.ru/wp-content/uploads/2016/08/mikrotik-yota-310x165.png" class="attachment-tie-medium size-tie-medium wp-post-image" alt="" />						<span class="fa overlay-icon"></span>
+					</a>
+				</div><!-- post-thumbnail /-->
+							
+				<h3><a href="https://serveradmin.ru/nastroyka-interneta-v-zagorodnom-dome-mikrotik-usb-4g-lte-modem-antenna-mimo-dlya-usileniya-signala-yota/" rel="bookmark">Настройка интернета в загородном доме &#8212; mikrotik + usb 4g lte модем + антенна MIMO для усиления сигнала + yota</a></h3>
+				<p class="post-meta"><span class="tie-date"><i class="fa fa-clock-o"></i>04.08.2016</span></p>
+			</div>
+						<div class="related-item">
+							
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/nastroyka-openvpn-client-na-mikrotik-s-zamenoy-shlyuza/">
+						<img width="310" height="165" src="https://serveradmin.ru/wp-content/uploads/2016/08/mikrotik-openvpn-client-310x165.png" class="attachment-tie-medium size-tie-medium wp-post-image" alt="" />						<span class="fa overlay-icon"></span>
+					</a>
+				</div><!-- post-thumbnail /-->
+							
+				<h3><a href="https://serveradmin.ru/nastroyka-openvpn-client-na-mikrotik-s-zamenoy-shlyuza/" rel="bookmark">Настройка openvpn client на mikrotik с заменой шлюза</a></h3>
+				<p class="post-meta"><span class="tie-date"><i class="fa fa-clock-o"></i>01.08.2016</span></p>
+			</div>
+						<div class="related-item">
+							
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/nastroyka-capsman-v-mikrotik/">
+						<img width="310" height="165" src="https://serveradmin.ru/wp-content/uploads/2016/01/capsman-logo-310x165.png" class="attachment-tie-medium size-tie-medium wp-post-image" alt="Capsman" />						<span class="fa overlay-icon"></span>
+					</a>
+				</div><!-- post-thumbnail /-->
+							
+				<h3><a href="https://serveradmin.ru/nastroyka-capsman-v-mikrotik/" rel="bookmark">Бесшовный wifi роуминг с помощью capsman v2 в Микротик</a></h3>
+				<p class="post-meta"><span class="tie-date"><i class="fa fa-clock-o"></i>07.01.2016</span></p>
+			</div>
+						<div class="clear"></div>
+		</div>
+	</section>
+			
+					
+		
+				
+<div id="comments">
+
+	
+	<div id="comments-box">
+		<div class="block-head">
+			<h3 id="comments-title">41 комментарий </h3><div class="stripe-line"></div>
+		</div>
+		<div class="post-listing">
+
+			
+					
+				
+			<ol class="commentlist">	<li id="comment-275">
+		<div  class="comment byuser comment-author-kinzo even thread-even depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/1114276958dd3b65f29ae638d7899a5f?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/1114276958dd3b65f29ae638d7899a5f?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">kinzo</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-275">	04.03.2016 at 11:04</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>добрый день , просмотрел кучу инструкций и не увидел альтернативной раздачи ип адресов внешним DHCP сервером для локальных клиентов &#8212; не WAN , ( стоит dfl210e c 2 ISP c с балансировкой и раздает ип адреса клиентам по разным VLAN ) , 2xMikrotik rb951G-2Hnd хочу использовать только для бесшовного wifi роуминга, нужно всего лишь настроить DHCP клиент для wifi клиентов &#8230; подскажите плз или ткните в ман . Спасибо</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=275#respond' onclick='return addComment.moveForm( "comment-275", "275", "respond", "2469" )' aria-label='Комментарий к записи kinzo'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-492">
+		<div  class="comment odd alt thread-odd thread-alt depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/f90f6f9d4b58e3ab60769a8c2521c3ce?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/f90f6f9d4b58e3ab60769a8c2521c3ce?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Геннадий</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-492">	24.11.2016 at 11:46</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Автору огромное человеческое Спасибо за труд и предоставленную информацию! Благодарю!!! Очень полезная и информативная статья. Держу в закладках как справочник и при случаю скидываю ссылку тем, кто хочет изучить данный роутер подробнее. Еще раз Спасибо!</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=492#respond' onclick='return addComment.moveForm( "comment-492", "492", "respond", "2469" )' aria-label='Комментарий к записи Геннадий'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-493">
+		<div  class="comment byuser comment-author-zerox bypostauthor even depth-2 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-493">	24.11.2016 at 12:29</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Спасибо за отзыв. Сейчас потихоньку готовлю материал по тонкой настройке wifi. У микротика много нюансов в этом плане. Есть черновики, наработки. Надо будет собрать все в статью.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=493#respond' onclick='return addComment.moveForm( "comment-493", "493", "respond", "2469" )' aria-label='Комментарий к записи Zerox'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-494">
+		<div  class="comment odd alt depth-3 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/f90f6f9d4b58e3ab60769a8c2521c3ce?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/f90f6f9d4b58e3ab60769a8c2521c3ce?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Геннадий</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-494">	24.11.2016 at 13:57</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Буду ждать. Очень удобно изучать технологию с помощью специалистов, умеющих объяснять в доступной форме.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=494#respond' onclick='return addComment.moveForm( "comment-494", "494", "respond", "2469" )' aria-label='Комментарий к записи Геннадий'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-722">
+		<div  class="comment byuser comment-author-lexa even depth-3 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/7a3d31e23ba1596d7384c02bda5d35af?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/7a3d31e23ba1596d7384c02bda5d35af?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">lexa</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-722">	22.12.2016 at 13:42</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>огромное спасибо за статью, но по вашим инструкциям не получается настроить микротик rb3011<br />
+делаю все точно по инструкции а вот не выходит пишет </p>
+<p>если пинговать из самого роутера следующие:</p>
+<p>invalid value for argument address:<br />
+    invalid value of mac-address, mac address required<br />
+    invalid value for argument ipv6-address<br />
+    while resolving ip-address: could not get answer from dns server</p>
+<p>хотя 8.8.8.8 пингует норм DNS ввел не подскажите в чем причина?</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=722#respond' onclick='return addComment.moveForm( "comment-722", "722", "respond", "2469" )' aria-label='Комментарий к записи lexa'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-723">
+		<div  class="comment byuser comment-author-zerox bypostauthor odd alt depth-4 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-723">	22.12.2016 at 13:47</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>dns все же по какой-то причине не работает, раз по ip пингует, а по имени сервера нет. Возможно сам dns настроен правильно, но фаервол блокирует запросы к внешним dns.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=723#respond' onclick='return addComment.moveForm( "comment-723", "723", "respond", "2469" )' aria-label='Комментарий к записи Zerox'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-724">
+		<div  class="comment byuser comment-author-lexa even depth-5 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/7a3d31e23ba1596d7384c02bda5d35af?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/7a3d31e23ba1596d7384c02bda5d35af?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">lexa</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-724">	22.12.2016 at 15:10</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>а из за прошивки может глючить?</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=724#respond' onclick='return addComment.moveForm( "comment-724", "724", "respond", "2469" )' aria-label='Комментарий к записи lexa'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-725">
+		<div  class="comment byuser comment-author-lexa odd alt depth-5 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/7a3d31e23ba1596d7384c02bda5d35af?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/7a3d31e23ba1596d7384c02bda5d35af?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">lexa</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-725">	22.12.2016 at 15:11</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>а куда копать?</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=725#respond' onclick='return addComment.moveForm( "comment-725", "725", "respond", "2469" )' aria-label='Комментарий к записи lexa'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-726">
+		<div  class="comment byuser comment-author-zerox bypostauthor even depth-6 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-726">	22.12.2016 at 15:30</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Первым делом обновить прошивку. Отключить все правила в firewall и проверить работу без него. Потом еще раз проверить настройки DNS. Если вроде все правильно, но не работает, сбросить все настройки в дефолт и настроить заново. Иногда это помогает 🙂</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=726#respond' onclick='return addComment.moveForm( "comment-726", "726", "respond", "2469" )' aria-label='Комментарий к записи Zerox'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-727">
+		<div  class="comment byuser comment-author-lexa odd alt depth-7 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/7a3d31e23ba1596d7384c02bda5d35af?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/7a3d31e23ba1596d7384c02bda5d35af?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">lexa</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-727">	22.12.2016 at 15:48</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>спасибо попробую 🙂</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=727#respond' onclick='return addComment.moveForm( "comment-727", "727", "respond", "2469" )' aria-label='Комментарий к записи lexa'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li id="comment-512">
+		<div  class="comment even thread-even depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo avatar-default' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Сергей</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-512">	27.11.2016 at 03:53</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>здравствуйте. сейчас многие провайдеры перешли на стандарт IPoE. пользователи мучаются с перенастройкой, а надо лишь добавить одну галочку (или это лишь с моим провайдером?). не помешало бы добавить этот момент в статью, т.к. на других ресурсах информации по этому поводу ноль.<br />
+Спасибо Вам большое.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=512#respond' onclick='return addComment.moveForm( "comment-512", "512", "respond", "2469" )' aria-label='Комментарий к записи Сергей'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-741">
+		<div  class="comment odd alt thread-odd thread-alt depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/ff10b16940374735ceb85cac772e5523?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/ff10b16940374735ceb85cac772e5523?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Александр</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-741">	25.12.2016 at 19:04</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Спасибо за статью. Настроил все по ней. MikroTik  RB941-2nD.  Провайдер проверяет по мак адресу устройство, изменил мас у Микротика ну нужный, вот только сразу при включении компа и роутера соеденения не происходит, не пингуется шлюз провайдера, помогает подключение напрямую от провайдера &#8212; соеденение пояляется, а потом уже перетыкиванием провода в роутер. Не могу понят почему так происходит?</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=741#respond' onclick='return addComment.moveForm( "comment-741", "741", "respond", "2469" )' aria-label='Комментарий к записи Александр'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-742">
+		<div  class="comment byuser comment-author-zerox bypostauthor even depth-2 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-742">	25.12.2016 at 21:15</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>А на компе и на роутере один и тот же мак стоит одновременно?</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=742#respond' onclick='return addComment.moveForm( "comment-742", "742", "respond", "2469" )' aria-label='Комментарий к записи Zerox'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li id="comment-744">
+		<div  class="comment odd alt thread-even depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/ff10b16940374735ceb85cac772e5523?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/ff10b16940374735ceb85cac772e5523?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Александр</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-744">	25.12.2016 at 21:42</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Да, так не правильно?</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=744#respond' onclick='return addComment.moveForm( "comment-744", "744", "respond", "2469" )' aria-label='Комментарий к записи Александр'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-745">
+		<div  class="comment byuser comment-author-zerox bypostauthor even depth-2 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-745">	25.12.2016 at 23:13</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Я честно говоря никогда так не делал и точно не могу сказать, к чему это приведет. Но раз возникает какая-та странная и непонятная ситуация, то она вполне может быть связана с этим. Я много раз менял mac на микротиках и подключал их к провайдерам. Тут нет никаких нюансов, все должно работать.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=745#respond' onclick='return addComment.moveForm( "comment-745", "745", "respond", "2469" )' aria-label='Комментарий к записи Zerox'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-746">
+		<div  class="comment odd alt depth-3 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo avatar-default' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Аноним</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-746">	25.12.2016 at 23:26</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Сбросил я настройку мака на заводскую, зарегистрировал у провайдера новый мак, проблема исчезла. Скорее всего было как вы и предполагали из-за двух одинаковых мак адресов. Спасибо за подсказку!</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=746#respond' onclick='return addComment.moveForm( "comment-746", "746", "respond", "2469" )' aria-label='Комментарий к записи '>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-747">
+		<div  class="comment even depth-3 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo avatar-default' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Аноним</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-747">	25.12.2016 at 23:32</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Вообще у меня хоть IP и выдается по DHCP, но адрес все равно статический. Когда не было роутера и мне нужно было подсоединить нетбук, я просто прописывал вручную все настройки и соеденение было несмотря на другой мак.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=747#respond' onclick='return addComment.moveForm( "comment-747", "747", "respond", "2469" )' aria-label='Комментарий к записи '>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-748">
+		<div  class="comment byuser comment-author-zerox bypostauthor odd alt depth-4 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-748">	25.12.2016 at 23:56</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Все правильно, значит привязка по маку в данном случае использовалась только для выдачи сетевых настроек. Если вы их сами знали и указали, то не удивительно, что все заработало. Это связано с организацией сети у провайдера. Не обязательно, что такой же трюк сработает с другим провайдером.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=748#respond' onclick='return addComment.moveForm( "comment-748", "748", "respond", "2469" )' aria-label='Комментарий к записи Zerox'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li id="comment-807">
+		<div  class="comment even thread-odd thread-alt depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo avatar-default' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Аноним</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-807">	11.01.2017 at 16:28</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Принес домой из офиса, сделал сброс настроек, подключил, обновил ПО-все заработало: интернет, вайфай. Больше ничего не требуется. Не всегда сложно=хорошо.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=807#respond' onclick='return addComment.moveForm( "comment-807", "807", "respond", "2469" )' aria-label='Комментарий к записи '>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-829">
+		<div  class="comment odd alt thread-even depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/db32c26beea46f689ee23e28dd8895e7?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/db32c26beea46f689ee23e28dd8895e7?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Сергей</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-829">	16.01.2017 at 11:43</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Никак не получается подключить принтер по вайфай. Пароль корректен. Но после его подтверждения пишет, что соединение утеряно.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=829#respond' onclick='return addComment.moveForm( "comment-829", "829", "respond", "2469" )' aria-label='Комментарий к записи Сергей'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-890">
+		<div  class="comment even thread-odd thread-alt depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo avatar-default' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Даян</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-890">	24.01.2017 at 16:17</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>У меня MIKROTIK RB951UI-2HND. Скорость провайдера 100 мегабит. Сейчас оператор предлагает скорость 1000 мегабит. Увеличится ли скорость данного роутера? Сейчас по спидтесту скорость загрузки 76 мегабит по воздуху. О, большое спасибо за статью, очень помогла!!!</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=890#respond' onclick='return addComment.moveForm( "comment-890", "890", "respond", "2469" )' aria-label='Комментарий к записи Даян'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-892">
+		<div  class="comment byuser comment-author-zerox bypostauthor odd alt depth-2 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-892">	24.01.2017 at 16:21</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Смысла нет переходить на этот тариф, так как в роутере нет гигабитных портов. Он все равно будет работать на скорости 100 мегабит. Нужно менять роутер на другой, с гигабитными портами.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=892#respond' onclick='return addComment.moveForm( "comment-892", "892", "respond", "2469" )' aria-label='Комментарий к записи Zerox'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-909">
+		<div  class="comment even depth-3 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/1c4edfdeceac2c0bf18d27912473a105?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/1c4edfdeceac2c0bf18d27912473a105?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Даян</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-909">	25.01.2017 at 19:02</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Спасибо! А какую модель<br />
+можете порекомендовать?</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=909#respond' onclick='return addComment.moveForm( "comment-909", "909", "respond", "2469" )' aria-label='Комментарий к записи Даян'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-910">
+		<div  class="comment byuser comment-author-zerox bypostauthor odd alt depth-4 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-910">	25.01.2017 at 22:01</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Можно как у меня в статье. Там гигабитные порты. Но лучше на сайте посмотреть, может что-то более современное есть. Там и цены будут.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=910#respond' onclick='return addComment.moveForm( "comment-910", "910", "respond", "2469" )' aria-label='Комментарий к записи Zerox'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-911">
+		<div  class="comment even depth-5 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/1c4edfdeceac2c0bf18d27912473a105?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/1c4edfdeceac2c0bf18d27912473a105?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Даян</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-911">	26.01.2017 at 16:08</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Благодарю Вас!</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=911#respond' onclick='return addComment.moveForm( "comment-911", "911", "respond", "2469" )' aria-label='Комментарий к записи Даян'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li id="comment-996">
+		<div  class="comment odd alt thread-even depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/15f3e2a8efea2878614c5a7eb97e319d?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/15f3e2a8efea2878614c5a7eb97e319d?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Артем</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-996">	05.02.2017 at 00:42</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Здравствуйте, дошел по вашей инструкции до шага, где мы объединили порты в свитч. Приступаю к объединению в bridge, и после того как во вкладке ports выбираю either у меня получается не так как у Вас, напртив either 1 пишется не rootport а designated port плюс помимо этого появляются и either 2-4 порты напротив которых написано disabled port. Ладно, может у меня новая версия программы, перехожу к шагу настройки стат.  IP, вы говорите network сам заполнится, а у меня требует его заполнить</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=996#respond' onclick='return addComment.moveForm( "comment-996", "996", "respond", "2469" )' aria-label='Комментарий к записи Артем'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-1474">
+		<div  class="comment even thread-odd thread-alt depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/3baa1ceaefd8dc55f23db3e1a06f577c?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/3baa1ceaefd8dc55f23db3e1a06f577c?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Андрей</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-1474">	11.04.2017 at 10:10</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Добрый день. </p>
+<p>Как настроить микротик если мне надо чтобы микротик работал  таким образом чтобы я смог заходить на него с внутренней сети т.е к примеру по адресу 192.168.4.100. Но при этом чтобы DHCP выдавался только клиентам которые будут подключаться по WiFi.<br />
+Мне надо чтобы DHCP не выдавался в корпоративную сеть но при этом чтобы я смог заходить на микротик с компьютера  из корпоративной сети  и мониторить микротик по статическому IP.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=1474#respond' onclick='return addComment.moveForm( "comment-1474", "1474", "respond", "2469" )' aria-label='Комментарий к записи Андрей'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1483">
+		<div  class="comment byuser comment-author-zerox bypostauthor odd alt depth-2 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-1483">	11.04.2017 at 22:50</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>А в чем проблема? Можно без проблем в dhcp сервере указать в качестве сетевого интерфейса только беспроводной. Он будет выдавать ip адреса только на него.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=1483#respond' onclick='return addComment.moveForm( "comment-1483", "1483", "respond", "2469" )' aria-label='Комментарий к записи Zerox'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li id="comment-1571">
+		<div  class="comment even thread-even depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/6d1baf120216a8373642c49cad89d1f5?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/6d1baf120216a8373642c49cad89d1f5?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Владислав</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-1571">	21.04.2017 at 20:38</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Добрый день! Помогите настроить rb951 по скайпу за плату.<br />
+У меня 2 штуки на данный момент: один будет использоваться как роутер+точка доступа, а второй просто как точка доступа (в последствии будет один pb951 + 2 обычных точки доступа).<br />
+1. Их надо объединить в бесшовный роуминг.<br />
+2. К одному порту роутера проводом будет подключен локальный сервер. Надо настроить, чтоб клиенты WiFi сети по внутреннему dns перенаправлялись на этот сервер, который будет отдавать свои страницы.<br />
+3. Роутер должен быть подключен к интернету (это будет либо подключение через 3G юсб-модем, либо через другую WiFi которая раздает интернет). Провода с инетом нет.<br />
+4. Все клиенты WiFi сети будут делиться на два вида: первые &#8212; имеют доступ только к локальной странице, которую раздает локальный сервер, вторые (в том числе сам локальный сервер) &#8212; могут иметь полноценный доступ в интернет.<br />
+Мне нужно это сделать до 24.04.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=1571#respond' onclick='return addComment.moveForm( "comment-1571", "1571", "respond", "2469" )' aria-label='Комментарий к записи Владислав'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1572">
+		<div  class="comment byuser comment-author-zerox bypostauthor odd alt depth-2 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-1572">	21.04.2017 at 20:51</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Я не оказываю услуг по настройке микротиков.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=1572#respond' onclick='return addComment.moveForm( "comment-1572", "1572", "respond", "2469" )' aria-label='Комментарий к записи Zerox'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-1573">
+		<div  class="comment even depth-3 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/6d1baf120216a8373642c49cad89d1f5?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/6d1baf120216a8373642c49cad89d1f5?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Владислав</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-1573">	21.04.2017 at 21:32</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Спасибо за оперативный ответ. Буду значит сам биться головой об стенку 🙁</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=1573#respond' onclick='return addComment.moveForm( "comment-1573", "1573", "respond", "2469" )' aria-label='Комментарий к записи Владислав'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li id="comment-1970">
+		<div  class="comment odd alt thread-odd thread-alt depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/635d1591f64408b27632454f0f7a9ea0?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/635d1591f64408b27632454f0f7a9ea0?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Фариза</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-1970">	01.07.2017 at 07:27</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Добрый день. Помогите настроить микротик, оператор Билайн.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=1970#respond' onclick='return addComment.moveForm( "comment-1970", "1970", "respond", "2469" )' aria-label='Комментарий к записи Фариза'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-2038">
+		<div  class="comment even thread-even depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/f894c965ef42f699b65e2e4b2a11f088?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/f894c965ef42f699b65e2e4b2a11f088?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn"><a href='http://inforkomp.com.ua' rel='external nofollow' class='url'>Игорь</a></cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-2038">	13.07.2017 at 16:19</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Круто, как раз то что искал, спасибо за инструкцию</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=2038#respond' onclick='return addComment.moveForm( "comment-2038", "2038", "respond", "2469" )' aria-label='Комментарий к записи Игорь'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-2110">
+		<div  class="comment odd alt thread-odd thread-alt depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/3b38ab087720f720c4a91d9f1f470a06?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/3b38ab087720f720c4a91d9f1f470a06?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Михаил</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-2110">	27.07.2017 at 09:04</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Большое спасибо! Лаконично, с примерами&#8230; Все бы так писали 🙂<br />
+У меня просьба &#8212; как настроить внешний доступ к Микротику ( для настроек) с конкретного IP_адреса(WAN)?</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=2110#respond' onclick='return addComment.moveForm( "comment-2110", "2110", "respond", "2469" )' aria-label='Комментарий к записи Михаил'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-2111">
+		<div  class="comment byuser comment-author-zerox bypostauthor even depth-2 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-2111">	27.07.2017 at 10:08</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Firewall надо настроить. Ограничить доступ порту winbox только с определенного ip. У меня есть статья про настройку firewall.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=2111#respond' onclick='return addComment.moveForm( "comment-2111", "2111", "respond", "2469" )' aria-label='Комментарий к записи Zerox'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li id="comment-2217">
+		<div  class="comment odd alt thread-even depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo avatar-default' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Дмитрий</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-2217">	22.08.2017 at 13:01</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Статья офигительна! Огромная помощь начинающим &#171;роутероводам&#187; и сочувствующим. 🙂 Не быстро, но уверенно настроил свой 951й &#8212; огромное спасибо автору!</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=2217#respond' onclick='return addComment.moveForm( "comment-2217", "2217", "respond", "2469" )' aria-label='Комментарий к записи Дмитрий'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+	<li id="comment-2285">
+		<div  class="comment even thread-odd thread-alt depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/6d4c096216bac7b07d343c5d4e4362bc?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/6d4c096216bac7b07d343c5d4e4362bc?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Константин</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-2285">	01.09.2017 at 11:33</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>А точно хорошая затея галочку напротив Allow Remote Requests ставить? Ведь тогда наш микротик вроде становится открытым для того, что б его использовали другие компьютеры извне в качестве DNS-сервера?</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=2285#respond' onclick='return addComment.moveForm( "comment-2285", "2285", "respond", "2469" )' aria-label='Комментарий к записи Константин'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-2286">
+		<div  class="comment byuser comment-author-zerox bypostauthor odd alt depth-2 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-2286">	01.09.2017 at 12:02</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Кстати, хороший вопрос. Вообще, эта галочка ставится, чтобы в локальной сети компьютеры могли использовать микротик в качестве днс сервера. Станет ли он таковым для внешних клиентов, я не проверял, так как обычно настраиваю firewall и там закрываю доступ к dns снаружи. У меня есть пример правил в отдельной статье.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=2286#respond' onclick='return addComment.moveForm( "comment-2286", "2286", "respond", "2469" )' aria-label='Комментарий к записи Zerox'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-2289">
+		<div  class="comment even depth-3 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/6d4c096216bac7b07d343c5d4e4362bc?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/6d4c096216bac7b07d343c5d4e4362bc?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Константин</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-2289">	01.09.2017 at 13:36</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Просто не все закроют роутер от запросов извне, а следовательно их роутеры могут стать участниками атак</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=2289#respond' onclick='return addComment.moveForm( "comment-2289", "2289", "respond", "2469" )' aria-label='Комментарий к записи Константин'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-2290">
+		<div  class="comment byuser comment-author-zerox bypostauthor odd alt depth-4 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-2290">	01.09.2017 at 13:46</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Этот момент нужно отдельно проверить. Я не уверен, что он будет доступен извне.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=2290#respond' onclick='return addComment.moveForm( "comment-2290", "2290", "respond", "2469" )' aria-label='Комментарий к записи Zerox'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-2293">
+		<div  class="comment even depth-5 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/6d4c096216bac7b07d343c5d4e4362bc?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/6d4c096216bac7b07d343c5d4e4362bc?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Константин</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/#comment-2293">	02.09.2017 at 01:30</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>нам на mtcna что-то рассказывали о необходимости закрытия его. Подробностей к сожалению не помню</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/?replytocom=2293#respond' onclick='return addComment.moveForm( "comment-2293", "2293", "respond", "2469" )' aria-label='Комментарий к записи Константин'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ol>
+				
+		 
+
+			
+					
+			
+		</div>
+	</div><!-- #comments-box -->
+			
+
+<div class="clear"></div>
+	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Добавить комментарий <small><a rel="nofollow" id="cancel-comment-reply-link" href="/bazovaya-nastroyka-routera-mikrotik/#respond" style="display:none;">Отменить ответ</a></small></h3>			<form action="https://serveradmin.ru/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+				<p class="comment-notes"><span id="email-notes">Ваш e-mail не будет опубликован.</span></p><p class="comment-form-comment"><label for="comment">Комментарий</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></p><p><div  id="g-recaptcha-0" class="g-recaptcha" data-sitekey="6Lf-awsUAAAAANpq5nIhOaMMW6KOoPLtqoNqzHjw" data-theme="light"></div><noscript>Пожалуйста, разрешите JavaScript чтобы отправить эту форму.<br></noscript></p><p class="comment-form-author"><label for="author">Имя</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" /></p>
+<p class="comment-form-email"><label for="email">E-mail</label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" /></p>
+<p class="comment-form-url"><label for="url">Сайт</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200" /></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Отправить комментарий" /> <input type='hidden' name='comment_post_ID' value='2469' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><!-- BEGIN: Email notification plugin by Elance360 --><p><label for='subscribe-reloaded'> Подписка на новые комментарии:<br /><select name='subscribe-reloaded' id='subscribe-reloaded'><option value='none'>Не отправлять уведомлений</option><option value='yes' selected='selected'>Отправить уведомление только при ответе на мой комментарий</option><option value='replies'>Отправить уведомление при появлении любого комментария</option></select></label></p><!-- END: Email notification plugin by Elance360 -->			</form>
+			</div><!-- #respond -->
+	
+
+</div><!-- #comments -->
+		
+	</div><!-- .content -->
+<aside id="sidebar">
+	<div class="theiaStickySidebar">
+<div id="text-html-widget-21" class="widget text-html"><div class="widget-top"><h4> </h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div style="text-align:center;"><div id="kwork-widget"></div>
+            <script type="text/javascript">
+                (function() {
+                    widgetOptions = {
+                        width: 350,
+                        catType:'42',    
+                        count:'5',
+                        ref:249810};
+
+                    var script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.async = true;
+                    script.src = "https://kwork.ru/js/kwork_widget.js";
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                })();
+            </script>
+				</div><div class="clear"></div></div></div><!-- .widget /--><div id="text-html-widget-8" class="widget text-html"><div class="widget-top"><h4>Хостинг</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div style="text-align:center;"><table style="width: 330px; height: 70px;" cellspacing="3">
+<tbody>
+<tr>
+<td width="120"><a href="https://www.ihor.ru/?from=84981" onclick="trackOutboundLink('https://www.ihor.ru/?from=84981'); return false;" target="_blank"><img class="alignleft wp-image-2659 size-full" title="Надежный и быстрый хостинг на SSD за небольшие деньги" src="https://serveradmin.ru/wp-content/uploads/2016/01/hosting.gif" alt="Быстрый хостинг" width="120" height="60" /></a></td>
+<td style="line-height:20px;padding:.4em;text-align: left;">Надежный и быстрый хостинг на SSD за небольшие деньги. Рекомендую, использую сам.</td>
+</tr>
+</tbody>
+</table>
+				</div><div class="clear"></div></div></div><!-- .widget /--><div id="text-html-widget-13" class="widget text-html"><div class="widget-top"><h4>Группа Вконтакте</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div ><script type="text/javascript" src="//vk.com/js/api/openapi.js?126"></script>
+
+<!-- VK Widget -->
+<div id="vk_groups"></div>
+<script type="text/javascript">
+VK.Widgets.Group("vk_groups", {redesign: 1, mode: 1, width: "350", height: "400", color1: 'FFFFFF', color2: '000000', color3: '5E81A8'}, 95686747);
+</script>
+				</div><div class="clear"></div></div></div><!-- .widget /--><div id="text-html-widget-20" class="widget text-html"><div class="widget-top"><h4>Чат в Telegram</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div style="text-align:center;"><a href="https://t.me/joinchat/AAAAAD_H1pmIcX3yfRlG_Q" target="_blank"><img class="aligncenter wp-image-4864 size-full" src="https://serveradmin.ru/wp-content/uploads/2017/02/chat-2.png" alt="Чат системных администраторов" width="330" height="45" /></a>
+				</div><div class="clear"></div></div></div><!-- .widget /--><div id="text-html-widget-6" class="widget text-html"><div class="widget-top"><h4>Прикольная игра</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div ><a href="https://serveradmin.ru/igra-sistemnyiy-administrator/"><img class="aligncenter wp-image-2248 size-full" title="Симулятор системного администратора" src="https://serveradmin.ru/wp-content/uploads/2015/10/sysadmin-game.png" alt="Игра Системный администратор" width="330" height="245" />
+				</div><div class="clear"></div></div></div><!-- .widget /--><div id="posts-list-widget-2" class="widget posts-list"><div class="widget-top"><h4>Популярное		</h4><div class="stripe-line"></div></div>
+						<div class="widget-container">				<ul>
+								<li >
+						
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/vault-virus/" title="Как расшифровать файл с расширением vault после вируса шифровальщика" rel="bookmark"><img width="110" height="75" src="https://serveradmin.ru/wp-content/uploads/2015/04/virus-110x75.png" class="attachment-tie-small size-tie-small wp-post-image" alt="" /><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/vault-virus/">Как расшифровать файл с расширением vault после вируса шифровальщика</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>12.08.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>263,861 </span> <span>
+							</li>
+				<li >
+						
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/" title="Как настроить микротик routerboard RB951G-2HnD" rel="bookmark"><img width="110" height="75" src="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-110x75.png" class="attachment-tie-small size-tie-small wp-post-image" alt="" /><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/">Как настроить микротик routerboard RB951G-2HnD</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>20.12.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>214,620 </span> <span>
+							</li>
+				<li >
+						
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/centos-7-nastroyka-servera/" title="CentOS 7 настройка сервера" rel="bookmark"><img width="110" height="75" src="https://serveradmin.ru/wp-content/uploads/2015/03/centos-configure-110x75.png" class="attachment-tie-small size-tie-small wp-post-image" alt="Centos настройка" /><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/centos-7-nastroyka-servera/">CentOS 7 настройка сервера</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>20.12.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>204,212 </span> <span>
+							</li>
+				<li >
+						
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/nastroyka-seti-v-centos/" title="Сетевые настройки в CentOS 7" rel="bookmark"><img width="110" height="75" src="https://serveradmin.ru/wp-content/uploads/2015/09/network-logo-110x75.png" class="attachment-tie-small size-tie-small wp-post-image" alt="Настройка сети в CentOS" /><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/nastroyka-seti-v-centos/">Сетевые настройки в CentOS 7</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>23.08.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>168,307 </span> <span>
+							</li>
+				<li >
+						
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/mikrotik-nastroyka-prostogo-firewall/" title="Mikrotik настройка простого Firewall" rel="bookmark"><img width="110" height="75" src="https://serveradmin.ru/wp-content/uploads/2015/02/firewall-110x75.jpg" class="attachment-tie-small size-tie-small wp-post-image" alt="" /><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/mikrotik-nastroyka-prostogo-firewall/">Mikrotik настройка простого Firewall</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>28.02.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>109,467 </span> <span>
+							</li>
+		
+				</ul>
+		<div class="clear"></div>
+	</div></div><!-- .widget /--><div id="categories-4" class="widget widget_categories"><div class="widget-top"><h4>Рубрики</h4><div class="stripe-line"></div></div>
+						<div class="widget-container">		<ul>
+	<li class="cat-item cat-item-174"><a href="https://serveradmin.ru/category/1c/" >1C</a> (6)
+</li>
+	<li class="cat-item cat-item-133"><a href="https://serveradmin.ru/category/asterisk/" >Asterisk</a> (12)
+</li>
+	<li class="cat-item cat-item-65"><a href="https://serveradmin.ru/category/freebsd/" >Freebsd</a> (19)
+</li>
+	<li class="cat-item cat-item-31"><a href="https://serveradmin.ru/category/linux/" >Linux</a> (65)
+<ul class='children'>
+	<li class="cat-item cat-item-67"><a href="https://serveradmin.ru/category/linux/centos/" >CentOS</a> (36)
+</li>
+	<li class="cat-item cat-item-68"><a href="https://serveradmin.ru/category/linux/debian/" >Debian</a> (19)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-66"><a href="https://serveradmin.ru/category/mikrotik/" >Mikrotik</a> (9)
+</li>
+	<li class="cat-item cat-item-33"><a href="https://serveradmin.ru/category/synology/" >Synology</a> (3)
+</li>
+	<li class="cat-item cat-item-30"><a href="https://serveradmin.ru/category/windows/" >Windows</a> (15)
+</li>
+	<li class="cat-item cat-item-117"><a href="https://serveradmin.ru/category/zabbix/" >Zabbix</a> (27)
+</li>
+	<li class="cat-item cat-item-69"><a href="https://serveradmin.ru/category/virtual/" >Виртуализация</a> (22)
+<ul class='children'>
+	<li class="cat-item cat-item-70"><a href="https://serveradmin.ru/category/virtual/hyperv/" >Hyper-V</a> (9)
+</li>
+	<li class="cat-item cat-item-175"><a href="https://serveradmin.ru/category/virtual/kvm/" >KVM</a> (1)
+</li>
+	<li class="cat-item cat-item-146"><a href="https://serveradmin.ru/category/virtual/proxmox/" >Proxmox</a> (1)
+</li>
+	<li class="cat-item cat-item-72"><a href="https://serveradmin.ru/category/virtual/vmware/" >VMware</a> (2)
+</li>
+	<li class="cat-item cat-item-71"><a href="https://serveradmin.ru/category/virtual/xenserver/" >XenServer</a> (11)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-138"><a href="https://serveradmin.ru/category/lichnoe/" >Личное</a> (5)
+</li>
+	<li class="cat-item cat-item-91"><a href="https://serveradmin.ru/category/virus/" >Осторожно, вирус!</a> (8)
+</li>
+	<li class="cat-item cat-item-129"><a href="https://serveradmin.ru/category/errors/" >Ошибки</a> (17)
+</li>
+	<li class="cat-item cat-item-95"><a href="https://serveradmin.ru/category/poleznyie-sovetyi/" >Полезные советы</a> (24)
+</li>
+	<li class="cat-item cat-item-20"><a href="https://serveradmin.ru/category/raznoe/" >Разное</a> (8)
+</li>
+		</ul>
+</div></div><!-- .widget /--><div id="text-html-widget-4" class="widget text-html"><div class="widget-top"><h4>Новости сайта на почту</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div style="text-align:center;"><form style="border:0px solid #ccc;padding:3px;text-align:center;" action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=serveradmin_ru', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+<input type="text" style="width:200px;margin:6px;" name="email" value=" Введите Ваш E-mail"/>
+<input type="hidden" value="serveradmin_ru" name="uri"/>
+<input type="hidden" name="loc" value="ru_RU"/><input type="submit"  style="width:100px;margin:6px;"value="Подписаться" /></form>
+				</div><div class="clear"></div></div></div><!-- .widget /-->			<div id="text-html-widget-18" class="text-html-box" >
+			<table class=" aligncenter" style="width: 310px; height: 255px;">
+<tbody>
+<tr>
+<td>
+<!-- Yandex.RTB R-A-184428-2 -->
+<div id="yandex_rtb_R-A-184428-2"></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-184428-2",
+                renderTo: "yandex_rtb_R-A-184428-2",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+</td>
+</tr>
+</tbody>
+</table>			</div>
+			</div><!-- .theiaStickySidebar /-->
+</aside><!-- #sidebar /-->	<div class="clear"></div>
+</div><!-- .container /-->
+
+<footer id="theme-footer">
+	<div id="footer-widget-area" class="footer-2c">
+
+			<div id="footer-first" class="footer-widgets-box">
+			<div id="login-widget-2" class="footer-widget login-widget"><div class="footer-widget-top"><h4>Вход/Регистрация</h4></div>
+						<div class="footer-widget-container">		<div id="login-form">
+			<form name="loginform" id="loginform" action="https://serveradmin.ru/wp-login.php" method="post">
+				<p id="log-username"><input type="text" name="log" id="log" title="Username" value="Username" onfocus="if (this.value == 'Username') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Username';}"  size="33" /></p>
+				<p id="log-pass"><input type="password" name="pwd" id="pwd" title="Password" value="Password" onfocus="if (this.value == 'Password') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Password';}" size="33" /></p>
+				<input type="submit" name="submit" value="Log in" class="login-button" />
+				<label for="rememberme"><input name="rememberme" id="rememberme" type="checkbox" checked="checked" value="forever" /> Remember Me</label>
+				<input type="hidden" name="redirect_to" value="/bazovaya-nastroyka-routera-mikrotik/"/>
+			</form>
+			<ul class="login-links">
+				<li><a rel="nofollow" href="https://serveradmin.ru/wp-login.php?action=register">Регистрация</a></li>				<li><a href="https://serveradmin.ru/wp-login.php?action=lostpassword&redirect_to=https://serveradmin.ru">Lost your password?</a></li>
+			</ul>
+		</div>
+	</div></div><!-- .widget /-->		</div>
+	
+			<div id="footer-second" class="footer-widgets-box">
+			<div id="text-2" class="footer-widget widget_text"><div class="footer-widget-top"><h4>Статистика</h4></div>
+						<div class="footer-widget-container">			<div class="textwidget"><!-- Yandex.Metrika informer -->
+<a href="https://metrika.yandex.ru/stat/?id=23506456&amp;from=informer"
+target="_blank" rel="nofollow"><img src="https://informer.yandex.ru/informer/23506456/3_0_FFB953FF_FF9933FF_0_pageviews"
+style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" class="ym-advanced-informer" data-cid="23506456" data-lang="ru" /></a>
+<!-- /Yandex.Metrika informer -->
+
+<!-- begin of Top100 code -->
+<script id="top100Counter" type="text/javascript" src="https://counter.rambler.ru/top100.jcn?3152045"></script>
+<noscript>
+<a href="http://top100.rambler.ru/navi/3152045/">
+<img src="http://counter.rambler.ru/top100.cnt?3152045" alt="Rambler's Top100" border="0" />
+</a>
+</noscript>
+<!-- end of Top100 code -->
+
+<!-- Rating@Mail.ru logo -->
+<a href="http://top.mail.ru/jump?from=2722258" target="_blank">
+<img src="//top-fwz1.mail.ru/counter?id=2722258;t=494;l=1" 
+style="border:0;" height="31" width="88" alt="Рейтинг@Mail.ru" /></a>
+<!-- //Rating@Mail.ru logo --></div>
+		</div></div><!-- .widget /-->		</div><!-- #second .widget-area -->
+	
+
+	
+		
+	</div><!-- #footer-widget-area -->
+	<div class="clear"></div>
+</footer><!-- .Footer /-->
+				
+<div class="clear"></div>
+<div class="footer-bottom">
+	<div class="container">
+		<div class="alignright">
+					</div>
+				
+		<div class="alignleft">
+					</div>
+		<div class="clear"></div>
+	</div><!-- .Container -->
+</div><!-- .Footer bottom -->
+
+</div><!-- .inner-Wrapper -->
+</div><!-- #Wrapper -->
+</div><!-- .Wrapper-outer -->
+	<div id="topcontrol" class="fa fa-angle-up" title="Scroll To Top"></div>
+<div id="fb-root"></div>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-N32MZXJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><!-- Rating@Mail.ru counter -->
+<script type="text/javascript">
+var _tmr = window._tmr || (window._tmr = []);
+_tmr.push({id: "2722258", type: "pageView", start: (new Date()).getTime()});
+(function (d, w, id) {
+  if (d.getElementById(id)) return;
+  var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+  ts.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//top-fwz1.mail.ru/js/code.js";
+  var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+  if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+})(document, window, "topmailru-code");
+</script><noscript><div style="position:absolute;left:-10000px;">
+<img src="//top-fwz1.mail.ru/counter?id=2722258;js=na" style="border:0;" height="1" width="1" alt="Рейтинг@Mail.ru" />
+</div></noscript>
+<!-- //Rating@Mail.ru counter --><div id="reading-position-indicator"></div>
+<!-- BEGIN recaptcha, injected by plugin wp-recaptcha-integration  -->
+<script type="text/javascript">
+		var recaptcha_widgets={};
+		function wp_recaptchaLoadCallback(){ 
+			try {
+				grecaptcha;
+			} catch(err){
+				return;
+			}
+			var e = document.querySelectorAll ? document.querySelectorAll('.g-recaptcha:not(.wpcf7-form-control)') : document.getElementsByClassName('g-recaptcha'),
+				form_submits;
+
+			for (var i=0;i<e.length;i++) {
+				(function(el){
+					var wid;
+					// check if captcha element is unrendered
+					if ( ! el.childNodes.length) {
+						wid = grecaptcha.render(el,{
+							'sitekey':'6Lf-awsUAAAAANpq5nIhOaMMW6KOoPLtqoNqzHjw',
+							'theme':el.getAttribute('data-theme') || 'light'
+						});
+						el.setAttribute('data-widget-id',wid);
+					} else {
+						wid = el.getAttribute('data-widget-id');
+						grecaptcha.reset(wid);
+					}
+				})(e[i]);
+			}
+		}
+		
+		// if jquery present re-render jquery/ajax loaded captcha elements 
+		if ( typeof jQuery !== 'undefined' )
+			jQuery(document).ajaxComplete( function(evt,xhr,set){
+				if( xhr.responseText && xhr.responseText.indexOf('6Lf-awsUAAAAANpq5nIhOaMMW6KOoPLtqoNqzHjw') !== -1)
+					wp_recaptchaLoadCallback();
+			} );
+		
+		</script><script src="https://www.google.com/recaptcha/api.js?onload=wp_recaptchaLoadCallback&#038;render=explicit&#038;hl=ru" async defer></script>
+<!-- END recaptcha -->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter23506456 = new Ya.Metrika({
+                    id:23506456,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/23506456" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter --><script type='text/javascript'>
+/* <![CDATA[ */
+var tocplus = {"smooth_scroll":"1"};
+var tocplus = {"smooth_scroll":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-content/plugins/table-of-contents-plus/front.min.js'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var tie = {"mobile_menu_active":"true","mobile_menu_top":"","lightbox_all":"true","lightbox_gallery":"","woocommerce_lightbox":"","lightbox_skin":"dark","lightbox_thumb":"vertical","lightbox_arrows":"","sticky_sidebar":"1","is_singular":"1","SmothScroll":"","reading_indicator":"true","lang_no_results":"No Results","lang_results_found":"Results Found"};
+var tie = {"mobile_menu_active":"true","mobile_menu_top":"","lightbox_all":"true","lightbox_gallery":"","woocommerce_lightbox":"","lightbox_skin":"dark","lightbox_thumb":"vertical","lightbox_arrows":"","sticky_sidebar":"1","is_singular":"1","SmothScroll":"","reading_indicator":"true","lang_no_results":"No Results","lang_results_found":"Results Found"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-content/themes/sahifa/js/tie-scripts.js'></script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-content/themes/sahifa/js/ilightbox.packed.js'></script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-includes/js/comment-reply.min.js'></script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-includes/js/wp-embed.min.js'></script>
+</body>
+</html>
+<!-- Dynamic page generated in 0.739 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2017-09-24 10:18:43 -->
+
+<!-- Compression = gzip -->

@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>
+Использование RPM</title><meta name="GENERATOR" content="Modular DocBook HTML Stylesheet Version 1.7"><link rel="HOME" title="Red Hat Enterprise Linux 4" href="http://www.linuxcookbook.ru/books/redhat/sysadmin-guide/index.html"><link rel="UP" title="Управление пакетами с помощью RPM" href="http://www.linuxcookbook.ru/books/redhat/sysadmin-guide/ch-rpm.html"><link rel="PREVIOUS" title="Управление пакетами с помощью RPM" href="http://www.linuxcookbook.ru/books/redhat/sysadmin-guide/ch-rpm.html"><link rel="NEXT" title="Проверка подписи пакета" href="http://www.linuxcookbook.ru/books/redhat/sysadmin-guide/s1-check-rpm-sig.html"><link rel="STYLESHEET" type="text/css" href="%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20RPM_files/rhdocs-man.css"></head><body class="SECT1" vlink="#840084" text="#000000" link="#0000FF" bgcolor="#FFFFFF" alink="#0000FF"><div class="NAVHEADER"><table summary="Header navigation table" width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr><th colspan="3" align="center">Red Hat Enterprise Linux 4: Руководство по системному администрированию</th></tr><tr><td width="10%" valign="bottom" align="left"><a href="http://www.linuxcookbook.ru/books/redhat/sysadmin-guide/ch-rpm.html" accesskey="P">Назад</a></td><td width="80%" valign="bottom" align="center">Глава 15. Управление пакетами с помощью RPM</td><td width="10%" valign="bottom" align="right"><a href="http://www.linuxcookbook.ru/books/redhat/sysadmin-guide/s1-check-rpm-sig.html" accesskey="N">Вперёд</a></td></tr></tbody></table><hr width="100%" align="LEFT"></div><div class="SECT1"><h1 class="SECT1"><a name="S1-RPM-USING">15.2. Использование RPM</a></h1><p>
+        RPM имеет пять основных режимов работы (не считая создания 
+пакета): установка, удаление, обновление, анализ и проверка.  Этот 
+раздел содержит описание каждого режима.  Чтобы получить полное описание
+ всех подробностей и параметров, попробуйте выполнить <tt class="COMMAND">rpm --help</tt> или обратиться к <a href="http://www.linuxcookbook.ru/books/redhat/sysadmin-guide/s1-rpm-additional-resources.html">разделу 15.5 <i>Дополнительные ресурсы</i></a>.      </p><div class="SECT2"><h2 class="SECT2"><a name="S2-RPM-FINDING">15.2.1. Поиск RPM-пакетов</a></h2><p>
+	  Прежде чем воспользоваться пакетами RPM, вы должны знать, где их 
+найти. Поисковые машины в Интернете знают о множество хранилищ RPM, но 
+если вы ищете пакеты RPM, созданные компанией Red Hat, обратитесь к 
+следующим источникам:
+	</p><p></p><ul><li><p>Компакт-диски Red Hat Enterprise Linux</p></li><li><p>Страница обновлений Red Hat, расположенная по адресу <a href="http://www.redhat.com/apps/support/errata/" target="_top">http://www.redhat.com/apps/support/errata/</a>.
+	    </p></li><li><p>Список зеркал FTP-сервера Red Hat, опубликованный по адресу <a href="http://www.redhat.com/download/mirror.html" target="_top">http://www.redhat.com/download/mirror.html</a>
+	    </p></li><li><p>Сеть Red Hat Network — Подробнее о ней вы узнаете в <a href="http://www.linuxcookbook.ru/books/redhat/sysadmin-guide/ch-rhnetwork.html">главе 17 <i>Red Hat Network</i></a>
+	    </p></li></ul></div><div class="SECT2"><h2 class="SECT2"><a name="S2-RPM-INSTALLING">15.2.2. Установка</a></h2><p>          Обычно файлы, содержащие пакеты RPM, имеют имена вроде <tt class="FILENAME">foo-1.0-1.i386.rpm</tt>.  Имя файла включает название пакета (<tt class="FILENAME">foo</tt>), версию (<tt class="FILENAME">1.0</tt>), выпуск (<tt class="FILENAME">1</tt>) и архитектуру (<tt class="FILENAME">i386</tt>). Чтобы установить пакет, войдите в систему под именем root и введите в приглашении оболочки следующую команду:
+	</p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><tt class="COMMAND">rpm -Uvh foo-1.0-1.i386.rpm</tt></pre></td></tr></tbody></table><p>	  Если установка пройдёт успешно, на экране появится следующее:
+	</p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><samp class="COMPUTEROUTPUT">Preparing...                ########################################### [100%]
+   1:foo                    ########################################### [100%]</samp></pre></td></tr></tbody></table><p>
+          Как вы видите, RPM выводит имя пакета, а затем, по мере 
+установки пакета, последовательность символов «решётка», отражающую 
+процесс установки.
+        </p><p>	  При установке или обновлении пакета автоматически 
+проверяется подпись пакета. Эта подпись подтверждает то, что пакет был 
+подписан разработчиком и не был изменён. Например, если при проверке 
+подписи происходит ошибка, вы получите примерно следующее сообщение:
+	</p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><samp class="COMPUTEROUTPUT">error: V3 DSA signature: BAD, key ID 0352860f</samp></pre></td></tr></tbody></table><p>	  Если это новая подпись только для заголовка появляется такое сообщение:
+	</p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><samp class="COMPUTEROUTPUT">error: Header V3 DSA signature: BAD, key ID 0352860f</samp></pre></td></tr></tbody></table><p>	  Если у вас не установлен ключ, подходящий для проверки подписи, сообщение об ошибке содержит слово <samp class="COMPUTEROUTPUT">NOKEY</samp>, например:
+	</p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><samp class="COMPUTEROUTPUT">warning: V3 DSA signature: NOKEY, key ID 0352860f</samp></pre></td></tr></tbody></table><p>	  За дополнительными сведениями о проверке подписи пакета обратитесь к <a href="http://www.linuxcookbook.ru/books/redhat/sysadmin-guide/s1-check-rpm-sig.html">разделу 15.3 <i>Проверка подписи пакета</i></a>.
+	</p><div class="WARNING"><p></p><table class="WARNING" width="100%" border="0"><tbody><tr><td width="25" valign="TOP" align="CENTER"><img src="%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20RPM_files/warning.png" alt="Предупреждение" hspace="5"></td><th valign="CENTER" align="LEFT"><b>Предупреждение</b></th></tr><tr><td>&nbsp;</td><td valign="TOP" align="LEFT"><p>	    Если вы устанавливаете пакет ядра, вместо этой команды следует использовать <tt class="COMMAND">rpm -ivh</tt>. За подробностями обратитесь к <a href="http://www.linuxcookbook.ru/books/redhat/sysadmin-guide/ch-kernel.html">главе 37 <i>Обновление ядра вручную</i></a>.
+	  </p></td></tr></tbody></table></div><p>          Установка пакетов должна выполняться просто, но иногда вы можете встретить ошибки:
+        </p><div class="SECT3"><h3 class="SECT3"><a name="S3-RPM-ERRORS">15.2.2.1. Пакет уже установлен</a></h3><p>            Если пакет той же версии уже установлен, вы увидите:
+          </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><samp class="COMPUTEROUTPUT">Preparing...                ########################################### [100%]
+package foo-1.0-1 is already installed</samp></pre></td></tr></tbody></table><p>
+            Если версия пакета, который вы пытаетесь установить, 
+совпадает с версией уже установленного, но вы, тем не менее, хотите 
+установить пакет, вы можете указать параметр <tt class="COMMAND">--replacepkgs</tt> и RPM проигнорирует эту ошибку:
+          </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><tt class="COMMAND">rpm -ivh --replacepkgs foo-1.0-1.i386.rpm</tt></pre></td></tr></tbody></table><p>
+	    Этот параметр полезен, если файлы, установленные из пакета RPM, 
+были удалены или вы не хотите, чтобы были установлены оригинальные файлы
+ конфигурации RPM.
+	  </p></div><div class="SECT3"><h3 class="SECT3"><a name="S3-RPM-CONFLICTING-FILES">15.2.2.2. Конфликтующие файлы</a></h3><p>
+            Если вы пытаетесь установить пакет, который содержит файл, 
+установленный другим пакетом или более ранней версий того же пакета, на 
+экране появляется сообщение:
+          </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><samp class="COMPUTEROUTPUT">Preparing...                ########################################### [100%]
+file /usr/bin/foo from install of foo-1.0-1 conflicts with file from package bar-2.0.20</samp></pre></td></tr></tbody></table><p>            Чтобы RPM игнорировал эту ошибку, укажите параметр <tt class="COMMAND">--replacefiles</tt>:
+          </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><tt class="COMMAND">rpm -ivh --replacefiles foo-1.0-1.i386.rpm</tt></pre></td></tr></tbody></table></div><div class="SECT3"><h3 class="SECT3"><a name="S3-RPM-UNRESOLVED-DEPENDENCY">15.2.2.3. Нарушенная зависимость</a></h3><p>
+            Пакеты RPM могут по сути зависеть от других пакетов, что 
+означает, что для их нормальной работы необходимо установить другие 
+пакеты.  Если вы попытаетесь установить пакет с неразрешёнными 
+зависимостями, вы увидите примерно следующее:
+          </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><samp class="COMPUTEROUTPUT">error: Failed dependencies:
+        bar.so.2 is needed by foo-1.0-1
+    Suggested resolutions:
+        bar-2.0.20-3.i386.rpm</samp></pre></td></tr></tbody></table><p>	
+    Если вы устанавливаете пакет с набора компакт-дисков Red Hat 
+Enterprise Linux CD-ROM, обычно вам предлагается название пакета, 
+необходимого для разрешения зависимости. Найдите предлагаемый пакет(ы) 
+на компакт-дисках Red Hat Enterprise Linux или на FTP-сайте Red Hat (или
+ зеркале) и добавьте его в команду:
+	  </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><tt class="COMMAND">rpm -ivh foo-1.0-1.i386.rpm bar-2.0.20-3.i386.rpm</tt></pre></td></tr></tbody></table><p>	    Если установка обоих пакетов прходит успешно, на экран выводится примерно следующее:
+	  </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><samp class="COMPUTEROUTPUT">Preparing...                ########################################### [100%]
+   1:foo                    ########################################### [ 50%]
+   2:bar                    ########################################### [100%]</samp></pre></td></tr></tbody></table><p>	    Если система не предлагает пакет для разрешения зависимости, вы можете попробовать параметр <tt class="OPTION">--redhatprovides</tt>, чтобы определить, какой пакет содержит требуемый файл. Для использования этого параметра вам потребуется установить пакет <tt class="FILENAME">rpmdb-redhat</tt>.
+	  </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><tt class="COMMAND">rpm -q --redhatprovides bar.so.2</tt></pre></td></tr></tbody></table><p>	    Если пакет, содержащий <tt class="FILENAME">bar.so.2</tt>, есть в установленной базе данных из пакета <tt class="FILENAME">rpmdb-redhat</tt>, вы увидите название этого пакета:
+	  </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><samp class="COMPUTEROUTPUT">bar-2.0.20-3.i386.rpm</samp></pre></td></tr></tbody></table><p>
+	    Чтобы выполнить установку, нарушив зависимости (что не 
+рекомендуется делать, так как пакет может работать некорректно), 
+воспользуйтесь параметром <tt class="OPTION">--nodeps</tt>.
+          </p></div></div><div class="SECT2"><h2 class="SECT2"><a name="S2-RPM-UNINSTALLING">15.2.3. Удаление</a></h2><p>          Удаление пакета выполняется также просто, как и его установка.  Введите в приглашении оболочки следующую команду:
+        </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><tt class="COMMAND">rpm -e foo</tt></pre></td></tr></tbody></table><div class="NOTE"><p></p><table class="NOTE" width="100%" border="0"><tbody><tr><td width="25" valign="TOP" align="CENTER"><img src="%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20RPM_files/note.png" alt="Замечание" hspace="5"></td><th valign="CENTER" align="LEFT"><b>Замечание</b></th></tr><tr><td>&nbsp;</td><td valign="TOP" align="LEFT"><p>	    Обратите внимание, здесь используется <i class="EMPHASIS">имя</i> пакета <tt class="FILENAME">foo</tt>, а не имя <i class="EMPHASIS">файла</i> оригинального пакета <tt class="FILENAME">foo-1.0-1.i386.rpm</tt>. Чтобы удалить пакет, замените <tt class="FILENAME">foo</tt> действительным именем первоначального пакета.
+	  </p></td></tr></tbody></table></div><p>          Вы можете 
+столкнуться с нарушением зависимости при удалении пакета, если другой 
+установленный пакет зависит от пакета, который вы пытаетесь удалить. 
+Например:
+        </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><samp class="COMPUTEROUTPUT">error: Failed dependencies:
+        foo is needed by (installed) bar-2.0.20-3.i386.rpm</samp></pre></td></tr></tbody></table><p>
+          Чтобы заставить RPM игнорировать эту ошибку и удалить пакет, 
+что может привести к поломке пакета, зависящего от него, используйте 
+параметр <tt class="OPTION">--nodeps</tt>.
+        </p></div><div class="SECT2"><h2 class="SECT2"><a name="S2-RPM-UPGRADING">15.2.4. Обновление</a></h2><p>          Обновление пакета похоже на его установку. Введите в приглашении оболочки следующую команду:
+        </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><tt class="COMMAND">rpm -Uvh foo-2.0-1.i386.rpm</tt></pre></td></tr></tbody></table><p>          В процессе обновления пакета RPM автоматически удаляет все старые версии пакета <tt class="FILENAME">foo</tt>.  В действительности, вы можете всегда использовать параметр <tt class="OPTION">-U</tt> для установки пакетов, так как он работает, даже если предыдущая версия пакета не установлена.
+        </p><div class="TIP"><p></p><table class="TIP" width="100%" border="0"><tbody><tr><td width="25" valign="TOP" align="CENTER"><img src="%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20RPM_files/tip.png" alt="Подсказка" hspace="5"></td><th valign="CENTER" align="LEFT"><b>Подсказка</b></th></tr><tr><td>&nbsp;</td><td valign="TOP" align="LEFT"><p>	    Не стоит использовать параметр <tt class="OPTION">-U</tt>
+ для установки пакетов ядра, так как при этом RPM заменит предыдущий 
+пакет ядра. Это не влияет на работающую систему, но если после следующей
+ перезагрузки запустить новое ядро не удастся, никакого другого ядра для
+ загрузки вместо него не будет.
+	  </p><p>	    Параметр <tt class="OPTION">-i</tt> добавляет ядро в меню загрузчика GRUB (<tt class="FILENAME">/etc/grub.conf</tt>).  Подобным образом, при удалении старого, ненужного ядра, запись этого ядра удаляется из GRUB.
+	  </p></td></tr></tbody></table></div><p>          Так как RPM выполняет умное обновление пакетов с файлами конфигурации, вам может встретиться подобное сообщение:
+        </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><samp class="COMPUTEROUTPUT">saving /etc/foo.conf as /etc/foo.conf.rpmsave</samp></pre></td></tr></tbody></table><p>          Это сообщение означает, что изменения файла конфигурации могут оказаться не <i class="FIRSTTERM">совместимыми снизу вверх</i>
+ с новым файлом конфигурации, входящим в пакет, поэтому RPM сохранил ваш
+ первоначальный файл и установил новый. Вы должны проанализировать 
+различия между двумя файлами конфигурации и разобраться с ними как можно
+ скорее, чтобы ваша система смогла продолжить нормальную работу.
+        </p><p>          Обновление в самом деле представляет собой 
+комбинацию удаления и установки, поэтому во время обновления RPM вы 
+можете встретить ошибки и удаления, и установки, плюс ещё одну. Если RPM
+ считает, что вы пытаетесь обновить пакет с более <i class="EMPHASIS">старой</i> версией, он сообщает примерно следующее:
+        </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><samp class="COMPUTEROUTPUT">package foo-2.0-1 (which is newer than foo-1.0-1) is already installed</samp></pre></td></tr></tbody></table><p>          Чтобы, несмотря на это, принудительно обновить пакет, укажите параметр <tt class="COMMAND">--oldpackage</tt>:
+        </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><tt class="COMMAND">rpm -Uvh --oldpackage foo-1.0-1.i386.rpm</tt></pre></td></tr></tbody></table></div><div class="SECT2"><h2 class="SECT2"><a name="S2-RPM-FRESHENING">15.2.5. Освежение</a></h2><p>          Освежение пакета похоже на его обновление.  Введите в приглашении оболочки следующую команду:
+        </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><tt class="COMMAND">rpm -Fvh foo-1.2-1.i386.rpm</tt></pre></td></tr></tbody></table><p>
+          Получив указание освежить пакет, RPM сравнивает версию 
+пакетов, заданных в командной строке с версией пакетов, установленных в 
+системе.   Если в параметрах RPM указан пакет с версией новее 
+установленного пакета, он обновляется до более новой версии.  Однако, 
+указание RPM освежить версию не будет работать, если пакет с таким 
+именем не был установлен ранее.  Этим данным параметр и отличается от 
+параметра обновления, так как при обновлении пакеты <i class="EMPHASIS">устанавливаются</i> вне зависимости от того, была ли установлена старая верия пакета.
+        </p><p>          RPM может выполнить эту операцию как для одного
+ пакета, так и для групп пакетов. Если вы только что загрузили много 
+разнообразных пакетов и хотите обновить только установленные в системе, 
+«освежение» пакетов — именно то, что вам нужно. Если вы освежаете 
+пакеты, перед использованием RPM вы можете не удалять ненужные пакеты из
+ загруженной группы пакетов.
+        </p><p>          В этом случае выполните следующую команду:
+        </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><tt class="COMMAND">rpm -Fvh *.rpm</tt></pre></td></tr></tbody></table><p>          RPM автоматически обновит только уже установленные пакеты.
+        </p></div><div class="SECT2"><h2 class="SECT2"><a name="S2-RPM-QUERYING">15.2.6. Анализ</a></h2><p>          Чтобы обратиться к базе данных установленных пакетов, используйте команду <tt class="COMMAND">rpm -q</tt>.  Команда <tt class="COMMAND">rpm -q foo</tt> выводит название пакета, версию и номер выпуска установленного пакета <tt class="FILENAME">foo</tt>:
+        </p><table class="SCREEN" width="100%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><samp class="COMPUTEROUTPUT">foo-2.0-1</samp></pre></td></tr></tbody></table><div class="NOTE"><p></p><table class="NOTE" width="100%" border="0"><tbody><tr><td width="25" valign="TOP" align="CENTER"><img src="%D0%98%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20RPM_files/note.png" alt="Замечание" hspace="5"></td><th valign="CENTER" align="LEFT"><b>Замечание</b></th></tr><tr><td>&nbsp;</td><td valign="TOP" align="LEFT"><p>	    Чтобы запросить информацию о пакете, замените <tt class="FILENAME">foo</tt> действительным именем пакета.
+	  </p></td></tr></tbody></table></div><p>          Вместо указания имени пакета используйте следующие параметры команды <tt class="COMMAND">-q</tt> для указания запрашиваемого пакета (ов).  Эти параметры называются <i class="EMPHASIS">Параметрами выбора пакета</i>.
+        </p><p></p><ul><li><p><tt class="COMMAND">-a</tt> запрашивает все установленные пакеты.</p></li><li><p><tt class="COMMAND">-f <tt class="FILENAME"><var class="REPLACEABLE">&lt;file&gt;</var></tt></tt> запрашивает пакет, к которому относится файл <tt class="FILENAME"><var class="REPLACEABLE">&lt;file&gt;</var></tt>. Указывая файл, вы должны определить полный путь к файлу (например, <tt class="FILENAME">/bin/ls</tt>).
+            </p></li><li><p><tt class="COMMAND">-p <tt class="FILENAME"><var class="REPLACEABLE">&lt;packagefile&gt;</var></tt></tt> запрашивает пакет <tt class="FILENAME"><var class="REPLACEABLE">&lt;packagefile&gt;</var></tt>.
+            </p></li></ul><p>          Указать параметры запроса можно 
+разными способами.  Следующие параметры определяют тип искомой 
+информации.  Они называются <i class="EMPHASIS">Параметрами запроса информации</i>.
+        </p><p></p><ul><li><p><tt class="COMMAND">-i</tt> отображает 
+информацию о пакете, включая имя, описание, выпуск, размер, дату сборки,
+ дату установки, производителя и другую разнообразную информацию.
+            </p></li><li><p><tt class="COMMAND">-l</tt> выводит список файлов, содержащихся в пакете.
+            </p></li><li><p><tt class="COMMAND">-s</tt> выводит состояние всех файлов в пакете.
+            </p></li><li><p><tt class="COMMAND">-d</tt> выводит список файлов, помеченных как документация (страницы man, info, файлы README, и т.д.).
+            </p></li><li><p><tt class="COMMAND">-c</tt> выводит список 
+файлов, помеченных как файлы конфигурации.  Таковыми считаются файлы, 
+изменяемые вами после установки при настройке пакета в вашей системе 
+(например, <tt class="FILENAME">sendmail.cf</tt>, <tt class="FILENAME">passwd</tt>, <tt class="FILENAME">inittab</tt> и т.д.).
+            </p></li></ul><p>          Добавьте для параметров, выводящих списки файлов, команду <tt class="COMMAND">-v</tt> и вы получите списки в знакомом формате <tt class="COMMAND">ls -l</tt>.
+        </p></div><div class="SECT2"><h2 class="SECT2"><a name="S2-RPM-VERIFYING">15.2.7. Проверка</a></h2><p>
+          При проверке пакета информация о файлах, установленных из 
+пакета, сравнивается с информацией из оригинального пакета.  Помимо 
+прочего, при такой проверке проверяется размер, сумма MD5, разрешения, 
+тип, владелец и группа владельца каждого файла.
+        </p><p>          Проверку пакета выполняет команда <tt class="COMMAND">rpm -V</tt>. Вы можете указать пакет, который хотите проверить, используя любой из перечисленных <i class="EMPHASIS">параметров выбора пакета</i>.  Простым примером проверки является команда <tt class="COMMAND">rpm -V foo</tt>, которая проверяет, что все файлы пакета <tt class="COMMAND">foo</tt> находятся там, куда они были изначально установлены.  Например:
+        </p><p></p><ul><li style="list-style-type: disc"><p>Чтобы проверить пакет, содержащий конкретный файл, выполните:</p><table class="SCREEN" width="90%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><tt class="COMMAND">rpm -Vf /usr/bin/vim</tt></pre></td></tr></tbody></table></li><li style="list-style-type: disc"><p>Чтобы проверить ВСЕ установленные пакеты:</p><table class="SCREEN" width="90%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><tt class="COMMAND">rpm -Va</tt></pre></td></tr></tbody></table></li><li style="list-style-type: disc"><p>Чтобы сравнить установленный пакет с файлом RPM-пакета:</p><table class="SCREEN" width="90%" bgcolor="#DCDCDC"><tbody><tr><td><pre class="SCREEN"><tt class="COMMAND">rpm -Vp foo-1.0-1.i386.rpm</tt></pre></td></tr></tbody></table><p>Эта команда может быть полезна, если вы сомневаетесь в целостности баз данных RPM.
+            </p></li></ul><p>          Если проверка проходит успешно, 
+никакие сообщения на экран не выводятся.  В случае обнаружения 
+каких-либо нарушений, вы увидите сообщения об этом.  Для каждого 
+несоответствия на экран будет выведена строка из восьми символов ( <samp class="COMPUTEROUTPUT">c</samp>
+ обозначает файл конфигурации), а затем имя файла.  Каждый из восьми 
+символов обозначает результат сравнения одного атрибута файла со 
+значением атрибута, записанного в базе данных RPM.  Единственная точка (<samp class="COMPUTEROUTPUT">.</samp>) означает, что тест пройден.  Следующие символы обозначают ошибки при выполнении определённых проверок:
+        </p><p></p><ul><li><p><samp class="COMPUTEROUTPUT">5</samp> — контрольная сумма MD5</p></li><li><p><samp class="COMPUTEROUTPUT">S</samp> — размер</p></li><li><p><samp class="COMPUTEROUTPUT">L</samp> — символическая ссылка</p></li><li><p><samp class="COMPUTEROUTPUT">T</samp> — дата изменения файла</p></li><li><p><samp class="COMPUTEROUTPUT">D</samp> — устройство</p></li><li><p><samp class="COMPUTEROUTPUT">U</samp> — пользователь</p></li><li><p><samp class="COMPUTEROUTPUT">G</samp> — группа</p></li><li><p><samp class="COMPUTEROUTPUT">M</samp> — режим (включая разрешения и тип файла)</p></li><li><p><samp class="COMPUTEROUTPUT">?</samp> — файл не удалось прочитать</p></li></ul><p>
+          Если вы увидели такие сообщения, вы должны решить, будете ли 
+вы удалять или переустанавливать пакет, или исправлять проблему другим 
+способом.
+        </p></div></div><div class="NAVFOOTER"><hr width="100%" align="LEFT"><table summary="Footer navigation table" width="100%" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td width="33%" valign="top" align="left"><a href="http://www.linuxcookbook.ru/books/redhat/sysadmin-guide/ch-rpm.html" accesskey="P">Назад</a></td><td width="34%" valign="top" align="center"><a href="http://www.linuxcookbook.ru/books/redhat/sysadmin-guide/index.html" accesskey="H">Начало</a></td><td width="33%" valign="top" align="right"><a href="http://www.linuxcookbook.ru/books/redhat/sysadmin-guide/s1-check-rpm-sig.html" accesskey="N">Вперёд</a></td></tr><tr><td width="33%" valign="top" align="left">Управление пакетами с помощью RPM</td><td width="34%" valign="top" align="center"><a href="http://www.linuxcookbook.ru/books/redhat/sysadmin-guide/ch-rpm.html" accesskey="U">Вверх</a></td><td width="33%" valign="top" align="right">Проверка подписи пакета</td></tr></tbody></table></div></body></html>

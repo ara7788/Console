@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" prefix="og: http://ogp.me/ns#" class="wf-roboto-n4-active wf-roboto-n7-active wf-roboto-n3-active wf-active" lang="ru-RU"><head><script type="text/javascript" async="" defer="defer" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/piwik.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="pingback" href="https://www.sim-networks.com/wiki/xmlrpc.php">
+<link rel="shortcut icon" href="https://www.sim-networks.com/wiki/wp-content/uploads/2015/11/favicon1.png">
+
+<title>Установка Active Directory + Сервер терминалов на Windows Server</title>
+		<style type="text/css">
+			@media only screen and (max-width: 600px) {
+				#header,
+				#leftcol {
+					background-color: #3b90bd;
+				}
+			}
+		</style>
+		                        <script type="text/javascript" async="" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/watch.js"></script><script async="" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/analytics.js"></script><script src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/webfont.js" type="text/javascript" async=""></script><script>
+                            /* You can add more configuration options to webfontloader by previously defining the WebFontConfig with your options */
+                            if ( typeof WebFontConfig === "undefined" ) {
+                                WebFontConfig = new Object();
+                            }
+                            WebFontConfig['google'] = {families: ['Roboto:400,700,300']};
+
+                            (function() {
+                                var wf = document.createElement( 'script' );
+                                wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.3/webfont.js';
+                                wf.type = 'text/javascript';
+                                wf.async = 'true';
+                                var s = document.getElementsByTagName( 'script' )[0];
+                                s.parentNode.insertBefore( wf, s );
+                            })();
+                        </script>
+                    
+<!-- This site is optimized with the Yoast SEO plugin v5.0.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Пошаговое руководство по установке сервера терминалов и Active Directory на Windows Server 2012 R2. Скриншоты и подсказки.">
+<link rel="canonical" href="https://www.sim-networks.com/wiki/configuring-a-terminal-server-windows-2012">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Установка Active Directory + Сервер терминалов на Windows Server">
+<meta property="og:description" content="Пошаговое руководство по установке сервера терминалов и Active Directory на Windows Server 2012 R2. Скриншоты и подсказки.">
+<meta property="og:url" content="https://www.sim-networks.com/wiki/configuring-a-terminal-server-windows-2012">
+<meta property="og:site_name" content="WIKI">
+<meta property="article:tag" content="Microsoft">
+<meta property="article:tag" content="VDS">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="Windows Server">
+<meta property="article:tag" content="Сервер">
+<meta property="article:section" content="Без рубрики">
+<meta property="article:published_time" content="2016-06-20T19:42:38+00:00">
+<meta property="article:modified_time" content="2017-06-07T17:53:57+00:00">
+<meta property="og:updated_time" content="2017-06-07T17:53:57+00:00">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/05/ts1.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts2.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts3.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts4.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts5.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts6.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts7.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts8.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts9.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts10.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts11.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts12.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts13.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts14.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts15.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts16.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts17.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts18.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts19.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts20.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts21.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts22.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts23.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts24.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts25.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts26.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts27.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts28.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts29.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts30.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts31.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts32.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts33.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts34.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts35.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts36.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts37.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts38.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts39.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts40.png">
+<meta property="og:image" content="https://www.sim-networks.com/wiki/wp-content/uploads/2016/06/ts41.png">
+<!-- / Yoast SEO plugin. -->
+
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="stylesheet" id="msw_wpfm_scan-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/wp-css.html" type="text/css" media="all">
+<link rel="stylesheet" id="style-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/style.css" type="text/css" media="screen">
+<link rel="stylesheet" id="font-awesome-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/font-awesome.css" type="text/css" media="screen">
+<link rel="stylesheet" id="superfish-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/superfish.css" type="text/css" media="screen">
+<link rel="stylesheet" id="ui.tabs-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/jquery_002.css" type="text/css" media="screen">
+<link rel="stylesheet" id="ui.datepicker-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/jquery.css" type="text/css" media="screen">
+<link rel="stylesheet" id="print-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/print.css" type="text/css" media="print">
+<link rel="stylesheet" id="responsive-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/responsive.css" type="text/css" media="screen">
+<link rel="stylesheet" id="default-style-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/default.css" type="text/css" media="screen">
+<link rel="stylesheet" id="custom-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/custom.css" type="text/css" media="screen">
+<link rel="stylesheet" id="cptch_stylesheet-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/front_end_style.css" type="text/css" media="all">
+<link rel="stylesheet" id="dashicons-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/dashicons.css" type="text/css" media="all">
+<link rel="stylesheet" id="cptch_desktop_style-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/desktop_style.css" type="text/css" media="all">
+<link rel="stylesheet" id="contact-form-7-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/styles.css" type="text/css" media="all">
+<link rel="stylesheet" id="wordpress-popular-posts-css" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/wpp.css" type="text/css" media="all">
+<link rel="stylesheet" href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/css.css"><script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/jquery_003.js"></script>
+<script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/jquery-migrate.js"></script>
+<link rel="https://api.w.org/" href="https://www.sim-networks.com/wiki/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.sim-networks.com/wiki/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.sim-networks.com/wiki/wp-includes/wlwmanifest.xml"> 
+<link rel="shortlink" href="https://www.sim-networks.com/wiki/?p=1037">
+<link rel="alternate" type="application/json+oembed" href="https://www.sim-networks.com/wiki/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.sim-networks.com%2Fwiki%2Fconfiguring-a-terminal-server-windows-2012">
+<link rel="alternate" type="text/xml+oembed" href="https://www.sim-networks.com/wiki/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.sim-networks.com%2Fwiki%2Fconfiguring-a-terminal-server-windows-2012&amp;format=xml">
+                                    				
+				<script type="text/javascript">//<![CDATA[
+
+					var sampling_active = 0;
+					var sampling_rate   = 100;
+					var do_request = false;
+
+					if ( !sampling_active ) {
+						do_request = true;
+					} else {
+						var num = Math.floor(Math.random() * sampling_rate) + 1;
+						do_request = ( 1 === num );
+					}
+
+					if ( do_request ) {
+
+						// Create XMLHttpRequest object and set variables
+						var xhr = ( window.XMLHttpRequest )
+						  ? new XMLHttpRequest()
+						  : new ActiveXObject( "Microsoft.XMLHTTP" ),
+						url = 'https://www.sim-networks.com/wiki/wp-admin/admin-ajax.php',
+						params = 'action=update_views_ajax&token=c1f2d648b7&wpp_id=1037';
+						// Set request method and target URL
+						xhr.open( "POST", url, true );
+						// Set request header
+						xhr.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" );
+						// Hook into onreadystatechange
+						xhr.onreadystatechange = function() {
+							if ( 4 === xhr.readyState && 200 === xhr.status ) {
+								if ( window.console && window.console.log ) {
+									window.console.log( xhr.responseText );
+								}
+							}
+						};
+						// Send request
+						xhr.send( params );
+
+					}
+
+				//]]></script>
+				
+				<style type="text/css" title="dynamic-css" class="options-output">body{font-family:Roboto;line-height:14px;font-weight:400;font-style:normal;color:#222222;font-size:14px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading body,{opacity: 0;}.ie.wf-loading body,{visibility: hidden;}#access ul#main-menu a{font-family:Roboto;text-transform:none;line-height:14px;font-weight:normal;font-style:normal;color:#222222;font-size:14px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #access ul#main-menu a,{opacity: 0;}.ie.wf-loading #access ul#main-menu a,{visibility: hidden;}#access ul#main-menu ul.sub-menu li a{font-family:Roboto;text-transform:none;line-height:13px;font-weight:400;font-style:normal;color:#222222;font-size:14px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #access ul#main-menu ul.sub-menu li a,{opacity: 0;}.ie.wf-loading #access ul#main-menu ul.sub-menu li a,{visibility: hidden;}#rightcol .widget h3.title{font-family:Roboto;text-transform:uppercase;letter-spacing:1px;font-weight:700;font-style:normal;color:#ffffff;font-size:15px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #rightcol .widget h3.title,{opacity: 0;}.ie.wf-loading #rightcol .widget h3.title,{visibility: hidden;}#content ul.warrior_cats li h4.title{font-family:Roboto;font-weight:normal;font-style:normal;color:#0f3b57;font-size:16px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #content ul.warrior_cats li h4.title,{opacity: 0;}.ie.wf-loading #content ul.warrior_cats li h4.title,{visibility: hidden;}#content .articles h4.title{font-family:Roboto;line-height:20px;font-weight:400;font-style:normal;color:#222222;font-size:14px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #content .articles h4.title,{opacity: 0;}.ie.wf-loading #content .articles h4.title,{visibility: hidden;}#sidebar .widget,#sidebar .widget p{font-family:Roboto;line-height:25px;font-weight:300;font-style:normal;color:#cccccc;font-size:13px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #sidebar .widget,.wf-loading #sidebar .widget p,{opacity: 0;}.ie.wf-loading #sidebar .widget,.ie.wf-loading #sidebar .widget p,{visibility: hidden;}#sidebar h3.title{font-family:Roboto;letter-spacing:1px;font-weight:700;font-style:normal;color:#ffffff;font-size:13px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #sidebar h3.title,{opacity: 0;}.ie.wf-loading #sidebar h3.title,{visibility: hidden;}#content p.categories{font-family:Roboto;line-height:12px;font-weight:400;font-style:normal;color:#0f3b57;font-size:12px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #content p.categories,{opacity: 0;}.ie.wf-loading #content p.categories,{visibility: hidden;}#content .publised p{font-family:Roboto;line-height:18px;font-weight:400;font-style:normal;color:#0f3b57;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #content .publised p,{opacity: 0;}.ie.wf-loading #content .publised p,{visibility: hidden;}.hentry h1.title{font-family:Roboto;line-height:30px;font-weight:400;font-style:normal;color:#302c20;font-size:30px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading .hentry h1.title,{opacity: 0;}.ie.wf-loading .hentry h1.title,{visibility: hidden;}#content .hentry h2.title{font-family:Roboto;line-height:20px;font-weight:400;font-style:normal;color:#302c20;font-size:20px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #content .hentry h2.title,{opacity: 0;}.ie.wf-loading #content .hentry h2.title,{visibility: hidden;}#content p.tags a{font-family:Roboto;font-weight:400;font-style:normal;color:#888;font-size:11px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #content p.tags a,{opacity: 0;}.ie.wf-loading #content p.tags a,{visibility: hidden;}#warrior-advanced-search #s{font-family:Roboto;font-weight:400;font-style:normal;color:#a7a7a7;font-size:14px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #warrior-advanced-search #s,{opacity: 0;}.ie.wf-loading #warrior-advanced-search #s,{visibility: hidden;}.livesearch ul li a{font-family:Roboto;font-weight:400;font-style:normal;color:#a7a7a7;font-size:14px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading .livesearch ul li a,{opacity: 0;}.ie.wf-loading .livesearch ul li a,{visibility: hidden;}#content button#searchsubmit[type="submit"]{font-family:Roboto;font-weight:400;font-style:normal;color:#ffffff;font-size:14px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #content button#searchsubmit[type="submit"],{opacity: 0;}.ie.wf-loading #content button#searchsubmit[type="submit"],{visibility: hidden;}#respond input#submit,form input[type=submit],form button{font-family:Roboto;font-weight:400;font-style:normal;color:#ffffff;font-size:14px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #respond input#submit,.wf-loading form input[type=submit],.wf-loading form button,{opacity: 0;}.ie.wf-loading #respond input#submit,.ie.wf-loading form input[type=submit],.ie.wf-loading form button,{visibility: hidden;}#comments ol.commentlist li.comment .meta{font-family:Roboto;line-height:10px;font-weight:400;font-style:normal;color:#9c9c9c;font-size:10px;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading #comments ol.commentlist li.comment .meta,{opacity: 0;}.ie.wf-loading #comments ol.commentlist li.comment .meta,{visibility: hidden;}#access ul#main-menu a{color:#3b90bd;}#access ul#main-menu a:hover{color:#3b90bd;}#content a{color:#3b90bd;}#content a:hover{color:#00acc1;}#sidebar ul li a{color:#ffffff;}#sidebar ul li a:hover{color:#ffffff;}ul.warrior_cats span{color:#555555;}#content p.categories a{color:#3b90bd;}#content p.categories a:hover{color:#3b90bd;}#content .hentry h2.title a{color:#3b90bd;}#content .hentry h2.title a:hover{color:#3b90bd;}#content p.tags a{color:#3b90bd;}#content p.tags a:hover{color:#3b90bd;}#content .publised a{color:#3b90bd;}#content .publised a:hover{color:#3b90bd;}#content .comment-box .meta a{color:#3b90bd;}#content .comment-box .meta a:hover{color:#3b90bd;}form input[type="submit"],form button[type="submit"]{color:#fff;}form input[type="submit"]:hover,form button[type="submit"]:hover{color:#fff;}.bg-area .after{border-right:0px solid #dddddd;}.top-menu li{border-left:1px solid #cbcbcb;}#footer .footer-area{border-top:1px solid #e6e6e6;}.hentry h1.title,.hentry h2.title,#rightcol .widget h3.title{border-bottom:1px solid #e6e6e6;}.warrior_tabs .tab-items .ui-state-active a{border:1px solid #c55746;}.twitter a.btn{border:1px solid #c55746;}form input[type="text"],form input[type="email"],form input[type="url"],form input[type="date"],form select,form textarea{border:1px solid #e0e0e0;}.warrior-advanced-search .form-item{border:1px solid #e0e0e0;}.livesearch{border-bottom:1px solid #dedede;border-left:1px solid #dedede;border-right:1px solid #dedede;}.livesearch ul li a{border-bottom:1px solid #eee;}body,#footer .footer-area{background-color:#ffffff;}#leftcol .before, .bg-area .before{background-color:#3b90bd;}.hentry h1.title span,.hentry h2.title span,#rightcol .widget h3.title span{background-color:#ffab40;}#leftcol .widget a.btn, .warrior_tabs .tab-items .ui-state-active a{background-color:#e86c57;}#leftcol .widget a.btn:hover, .warrior_tabs .tab-items .ui-state-active a:hover{background-color:#ffffff;}.twitter a.btn{background-color:#ffffff;}.twitter a.btn:hover{background-color:#ffffff;}#warrior-advanced-search #s,.warrior-advanced-search .form-item{background-color:#e8e8e8;}#content button#searchsubmit[type="submit"]{background-color:#3b90bd;}#content button#searchsubmit[type="submit"]:hover{background-color:#3b90bd;}.livesearch{background-color:#ffffff;}form input[type="text"],form input[type="email"],form input[type="url"],form input[type="date"],form select,form textarea{background-color:#ffffff;}form input[type="submit"],form button[type="submit"],form button{background-color:#3b90bd;}form input[type="submit"]:hover,form button[type="submit"]:hover,form button:hover{background-color:#3b90bd;}</style><link href="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/css_002.css" rel="stylesheet" type="text/css">
+</head>
+
+<body class="post-template-default single single-post postid-1037 single-format-standard">
+	<div id="top" class="clearfix">
+		<div class="container">
+			<!-- START: HEADER -->
+			<div id="header" class="clearfix">
+				<div class="logo">
+					<a href="https://www.sim-networks.com/wiki/"><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/logo11.png" alt=""></a>
+				</div>		
+			</div>
+			<!-- END: HEADER -->
+
+			<!-- START: ACCESS -->
+			<div id="access" class="clearfix">
+							</div>
+			<!-- END: ACCESS -->
+		</div>
+	</div>
+
+	<div id="main-content" class="container clearfix">
+<!-- START: RIGHT COLUMN -->
+<div id="rightcol" class="clearfix">
+	
+	<!-- START: CONTENT -->
+	<div id="content" class="clearfix">	
+	<div id="widget-warrior-advanced-search-2" class="widget warrior-advanced-search clearfix">
+			<form role="search" method="get" id="warrior-advanced-search" action="https://www.sim-networks.com/wiki/">
+            <div class="form-item">
+            	<input name="s" id="s" placeholder="Что нужно найти?" class="input s" autocapitalize="off" autocorrect="off" autocomplete="off" type="text">
+            	<i class="live-search-reset">x</i>
+                <button id="searchsubmit" type="submit"><span class="fa fa-search"></span> <em>Поиск</em></button>
+            </div>
+        
+            <div class="advanced-search">
+				<a style="cursor:pointer;" id="click-advanced-search">Advanced Search</a>
+				<span class="before"></span>
+				<span class="after"></span>
+			</div>
+		</form>
+
+       <script type="text/javascript">
+			//<![CDATA[
+			jQuery(document).ready(function($) {
+				"use strict";
+
+				//liveSearch
+				jQuery('#warrior-advanced-search #s').liveSearch({
+					url: 'https://www.sim-networks.com/wiki/?ajax=1&s=',
+					loadingClass: 'loading',
+				});
+
+				$('#advanced-search').hide();
+				var advancedSearchClose = true;
+				$('#click-advanced-search').click(function() {
+					$('#advanced-search').slideToggle(300, function() {
+						if ( advancedSearchClose ){
+							$('#click-advanced-search').html('Close [x]');
+							advancedSearchClose = false;
+							$('.warrior-advanced-search').addClass('warrior-advanced-search-toogle');
+						} else {
+							$('#click-advanced-search').html('Advanced Search');
+							advancedSearchClose = true;
+							$('.warrior-advanced-search').removeClass('warrior-advanced-search-toogle');
+						}
+					});
+				});
+				
+				$('.input#s').keypress(function(e){
+					if(e.which === 13){
+						jQuery('#warrior-advanced-search').submit();
+					}
+				});
+
+				$(function() {
+					$( ".datepicker" ).datepicker({
+						changeMonth: true,
+						changeYear: true,
+						dateFormat: 'yy-mm-dd'
+					});
+				});
+			});
+			//]]>
+		</script>
+        
+</div>
+	<div class="breadcrumb clearfix"></div>	
+	
+
+
+				
+			<div id="post-1037" class="clearfix post-1037 post type-post status-publish format-standard hentry category-1 tag-microsoft tag-vds tag-windows tag-windows-server tag-14">
+				<h1 class="title">Настройка терминального сервера на базе Windows 2012 r2<span></span></h1>
+					
+				<div class="entry">
+					<h3>Установка Active Directory + Сервер терминалов на Windows Server 2012 R2</h3>
+<p>Перед началом настроек необходимо установить имя самого сервера:</p>
+<p><em><strong>Пуск → Диспетчер серверов → Локальный сервер →</strong></em> Выполнить нажатие на текущее имя компьютера для его изменения.</p>
+<p>Попав после этого на страницу <em><strong>Свойства системы</strong></em> нажимаем кнопку <em><strong>Изменить,</strong></em>&nbsp;после
+ чего переходим на страницу изменения имени компьютера. Указываем 
+желаемое имя, жмем ОК. В результате получаем системное сообщение о том, 
+что для применения новой настройки понадобится перезагрузка. 
+Перезагрузку можно выполнить как сразу, так и позже самостоятельно.</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts1.png" alt="ts1" width="783" height="398"></p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts2.png" alt="ts2" width="769" height="472"></p>
+<p>После перезагрузки сервера мы можем приступить непосредственно к установке службы каталогов Active Directory:</p>
+<p><em><strong>Пуск → Диспетчер сервервов → Добавить роли и компоненты:</strong></em></p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts3.png" alt="ts3" width="775" height="473"></p>
+<p>В открывшемся диалоговом окне выберем пункт <em><strong>Установка ролей и компонентов:</strong></em></p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts4.png" alt="ts4" width="791" height="554"></p>
+<p>Далее необходимо выбрать сервер, на который мы будем производить установку роли AD. Из списка <em><strong>Пул серверов</strong></em> выбираем наш сервер <em>SRV01</em> и жмем <em><strong>Далее:</strong></em></p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts5.png" alt="ts5" width="794" height="555"></p>
+<p>Затем появится список доступных ролей для установки на наш сервер. В данном случае нас интересует роль с названием <em><strong>Доменные службы Active Directory</strong></em>.
+ Отметив этот пункт, мы откроем список всех необходимых компонентов, 
+которые будут установлены для базового функционирования роли AD. Также 
+во время выбора ролей для установки можно установить роль DNS-сервера. 
+Во всех оставшихся диалоговых окнах жмем кнопку <em><strong>Далее</strong></em>. На самом последнем этапе жмем <em><strong>Установить</strong></em> для установления роли:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts6.png" alt="ts6" width="824" height="586"></p>
+<p>По завершении установки перейдем снова в пункт меню <em><strong>Пуск → Диспетчер серверов → Добавить роли и компоненты.</strong> </em>Как и на изображении ниже, после установления новой роли появится иконка в виде желтого треугольника:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts7.png" alt="ts7" width="780" height="471"></p>
+<p>Повышаем роль сервера до уровня контроллера домена, нажав одноименную кнопку.</p>
+<p>Затем, после выбора пункта <em><strong>Добавить новый лес,</strong> </em>указываем название нашего домена и жмем <em><strong>Далее:</strong></em></p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts8.png" alt="ts8" width="771" height="562"></p>
+<p>Совместимость работы леса и корневого домена оставляем <em><strong>Windows Server 2012 R2.</strong></em><br>
+Отмечаем пункты <em><strong>DNS-сервер</strong></em>&nbsp;и <em><strong>Глобальный каталог (GC)</strong></em>.<br>
+Устанавливаем пароль для восстановления служб каталогов, если в будущем возникнет такая необходимость:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts9.png" alt="ts9" width="772" height="560"></p>
+<p>На следующей вкладке мы получим предупреждение о том, что невозможно 
+выполнить делегирование для этого DNS-сервера, игнорируем сообщение и 
+переходим к следующему окну:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts10.png" alt="ts10" width="764" height="561"></p>
+<p>На следующей вкладке NetBIOS имя оставляем без изменений:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts11.png" alt="ts11" width="769" height="560"></p>
+<p>На следующем этапе будут отображены пути к файлам базы, оставляем их также без изменений:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts12.png" alt="ts12" width="765" height="560"></p>
+<p>Нажав <em><strong>Далее</strong></em> мы перейдем к списку суммарных 
+настроек, после этого можно переходить непосредственно к этапу самой 
+установки. Буду выполнены автоматические проверки на корректность 
+установленных параметров и настроек, после чего кнопка <em><strong>Установить</strong></em> станет доступной:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts13.png" alt="ts13" width="770" height="559"></p>
+<p>По завершении установки сервер будет перезагружен.</p>
+<p>Централизованное управление пользователями, группами, их 
+редактированием, добавлением и удалением теперь можно выполнять через 
+оснастку <em><strong>Центр администрирования Active Directory</strong></em> в меню <em>Диспетчера серверов</em>, с вкладки <em><strong>Средства</strong></em>:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts14.png" alt="ts14" width="857" height="567"></p>
+<p>Приступим к установке терминального сервера:<br>
+<em><strong>Пуск → Диспетчер серверов → Добавить роли и компоненты.</strong> </em>Оставляем на следующем диалоговом окне выбранный пункт <em><strong>Установка ролей и компонентов</strong></em> и переходим далее:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts15.png" alt="ts15" width="777" height="470"></p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts16.png" alt="ts16" width="789" height="558"></p>
+<p>Выбираем в диалоговом окне пункт <em><strong>Выбор целевого сервера</strong>&nbsp;</em>и жмем <em><strong>Далее:</strong></em></p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts17.png" alt="ts17" width="796" height="558"></p>
+<p>Переходим к выбору конкретной роли для сервера, которую хотим установить. В данном случае – <em><strong>Службы удаленных рабочих столов</strong></em>:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts18.png" alt="ts18" width="793" height="562"></p>
+<p>Переходим к следующему окну <em><strong>Компоненты</strong></em>. Оставляем всё как есть, без изменений, и переходим далее:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts19.png" alt="ts19" width="795" height="559"></p>
+<p>Ознакомимся с описанием службы удаленных рабочих столов и нажимаем <em><strong>Далее:</strong></em></p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts20.png" alt="ts20" width="794" height="560"></p>
+<p>Теперь необходимо выбрать устанавливаемые службы ролей. Нам необходима роль <em><strong>Лицензирование удаленных рабочих столов</strong></em>.
+ Отмечаем соответствующий пункт, в открывшемся дочернем окне 
+подтверждаем добавление компонентов этой роли, переходим к этапу 
+установки и ждем ее успешного завершения.<br>
+После установки потребуется перезагрузка сервера:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts21.png" alt="ts21" width="986" height="590"></p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts22.png" alt="ts22" width="794" height="559"></p>
+<p>После этого необходимо выполнить лицензирование сервера терминалов.<br>
+Запустим <em><strong>Средство диагностики лицензирования удаленных рабочих столов</strong></em>. Данный пункт доступен из <em>Диспетчера серверов:</em></p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts23.png" alt="ts23" width="865" height="570"></p>
+<p>Как можно заметить, открыв <em><strong>Средство диагностики лицензирования удаленных рабочих столов</strong></em>,
+ количество доступных лицензий пока равно нулю. Прежде всего, для 
+установки лицензий понадобится задать режим лицензирования для 
+терминального сервера.<br>
+В Windows Server 2012 это выполняется через панель управления групповыми
+ политиками. Откроем командную строку и пропишем команду <strong>gpedit.msc</strong>:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts24.png" alt="ts24" width="560" height="246"></p>
+<p>По этой команде откроется редактор групповых политик. Переходим по пути:<br>
+<em><strong>Конфигурация компьютера → Административные шаблоны → 
+Компоненты Windows → Службы удаленных рабочих столов → Узел сеансов 
+удаленных рабочих столов → Лицензирование</strong></em><br>
+Тут нас интересуют два параметра: <em><strong>Использовать указанные серверы лицензирования удаленных рабочих столов</strong></em> и <em><strong>Задать режим лицензирования удаленных рабочих столов:</strong></em></p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts25.png" alt="ts25" width="859" height="533"></p>
+<p>Откроем для редактирования первый параметр и укажем сервер 
+лицензирования. Поскольку он располагается на нашем сервере, то 
+указываем имя нашего сервера (SRV01) или наш IP-адрес и меняем состояние
+ политики на <em><strong>Включено:</strong></em></p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts26.png" alt="ts26" width="695" height="628"></p>
+<p>Меняем второй параметр групповой политики.&nbsp;Нам необходимо 
+выбрать, каким образом будет происходить процедура лицензирования. Есть 
+два варианта: <em><strong>На устройство</strong></em>, либо <em><strong>На пользователя</strong></em>.<br>
+При 5 лицензиях и режиме <em><strong>На устройство</strong>&nbsp;</em>можно
+ создать неограниченное число пользователей на сервере, которые смогут 
+подключаться через удаленный рабочий стол только с 5 компьютеров, на 
+которых установлены эти лицензии. Если выбрать режим <em><strong>На пользователя</strong></em>,
+ то зайти на сервер смогут только 5 выбранных пользователей, независимо 
+от того, с какого устройства они выполняют подключение. В нашем примере 
+мы выбираем вариант лицензирования <em><strong>На пользователя</strong></em>.</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts27.png" alt="ts27" width="698" height="639"></p>
+<p>Вернемся в оснастку <em><strong>Средство диагностики лицензирования удаленных рабочих столов</strong></em>&nbsp;и видим ошибку, говорящую о том, что сервер лицензирования указан, но не включен:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts28.png" alt="ts28" width="824" height="508"></p>
+<p>Исправим эту ошибку, активировав сервер лицензирования. Перейдем в <em><strong>Диспетчер лицензирования удаленных рабочих столов</strong></em>:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts29.png" alt="ts29" width="865" height="570"></p>
+<p>Видим, что статус нашего сервера лицензирования – <em><strong>Не активирован</strong></em>. Чтобы активировать его, жмем правой кнопкой мыши, и в появившемся контекстном меню выбираем пункт <em><strong>Активировать сервер.</strong> </em>После чего откроется мастер активации сервера:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts30.png" alt="ts30" width="767" height="390"></p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts31.png" alt="ts31" width="553" height="619"></p>
+<p>Жмем <em><strong>Далее</strong></em> и переходим к следующему пункту выбора метода подключения, оставляем пункт <em><strong>Авто</strong></em>:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts32.png" alt="ts32" width="563" height="616"></p>
+<p>Далее потребуется ввести сведения для организации, где все поля обязательны для заполнения.<br>
+А также дополнительные сведения об организации, которые являются необязательными:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts33.png" alt="ts33" width="558" height="619"></p>
+<p>Затем появится сообщение о активации сервера лицензирования. Осталось
+ выполнить установку лицензий на сервер. Оставим включенным пункт <em><strong>Запустить мастер установки лицензий</strong></em> в финальном окне активации сервера лицензирования:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts34.png" alt="ts34" width="559" height="617"></p>
+<p>Запустится мастер установки лицензий:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts35.png" alt="ts35" width="562" height="621"></p>
+<p>Нам необходимо в следующем окне выбрать программу, на основе которой получены наши лицензии. В примере рассматривается тип <em><strong>Соглашение «Enterprise Agreement»:</strong></em></p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts36.png" alt="ts36" width="561" height="624"></p>
+<p>Переходим к следующему окну и вводим номер нашего соглашения:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts37.png" alt="ts37" width="557" height="620"></p>
+<p>Указываем версию продукта, тип лицензии и количество лицензий в соответствии с нашей программой лицензирования:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts38.png" alt="ts38" width="558" height="617"></p>
+<p>Дождемся, пока мастер установки активирует лицензии:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts39.png" alt="ts39" width="548" height="333"></p>
+<p>Убедимся, что сервер лицензирования работает, и проверим число установленных лицензий в диспетчере лицензирования:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts40.png" alt="ts40" width="752" height="412"></p>
+<p>В меню <em><strong>Средства диагностики лицензирования удаленных рабочих столов</strong></em> видим, что ошибок нет и число установленных лицензий равно тому, которое мы вводили на предыдущих шагах:</p>
+<p><img src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/ts41.png" alt="ts41" width="814" height="331"></p>
+<p>После этого можно выполнять многопользовательское подключение клиентов, например, через встроенный в Windows клиент <em><strong>Подключение к удаленному рабочему столу</strong></em>.
+ Также необходимо заметить, что пользователь, которому нужен доступ к 
+подключению через удаленный рабочий стол, должен состоять в группе <em><strong>Пользователи удаленного рабочего стола</strong></em>.</p>
+<p>&nbsp;</p>
+
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$.post('https://www.sim-networks.com/wiki/wp-admin/admin-ajax.php', {action: 'wpt_view_count', id: '1037'});
+});
+</script>										<p class="tags"><a href="https://www.sim-networks.com/wiki/tag/microsoft" rel="tag">Microsoft</a><a href="https://www.sim-networks.com/wiki/tag/vds" rel="tag">VDS</a><a href="https://www.sim-networks.com/wiki/tag/windows" rel="tag">Windows</a><a href="https://www.sim-networks.com/wiki/tag/windows-server" rel="tag">Windows Server</a><a href="https://www.sim-networks.com/wiki/tag/%d1%81%d0%b5%d1%80%d0%b2%d0%b5%d1%80" rel="tag">Сервер</a></p>				</div>
+			</div>
+					
+		
+<div class="wrapper">
+</div>
+			
+ 
+
+	<!-- START: RESPOND -->
+     	<!-- END: RESPOND -->	
+	</div>
+	<!-- END: CONTENT -->
+</div>
+<!-- END: RIGHT COLUMN -->
+
+<!-- START: LEFT COLUMN -->
+<div id="leftcol" class="clearfix"><div class="before"></div>
+	<!-- START: SIDEBAR -->
+	<div id="sidebar" class="clearfix">				
+		<div id="widget-wpp-2" class="widget popular-posts">
+
+
+<ul class="wpp-list">
+<li><a href="https://www.sim-networks.com/wiki/sitestatus" title="Что делать при появлении сообщения «Сайт недоступен»" class="wpp-post-title" target="_self">Что делать при появлении сообщения «Сайт недоступен»</a> </li>
+<li><a href="https://www.sim-networks.com/wiki/swift-payment-instructions" title="Инструкции по оплате комиссии в банковских переводах (SWIFT)" class="wpp-post-title" target="_self">Инструкции по оплате комиссии в банковских переводах (SWIFT)</a> </li>
+<li class="current"><a title="Настройка терминального сервера на базе Windows 2012 r2" class="wpp-post-title" target="_self">Настройка терминального сервера на базе Windows 2012 r2</a> </li>
+<li><a href="https://www.sim-networks.com/wiki/add-disk-space-linux-server" title="Расширение диска в Linux (Debian, CentOS, Ubuntu)" class="wpp-post-title" target="_self">Расширение диска в Linux (Debian, CentOS, Ubuntu)</a> </li>
+<li><a href="https://www.sim-networks.com/wiki/setup-raid10" title="Настройка RAID10 на контроллерах LSI MegaRAID" class="wpp-post-title" target="_self">Настройка RAID10 на контроллерах LSI MegaRAID</a> </li>
+<li><a href="https://www.sim-networks.com/wiki/ftpispmanager" title="Доступ к файлам сайта по FTP в панели управления ISPmanager" class="wpp-post-title" target="_self">Доступ к файлам сайта по FTP в панели управления ISPmanager</a> </li>
+<li><a href="https://www.sim-networks.com/wiki/about-virtualization-technology" title="О технологиях виртуализации Xen, VMware ESXi, KVM, OpenVZ" class="wpp-post-title" target="_self">О технологиях виртуализации Xen, VMware ESXi, KVM, OpenVZ</a> </li>
+<li><a href="https://www.sim-networks.com/wiki/newticket" title="Как создать тикет на сайте" class="wpp-post-title" target="_self">Как создать тикет на сайте</a> </li>
+<li><a href="https://www.sim-networks.com/wiki/vpsesxi" title="Управление VDS ESXi" class="wpp-post-title" target="_self">Управление VDS ESXi</a> </li>
+<li><a href="https://www.sim-networks.com/wiki/backup-via-open-source-bareos" title="Бэкап сервера с помощью OpenSource Bareos" class="wpp-post-title" target="_self">Бэкап сервера с помощью OpenSource Bareos</a> </li>
+
+</ul>
+</div>
+
+
+		<div class="socialmedia">
+			
+		</div>		
+	</div>
+	<!-- END: SIDEBAR -->
+<div class="after"></div></div>
+<!-- END: LEFT COLUMN -->
+ </div>
+	<!-- START: FOOTER -->
+	<div id="footer" class="clearfix">
+		<div class="container">
+			<div class="footer-area">
+				<div class="copyright">
+					WIKI. Copyright 2017. All rights reserved.				</div>
+				<div class="generator">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END: FOOTER -->
+
+	<div class="bg-area clearfix">
+		<div class="container">
+			<div class="bg-left"><div class="before"></div>
+			<div class="after"></div></div>
+		</div>
+	</div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-43373126-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter20598007 = new Ya.Metrika({
+                    id:20598007,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/20598007" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//statistik.sim-creative.de/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 17]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//statistik.sim-creative.de/piwik.php?idsite=17" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code --><style type="text/css">                    .logo {
+	max-width: 90px;
+	margin-left: 10px;
+	margin-bottom: 20px;
+}                </style>			
+<script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/core.js"></script>
+<script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/datepicker.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"\u0417\u0430\u043a\u0440\u044b\u0442\u044c","currentText":"\u0421\u0435\u0433\u043e\u0434\u043d\u044f","monthNames":["\u042f\u043d\u0432\u0430\u0440\u044c","\u0424\u0435\u0432\u0440\u0430\u043b\u044c","\u041c\u0430\u0440\u0442","\u0410\u043f\u0440\u0435\u043b\u044c","\u041c\u0430\u0439","\u0418\u044e\u043d\u044c","\u0418\u044e\u043b\u044c","\u0410\u0432\u0433\u0443\u0441\u0442","\u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044c","\u041e\u043a\u0442\u044f\u0431\u0440\u044c","\u041d\u043e\u044f\u0431\u0440\u044c","\u0414\u0435\u043a\u0430\u0431\u0440\u044c"],"monthNamesShort":["\u042f\u043d\u0432","\u0424\u0435\u0432","\u041c\u0430\u0440","\u0410\u043f\u0440","\u041c\u0430\u0439","\u0418\u044e\u043d","\u0418\u044e\u043b","\u0410\u0432\u0433","\u0421\u0435\u043d","\u041e\u043a\u0442","\u041d\u043e\u044f","\u0414\u0435\u043a"],"nextText":"\u0414\u0430\u043b\u0435\u0435","prevText":"\u041d\u0430\u0437\u0430\u0434","dayNames":["\u0412\u043e\u0441\u043a\u0440\u0435\u0441\u0435\u043d\u044c\u0435","\u041f\u043e\u043d\u0435\u0434\u0435\u043b\u044c\u043d\u0438\u043a","\u0412\u0442\u043e\u0440\u043d\u0438\u043a","\u0421\u0440\u0435\u0434\u0430","\u0427\u0435\u0442\u0432\u0435\u0440\u0433","\u041f\u044f\u0442\u043d\u0438\u0446\u0430","\u0421\u0443\u0431\u0431\u043e\u0442\u0430"],"dayNamesShort":["\u0412\u0441","\u041f\u043d","\u0412\u0442","\u0421\u0440","\u0427\u0442","\u041f\u0442","\u0421\u0431"],"dayNamesMin":["\u0412\u0441","\u041f\u043d","\u0412\u0442","\u0421\u0440","\u0427\u0442","\u041f\u0442","\u0421\u0431"],"dateFormat":"dd.mm.yy","firstDay":1,"isRTL":false});});
+</script>
+<script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/widget.js"></script>
+<script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/tabs.js"></script>
+<script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/superfish.js"></script>
+<script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/jquery_002.js"></script>
+<script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/jquery.js"></script>
+<script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/grids.js"></script>
+<script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/functions.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var wpcf7 = {"apiSettings":{"root":"https:\/\/www.sim-networks.com\/wiki\/wp-json\/","namespace":"contact-form-7\/v1"},"recaptcha":{"messages":{"empty":"\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043f\u043e\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435, \u0447\u0442\u043e \u0432\u044b \u043d\u0435 \u0440\u043e\u0431\u043e\u0442."}}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/scripts.js"></script>
+<script type="text/javascript" src="%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20Active%20Directory%20+%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B5%D1%80%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2%20%D0%BD%D0%B0%20Windows%20Server_files/wp-embed.js"></script>
+
+<div id="jquery-live-search" style="display: none;"></div></body></html>

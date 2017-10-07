@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Кодировки в MySQL</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="UTF-8"><link rel="apple-touch-icon" sizes="57x57" href="https://anton-pribora.ru/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://anton-pribora.ru/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://anton-pribora.ru/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://anton-pribora.ru/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://anton-pribora.ru/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://anton-pribora.ru/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://anton-pribora.ru/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://anton-pribora.ru/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://anton-pribora.ru/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://anton-pribora.ru/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://anton-pribora.ru/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://anton-pribora.ru/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://anton-pribora.ru/favicon-16x16.png">
+<link rel="manifest" href="https://anton-pribora.ru/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="%D0%9A%D0%BE%D0%B4%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8%20%D0%B2%20MySQL_files/bootstrap.css"><style type="text/css">h1,h2,h3 {margin: 1rem 0rem;}</style>   </head>
+   <body>
+   
+        <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+              <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            <div class="container">
+              <a class="navbar-brand" href="https://anton-pribora.ru/"><img src="%D0%9A%D0%BE%D0%B4%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8%20%D0%B2%20MySQL_files/logo.png" alt="Logo"></a>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto"><li class="nav-item"><a href="https://anton-pribora.ru/" class="nav-link">Главная</a></li><li class="nav-item active"><a href="https://anton-pribora.ru/articles/" class="nav-link">Статьи</a></li><li class="nav-item"><a href="https://anton-pribora.ru/hl/" class="nav-link">Подсветка кода</a></li><li class="nav-item"><a href="https://anton-pribora.ru/recoder/" class="nav-link">Recoder</a></li><li class="nav-item"><a href="https://anton-pribora.ru/certificates/" class="nav-link">Сертификаты</a></li><li class="nav-item"><a href="https://anton-pribora.ru/creation/" class="nav-link">Творчество</a></li><li class="nav-item"><a href="https://anton-pribora.ru/feedback/" class="nav-link">Написать письмо</a></li></ul>              </div>
+          </div>
+        </nav>
+        
+      <div class="container">
+        <ol class="breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+	<li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+      <a itemprop="url" href="https://anton-pribora.ru/articles/">
+        <span itemprop="name">Доступные статьи</span>
+      </a>
+      <meta itemprop="position" content="1">
+    </li>
+	<li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+      <a itemprop="url" href="https://anton-pribora.ru/articles/mysql/">
+        <span itemprop="name">MySQL</span>
+      </a>
+      <meta itemprop="position" content="2">
+    </li>
+	<li class="breadcrumb-item active" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+      <a itemprop="url" href="https://anton-pribora.ru/articles/mysql/mysql-charsets/" class="text-muted">
+        <span itemprop="name">Кодировки в MySQL</span>
+      </a>
+      <meta itemprop="position" content="3">
+    </li>
+</ol>
+<h1>Работа с кодировками в MySQL 4.1.11 и выше</h1>
+
+<ol>
+	<li><a href="#pc">Тестовая машина</a></li>
+	<li><a href="#install-mysql">Устанавливаем MySQL</a></li>
+	<li><a href="#begin">Начало работы</a></li>
+	<li><a href="#inference">Разумные выводы</a></li>
+	<li><a href="#set-charsets">Настройка кодировок</a>
+	
+	<ul>
+		<li><a href="#set-charset-names">Через names</a></li>
+		<li><a href="#set-charset-vars">Через системные переменные</a></li>
+		<li><a href="#set-charset-mycnf">Через настройки сервера</a></li>
+	</ul>
+	
+	</li>
+	<li><a href="#fix-dump">Что делать, если данные внесены в неправильной кодировке</a></li>
+	<li><a href="#correct">Правильный вариант работы с MySQL</a></li>
+</ol>
+
+<p>Полезность первоисточника информации трудно переоценить, поэтому не 
+поленитесь и скачайте полный мануал от разработчиков MySQL - <a href="http://dev.mysql.com/doc/">http://dev.mysql.com/doc/</a></p>
+
+<h2><a id="pc"></a>Тестовая машина</h2>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #06d">test</span><span style="color: #808080"># uname -a</span>
+FreeBSD <span style="color: #06d">test</span><span style="color: red">.</span>dm <span style="color: red">7.0</span>-RELEASE FreeBSD <span style="color: red">7.0</span>-RELEASE <span style="color: #808080">#1: </span>
+Fri May  <span style="color: red">9</span> <span style="color: red">15</span><span style="color: blue">:</span><span style="color: red">40</span><span style="color: blue">:</span><span style="color: red">21</span> YEKST <span style="color: red">2008</span>     zg<span style="color: blue">@</span><span style="color: #06d">test</span><span style="color: red">.</span>dm<span style="color: blue">:</span>/usr/obj/usr/src/sys/GATE  i386
+<span style="color: #06d">test</span><span style="color: #808080">#</span></pre></td>
+
+</tr>
+</tbody></table>
+
+
+<h2><a id="install-mysql"></a>Устанавливаем MySQL 5.1</h2>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #06d">test</span><span style="color: #808080"># pkg_add -r mysql51-server</span>
+Fetching ftp<span style="color: blue">:</span>//ftp<span style="color: red">.</span>freebsd<span style="color: red">.</span>org/pub/FreeBSD/ports/i386/
+packages-<span style="color: red">7.0</span>-release/Latest/mysql51-server<span style="color: red">.</span>tbz<span style="color: red">.</span><span style="color: red">.</span><span style="color: red">.</span> Done<span style="color: red">.</span>
+Fetching ftp<span style="color: blue">:</span>//ftp<span style="color: red">.</span>freebsd<span style="color: red">.</span>org/pub/FreeBSD/ports/i386/
+packages-<span style="color: red">7.0</span>-release/All/mysql-client-<span style="color: red">5.1</span><span style="color: red">.22</span><span style="color: red">.</span>tbz<span style="color: red">.</span><span style="color: red">.</span><span style="color: red">.</span> Done<span style="color: red">.</span>
+Added group <span style="color: green">"mysql"</span><span style="color: red">.</span>
+Added user <span style="color: green">"mysql"</span><span style="color: red">.</span>
+
+************************************************************************
+
+Remember to run mysql_upgrade <span style="color: blue">(</span>with the optional --<span style="color: #650">datadir</span>=<span style="color: blue">&lt;</span>dbdir<span style="color: blue">&gt;</span> flag<span style="color: blue">)</span>
+the first <span style="color: blue">time</span> you start the MySQL server after an upgrade from an
+earlier version<span style="color: red">.</span>
+
+************************************************************************
+
+<span style="color: #06d">test</span><span style="color: #808080"># echo mysql_enable="YES" &gt;&gt; /etc/rc.conf</span>
+<span style="color: #06d">test</span><span style="color: #808080"># cp /usr/local/share/mysql/my-large.cnf /etc/my.cnf</span>
+<span style="color: #06d">test</span><span style="color: #808080"># /usr/local/etc/rc.d/mysql-server start</span>
+Starting mysql<span style="color: red">.</span>
+<span style="color: #06d">test</span><span style="color: #808080"># sockstat | grep mysql</span>
+mysql    mysqld     <span style="color: red">1154</span>  <span style="color: red">13</span> tcp4   *<span style="color: blue">:</span><span style="color: red">3306</span>                *<span style="color: blue">:</span>*
+mysql    mysqld     <span style="color: red">1154</span>  <span style="color: red">14</span> stream /tmp/mysql<span style="color: red">.</span>sock
+<span style="color: #06d">test</span><span style="color: #808080">#</span></pre></td>
+
+</tr>
+</tbody></table>
+
+<p>Пускай это не самый "правильный" способ установки MySQL-сервера, зато быстрый и рабочий.</p>
+
+<h2><a id="begin"></a>Начало работы</h2>
+
+<p>Итак, sockstat показала, что сервер работает, а установка говорит о 
+том, что сервер абсолютно девственный. Чем это грозит? Кодировки по 
+умолчанию выставлены англоязычные, а значит, будут проблемы при 
+использовании кирилицы. Но как это распознать? Проверяем:</p>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #06d">test</span><span style="color: #808080"># mysql</span>
+Welcome to the MySQL monitor<span style="color: red">.</span>  Commands <span style="color: blue">end</span> with <span style="color: blue">;</span> or \g<span style="color: red">.</span>
+Your MySQL connection id is <span style="color: red">2</span>
+Server version<span style="color: blue">:</span> <span style="color: red">5.1</span><span style="color: red">.22</span>-rc-<span style="color: blue">log</span> FreeBSD port<span style="color: blue">:</span> mysql-server-<span style="color: red">5.1</span><span style="color: red">.22</span>
+
+Type <span style="color: green">'help;'</span> or <span style="color: green">'\h'</span> <span style="color: blue">for</span> help<span style="color: red">.</span> Type <span style="color: green">'\c'</span> to clear the buffer<span style="color: red">.</span>
+
+mysql<span style="color: blue">&gt;</span> use <span style="color: #06d">test</span><span style="color: blue">;</span>
+Database changed
+mysql<span style="color: blue">&gt;</span> create table <span style="color: green">`<span style="color: #06d">test</span>`</span> <span style="color: blue">(</span><span style="color: green">`field`</span> VARCHAR<span style="color: blue">(</span><span style="color: red">60</span><span style="color: #580">))</span><span style="color: blue">;</span>
+Query OK, <span style="color: red">0</span> rows affected <span style="color: blue">(</span><span style="color: red">0.01</span> sec<span style="color: blue">)</span>
+
+mysql<span style="color: blue">&gt;</span> insert into <span style="color: green">`<span style="color: #06d">test</span>`</span> values <span style="color: blue">(</span><span style="color: green">'иван'</span><span style="color: blue">)</span>, <span style="color: blue">(</span><span style="color: green">'родил'</span><span style="color: blue">)</span>, <span style="color: blue">(</span><span style="color: green">'девчёнку'</span><span style="color: blue">)</span><span style="color: blue">;</span>
+Query OK, <span style="color: red">3</span> rows affected <span style="color: blue">(</span><span style="color: red">0.01</span> sec<span style="color: blue">)</span>
+Records<span style="color: blue">:</span> <span style="color: red">3</span>  Duplicates<span style="color: blue">:</span> <span style="color: red">0</span>  Warnings<span style="color: blue">:</span> <span style="color: red">0</span>
+
+mysql<span style="color: blue">&gt;</span></pre></td>
+
+</tr>
+</tbody></table>
+
+<p>Первым делом используем тестовую базу, которая уже есть на сервере, 
+затем создаём в ней таблицу и вставляем в неё три слова на русском, про 
+кодировки мы пока ничего не знаем и знать не хотим ))).</p>
+
+<p>Пока всё хорошо и радужно, никаких ошибок нет, пробуем сделать выборку:</p>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">select</span> * <span style="color: #0066dd">from</span> <span style="color: green">`test`</span>;
++<span style="color: #808080">----------+</span>
+| <span style="color: #003388">field</span>    |
++<span style="color: #808080">----------+</span>
+| <span style="color: #003388">иван</span>     |
+| <span style="color: #003388">родил</span>    |
+| <span style="color: #003388">девчёнку</span> |
++<span style="color: #808080">----------+</span>
+<span style="color: red">3</span> <span style="color: #003388">rows</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.01</span> <span style="color: #003388">sec</span>)
+
+<span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">select</span> * <span style="color: #0066dd">from</span> <span style="color: green">`test`</span> <span style="color: #0066dd">where</span> <span style="color: green">`field`</span> <span style="color: #0066dd">like</span> <span style="color: green">"иван"</span>;
++<span style="color: #808080">-------+</span>
+| <span style="color: #003388">field</span> |
++<span style="color: #808080">-------+</span>
+| <span style="color: #003388">иван</span>  |
++<span style="color: #808080">-------+</span>
+<span style="color: red">1</span> <span style="color: #003388">row</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.00</span> <span style="color: #003388">sec</span>)</pre></td>
+
+</tr>
+</tbody></table>
+
+<p>Как видно, запросы работают абсолютно корректно, так где же грабли?... Оказывается мы на них уже стоим:</p>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">select</span> * <span style="color: #0066dd">from</span> <span style="color: green">`test`</span> <span style="color: #0066dd">order</span> <span style="color: #0066dd">by</span> <span style="color: green">`field`</span> <span style="color: #ba529f;">DESC</span>;
++<span style="color: #808080">----------+</span>
+| <span style="color: #003388">field</span>    |
++<span style="color: #808080">----------+</span>
+| <span style="color: #003388">девчёнку</span> |
+| <span style="color: #003388">родил</span>    |
+| <span style="color: #003388">иван</span>     |
++<span style="color: #808080">----------+</span>
+<span style="color: red">3</span> <span style="color: #003388">rows</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.01</span> <span style="color: #003388">sec</span>)</pre></td>
+
+</tr>
+</tbody></table>
+
+<p>Запрос на выборку с обратной сортировкой привёл к тому, что записи 
+просто вывелись в обратном порядке, но не по алфавиту... До удара 
+граблей остаются считанные секунды, но пока растянем удовольствие :) 
+Сперва ответим на вопрос - почему поля не сортируются по алфавиту? У 
+MySQL имеется мощный и богатый механизм для работы с интернациональными 
+наборами символов, но.. но откуда MySQL узнает, что наши символы - есть 
+русский алфавит, мы же качали <b>английскую</b> версию? Ничего не остаётся, как идти ковырять мануал на предмет кодировок...</p>
+
+<p>После того, как загрузился 16-метровый мануал, можно не полениться и 
+прочитать первые пару-тройку страниц с оглавлением )), а можно просто 
+сделать поиск на предмет <b>charset</b> или <b>character set</b>. Не суть важно, но через некоторое время можно найти раздел <b>9.1.2. Character Sets and Collations in MySQL</b>, в котором написано много и интересно, а, главное, содержательно про то, каким образом можно и нужно работать с кодировками.</p>
+
+<p>Расставляя точки над и, <b>Character Set</b> - транслируется как "кодировка", а <b>Collation</b>
+ - сравнение. В чём разница? Сравнение - это правила сравнения букв 
+кодировки. Сравнения работают только в рамках кодировки, и нельзя 
+сравнивать данные в латинице по правилам кирилицы. Поясню на примере: 
+мы, как увидим позже, внесли данные в таблицу на латинице, а сортировать
+ нужно на кирилице, для чего можно использовать ключевое слово <code class="sh">collate</code>:</p> 
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">select</span> * <span style="color: #0066dd">from</span> <span style="color: green">`test`</span> <span style="color: #0066dd">order</span> <span style="color: #0066dd">by</span> <span style="color: green">`field`</span> <span style="color: #0066dd">collate</span> <span style="color: #003388">cp1251_general_ci</span> <span style="color: #ba529f;">DESC</span>;
+<span style="color: #003388">ERROR</span> <span style="color: red">1253</span> (<span style="color: red">42000</span>): <span style="color: #003388">COLLATION</span> <span style="color: green">'cp1251_general_ci'</span> <span style="color: #0066dd">is</span> <span style="color: #a40">not</span> <span style="color: #003388">valid</span> <span style="color: #0066dd">for</span> <span style="color: #0066dd">CHARACTER</span> <span style="color: #ba529f">SET</span> <span style="color: green">'latin1'</span>
+<span style="color: #003388">mysql</span>&gt;</pre></td>
+
+</tr>
+</tbody></table>
+
+<p>MySQL отказывается это делать... но почему? Потому, что latin1 не 
+поддерживает сравнение в кирилице, а доступные "сравнения" можно увидеть
+ так:</p>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">show</span> <span style="color: #003388">collation</span> <span style="color: #0066dd">like</span> <span style="color: green">'latin1%'</span>;
++<span style="color: #808080">-------------------+---------+----+---------+----------+---------+</span>
+| <span style="color: #003388">Collation</span>         | <span style="color: #003388">Charset</span> | <span style="color: #003388">Id</span> | <span style="color: #0066dd">Default</span> | <span style="color: #003388">Compiled</span> | <span style="color: #003388">Sortlen</span> |
++<span style="color: #808080">-------------------+---------+----+---------+----------+---------+</span>
+| <span style="color: #003388">latin1_german1_ci</span> | <span style="color: #003388">latin1</span>  |  <span style="color: red">5</span> |         | <span style="color: #003388">Yes</span>      |       <span style="color: red">1</span> |
+| <span style="color: #003388">latin1_swedish_ci</span> | <span style="color: #003388">latin1</span>  |  <span style="color: red">8</span> | <span style="color: #003388">Yes</span>     | <span style="color: #003388">Yes</span>      |       <span style="color: red">1</span> |
+| <span style="color: #003388">latin1_danish_ci</span>  | <span style="color: #003388">latin1</span>  | <span style="color: red">15</span> |         | <span style="color: #003388">Yes</span>      |       <span style="color: red">1</span> |
+| <span style="color: #003388">latin1_german2_ci</span> | <span style="color: #003388">latin1</span>  | <span style="color: red">31</span> |         | <span style="color: #003388">Yes</span>      |       <span style="color: red">2</span> |
+| <span style="color: #003388">latin1_bin</span>        | <span style="color: #003388">latin1</span>  | <span style="color: red">47</span> |         | <span style="color: #003388">Yes</span>      |       <span style="color: red">1</span> |
+| <span style="color: #003388">latin1_general_ci</span> | <span style="color: #003388">latin1</span>  | <span style="color: red">48</span> |         | <span style="color: #003388">Yes</span>      |       <span style="color: red">1</span> |
+| <span style="color: #003388">latin1_general_cs</span> | <span style="color: #003388">latin1</span>  | <span style="color: red">49</span> |         | <span style="color: #003388">Yes</span>      |       <span style="color: red">1</span> |
+| <span style="color: #003388">latin1_spanish_ci</span> | <span style="color: #003388">latin1</span>  | <span style="color: red">94</span> |         | <span style="color: #003388">Yes</span>      |       <span style="color: red">1</span> |
++<span style="color: #808080">-------------------+---------+----+---------+----------+---------+</span>
+<span style="color: red">8</span> <span style="color: #003388">rows</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.00</span> <span style="color: #003388">sec</span>)
+
+<span style="color: #003388">mysql</span>&gt;</pre></td>
+
+</tr>
+</tbody></table>
+
+
+<p>Ни о какой кирилице не может идти и речи... Куда копать?.. В создание таблицы!</p>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">show</span> <span style="color: #850">create</span> <span style="color: #0066dd">table</span> <span style="color: green">`test`</span>;
++<span style="color: #808080">-------+-------------------------------------------------+</span>
+| <span style="color: #0066dd">Table</span> | <span style="color: #850">Create</span> <span style="color: #0066dd">Table</span>                                    |
++<span style="color: #808080">-------+-------------------------------------------------+</span>
+| <span style="color: #003388">test</span>  | <span style="color: #850">CREATE</span> <span style="color: #0066dd">TABLE</span> <span style="color: green">`test`</span> (
+  <span style="color: green">`field`</span> <span style="color: #0066dd">varchar</span>(<span style="color: red">60</span>) <span style="color: #0066dd">DEFAULT</span> <span style="color: #0066dd">NULL</span>
+) <span style="color: #003388">ENGINE</span>=<span style="color: #003388">MyISAM</span> <span style="color: #0066dd">DEFAULT</span> <span style="color: #003388">CHARSET</span>=<span style="color: #003388">latin1</span>                    |
++<span style="color: #808080">-------+-------------------------------------------------+</span>
+<span style="color: red">1</span> <span style="color: #003388">row</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.00</span> <span style="color: #003388">sec</span>)</pre></td>
+
+</tr>
+</tbody></table>
+
+<p>Ага! По-умолчанию при создании таблицы была взята кодировка latin1, 
+значит, если мы изменим таблицу и укажем ей, что надо использовать 
+кирилистическую кодировку, то всё заработает?... В мануале написан 
+пример про изменение кодировки таблицы, используем его:</p>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">alter</span> <span style="color: #0066dd">table</span> <span style="color: green">`test`</span> <span style="color: #003388">charset</span> <span style="color: green">"cp1251"</span>;
+<span style="color: #003388">Query</span> <span style="color: #003388">OK</span>, <span style="color: red">3</span> <span style="color: #003388">rows</span> <span style="color: #003388">affected</span> (<span style="color: red">0.02</span> <span style="color: #003388">sec</span>)
+<span style="color: #003388">Records</span>: <span style="color: red">3</span>  <span style="color: #003388">Duplicates</span>: <span style="color: red">0</span>  <span style="color: #003388">Warnings</span>: <span style="color: red">0</span></pre></td>
+
+</tr>
+</tbody></table>
+
+<p>Ок! Проверяем, что получилось... </p>
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">select</span> * <span style="color: #0066dd">from</span> <span style="color: green">`test`</span> <span style="color: #0066dd">order</span> <span style="color: #0066dd">by</span> <span style="color: green">`field`</span> <span style="color: #0066dd">collate</span> <span style="color: #003388">cp1251_general_ci</span> <span style="color: #ba529f;">DESC</span>;
+<span style="color: #003388">ERROR</span> <span style="color: red">1253</span> (<span style="color: red">42000</span>): <span style="color: #003388">COLLATION</span> <span style="color: green">'cp1251_general_ci'</span> <span style="color: #0066dd">is</span> <span style="color: #a40">not</span> <span style="color: #003388">valid</span> <span style="color: #0066dd">for</span> <span style="color: #0066dd">CHARACTER</span> <span style="color: #ba529f">SET</span> <span style="color: green">'latin1'</span></pre></td>
+
+</tr>
+</tbody></table> 
+
+<p>Хм.. опять та же ошибка, но откуда ей взяться?!.. </p>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">show</span> <span style="color: #850">create</span> <span style="color: #0066dd">table</span> <span style="color: green">`test`</span>;
++<span style="color: #808080">-------+-------------------------------------------------+</span>
+| <span style="color: #0066dd">Table</span> | <span style="color: #850">Create</span> <span style="color: #0066dd">Table</span>                                    |
++<span style="color: #808080">-------+-------------------------------------------------+</span>
+| <span style="color: #003388">test</span>  | <span style="color: #850">CREATE</span> <span style="color: #0066dd">TABLE</span> <span style="color: green">`test`</span> (
+  <span style="color: green">`field`</span> <span style="color: #0066dd">varchar</span>(<span style="color: red">60</span>) <span style="color: #0066dd">CHARACTER</span> <span style="color: #ba529f">SET</span> <span style="color: #003388">latin1</span> <span style="color: #0066dd">DEFAULT</span> <span style="color: #0066dd">NULL</span>
+) <span style="color: #003388">ENGINE</span>=<span style="color: #003388">MyISAM</span> <span style="color: #0066dd">DEFAULT</span> <span style="color: #003388">CHARSET</span>=<span style="color: #003388">cp1251</span>                    |
++<span style="color: #808080">-------+-------------------------------------------------+</span>
+<span style="color: red">1</span> <span style="color: #003388">row</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.00</span> <span style="color: #003388">sec</span>)</pre></td>
+
+</tr>
+</tbody></table>
+
+
+<p>Ого, структура таблицы резко изменилась, теперь у неё задана одна 
+кодировка, а у поля совсем другая.. :(( Порыв ещё мануал, можно изменить
+ и кодировку столбца:</p>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">alter</span> <span style="color: #0066dd">table</span> <span style="color: green">`test`</span> <span style="color: #003388">modify</span> <span style="color: green">`field`</span> <span style="color: #0066dd">varchar</span>(<span style="color: red">60</span>) <span style="color: #003388">charset</span> <span style="color: green">"cp1251"</span>;
+<span style="color: #003388">Query</span> <span style="color: #003388">OK</span>, <span style="color: red">3</span> <span style="color: #003388">rows</span> <span style="color: #003388">affected</span>, <span style="color: red">3</span> <span style="color: #003388">warnings</span> (<span style="color: red">0.02</span> <span style="color: #003388">sec</span>)
+<span style="color: #003388">Records</span>: <span style="color: red">3</span>  <span style="color: #003388">Duplicates</span>: <span style="color: red">0</span>  <span style="color: #003388">Warnings</span>: <span style="color: red">0</span>
+
+<span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">show</span> <span style="color: #850">create</span> <span style="color: #0066dd">table</span> <span style="color: green">`test`</span>;
++<span style="color: #808080">-------+------------------------------------------+</span>
+| <span style="color: #0066dd">Table</span> | <span style="color: #850">Create</span> <span style="color: #0066dd">Table</span>                             |
++<span style="color: #808080">-------+------------------------------------------+</span>
+| <span style="color: #003388">test</span>  | <span style="color: #850">CREATE</span> <span style="color: #0066dd">TABLE</span> <span style="color: green">`test`</span> (
+  <span style="color: green">`field`</span> <span style="color: #0066dd">varchar</span>(<span style="color: red">60</span>) <span style="color: #0066dd">DEFAULT</span> <span style="color: #0066dd">NULL</span>
+) <span style="color: #003388">ENGINE</span>=<span style="color: #003388">MyISAM</span> <span style="color: #0066dd">DEFAULT</span> <span style="color: #003388">CHARSET</span>=<span style="color: #003388">cp1251</span>             |
++<span style="color: #808080">-------+------------------------------------------+</span>
+<span style="color: red">1</span> <span style="color: #003388">row</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.01</span> <span style="color: #003388">sec</span>)</pre></td>
+
+</tr>
+</tbody></table>
+
+<p>Ну вот!!! Злой кодировки latin1 нет и в помине, можно проверять наш роддом )))</p>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">select</span> * <span style="color: #0066dd">from</span> <span style="color: green">`test`</span> <span style="color: #0066dd">order</span> <span style="color: #0066dd">by</span> <span style="color: green">`field`</span> <span style="color: #0066dd">collate</span> <span style="color: #003388">cp1251_general_ci</span> <span style="color: #ba529f;">DESC</span>;
++<span style="color: #808080">----------+</span>
+| <span style="color: #003388">field</span>    |
++<span style="color: #808080">----------+</span>
+| ???????? |
+| ?????    |
+| ????     |
++<span style="color: #808080">----------+</span>
+<span style="color: red">3</span> <span style="color: #003388">rows</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.00</span> <span style="color: #003388">sec</span>)</pre></td>
+
+</tr>
+</tbody></table>
+
+<p>И вот тот страшный удар граблями, который так долго оттягивался! 
+Внимательный читатель мог заметить, что когда была сделана попытка 
+принудительно сменить кодировку столбца, содержащего данные в latin1, то
+ на каждую запись, содержащую русские буквы, у MySQL был варнинг! Это 
+был крик о том, что сервер не знает, каким образом можно перевести 
+данные из latin1 в cp1251, ну и лучшего способа, чем заменить символы не
+ latin1 вопросиками, он не нашёл :))). Роддом безвозвратно потерян 
+потому, что теперь вместо кирилицы в базе содержатся вопросики.. </p>
+
+<h2><a id="inference"></a>Вопросиков можно было избежать</h2>
+<p>На самом деле, ситуация, когда изначально выставлена неправильная 
+кодировка, встречается сплошь и рядом. Симптомы можно выявить следующим 
+образом:</p>
+
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">show</span> <span style="color: #003388">variables</span> <span style="color: #0066dd">like</span> <span style="color: green">"char%"</span>;
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+| <span style="color: #003388">Variable_name</span>            | <span style="color: #003388">Value</span>                            |
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+| <span style="color: #003388">character_set_client</span>     | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_connection</span> | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_database</span>   | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_filesystem</span> | <span style="color: #0066dd">binary</span>                           |
+| <span style="color: #003388">character_set_results</span>    | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_server</span>     | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_system</span>     | <span style="color: #003388">utf8</span>                             |
+| <span style="color: #003388">character_sets_dir</span>       | /<span style="color: #003388">usr</span>/<span style="color: #003388">local</span>/<span style="color: #003388">share</span>/<span style="color: #003388">mysql</span>/<span style="color: #003388">charsets</span>/ |
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+<span style="color: red">8</span> <span style="color: #003388">rows</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.02</span> <span style="color: #003388">sec</span>)</pre></td>
+
+</tr>
+</tbody></table>
+
+
+<p>Именно эти переменные отвечают за дефолтные значения кодировок.</p>
+
+<ul>
+<li><code>character_set_client</code> - кодировка, в которой данные будут поступать от клиента</li>
+<li><code>character_set_connection</code> - кодировка по умолчанию для всего, что в рамках соединения не имеет кодировки</li>
+<li><code>character_set_database</code> - кодировка по умолчанию для баз</li>
+<li><code>character_set_filesystem</code> - кодировка для работы с файловой системой (LOAD DATA INFILE, SELECT ... INTO OUTFILE, и т.д.)</li>
+<li><code>character_set_results</code> - кодировка, в которой будет выбран результат</li>
+<li><code>character_set_server</code> - кодировка, в которой работает сервер</li>
+<li><code>character_set_system</code> - кодировка, в которой задаются идентификаторы MySQL, всегда UTF8</li>
+<li><code>character_sets_dir</code> - папка с кодировками</li>
+</ul>
+
+<p style="color:red"><b>ВАЖНО:</b> Если <code><a href="http://dev.mysql.com/doc/refman/5.1/en/server-system-variables.html#sysvar_character_sets_dir">character_sets_dir</a></code>
+ установлена неверно, то работа с кодировками будет под угрозой. Не 
+пытайтесь менять её значение, если вы неуверены в своих силах. Если вы 
+системный администратор, то перед установкой лучше <a href="http://dev.mysql.com/doc/refman/5.1/en/configure-options.html">ознакомиться с мануалом</a>. </p>
+<p>Наиболее значимые для простых пользователей следующие переменные: 
+character_set_client, character_set_results, character_set_connection. 
+Поскольку именно они отвечают за внесение, извлечение информации и 
+создание таблиц/баз соответственно. Какими они могут быть?</p>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">SHOW</span> <span style="color: #0066dd">CHARACTER</span> <span style="color: #ba529f">SET</span>;
++<span style="color: #808080">----------+-----------------------------+---------------------+--------+</span>
+| <span style="color: #003388">Charset</span>  | <span style="color: #003388">Description</span>                 | <span style="color: #0066dd">Default</span> <span style="color: #003388">collation</span>   | <span style="color: #003388">Maxlen</span> |
++<span style="color: #808080">----------+-----------------------------+---------------------+--------+</span>
+| <span style="color: #003388">dec8</span>     | <span style="color: #0066dd">DEC</span> <span style="color: #003388">West</span> <span style="color: #003388">European</span>           | <span style="color: #003388">dec8_swedish_ci</span>     |      <span style="color: red">1</span> |
+| <span style="color: #003388">cp850</span>    | <span style="color: #003388">DOS</span> <span style="color: #003388">West</span> <span style="color: #003388">European</span>           | <span style="color: #003388">cp850_general_ci</span>    |      <span style="color: red">1</span> |
+| <span style="color: #003388">hp8</span>      | <span style="color: #003388">HP</span> <span style="color: #003388">West</span> <span style="color: #003388">European</span>            | <span style="color: #003388">hp8_english_ci</span>      |      <span style="color: red">1</span> |
+| <span style="color: #003388">koi8r</span>    | <span style="color: #003388">KOI8</span>-<span style="color: #003388">R</span> <span style="color: #003388">Relcom</span> <span style="color: #003388">Russian</span>       | <span style="color: #003388">koi8r_general_ci</span>    |      <span style="color: red">1</span> |
+| <span style="color: #003388">latin1</span>   | <span style="color: #003388">cp1252</span> <span style="color: #003388">West</span> <span style="color: #003388">European</span>        | <span style="color: #003388">latin1_swedish_ci</span>   |      <span style="color: red">1</span> |
+| <span style="color: #003388">latin2</span>   | <span style="color: #003388">ISO</span> <span style="color: red">8859</span>-<span style="color: red">2</span> <span style="color: #003388">Central</span> <span style="color: #003388">European</span> | <span style="color: #003388">latin2_general_ci</span>   |      <span style="color: red">1</span> |
+| <span style="color: #003388">swe7</span>     | <span style="color: red">7</span><span style="color: #003388">bit</span> <span style="color: #003388">Swedish</span>                | <span style="color: #003388">swe7_swedish_ci</span>     |      <span style="color: red">1</span> |
+| <span style="color: #003388">ascii</span>    | <span style="color: #003388">US</span> <span style="color: #003388">ASCII</span>                    | <span style="color: #003388">ascii_general_ci</span>    |      <span style="color: red">1</span> |
+| <span style="color: #003388">hebrew</span>   | <span style="color: #003388">ISO</span> <span style="color: red">8859</span>-<span style="color: red">8</span> <span style="color: #003388">Hebrew</span>           | <span style="color: #003388">hebrew_general_ci</span>   |      <span style="color: red">1</span> |
+| <span style="color: #003388">koi8u</span>    | <span style="color: #003388">KOI8</span>-<span style="color: #003388">U</span> <span style="color: #003388">Ukrainian</span>            | <span style="color: #003388">koi8u_general_ci</span>    |      <span style="color: red">1</span> |
+| <span style="color: #003388">greek</span>    | <span style="color: #003388">ISO</span> <span style="color: red">8859</span>-<span style="color: red">7</span> <span style="color: #003388">Greek</span>            | <span style="color: #003388">greek_general_ci</span>    |      <span style="color: red">1</span> |
+| <span style="color: #003388">cp1250</span>   | <span style="color: #003388">Windows</span> <span style="color: #003388">Central</span> <span style="color: #003388">European</span>    | <span style="color: #003388">cp1250_general_ci</span>   |      <span style="color: red">1</span> |
+| <span style="color: #003388">latin5</span>   | <span style="color: #003388">ISO</span> <span style="color: red">8859</span>-<span style="color: red">9</span> <span style="color: #003388">Turkish</span>          | <span style="color: #003388">latin5_turkish_ci</span>   |      <span style="color: red">1</span> |
+| <span style="color: #003388">armscii8</span> | <span style="color: #003388">ARMSCII</span>-<span style="color: red">8</span> <span style="color: #003388">Armenian</span>          | <span style="color: #003388">armscii8_general_ci</span> |      <span style="color: red">1</span> |
+| <span style="color: #003388">utf8</span>     | <span style="color: #003388">UTF</span>-<span style="color: red">8</span> <span style="color: #003388">Unicode</span>               | <span style="color: #003388">utf8_general_ci</span>     |      <span style="color: red">3</span> |
+| <span style="color: #003388">cp866</span>    | <span style="color: #003388">DOS</span> <span style="color: #003388">Russian</span>                 | <span style="color: #003388">cp866_general_ci</span>    |      <span style="color: red">1</span> |
+| <span style="color: #003388">keybcs2</span>  | <span style="color: #003388">DOS</span> <span style="color: #003388">Kamenicky</span> <span style="color: #003388">Czech</span>-<span style="color: #003388">Slovak</span>  | <span style="color: #003388">keybcs2_general_ci</span>  |      <span style="color: red">1</span> |
+| <span style="color: #003388">macce</span>    | <span style="color: #003388">Mac</span> <span style="color: #003388">Central</span> <span style="color: #003388">European</span>        | <span style="color: #003388">macce_general_ci</span>    |      <span style="color: red">1</span> |
+| <span style="color: #003388">macroman</span> | <span style="color: #003388">Mac</span> <span style="color: #003388">West</span> <span style="color: #003388">European</span>           | <span style="color: #003388">macroman_general_ci</span> |      <span style="color: red">1</span> |
+| <span style="color: #003388">cp852</span>    | <span style="color: #003388">DOS</span> <span style="color: #003388">Central</span> <span style="color: #003388">European</span>        | <span style="color: #003388">cp852_general_ci</span>    |      <span style="color: red">1</span> |
+| <span style="color: #003388">latin7</span>   | <span style="color: #003388">ISO</span> <span style="color: red">8859</span>-<span style="color: red">13</span> <span style="color: #003388">Baltic</span>          | <span style="color: #003388">latin7_general_ci</span>   |      <span style="color: red">1</span> |
+| <span style="color: #003388">cp1251</span>   | <span style="color: #003388">Windows</span> <span style="color: #003388">Cyrillic</span>            | <span style="color: #003388">cp1251_general_ci</span>   |      <span style="color: red">1</span> |
+| <span style="color: #003388">cp1256</span>   | <span style="color: #003388">Windows</span> <span style="color: #003388">Arabic</span>              | <span style="color: #003388">cp1256_general_ci</span>   |      <span style="color: red">1</span> |
+| <span style="color: #003388">cp1257</span>   | <span style="color: #003388">Windows</span> <span style="color: #003388">Baltic</span>              | <span style="color: #003388">cp1257_general_ci</span>   |      <span style="color: red">1</span> |
+| <span style="color: #0066dd">binary</span>   | <span style="color: #0066dd">Binary</span> <span style="color: #003388">pseudo</span> <span style="color: #003388">charset</span>       | <span style="color: #0066dd">binary</span>              |      <span style="color: red">1</span> |
+| <span style="color: #003388">geostd8</span>  | <span style="color: #003388">GEOSTD8</span> <span style="color: #003388">Georgian</span>            | <span style="color: #003388">geostd8_general_ci</span>  |      <span style="color: red">1</span> |
++<span style="color: #808080">----------+-----------------------------+---------------------+--------+</span>
+<span style="color: red">26</span> <span style="color: #003388">rows</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.00</span> <span style="color: #003388">sec</span>)</pre></td>
+
+</tr>
+</tbody></table>
+
+<p>Любую из этих кодировок можно пользовать на свой вкус. Обычно 
+русскоязычные пользователи предпочитают cp1251 или utf8, но по сути, 
+неважно, в какой кодировке хранятся данные, важно, чтобы она была 
+изначально правильно указана и данные были корректно внесены.</p>
+
+<h2><a id="set-charsets"></a>Настройка кодировок</h2>
+
+<p>Мануал предлагает нам три варианта задания кодировок:</p>
+<ol>
+<li><a href="#set-charset-names">Через names</a></li>
+<li><a href="#set-charset-vars">Через непосредственно переменные character_set_*</a></li>
+<li><a href="#set-charset-mycnf">Через настройки самого сервера</a></li>
+</ol>
+
+<p style="color: red"><b>ВНИМАНИЕ!!!</b> Первые два варианта работают только <b>в рамках текущего соединения</b>.
+ Это значит, что при следующем подключении все настройки вернутся в 
+начальное состояние! Чтобы не выставлять кодировку каждый раз, нужно 
+воспользоваться третьим вариантом.</p>
+
+<h2><a id="set-charset-names"></a>Вариант 1 - Через names</h2>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #ba529f">set</span> <span style="color: #003388">names</span> <span style="color: green">'cp1251'</span>;
+<span style="color: #003388">Query</span> <span style="color: #003388">OK</span>, <span style="color: red">0</span> <span style="color: #003388">rows</span> <span style="color: #003388">affected</span> (<span style="color: red">0.00</span> <span style="color: #003388">sec</span>)
+
+<span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">show</span> <span style="color: #003388">variables</span> <span style="color: #0066dd">like</span> <span style="color: green">'char%'</span>;
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+| <span style="color: #003388">Variable_name</span>            | <span style="color: #003388">Value</span>                            |
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+| <span style="color: #003388">character_set_client</span>     | <span style="color: #003388">cp1251</span>                           |
+| <span style="color: #003388">character_set_connection</span> | <span style="color: #003388">cp1251</span>                           |
+| <span style="color: #003388">character_set_database</span>   | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_filesystem</span> | <span style="color: #0066dd">binary</span>                           |
+| <span style="color: #003388">character_set_results</span>    | <span style="color: #003388">cp1251</span>                           |
+| <span style="color: #003388">character_set_server</span>     | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_system</span>     | <span style="color: #003388">utf8</span>                             |
+| <span style="color: #003388">character_sets_dir</span>       | /<span style="color: #003388">usr</span>/<span style="color: #003388">local</span>/<span style="color: #003388">share</span>/<span style="color: #003388">mysql</span>/<span style="color: #003388">charsets</span>/ |
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+<span style="color: red">8</span> <span style="color: #003388">rows</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.02</span> <span style="color: #003388">sec</span>)</pre></td>
+
+</tr>
+</tbody></table>
+
+<p>Ну, тут всё ясно, три самые нужные кодировки в одном )))</p>
+
+<h2><a id="set-charset-vars"></a>Вариант 2 - Через непосредственно переменные character_set_*</h2>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #ba529f">set</span> <span style="color: #600">@</span><span style="color: #600">@character_set_client</span>=<span style="color: green">'cp1251'</span>;
+<span style="color: #003388">Query</span> <span style="color: #003388">OK</span>, <span style="color: red">0</span> <span style="color: #003388">rows</span> <span style="color: #003388">affected</span> (<span style="color: red">0.00</span> <span style="color: #003388">sec</span>)
+
+<span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">show</span> <span style="color: #003388">variables</span> <span style="color: #0066dd">like</span> <span style="color: green">'char%'</span>;
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+| <span style="color: #003388">Variable_name</span>            | <span style="color: #003388">Value</span>                            |
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+| <span style="color: #003388">character_set_client</span>     | <span style="color: #003388">cp1251</span>                           |
+| <span style="color: #003388">character_set_connection</span> | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_database</span>   | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_filesystem</span> | <span style="color: #0066dd">binary</span>                           |
+| <span style="color: #003388">character_set_results</span>    | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_server</span>     | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_system</span>     | <span style="color: #003388">utf8</span>                             |
+| <span style="color: #003388">character_sets_dir</span>       | /<span style="color: #003388">usr</span>/<span style="color: #003388">local</span>/<span style="color: #003388">share</span>/<span style="color: #003388">mysql</span>/<span style="color: #003388">charsets</span>/ |
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+<span style="color: red">8</span> <span style="color: #003388">rows</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.01</span> <span style="color: #003388">sec</span>)</pre></td>
+
+</tr>
+</tbody></table>
+
+
+<p>Более детальная настройка, чем names.</p>
+
+<h2><a id="set-charset-mycnf"></a>Вариант 3 - Через настройки самого сервера</h2>
+
+<p>Тут можно пойти двумя путями - либо через конфиг файл:</p>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #808080">---- Файл my.cnf</span>
+[<span style="color: #003388">client</span>]
+<span style="color: #808080"># Для местного клиента</span>
+<span style="color: #0066dd">default</span>-<span style="color: #0066dd">character</span>-<span style="color: #ba529f">set</span>=<span style="color: #003388">cp1251</span>
+....
+
+[<span style="color: #003388">mysqld</span>]
+<span style="color: #808080"># Для всего сервера</span>
+<span style="color: #0066dd">default</span>-<span style="color: #0066dd">character</span>-<span style="color: #ba529f">set</span>=<span style="color: #003388">cp1251</span>
+....</pre></td>
+
+</tr>
+</tbody></table>
+
+<p>либо</p>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">shell</span>&gt; <span style="color: #003388">mysqld</span> <span style="color: #808080">--character-set-server=cp1251</span></pre></td>
+
+</tr>
+</tbody></table>
+
+<p>Ещё можно при конфигурировании задать кодировку по умолчанию </p>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">shell</span>&gt; ./<span style="color: #003388">configure</span> <span style="color: #808080">--with-charset=latin1</span></pre></td>
+
+</tr>
+</tbody></table>
+
+<p>Но лучше, когда кодировка настраивается прямо в соединении.</p>
+
+<h2><a id="fix-dump"></a>Что делать, если данные внесены в неправильной кодировке</h2>
+<p>Если база/таблица/данные были созданы/внесены в кодировке отличной от нужной, то необходимо сделать следующее:</p>
+
+<ol>
+<li>Создать бэкап базы данных</li>
+<li>Создать текстовый дамп базы в SQL-запросах (mysqldump или PhpMyAdmin)</li>
+<li>С помощью текстового редактора исправить вхождения неверной 
+кодировки на нужную (а лучше попросту удалить всю информацию о 
+кодировках и сравнениях)</li>
+<li>Удалить базу/таблицу</li>
+<li>Выставить нужную кодирвку на клиента/соединение</li>
+<li>Импортировать данные исправленного SQL-дампа</li>
+</ol>
+
+<p>Этот вариант подходит почти для всех случаев, за исключением 
+некоторых особых ситуаций, например, когда сравнение, выставленное 
+по-умолчанию, не уместно для некоторых полей. Пример - поле для хранения
+ пароля, необходимо сравнивать его с учётом регистра, тогда как 
+по-умолчанию выставляется сравнение без учёта регистра.</p>
+
+<h2><a id="correct"></a>Правильный вариант работы с MySQL</h2>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">show</span> <span style="color: #003388">variables</span> <span style="color: #0066dd">like</span> <span style="color: green">'char%'</span>;
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+| <span style="color: #003388">Variable_name</span>            | <span style="color: #003388">Value</span>                            |
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+| <span style="color: #003388">character_set_client</span>     | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_connection</span> | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_database</span>   | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_filesystem</span> | <span style="color: #0066dd">binary</span>                           |
+| <span style="color: #003388">character_set_results</span>    | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_server</span>     | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_system</span>     | <span style="color: #003388">utf8</span>                             |
+| <span style="color: #003388">character_sets_dir</span>       | /<span style="color: #003388">usr</span>/<span style="color: #003388">local</span>/<span style="color: #003388">share</span>/<span style="color: #003388">mysql</span>/<span style="color: #003388">charsets</span>/ |
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+<span style="color: red">8</span> <span style="color: #003388">rows</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.02</span> <span style="color: #003388">sec</span>)
+
+<span style="color: #808080">## Кодировки выставлены неверно, нужно их настроить</span>
+<span style="color: #003388">mysql</span>&gt; <span style="color: #ba529f">set</span> <span style="color: #003388">names</span> <span style="color: green">'koi8r'</span>;
+<span style="color: #003388">Query</span> <span style="color: #003388">OK</span>, <span style="color: red">0</span> <span style="color: #003388">rows</span> <span style="color: #003388">affected</span> (<span style="color: red">0.00</span> <span style="color: #003388">sec</span>)
+
+<span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">show</span> <span style="color: #003388">variables</span> <span style="color: #0066dd">like</span> <span style="color: green">'char%'</span>;
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+| <span style="color: #003388">Variable_name</span>            | <span style="color: #003388">Value</span>                            |
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+| <span style="color: #003388">character_set_client</span>     | <span style="color: #003388">koi8r</span>                            |
+| <span style="color: #003388">character_set_connection</span> | <span style="color: #003388">koi8r</span>                            |
+| <span style="color: #003388">character_set_database</span>   | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_filesystem</span> | <span style="color: #0066dd">binary</span>                           |
+| <span style="color: #003388">character_set_results</span>    | <span style="color: #003388">koi8r</span>                            |
+| <span style="color: #003388">character_set_server</span>     | <span style="color: #003388">latin1</span>                           |
+| <span style="color: #003388">character_set_system</span>     | <span style="color: #003388">utf8</span>                             |
+| <span style="color: #003388">character_sets_dir</span>       | /<span style="color: #003388">usr</span>/<span style="color: #003388">local</span>/<span style="color: #003388">share</span>/<span style="color: #003388">mysql</span>/<span style="color: #003388">charsets</span>/ |
++<span style="color: #808080">--------------------------+----------------------------------+</span>
+<span style="color: red">8</span> <span style="color: #003388">rows</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.02</span> <span style="color: #003388">sec</span>)
+
+<span style="color: #808080">## Я работаю через koi8r, поэтому и выставляю её, </span>
+<span style="color: #808080">## но данные в таблице буду хранить в cp1251</span>
+<span style="color: #003388">mysql</span>&gt; <span style="color: #850">create</span> <span style="color: #0066dd">table</span> <span style="color: green">`test2`</span> (<span style="color: green">`field`</span> <span style="color: #0066dd">varchar</span>(<span style="color: red">60</span>)) <span style="color: #003388">charset</span> <span style="color: #003388">cp1251</span>;
+<span style="color: #003388">Query</span> <span style="color: #003388">OK</span>, <span style="color: red">0</span> <span style="color: #003388">rows</span> <span style="color: #003388">affected</span> (<span style="color: red">0.01</span> <span style="color: #003388">sec</span>)
+
+<span style="color: #808080">## Проверяем, всё ли в порядке</span>
+<span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">show</span> <span style="color: #850">create</span> <span style="color: #0066dd">table</span> <span style="color: green">`test2`</span>;
++<span style="color: #808080">-------+--------------------------------------------+</span>
+| <span style="color: #0066dd">Table</span> | <span style="color: #850">Create</span> <span style="color: #0066dd">Table</span>                               |
++<span style="color: #808080">-------+--------------------------------------------+</span>
+| <span style="color: #003388">test2</span> | <span style="color: #850">CREATE</span> <span style="color: #0066dd">TABLE</span> <span style="color: green">`test2`</span> (
+  <span style="color: green">`field`</span> <span style="color: #0066dd">varchar</span>(<span style="color: red">60</span>) <span style="color: #0066dd">DEFAULT</span> <span style="color: #0066dd">NULL</span>
+) <span style="color: #003388">ENGINE</span>=<span style="color: #003388">MyISAM</span> <span style="color: #0066dd">DEFAULT</span> <span style="color: #003388">CHARSET</span>=<span style="color: #003388">cp1251</span>
++<span style="color: #808080">-------+--------------------------------------------+</span>
+<span style="color: red">1</span> <span style="color: #003388">row</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.01</span> <span style="color: #003388">sec</span>)
+
+<span style="color: #808080">## Вносим данные </span>
+<span style="color: #003388">mysql</span>&gt; <span style="color: #850">insert</span> <span style="color: #0066dd">into</span> <span style="color: green">`test2`</span> <span style="color: #0066dd">values</span> (<span style="color: green">'и раз'</span>), (<span style="color: green">'Два'</span>),(<span style="color: green">'три'</span>), (<span style="color: green">'И ять'</span>), (<span style="color: green">'шесть'</span>);
+<span style="color: #003388">Query</span> <span style="color: #003388">OK</span>, <span style="color: red">5</span> <span style="color: #003388">rows</span> <span style="color: #003388">affected</span> (<span style="color: red">0.01</span> <span style="color: #003388">sec</span>)
+<span style="color: #003388">Records</span>: <span style="color: red">5</span>  <span style="color: #003388">Duplicates</span>: <span style="color: red">0</span>  <span style="color: #003388">Warnings</span>: <span style="color: red">0</span>
+
+<span style="color: #808080">## Проверяем сортировки</span>
+<span style="color: #808080">## В обычном сравнении "И" и "и" одинаковы, поэтому </span>
+<span style="color: #808080">## сравнение идёт до первого отличного символа</span>
+<span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">select</span> * <span style="color: #0066dd">from</span> <span style="color: green">`test2`</span> <span style="color: #0066dd">order</span> <span style="color: #0066dd">by</span> <span style="color: green">`field`</span> <span style="color: #0066dd">collate</span> <span style="color: #003388">cp1251_general_ci</span> <span style="color: #ba529f;">ASC</span>;
++<span style="color: #808080">-------+</span>
+| <span style="color: #003388">field</span> |
++<span style="color: #808080">-------+</span>
+| <span style="color: #003388">Два</span>   |
+| <span style="color: #003388">и</span> <span style="color: #003388">раз</span> |
+| <span style="color: #003388">И</span> <span style="color: #003388">ять</span> |
+| <span style="color: #003388">три</span>   |
+| <span style="color: #003388">шесть</span> |
++<span style="color: #808080">-------+</span>
+<span style="color: red">5</span> <span style="color: #003388">rows</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.01</span> <span style="color: #003388">sec</span>)
+
+<span style="color: #808080">## В бинарном сравнении "И" меньше чем "и", поскольку у неё код меньше</span>
+<span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">select</span> * <span style="color: #0066dd">from</span> <span style="color: green">`test2`</span> <span style="color: #0066dd">order</span> <span style="color: #0066dd">by</span> <span style="color: green">`field`</span> <span style="color: #0066dd">collate</span> <span style="color: #003388">cp1251_bin</span> <span style="color: #ba529f;">ASC</span>;
++<span style="color: #808080">-------+</span>
+| <span style="color: #003388">field</span> |
++<span style="color: #808080">-------+</span>
+| <span style="color: #003388">Два</span>   |
+| <span style="color: #003388">И</span> <span style="color: #003388">ять</span> |
+| <span style="color: #003388">и</span> <span style="color: #003388">раз</span> |
+| <span style="color: #003388">три</span>   |
+| <span style="color: #003388">шесть</span> |
++<span style="color: #808080">-------+</span>
+<span style="color: red">5</span> <span style="color: #003388">rows</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.00</span> <span style="color: #003388">sec</span>)</pre></td>
+
+</tr>
+</tbody></table>
+
+<p>Таким образом, клиент работает в KOI8-R, но данные хранятся в cp1251, MySQL знает об этом и делает перекодировку на лету.</p>
+
+<p>Ну и на посошок:</p>
+
+<table class="source-code" style="border: 1px #7f9db9 solid; font-size: 12px; background-color:#fffff5">
+    <tbody><tr>
+    <td style="width: 240px; vertical-align: top; padding: 4px;"><pre style="margin: 0px; line-height: 15px"><span style="color: #003388">mysql</span>&gt; <span style="color: #ba529f">set</span> <span style="color: #003388">character_set_results</span>=<span style="color: green">'cp1251'</span>;
+<span style="color: #003388">Query</span> <span style="color: #003388">OK</span>, <span style="color: red">0</span> <span style="color: #003388">rows</span> <span style="color: #003388">affected</span> (<span style="color: red">0.00</span> <span style="color: #003388">sec</span>)
+
+<span style="color: #003388">mysql</span>&gt; <span style="color: #0066dd">select</span> * <span style="color: #0066dd">from</span> <span style="color: green">`test2`</span>;
++<span style="color: #808080">-------+</span>
+| <span style="color: #003388">field</span> |
++<span style="color: #808080">-------+</span>
+| <span style="color: #003388">Х</span> <span style="color: #003388">ПЮГ</span> |
+| <span style="color: #003388">дБЮ</span>   |
+| <span style="color: #003388">РПХ</span>   |
+| <span style="color: #003388">х</span> <span style="color: #003388">ЪРЭ</span> |
+| <span style="color: #003388">ЬЕЯРЭ</span> |
++<span style="color: #808080">-------+</span>
+<span style="color: red">5</span> <span style="color: #003388">rows</span> <span style="color: #0066dd">in</span> <span style="color: #ba529f">set</span> (<span style="color: red">0.00</span> <span style="color: #003388">sec</span>)</pre></td>
+
+</tr>
+</tbody></table>
+
+<p>Выбирать данные можно в любой кодировке, так же, как и вносить, главное - правильно сообщить об этом MySQL.</p>          
+        <hr>
+
+          <footer>
+            <p><small class="text-muted">© 2017 Антон Прибора. При копировании материалов с сайта, пожалуйста, указывайте ссылку на источник.</small></p>
+          </footer>
+      </div>
+      
+<script type="text/javascript" async="" src="%D0%9A%D0%BE%D0%B4%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8%20%D0%B2%20MySQL_files/watch.js"></script><script type="text/javascript" src="%D0%9A%D0%BE%D0%B4%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8%20%D0%B2%20MySQL_files/jquery-3.js"></script>
+<script type="text/javascript" src="%D0%9A%D0%BE%D0%B4%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8%20%D0%B2%20MySQL_files/tether.js"></script>
+<script type="text/javascript" src="%D0%9A%D0%BE%D0%B4%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8%20%D0%B2%20MySQL_files/bootstrap.js"></script><!-- Yandex.Metrika counter --> <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter41867424 = new Ya.Metrika({ id:41867424, clickmap:true, trackLinks:true, accurateTrackBounce:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/41867424" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+
+
+   
+</body></html>

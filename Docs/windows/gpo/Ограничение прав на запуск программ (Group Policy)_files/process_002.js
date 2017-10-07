@@ -1,0 +1,1 @@
+if (typeof pluso != "undefined") pluso.setCounter("0", "http://sysadmins.ru/topic88032.html", undefined, undefined, undefined);

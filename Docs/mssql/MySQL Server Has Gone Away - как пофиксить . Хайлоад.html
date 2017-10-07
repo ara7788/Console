@@ -1,0 +1,617 @@
+<html itemscope="" itemtype="http://schema.org/Article"><head>
+	<title>MySQL Server Has Gone Away - как пофиксить . Хайлоад</title>
+	
+    <link rel="apple-touch-icon" sizes="180x180" href="https://ruhighload.com/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="https://ruhighload.com/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://ruhighload.com/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="https://ruhighload.com/manifest.json">
+    <link rel="mask-icon" href="https://ruhighload.com/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
+    
+    <meta name="yandex-verification" content="1633b7860750619c">
+    <link rel="alternate" type="application/rss+xml" title="Фид Хайлоада" href="https://ruhighload.com/feed?rss=1">
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta property="og:site_name" content="[Хд]">
+	<meta property="fb:admins" content="729597381">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		    <meta name="yandex-verification" content="6439ac49ae83c09f">
+	    <meta name="yandex-verification" content="78c913525a53db72">
+		
+	<style>body { margin:0; padding:0; color:#1f1f1f; font-size:15px; font-family:"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;  }
+.wrap { box-sizing: border-box; width:100%; padding:0 20px; max-width: 1170px; margin: 0 auto; position: relative; box-sizing:border-box;  }
+.wrap_fixed { position: fixed; top:0; width: 1170px; left: 50%; transform: translate(-50%,0); opacity: 0; visibility: hidden; transition:all 0.3s ease; }
+.wrap_fixed.on { opacity: 1; visibility: visible;  }
+
+header { padding:25px 0; -webkit-box-shadow: 0px 2px 5px -1px rgba(0,0,0,0.15); -moz-box-shadow: 0px 2px 5px -1px rgba(0,0,0,0.15);box-shadow: 0px 2px 5px -1px rgba(0,0,0,0.15); }
+section { padding: 25px 0; }
+
+.user-photo { margin: 0 auto; display: block; width: 100px; border-radius: 50%; }
+
+/* close search form */
+header .search_form { z-index:0; display: inline-block; position: absolute; right: 0; left: 100px; height: 50px; top:50%; transform:translate(0,-50%); -webkit-transform:translate(0,-50%); -moz-transform:translate(0,-50%); }
+header .search_form input.search_input[type="search"] { font-weight: bold; -webkit-appearance: none; position: absolute; right:0;  left:0; width: 100%;height: 100%;border:none;outline: none;background: #f3f3f3; padding: 0 20px;border-radius:5px;font-size: 13px; transition:all 0.3s ease;opacity: 0;visibility: hidden;}
+header .search_form input.search_input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
+header .search_form .search_icon {  transition:all 0.3s ease;  width:50px; height: 50px; display: block; position: absolute; right: 0; opacity: 0.5; background-size: 25px; background-position: center; background-repeat: no-repeat; }		
+header .search_form .search_icon:hover { cursor: pointer; opacity: 1; }
+header .search_form .search_icon.open {  background-image: url('/search_icon.png'); }
+header .search_form .search_icon.close {  background-image: url('/search_icon_close.png'); background-size: 22px; opacity: 0; visibility: hidden; }
+header .header_right_mask { display: none; }
+header .header_right_icon { display: none; }
+
+/* open search form */
+header .search_form.on { z-index:2; }
+header .search_form.on .search_icon.open { opacity: 0; visibility: hidden; }
+header .search_form.on .search_icon.close { opacity: 0.5; visibility: visible; }
+header .search_form.on .search_icon.close:hover { opacity:1; }
+header .search_form.on input.search_input[type="search"] { opacity: 1; visibility: visible; }
+
+.header_right { position: absolute; z-index: 1; right: 70px; top:50%; transform:translate(0,-50%); white-space: nowrap; }
+.header_right  .nav_item  { font-size:13px; padding: 25px 0; text-transform: uppercase; margin-left: 30px; font-weight: normal; color:#919191; text-decoration: none; position: relative; }
+.header_right  .nav_item:before { content: ''; position: absolute; bottom: 15px; height: 2px; width: 100%; background: #e4705b; transition:all 0.2s ease; display: none; }
+.header_right  .nav_item:hover , .header_right  .nav_item.on { color: #e4705b; }
+.header_right  .nav_item:hover:before , .header_right  .nav_item.on:before  { display: inline-block; }
+
+
+article { width:640px; padding: 0 25px; margin: 0 auto; }
+section.for-article { width:640px; padding: 0 25px; margin: 0 auto; }
+
+footer {  border-top:solid rgba(0,0,0,0.05) 1px; padding:30px 0; text-align: center;  }
+footer a { display: inline-block; margin: 0; color: #333; text-decoration: underline; }
+footer span { opacity: 0.8; font-size: 0.8em; }
+
+ul,ol,menu { list-style: none; padding: 0; } 
+.main_nav .wrap { font-size: 0; }
+menu h4 { margin: 0 0 10px 0; }
+menu li { padding: 8px 0; display: block; } 
+menu a { display: block; }
+
+.logo { margin: 0 0 0 20px; }
+
+.tags-cloud { text-align: center; font-family: Georgia, Times, "Times New Roman", serif; }
+.tags-cloud h3 a { text-transform: capitalize; text-decoration: none; font-weight: normal; }
+.tags-cloud h3 sub { font-weight: normal; color: gray; line-height: 100%; }
+
+.divider { height: 15px; }
+.dot_divider { display: block; margin: 5px 0; height: 20px; background-image: url('/divider.png'); background-repeat: no-repeat; background-size: 50px; background-position: center;}
+.main_tags { text-align: center; }
+.main_promo { padding: 50px 0; color: white;text-align: center;font-weight: normal;
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e88371+0,e85f63+100 */
+background: #e88371; /* Old browsers */
+background: -moz-linear-gradient(-45deg,  #e88371 0%, #e85f63 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg,  #e88371 0%,#e85f63 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg,  #e88371 0%,#e85f63 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e88371', endColorstr='#e85f63',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+.main_promo * { transition:all 0.5s ease; }
+
+.main_tags,
+.main_nav,
+.dot_divider,
+.articles_list_prev { transition:all 0.5s ease; }
+
+ #particles-background, #particles-foreground {left: 0;top: 0;bottom: 0;right: 0;height: 100%;width: 100%;position: absolute;}
+
+/* basic grid system */
+.row { font-size: 0; white-space: nowrap; }
+.col { display: inline-block; font-size: 15px; padding: 25px; width: 100%; vertical-align: top; box-sizing:border-box; white-space: normal; }
+.col.clear { padding:0; } 
+.col.clear_right { padding-left:0; } 
+.col_1 { width:8.33333333333%; }
+.col_2 { width:16.6666666667%; }
+.col_3 { width:25%; }
+.col_4 { width:33.3333333333%; } 
+.col_5 { width:41.6666666667%; }
+.col_6 { width:50%; } 
+.col_7 { width:58.3333333333%; } 
+.col_8 { width:66.6666666667%; }  
+.col_9 { width:75%; }
+.col_10 { width:83.3333333333%; } 
+.col_11 { width:91.6666666667%; }
+.col_12 { width:100%; } 
+
+
+
+.pager { text-align: center; margin: 0 0 1em 0 }
+.pager a { margin: 0 .5em }
+
+
+
+
+@media (max-width: 1170px) {
+	
+	.wrap { width: 100%; box-sizing:border-box; }
+	.wrap_fixed { width: 100%; }
+	header .search_form { right: 20px; }
+	.header_right { right: 100px; }
+
+}
+
+@media (max-width: 980px) {
+	.col_8 { width: 100%; } 
+	.right_category_nav { display: none; }
+	.category .articles_list_prev article { margin: 0 auto; display: block; }
+	.category h1 { display: block; font-size: 2.5em }
+}
+
+@media ( max-width:768px ) {
+	.wrap { padding: 0; }
+	.row { white-space: normal; }
+	.col_3 { width: 50%; }
+	.col_6 { width: 100%; }
+
+	article { width: 100%; padding:10px 20px; box-sizing:border-box; }
+	section.for-article { width: 100%; padding: 0 20px; box-sizing:border-box; }
+
+	header .search_form { right: 80px; transition:all 0.3s ease; }
+	header .search_form.on { left: 10px; right: 10px; }
+	header .header_right_icon { display: block; position: absolute; top:50%; transform:translate(0,-50%); right: 20px; width: 50px; height: 50px; background-image: url('/menu.png'); background-size: 35px; background-position: center; background-repeat: no-repeat; }
+	header .header_right { z-index: 9999; position: fixed; top:0; left: 0; right: 0; background: white; text-align: center; transform:translate(0,-100%); transition:all 0.3s ease; }
+	header .header_right.on {  transform:translate(0,0); }	
+	header .header_right_mask.on { display: block; position:fixed; z-index: 9998; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.7); }
+	header .header_right .nav_item { display: block; margin: 0; }
+	header .header_right .nav_item.on:before, .header_right .nav_item:hover:before { display: none; }
+}
+
+@media ( max-width:480px ) {
+
+	.main_nav { text-align: center; }
+	.col_3 { width: 100%; }
+}
+
+
+
+.text_capitalize { text-transform: capitalize; }
+.text_upper { text-transform: uppercase; }
+.text_light { color:rgba(0,0,0,0.3); }
+.text_black { color:rgba(0,0,0,1); }
+
+a { color: #e4705b; }
+a.black { color: black; }
+a:hover { text-decoration: underline; color: #e4705b; }
+
+.search_query { font-family: Georgia, Times, "Times New Roman", serif; text-align: center; margin: 50px 0; font-size: 4em; }
+.search_query small { color: gray; font-size: 50%; font-weight: normal; }
+
+article p { font-family: Georgia, Times, "Times New Roman", serif; font-size: 17px; letter-spacing: 0.5px; line-height: 150%; }
+article blockquote { font-family: Georgia, Times, "Times New Roman", serif; font-size: 27px; letter-spacing: 0.5px; line-height: 150%; color: #888; }
+article { font-family: Georgia, Times, "Times New Roman", serif; }
+article dl { font-family: Georgia, Times, "Times New Roman", serif; font-size: 17px; letter-spacing: 0.5px; line-height: 150%; }
+article dt { font-weight: bold; font-family: Monaco, "Courier New", Courier, mono; font-size: 12px; color: #555; }
+article dd { padding-left: 25px; font-family: Monaco, "Courier New", Courier, mono; font-size: 12px; color: #888; }
+
+
+
+button, .button { background:#e4705b; border:solid #e4705b 1px; border-radius: 3px; color: white; font-size: 13px; text-transform: uppercase; outline: none; padding: 10px 20px; transition:all 0.2s ease; display: inline-block }
+button:hover, .button:hover { background: #d66652; border-color: #d66652; cursor: pointer; text-decoration: none; color: #fff }
+button.light, .button.light { border-color: white; background: none; }
+button.light:hover, .button.light:hover { background: rgba(255,255,255,0.2); }
+
+.tag { display: inline-block; text-decoration: none; color: rgba(0,0,0,0.7); text-transform: capitalize; padding: 5px 10px; background: rgba(0,0,0,0.07); margin:0 10px 10px 0; font-weight: bold; }
+/*.tag:before { content:''; }*/
+.tag:hover { cursor: pointer; background:rgba(0,0,0,0.12); color: black; text-decoration: none; }
+.tag b { display: inline-block; font-weight: normal; margin:0 3px 0 7px; color:black;}
+
+.ask_me_btn, .ask_me_btn:before, .ask_me_btn:after { position: fixed; bottom: 30px; right: 30px; width:50px; height: 50px; background:#e4705b; border-radius: 50%; background-image: url('/chat.png'); background-size:23px; background-repeat: no-repeat; background-position: center; }
+.ask_me_btn:before{ background-image:none; animation: fire 2s linear 0.2s infinite; -webkit-animation: fire 2s linear 0.2s infinite; }
+.ask_me_btn:before, .ask_me_btn:after { content: ''; }  
+.ask_me_btn
+{
+	transition:all 0.3s ease;
+	-webkit-box-shadow: 0px 2px 30px 0px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0px 2px 30px 0px rgba(0,0,0,0.1);
+	box-shadow: 0px 2px 30px 0px rgba(0,0,0,0.1);
+}
+.ask_me_btn:hover 
+{
+	-webkit-box-shadow: 0px 2px 30px 0px rgba(0,0,0,0.3);
+	-moz-box-shadow: 0px 2px 30px 0px rgba(0,0,0,0.3);
+	box-shadow: 0px 2px 30px 0px rgba(0,0,0,0.3);
+}
+.ask_me_btn:hover { cursor: pointer; }
+
+.popup { position: fixed; top: 0; right: 0; left: 0; bottom: 0; background-color: rgba(255,255,255,0.95); z-index: 9999999; text-align: center; transition:all 0.2s ease; opacity: 0; visibility: hidden; transform:scale(1.5); }
+.popup.on { opacity: 1; visibility: visible; transform:scale(1); }
+.popup form { position: absolute; left: 50%; top:50%; transform:translate(-50%,-50%); -webkit-transform:translate(-50%,-50%); -moz-transform:translate(-50%,-50%); width: 90%; max-width: 640px; }
+.popup form textarea { border:none; font-size: 18px; font-family: Georgia, Times, "Times New Roman", serif;  padding:20px 40px; width: 100%; outline: none; resize:none; }
+.popup .close { position: absolute; right: 20px; top: 20px; width: 25px; height: 25px; background-image: url('/search_icon_close.png'); background-size: 25px; opacity: 0.5; }
+.popup .close:hover { opacity: 1; cursor: pointer; }
+
+@keyframes fire {
+    0%   { transform:scale(0); opacity: 1; }
+    100% { transform:scale(2); opacity: 0; }
+} 
+
+@-webkit-keyframes fire {
+    0%   { transform:scale(0); opacity: 1; }
+    100% { transform:scale(2); opacity: 0; }
+} 
+
+
+pre { background: #333; color: #ccc; font-family: Monaco, "Courier New", Courier, mono; display: block; font-size: 12px; padding: 15px; overflow: auto; margin: 15px 0 30px 0; }
+pre b { color: #58D68D; font-weight: bold; }
+pre em { color: #E74C3C; font-weight: bold; font-style: normal; }
+.wow { font-size: 2em; }
+.mini { font-size: 0.5em; }
+code { display: block; font-family: Monaco, "Courier New", Courier, mono; }
+.code-comment { margin: -20px 0 30px 0; font-family: Monaco, "Courier New", Courier, mono; color: #999; font-size: 12px; }
+var { font-style: normal; font-family: Monaco, "Courier New", Courier, mono; background: #eee; padding: 2px 5px; font-size: 12px; }
+.var { font-family: Monaco, "Courier New", Courier, mono; }
+right { color: #4F8A10; background: #DFF2BF; padding: 1px 5px; border-radius: 3px; }
+warning { color: #9F6000; background: #FEEFB3; padding: 1px 5px; border-radius: 3px; }
+
+article table { width: 100%; border: 1px solid #ccc; border-collapse: collapse; }
+article table th { background: #f7f7f7; padding: 4px; text-align: left; }
+article table td { background: #fff; padding: 4px; }
+
+explain { text-decoration: none; border-bottom: 1px dashed #e4705b; cursor: help; }
+explain var { border-bottom: 1px dashed #e4705b; cursor: help; }
+explain:hover { border: none; background: #EBF5FB; }
+explain:hover var { border: none; background: #EBF5FB; }
+explained { background: #21618C; color: #fff; }
+
+.article article { padding-bottom: 50px; }
+article img { max-width:100%; margin: 30px 0;  }
+article p,article ul,article ol,article li { font-family: Georgia, Times, "Times New Roman", serif;  font-size: 17px; letter-spacing: 0.5px; line-height: 150%; }
+article ul { list-style: initial; padding-left: 20px; }
+
+ins { display: block; margin: 40px 0 0 0; min-height: 60px; }
+
+article h1 { font-size: 2.5em; letter-spacing: 0;  margin-top:40px;  }
+article h1 small { font-size: 0.5em; color: #888; }
+article h2 { margin-top:60px; }
+article h2 a { text-decoration: none }
+article h3 { margin-top:40px; color: #555; }
+article h4 { font-size: 16px; color: #888; }
+article h5 { font-size: 14px; color: #aaa; }
+article menu { width:100%; margin: 0; }
+article menu li { padding:4px 0; }
+
+article .bread_crumbs { text-align: center; font-size: 12px; font-weight: bold; margin:45px 0 -30px 0;  }
+article .bread_crumbs a { margin: 0 10px; position: relative; }
+article .bread_crumbs a:after { content: ''; position: absolute; right: -15px; top:50%; transform:translate(0,-50%); -webkit-transform:translate(0,-50%); -moz-transform:translate(0,-50%); display: inline-block; width: 5px; height: 5px; background: gray; opacity: 0.3; border-radius: 50%; }
+article .bread_crumbs a:last-child:after { display: none; }
+
+
+.category .articles_list_prev { padding-top:55px; }
+.category article { padding: 0; display: inline-block; }
+.category h1 { display: none; }
+
+.right_category_nav.fixed { position: absolute; left:66.6666666667%; }
+
+
+#signin {
+    position: fixed; left: -40%; opacity: 0; top: 0; bottom: 0; width: 40%; background: rgba(0,0,0, 0.9); border-right: 10px solid #e55c53;
+    text-align: center; transition: all 0.25s; }
+#signin.on {left: 0; opacity: 1;}
+@media ( max-width: 800px ) {
+    #signin { display: none; }
+    .search_query { font-size: 2em; }
+}
+#signin.off {left: -40%; opacity: 0;}
+#signin table { width: 100%; height: 100%; background: transparent; margin: 0; padding: 0; }
+#signin table td { vertical-align: middle; background: transparent; padding: 15px; margin: 0; border: none; text-align: center; color: #fff; }
+#signin strong { font-weight: normal; font-size: 48px; line-height: 150%; }
+#signin p a { font-size: 14px; margin: 0 5px; }</style>
+	
+		    <meta property="og:image" content="https://ruhighload.com/i.php?text=MySQL+Server+Has+Gone+Away+-+%D0%BA%D0%B0%D0%BA+%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C">
+	    <meta property="twitter:image" content="https://ruhighload.com/i.php?text=MySQL+Server+Has+Gone+Away+-+%D0%BA%D0%B0%D0%BA+%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C">
+	    <meta property="og:type" content="article">
+		
+			<meta name="keywords" content="">
+		<meta name="description" content="И как правильно работать с длительными соединениями в MySQL">
+		
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:creator" content="@golotyuk">
+		<meta property="og:url" content="https://ruhighload.com/post/%D0%9A%D0%B0%D0%BA+%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C+Mysql+Server+Has+Gone+Away">
+		<meta property="og:title" content="MySQL Server Has Gone Away - как пофиксить">
+		
+				    <meta itemprop="author" content="Sergey Nikiforov">
+                
+		<meta itemprop="datePublished" content="2016-03-21 16:14:38">
+
+				    <meta itemprop="headline" content="И как правильно работать с длительными соединениями в MySQL">
+				
+					<meta property="og:description" content="И как правильно работать с длительными соединениями в MySQL">
+			<meta itemprop="description" content="И как правильно работать с длительными соединениями в MySQL">
+				
+	<meta property="fb:pages" content="1275367325876371">
+	
+	<script async="" src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/analytics.js"></script><script src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/ca-pub-7003508399888210.js"></script><script async="" src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-7003508399888210",
+        enable_page_level_ads: true
+      });
+    </script>
+<script src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/a_003" async="true" id="_io64438.51300613571.1502894614293"></script><script src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/a_002" async="true" id="_io33649.52141304931.1502894624259"></script><script src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/a_004" async="true" id="_io86874.92652062778.1502894634259"></script><script src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/a" async="true" id="_io10210.359079986674.1502894644258"></script><script src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/a_005" async="true" id="_io91579.7900847529.1502894654259"></script><script src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/a_006" async="true" id="_io50177.189123471966.1502894664259"></script></head><body class="body-post"><ins class="adsbygoogle" style="display: none; width: auto; height: auto;" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;width:0px;height:0px;" width="0" height="0" frameborder="0"></iframe></ins></ins></ins>
+	<header>
+	<div class="wrap">
+		<div class="header_right_mask" onclick="nav.close()"></div>
+		<div class="header_right_icon" onclick="nav.open()"></div>
+		<a href="https://ruhighload.com/" class="logo">
+			<img src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/logo_color.png" alt="[Хд] logo" height="30">
+		</a>
+		<nav class="header_right">
+		        <a class="nav_item " href="https://ruhighload.com/server" title="Серверная">
+        Серверная    </a>
+    <a class="nav_item " href="https://ruhighload.com/client" title="Браузерная">
+        Браузерная    </a>
+    <a class="nav_item " href="https://ruhighload.com/scale" title="Масштабирование">
+        Масштабирование    </a>
+    <a class="nav_item " href="https://ruhighload.com/tags" title="Темы">
+        Темы    </a>
+
+<a class="nav_item" href="https://ruhighload.com/questions">
+    Вопросы</a>		</nav>
+		<form id="search_form" class="search_form " action="/search">
+			<input name="q" class="search_input" placeholder="Ищите тут..." type="search">
+			<icon class="search_icon open" onclick="search.open(this);"></icon>
+			<icon class="search_icon close" onclick="search.close(this);"></icon>
+		</form>
+
+	</div>
+</header>
+
+<div id="head-title">
+        
+    </div>
+	<div id="content"><article>
+        
+    <!-- Хд -->
+    
+    <ins class="adsbygoogle" style="display: block; height: 60px;" data-ad-client="ca-pub-7003508399888210" data-ad-slot="6391145678" data-ad-format="auto" data-adsbygoogle-status="done"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:640px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:640px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;width:640px;height:60px;" width="640" height="60" frameborder="0"></iframe></ins></ins></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    
+    <h1 itemprop="name">MySQL Server Has Gone Away - как пофиксить</h1>
+    
+    <script async="" src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/adsbygoogle.js"></script>
+    
+    <div class="body" itemprop="articleBody"><p>Ошибка MySQL Server Has Gone Away (error 2006) может возникнуть в двух случаях.
+
+<img alt="" title="" class="" src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/shpzkl7b7vk7usijc.jpg">
+
+</p><h3>Таймаут соединения</h3>
+<p> Наиболее распространенная проблема: таймаут соединения, в результате
+ чего сервер его закрывает. Решение весьма тривиальное — увеличение 
+лимита времени <var>wait_timeout</var> в файле конфигурации <var><a href="https://ruhighload.com/post/my.cnf" class="conf">my.cnf</a></var>. Для этого в Debian нужно выполнить: 
+
+</p><pre><code>sudo nano 
+/etc/mysql/<a href="https://ruhighload.com/post/my.cnf" class="conf">my.cnf</a></code></pre>
+<p class="code-comment">#  Открытие файла настроек MySQL
+</p>
+<p>Затем установить тайм-аут ожидания:
+</p><pre><code>wait_timeout = 600</code></pre>
+<p class="code-comment">#  Время ожидания в секундах, можно установить вплоть до 28800 с (8 часов)
+</p>
+<p>Не забудьте перезагрузить базу:
+</p><pre><code>sudo /etc/init.d/mysql restart </code></pre>
+<p class="code-comment">#  Перезагрузка базы данных MySQL
+</p>
+<p>Иногда, при выполнении длительных запланированных задач, также может 
+появиться ошибка MySQL Server Has Gone Away все из-за того же таймаута 
+соединения. При этом лимит времени не получится существенно увеличить 
+(максимум до нескольких часов), так как это может привести к заполнению 
+буфера ожидающими соединениями. 
+</p><p>Поэтому лучше проверить соединение и, при необходимости, переподключиться.
+
+</p><pre><code>$link = <a title="Функция mysql_connect в php" href="https://ruhighload.com/php.mysql.mysql_connect">mysql_connect</a>("localhost","root","root"); 
+<span class="comment">
+# Здесь будут cron jobs
+</span>
+if( !<a title="Функция mysql_ping в php" href="https://ruhighload.com/php.mysql.mysql_ping">mysql_ping</a>($link) ) $link = <a title="Функция mysql_connect в php" href="https://ruhighload.com/php.mysql.mysql_connect">mysql_connect</a>("localhost","root","root", true);</code></pre>
+<p class="code-comment">#  Подключение БД и переподключение при необходимости
+</p>
+<h3>Большой или некорректный пакет</h3>
+<p>Вторая распространенная проблема: сервер получает большой или 
+некорректный пакет и отклоняет его. В этом случае сервер считает, что 
+проблема на стороне клиента и закрывает соединение. Так что для решения 
+нужно увеличить лимит на максимальный размер пакета все в том же файле 
+конфигурации:
+
+</p><pre><code>[mysqld]
+...
+max_allowed_packet = 64M
+…</code></pre>
+<p class="code-comment">#  Увеличение лимита размера входящего пакета, в МБ
+</p>
+<p>Также не забудьте перезагрузить базу данных.
+
+</p><h2>Самое главное</h2>
+<p>После того, как устраните ошибку MySQL Server Has Gone Away, поиграйтесь с параметрами <var>wait_timeout</var> и <var>max_allowed_packet</var> для получения оптимальных лимитов.</p></div>
+                        <a target="_blank" href="https://ruhighload.com/_2870" itemprop="author">Sergey Nikiforov</a>
+                
+	</article>
+
+<div class="dot_divider"></div>
+
+<section class="for-article">
+    <a title=".io developers Jupiter" href="https://onthe.io/dev" target="_blank"><img src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/smngoz3qthhhdkgii.png" style="width:100%;"></a>
+    <br>
+    
+	<div class="row">
+		<div class="col col_6 clear_right">
+			<h4 class="text_upper">материалы по теме</h4>
+			<menu>
+			    			                                                            				    <li><a href="https://ruhighload.com/post/%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0+1045+%D0%B2+MySQL_20160627">Mysql 1045 access denied for user</a></li>
+				                                        				    <li><a href="https://ruhighload.com/post/Mysql+error+ib_logfile0+is+of+different+size">Mysql error ib_logfile0 is of different size</a></li>
+				                                        				    <li><a href="https://ruhighload.com/post/%D0%9A%D0%B0%D0%BA+%D0%BF%D0%BE%D1%87%D0%B8%D0%BD%D0%B8%D1%82%D1%8C+Lock+wait+timeout+exceeded+%D0%B2+Mysql_20151205">Lock wait timeout exceeded в Mysql</a></li>
+				                                        				    <li><a href="https://ruhighload.com/post/%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0+1054%3A+Unknown+column+%27password_last_changed%27+in+%27mysql.user%27">Ошибка 1054: Unknown column 'password_last_changed' in 'mysql.user'</a></li>
+				                                        				    <li><a href="https://ruhighload.com/post/%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0+1062+Duplicate+entry+for+key+PRIMARY+%D0%BF%D1%80%D0%B8+%D1%80%D0%B5%D0%BF%D0%BB%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D0%B8">Mysql 1062 Duplicate entry for key PRIMARY при репликации</a></li>
+							</menu>
+		</div>
+		<div class="col col_6 clear_right">
+			<h4 class="text_upper">Темы</h4>
+			        		        			        			        			<a title="mysql" class="tag" href="https://ruhighload.com/mysql"># mysql</a>
+        			        		        			        			        			<a title="ошибки" class="tag" href="https://ruhighload.com/%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%B8"># ошибки</a>
+        			        		        			</div>
+	</div>
+</section>
+
+
+    <div id="signin" class="off">
+        <table><tbody><tr><td>
+        <img src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/logo_color.png" width="100/">
+
+        <p>
+            Подпишитесь на Хайлоад с помощью <b><a class="join" href="https://ruhighload.com/join?t=ga">Google аккаунта</a></b>
+            <br>или <a href="javascript:;" id="close-this-shit">закройте эту хрень</a>
+        </p>
+        
+        </td></tr></tbody></table>
+    </div>
+
+<script>
+    var els = document.querySelectorAll('explain');
+    for ( i = 0; i < els.length; i++ )
+    {
+        els[i].addEventListener('mouseover', function() {
+          var codes = document.querySelectorAll('code,pre');
+          var rel = this.getAttribute('rel');
+          rel = rel.replace('<', '&gt;');
+          rel = rel.replace('>', '&lt;');
+          for ( j = 0; j < codes.length; j++ ) codes[j].innerHTML = 
+codes[j].innerHTML.replace(rel, '<explained>' + rel + '</explained>');
+        });
+        els[i].addEventListener('mouseout', function() {
+          var codes = document.querySelectorAll('code,pre');
+          for ( j = 0; j < codes.length; j++ ) codes[j].innerHTML = 
+codes[j].innerHTML.replace(/<\/?explained>/g, '');
+        });
+    }
+
+    _io_slices = typeof _io_slices != 'undefined' ? _io_slices : [];
+        
+    				    									_io_slices.push('tag:mysql');
+				    									_io_slices.push('tag:ошибки');
+				
+    if ( document.querySelector('#signin') )
+    {
+        window.onscroll = function()
+        {
+            var read = (window.scrollY + window.innerHeight) / 
+document.body.offsetHeight;
+            if ( read >= 0.7 ) 
+document.querySelector('#signin').classList.add('on');
+            else 
+document.querySelector('#signin').classList.remove('on');
+        }
+        
+        
+document.querySelector('#close-this-shit').addEventListener('click', 
+function() {
+            document.querySelector('#signin').classList.add('off');
+            document.cookie = 'signin_later=1502894612';
+        });
+    }
+</script></div>
+
+	<footer>
+	<p class="links">
+				
+		<a href="https://www.facebook.com/ruhighload/" target="_blank">Группа в Фейсбуке</a> &nbsp;
+		<a href="http://onthe.io/work" target="_blank">Карьера в .io</a>
+	</p>
+	<span>
+	    Хайлод поддерживают
+	    <a href="mailto:golotyuk@gmail.com" target="_blank">den golotyuk</a> и
+	    <a href="http://onthe.io/work" target="_blank">.io команда</a>
+	    в 2017 году
+	    <br><br>
+		<a href="https://onthe.io/" target="_blank" title=".io analytics"><img src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/smngoz6f4ear59isb.png"></a>
+    </span>
+</footer>	
+	<script>var search = {
+	open : function(el) {
+
+		el.parentNode.classList.add('on'); 
+		setTimeout( function() { 
+			el.parentNode.querySelector('input').focus(); 
+		}, 100 );
+
+		document.body.addEventListener("keydown", function(e) {
+			if ( e.keyCode == 27 ) {
+				el.parentNode.classList.remove('on');
+			}
+		}); 
+	},
+
+	close : function(el) {
+		el.parentNode.classList.remove('on');
+	}
+}
+
+var nav = {
+	open : function() {
+		document.querySelector('.header_right').classList.add('on');
+		document.querySelector('.header_right_mask').classList.add('on');
+	},
+
+	close : function() {
+		document.querySelector('.header_right').classList.remove('on');
+		document.querySelector('.header_right_mask').classList.remove('on');
+	},
+}
+
+var popup = {
+	open : function() {
+		document.querySelector('.popup').classList.add('on');
+		if ( document.querySelector('.popup textarea') ) setTimeout( 
+function() { document.querySelector('.popup textarea').focus() } , 50 );
+		document.body.addEventListener("keydown", function(e) {
+			if ( e.keyCode == 27 ) {
+				document.querySelector('.popup').classList.remove('on');
+			}
+		}); 
+	},
+
+	close : function() {
+		document.querySelector('.popup').classList.remove('on');
+	},
+}</script>
+
+    <script src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/io_002.js"></script><script src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/io.js"></script>
+    
+    <script>
+        document.querySelector('.search_input').addEventListener('keyup', function(e) {
+            if ( this.value.length >= 3 )
+            {
+                var q = this.value;
+                xhr = new XMLHttpRequest();
+                xhr.open('POST', '/search');
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function() {
+                    if ( xhr.status === 200 ) {
+                        var r = JSON.parse(xhr.responseText);
+                        if ( document.querySelector('#head-title') ) document.querySelector('#head-title').remove();
+                        document.querySelector('#content').innerHTML = r.html;
+                    }
+                };
+                xhr.send(encodeURI('q=' + q));
+            }
+        });
+    
+        document.addEventListener('keydown', function(e) {
+            if ( e.keyCode == 70 ) search.open( document.querySelector('.search_icon.open') );
+        });
+    </script>
+    
+    <script type="text/javascript" src="MySQL%20Server%20Has%20Gone%20Away%20-%20%D0%BA%D0%B0%D0%BA%20%D0%BF%D0%BE%D1%84%D0%B8%D0%BA%D1%81%D0%B8%D1%82%D1%8C%20.%20%D0%A5%D0%B0%D0%B9%D0%BB%D0%BE%D0%B0%D0%B4_files/58b6e43fe45a1dac187b23c6.js" async=""></script>
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        
+        ga('create', 'UA-96442188-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    
+    
+</body></html>

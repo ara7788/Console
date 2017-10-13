@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="ru-RU" prefix="og: http://ogp.me/ns#" prefix="og: http://ogp.me/ns#">
+<head>
+<meta charset="UTF-8" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://serveradmin.ru/xmlrpc.php" />
+<title>Установка Asterisk + Freepbx на Debian/Ubuntu</title>
+
+<!-- This site is optimized with the Yoast SEO plugin v5.5.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Установка Freepbx 12 и Asterisk 13 на сервер под управлением Debian/Ubuntu. Подробное описание и разбор ошибок установки."/>
+<link rel="canonical" href="https://serveradmin.ru/ustanovka-freepbx-na-debian-ubuntu/" />
+<meta property="og:locale" content="ru_RU" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Установка Asterisk + Freepbx на Debian/Ubuntu" />
+<meta property="og:description" content="Установка Freepbx 12 и Asterisk 13 на сервер под управлением Debian/Ubuntu. Подробное описание и разбор ошибок установки." />
+<meta property="og:url" content="https://serveradmin.ru/ustanovka-freepbx-na-debian-ubuntu/" />
+<meta property="og:site_name" content="Системное администрирование" />
+<meta property="article:tag" content="asterisk" />
+<meta property="article:tag" content="debian" />
+<meta property="article:tag" content="FreePBX" />
+<meta property="article:section" content="Debian" />
+<meta property="article:published_time" content="2015-06-27T17:42:11+00:00" />
+<meta property="article:modified_time" content="2015-10-25T01:43:47+00:00" />
+<meta property="og:updated_time" content="2015-10-25T01:43:47+00:00" />
+<meta property="og:image" content="https://serveradmin.ru/wp-content/uploads/2015/06/freepbx-logo.png" />
+<meta property="og:image:secure_url" content="https://serveradmin.ru/wp-content/uploads/2015/06/freepbx-logo.png" />
+<meta property="og:image:width" content="850" />
+<meta property="og:image:height" content="425" />
+<script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"WebSite","@id":"#website","url":"https:\/\/serveradmin.ru\/","name":"\u0421\u0438\u0441\u0442\u0435\u043c\u043d\u043e\u0435 \u0430\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435","potentialAction":{"@type":"SearchAction","target":"https:\/\/serveradmin.ru\/?s={search_term_string}","query-input":"required name=search_term_string"}}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Системное администрирование &raquo; Лента" href="https://serveradmin.ru/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Системное администрирование &raquo; Лента комментариев" href="https://serveradmin.ru/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Системное администрирование &raquo; Лента комментариев к &laquo;Установка Asterisk + Freepbx на Debian/Ubuntu&raquo;" href="https://serveradmin.ru/ustanovka-freepbx-na-debian-ubuntu/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/serveradmin.ru\/wp-includes\/js\/wp-emoji-release.min.js"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b!==c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='toc-screen-css'  href='https://serveradmin.ru/wp-content/plugins/table-of-contents-plus/screen.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wpforo-widgets-css'  href='https://serveradmin.ru/wp-content/plugins/wpforo/wpf-themes/classic/widgets.css' type='text/css' media='all' />
+<link rel='stylesheet' id='tie-style-css'  href='https://serveradmin.ru/wp-content/themes/sahifa/style.css' type='text/css' media='all' />
+<link rel='stylesheet' id='tie-ilightbox-skin-css'  href='https://serveradmin.ru/wp-content/themes/sahifa/css/ilightbox/dark-skin/skin.css' type='text/css' media='all' />
+<link rel='stylesheet' id='Droid+Sans-css'  href='https://fonts.googleapis.com/css?family=Droid+Sans%3Aregular%2C700' type='text/css' media='all' />
+<script type='text/javascript' src='https://serveradmin.ru/wp-includes/js/jquery/jquery.js'></script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-includes/js/jquery/jquery-migrate.min.js'></script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-content/plugins/duracelltomi-google-tag-manager/js/gtm4wp-form-move-tracker.js'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var tieViewsCacheL10n = {"admin_ajax_url":"https:\/\/serveradmin.ru\/wp-admin\/admin-ajax.php","post_id":"1007"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-content/themes/sahifa/js/postviews-cache.js'></script>
+<link rel='https://api.w.org/' href='https://serveradmin.ru/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://serveradmin.ru/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://serveradmin.ru/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.8.2" />
+<link rel='shortlink' href='https://serveradmin.ru/?p=1007' />
+<link rel="alternate" type="application/json+oembed" href="https://serveradmin.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fserveradmin.ru%2Fustanovka-freepbx-na-debian-ubuntu%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://serveradmin.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fserveradmin.ru%2Fustanovka-freepbx-na-debian-ubuntu%2F&#038;format=xml" />
+<style type="text/css">div#toc_container {background: #f9f9f9;border: 1px solid #aaaaaa;width: 100%;}div#toc_container ul li {font-size: 15px;}</style>		<script type="text/javascript">
+			jQuery(document).ready(function($){
+				$(document).on('click','.attach_cant_view', function(){
+					$("#wpf-msg-box").hide();
+					$('#wpforo-load').visible();
+					$("#wpf-msg-box p.wpf-msg-box-triangle-right").removeClass("error").removeClass("success");
+					$("#wpf-msg-box p.wpf-msg-box-triangle-right").html("<span>Пожалуйста, <a href=\"https://serveradmin.ru/forum/?wpforo=signin\" rel=\"nofollow\">Вход</a> или <a href=\"https://serveradmin.ru/forum/?wpforo=signup\" rel=\"nofollow\">Зарегистрироваться</a></span>");
+					$("#wpf-msg-box").show(150).delay(1000);
+					$('#wpforo-load').invisible();
+				});
+			});
+		</script>
+		
+<!-- Google Tag Manager for WordPress by DuracellTomi - http://duracelltomi.com -->
+<script data-cfasync="false" type="text/javascript">
+	var gtm4wp_datalayer_name = "dataLayer";
+	var dataLayer = dataLayer || [];
+	dataLayer.push({"pagePostType":"post","pagePostType2":"single-post","pageCategory":["debian","linux"],"pageAttributes":["asterisk","debian","freepbx"],"pagePostAuthor":"Zerox"});
+</script>
+<script data-cfasync="false">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.'+'js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N32MZXJ');</script>
+<!-- End Google Tag Manager -->
+<!-- End Google Tag Manager for WordPress by DuracellTomi --><link rel="shortcut icon" href="https://serveradmin.ru/wp-content/uploads/2015/08/favicon.ico" title="Favicon" />	
+<!--[if IE]>
+<script type="text/javascript">jQuery(document).ready(function (){ jQuery(".menu-item").has("ul").children("a").attr("aria-haspopup", "true");});</script>
+<![endif]-->	
+<!--[if lt IE 9]>
+<script src="https://serveradmin.ru/wp-content/themes/sahifa/js/html5.js"></script>
+<script src="https://serveradmin.ru/wp-content/themes/sahifa/js/selectivizr-min.js"></script>
+<![endif]-->
+<!--[if IE 9]>
+<link rel="stylesheet" type="text/css" media="all" href="https://serveradmin.ru/wp-content/themes/sahifa/css/ie9.css" />
+<![endif]-->
+<!--[if IE 8]>
+<link rel="stylesheet" type="text/css" media="all" href="https://serveradmin.ru/wp-content/themes/sahifa/css/ie8.css" />
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" media="all" href="https://serveradmin.ru/wp-content/themes/sahifa/css/ie7.css" />
+<![endif]-->
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+< meta name="referrer" content="origin">
+
+<style type="text/css" media="screen"> 
+
+	
+body {
+	background-image : url(https://serveradmin.ru/wp-content/themes/sahifa/images/patterns/body-bg15.png);
+	background-position: top center;
+}
+
+body.single .post .entry a, body.page .post .entry a {
+	color: #e6773c;
+}
+		
+</style> 
+
+
+<!-- BEGIN recaptcha, injected by plugin wp-recaptcha-integration  -->
+
+<!-- END recaptcha -->
+</head>
+<body id="top" class="post-template-default single single-post postid-1007 single-format-standard">
+
+<div class="wrapper-outer">
+
+	<div class="background-cover"></div>
+
+	<aside id="slide-out">
+	
+			<div class="search-mobile">
+			<form method="get" id="searchform-mobile" action="https://serveradmin.ru/">
+				<button class="search-button" type="submit" value="Поищем"><i class="fa fa-search"></i></button>	
+				<input type="text" id="s-mobile" name="s" title="Поищем" value="Поищем" onfocus="if (this.value == 'Поищем') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Поищем';}"  />
+			</form>
+		</div><!-- .search-mobile /-->
+		
+		
+		<div id="mobile-menu" ></div>
+	</aside><!-- #slide-out /-->
+
+		<div id="wrapper" class="boxed-all">
+		<div class="inner-wrapper">
+
+		<header id="theme-header" class="theme-header">
+						<div id="top-nav" class="top-nav">
+				<div class="container">
+
+								
+				<div class="top-menu"><ul id="menu-menyu-1" class="menu"><li id="menu-item-522" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-522"><a href="//serveradmin.ru/">Главная</a></li>
+<li id="menu-item-636" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-636"><a href="https://serveradmin.ru/karta-sayta/">Карта сайта</a></li>
+<li id="menu-item-1183" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1183"><a href="https://serveradmin.ru/zakazat-statyu/">Заказать статью</a></li>
+<li id="menu-item-2592" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2592"><a href="https://serveradmin.ru/uslugi/">Услуги</a></li>
+<li id="menu-item-2593" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2593"><a href="https://serveradmin.ru/kontaktyi/">Контакты</a></li>
+</ul></div>
+						<div class="search-block">
+						<form method="get" id="searchform-header" action="https://serveradmin.ru/">
+							<button class="search-button" type="submit" value="Поищем"><i class="fa fa-search"></i></button>	
+							<input class="search-live" type="text" id="s-header" name="s" title="Поищем" value="Поищем" onfocus="if (this.value == 'Поищем') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Поищем';}"  />
+						</form>
+					</div><!-- .search-block /-->
+			<div class="social-icons">
+		<a class="ttip-none" title="Rss" href="https://serveradmin.ru/feed/" target="_blank"><i class="fa fa-rss"></i></a>		
+			</div>
+
+		
+	
+				</div><!-- .container /-->
+			</div><!-- .top-menu /-->
+			
+		<div class="header-content">
+		
+					<a id="slide-out-open" class="slide-out-open" href="#"><span></span></a>
+				
+			<div class="logo">
+			<h2>								<a title="Системное администрирование" href="https://serveradmin.ru/">
+					<img src="https://serveradmin.ru/wp-content/uploads/2015/12/logo-new.png" alt="Системное администрирование"  /><strong>Системное администрирование Сайт содержит статьи, обзоры, инструкции по установке, настройке и администрированию различных информационных систем</strong>
+				</a>
+			</h2>			</div><!-- .logo /-->
+			<div class="e3lan e3lan-top">			
+			<a href="https://www.keyweb.ru/products/server/root-virtual-server" title="Виртуальные серверы в Германии" target="_blank">
+				<img src="https://serveradmin.ru/wp-content/uploads/2017/07/server_vds.gif" alt="Виртуальные серверы в Германии" />
+			</a>
+				</div>			<div class="clear"></div>
+			
+		</div>	
+													<nav id="main-nav">
+				<div class="container">
+				
+				
+					<div class="main-menu"><ul id="menu-osnovnoe" class="menu"><li id="menu-item-1934" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1934"><a href="//serveradmin.ru">Главная</a></li>
+<li id="menu-item-3761" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3761"><a target="_blank" href="https://serveradmin.ru/forum/"><i class="fa fa-comments-o"></i>Форум</a></li>
+<li id="menu-item-1921" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1921"><a><i class="fa fa-server"></i>Системы</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-1932" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1932"><a href="https://serveradmin.ru/category/freebsd/">Freebsd</a></li>
+	<li id="menu-item-1922" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1922"><a href="https://serveradmin.ru/category/linux/centos/">CentOS</a></li>
+	<li id="menu-item-1923" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-1923"><a href="https://serveradmin.ru/category/linux/debian/">Debian</a></li>
+	<li id="menu-item-1924" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1924"><a href="https://serveradmin.ru/category/windows/">Windows</a></li>
+	<li id="menu-item-1925" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1925"><a href="https://serveradmin.ru/category/synology/">Synology</a></li>
+</ul>
+</li>
+<li id="menu-item-5106" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-5106"><a><i class="fa fa-list-ul"></i>Сервисы</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-5114" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5114"><a href="https://serveradmin.ru/tag/sysconfig/">Настройка системы</a></li>
+	<li id="menu-item-5112" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5112"><a href="https://serveradmin.ru/tag/gate/">Шлюз</a></li>
+	<li id="menu-item-5110" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5110"><a href="https://serveradmin.ru/tag/webserver/">Веб сервер</a></li>
+	<li id="menu-item-5107" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5107"><a href="https://serveradmin.ru/tag/mailserver">Почтовый сервер</a></li>
+	<li id="menu-item-5702" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5702"><a href="https://serveradmin.ru/tag/fileserver/">Файловый сервер</a></li>
+	<li id="menu-item-5113" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5113"><a href="https://serveradmin.ru/tag/backup/">Бэкап</a></li>
+</ul>
+</li>
+<li id="menu-item-1927" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-1927"><a href="https://serveradmin.ru/category/virtual/"><i class="fa fa-cloud"></i>Виртуализация</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-1928" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1928"><a href="https://serveradmin.ru/category/virtual/hyperv/">Hyper-V</a></li>
+	<li id="menu-item-1929" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1929"><a href="https://serveradmin.ru/category/virtual/vmware/">VMware</a></li>
+	<li id="menu-item-1972" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1972"><a href="https://serveradmin.ru/category/virtual/xenserver/">XenServer</a></li>
+	<li id="menu-item-3700" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3700"><a href="https://serveradmin.ru/category/virtual/proxmox/">Proxmox</a></li>
+	<li id="menu-item-4903" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-4903"><a href="https://serveradmin.ru/category/virtual/kvm/">KVM</a></li>
+</ul>
+</li>
+<li id="menu-item-1926" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1926"><a href="https://serveradmin.ru/category/mikrotik/"><i class="fa fa-maxcdn"></i>Mikrotik</a></li>
+<li id="menu-item-2272" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2272"><a><i class="fa fa-binoculars"></i>Мониторинг</a>
+<ul class="sub-menu menu-sub-content">
+	<li id="menu-item-2273" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2273"><a href="https://serveradmin.ru/category/zabbix/">Zabbix</a></li>
+</ul>
+</li>
+<li id="menu-item-3340" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3340"><a href="https://serveradmin.ru/category/asterisk/"><i class="fa fa-phone-square"></i>Asterisk</a></li>
+<li id="menu-item-4832" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-4832"><a href="https://serveradmin.ru/category/1c/"><i class="fa fa-copyright"></i>1C</a></li>
+<li id="menu-item-1930" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1930"><a href="https://serveradmin.ru/category/virus/"><i class="fa fa-exclamation-circle"></i>Осторожно, вирус!</a></li>
+<li id="menu-item-1931" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1931"><a href="https://serveradmin.ru/category/poleznyie-sovetyi/"><i class="fa fa-cogs"></i>Советы</a></li>
+<li id="menu-item-2803" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2803"><a href="https://serveradmin.ru/category/errors/"><i class="fa fa-times-circle"></i>Ошибки</a></li>
+<li id="menu-item-3205" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3205"><a href="https://serveradmin.ru/category/lichnoe/"><i class="fa fa-android"></i>Личное</a></li>
+</ul></div>					
+					
+				</div>
+			</nav><!-- .main-nav /-->
+					</header><!-- #header /-->
+	
+		
+	
+	
+	<div id="main-content" class="container">
+			
+		
+	
+	
+		
+	<div class="content">
+	
+				
+		<div xmlns:v="http://rdf.data-vocabulary.org/#"  id="crumbs"><span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" class="crumbs-home" href="https://serveradmin.ru">Home</a></span> <span class="delimiter">&raquo;</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="https://serveradmin.ru/category/linux/">Linux</a></span> <span class="delimiter">&raquo;</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="https://serveradmin.ru/category/linux/debian/">Debian</a></span> <span class="delimiter">&raquo;</span> <span class="current">Установка Asterisk + Freepbx на Debian/Ubuntu</span></div>
+					
+				
+						
+		<article class="post-listing post-1007 post type-post status-publish format-standard has-post-thumbnail hentry category-debian category-linux tag-asterisk tag-debian tag-freepbx" id="the-post">
+			
+			<div class="post-inner">
+			
+							<h1 class="name post-title entry-title" itemprop="itemReviewed" itemscope itemtype="http://schema.org/Thing"><span itemprop="name">Установка Asterisk + Freepbx на Debian/Ubuntu</span></h1>
+
+						
+<p class="post-meta">
+	
+		
+	<span class="tie-date"><i class="fa fa-clock-o"></i>Обновлено: 25.10.2015</span>	
+	<span class="post-cats"><i class="fa fa-folder"></i><a href="https://serveradmin.ru/category/linux/debian/" rel="category tag">Debian</a>, <a href="https://serveradmin.ru/category/linux/" rel="category tag">Linux</a></span>
+	
+	<span class="post-comments"><i class="fa fa-comments"></i><a href="https://serveradmin.ru/ustanovka-freepbx-na-debian-ubuntu/#comments">3 комментария</a></span>
+<span class="post-views"><i class="fa fa-eye"></i>27,676 Views</span> </p>
+<div class="clear"></div>
+			
+				<div class="entry">
+					
+					
+					<p>В настоящее время большую популярность получил сервер голосовой связи Asterisk. Удобнее всего им управлять с помощью web панели администрирования Freepbx. Вопросом установки и настройки этого инструмента я бы и хотел заняться в этой статье. За основу возьмем сервер Debian 8. Установка на сервер Ubuntu будет аналогична с точностью до каждой команды с сервером Debian.</p>
+<p><span id="more-1007"></span><div id="toc_container" class="no_bullets"><p class="toc_title">Содержание:</p><ul class="toc_list"><li><a href="#_Freepbx"><span class="toc_number toc_depth_1">1</span> Что такое Freepbx</a></li><li><a href="#_Freepbx_Distro"><span class="toc_number toc_depth_1">2</span> Что такое Freepbx Distro</a></li><li><a href="#__Freepbx"><span class="toc_number toc_depth_1">3</span> Подготовка к установке Freepbx</a></li><li><a href="#_asterisk_13"><span class="toc_number toc_depth_1">4</span> Установка asterisk 13</a></li><li><a href="#_Freepbx_12"><span class="toc_number toc_depth_1">5</span> Установка Freepbx 12</a></li><li><a href="#__Debian"><span class="toc_number toc_depth_1">6</span> Дополнительные материалы по Debian</a></li></ul></div>
+
+<div class="box info  "><div class="box-inner-block"><i class="fa tie-shortcode-boxicon"></i>
+			Если вы еще не определились, как вам лучше настраивать и использовать астериск, рекомендую мою статью &#8212; <a href="//serveradmin.ru/nastroyka-servera-telefonii-asterisk-s-nulya/" target="_blank">asterisk &#8212; настройка с нуля</a> для малого и среднего офиса. Рассмотрен основной функционал, который необходим для эффективной работы. Инструкция подробная, по шагам, от и до: от установки до записи разговоров и статистики звонков.
+			</div></div>
+<h2><span id="_Freepbx"><span style="color: #000000;">Что такое Freepbx</span></span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p>FreePBX &#8212; это удобный GUI (графический интерфейс пользователя), который управляет Asterisk &#8212; самым популярным общедоступным программным обеспечением в области компьютерной телефонии. FreePBX является продуктом Open Source, он разработан тысячами добровольцев по всему миру.</p>
+<p>На сегодня FreePBX загружен более чем 5 000 000 раз и обслуживает более чем 500 000 активных телефонных систем. Если Вы никогда не слышали про FreePBX, то, вероятно, будете удивлены ее возможностями для Вашего бизнеса.</p>
+<p>FreePBX &#8212; это основанный на web интерфейс, который позволяет управлять самым популярным на сегодняшний день сервером ip телефонии asterisk. FreePBX выпускается под лицензией GNU и может свободно использоваться конечными пользователями без какого-либо ограничения. Данный продукт является компонентом FreePBX Distro и некоторых других дистрибутивов.</p>
+<p>Первый релиз системы 0.2 (28 ноября 2004 года) был назван AMP (Asterisk Management Portal). Но имя пришлось изменить, так как Asterisk является зарегистрированной торговой маркой Digium corporation.</p>
+<p>С тех пор вышло множество обновлений, поддерживающие новые версии Astersik, добавлены новые меню и поддержка голосовой почты, очереди звонков, факсов, различных языков, устройств DAHDI и папок пользователей.</p>
+<p>Поддерживаемое оборудование включает в себя устройства компаний Aastra Technologies, Algo, AND, AudioCodes, Cisco Systems, Cyberdata, Digium, Grandstream, Mitel, Panasonic, Polycom, Sangoma, Snom, Xorcom, and Yealink.</p>
+<h2><span id="_Freepbx_Distro"><span style="color: #000000;">Что такое Freepbx Distro</span></span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p><b>FreePBX Distro </b>&#8212; open source дистрибутив Linux на базе популярной операционной системы CentOS. Его можно использовать для быстрого разворачивания сервера Asterisk и панели управления Freepbx. Это вариант удобен для тех, кто не очень разбирается в linux и не хочет тратить время на ручную установку всех компонентов, необходимых для полноценной установки freepbx на отдельный сервер.</p>
+<p>FreePBX Distro, в отличие от Elastix, выпускается самими разработчиками FreePBX, поэтому более динамично развивается и чаще выпускаются обновления. В него встроены Fail2Ban и IPTables, работает русский язык из коробки, настроен LAMP (Linux/Apache/MySQL).</p>
+<p>Я не буду в данной статье касаться настройки системы из этого дистрибутива. Это тема отдельного разговора. Хотя там и говорить особо нечего, установка проходит достаточно просто и быстро.</p>
+<h2><span id="__Freepbx"><span style="color: #000000;">Подготовка к установке Freepbx</span></span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<p>Приступим к установке Freepbx. Предварительно, если вы еще не сделали, вам необходимо <a href="//serveradmin.ru/ustanovka-debian-8/">установить Debian сервер</a>, а потом его <a href="//serveradmin.ru/debian-nastroyka-servera/">настроить</a>. Мы будем устанавливать на сервер следующей версии:</p>
+<pre># lsb_release -a
+No LSB modules are available.
+Distributor ID: Debian
+Description: Debian GNU/Linux 8.0 (jessie)
+Release: 8.0
+Codename: jessie</pre>
+<p>Первым делом устанавливаем зависимости:</p>
+<pre># apt-get install -y build-essential linux-headers-`uname -r` openssh-server apache2 mysql-server mysql-client bison flex php5 php5-curl php5-cli php5-mysql php-pear php-db php5-gd curl sox libncurses5-dev libssl-dev libmysqlclient-dev mpg123 libxml2-dev libnewt-dev sqlite3 libsqlite3-dev pkg-config automake libtool autoconf git subversion unixodbc-dev uuid uuid-dev libasound2-dev libogg-dev libvorbis-dev libcurl4-openssl-dev libical-dev libneon27-dev libsrtp0-dev libspandsp-dev libiksemel-dev libiksemel-utils libiksemel3</pre>
+<p>Инсталлируем PearDB:</p>
+<pre># pear uninstall db
+uninstall ok: channel://pear.php.net/DB-1.7.14
+# pear install db-1.7.14
+WARNING: "pear/DB" is deprecated in favor of "pear/MDB2"
+downloading DB-1.7.14.tgz ...
+Starting to download DB-1.7.14.tgz (133,103 bytes)
+.............................done: 133,103 bytes
+install ok: channel://pear.php.net/DB-1.7.14
+</pre>
+<p>Перезагружаем сервер:</p>
+<pre># shutdown -r now</pre>
+<h2><span id="_asterisk_13"><span style="color: #000000;">Установка asterisk 13</span></span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<pre># cd /usr/src
+# wget http://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz
+# wget http://downloads.asterisk.org/pub/telephony/libpri/libpri-1.4-current.tar.gz
+# wget http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-13-current.tar.gz
+# git clone https://github.com/akheron/jansson.git
+# wget http://www.pjsip.org/release/2.2.1/pjproject-2.2.1.tar.bz2</pre>
+<p>Собираем и ставим DAHDI:</p>
+<pre># tar xvfz dahdi-linux-complete-current.tar.gz
+# cd dahdi-linux-complete-*
+# make all
+# make install
+# make config</pre>
+<p>Собираем и ставим LIBPRI:</p>
+<pre># cd /usr/src
+# tar xvfz libpri-1.4-current.tar.gz
+# cd libpri-*
+# make
+# make install</pre>
+<p>Компилируем и устанавливаем pjproject</p>
+<pre># cd /usr/src
+# tar -xjvf pjproject-2.2.1.tar.bz2
+# cd pjproject-2.2.1
+# CFLAGS='-DPJ_HAS_IPV6=1' ./configure --prefix=/usr --enable-shared --disable-sound --disable-resample --disable-video --disable-opencore-amr
+# make dep
+# make
+# make install</pre>
+<p>Компилируем и устанавливаем jansson</p>
+<pre style="text-align: left;"># cd /usr/src/jansson
+# autoreconf -i
+# ./configure
+# make
+# make install</pre>
+<p>Собираем и ставим Astersik 13:</p>
+<pre># cd /usr/src
+# tar xvfz asterisk-13-current.tar.gz
+# cd asterisk-13.4.0
+# ./configure</pre>
+<p>Если вылезает ошибка:</p>
+<pre>configure: error: *** uuid support not found (this typically means the uuid development package is missing)</pre>
+<p>Делаем следующее:</p>
+<pre># contrib/scripts/install_prereq install</pre>
+<p>Выскочит окно, указываем код 7, если вы из России:<br />
+<a href="//serveradmin.ru/wp-content/uploads/2015/06/lipvpb0.png"><img class="aligncenter size-large wp-image-1264" src="//serveradmin.ru/wp-content/uploads/2015/06/lipvpb0-1024x125.png" alt="lipvpb0" width="618" height="75" srcset="https://serveradmin.ru/wp-content/uploads/2015/06/lipvpb0-1024x125.png 1024w, https://serveradmin.ru/wp-content/uploads/2015/06/lipvpb0-300x37.png 300w, https://serveradmin.ru/wp-content/uploads/2015/06/lipvpb0.png 1513w" sizes="(max-width: 618px) 100vw, 618px" /></a><br />
+Продолжаем сборку:</p>
+<pre># ./configure</pre>
+<p>Если все прошло без ошибок, продолжаем:</p>
+<pre># contrib/scripts/get_mp3_source.sh
+# make menuselect</pre>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/06/asterisk-menuselect.png"><img class="aligncenter wp-image-1293 size-large" title="menuselect при установке asterisk" src="//serveradmin.ru/wp-content/uploads/2015/06/asterisk-menuselect-1024x569.png" alt="Установка Asterisk" width="618" height="343" srcset="https://serveradmin.ru/wp-content/uploads/2015/06/asterisk-menuselect-1024x569.png 1024w, https://serveradmin.ru/wp-content/uploads/2015/06/asterisk-menuselect-300x167.png 300w, https://serveradmin.ru/wp-content/uploads/2015/06/asterisk-menuselect.png 1521w" sizes="(max-width: 618px) 100vw, 618px" /></a><br />
+Выбираем отмеченные мной модули и продолжаем:</p>
+<pre># make
+# make install
+# make config
+# ldconfig</pre>
+<p>Устанавливаем дополнительные звуки:</p>
+<pre># mkdir -p /var/lib/asterisk/sounds
+# cd /var/lib/asterisk/sounds
+# wget http://downloads.asterisk.org/pub/telephony/sounds/asterisk-extra-sounds-en-wav-current.tar.gz
+# tar xfz asterisk-extra-sounds-en-wav-current.tar.gz
+# rm -f asterisk-extra-sounds-en-wav-current.tar.gz
+# wget http://downloads.asterisk.org/pub/telephony/sounds/asterisk-extra-sounds-en-g722-current.tar.gz
+# tar xfz asterisk-extra-sounds-en-g722-current.tar.gz
+# rm -f asterisk-extra-sounds-en-g722-current.tar.gz</pre>
+<h2><span id="_Freepbx_12"><span style="color: #000000;">Установка Freepbx 12</span></span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<pre># cd /usr/src
+# wget http://mirror.freepbx.org/freepbx-12.0.43.tgz
+# tar xvfz freepbx-12.0.43.tgz</pre>
+<p>Создаем нового пользователя Asterisk:</p>
+<pre># useradd -m asterisk
+# chown asterisk. /var/run/asterisk
+# chown -R asterisk. /etc/asterisk
+# chown -R asterisk. /var/{lib,log,spool}/asterisk
+# chown -R asterisk. /usr/lib/asterisk
+# rm -rf /var/www/html</pre>
+<p>Вносим изменения в конфиг apache:</p>
+<pre># sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php5/apache2/php.ini
+# cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf_orig
+# sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf
+# service apache2 restart</pre>
+<p>Настраиваем базу данный mysql:</p>
+<pre># mysqladmin -u root -p create asterisk
+# mysqladmin -u root -p create asteriskcdrdb
+# mysql -u root -p -e "GRANT ALL PRIVILEGES ON asterisk.* TO asteriskuser@localhost IDENTIFIED BY '123';"
+# mysql -u root -p -e "GRANT ALL PRIVILEGES ON asteriskcdrdb.* TO asteriskuser@localhost IDENTIFIED BY '123';"
+# mysql -u root -p -e "flush privileges;"</pre>
+<p>Стартуем asterisk:</p>
+<pre># /usr/src/freepbx/start_asterisk start
+STARTING ASTERISK
+Asterisk Started</pre>
+<p>Устанавливаем FreePBX:</p>
+<pre># cd /usr/src/freepbx
+# ./install_amp --installdb --username=asteriskuser --password=123
+Checking for PEAR DB..OK
+Checking for PEAR Console::Getopt..OK
+Using username: asteriskuser
+Using password: ***
+Checking user..OK
+Checking if Asterisk is running..running with PID: 37303..OK
+Checking for /etc/amportal.conf../etc/amportal.conf does not exist, copying default
+Creating new /etc/amportal.conf</pre>
+<p>Отвечаем на заданные вопросы. Я везде оставлял значения по-умолчанию, кроме адреса сервера. Пароли не забудьте поставить свои:</p>
+<pre>Enter your USERNAME to connect to the 'asterisk' database:
+ [asteriskuser]
+Enter your PASSWORD to connect to the 'asterisk' database:
+ [123]
+Enter the hostname of the 'asterisk' database:
+ [localhost]
+Enter a USERNAME to connect to the Asterisk Manager interface:
+ [admin]
+Enter a PASSWORD to connect to the Asterisk Manager interface:
+ [amp111] 123
+Enter the path to use for your AMP web root:
+ [/var/www/html]
+
+Created /var/www/html
+Enter the IP ADDRESS or hostname used to access the AMP web-admin:
+ [192.168.1.1] 192.168.8.101
+Use simple Extensions [extensions] admin or separate Devices and Users [deviceanduser]?
+ [extensions]
+Enter directory in which to store AMP executable scripts:
+ [/var/lib/asterisk/bin]
+
+Created /var/lib/asterisk/bin
+Enter directory in which to store super-user scripts:
+ [/usr/local/sbin]
+
+/etc/amportal.conf writtenAssuming new install, --install-moh added to command line
+OK
+Reading /etc/amportal.conf..parsed amp_conf variables from /etc/amportal.conf:
+amp_conf [AMPDBHOST] =&gt; [localhost]
+amp_conf [AMPDBENGINE] =&gt; [mysql]
+amp_conf [AMPENGINE] =&gt; [asterisk]
+amp_conf [AMPMGRUSER] =&gt; [admin]
+amp_conf [AMPMGRPASS] =&gt; [123]
+amp_conf [AMPBIN] =&gt; [/var/lib/asterisk/bin]
+amp_conf [AMPSBIN] =&gt; [/usr/local/sbin]
+amp_conf [AMPWEBROOT] =&gt; [/var/www/html]
+amp_conf [AMPCGIBIN] =&gt; [/var/www/cgi-bin ]
+amp_conf [FOPWEBROOT] =&gt; [/var/www/html/panel]
+amp_conf [FOPPASSWORD] =&gt; [passw0rd]
+amp_conf [AUTHTYPE] =&gt; [database]
+amp_conf [AMPEXTENSIONS] =&gt; [extensions]
+amp_conf [AMPDBUSER] =&gt; [asteriskuser]
+amp_conf [AMPDBPASS] =&gt; [123]
+amp_conf [AMPWEBADDRESS] =&gt; [192.168.8.101]
+amp_conf [AMPDBNAME] =&gt; [asterisk]
+OK</pre>
+<p>Дальше идет установка, не буду приводить вывод. В конце установки будет сообщение:</p>
+<pre>****************************************
+* At This Time Please Restart Asterisk *
+****************************************</pre>
+<p>Продолжаем установку:</p>
+<pre># amportal chown
+# amportal a ma installall
+</pre>
+<p>Идет долгая установка, что-то постоянно качается, распаковывается, устанавливается. В конце у меня вылетела ошибка:</p>
+<p><strong>Setting operator panel web root and enabling dev state&#8230;.&lt;br&gt;Done&lt;br&gt;Setting callevents = yes&#8230;.&lt;br&gt;Creating client symlink&#8230;.&lt;br&gt;Done&lt;br&gt;Enabling voicemail box polling&lt;br/&gt;PHP Fatal error:  Call to a member function send_request() on null in /var/www/html/admin/modules/voicemail/functions.inc.php on line 1154</strong></p>
+<p>Так как у меня уже был <a href="//serveradmin.ru/asterisk-11-i-freepbx-ustanovka-na-debian-7-wheezy/" target="_blank">опыт установки</a> предыдущих версий подобной связки, сразу полез проверять старые болячки. Открываем файл <strong>/etc/asterisk/manager.conf</strong> и видим в конце две строки:</p>
+<pre>#include manager_additional.conf
+#include manager_custom.conf</pre>
+<p>Меняем # на ; чтобы стало так:</p>
+<pre>;include manager_additional.conf
+;include manager_custom.conf</pre>
+<p>Сохраняем файл и перечитываем конфиг астериска:</p>
+<pre># asterisk -r
+# CLI&gt; core reload</pre>
+<p>Выходим из консоли астериск и запускаем заново установку FreePBX:</p>
+<pre># amportal a ma installall</pre>
+<p>Продолжается стандартный процесс, доустанавливается то, что не установилось ранее. В конце получаем сообщение:</p>
+<pre>SETTING FILE PERMISSIONS................Done
+Removing any dangling symlinks
+Dangling symlinks removed</pre>
+<p>Если получили это сообщение, значит установка прошла успешно. Доделываем:</p>
+<pre># amportal a reload
+
+Please wait...
+
+Successfully reloaded</pre>
+<pre># amportal a ma refreshsignatures
+# amportal chown</pre>
+<pre># ln -s /var/lib/asterisk/moh /var/lib/asterisk/mohmp3 
+# amportal restart
+Please wait...
+
+STOPPING ASTERISK
+Waiting for Asterisk to Stop Gracefully...
+
+Asterisk Stopped
+
+SETTING FILE PERMISSIONS.............../var/lib/asterisk/bin/freepbx_engine: line 275: sudo: команда не найдена
+.Done
+Removing any dangling symlinks
+Dangling symlinks removed
+
+STARTING ASTERISK
+Asterisk Started</pre>
+<p>Все, на этом установка закончена. Теперь можно зайти по адресу http://192.168.8.101 и попасть в веб интерфейс freepbx:</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/06/freepbx-config.png"><img class="aligncenter wp-image-1294 size-large" title="Первый вход в web интерфейс freepbx после установки" src="//serveradmin.ru/wp-content/uploads/2015/06/freepbx-config-1024x243.png" alt="Установка Freepbx" width="618" height="147" srcset="https://serveradmin.ru/wp-content/uploads/2015/06/freepbx-config-1024x243.png 1024w, https://serveradmin.ru/wp-content/uploads/2015/06/freepbx-config-300x71.png 300w, https://serveradmin.ru/wp-content/uploads/2015/06/freepbx-config.png 1558w" sizes="(max-width: 618px) 100vw, 618px" /></a></p>
+<p>Создаем пользователя и заходим в админку с этой учеткой:</p>
+<p><a href="//serveradmin.ru/wp-content/uploads/2015/06/freepbx-overview.png"><img class="aligncenter wp-image-1295 size-large" title="Первая страница web интерфейса freepbx" src="//serveradmin.ru/wp-content/uploads/2015/06/freepbx-overview-1024x696.png" alt="freepbx system overview" width="618" height="420" srcset="https://serveradmin.ru/wp-content/uploads/2015/06/freepbx-overview-1024x696.png 1024w, https://serveradmin.ru/wp-content/uploads/2015/06/freepbx-overview-300x204.png 300w, https://serveradmin.ru/wp-content/uploads/2015/06/freepbx-overview-110x75.png 110w, https://serveradmin.ru/wp-content/uploads/2015/06/freepbx-overview.png 1222w" sizes="(max-width: 618px) 100vw, 618px" /></a></p>
+<p>На этом установка окончена, можно приступать к конфигурированию. Подробным примером <a href="//serveradmin.ru/nastroyka-servera-telefonii-asterisk-s-nulya/" target="_blank">настройки asterisk для чайников</a> может служить моя статья. Хотя в ней речь идет о настройке без использования freepbx, какие-то вещи из статьи можете взять на вооружение.</p>
+<!-- Start shortcoder --><hr />
+
+<h4 style="text-align: center;">Помогла статья? Есть возможность отблагодарить автора</h4>
+<p style="text-align: center;"><iframe src="https://money.yandex.ru/quickpay/shop-widget?account=4100198746754&amp;quickpay=shop&amp;payment-type-choice=on&amp;mobile-payment-type-choice=on&amp;writer=seller&amp;targets=%D0%A1%D0%BF%D0%B0%D1%81%D0%B8%D0%B1%D0%BE+%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D1%83+%D0%B7%D0%B0+%D0%BF%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%83%D1%8E+%D1%81%D1%82%D0%B0%D1%82%D1%8C%D1%8E&amp;targets-hint=&amp;default-sum=&amp;button-text=03&amp;comment=on&amp;hint=&amp;successURL=" width="450" height="258" frameborder="0" scrolling="no"></iframe></p><!-- End shortcoder v4.1.1-->
+<h2><span id="__Debian">Дополнительные материалы по Debian</span></h2><p style="text-align: center;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Статьи -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1310661631569687"
+     data-ad-slot="3326828851"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+<!-- Start shortcoder --><div class="clear"></div><div style="margin-top:20px; margin-bottom:20px;" class="divider divider-normal"></div>
+<table class=" aligncenter" style="border-color: #e5e5e5;">
+<tbody>
+<tr>
+<td style="background-color: #e7f6ff; border-color: #e5e5e5; text-align: center;"><span style="color: #ff0000;"><strong><span style="color: #000000;">Рекомендую полезные материалы по <a href="//serveradmin.ru/category/linux/debian/" target="_blank" rel="noopener">Debian</a>:</span></strong></span></td>
+</tr>
+<tr>
+<th style="text-align: center;">Настройки системы</th>
+</tr>
+<tr>
+<td style="border-color: #e5e5e5;">
+	<script type="text/javascript">	jQuery(document).ready(function($){	jQuery("ul.tabs-nav").tabs("> .pane"); }); </script>
+
+		<div class="post-tabs-ver">
+		
+<ul class="tabs-nav">
+<li>Установка</li>
+<li><strong>Базовая настройка</strong></li>
+<li>Настройка сети</li>
+<li>Обновление 8 до 9</li>
+<li>Обновление 7 до 8</li>
+<li>Включение логов cron</li>
+</ul>
+
+		<div class="pane">
+		Подробная <a href="https://serveradmin.ru/ustanovka-debian-9/" target="_blank" rel="noopener">установка Debian 9 Stratch</a> с помощью графического инсталлятора со скриншотами и пояснениями к каждому пункту установщика.
+		</div>
+	
+
+		<div class="pane">
+		Базовая <a href="//serveradmin.ru/debian-nastroyka-servera/" target="_blank" rel="noopener">настройка сервера Debian</a>. Приведены практические советы по улучшению безопасности и удобства администрирования.
+		</div>
+	
+
+		<div class="pane">
+		Подробное описание <a href="//serveradmin.ru/nastroyka-seti-v-debian/" target="_blank" rel="noopener">настройки сети в Debian</a> - задать ip адрес, dhcp, отключить ipv6, dns, hostname, статические маршруты и др.
+		</div>
+	
+
+		<div class="pane">
+		<a href="https://serveradmin.ru/obnovlenie-debian-8-jessie-do-9-stretch/" target="_blank" rel="noopener">Обновление предыдущей версии Debian 8 Jessie до последней Debian 9 Stratch</a>. Подробная инструкция с описанием по каждому этапу обновления.
+		</div>
+	
+
+		<div class="pane">
+		<a href="//serveradmin.ru/obnovlenie-debian-8/" target="_blank" rel="noopener">Обновление версии Debian 7 wheezy до Debian 8 Jessie</a>. Подробная инструкция с описанием по каждому этапу обновления.
+		</div>
+	
+
+		<div class="pane">
+		<a href="//serveradmin.ru/gde-v-debian-logi-cron/" target="_blank" rel="noopener">Включение записи логов cron в Debian в отдельный файл</a> и настройка ротации этого файла. Отключение логов в syslog.
+		</div>
+	
+
+		</div>
+	</td>
+</tr>
+<tr>
+<th style="text-align: center;">Настройка программных комплексов</th>
+</tr>
+<tr>
+<td style="border-color: #e5e5e5;"> 
+	<script type="text/javascript">	jQuery(document).ready(function($){	jQuery("ul.tabs-nav").tabs("> .pane"); }); </script>
+
+		<div class="post-tabs-ver">
+		
+<ul class="tabs-nav">
+<li>Proxmox</li>
+<li>Шлюз в интернет</li>
+<li>Установка Asterisk</li>
+<li>Asterisk+Freepbx</li>
+<li>PostgreSQL для 1С</li>
+<li>Настройка pptp</li>
+</ul>
+
+		<div class="pane">
+		Подробное описание <a href="//serveradmin.ru/ustanovka-i-nastroyka-proxmox/" target="_blank" rel="noopener">установки гипервизора proxmox</a> на raid1 mdadm на базе операционной системы Debian 8. Приведены практические советы по настройке.
+		</div>
+	
+
+		<div class="pane">
+		<a href="//serveradmin.ru/nastroyka-internet-shlyuza-na-debian/" target="_blank" rel="noopener">Настройка интернет шлюза на Debian</a>. Включает в себя настройку iptables, nat, dhcp, dns, iftop.
+		</div>
+	
+
+		<div class="pane">
+		Чистая <a target="_blank">установка Asterisk 13</a> на сервер под управлением Debian 8. Никаких дополнений и GUI, только vanilla asterisk.
+		</div>
+	
+
+		<div class="pane">
+		<a href="//serveradmin.ru/ustanovka-freepbx-na-debian-ubuntu/" target="_blank" rel="noopener">Установка Freepbx 12 и Asterisk 13</a> на сервер под управлением Debian/Ubuntu. Подробное описание и разбор ошибок установки.
+		</div>
+	
+
+		<div class="pane">
+		Рассказ об установке и небольшой настройке сервера <a href="https://serveradmin.ru/ustanovka-i-nastroyka-postgresql-na-debian-8-dlya-rabotyi-s-1s/" target="_blank" rel="noopener">бд postgresql для работы с базами 1С</a>. Задача не сложная, но есть небольшие нюансы как по настройке, так и по выбору дистрибутива.
+		</div>
+	
+
+		<div class="pane">
+		Описание установки и <a href="//serveradmin.ru/nastroyka-pptp-servera-na-debian/" target="_blank" rel="noopener">настройки pptp сервера в Debian</a> с передачей статических маршрутов клиенту для организации доступа к ресурсам сети.
+		</div>
+	
+
+		</div>
+	</td>
+</tr>
+<tr>
+<th style="text-align: center;">Разное</th>
+</tr>
+<tr>
+<td style="border-color: #e5e5e5;">
+	<script type="text/javascript">	jQuery(document).ready(function($){	jQuery("ul.tabs-nav").tabs("> .pane"); }); </script>
+
+		<div class="post-tabs-ver">
+		
+<ul class="tabs-nav">
+<li>Бэкап с помощью rsync</li>
+<li>Тюнинг postgresl для 1C</li>
+</ul>
+
+		<div class="pane">
+		Подробное описание <a href="//serveradmin.ru/rsync-nastroyka-bekapa-na-centos-debian-ubuntu/" target="_blank" rel="noopener">настройки бэкапа с помощью rsync</a> на примере скрипта инкрементного архива на системе Centos, Debian, Ubuntu, Windows.
+		</div>
+	
+
+		<div class="pane">
+		<a href="https://serveradmin.ru/uskorenie-rabotyi-1s-s-postgresql-i-diagnostika-problem-proizvoditelnosti/" target="_blank" rel="noopener">Ускорение работы 1С с postgresql</a> и диагностика проблем производительности
+		</div>
+	
+
+		</div>
+	</td>
+</tr>
+</tbody>
+</table><!-- End shortcoder v4.1.1-->
+										
+									</div><!-- .entry /-->
+				<span style="display:none"><a href="https://serveradmin.ru/tag/asterisk/" rel="tag">asterisk</a> <a href="https://serveradmin.ru/tag/debian/" rel="tag">debian</a> <a href="https://serveradmin.ru/tag/freepbx/" rel="tag">FreePBX</a></span>				<span style="display:none" class="updated">2015-06-27</span>
+								<div style="display:none" class="vcard author" itemprop="author" itemscope itemtype="http://schema.org/Person"><strong class="fn" itemprop="name"><a href="https://serveradmin.ru/author/zerox/" title="Записи Zerox" rel="author">Zerox</a></strong></div>
+								
+								<div class="clear"></div>
+			</div><!-- .post-inner -->
+		</article><!-- .post-listing -->
+		
+		
+		<div class="e3lan e3lan-post">			<!-- Yandex.RTB R-A-184428-1 -->
+<div id="yandex_rtb_R-A-184428-1"></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-184428-1",
+                renderTo: "yandex_rtb_R-A-184428-1",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>				</div>		
+				
+		
+			
+			<section id="related_posts">
+		<div class="block-head">
+			<h3>Похожие записи</h3><div class="stripe-line"></div>
+		</div>
+		<div class="post-listing">
+						<div class="related-item">
+							
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/backup-i-perenos-linux-servera/">
+						<img width="310" height="165" src="https://serveradmin.ru/wp-content/uploads/2017/08/linux-backup-and-restore-310x165.png" class="attachment-tie-medium size-tie-medium wp-post-image" alt="" />						<span class="fa overlay-icon"></span>
+					</a>
+				</div><!-- post-thumbnail /-->
+							
+				<h3><a href="https://serveradmin.ru/backup-i-perenos-linux-servera/" rel="bookmark">Бэкап и перенос linux (centos, debian, ubuntu) сервера с помощью Veeam Agent for Linux</a></h3>
+				<p class="post-meta"><span class="tie-date"><i class="fa fa-clock-o"></i>21.08.2017</span></p>
+			</div>
+						<div class="related-item">
+							
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/ogranichenie-na-zvonki-dlya-gruppyi-nomerov-v-asterisk/">
+						<img width="310" height="165" src="https://serveradmin.ru/wp-content/uploads/2017/08/asterisk-ogranichenie-310x165.png" class="attachment-tie-medium size-tie-medium wp-post-image" alt="" />						<span class="fa overlay-icon"></span>
+					</a>
+				</div><!-- post-thumbnail /-->
+							
+				<h3><a href="https://serveradmin.ru/ogranichenie-na-zvonki-dlya-gruppyi-nomerov-v-asterisk/" rel="bookmark">Ограничение на звонки для группы номеров в asterisk</a></h3>
+				<p class="post-meta"><span class="tie-date"><i class="fa fa-clock-o"></i>09.08.2017</span></p>
+			</div>
+						<div class="related-item">
+							
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/ustanovka-debian-9/">
+						<img width="310" height="165" src="https://serveradmin.ru/wp-content/uploads/2017/07/debian-9-install-310x165.png" class="attachment-tie-medium size-tie-medium wp-post-image" alt="" />						<span class="fa overlay-icon"></span>
+					</a>
+				</div><!-- post-thumbnail /-->
+							
+				<h3><a href="https://serveradmin.ru/ustanovka-debian-9/" rel="bookmark">Как скачать и установить Debian 9 Stretch</a></h3>
+				<p class="post-meta"><span class="tie-date"><i class="fa fa-clock-o"></i>03.07.2017</span></p>
+			</div>
+						<div class="clear"></div>
+		</div>
+	</section>
+			
+					
+		
+				
+<div id="comments">
+
+	
+	<div id="comments-box">
+		<div class="block-head">
+			<h3 id="comments-title">3 комментария </h3><div class="stripe-line"></div>
+		</div>
+		<div class="post-listing">
+
+			
+					
+				
+			<ol class="commentlist">	<li id="comment-853">
+		<div  class="comment even thread-even depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/aec243ae6d3419818ad443c20cb79375?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/aec243ae6d3419818ad443c20cb79375?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Кирилл</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/ustanovka-freepbx-na-debian-ubuntu/#comment-853">	19.01.2017 at 17:22</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Можно поинтересоваться минимальными системными требованиями?</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/ustanovka-freepbx-na-debian-ubuntu/?replytocom=853#respond' onclick='return addComment.moveForm( "comment-853", "853", "respond", "1007" )' aria-label='Комментарий к записи Кирилл'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	<ul class="children">
+	<li id="comment-854">
+		<div  class="comment byuser comment-author-zerox bypostauthor odd alt depth-2 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/021a5c3751266898c63b1b4431985d02?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">Zerox</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/ustanovka-freepbx-na-debian-ubuntu/#comment-854">	19.01.2017 at 17:27</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>Думаю это будут минимальные системные требования самой системы. Начинать можно от одного ядра и 512 мб памяти. Но лучше от 1024 памяти.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/ustanovka-freepbx-na-debian-ubuntu/?replytocom=854#respond' onclick='return addComment.moveForm( "comment-854", "854", "respond", "1007" )' aria-label='Комментарий к записи Zerox'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li id="comment-2208">
+		<div  class="comment even thread-odd thread-alt depth-1 comment-wrap" >
+			<div class="comment-avatar"><img alt='' src='https://secure.gravatar.com/avatar/64578eadabf29832c19c674093c42c59?s=65&#038;d=identicon&#038;r=g' srcset='https://secure.gravatar.com/avatar/64578eadabf29832c19c674093c42c59?s=130&amp;d=identicon&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' /></div>
+
+			<div class="comment-content">
+				<div class="author-comment">
+					<cite class="fn">bagrintsev</cite> 					<div class="comment-meta commentmetadata"><a href="https://serveradmin.ru/ustanovka-freepbx-na-debian-ubuntu/#comment-2208">	19.08.2017 at 10:18</a></div><!-- .comment-meta .commentmetadata -->
+					<div class="clear"></div>
+				</div>
+			
+									
+				<p>а почему 12, а не 13 или 14, уже вышел LTS релиз.</p>
+			</div>
+			<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://serveradmin.ru/ustanovka-freepbx-na-debian-ubuntu/?replytocom=2208#respond' onclick='return addComment.moveForm( "comment-2208", "2208", "respond", "1007" )' aria-label='Комментарий к записи bagrintsev'>Ответить</a></div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+	</li><!-- #comment-## -->
+</ol>
+				
+		 
+
+			
+					
+			
+		</div>
+	</div><!-- #comments-box -->
+			
+
+<div class="clear"></div>
+	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Добавить комментарий <small><a rel="nofollow" id="cancel-comment-reply-link" href="/ustanovka-freepbx-na-debian-ubuntu/#respond" style="display:none;">Отменить ответ</a></small></h3>			<form action="https://serveradmin.ru/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+				<p class="comment-notes"><span id="email-notes">Ваш e-mail не будет опубликован.</span></p><p class="comment-form-comment"><label for="comment">Комментарий</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></p><p><div  id="g-recaptcha-0" class="g-recaptcha" data-sitekey="6Lf-awsUAAAAANpq5nIhOaMMW6KOoPLtqoNqzHjw" data-theme="light"></div><noscript>Пожалуйста, разрешите JavaScript чтобы отправить эту форму.<br></noscript></p><p class="comment-form-author"><label for="author">Имя</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" /></p>
+<p class="comment-form-email"><label for="email">E-mail</label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" /></p>
+<p class="comment-form-url"><label for="url">Сайт</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200" /></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Отправить комментарий" /> <input type='hidden' name='comment_post_ID' value='1007' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><!-- BEGIN: Email notification plugin by Elance360 --><p><label for='subscribe-reloaded'> Подписка на новые комментарии:<br /><select name='subscribe-reloaded' id='subscribe-reloaded'><option value='none'>Не отправлять уведомлений</option><option value='yes' selected='selected'>Отправить уведомление только при ответе на мой комментарий</option><option value='replies'>Отправить уведомление при появлении любого комментария</option></select></label></p><!-- END: Email notification plugin by Elance360 -->			</form>
+			</div><!-- #respond -->
+	
+
+</div><!-- #comments -->
+		
+	</div><!-- .content -->
+<aside id="sidebar">
+	<div class="theiaStickySidebar">
+<div id="text-html-widget-21" class="widget text-html"><div class="widget-top"><h4> </h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div style="text-align:center;"><div id="kwork-widget"></div>
+            <script type="text/javascript">
+                (function() {
+                    widgetOptions = {
+                        width: 350,
+                        catType:'42',    
+                        count:'5',
+                        ref:249810};
+
+                    var script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.async = true;
+                    script.src = "https://kwork.ru/js/kwork_widget.js";
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                })();
+            </script>
+				</div><div class="clear"></div></div></div><!-- .widget /--><div id="text-html-widget-8" class="widget text-html"><div class="widget-top"><h4>Хостинг</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div style="text-align:center;"><table style="width: 330px; height: 70px;" cellspacing="3">
+<tbody>
+<tr>
+<td width="120"><a href="https://www.ihor.ru/?from=84981" onclick="trackOutboundLink('https://www.ihor.ru/?from=84981'); return false;" target="_blank"><img class="alignleft wp-image-2659 size-full" title="Надежный и быстрый хостинг на SSD за небольшие деньги" src="https://serveradmin.ru/wp-content/uploads/2016/01/hosting.gif" alt="Быстрый хостинг" width="120" height="60" /></a></td>
+<td style="line-height:20px;padding:.4em;text-align: left;">Надежный и быстрый хостинг на SSD за небольшие деньги. Рекомендую, использую сам.</td>
+</tr>
+</tbody>
+</table>
+				</div><div class="clear"></div></div></div><!-- .widget /--><div id="text-html-widget-13" class="widget text-html"><div class="widget-top"><h4>Группа Вконтакте</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div ><script type="text/javascript" src="//vk.com/js/api/openapi.js?126"></script>
+
+<!-- VK Widget -->
+<div id="vk_groups"></div>
+<script type="text/javascript">
+VK.Widgets.Group("vk_groups", {redesign: 1, mode: 1, width: "350", height: "400", color1: 'FFFFFF', color2: '000000', color3: '5E81A8'}, 95686747);
+</script>
+				</div><div class="clear"></div></div></div><!-- .widget /--><div id="text-html-widget-20" class="widget text-html"><div class="widget-top"><h4>Чат в Telegram</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div style="text-align:center;"><a href="https://t.me/joinchat/AAAAAD_H1pmIcX3yfRlG_Q" target="_blank"><img class="aligncenter wp-image-4864 size-full" src="https://serveradmin.ru/wp-content/uploads/2017/02/chat-2.png" alt="Чат системных администраторов" width="330" height="45" /></a>
+				</div><div class="clear"></div></div></div><!-- .widget /--><div id="text-html-widget-6" class="widget text-html"><div class="widget-top"><h4>Прикольная игра</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div ><a href="https://serveradmin.ru/igra-sistemnyiy-administrator/"><img class="aligncenter wp-image-2248 size-full" title="Симулятор системного администратора" src="https://serveradmin.ru/wp-content/uploads/2015/10/sysadmin-game.png" alt="Игра Системный администратор" width="330" height="245" />
+				</div><div class="clear"></div></div></div><!-- .widget /--><div id="posts-list-widget-2" class="widget posts-list"><div class="widget-top"><h4>Популярное		</h4><div class="stripe-line"></div></div>
+						<div class="widget-container">				<ul>
+								<li >
+						
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/vault-virus/" title="Как расшифровать файл с расширением vault после вируса шифровальщика" rel="bookmark"><img width="110" height="75" src="https://serveradmin.ru/wp-content/uploads/2015/04/virus-110x75.png" class="attachment-tie-small size-tie-small wp-post-image" alt="" /><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/vault-virus/">Как расшифровать файл с расширением vault после вируса шифровальщика</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>12.08.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>264,176 </span> <span>
+							</li>
+				<li >
+						
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/" title="Как настроить микротик routerboard RB951G-2HnD" rel="bookmark"><img width="110" height="75" src="https://serveradmin.ru/wp-content/uploads/2015/12/mikrotik-settings-110x75.png" class="attachment-tie-small size-tie-small wp-post-image" alt="" /><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/bazovaya-nastroyka-routera-mikrotik/">Как настроить микротик routerboard RB951G-2HnD</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>20.12.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>222,145 </span> <span>
+							</li>
+				<li >
+						
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/centos-7-nastroyka-servera/" title="CentOS 7 настройка сервера" rel="bookmark"><img width="110" height="75" src="https://serveradmin.ru/wp-content/uploads/2015/03/centos-configure-110x75.png" class="attachment-tie-small size-tie-small wp-post-image" alt="Centos настройка" /><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/centos-7-nastroyka-servera/">CentOS 7 настройка сервера</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>20.12.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>208,295 </span> <span>
+							</li>
+				<li >
+						
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/nastroyka-seti-v-centos/" title="Сетевые настройки в CentOS 7" rel="bookmark"><img width="110" height="75" src="https://serveradmin.ru/wp-content/uploads/2015/09/network-logo-110x75.png" class="attachment-tie-small size-tie-small wp-post-image" alt="Настройка сети в CentOS" /><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/nastroyka-seti-v-centos/">Сетевые настройки в CentOS 7</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>23.08.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>171,817 </span> <span>
+							</li>
+				<li >
+						
+				<div class="post-thumbnail">
+					<a href="https://serveradmin.ru/mikrotik-nastroyka-prostogo-firewall/" title="Mikrotik настройка простого Firewall" rel="bookmark"><img width="110" height="75" src="https://serveradmin.ru/wp-content/uploads/2015/02/firewall-110x75.jpg" class="attachment-tie-small size-tie-small wp-post-image" alt="" /><span class="fa overlay-icon"></span></a>
+				</div><!-- post-thumbnail /-->
+							<h3><a href="https://serveradmin.ru/mikrotik-nastroyka-prostogo-firewall/">Mikrotik настройка простого Firewall</a></h3>
+				 <span class="tie-date"><i class="fa fa-clock-o"></i>28.02.2015</span>									<span class="post-views-widget"><span class="post-views"><i class="fa fa-eye"></i>112,570 </span> <span>
+							</li>
+		
+				</ul>
+		<div class="clear"></div>
+	</div></div><!-- .widget /--><div id="categories-4" class="widget widget_categories"><div class="widget-top"><h4>Рубрики</h4><div class="stripe-line"></div></div>
+						<div class="widget-container">		<ul>
+	<li class="cat-item cat-item-174"><a href="https://serveradmin.ru/category/1c/" >1C</a> (6)
+</li>
+	<li class="cat-item cat-item-133"><a href="https://serveradmin.ru/category/asterisk/" >Asterisk</a> (12)
+</li>
+	<li class="cat-item cat-item-65"><a href="https://serveradmin.ru/category/freebsd/" >Freebsd</a> (19)
+</li>
+	<li class="cat-item cat-item-31"><a href="https://serveradmin.ru/category/linux/" >Linux</a> (68)
+<ul class='children'>
+	<li class="cat-item cat-item-67"><a href="https://serveradmin.ru/category/linux/centos/" >CentOS</a> (39)
+</li>
+	<li class="cat-item cat-item-68"><a href="https://serveradmin.ru/category/linux/debian/" >Debian</a> (19)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-66"><a href="https://serveradmin.ru/category/mikrotik/" >Mikrotik</a> (9)
+</li>
+	<li class="cat-item cat-item-33"><a href="https://serveradmin.ru/category/synology/" >Synology</a> (3)
+</li>
+	<li class="cat-item cat-item-30"><a href="https://serveradmin.ru/category/windows/" >Windows</a> (15)
+</li>
+	<li class="cat-item cat-item-117"><a href="https://serveradmin.ru/category/zabbix/" >Zabbix</a> (27)
+</li>
+	<li class="cat-item cat-item-69"><a href="https://serveradmin.ru/category/virtual/" >Виртуализация</a> (22)
+<ul class='children'>
+	<li class="cat-item cat-item-70"><a href="https://serveradmin.ru/category/virtual/hyperv/" >Hyper-V</a> (9)
+</li>
+	<li class="cat-item cat-item-175"><a href="https://serveradmin.ru/category/virtual/kvm/" >KVM</a> (1)
+</li>
+	<li class="cat-item cat-item-146"><a href="https://serveradmin.ru/category/virtual/proxmox/" >Proxmox</a> (1)
+</li>
+	<li class="cat-item cat-item-72"><a href="https://serveradmin.ru/category/virtual/vmware/" >VMware</a> (2)
+</li>
+	<li class="cat-item cat-item-71"><a href="https://serveradmin.ru/category/virtual/xenserver/" >XenServer</a> (11)
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-138"><a href="https://serveradmin.ru/category/lichnoe/" >Личное</a> (5)
+</li>
+	<li class="cat-item cat-item-91"><a href="https://serveradmin.ru/category/virus/" >Осторожно, вирус!</a> (8)
+</li>
+	<li class="cat-item cat-item-129"><a href="https://serveradmin.ru/category/errors/" >Ошибки</a> (18)
+</li>
+	<li class="cat-item cat-item-95"><a href="https://serveradmin.ru/category/poleznyie-sovetyi/" >Полезные советы</a> (24)
+</li>
+	<li class="cat-item cat-item-20"><a href="https://serveradmin.ru/category/raznoe/" >Разное</a> (9)
+</li>
+		</ul>
+</div></div><!-- .widget /--><div id="text-html-widget-4" class="widget text-html"><div class="widget-top"><h4>Новости сайта на почту</h4><div class="stripe-line"></div></div>
+						<div class="widget-container"><div style="text-align:center;"><form style="border:0px solid #ccc;padding:3px;text-align:center;" action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=serveradmin_ru', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+<input type="text" style="width:200px;margin:6px;" name="email" value=" Введите Ваш E-mail"/>
+<input type="hidden" value="serveradmin_ru" name="uri"/>
+<input type="hidden" name="loc" value="ru_RU"/><input type="submit"  style="width:100px;margin:6px;"value="Подписаться" /></form>
+				</div><div class="clear"></div></div></div><!-- .widget /-->			<div id="text-html-widget-18" class="text-html-box" >
+			<table class=" aligncenter" style="width: 310px; height: 255px;">
+<tbody>
+<tr>
+<td>
+<!-- Yandex.RTB R-A-184428-4 -->
+<div id="yandex_rtb_R-A-184428-4"></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-A-184428-4",
+                renderTo: "yandex_rtb_R-A-184428-4",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+</td>
+</tr>
+</tbody>
+</table>			</div>
+			</div><!-- .theiaStickySidebar /-->
+</aside><!-- #sidebar /-->	<div class="clear"></div>
+</div><!-- .container /-->
+
+<footer id="theme-footer">
+	<div id="footer-widget-area" class="footer-2c">
+
+			<div id="footer-first" class="footer-widgets-box">
+			<div id="login-widget-2" class="footer-widget login-widget"><div class="footer-widget-top"><h4>Вход/Регистрация</h4></div>
+						<div class="footer-widget-container">		<div id="login-form">
+			<form name="loginform" id="loginform" action="https://serveradmin.ru/wp-login.php" method="post">
+				<p id="log-username"><input type="text" name="log" id="log" title="Username" value="Username" onfocus="if (this.value == 'Username') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Username';}"  size="33" /></p>
+				<p id="log-pass"><input type="password" name="pwd" id="pwd" title="Password" value="Password" onfocus="if (this.value == 'Password') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Password';}" size="33" /></p>
+				<input type="submit" name="submit" value="Log in" class="login-button" />
+				<label for="rememberme"><input name="rememberme" id="rememberme" type="checkbox" checked="checked" value="forever" /> Remember Me</label>
+				<input type="hidden" name="redirect_to" value="/ustanovka-freepbx-na-debian-ubuntu/"/>
+			</form>
+			<ul class="login-links">
+				<li><a rel="nofollow" href="https://serveradmin.ru/wp-login.php?action=register">Регистрация</a></li>				<li><a href="https://serveradmin.ru/wp-login.php?action=lostpassword&redirect_to=https://serveradmin.ru">Lost your password?</a></li>
+			</ul>
+		</div>
+	</div></div><!-- .widget /-->		</div>
+	
+			<div id="footer-second" class="footer-widgets-box">
+			<div id="text-2" class="footer-widget widget_text"><div class="footer-widget-top"><h4>Статистика</h4></div>
+						<div class="footer-widget-container">			<div class="textwidget"><!-- Yandex.Metrika informer -->
+<a href="https://metrika.yandex.ru/stat/?id=23506456&amp;from=informer"
+target="_blank" rel="nofollow"><img src="https://informer.yandex.ru/informer/23506456/3_0_FFB953FF_FF9933FF_0_pageviews"
+style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" class="ym-advanced-informer" data-cid="23506456" data-lang="ru" /></a>
+<!-- /Yandex.Metrika informer -->
+
+<!-- begin of Top100 code -->
+<script id="top100Counter" type="text/javascript" src="https://counter.rambler.ru/top100.jcn?3152045"></script>
+<noscript>
+<a href="http://top100.rambler.ru/navi/3152045/">
+<img src="http://counter.rambler.ru/top100.cnt?3152045" alt="Rambler's Top100" border="0" />
+</a>
+</noscript>
+<!-- end of Top100 code -->
+
+<!-- Rating@Mail.ru logo -->
+<a href="http://top.mail.ru/jump?from=2722258" target="_blank">
+<img src="//top-fwz1.mail.ru/counter?id=2722258;t=494;l=1" 
+style="border:0;" height="31" width="88" alt="Рейтинг@Mail.ru" /></a>
+<!-- //Rating@Mail.ru logo --></div>
+		</div></div><!-- .widget /-->		</div><!-- #second .widget-area -->
+	
+
+	
+		
+	</div><!-- #footer-widget-area -->
+	<div class="clear"></div>
+</footer><!-- .Footer /-->
+				
+<div class="clear"></div>
+<div class="footer-bottom">
+	<div class="container">
+		<div class="alignright">
+					</div>
+				
+		<div class="alignleft">
+					</div>
+		<div class="clear"></div>
+	</div><!-- .Container -->
+</div><!-- .Footer bottom -->
+
+</div><!-- .inner-Wrapper -->
+</div><!-- #Wrapper -->
+</div><!-- .Wrapper-outer -->
+	<div id="topcontrol" class="fa fa-angle-up" title="Scroll To Top"></div>
+<div id="fb-root"></div>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-N32MZXJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><!-- Rating@Mail.ru counter -->
+<script type="text/javascript">
+var _tmr = window._tmr || (window._tmr = []);
+_tmr.push({id: "2722258", type: "pageView", start: (new Date()).getTime()});
+(function (d, w, id) {
+  if (d.getElementById(id)) return;
+  var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+  ts.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//top-fwz1.mail.ru/js/code.js";
+  var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+  if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+})(document, window, "topmailru-code");
+</script><noscript><div style="position:absolute;left:-10000px;">
+<img src="//top-fwz1.mail.ru/counter?id=2722258;js=na" style="border:0;" height="1" width="1" alt="Рейтинг@Mail.ru" />
+</div></noscript>
+<!-- //Rating@Mail.ru counter --><div id="reading-position-indicator"></div>
+<!-- BEGIN recaptcha, injected by plugin wp-recaptcha-integration  -->
+<script type="text/javascript">
+		var recaptcha_widgets={};
+		function wp_recaptchaLoadCallback(){ 
+			try {
+				grecaptcha;
+			} catch(err){
+				return;
+			}
+			var e = document.querySelectorAll ? document.querySelectorAll('.g-recaptcha:not(.wpcf7-form-control)') : document.getElementsByClassName('g-recaptcha'),
+				form_submits;
+
+			for (var i=0;i<e.length;i++) {
+				(function(el){
+					var wid;
+					// check if captcha element is unrendered
+					if ( ! el.childNodes.length) {
+						wid = grecaptcha.render(el,{
+							'sitekey':'6Lf-awsUAAAAANpq5nIhOaMMW6KOoPLtqoNqzHjw',
+							'theme':el.getAttribute('data-theme') || 'light'
+						});
+						el.setAttribute('data-widget-id',wid);
+					} else {
+						wid = el.getAttribute('data-widget-id');
+						grecaptcha.reset(wid);
+					}
+				})(e[i]);
+			}
+		}
+		
+		// if jquery present re-render jquery/ajax loaded captcha elements 
+		if ( typeof jQuery !== 'undefined' )
+			jQuery(document).ajaxComplete( function(evt,xhr,set){
+				if( xhr.responseText && xhr.responseText.indexOf('6Lf-awsUAAAAANpq5nIhOaMMW6KOoPLtqoNqzHjw') !== -1)
+					wp_recaptchaLoadCallback();
+			} );
+		
+		</script><script src="https://www.google.com/recaptcha/api.js?onload=wp_recaptchaLoadCallback&#038;render=explicit&#038;hl=ru" async defer></script>
+<!-- END recaptcha -->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter23506456 = new Ya.Metrika({
+                    id:23506456,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/23506456" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter --><script type='text/javascript'>
+/* <![CDATA[ */
+var tocplus = {"smooth_scroll":"1"};
+var tocplus = {"smooth_scroll":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-content/plugins/table-of-contents-plus/front.min.js'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var tie = {"mobile_menu_active":"true","mobile_menu_top":"","lightbox_all":"true","lightbox_gallery":"","woocommerce_lightbox":"","lightbox_skin":"dark","lightbox_thumb":"vertical","lightbox_arrows":"","sticky_sidebar":"1","is_singular":"1","SmothScroll":"","reading_indicator":"true","lang_no_results":"No Results","lang_results_found":"Results Found"};
+var tie = {"mobile_menu_active":"true","mobile_menu_top":"","lightbox_all":"true","lightbox_gallery":"","woocommerce_lightbox":"","lightbox_skin":"dark","lightbox_thumb":"vertical","lightbox_arrows":"","sticky_sidebar":"1","is_singular":"1","SmothScroll":"","reading_indicator":"true","lang_no_results":"No Results","lang_results_found":"Results Found"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-content/themes/sahifa/js/tie-scripts.js'></script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-content/themes/sahifa/js/ilightbox.packed.js'></script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-includes/js/comment-reply.min.js'></script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-includes/js/wp-embed.min.js'></script>
+<script type='text/javascript' src='https://serveradmin.ru/wp-content/themes/sahifa/js/tabs.min.js'></script>
+</body>
+</html>
+<!-- Dynamic page generated in 0.576 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2017-10-07 16:48:54 -->
+
+<!-- Compression = gzip -->

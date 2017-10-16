@@ -1,0 +1,2434 @@
+﻿yum
+папка, содержащая информацию о репозиториях
+/etc/yum.repos.d/
+дополнительно можно просмотреть лог
+#cat /var/log/yum.log
+
+Проверка на доступные обновления
+#yum check-update
+список подключенных репозиториев
+#yum repolist
+информация об определенном репозитории
+#yum repoinfo epel
+информация о пакетах в указанном репозитории
+#yum repo-pkgs epel list
+удалить пакеты сохраненные в кэше
+#yum clean packages
+удалить все пакеты и метаданные
+#yum clean all
+создать кэш
+#yum makecache
+установить пакет
+#yum install httpd
+удаление пакета
+установить из локальной директории (поиск/установка зависимостей будут произведены из подключенных репозиториев)
+#yum localinstall httpd.rpm
+или
+#yum install httpd.rpm
+установить с http
+#yum localinstall http://server/repo/httpd.rpm
+#yum remove httpd
+обновить пакет
+#yum update httpd
+откатиться к предыдущей версии пакета
+#yum downgrade
+переустановка пакета (восстановление удаленных файлов)
+#yum reinstall httpd
+удаление ненужных более пакетов
+#yum autoremove
+обновить все пакеты
+#yum update
+обновить до определенной версии
+#yum update-to
+проверить локальную базу rpm (поддерживаются параметры dependencies, duplicates, obsoletes, provides)
+#yum check
+#yum check dependencies
+список названий пакетов из репозиторий
+#yum list
+список всех доступных пакетов
+#yum list available
+список всех установленных пакетов
+#yum list installed
+установлен ли указанный пакет
+#yum list installed httpd
+список установленных и доступных пакетов
+#yum list all
+список пакетов, относящихся к ядру
+#yum list kernel
+отображение информации о пакете
+#yum info httpd
+список зависимостей и необходимых пакетов
+#yum deplist httpd
+найти пакет, который содержит файл
+#yum provides "*bin/top"
+поиск пакета по имени и описанию
+#yum search httpd
+получить информацию о доступных обновлениях безопасности
+#yum updateinfo list security
+вывести список групп
+#yum grouplist
+просмотр yum истории (вывод списка транзакций)
+#yum history list
+просмотр информации определенной транзакции (установленные пакеты, установленные зависимости)
+#yum history info 9
+отмена транзакции
+#yum history undo 9
+повторить
+#yum history redo 9
+Основной конфигурационный файл
+/etc/yum.conf
+создание локальных репозиториев (createrepo ставится отдельно)
+#createrepo
+включить отключенный репозиторий
+#yum update -y --enablerepo=epel
+отключить репозиторий
+#yum update -y --disablerepo=epel
+
+Выбор из какого репозитория ставить:
+yum -y remove php
+yum -y --enablerepo=remi-php70 install php70-php php70-php-pear php70-php-bcmath php70-php-pecl-jsond-devel php70-php-mysqlnd php70-php-gd php70-php-common php70-php-fpm php70-php-intl php70-php-cli php70-php php70-php-xml php70-php-opcache php70-php-pecl-apcu php70-php-pecl-jsond php70-php-pdo php70-php-gmp php70-php-process php70-php-pecl-imagick php70-php-devel php70-php-mbstring
+rm -f /usr/bin/php
+ln -s /usr/bin/php70 /usr/bin/php
+service httpd restart
+service php70-php-fpm start
+Настрока репозитория актвного
+dir:/etc/yum.repos.d/repolist_name
+repolist_name:
+enabled=1 - active
+
+
+exim
+imapsync
+
+IMAP
+
+telnet server imap
+Если у нас соединение с сервером IMAP шифрованное (по SSL), то команда соединения будет следующей:
+$ openssl s_client -crlf -ign_eof -connect mail-srv:993	
+# openssl s_client -connect imap.server:993 -quiet
+
+a login user pass
+Далее смотрим список ящиков :
+a2 LIST «» «*»
+a list "" "*"
+Запрашиваем у сервера статус папки Inbox
+. status INBOX (messages)	
+Выбираем папку Inbox
+. select inbox
+Даем команду серверу показать письмо № 7
+. fetch 7 full	
+Даем команду серверу показать тело письма № 7
+. fetch 7 rfc822.text
+a4 FETCH 1 BODY[]
+Далее можем просмотреть список входящих писем и увидеть непрочитанные
+a3 EXAMINE INBOX
+a logout
+
+
+SMTP
+$ telnet localhost 25
+-1> helo localhost
+или
+-1> ehlo localhost
+Если нужна авторизация на сервере — вводим эту строку.
+-1.1>auth login
+Получаем ответ от сервера
+334 VXNlcm5hbWU6
+Вводим наш логин в формате base64, который мы получили и запомнили выше
+bXlfbG9naW4K
+Получаем ответ от сервера
+334 UGFzc3dvcmQ6
+Вводим наш пароль в формате base64, который мы получили и запомнили выше
+bXlfcGFzc3dvcmQK
+-1.2>pass
+-2> mail from: <root@exim.teachers>
+-3> rcpt to: <test@exim.teachers>
+-4> data
+-4.1>subject: test telnet auth
+-5> test
+-6> .
+-7> quit
+
+POP3
+
+exim# telnet localhost 110
+-1> user test@exim.teachers
+-2> pass pass
+-3> list
++OK POP3 clients that break here, they violate STD53.
+1 1953
+2 337
+.
+-4> retr 1
+-5> quit
+
+
+user2.txt
+пустая строка
+user1;pass1;user2;pass2;
+user3;pass3;user4;pass4;
+пустая строка
+
+imapsync.sh
+#!/bin/bash
+FILE=/root/user2.txt
+HOST1=mx.example.ru
+HOST2=imap.yandex.ru
+PORT1=143
+PORT2=143
+IFS=$'\n'
+#Пример
+#while read list
+#    do
+#        while IFS=$';' read u1 p1 u2 p2
+#            do echo "$u1=$p1 and $u2=$p2"
+#        done
+#done < $FILE
+
+while IFS=$';' read U1 P1 U2 P2
+#    do echo "$U1 = $P1 and $U2 = $P2"
+do
+imapsync \
+   --host1 $HOST1 --port1 $PORT1 --user1 $U1@example.ru  --password1 $P1  \
+   --host2 $HOST2 --port2 $PORT2 --user2 $U2@yandex.ru  --password2 $P2 
+done < $FILE
+
+
+Вариант в ручную:
+imapsync \
+   --host1 mx.example.ru --port1 143 --user1 user@example.ru  --password1 "Pass123"  \
+   --host2 imap.yandex.ru --port2 143 --user2 user@yandex.ru  --password2 "Pass123" 
+imapsync \
+   --host1 mx.example.ru --port1 143 --user3 user@example.ru  --password1 "Pass123"  \
+   --host2 imap.yandex.ru --port2 143 --user4 user@yandex.ru  --password2 "Pass123" 
+
+
+
+hostnamectl status
+hostnamectl set-hostname client.itzgeek.com
+systemctl restart systemd-hostnamedyum
+
+bash
+работа в цикле с пользователями из файла (user1;pass1;user2;pass2;)
+#!/bin/bash
+FILE=/root/user2.txt
+while read list
+    do
+        while IFS=$';' read u1 p1 u2 p2
+            do echo "$u1=$p1 and $u2=$p2"
+        done
+done < $FILE
+
+vi
+exim
+
+#########
+#FTP
+#########
+
+#pure-ftp
+#pure-ftp.conf
+======================================
+ChrootEveryone              yes
+CreateHomeDir			yes
+MaxClientsNumber            50
+Daemonize                   yes
+MaxClientsPerIP             8
+VerboseLog                  yes
+DisplayDotFiles             yes
+AnonymousOnly               no
+NoAnonymous                 yes
+SyslogFacility              ftp
+DontResolve                 yes
+MaxIdleTime                 15
+PureDB                        /etc/pure-ftpd/pureftpd.pdb
+LimitRecursion              10000 8
+AnonymousCanCreateDirs      no
+MaxLoad                     4
+ PassivePortRange          30000 50000
+AntiWarez                   yes
+Umask                       133:022
+MinUID                      1000
+UseFtpUsers no
+AllowUserFXP                no
+AllowAnonymousFXP           no
+ProhibitDotFilesWrite       no
+ProhibitDotFilesRead        no
+AutoRename                  no
+AnonymousCantUpload         yes
+AltLog                     clf:/var/log/pureftpd.log
+#PIDFile                     /var/run/pure-ftpd.pid
+MaxDiskUsage               99
+CustomerProof              yes
+# TLS                      1
+# TLSCipherSuite           HIGH
+# Certificate file, for TLS
+# CertFile                 /etc/ssl/private/pure-ftpd.pem
+# IPV4Only                 yes
+# IPV6Only                 yes
+======================================
+#users
+groupadd ftpgroup
+useradd -g ftpgroup -d /dev/null -s /etc ftpuser
+
+Теперь можно добавить виртуального пользователя:
+pure-pw useradd remote -u ftpuser -g ftpgroup -d /home/pubftp/remote -N 10
+
+Где remote — имя пользователя для доступа к FTP,
+а /home/pubftp/remote — персональная директория,\
+с которой он будет работать. -N 10 задает квоту в 10МБ
+(ограничение на использование дискового пространства).
+Эту директорию не нужно создавать вручную, т.к. она появится автоматически 
+(параметр задается при конфигурировании, об этом чуть позже)
+ при первом подключении и обмене данными с сервером.
+
+Так же после первого выполнения этой команды создается файл,
+который будет хранить данные для доступа пользователей.
+======================================
+#help to add access for different folders
+ChrootEveryone              yes
+!!! local user must have UID>1000
+groupadd ftpgroup
+useradd -g ftpgroup -d /dev/null -s /etc ftpuser
+/home/siteuser
+1.add local user
+--------------------------------------
+useradd -d /home/siteuser -s /bin/bash siteuser
+useradd -d /home/devuser -s /bin/bash devuser
+--------------------------------------
+/etc/passwd
+ftpuser:x:1001:1001::/dev/null:/etc
+devuser:x:1002:1002::/home/devuser:/bin/bash
+siteuser:x:1003:1003::/home/siteuser:/bin/bash
+
+2.add this user to local group
+--------------------------------------
+groupadd bitrix
+usermod -a -G bitrix devuser
+usermod -a -G bitrix siteuser
+groups bitrix
+--------------------------------------
+/etc/group
+bitrix:x:600:devuser,siteuser
+ftpgroup:x:1001
+
+3.add rights go the group on resurce
+--------------------------------------
+chown -R bitrix:bitrix /home/bitrix/
+chmod rwx+g bitrix
+--------------------------------------
+/home/bitrix/
+drwxrwx---   6 bitrix   bitrix   4096 Июл 14 23:10 bitrix
+/home/bitrix/www
+drwxrwx---  39 bitrix bitrix 12288 Июл 17 12:24 www
+/home/bitrix/ext_www
+drwxrwxr-x   3 bitrix bitrix  4096 Июл 14 17:17 ext_www
+
+4.add pure-pw useradd
+--------------------------------------
+pure-pw useradd site -u siteuser -g siteuser -d /home/pubftp/site
+pure-pw useradd dev -u devuser -g devuser -d /home/pubftp/dev
+pure-pw mkdb
+--------------------------------------
+/etc/pureftpd/pureftpd.passwd
+dev:passwd:1002:1002::/home/pubftp/dev/./::::::::::::
+site:passwd:1003:1003::/home//pubftp/site/./::::::::::::
+
+5.config access for the resurce in pureftpd.passwd like HOME_DIR
+--------------------------------------
+vi /etc/pureftpd/pureftpd.passwd
+--------------------------------------
+/etc/pureftpd/pureftpd.passwd
+dev:passwd:1002:1002::/home/bitrix/ext_www/./::::::::::::
+site:passwd:1003:1003::/home/bitrix/www/./::::::::::::
+======================================
+#commands
+yum install pure-ftpd
+more /var/log/messages | grep pure-ftpd
+tailf /var/log/pureftpd.log
+groupadd ftpgroup
+useradd -g ftpgroup -d /dev/null -s /etc ftpuser
+pure-pw useradd remote -u ftpuser -g ftpgroup -d /home/pubftp/remote -N 10
+pure-pw mkdb
+pure-pw passwd remote
+pure-pw list
+pure-pw show remote
+pure-pw userdel remote
+#urls
+======================================
+http://cisu.blogspot.com/2013/01/pure-ftpd-debian.html
+http://blogpmenier.dynalias.net/docext/pureftpd/pure-ftpd.conf
+
+
+﻿################
+#Firewalld
+################
+-------------------------------------------------------------------------------------------
+# systemctl status firewalld
+# firewall-cmd --state
+# systemctl start firewalld
+# systemctl enable firewalld
+# systemctl disable firewalld
+# systemctl stop firewalld
+
+# yum install iptables-services
+# systemctl start iptables
+# systemctl start ip6tables
+# systemctl enable iptables
+# systemctl enable ip6tables
+# /sbin/iptables-save > /etc/sysconfig/iptables
+# /sbin/ip6tables-save > /etc/sysconfig/ip6tables
+
+Или по-старинке:
+# service iptables save
+Текущие правила находятся в файлах:
+/etc/sysconfig/iptables
+/etc/sysconfig/ip6tables
+
+Перезапуск iptables (например, после совершения каких-либо изменений):
+# systemctl restart iptables.service
+---------------------------------------------------------------------------------------------------
+firewalld хранит свои настройки в XML файлах раскидав их по /usr/lib/firewalld/ и /etc/firewalld/
+---------------------------------------------------------------------------------------------------
+
+    drop – как и следовало ожидать входящие сетевые пакеты сбрасываются, без ответа, допускаются только исходящие соединения
+    block – входящие сетевые соединения отклоняются с сообщением icmp-host-prohibited для Ipv4 и icmp6-adm-prohibited для IPv6
+	    допускаются только сетевые соединения инициированные внутри нашей системы.
+    public – разрешается устанавливать только конкретные входящие соединения.
+    external – для использования во внешних сетях с разрешенным маскарадингом, особенно для роутеров,
+	       разрешается устанавливать только конкретные входящие соединения
+    dmz – для компьютеров собственной демилитаризованной зоне с ограниченным доступом к вашей внутренней сети,
+	  разрешается устанавливать только конкретные входящие соединения.
+    work/home/internal – Для всех трёх зон в описании примерно та же вода, плюс:
+	максимальное доверие к компьютерам, уверенность в том, что они не причинят вреда нашему компьютеру,
+	разрешается устанавливать только конкретные входящие соединения
+    trusted – Специальная зона, где все сетевые соединения разрешены.
+
+-------------------------------------------------------------------------------------------
+#firewall-cmd --zone=[нужная_зона] --add-port=5280/tcp --permanent
+#firewall-cmd --reload
+-------------------------------------------------------------------------------------------
+[--zone=нужная_зона] --list-services 	Просмотреть список сервисов в зоне
+[--zone=нужная_зона] --list-ports 	Просмотреть список портов в зоне
+--permanent 	объявить вносимые изменеия постоянными
+--state  	 узнать состояние FirewallD
+ --reload 	 перезагрузить FirewallD
+ --get-zones 	 вывести список всех заданных зон
+ --get-services 	 список всех поддерживаемых служб
+--get-active-zones 	список всех активных зон
+[--zone=нужная_зона] --add-interface=интерфейс 	добавить интерфейс к зоне
+[--zone=нужная_зона] --change-interface= интерфейс 	изменить интерфейс
+[--zone=нужная_зона] --remove-interface= интерфейс 	удалить интерфейс из зоны
+--panic-on 	режим паники, блокирующий все сетевые соединения
+--panic-off  	отмена режима паники
+[--zone=нужная_зона] --add-service=нужный_сервис [--timeout=] 	добавить службу к зоне
+[--zone=нужная_зона] --remove-service= нужный_сервис [--timeout=] 	- удалить службу из зоны
+[--zone=нужная_зона] --add-port=[-]/ [--timeout=]       	добавить порт к зоне
+[--zone=нужная_зона] --remove-port=[-]/ [--timeout=]  	удалить порт из зоны
+[--zone=нужная_зона] --add-masquerade 	добавить маскарадинг к зоне
+[--zone=нужная_зона] --remove-masquerade   	удалить маскарадинг
+[--zone=нужная_зона] --add-forward-port=port=[-]:proto= { :toport=[-] | :toaddr=| :toport=[-]:toaddr=} 	добавить проброс портов к зоне
+[--zone=нужная_зона] --remove-forward-port=port=[-]:proto= { :toport=[-] | :toaddr=| :toport=[-]:toaddr=} 	удалить проброс портов из зон
+-------------------------------------------------------------------------------------------
+Пример: разрешаем ssh на нестандартном порте
+
+# firewall-cmd --permanent --zone=public --add-port=2234/tcp
+# firewall-cmd --reload
+# firewall-cmd --zone=public --list-ports
+2234/tcp
+# nano /etc/ssh/sshd_config
+...
+port 2234
+# systemctl restart sshd.service
+# yum provides semanage
+# yum install policycoreutils-python
+# semanage port -a -t ssh_port_t -p tcp 2234
+# firewall-cmd --permanent --zone=public --remove-service=ssh
+# firewall-cmd --reload
+# firewall-cmd --list-all
+-------------------------------------------------------------------------------------------
+# firewall-cmd --permanent --zone=public --remove-service=dhcpv6-client
+-------------------------------------------------------------------------------------------
+# firewall-cmd --zone=public --permanent --add-interface=em1
+-------------------------------------------------------------------------------------------
+# firewall-cmd --zone=public --add-port=5059-5061/udp
+-------------------------------------------------------------------------------------------
+Маскарад (masquerade, он же nat, он же...):
+
+# firewall-cmd --zone=external --query-masquerade
+# firewall-cmd --zone=external --add-masquerade
+# firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toaddr=192.168.1.23
+# firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toport=2055:toaddr=192.168.1.23
+-------------------------------------------------------------------------------------------
+--------------------------------------
+Forward ports and servers
+--------------------------------------
+firewall-cmd --list-all
+firewall-cmd --zone=external --add-interface=eth0
+firewall-cmd --zone=external --add-service=ssh --permanent 
+firewall-cmd --zone=external --query-masquerade
+firewall-cmd --zone=external --add-forward-port=port=3389:proto=tcp:toport=3389:toaddr=194.54.80.222 --permanent
+firewall-cmd --zone=external --remove-forward-port=port=3389:proto=tcp:toport=3389:toaddr=194.54.80.222 --permanent
+firewall-cmd --reload
+firewall-cmd --zone=external --list-forward-ports
+--------------------------------------
+-------------------------------------------------------------------------------------------
+
+firewall-cmd
+-------------------------------------------------------------------------------------------
+Постоянные параметры:
+
+Постоянные параметры будут хранится в настройках и не исчезнут после перезагрузки. Так же их изменение вступят в силу только после перезагрузки или перезапуска системы.(Ключевое слово тут --permanent) Можно использовать:
+
+    --permanent { --get-zones | --get-services | --get-icmptypes }
+    --permanent [--zone=<zone>] { --list-services | --list-ports | --list-icmp-blocks | --list-forward-ports }
+    --permanent [--zone=<zone>] { --add-ACTION | --remove-ACTION | --query-ACTION }
+    --permanent [--zone=<zone>] { --add-masquerade | --remove-masquerade |--query-masquerade }
+
+Результат такой же как и при использовании временных параметров, только постоянный. :)
+-------------------------------------------------------------------------------------------
+Проверка статуса:
+    --state — Проверяет активен ли демон firewalld.
+-------------------------------------------------------------------------------------------
+Перезагрузка:
+    --reload - Перезагружает правила межсетевого экрана с сохранением информации о состоянии.
+    --complete-reload — Полностью перезагружает межсетевой экран, в том числе перезагружает модули ядра (netfilter). Все соединения будут сброшены и временные правила потеряны.
+-------------------------------------------------------------------------------------------
+Паника (внештатный режим):
+    --panic-on — Включае режим паники. Все входящие и исходящие пакеты без исключения отбрасываются, все соединения со временем разрываются.
+    --panic-off — Отключить режим паники. Брэндмауер начинает работать в штатном режиме, некоторые соединения могут быть восстановлены, если режим паники длился меньше время окончания для этих соединений.
+    --query-panic — Возвращает 0 если режим паники включен и 1 если выключен.
+-------------------------------------------------------------------------------------------
+Опции обработки зон:
+
+    --get-default-zone — Возвращает зону по умолчанию для соединений и интерфейсов.
+    --set-default-zone=<zone> - Устанавливает зону по умолчанию для соединений и интерфейсов (Для которых зона не была установлена). Это постоянные изменения.
+    --get-zones — Возвращает предопределенных зон служб используя пробелы в качестве разделителя.
+    --get-services — Возвращает список стандартных служб используя пробелы в качестве разделителя.
+    --get-icmptypes - Возвращает список предопределенных типов ICMP используя пробелы в качестве разделителя
+    --get-active-zones — Возвращает список активных в настоящее время зон вместе с интерфейсами в этих зонах в формате:
+    <zone1>: <interface1> <interface2> ..
+    <zone2>: <interface3> ..
+    --get-zone-of-interface=<interface> - Возвращает зону которой пренадлежит интерфейс <interface> или ничего, если интерфейсу не назначена зона.
+    --list-all-zones — Возвращает список всех действий во всех зонах в формате:
+    <zone>
+    interfaces: <interface1> ..
+    services: <service1> ..
+    ports: <port1> ..
+    forward-ports: <forward port1> ..
+    icmp-blocks: <icmp type1> ..
+
+-------------------------------------------------------------------------------------------
+Опции обработки интерфейсов:
+
+Эти опции относятся только к одной конкретной зоне. Если используется --zone=<zone>, то они влияют на зону <zone>. Если нет, то опции влияют на зону «по умолчанию» (смотрите --get-default-zone).
+
+[--zone=<zone>] --list-interfaces — Возвращает список интерфейсов которые пренадлежат к зоне <zone>. Если параметра нет, то используется зона «по умолчанию». 
+[--zone=<zone>] --add-interface=<interface> - Добавляет интерфейс <interface> в зону <zone>.
+
+[--zone=<zone>] { --change-interface=<interface> | --change --zone=<interface> } - Изменить зону интерфейса <interface> принадлежащего зоне <zone>.
+Если старая и новая зона совпадают то команда ничего не делает и не возвращает ошибки. Если интерфейс не принадлежал ранее к этой зоне то он будет в неё добавлен, как при использовании параметра --add-interface.
+
+[--zone=<zone>]--query-interface=<interface> - Возвращает 0 если интерфейс <interface> принадлежит к зоне <zone> и 1 если не пренадлежит.
+
+[--zone=<zone>]--remove-interface=<interface> - Удаляет интерфейс<interface> из зоны <zone>.
+
+
+-------------------------------------------------------------------------------------------
+Опции настройки и запроса зон:
+
+Чтобы использовать эти параметры следует знать какие действия и когда можно использовать. Об этом написано ниже.
+
+    [--zone=<zone>] --add-ACTION [--timeout=<seconds>] - Добавить действие ACTION для зоны <zone>. Эта опция может быть указана несколько раз. Чтобы получить зону по умолчанию используется --get-default-zone. Если указан тайм-аут то действие ACTION будет активно указанное количество секунд и затем удалено.
+
+    [--zone=<zone>] --remove-ACTION - Удалить действие ACTION из зоны <zone>. Эта опция может быть указан несколько раз. Если действие было добавлено с указанием тайм-аута, оно всё равно будет удалено.
+
+    [--zone=<zone>] --query-ACTION — Возвращает 0 если действие ACTION было добавлено для зоны <zone> и 1 в противном случае.
+
+    [--zone=<zone>] --add-masquerade [--timeout=<seconds>] - Включить маскарад для зоны <zone>. Если указан тайм-аут, маскарадинг будет активным в течение указанного количества секунд.
+
+    [--zone=<zone>] --remove-masquerade - Отключить маскарад для зоны <zone>. Если маскарадинг был включен с тайм-аут, он всё равно будет отключен.
+
+    [--zone=<zone>] --query-masquerade — Возвращает 0 если маскарадинг включен для зоны <zone> и 1 в противном случае.
+
+    [--zone=<zone>] --list-services — Возвращает список сервисов добавлены в зону <zone> разделенный пробелами. Чтобы получить список всех предустановленных сервисов используйте --get-services.
+
+    [--zone=<zone>] --list-ports— Возвращает список портов добавленных в зону <zone> разделённый пробелами. Списрок имеет формат: <port>[-<port>]/<protocol>, где в качестве порта может быть указан диапазон портов.
+
+    [--zone=<zone>]--list-icmp-blocks - Список типов ICMP пакетов добавлнных в зону <zone> разделенный пробелами. Для получения списка всех предопределенных типов ICMP используйте --get-icmptypes.
+
+    [--zone=<zone>] --list-forward-ports — Возвращает список всех «проброшенных» портов добавленных в зону <zone>.
+    [--zone=<zone>] --list-all - Возвращает список всех действий добавленных или включенных в зону <zone>.
+
+-------------------------------------------------------------------------------------------
+Эти действия (ACTION) используются в --add-ACTION, --remove-ACTION и --query-ACTION предыдущего раздела.
+
+    service=<service> - Использовать одну из стандартных служб. Для получения списка всех стандартных служб используйте --get-services.
+
+    port=<port>[-<port>]/<protocol> - Использовать порт <port> или диапазон портов <port>-<port> для работы протоколы. Порт - это номер порта от 1 до 65535. Протокол может быть TCP или UDP.
+
+    icmp-block=<icmptype> - .Использовать предопределенные типы ICMP пакетов. Для получения списка всех предопределенных типов ICMP используйте --get-icmptypes.
+
+    forward-port=port=<port>[-<port>]:proto=<protocol>:toport=<port>[-<port>] - Использовать порт при переадресации пакетов. Указываются исходный и целевой 
+порты или диапазоны портов для протокола. Протоколом может быть UDP или TCP. Проброс осуществляется с локального порта port на локальный toport.
+
+    forward-port=port=<port>[-<port>]:proto=<protocol>:toaddr=<address> - Проброс локального порта port в тот же порт на хосте toaddr.
+
+    forward-port=port=<port>[-<port>]:proto=<protocol>:toport=<port>[-<port>]:toaddr=<address> - Проброс локального порта port в порт toport на хосте toaddr.
+
+Ещё опции:
+
+-------------------------------------------------------------------------------------------
+Эти опции служат для управления правилами на более низком уровне.
+
+    --direct--passthrough { ipv4 | ipv6 | eb } <args> - Передача команд через фаервол. Аргументом <args> могут быть любые агрументы командной строки допрустимые в iptables, ip6tables и ebtables.
+
+    --direct--add-chain { ipv4 | ipv6 | eb } <table> <chain> - Добавить новую цепочку <chain> в таблицу <table>.
+
+    --direct--remove-chain { ipv4 | ipv6 | eb } <table> <chain> - Удалить цепочку <chain> из таблицы <table>.
+
+    --direct--query-chain { ipv4 | ipv6 | eb } <table> <chain> - Возвращает 0 если цепочка с именем <chain> присутствует в таблице <table> и 1 в противном случае.
+
+    --direct--get-chains { ipv4 | ipv6 | eb } <table> - Возвращает все цепочки содержащиеся в таблице <table> в виде списка разделенного пробелами.
+
+    --direct--add-rule { ipv4 | ipv6 | eb } <table> <chain> <priority> <args> - Добавить правило <args> в цепочку <chain> таблицы <table>.Приоритет используется для задания позиции правила в цепи. Правило с приоритетом 0 добавляется на самый верх цепи. Чем больше приоритет, тем ниже правило расположено в цепочке. Порядок расположения правил с одинаковым приоритетом может менятся и поэтому не предсказуем. Не стоит назначать одинаковый приоритет правилам.
+
+    --direct--remove-rule { ipv4 | ipv6 | eb } <table> <chain> <args> -Удалить правило <args> из цепочки <chain> в таблице <table>.
+
+    --direct--query-rule { ipv4 | ipv6 | eb } <table> <chain> <args> - Возвращает 0 если правило <args> существует в цепочке <chain> таблицы <table> и 1 в противном случае.
+
+    --direct--get-rules { ipv4 | ipv6 | eb } <table> <chain> - Возвращает все правила цепочки <chain> в таблице <table> в виде строк.
+-------------------------------------------------------------------------------------------
+
+
+############
+#ПОИСК
+#FIND
+############
+1. искать файлы или директорию начиная с / (можно добавить тильду, вот так ~/ и это укажет на домашний каталог)
+find / -name file1
+2. искать файлы и директории относящиеся к user1
+find / -user user1
+3. искать файлы с расширением .bin в директории /home/user1
+find /home/user1 -name \*.bin
+4. искать бинарные файлы, которые не запускались 100 дней
+find /usr/bin -type f -atime +100
+5. найти файлы созданные или изменённые за 10 дней
+find /usr/bin -type f -mtime -10
+6. найти файлы с расширением .deb и изменить права доступа (будьте внимательны с этой командой)
+find / -name \*.deb -exec chmod 755 '{}' \;
+7. найти файлы с расширением .ps
+locate \*.ps
+8. показать путь к указанной программе, в данном случае halt
+whereis halt
+9. показать полный путь к указанной программе, в данном случае halt
+which halt
+
+В каком файле есть запись вида "apc.so"
+grep -r apc.so /etc/php*
+
+Поиск файла по тексту
+grep -iRI "Some text" /path
+
+Поиск и замена
+sed -i 's/CHARSET=latin1/CHARSET=utf8/g' /home/admin/admin_backups/utf8/medtehnika_b.sql
+
+############
+#PHP
+############
+Проверка сессии
+#php70 -S 0.0.0.0:8000
+PHP 7.0.21 Development Server started at Thu Jul 27 13:11:35 2017
+Listening on http://0.0.0.0:8000
+Document root is /home/nextcloud/www
+
+modules
+php70 -m
+
+
+Если не авторизуется нет доступа к записи сессии:
+mcedit /etc/opt/remi/php70/php-fpm.d/www.conf
+php_value[session.save_path]    = /tmp
+
+
+#############
+#MYSQL
+#############
+---------------------------------------------------------------
+MySql_5.5
+---------------------------------------------------------------
+mysql -uroot -ppassword
+---------------------------------------------------------------
+mysql> CREATE USER 'jeffrey'@'localhost' IDENTIFIED BY 'mypass';
+mysql> SET PASSWORD FOR 'jeffrey'@'localhost' = PASSWORD('mypass');
+mysql> SET PASSWORD = PASSWORD('mypass');
+mysql> GRANT USAGE ON *.* TO 'jeffrey'@'localhost' IDENTIFIED BY 'mypass';
+shell> mysqladmin -u user_name -h host_name password "new_password"
+---------------------------------------------------------------
+mysql> CREATE USER 'finley'@'localhost' IDENTIFIED BY 'some_pass';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'finley'@'localhost' WITH GRANT OPTION;
+mysql> CREATE USER 'finley'@'%' IDENTIFIED BY 'some_pass';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'finley'@'%' WITH GRANT OPTION;
+mysql> CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin_pass';
+mysql> GRANT RELOAD,PROCESS ON *.* TO 'admin'@'localhost';
+mysql> CREATE USER 'dummy'@'localhost';
+---------------------------------------------------------------
+mysql> SHOW GRANTS FOR 'admin'@'localhost';
+---------------------------------------------------------------
+mysql> CREATE USER 'custom'@'localhost' IDENTIFIED BY 'obscure';
+mysql> GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP ON bankaccount.* TO 'custom'@'localhost';
+mysql> CREATE USER 'custom'@'host47.example.com' IDENTIFIED BY 'obscure';
+mysql> GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP ON expenses.* TO 'custom'@'host47.example.com';
+mysql> CREATE USER 'custom'@'%.example.com' IDENTIFIED BY 'obscure';
+mysql> GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP ON customer.* TO 'custom'@'%.example.com';
+---------------------------------------------------------------
+mysql> REVOKE ALL ON dbname.* FROM 'user'@'localhost';
+---------------------------------------------------------------
+mysql> DROP USER 'jeffrey'@'localhost';
+---------------------------------------------------------------
+mysql> SELECT USER(), CURRENT_USER();
+---------------------------------------------------------------
+mysql> RENAME USER ''@'localhost' TO 'user1'@'localhost';
+mysql> RENAME USER 'user2'@'%.example.com' TO 'user2'@'remote.example.com';
+---------------------------------------------------------------
+mysql> FLUSH PRIVILEGES;
+---------------------------------------------------------------
+mysql> SHOW DATABASES;
+---------------------------------------------------------------
+mysql> SHOW TABLES;
+---------------------------------------------------------------
+mysql> SHOW GLOBAL STATUS;
+---------------------------------------------------------------
+mysqldump -u root -p dbname > dump.sql
+---------------------------------------------------------------
+--add-drop-table - добавляет команду DROP TABLE перед каждой командой CREATE TABLE
+--add-locks - добавляет команду LOCK TABLES перед выполнением и UNLOCK TABLE после выполнения каждого дампа таблицы
+--no-create-db, -n - не добавлять команду CREATE DATABASE, которая добавляется при использовании параметров --databases и --all-databases
+--no-data, -d - дампить только структуру таблиц
+--no-create-info, -t - не создавать команду CREATE TABLE
+--skip-comments - не выводить комментарии.
+--compact - использовать компактный формат
+--create-options - добавляет дополнительную информацию о таблице в команду CREATE TABLE: тип, значение AUTO_INCREMENT и т.д. Не нужные опции можно вырезать с помощью sed.
+--extended-insert, -e - применение команды INSERT с многострочным синтаксисом (повышает компактность и быстродействие операторов ввода)
+--tables - дампить только таблицы из списка, следующего за этим параметром, разделитель - пробел
+---------------------------------------------------------------
+mysql -uroot -p dbname1 < dump.sql
+---------------------------------------------------------------
+===========================
+Смена пароля
+===========================
+Себе
+mysql>SET PASSWORD = PASSWORD('пароль')
+Пользователю
+mysql>  SET PASSWORD FOR логин@localhost = PASSWORD('пароль');
+mysql>  SET PASSWORD FOR логин@"%" = PASSWORD('пароль');
+или
+mysql>  UPDATE mysql.user SET Password=PASSWORD('пароль') WHERE User='логин' AND Host='localhost';
+mysql>  FLUSH PRIVILEGES;
+mysql>  SHOW GRANTS FOR 'admin_db'@'localhost';
+mysql>  SHOW GRANTS FOR 'admin_db'@'%';
+
+---------------------------------------------------------------
+===========================
+Перекодировка Charset:
+===========================
+Поиск текста в файле и замена
+Дамп для конвертирования
+1. mysqldump
+Конвертирование
+2. sed -i 's/CHARSET=cp1251/CHARSET=utf8/g' /home/admin/admin_backups/utf8/medtehnika_dev.sql 
+   sed -i 's/CHARSET=cp1251/CHARSET=utf8/g' /home/admin/admin_backups/utf8/medtehnika_b.sql 
+   sed -i 's/CHARSET=latin1/CHARSET=utf8/g' /home/admin/admin_backups/utf8/medtehnika_b.sql 
+Тестовое восстановление
+3. mysql -u da_admin -p aaa < /home/admin/admin_backups/utf8/medtehnika_dev.sql 
+   mysql -u da_admin -p aaa < /home/admin/admin_backups/utf8/medtehnika_b.sql 
+Восстановление, можно через phpMyAdmin
+4. mysql -u da_admin -p7S7L9tA7Du medtehnika_b < /home/admin/admin_backups/utf8/medtehnika_b.sql 
+   mysql -u da_admin -p7S7L9tA7Du medtehnika_dev < /home/admin/admin_backups/utf8/medtehnika_dev.sql 
+---------------------------------------------------------------
+===========================
+Восстановление root доступа
+===========================
+service mysqld stop
+systemctl stop mariadb
+
+mysqld_safe --skip-grant-tables &
+mysql
+mysql> UPDATE mysql.user SET Password=PASSWORD('secret') WHERE User='root';
+mysql> FLUSH PRIVILEGES;
+mysql> \q
+
+systemctl start mariadb
+service mysqld restart
+---------------------------------------------------------------
+======================================
+Рекомендации настройки Сервера БД
+======================================
+Tunner for fast working mysql
+perl ~/mysqltuner.pl
+---------------------------------------------------------------
+===============================================================
+innodb bitrix
+---------------------------------------------------------------
+my.cnf
+---------------------------------------------------------------
+[mysqld]
+
+skip-name-resolve	= 1
+query_cache_size        = 64M
+query_cache_type        = 2
+join_buffer_size	= 8M
+innodb_log_file_size	= 1G
+#
+
+max_connections         = 2048
+query_cache_limit       = 8M
+max_allowed_packet      = 128M
+
+innodb_buffer_pool_size         = 8G
+innodb_buffer_pool_instances    = 8
+innodb_log_buffer_size          = 128M
+innodb_file_per_table           = 1
+innodb_flush_log_at_trx_commit  = 2
+innodb_additional_mem_pool_size = 64M
+innodb_flush_method             = O_DIRECT
+
+transaction-isolation           =  READ-COMMITTED
+max-heap-table-size             = 300M
+tmp-table-size                  = 300M
+
+key_buffer_size                 = 128M
+sort_buffer_size                = 1M
+read_buffer_size                = 1M
+read_rnd_buffer_size            = 1M
+
+thread_stack                    = 1M
+thread_cache_size		= 32
+table_open_cache		= 4096
+
+[safe_mysqld]
+err-log=/var/log/mysqld.log
+open_files_limit=8192
+
+[mysqldump]
+quick
+max_allowed_packet=16M
+
+[client]
+default-character-set=utf8
+---------------------------------------------------------------
+show variables like 'innodb_log_file_size';
+mysql> SET GLOBAL innodb_fast_shutdown = 1;
+# mv /var/lib/mysql/ib_logfile0 /var/lib/mysql/ib_logfile0.bak
+# mv /var/lib/mysql/ib_logfile1 /var/lib/mysql/ib_logfile1.bak
+---------------------------------------------------------------
+===============================================================
+---------------------------------------------------------------
+=================================================================================================================================
+###########
+#[Warning] 'user' entry 'root@localhost' has both a password and an authentication plugin specified. The password will be ignored.
+###########
+=================================================================================================================================
+It is normal, if by saying "accessing the DB via mysql -u root -p works fine" you mean that you are running it while being a system root (or under sudo). You should not be able to do it as an ordinary user.
+Packages generated by Ubuntu by default have unix_socket authentication for the local root. To check, run 
+---------------------------------------------------------------
+SELECT user, host, plugin FROM mysql.user;
+---------------------------------------------------------------
+You should see unix_socket in the plugin column for root@localhost.
+If you want to use the password authentication instead, run
+---------------------------------------------------------------
+UPDATE mysql.user SET plugin = '' WHERE plugin = 'unix_socket';
+FLUSH PRIVILEGES;
+---------------------------------------------------------------
+===============================================================
+---------------------------------------------------------------
+show processlist;
+show status;
+mytop в режиме реального времени.
+Innotop
+---------------------------------------------------------------
+---------------------------------------------------------------
+###########
+#phpMyAdmin
+###########
+---------------------------------------------------------------
+/etc/phpMyAdmin.conf
+/etc/httpd/conf.d/phpMyAdmin.conf
+/etc/nginx/conf.d/phpmyadmin.inc
+/home/admin/conf/web/httpd.conf,shttpd.conf,nginx.conf,snginx.conf
+php_admin_value open_basedir /usr/share:/usr/share/phpMyAdmin:/usr/share/pear:/usr/share/php:/var/lib/phpMyAdmin:
+./htaccess
+php.ini:memory_limit = 12M
+php -m
+chown -R
+chmod -R 
+---------------------------------------------------------------
+tail -f /var/log/httpd/domains/default.domain.error.log
+---------------------------------------------------------------
+
+##############
+#GIT
+##############
+----------------------------------------------------------------------------------
+    На Unix системах достаточно открыть терминал и перейти в нужную директорию.
+----------------------------------------------------------------------------------
+Клонирование репозитария
+	git clone https://github.com/%user_login%/%repo_name%.git 
+Переходим в свежесозданную папку репозитория и настраиваем его:
+	git config user.name ivan.ivanov
+	git config user.email ivanov@example.com
+Статус	
+	git status
+После изменений
+	git add %file_path%
+Коммит
+	git commit -m "%commit_message%"
+История изменений
+	git log или git log --name-only
+Загрузка локальных изменений в удаленный репозиторий
+	git push origin master.
+Выполнение этой команды может закончиться с ошибкой, если в локально репозитории отсутствуют последние изменения, имеющиеся в удаленном репозитории.
+Для решения этой проблемы надо выполнить команду git pull, которая скачает последние изменения из удаленного репозитория и смержит их с вашими локальными правками, после чего можно повторить команду 		git push
+----------------------------------------------------------------------------------
+cat .git/config
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = https://github.com/ara7788/Console.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[user]
+	name = ara7788
+	email = test3007@ya.ru
+[credential]
+        helper = cache --timeout=3600
+[color]
+	branch = auto
+        diff = auto
+        interactive = auto
+        status = auto
+        ui = auto OR ui = true
+----------------------------------------------------------------------------------
+[alias]
+    cd = checkout
+    dir = branch
+    mersq = merge --squash
+    free = branch -D
+
+----------------------------------------------------------------------------------
+А теперь посмотрим что мы сделали:
+Без модификаций
+
+git pull --rebase
+git branch
+git checkout temp
+git add -u
+git commit
+git merge master
+git checkout master
+git merge --squash temp
+git commit
+git push
+git branch -D temp
+
+
+С модификациями
+
+git pull --rebase
+git dir
+git cd temp
+git add -u
+git commit
+git merge master
+git cd master
+git mersq temp
+git commit
+git push
+git free temp
+
+----------------------------------------------------------------------------------
+[commit]
+        template = ~/.commit-template
+----------------------------------------------------------------------------------
+Префиксы для remote
+
+Есть один трюк, который нередко используется разработчиками. Это префиксы для remote. 
+Они позволяют сократить длину адреса к удаленному репозиторию.
+Можно задать такие для read-only и push. Зачем? Это логично для open-source проектов.
+Для уменшения нагрузки на сервер и скорости, лучше pull'ить из anongit (read-only) без использования SSH.
+Что стоит у меня для KDE?
+
+[url "http://anongit.kde.org/"]
+    insteadOf = kde:
+[url "git@git.kde.org:"]
+    pushInsteadOf = kde:
+
+Давайте разбираться. Тут мы настроили два URL для pull и push. Задали префикс kde.
+Что это нам дает? Посмотрим на примере (в статье не указан префикс gh — для GitHub):
+Без модификаций 	С модификациями
+
+git clone http://anongit.kde.org/marble
+git clone https://github.com/user/repository
+
+git clone kde:marble
+git clone gh:user/repository
+
+----------------------------------------------------------------------------------
+
+######################
+#AUTOSTART LOAD SCRIPT
+######################
+----------------------------------------------------------------------------------
+systemd
+----------------------------------------------------------------------------------
+Создаем файл нашей службы:
+
+# touch /etc/systemd/system/routing-settings.service
+# chmod 664 /etc/systemd/system/routing-settings.service
+
+с таким содержимым:
+
+[Unit]
+Description=Routing Settings Service
+After=network.target
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/root/routing.sh
+
+[Install]
+WantedBy=multi-user.target
+
+# systemctl start routing-settings
+# systemctl enable routing-settings
+----------------------------------------------------------------------------------
+SysV
+----------------------------------------------------------------------------------
+Создание скрипта в init.d
+sudo chmod ugo+x /etc/init.d/имя_скрипта
+
+Теперь добавите его в автозагрузку:
+sudo rc-update add имя_скрипта defaults
+----------------------------------------------------------------------------------
+ИЛИ
+----------------------------------------------------------------------------------
+Создайте скрипт.
+sudo nano /etc/rc.local
+Пропишите ваш скрипт перед строчкой exit 0 и сохраните файл.
+----------------------------------------------------------------------------------
+Пример
+# cat /etc/rc.local
+#!/bin/sh -e
+# rc.local
+/usr/local/ispmgr/sbin/eximquota
+/usr/local/ispmgr/sbin/ihttpd ip 1500
+/root/antiddos/restorefw.sh
+exit 0
+----------------------------------------------------------------------------------
+ИЛИ
+----------------------------------------------------------------------------------
+update-rc.d /path-to-script/script.sh defaults
+update-rc.d -f имя remove
+----------------------------------------------------------------------------------
+Создать ссылки можно вручную, но проще это сделать через команду update-rc.d
+Например:
+
+sudo update-rc.d имя_сценария start 20 0 6 . stop 1 0 6 .
+
+Точки важны (обе). Исследуя просторы интернета, у меня сложилось впечатление,
+что синтаксис этой программы иногда меняется. Актуальные примеры можно посмотреть
+по команде «man update-rc.d». Примеры будут в низу.
+
+Эта команда создаст по 2 ссылки в каталогах /etc/rc0.d (второе число в команде) 
+и /etc/rc6.d (третье число в команде). Причём вначале будет выполняться сценарий
+ с параметром stop (т.к. стоит 1), а уже потом с параметром start (т.к. стоит 20).
+Если второй параметр не нужен, то можно выполнить команду:
+
+sudo update-rc.d имя_сценария stop 1 0 6 .
+
+Советую ставить приоритет повыше (т.е. число после start или stop должно быть маленьким),
+ желательно меньше 20. В обратном случае у меня иногда зависал компьютер при попытке перезагрузиться.
+
+----------------------------------------------------------------------------------
+#!/bin/bash
+
+# chkconfig: 35 99 01
+# description: Send system status
+# processname: test_script
+
+. /etc/rc.d/init.d/functions
+
+username="around"
+lock_file=/var/lock/test_script
+log_datetime=`date -u +"%F %T"`
+
+start(){
+touch "$lock_file"
+daemon --user=$username /usr/local/bin/python2.7 "/home/$username/test.py" "Service started at $log_datetime UTC" &>/dev/null &
+}
+
+stop(){
+rm -f "$lock_file"
+daemon --user=$username /usr/local/bin/python2.7 "/home/$username/test.py" "Service stopped at $log_datetime UTC" &>/dev/null &
+}
+
+case "$1" in
+start)
+start
+;;
+stop)
+stop
+;;
+*)
+echo $"Usage: $0 {start|stop}"
+exit 2
+esac
+exit 0
+----------------------------------------------------------------------------------
+Настройки того, куда и с какими именами будут создаваться симлинки, задаются в строке "chkconfig: 35 99 01". Это означает, что скрипт будет актуален для запуска системы с уровнем 3 и 5, причем старт осуществлять после загрузки всех сервисов (99), а останавливать в первую очередь (01). Т.е. тебе туда надо chkconfig: 06 01 01
+
+Запуск от имени пользователя осуществляется с помощью конструкции
+
+daemon --user=$username
+где "$username" - имя пользователя в системе, а "&>/dev/null" предотвращает вывод скрипта в консоль. Команда "daemon" и другие служебные функции находятся в файле "/etc/rc.d/init.d/functions", поэтому его мы импортируем в самом начале.
+
+"lock_file" - служебный файл, который позволяет системе определять, запущен ли сервис и нужно ли его останавливать, запуская скрипт с параметром "stop" при выключении или презагрузке. Если его не создавать, то будет осуществляться только запуск скрипта, а если не удалять - то только остановка. Для системных сервисов такой файл создается автоматически, для пользовательских же его необходимо создать самостоятельно.
+
+"log_datetime" - это строка даты и времени в UTC для передачи python-скрипту.
+----------------------------------------------------------------------------------
+chkconfig --add test_script
+chkconfig --list test_script
+----------------------------------------------------------------------------------
+chmod +x /etc/init.d/script
+chmod 775 /etc/init.d/script
+chkconfig script on
+systemctl start script
+----------------------------------------------------------------------------------
+#PXE
+#############
+----------------------------------------------------------------------------------
+Windows2008
+----------------------------------------------------------------------------------
+PXE
+net use i: \\10.255.239.112
+
+update
+remotedesktop
+firewall rdp 
+----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+######
+#DNS
+######
+----------------------------------------------------------------------------------
+PTR
+dig -x 2001:67c:25dc:80::53b
+----------------------------------------------------------------------------------
+dig dolina-67c_25dc_80_53b.dolina.rx-name.net AAAA
+----------------------------------------------------------------------------------
+dig openstorekiev.com.ua any +trace
+----------------------------------------------------------------------------------
+Подробно dig
+https://www.reg.ru/nettools/dig?domain
+----------------------------------------------------------------------------------
+Подробности регистрации
+https://www.namecheap.com/domains/whois/results.aspx?domain=openstorekiev.com.ua
+----------------------------------------------------------------------------------
+whois site.com
+----------------------------------------------------------------------------------
+curl -v site.com
+----------------------------------------------------------------------------------
+https://2ip.ua/ua/
+----------------------------------------------------------------------------------
+Трансфер 3 дня на авторизацию.
+http://wiki.drs.ua/UAEPP
+http://dig.ua/
+----------------------------------------------------------------------------------
+Для подтверждения регистрации домена
+В целях безопасности в Вашем личном кабинете Кнопка подтверждения регистрации доступна в течении 3 дней.
+По прошествию 3 дней не
+----------------------------------------------------------------------------------
+З метою безпеки в Вашому особистому кабінеті Кнопка підтвердження трансферу домену доступна протягом 3 днів.
+По закінченню 3 днів, кнопка з метою Вашої безпеки забирається.
+Вам необхідно повторити запит трансферу домену з сайту організації власника домену і на протязі 3 днів підтвердити натисканням цієї кнопки в Особистому кабінеті на нашому сайті https://rx-name.ua/. Якщо будуть питання, пишіть.
+----------------------------------------------------------------------------------
+Редирект на ДНС
+@	A	301-> https://site на
+www	A	301-> https://site на
+@	AAAA	301-> https://site на
+www	AAAA	301-> https://site на
+У клиента lozh.com.ua
+----------------------------------------------------------------------------------
+#########
+#SSL\TLS
+#########
+[DV], [OV/EV] - Domain Validation  (DV), Organization Validation (OV) и Extended Validation (EV). 
+DV - проверяется домен
+OV/EV - проверяется организация
+1.один домен(site.com)
+2.wild card(*.site.com)
+3.multy domain(site1.com,site2.com,site3.com)
+1. Типы регистрируемых сертификатов
+DV
+	PositiveSSL
+	GeoTrust QuickSSL Premium
+	RapidSSL Wildcard
+OV
+	InstantSSL
+	Multi-Domain SSL
+	True BusinessID Wildcard
+EV
+	EV SSL
+	SSL Web Server with EV
+	EV Multi-Domain SSL
+
+Генератор https://ru.rx-support.net/tools/csr-generator
+
+2. Let's encrypt
+----------------------------------------------------------------------------------
+Test
+https://www.ssllabs.com/ssltest/analyze.html?d=vinsanto.com.ua
+----------------------------------------------------------------------------------
+1.COMODORSADomainValidationSecureServerCA
+2.COMODORSAAddTrustCA.crt
+3.AddTrustExternalCARoot.crt
+4.vinsanto_com_ua.crt
+5.vinsanto.key
+Для Vesta
+http://бузони.рф/2015/04/27/%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-ssl-%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%B0-%D0%B2-vesta-cp/
+COMODORSAAddTrustCA.crt
+COMODORSADomainValidationSecureServerCA.crt
+AddTrustExternalCARoot.crt.
+.htaccess
+После вам пригодится файл .htaccess, добавьте в него парочку строчек:
+    <IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    </IfModule>
+Они для того чтобы сайт с протокола http редиректился на https. Ну вот и все, теперь сайт будет сам направляться на правильный протокол, который будет работать.
+----------------------------------------------------------------------------------
+Альтернативные варианты
+----------------------------------------------------------------------------------
+В документах панели указано следующее:
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+
+Но существуют и другие варианты:
+Вариант 1 *
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{SERVER_PORT} !^443$
+RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+Вариант 2
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTPS} =on 
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
+</IfModule>
+
+Вариант 3
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP:SSL} !=1 [NC]
+RewriteRule ^(.*) https://www.pupi-boy.ru/$1 [L,R=301]
+</IfModule>
+
+Вариант 4 (При возникновении циклической переадресации)
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+WordPress спешл, вставьте перед правилами WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)\ HTTP/ [NC]
+RewriteCond %{HTTPS} off [NC]
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI}%{QUERY_STRING} [R=301,QSA,L]
+</IfModule>
+
+Редирект всех страниц кроме одной
+Рекомендую не перенаправлять файл robots.txt
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTPS} =off
+RewriteCond %{REQUEST_URI} !^/robots.txt
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
+</IfModule>
+----------------------------------------------------------------------------------
+HTTPS To HTTP
+----------------------------------------------------------------------------------
+RewriteEngine On
+RewriteCond %{SERVER_PORT} ^443$ [OR]
+RewriteCond %{HTTPS} =on
+RewriteRule ^(.*)$ http://site.ru/$1 [R=301,L]
+----------------------------------------------------------------------------------
+####
+1C
+####
+----------------------------------------------------------------------------------
+backup
+http://www.handybackup.ru/handybackup-professional.shtml
+----------------------------------------------------------------------------------
+##########
+#DATE/TIME
+##########
+----------------------------------------------------------------------------------
+$ date
+# hwclock -r
+# hwclock --show --utc
+----------------------------------------------------------------------------------
+# date -s "2 OCT 2006 18:00:00"
+# date --set="2 OCT 2006 18:00:00"
+# date +%Y%m%d -s "20081128"
+# date +%T -s "10:13:13"
+Set the Hardware Clock to the current System Time
+# hwclock --systohc
+# hwclock -w
+----------------------------------------------------------------------------------
+timedatectl
+# timedatectl set-time YYYY-MM-DD
+$ sudo timedatectl set-time YYYY-MM-DD
+# timedatectl set-time HH:MM:SS
+# timedatectl set-time '10:42:43'
+$ timedatectl list-timezones
+$ timedatectl list-timezones | more
+$ timedatectl list-timezones | grep -i asia
+$ timedatectl list-timezones | grep America/New
+# timedatectl set-ntp yes
+----------------------------------------------------------------------------------
+###########
+#JPEG/Optim
+###########
+----------------------------------------------------------------------------------
+find /путь/к/корневой/директории/сайта -type f -name '*.jpg' -exec jpegoptim {} --strip-all \;
+----------------------------------------------------------------------------------
+####################
+#SCAN NETWORK 
+####################
+----------------------------------------------------------------------------------
+https://nmap.org/man/ru/
+https://ip-calculator.ru/#!ip=185.35.100.0/20
+----------------------------------------------------------------------------------
+1. Уточняем, можно ли это делать у владельца сети.
+2. Считаем сеть https://ip-calculator.ru/ -> получаем диапазон
+3. Запускаем Nmap https://nmap.org/man/ru/ c проверкой служб на 22,53,80,443,3389,8080 и тд -> Лог файл.
+4. Парсим Лог.
+5. Проверяем соответствие IP -> DNS именам.
+6. Определяем дейтсвующие вебсайты, сервера unix, windows.
+----------------------------------------------------------------------------------
+nmap -v -A scanme.nmap.org
+----------------------------------------------------------------------------------
+Доролнение
+1. Просканить порты на наличие открытых сервисов (суммарно)
+2. На открытые 25 порты поузнавать заголовок сервера (смотреть на хост), то же с портами 22 и 21.
+3. Пробить порты 80, 443 курлом - открытые спарсить на наличие HTML ссылок. Страницы 4xx тоже могут отдавать хостнейм.
+4. получить PTR
+5. взять списки доменов (конечно не только украинские), пройтись по каждому домену, взять часто используемые субдомены,
+SRV (AD, DC, XMPP, автокофигурация почты и т.д.) и проверить вхождение в подсети WP.
+6. еще есть сервисы где вбиваешь IP сервера - он показывает какие сайты на нем, но там обычно капча. 
+----------------------------------------------------------------------------------
+#############
+#500
+#############
+Наиболее частой причиной ошибки 500 (Internal Server Error, внутренняя ошибка сервера)
+является неверный синтаксис файла .htaccess или наличие в нем неподдерживаемых директив.
+Чаще всего достаточно закомментировать директиву Options (для этого нужно поставить в
+начале строки решетку — #), и проблема исчезнет.
+
+Ошибка 500 также может возникать вследствие неправильного обращения с CGI-скриптами:
+
+    CGI-скрипты должны иметь окончания строк в формате UNIX (\n), а не в формате Windows (\r\n).
+ Для этого их надо загружать на сервер по FTP в режиме ASCII.
+
+    CGI-скрипты и папки, в которых они находятся, должны быть доступны для записи только владельцу,
+ то есть иметь права 0755 (drwxr-xr-x).
+
+    В результате работы CGI-скрипта сформированы неправильные HTTP-заголовки ответа. 
+В этом случае для решения проблемы полезно обратиться к error_log (его можно найти в контрольной панели в разделе «Хостинг / Статистика / Лог-файлы / Ошибки»).
+#############
+#502, 504
+#############
+nginx.conf
+    proxy_connect_timeout       600;
+    proxy_send_timeout          600;
+    proxy_read_timeout          600;
+    send_timeout                600;
+    client_header_timeout       600;
+    client_body_timeout    	600;
+    keepalive_timeout 		400;
+
+php.ini:
+max_execution_time = 900
+
+Повышение лимитов LVE Manager
+#############
+#503
+#############
+https://www.jino.ru/help/faq/problems/error-503/
+Каждому аккаунту на сервере выделено определенное количество процессов-рабочих, обрабытывающих запросы пользователей. Запросы поступают на сервер и становятся в очередь. Легкие запросы обрабатываются быстро, а тяжёлые проблемные — медленно, тормозя продвижение очереди. Когда длина очереди достигает определенной величины, сервер перестает принимать новые запросы, возвращая ошибку 503 (Service Temporarily Unavailable, сервис временно недоступен).
+
+Ниже описаны частые причины возникновения длинной очереди, а так же пути решения этой проблемы:
+Зависают скрипты
+
+    Передача больших статичных файлов через PHP
+
+Большие статичные файлы лучше всего передавать напрямую, не используя для этого скрипты. На это есть две причины: во-первых, время работы скриптов ограничено, по его истечению передача файла прерывается; во-вторых, для передачи файла через PHP используется отдельный процесс-рабочий, а значит он перестаёт участвовать в механизме обработки запросов от пользователей.
+
+Для передачи файлов напрямую, наоборот, задействуется специальный многопоточный процесс, который может обрабатывать множество потоков одновременно, не влияя на скорость загрузки сайта.
+
+Функциональность многих скриптов хранения файлов можно реализовать через правила mod_rewrite в файле .htaccess (например, антилич-систему).
+
+    Соединение с удаленным сервером
+
+Этого лучше избегать. Если же без такого не обойтись, то необходимо выставить маленький таймаут на ожидание ответа и убедиться, что связь с удаленным сервером достаточно хорошая.
+
+Если в PHP-скриптах используются Include-функции, загружающие части движка, расположенные на одном аккаунте, убедитесь, что в них используется локальный путь, а не URL вида «http://…». Наличие URL заставляет сервер делать дополнительный HTTP-запрос — это занимает лишний процесс-рабочий и сильно замедляет загрузку сайта.
+
+    Большое число «тяжёлых» или испорченных компонентов CMS
+
+Проверьте все компоненты и плагины вашей CMS, отключая их по очереди, и найдите самые тяжёлые или испорченные, при работе которых загрузка сайта замедляется. По возможности откажитесь от таких компонентов, либо поищите более быстрый аналог. Также деинсталируйте все ненужные компоненты, которые вы не используйте или использование которых необязательно.
+
+    Долговыполняющееся задание mambot (для Joomla)
+
+Если среди mambot'ов присутствуют задания, которые можно перенести в системный cron, лучше всего сделать это. mambot-задания выполняются вместе с запросом пользователя, поэтому загрузка сайта происходит очень медленно, либо вообще не происходит.
+
+    Почтовая рассылка
+
+Запуск скрипта почтовой рассылки лучше всего расположить в системном cron'е, управление которым находится в контрольной панели. А запуск его назначить на время наименьшей нагрузки на сервер (ночь по московскому времени). При этом следует учитывать ограничения, накладываемые условиями договора-оферты относительно количества писем в час/день и временем работы PHP-скрипта.
+
+    Большое количество медленных запросов к MySQL
+
+При наличии у вас медленных запросов, в папке logs вашего аккаунта создается файл mysql-slow.log. Информация в этом файле обновляется раз в сутки и содержит только самые проблемные SQL-запросы.
+
+    Установите в движок кеширующие компоненты, которые могли бы сократить число SQL-запросов.
+    Оптимизируйте SQL-запросы.
+    Проиндексируйте таблицы БД по столбцам, которые используются в выборке.
+    Если ничего не помогает, возможно, стоит сменить движок на более оптимальный.
+
+Большое число запросов к веб-серверу
+
+    Загружаемый ресурс разбит/содержит ссылки на слишком больше число файлов (картинки, таблицы стилей JS-скрипты), которые подгружаются через отдельные запросы. Постарайтесь объединять ресурсы в один файл, где это возможно.
+
+    На сайте установлен элемент, который периодически посылает на сервер AJAX-запросы (например, чат). Количество запросов зависит не только от числа посетителей, но и от их привычки открывать несколько вкладок в браузере.
+
+    Боты-индексаторы, сканирующие ресурсы сайтов (поисковые системы, Sape и другие).
+
+    Использование элементов ресурсов или скриптов на чужих сайтах (ссылки на картинки, скрипты-информёры). Используйте антилич-модули/настройки.
+
+    DDoS-атаки.
+
+----------------------------------------------------------------------------------
+##############################
+#SITE TIME UPLOAD DOWNLOAD
+##############################
+----------------------------------------------------------------------------------
+https://tools.pingdom.com
+----------------------------------------------------------------------------------
+#####################
+#MARK DOWN РАЗМЕТКА
+#####################
+
+http://dillinger.io/
+----------------------------------------------------------------------------------
+#####################
+#SPAM, ANTIVIRUS 
+#####################
+----------------------------------------------------------------------------------
+https://revisium.com/
+https://revisium.com/ru/blog/ai-bolit-4-ISP.html
+http://aleksius.com/joomla/zashchita-sajta/stranitsa-3
+----------------------------------------------------------------------------------
+Чтобы найти источник спам-рассылки на сайте, нужно в файле php.ini включить логирование рассылаемой почты директивами:
+mail.add_x_header = On
+mail.log = <путь до вашего пользовательского каталога>/phpmail.log
+
+После включения данных опций в заголовок каждого письма, отправленного функцией mail(), будет добавляться строка вида
+X-PHP-Originating-Script: <UID>:<имя скрипта>.php
+
+Например,
+X-PHP-Originating-Script: 33:ok.php
+
+В случае спам-рассылки необходимо анализировать служебные заголовки рассылаемых писем и лог phpmail.log, в котором будут записи вида
+mail() on [/var/www/vhosts/site.com/httpdocs/pages/modules/system/system.mail.inc:83]: To: smith@domain.co.uk -- Headers: MIME-Version: 1.0 Content-Type: text/plain; charset=UTF-8; format=flowed; delsp=yes Content-Transfer-Encoding: 8Bit X-Mailer: Drupal Sender: smith@domain.co.uk From: smith@domain.co.uk
+
+Так вы сможете легко найти скрипт, рассылающий спам, и удалить его.
+Если ваш сайт или эккаунт на хостинге уже заблокировали за рассылку спама, запросите в техподдержке хостинга для анализа 
+
+    логи почтового сервера за день рассылки
+    логи веб-сервера (access_log) за день рассылки
+    образцы писем из спам-рассылки (нужны служебные заголовки писем)
+
+Далее в ходе анализа возможны два варианта:
+
+    В заголовке спам-письма будет строка X-PHP-Originating-Script. В этом случае вы знаете, через какой скрипт была выполнена рассылка.
+    Строка X-PHP-Originating-Script в служебном заголовке отсутствует. В этом случае нужно сопоставить дату и время отправки писем (ее можно узнать из служебного заголовка письма) с логами веб-сервера (access_log). Скорее всего в access_log в то же самое время будет обращение к скрипту методом POST. Этот скрипт будет источником спама.  
+
+После удаления спам-рассыльщика рекомендуем просканировать сайт на наличие других вредоносных скриптов (бэкдоров или хакерских шеллов), так как обычно взлом сайта не ограничивается размещением только одного скрипта, рассылающего спам. Сайт можно проверить бесплатным сканером AI-BOLIT. Если у вас не получается сделать это самостоятельно, обратитесь к профессионалам.
+----------------------------------------------------------------------------------
+#############
+#PROFESSION
+#############
+----------------------------------------------------------------------------------
+plesk,cloudlinux,bitrix,xen,dns,juniper,asterisk,django,python,php
+----------------------------------------------------------------------------------
+nginx,apache,h2o,mysql,proftpd,ssl,sphinx,php5.4_7,alternatives,update-alternatives
+----------------------------------------------------------------------------------
+restore_passwd,uid,gid,stickibitk,selinux,aparmorecron,dns,dhcp,samba,ldap,acl
+----------------------------------------------------------------------------------
+exim,postfix,devecon,spamassasing,webmail,nextcloud
+----------------------------------------------------------------------------------
+plesk,vestacp,bitrix,wordpre,joomla,Opencart,СMS Magento,ImageCMS,Drupal,cpanel
+----------------------------------------------------------------------------------
+file sistems,fdisk,lvm,zfs,ext4,mount,fstab,nfs,ntpd,raid_0_60
+----------------------------------------------------------------------------------
+yum,apt,rpm,deb,curl,whois,dig,rsync,systemd,syslog
+----------------------------------------------------------------------------------
+juniper,microtik,cisco,net,resolv,hostname
+----------------------------------------------------------------------------------
+cloudlinux,xen
+----------------------------------------------------------------------------------
+fail2ban,firewald,iptables,ipfw,ipf,pf,ufw,windows firewall
+----------------------------------------------------------------------------------
+bash,git,docker,aws
+----------------------------------------------------------------------------------
+==================================================================================
+----------------------------------------------------------------------------------
+nginx,apache,h2o,mysql,proftpd,ssl,plesk,bitrix,vesta
+----------------------------------------------------------------------------------
+dns,fail2ban,firewald,iptables,selinux,php5.4_7,alternatives,update-alternatives
+----------------------------------------------------------------------------------
+cloudlinux
+----------------------------------------------------------------------------------
+juniper(lasp,trunc,vlan),microtik(l2tp,lasp)
+----------------------------------------------------------------------------------
+exim,postfix,devecon,spamassasing,nextcloud
+----------------------------------------------------------------------------------
+==================================================================================
+----------------------------------------------------------------------------------
+#############
+#BITRIX_ERROR
+#############
+----------------------------------------------------------------------------------
+/bitrix/.settings
+----------------------------------------------------------------------------------
+'exception_handling' => 
+  array (
+    'value' => 
+    array (
+      'debug' => true,
+      'handled_errors_types' => E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE & ~E_DEPRECATED,
+      'exception_errors_types' => E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT & ~E_USER_WARNING & ~E_USER_NOTICE & ~E_COMPILE_WARNING,
+      'ignore_silence' => true,
+      'assertion_throws_exception' => false,
+      'assertion_error_type' => 256,
+      'log' => array (
+        'settings' => array (
+          'file' => 'bitrix/modules/error.log',
+          'log_size' => 1000000,
+        ),
+    ),
+    ),
+    'readonly' => true,
+  ),
+----------------------------------------------------------------------------------
+/bitrix/modules/error.log
+==================================================================================
+----------------------------------------------------------------------------------
+#######
+#CRON
+#######
+----------------------------------------------------------------------------------
+systemctl status cron
+systemctl restart cron
+service crond restart
+----------------------------------------------------------------------------------
+/etc/cron.d
+var/spool/cron/crontabs/
+----------------------------------------------------------------------------------
+/etc/crontab
+----------------------------------------------------------------------------------
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+HOME=/
+# run-parts
+01 * * * * root run-parts /etc/cron.hourly
+02 4 * * * root run-parts /etc/cron.daily
+22 4 * * 0 root run-parts /etc/cron.weekly
+42 4 1 * * root run-parts /etc/cron.monthly
+----------------------------------------------------------------------------------
+/etc/cron.hourly
+/etc/cron.daily
+/etc/cron.weekly
+/etc/cron.monthly
+----------------------------------------------------------------------------------
+минута час день месяц день_недели пользователь команда
+
+Формат
+    Минута - время в минутах от 0 до 59
+    Час - от 0 до 23
+    День - день месяца от 1 до 31
+    Месяц - от 1 до 12 либо буквенные обозначения jan - dec
+    День недели - от 0 до 6 (0 - воскресенье) или sat - sun
+    Пользователь
+    Команда - строка в формате командного интерпретатора которая будет исполнена, допускается запись типа команда1 && команда2 для запуска нескольких команд подряд.
+
+Значения минут, часов, дней можно указывать следующим образом:
+    Значение - число обозначающее дату или время, допускается подстановочный знак *  допускающий полный диапазон значений
+    Несколько значений - допускается указывать несколько значений через запятую, например 2,14,22
+    Диапазон значений - указывается через дефис, например 2-10
+    Шаг значений - указывается через дробь, в знаменатель которой ставится шаг, например */3 - каждое третье значение 0, 3, 6, 9 и т.д. В качестве числителя должен быть диапазон значений либо звездочка.
+    Вся оставшаяся часть строки до символа перевода строки или символа %, будет выполнен вызов /bin/sh или другой оболочки, определенной в переменной SHELL в crontab Знак процента (`%' ) в команде (если он не экранирован обратной косой чертой (`\' ) ) будет соответствовать символу перевода строки и все данные после первого `%'  будут посланы для команды на стандартный ввод.
+
+Рассмотрим следующий пример записи:
+0 8-19/2 * * 1 /home/ivanov/test
+
+Она означает что каждый второй час с 8 до 19 (8, 10,12,14,16) по понедельникам запускать скрипт test в
+домашнем каталоге Иванова.
+
+Сразу хотим предостеречь вас от распространенной ошибки, при указании периодического исполнения
+все даты должны быть указаны явно, звездочка обозначает полный диапазон значений, а не их отсутствие.
+Например если вам требуется исполнять некий скрипт каждый час с 10 до 15 неправильно будет:
+
+* 10-15 * * * /home/ivanov/test
+Данная строка приведет к запуску скрипта каждую минуту в диапазоне с 10 до 15 часов. Правильно будет:
+
+0 10-15 * * * /home/ivanov/test
+Данная запись позволит запускать скрипт в начале каждого часа указанного диапазона.
+
+
+
+Кроме даты можно использовать ряд специальных строк:
+
+    @reboot - выполнять команду при перезагрузке
+    @yearly или @annually - выполнять 1 января, аналогично записи: "0 0 1 1 * "
+    @monthly - выполнять 1 числа каждого месяца, аналогично "0 0 1 * * "
+    @weekly - выполнять каждое воскресенье, равносильно "0 0 * * 0"
+    @daily или @midnight - ежедневно в полночь,"0 0 * * * "
+    @hourly - раз в час, "0 * * * * "
+
+Так для ежедневного исполнения нашего скрипта каждую полночь можно написать:
+
+@midnight /home/ivanov/test
+----------------------------------------------------------------------------------
+Если необходимо запретить пользователю создавать и редактировать crontab-файлы сделать 
+это можно записав, имя его учетной записи в файл /etc/cron.deny.
+Если файла нет, то его нужно создать самому. Имена учетных записей записываются по одному в строке.
+Можно также использовать файл /etc/cron.allow. Подробнее описано в man crontab.
+----------------------------------------------------------------------------------
+-------------------------
+crontab -u user_name file      -создание файла crontab из файла "file" для юзера "user_name"
+-------------------------
+-------------------------
+crontab -u user_name -l       -просмотр файла crontab юзера "user_name"
+-------------------------
+-------------------------
+crontab -u user_name -r       -удаление файла crontab юзера "user_name"
+-------------------------
+-------------------------
+crontab -u user_name -e       -редактирование файла crontab юзера "user_name" используя редактор, заданный переменной окружения VISUAL или EDITOR
+-------------------------
+
+----------------------------------------------------------------------------------
+Перезагрузка Linux по расписанию внесите в консоль следующее:
+    cd /etc
+    cat > shutdown.sh << EOF
+    shutdown -r now
+    EOF
+    chmod +x shutdown.sh
+    crontab -e
+в открывшемся редакторе внести:
+
+    00 04 * * * /etc/shutdown.sh
+если нужно несколько раз в сутки перезагружать нужно добавить несколько строчек
+в этот файл с указанием времени запуска команды перезагрузки
+----------------------------------------------------------------------------------
+Задача: запускать каждую минуту файл /home/user/mail, который будет отправлять почту
+
+#содержимое файла mail (файл должен быть с правами на запуск! например -rwxr-xr-x)
+#!/bin/bash
+mess="test cron"
+echo "$mess" |mutt -s "subj" -m application/octet-stream bob@server.ru
+
+1.Создаем временный файл /home/user/test содержимое файла test такое:
+
+SHELL=/bin/bash
+MAILTO=user
+0-59 * * * * /home/user/mail
+
+2. Запускаем в терминале команду crontab /home/user/test
+
+Все. После этого в каталоге /var/spool/cron будет создан файл "user" примерно с таким содержимым
+
+# DO NOT EDIT THIS FILE - edit the master and reinstall.
+# (/home/user/test installed on Mon Mar 29 02:31:34 2004)
+# (Cron version -- $Id: crontab.c,v 2.13 1994/01/17 03:20:37 vixie Exp $)
+SHELL=/bin/bash
+MAILTO=user
+0-59 * * * * /home/user/mail
+
+и файл /home/user/mail будет запускаться демоном cron каждую минуту. 
+----------------------------------------------------------------------------------
+По мимо cron есть ещё комманда at которая позволяет заплпнировать комманду на выполнение один раз
+	touch 1.txt | at 10:00
+----------------------------------------------------------------------------------
+#####
+#NFS
+#####
+----------------------------------------------------------------------------------
+Установка и настройка NFS-сервера и NFS-клиента на Centos
+
+1.Установка NFS
+Проверка, установлен ли nfs уже в системе
+[root@guk5 ~]# chkconfig —list nfs
+nfs             0:выкл  1:выкл  2:вкл   3:вкл   4:вкл   5:вкл   6:выкл
+Аналогично проверяем службу portmap
+[root@kit ~]#  chkconfig —list portmap
+portmap         0:выкл  1:выкл  2:вкл   3:вкл   4:вкл   5:вкл   6:выкл
+Если нет, то устанавливаем ,добавляем в автозагрузку, запускаем
+----------------------------------
+yum -y install nfs-utils portmap
+----------------------------------
+chkconfig —level 2345 portmap on
+chkconfig —level 2345 nfs on
+/etc/init.d/portmap start
+/etc/init.d/nfs start
+
+В своей работе NFS использует RPC-вызовы а значит работоспособность службы можно проверить
+с помощью portmapper (/etc/init.d/portmap) (он тоже должен быть запущен на сервере где
+выполняются программы использующие RPC Calls).
+---------------------------------------------------
+[root@guk5 ~]# rpcinfo -p localhost | grep nfs
+---------------------------------------------------
+100003    2   udp   2049  nfs
+100003    3   udp   2049  nfs
+100003    4   udp   2049  nfs
+100003    2   tcp   2049  nfs
+100003    3   tcp   2049  nfs
+100003    4   tcp   2049  nfs
+Как видим на моем сервере обслуживаются NFS-запросы всех версий NFS (4-ая — последняя на данный момент).
+
+2.Настройка NFS-сервера
+
+Файл конфигурации /etc/exports содержит список файловых систем которые мы экспортируем,
+то есть разрешаем монтировать по протоколу NFS на удаленных системах.
+Каждая строка в файле это указание на экспортируемую ФС и режим доступа к ней, шаблон следующий:
+[файловая система] [кому разрешено получать доступ] [опциональные ключи]
+
+[root@kit ~]# cat /etc/exports
+/home 192.168.1.16(rw,no_root_squash)
+
+Здесь мы разрешаем монтировать /home на сервере 192.168.1.16 в режиме rw
+После изменения в /etc/exports обязательно перечитываем, чтобы изменения вступили в силу
+-----------------
+exportfs –r
+-----------------
+Проверка списка экспортируемых файловых систем
+[root@guk5 ~]# exportfs
+/home           192.168.1.17
+
+3.Настройка NFS- клиента
+
+На стороне клиента так же должна быть поддержка NFS в ядре. В случае с CentOS 5 и выше и стандартным ядром такая поддержка имеется.
+
+создаем точку монтировании
+-----------------
+mkdir /mnt/nfs
+-----------------
+Ручное монтирование
+---------------------------------------------------
+mount -t nfs 192.168.1.16:/home /mnt/nfs
+---------------------------------------------------
+Монтируем с помощью команды mount. Ключем -t задаем тип монтируемой ФС, далее : <точка монтирования в локальной системе>
+
+Используя опцию -o можно указать дополнительные ключи монтирования. По умолчанию монтирование происходит в режиме rw.
+
+Проверяем наличие файлов в /mnt/nfs
+-----------------
+ls –al /mnt/nfs
+-----------------
+Для автоматического монтирования на клиенте добавляем в 
+-----------------
+/etc/fstab
+-----------------
+192.168.1.16:/home  /mnt/nfs  nfs  defaults  0 0
+
+----------------------------------
+Дополнительная информация
+----------------------------------
+
+Опции конфигурационного файла
+Самые часто используемые опции я описал ниже.
+
+ro — Только чтение;
+rw Чтение и запись;
+
+root_squash Не разрешает пользователю root получать root-привилегии в удаленной файловой системе,
+все действия будут сделаны от лица пользователя nobody;
+
+no_root_squash Пользователь root в локальной системе получает такие же права в удаленной.
+Стоит использовать эту опцию только в случае острой необходимости. Используется для бездисковых клиентов;
+
+all_squash Все запросы происходят от анонимного пользователя, что способствует повышению безопасности.
+Актуально для публичных разделов;
+
+anonuid/anongid Позволяет задать UID и GID пользователя от лица которого будут выполняться все запросы;
+
+sync Синхронный режим работы, ответы на запросы происходят только после того, как данные будут надежно
+записаны на диск. Надежность выше, производительность меньше;
+
+async Асинхронный режим работы, ответы на запросы происходят сразу, не дожидаясь записи на диск. 
+Надежность ниже, производительность выше;
+
+insecure Разрешать запросы с портов более чем 1024;
+
+no_subtree_check Если экспортируется подкаталог файловой системы, но не вся файловая система, сервер,
+проверяет, находится ли запрошенный файл в экспортированном подкаталоге. Эта проверка называется проверкой
+подкаталога. Отключение проверки уменьшает безопасность, но увеличивает скорость передачи данных.
+
+Указать каким хостам разрешено монтировать наши разделы можно несколькими способами:
+
+1. Указать hostname или просто IP-адрес;
+2. Указать “*”, что означает разрешено всем. Если указать *.gnu.su то будет разрешено test.gnu.su но запрещено aandreika.test.gnu.su . Чтобы этого избежать нужно написать *.*.gnu.su;
+3. В нужных местах использовать “?”, что заменяет любой символ (не применимо к IP-адресам);
+4. Использовать маски подсетей, например 192.168.146.32/27;
+5. Использовать NIS-группы, например @nisgroup2.
+
+Дополнительная информация
+
+Описанного выше должно хватить сполна, но если хочется больше то:
+# man nfs
+# man exports
+# man exportfs
+
+Не путайте exports и exportfs.
+exports – это конфигурационный файл, exportfs — программа для работы с ним.
+----------------------------------------------------------------------------------
+http://ru.bmstu.wiki/NFS_(Network_File_System)
+
+NFS (Network File System)
+Материал из Национальной библиотеки им. Н. Э. Баумана
+Последнее изменение этой страницы: 18:55, 20 июля 2016.
+NFSУровень (по модели OSI):	Прикладной
+Семейство:	стек протоколов TCP/IP
+Порт/ID:	67, 68/UDP
+Назначение протокола:	Получение сетевой конфигурации
+Спецификация:	RFC 2131
+Основные реализации (серверы):	dhcpd, ISC DHCP Server, Infoblox
+Вступил в силу с:	1990
+
+NFS (англ. Network File System) — протокол сетевого доступа к файловым системам, первоначально разработан Sun Microsystems в 1984 году. Основан на протоколе вызова удалённых процедур (ONC RPC). Позволяет подключать (монтировать) удалённые файловые системы через сеть.[1]
+
+NFS абстрагирован от типов файловых систем как сервера, так и клиента, существует множество реализаций NFS-серверов и клиентов для различных операционных систем и аппаратных архитектур. Наиболее зрелая версия NFS — v.4, поддерживающая различные средства аутентификации (в частности, Kerberos и LIPKEY с использованием протокола RPCSEC GSS) и списков контроля доступа (как POSIX, так и Windows-типов).
+Общая организация NFS
+
+NFS предоставляет клиентам прозрачный доступ к файлам и файловой системе сервера. В отличие от FTP, протокол NFS осуществляет доступ только к тем частям файла, к которым обратился процесс, и основное достоинство его в том, что он делает этот доступ прозрачным. Это означает, что любое приложение клиента, которое может работать с локальным файлом, с таким же успехом может работать и с NFS файлом, без каких либо модификаций самой программы.
+
+NFS-клиенты получают доступ к файлам на NFS-сервере путём отправки RPC-запросов на сервер. Это может быть реализовано с использованием обычных пользовательских процессов — а именно, NFS-клиент может быть пользовательским процессом, который осуществляет конкретные RPC-вызовы на сервер, который так же может быть пользовательским процессом.
+
+Важной частью последней версии стандарта NFS (v4.1) стала спецификация pNFS, нацеленная на обеспечение распараллеленной реализации общего доступа к файлам, увеличивающая скорость передачи данных пропорционально размерам и степени параллелизма системы.
+Содержание
+
+    1 История
+    2 Цели разработки
+    3 Принцип работы NFS
+    4 Настройка сервера NFS
+    5 Управление сервером NFS
+        5.1 showmount
+        5.2 exportfs
+    6 Монтирование файловой системы Network Files System командой mount
+    7 Опции обработки ошибок NFS
+    8 Повышение производительности NFS
+    9 Примечания
+
+История
+
+Протокол NFS имеет в своей истории 4 версии.
+
+Первая версия применялась только для внутреннего использования в Sun в экспериментальных целях. Версия 2 выпущена в марте 1989 года, первоначально полностью работала по протоколу UDP. Разработчики решили не хранить данных о внутреннем состоянии внутри протокола, как пример, блокировка, реализованная вне базового протокола. Люди, вовлечённые в создание NFS версии 2 — Расти Сэндберг (Rusty Sandberg,) Боб Лайон (Bob Lyon), Билл Джой и Стив Клейман (Steve Kleiman).
+
+NFSv3 вышла в июне 1995 года, в ней добавлена поддержка дескрипторов файлов переменного размера до 64 байт (в версии 2 — массив фиксированного размера 32 байта), снято ограничение на 8192 байта в RPC-вызовах чтения и записи (тем самым, размер передаваемого блока в вызовах ограничен только пределом для UDP-датаграммы — 65535 байт), реализована поддержка файлов больших размеров, поддержаны асинхронные вызовы операций записи, к процедурам READ и WRITE добавлены вызовы ACCESS (проверка прав доступа к файлу), MKNOD (создание специального файла Unix), READDIRPLUS (возвращает имена файлов в директории вместе с их атрибутами), FSINFO (возвращает статистическую информацию о файловой системе), FSSTAT (возвращает динамическую информацию о файловой системе), PATHCONF (возвращает POSIX.1-информацию о файле) и COMMIT (передает ранее сделанные асинхронные записи на постоянное хранение). На момент введения версии 3 отмечен рост популярности в среде разработчиков протокола TCP. Некоторые независимые разработчики самостоятельно добавили поддержку протокола TCP для NFS версии 2 в качестве транспортного, Sun Microsystems добавили поддержку TCP в NFS в одном из дополнений к версии 3. С поддержкой TCP повысились практическая осуществимость использования NFS в глобальных сетях.
+
+NFSv4 выпущена в декабре 2000 года под влиянием AFS и CIFS, в неё включены улучшения производительности и безопасности. Версия 4 стала первой версией, разработанной совместно с Internet Engineering Task Force (IETF). NFS версии v4.1 была одобрена IESG в январе 2010 года (новая спецификация, объёмом 612 страниц, стала известна как самый длинный документ, одобренный IETF). Важным нововведением версии 4.1 является спецификация pNFS — Parallel NFS, механизма параллельного доступа NFS-клиента к данным множества распределенных NFS-серверов. Наличие такого механизма в стандарте сетевой файловой системы поможет строить распределённые облачные хранилища и информационные системы.
+Цели разработки
+
+Изначальными требованиями при разработке NFS были:
+
+    потенциальная поддержка различных операционных систем (не только UNIX), чтобы серверы и клиенты NFS возможно было бы реализовать в разных операционных системах;
+    протокол не должен зависеть от каких-либо определённых аппаратных средств;
+    должны быть реализованы простые механизмы восстановления в случае отказов сервера или клиента;
+    приложения должны иметь прозрачный доступ к удаленным файлам без использования специальных путевых имен или библиотек и без перекомпиляции;
+    для UNIX-клиентов должна поддерживаться семантика UNIX;
+    производительность NFS должна быть сравнима с производительностью локальных дисков;
+    реализация не должна быть зависимой от транспортных средств.
+
+Принцип работы NFS
+
+NFS строится по крайней мере из двух основных частей: сервера и одного или большего количества клиентов. Клиент обращается к данным, находящимся на сервере, в режиме удалённого доступа. Для того, чтобы это нормально функционировало, нужно настроить и запустить несколько процессов. Реализация NFS состоит из нескольких компонентов. Некоторые из них локализованы либо на сервере, либо на клиенте, а некоторые используются и на обеих сторонах соединения. Некоторые компоненты не требуются для обеспечения основных функциональных возможностей, но составляют часть расширенного интерфейса NFS.
+
+Протокол NFS определяет набор запросов (операций), которые могут быть направлены клиентом к серверу, а также набор аргументов и возвращаемые значения для каждого из этих запросов. Версия 1 этого протокола существовала только в недрах Sun Microsystems и никогда не была выпущена. Все реализации NFS (в том числе NFSv3) поддерживают версию 2 NFS (NFSv2), которая впервые была выпущена в 1985 году в SunOS 2.0. Версия 3 протокола была опубликована в 1993 году и реализована некоторыми фирмами-поставщиками.
+
+Протокол удаленного вызова процедур (RPC) определяет формат всех взаимодействий между клиентом и сервером. Каждый запрос NFS посылается как пакет RPC. На сервере работают следующие даемоны[2]:
+
+    rpc.nfsd - Основной даемон сервера NFS - nfsd (в новых версиях иногда называется nfsd4). Этот демон обслуживает запросы клиентов NFS. Параметр RPCNFSDCOUNT в файле /etc/default/nfs-kernel-server в Debian и NFSDCOUNT в файле /etc/sysconfig/nfs в RedHat определяет число запускаемых демонов (по-умолчанию - 8). (RPC программа 100003)
+    rpc.mountd - Даемон монтирования NFS mountd обрабатывает запросы клиентов на монтирование каталогов. Демон mountd работает на серверах NFS. (RPC программа 100005)
+    rpc.statd - Даемон наблюдения за сетевым состоянием (он же Network Status Monitor, он же NSM). Он позволяет корректно отменять блокировку после сбоя/перезагрузки. Для уведомления о сбое использует программу /usr/sbin/sm-notify. Демон statd работает как на серверах, так и на клиентах. Ранее данный сервер был необходим для работы rpc.lockd, но за блокировки сейчас отвечает ядро. (RPC программа 100021 и 100024 - в новых версиях)
+    rpc.lockd - Даемон блокировки lockd (он же NFS lock manager (NLM)) обрабатывает запросы на блокировку файлов. Демон блокировки работает как на серверах, так и на клиентах. Клиенты запрашивают блокировку файлов, а серверы ее разрешают. (устарел и в новых дистрибутивах не используется как демон. Его функции в современных дистрибутивах (с ядром старше 2.2.18) выполняются ядра (lockd). (RPC программа 100024)
+    rpc.idmapd - Даемон idmapd для NFSv4 на сервере преобразует локальные uid/gid пользователей в формат вида имя@домен, а сервис на клиенте преобразует имена пользователей/групп вида имя@домен в локальные идентификаторы пользователя и группы (согласно конфигурационному файлу /etc/idmapd.conf).
+
+Клиент может запустить также даемон, называемый nfsiod. nfsiod обслуживает запросы, поступающие от сервера от сервера NFS. Он необязателен, увеличивает производительность, однако для нормальной и правильной работы не требуется.[3] В NFSv4 при использовании Kerberos дополнительно запускаются демоны:
+
+    rpc.gssd - Даемон NFSv4 обеспечивает методы аутентификации через GSS-API (Kerberos-аутентификация). Работает на клиенте и сервере.
+    rpc.svcgssd - Даемон сервера NFSv4, который обеспечивает проверку подлинности клиента на стороне сервера.
+
+Даемоны старых версий (NFS v.3 и ниже):
+
+    nfslogd - даемон журналов NFS фиксирует активность для экспортированных файловых систем, работает на серверах NFS
+    rpc.rquotad - сервер удаленных квот предоставляет информацию о квотах пользователей в удаленных файловых системах, может работать как на серверах, так и на клиентах.
+
+Кроме указанных выше пакетов, для корректной работы NFSv2 и v3 требуется дополнительный пакет portmap (в более новых дистрибутивах заменен на переименован в rpcbind). Sun RPC — это сервер, который преобразует номера программ RPC (Remote Procedure Call) в номера портов TCP/UDP.
+
+portmap оперирует несколькими сущностями:
+
+    RPC-вызовами или запросами
+    TCP/UDP портами, версией протокола (tcp или udp)
+    номерами программ и версиями программ 
+
+Даемон portmap запускается скриптом /etc/init.d/portmap до старта NFS-сервисов.
+
+Работа сервера RPC (Remote Procedure Call) заключается в обработке RPC-вызовов (т.н. RPC-процедур) от локальных и удаленных процессов. Используя RPC-вызовы, сервисы регистрируют или удаляют себя в/из преобразователя портов ( portmap, portmapper, он же, в новых версиях, rpcbind), а клиенты с помощью RPC-вызовов направляя запросы к portmapper получают необходимую информацию.
+Механизм работы RPC
+
+Работу RPC-сервера можно представить следующими шагами:
+
+    Преобразователь портов должен стартовать первым, обычно при загрузке системы. При этом создается конечная точка TCP и осуществляется открытие TCP порта 111. Также создается конечная точка UDP, которая находится в ожидании, когда на UDP порт 111 прибудет UDP датаграмма.
+    При старте программа, работающая через сервер RPC создает конечную точку TCP и конечную точку UDP для каждой поддерживаемой версии программы. (Сервер RPC может поддерживать несколько версий. Клиент указывает требуемую версию при посылке RPC-вызова.) Динамически назначаемый номер порта закрепляется за каждой версией сервиса. Сервер регистрирует каждую программу, версию, протокол и номер порта, осуществляя соответствующий RPC-вызов.
+    Когда программе клиента RPC необходимо получить необходимую информацию, она вызывает вызов процедуру преобразователя портов, чтобы получить динамически назначаемый номер порта для заданной программы, версии и протокола.
+    В ответ на этот запрос север возвращает номер порта.
+    Клиент отправляет сообщение RPC-запрос на номер порта, полученный в пункте 4. Если используется UDP, клиент просто посылает UDP датаграмму, содержащую сообщение RPC-вызова , на номер UDP порта, на котором работает запрошенный сервис. В ответ сервис отправляет UDP датаграмму, содержащую сообщение RPC отклика. Если используется TCP, клиент осуществляет активное открытие на номер TCP порта требуемого сервиса и затем посылает сообщение вызова RPC по установленному соединению. Сервер отвечает сообщением отклика RPC по соединению.
+
+Для получения информации от RPC-сервера используется утилита rpcinfo, она отображает номер зарегистрированной программы, версию, протокол, порт и название. С помощью rpcinfo также можно удалить регистрацию программы или получить информацию об отдельном сервисе RPC. При указании параметров -p host программа выводит список всех зарегистрированных RPC программ на хосте host. Без указания хоста программа выведет сервисы на localhost.
+
+NFS сервер (точнее даемон rpc.nfsd) получает запросы от клиента в виде UDP датаграмм на порт 2049. Несмотря на то, что NFS работает с преобразователем портов, что позволяет серверу использовать динамически назначаемые порты, UDP порт 2049 жестко закреплен за NFS в большинстве реализаций.
+
+Описание процесса обращения к файлу, расположенному на сервере NFS:
+
+    Клиенту (пользовательскому процессу) безразлично, получает ли он доступ к локальному файлу или к NFS файлу. Ядро занимается взаимодействием с железом через модули ядра или встроенные системные вызовы.
+    Модуль ядра kernel/fs/nfs/nfs.ko, который выполняет функции NFS клиента отправляет RPC запросы NFS серверу через модуль TCP/IP. NFS обычно использует UDP, однако более новые реализации могут использовать TCP.
+    NFS сервер получает запросы от клиента в виде UDP датаграмм на порт 2049. Несмотря на то, что NFS может работать с преобразователем портов, что позволяет серверу использовать динамически назначаемые порты, UDP порт 2049 жестко закреплен за NFS в большинстве реализаций.
+    Когда NFS сервер получает запрос от клиента, он передаётся локальной подпрограмме доступа к файлу, которая обеспечивает доступ к локальному диску на сервере.
+    Результат обращения диску возвращается клиенту.
+
+Настройка сервера NFS
+
+Настройка сервера в целом заключается в задании локальных каталогов, разрешенных для монтирования удаленными системами в файле /etc/exports. Это действие называется экспорт иерархии каталогов. Основными источниками информации об экспортированных каталогах служат следующие файлы:
+Структура папки Root
+
+    /etc/exports - основной конфигурационный файл, хранящий в себе конфигурацию экспортированных каталогов. Используется при запуске NFS и утилитой exportfs.
+    /var/lib/nfs/xtab - содержит список каталогов, монтированных удаленными клиентами. Используется демоном rpc.mountd, когда клиент пытается смонтировать иерархию (создается запись о монтировании).
+    /var/lib/nfs/etab - список каталогов, которые могут быть смонтированы удаленными системами с указанием всех параметров экспортированных каталогов.
+    /var/lib/nfs/rmtab - список каталогов, которые не разэкспортированы в данный момент.
+    /proc/fs/nfsd - специальная файловая система (ядро 2.6) для управления NFS сервером.
+    /proc/net/rpc - содержит "сырую" (raw) статистику, которую можно получить с помощью nfsstat, а также различные кеши.
+    /var/run/portmap_mapping - информация о зарегистрированных в RPC сервисах.
+
+В файле exports используются следующие общие опции:[4]
+
+    auth_nlm (no_auth_nlm) или secure_locks (insecure_locks) - указывает, что сервер должен требовать аутентификацию запросов на блокировку (с помощью протокола NFS Lock Manager (диспетчер блокировок NFS)).
+    nohide (hide) - если сервер экспортирует две иерархии каталогов, при этом одна вложенна (примонтированна) в другую. Клиенту необходимо явно смонтировать вторую (дочернюю) иерархию, иначе точка монтирования дочерней иерархии будет выглядеть как пустой каталог. Опция nohide приводит к появлению второй иерархии каталогов без явного монтирования.
+    ro - Разрешает только запросы на чтение.
+    rw - Разрешает запросы на запись.
+    secure (insecure) - требует, чтобы запросы NFS поступали с защищенных портов (< 1024), чтобы программа без прав root не могла монтировать иерархию каталогов.
+    subtree_check (no_subtree_check) - Если экспортируется подкаталог фаловой системы, но не вся файловая система, сервер проверяет, находится ли запрошенный файл в экспортированном подкаталоге. Отключение проверки уменьшает безопасность, но увеличивает скорость передачи данных.
+    sync (async) - указывает, что сервер должен отвечать на запросы только после записи на диск изменений, выполненных этими запросами. Опция async указывает серверу не ждать записи информации на диск, что повышает производительность, но понижает надежность, т.к. в случае обрыва соединения или отказа оборудования возможна потеря информации.
+    wdelay (no_wdelay) - указывает серверу задерживать выполнение запросов на запись, если ожидается последующий запрос на запись, записывая данные более большими блоками. Это повышает производительность при отправке больших очередей команд на запись. no_wdelay указывает не откладывать выполнение команды на запись, что может быть полезно, если сервер получает большое количество команд не связанных друг с другом.
+
+Управление сервером NFS
+
+Управление сервером NFS осуществляется с помощью следующих утилит:
+
+    nfsstat
+    showmsecure (insecure)ount
+    exportfs
+
+Утилита nfsstat позволяет посмотреть статистику RPC и NFS серверов.
+showmount
+
+Утилита showmount запрашивает демон rpc.mountd на удалённом хосте о смонтированных файловых системах. По умолчанию выдаётся отсортированный список клиентов. Команды:
+
+    --all - выдаётся список клиентов и точек монтирования с указанием куда клиент примонтировал каталог. Эта информация может быть не надежной.
+    --directories - выдаётся список точек монтирования.
+    --exports - выдаётся список экспортируемых файловых систем с точки зрения nfsd.
+
+При запуске showmount без аргументов, на консоль будет выведена информация о системах, которым разрешено монтировать локальные каталоги.
+exportfs
+
+Данная команда синхронизирует экспортированные каталоги, заданные в файле /etc/exports, с файлом /var/lib/nfs/xtab и удаляет из xtab несуществующие. exportfs выполняется при запуске демона nfsd с аргументом -r. Утилита exportfs в режиме ядра 2.6 общается с демоном rpc.mountd через файлы каталога /var/lib/nfs/ и не общается с ядром напрямую. Без параметров выдаёт список текущих экспортируемых файловых систем. Параметры exportfs:
+
+    [клиент:имя-каталога] - добавить или удалить указанную файловую систему для указанного клиента)
+    -v - выводить больше информации
+    -r - переэкспортировать все каталоги (синхронизировать /etc/exports и /var/lib/nfs/xtab)
+    -u - удалить из списка экспортируемых
+    -a - добавить или удалить все файловые системы
+    -o - опции через запятую (аналогичен опциям применяемым в /etc/exports; т.о. можно изменять опции уже смонтированных файловых систем)
+    -i - не использовать /etc/exports при добавлении, только параметры текущей командной строки
+    -f - сбросить список экспортируемых систем в ядре 2.6.
+
+Монтирование файловой системы Network Files System командой mount
+
+Пример команды mount для монтирования файловой системы NFS в Debian:
+
+FILES ~ # mount -t nfs archiv:/archiv-small /archivs/archiv-small
+FILES ~ # mount -t nfs -o ro archiv:/archiv-big /archivs/archiv-big
+FILES ~ # mount
+.......
+archiv:/archiv-small on /archivs/archiv-small type nfs (rw,addr=10.0.0.6)
+archiv:/archiv-big on /archivs/archiv-big type nfs (ro,addr=10.0.0.6)
+
+Первая команда монтирует экспортированный каталог /archiv-small на сервере archiv в локальную точку монтирования /archivs/archiv-small с опциями по умолчанию (то есть для чтения и записи). Вторая команда монтирует экспортированный каталог /archiv-big на сервере archiv в локальный каталог /archivs/archiv-big с опцией только для чтения (ro). Команда mount без параметров наглядно отображает нам результат монтирования. Кроме опции только чтения (ro), возможно задать другие основные опции при монтировании NFS[5]:
+
+    nosuid - Данная опция запрещает исполнять setuid программы из смонтированного каталога.
+    nodev (no device - не устройство) - Данная опция запрещает использовать в качестве устройств символьные и блочные специальные файлы.
+    lock (nolock) - Разрешает блокировку NFS (по умолчанию). nolock отключает блокировку NFS (не запускает демон lockd) и удобна при работе со старыми серверами, не поддерживающими блокировку NFS.
+    mounthost=имя - Имя хоста, на котором запущен демон монтирования NFS - mountd.
+    mountport=n - Порт, используемый демоном mountd.
+    port=n - порт, используемый для подключения к NFS серверу (по умолчанию 2049, если демон rpc.nfsd не зарегистрирован на RPC-сервере). Если n=0 (по умолчанию), то NFS посылает запрос к portmap на сервере, чтобы определить порт.
+    rsize=n (read block size - размер блока чтения) - Количество байтов, читаемых за один раз с NFS-сервера. Стандартно - 4096.
+    wsize=n (write block size - размер блока записи) - Количество байтов, записываемых за один раз на NFS-сервер. Стандартно - 4096.
+    tcp или udp - Для монтирования NFS использовать протокол TCP или UDP соответственно.
+    bg - При потери доступа к серверу, повторять попытки в фоновом режиме, чтобы не блокировать процесс загрузки системы.
+    fg - При потери доступа к серверу, повторять попытки в приоритетном режиме. Данный параметр может заблокировать процесс загрузки системы повторениями попыток монтирования. По этой причине параметр fg используется преимущественно при отладке.
+    Опции, влияющие на кэширование атрибутов при монтировании NFS
+    Атрибуты файлов, хранящиеся в inod (индексных дескрипторах), такие как время модификации, размер, жесткие ссылки, владелец, обычно изменяются не часто для обычных файлов и еще реже - для каталогов. Ядро использует время модификации файла, чтобы определить устарел ли кэш, сравнивая время модификации в кэше и время модификации самого файла.
+
+Кэш атрибутов периодически обновляется в соответствии с заданными параметрами:
+
+    ac (noac) (attrebute cache - кэширование атрибутов) - Разрешает кэширование атрибутов (по-умолчанию). Хотя опция noac замедляет работу сервера, она позволяет избежать устаревания атрибутов, когда несколько клиентов активно записывают информацию в общию иерархию.
+    acdirmax=n (attribute cache directory file maximum - кэширование атрибута максимум для файла каталога) - Максимальное количество секунд, которое NFS ожидает до обновления атрибутов каталога (по-умолчанию 60 сек.)
+    acdirmin=n (attribute cache directory file minimum - кэширование атрибута минимум для файла каталога) - Минимальное количество секунд, которое NFS ожидает до обновления атрибутов каталога (по-умолчанию 30 сек.)
+    acregmax=n (attribute cache regular file maximum - кэширование атрибута максимум для обычного файла) - Максимаьное количество секунд, которое NFS ожидает до обновления атрибутов обычного файла (по-умолчанию 60 сек.)
+    acregmin=n (attribute cache regular file minimum- кэширование атрибута минимум для обычного файла) - Минимальное количество секунд, которое NFS ожидает до обновления атрибутов обычного файла (по-умолчанию 3 сек.)
+    actimeo=n (attribute cache timeout - таймаут кэширования атрибутов) - Заменяет значения для всех вышуказаных опций. Если actimeo не задан, то вышеуказанные значения принимают значения по умолчанию.
+
+Опции обработки ошибок NFS
+
+Следующие опции управляют действиями NFS при отсутствии ответа от сервера или в случае возникновения ошибок ввода/вывода:
+
+    fg (bg) (foreground - передний план, background - задний план) - Производить попытки монтирования отказавшей NFS на переднем плане/в фоне.
+    hard (soft) - выводит на консоль сообщение "server not responding" при достижении таймаута и продолжает попытки монтирования. При заданной опции soft - при таймауте сообщает вызвавшей операцию программе об ошибке ввода/вывода.
+    nointr (intr) (no interrupt - не прерывать) - Не разрешает сигналам прерывать файловые операции в жестко смонтированной иерархии каталогов при достижении большого таймаута. intr - разрешает прерывание.
+    retrans=n (retransmission value - значение повторной передачи) - После n малых таймаутов NFS генерирует большой таймаут (по-умолчанию 3). Большой таймаут прекращает выполнение операций или выводит на консоль сообщение "server not responding", в зависимости от указания опции hard/soft.
+    retry=n (retry value - значение повторно попытки) - Количество минут повторений службы NFS операций монтирования, прежде чем сдаться (по-умолчанию 10000).
+    timeo=n (timeout value - значение таймаута) - Количество десятых долей секунды ожидания службой NFS до повторной передачи в случае RPC или малого таймаута (по-умолчанию 7). Это значение увеличивается при каждом таймауте до максимального значения 60 секунд или до наступления большого таймаута. В случае занятой сети, медленного сервера или при прохождении запроса через несколько маршрутизаторов или шлюзов увеличение этого значения может повысить производительность.
+
+Повышение производительности NFS
+
+На производительность NFS могут влиять несколько параметров, особенно при работе через медленные соединения. При работе с медленными и высоконагруженными соединениями, желательно использовать параметр hard, чтобы таймауты не привели к прекращению работы программ. Но необходимо осознавать, что если смонтировать файловую систему через NFS с параметром hard через fstab, а удаленный хост окажется недоступен, то при загрузке системы произойдет зависание.
+
+Одним из способов повышения производительности NFS - увеличение количества байтов, передаваемых за один раз. Размер в 4096 байт слишком мал для современных быстрых соединений, увеличивая это значение до 8192 и более можно экспериментальным путем найти оптимальную скорость.
+
+Так же, не стоит упускать из внимания и настройки тайм-аутов. NFS ожидает ответа на пересылку данных в течении промежутка времени, указанного в опции timeo, если ответ за это время не получен, то выполняется повторная пересылка. На загруженных и медленных соединениях это время может быть меньше времени реакции сервера и способности каналов связи, в результате чего могут быть излишние повторные пересылки, замедляющие работу.По умолчанию, timeo равно 0,7 сек (700 миллисекунд). после обнаружения факта обрыва связи в течении 700 мс сервер совершит повторную пересылку и удвоит время ожидания до 1,4 сек., увеличение timeo будет продолжаться до максимального значения в 60 сек. 
+----------------------------------------------------------------------------------
+=======
+oVirt
+=======
+# yum install nfs-utils 
+# systemctl daemon-reload
+# systemctl enable rpcbind.service
+# systemctl enable nfs-server.service
+# systemctl start rpcbind.service
+# systemctl start nfs-server.service 
+# mkdir -p /exports/data # mkdir -p /exports/export 
+/etc/exports
+	/exports/data *(rw)
+	/exports/export *(rw) 
+# exportfs -r
+# systemctl reload nfs-server.service
+# groupadd kvm -g 36 
+# useradd vdsm -u 36 -g 36
+# chown -R 36:36 /exports/data
+# chown -R 36:36 /exports/export 
+# chmod 0755 /exports/data
+# chmod 0755 /exports/export
+----------------------------------------------------------------------------------
+#########
+#ProFTPd
+#########
+----------------------------------------------------------------------------------
+Устанавливаем ProFTPD:
+#yum install -y proftpd
+
+Добавляем в Автозагрузку:
+#chkconfig proftpd on
+#service proftpd start
+#systemctl enable proftpd
+#systemctl start proftpd
+
+Далее редактируем конфиг (/etc/proftpd.conf):
+# mcedit /etc/proftpd.conf
+
+изменим Group на nobody
+Group nobody
+
+По соображениям безопасности, вы можете также добавить (или разкомментировать) следующие строки в /etc/proftpd.conf:
+DefaultRoot ~
+IdentLookups off
+ServerIdent on "FTP Server ready."
+
+Чтобы FTP пользователи могли использовать сhmod команды, закомментируем строки в разделе:
+# DenyAll
+
+Также можно сделать, чтоб отображались все файлы от и до, т.к. файлы начинающиеся на точку, видно не будет:
+ListOptions -a
+
+Запускаем:
+# proftpd
+
+Добавление пользователя:
+# useradd -d /home/site.ru/ -M -s /bin/bash user
+Где:
+/home/site.ru/ — корневая директория пользователя на фтп
+user — Имя пользователя
+
+Редактирование пароля пользователя:
+# passwd user
+
+Удаление пользователя:
+# userdel user
+----------------------------------------------------------------------------------
+#################################
+#Настройка ProFTPd для хостинга
+#################################
+
+
+Написано достаточно статей, как поднять и настроить LAMP.
+Во многих из них есть пара абзацев, в которых кратко описывается установка и базовая настройка ProFTPd.
+Как правило, для организации нормальной работы хостинга этого не хватает.
+Возникает вопрос — «как настроить ftp-доступ конкретного пользователя к определенному виртуальному хосту?».
+
+Виртуальные ftp-пользователи
+
+Для хостинга нецелесообразно заводить пользователей в системе. Гораздо логичнее завести виртуальных ftp-пользователей.
+В первую очередь нужно определиться, где будем хранить их учетные записи.
+У ProFTPd есть несколько вариантов, но я рассмотрю лишь два:
+
+    Альтернативный файл пользователей и паролей;
+    СУБД MySQL.
+
+
+Сразу оговорюсь, что у меня установлена система Ubuntu 10.04.
+Apache работает от имени www-data, у которого UserId=33, GroupId=33.
+Логи ftp-сервера по умолчанию можно посмотреть тут: /var/log/proftpd/
+В руководстве я создам пользователя tester, для работы с виртуальным хостом test.ru.
+
+Общая настройка ProFTPd
+
+Открываем конфиг ProFTPd, по-умолчанию он располагается /etc/proftpd/proftpd.conf.
+Из соображений безопасности добавляем в него следующие строки:
+
+DefaultRoot ~
+ServerIdent on "FTP Server ready."
+
+Так рекомендовано сделать в официальном руководстве пользователя.
+Остальное по умолчанию можно оставить, так как есть.
+
+Хранение виртуальных пользователей в текстовом файле
+
+Нам нужно, чтобы ftp пользователь имел возможность редактировать и удалять файлы, созданные скриптами.
+Создаем нового виртуального ftp-пользователя с логином tester, идентификатором 33, группой 33 и домашним каталогом /var/www/test.ru.
+
+ftpasswd --passwd --file=/etc/proftpd/ftpd.passwd --name=tester --uid=33 --gid=33 --home=/var/www/test.ru --shell=/bin/false
+
+После выполнения команды система попросит ввести дважды пароль пользователя.
+В итоге, у нас появится файл /etc/proftpd/ftp.passwd с записью о пользователе.
+Кстати, изменить пароль пользователя можно следующей командой:
+
+ftpasswd --passwd --name=tester --change-password
+
+Теперь редактируем /etc/proftpd/proftpd.conf, для подключения виртуального пользователя:
+
+RequireValidShell off
+AuthUserFile /etc/proftpd/ftpd.passwd
+
+Перезапускаем ftp:
+/etc/init.d/proftpd restart
+
+Хранение виртуальных пользователей в СУБД MySQL
+
+Для хранения виртуальных пользователей в СУБД MySQL необходим пакет proftpd-mod-mysql.
+Через PHPMyAdmin или любым другим удобным способом создаем новую базу, к примеру proftpd.
+Так же создаем нового пользователя proftpd_user с паролем proftpd_password с правами на чтение этой базы.
+В базе создаем одну таблицу:
+
+CREATE TABLE `proftpd`.`users` (
+`username` VARCHAR( 32 ) NOT NULL ,
+`password` VARCHAR( 32 ) NOT NULL ,
+`uid` INT NOT NULL ,
+`gid` INT NOT NULL ,
+`homedir` VARCHAR( 255 ) NOT NULL ,
+`shell` VARCHAR( 255 ) NOT NULL ,
+UNIQUE (`username`)
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+И добавляем запись о пользователе:
+
+INSERT INTO `proftpd`.`users` (`username`, `password`, `gid`, `homedir`, `shell`) VALUES (
+'tester', 'pass', '33', '33', '/var/www/test.ru', '/bin/false' );
+
+На этом настройка MySQL окончена.
+Теперь, что касается конфигурации FTP-сервера.
+Редактируем файл /etc/proftpd/modules.conf – уберем комментарий со строк
+
+LoadModule mod_sql.c
+LoadModule mod_sql_mysql.c
+
+Редактируем файл /etc/proftpd/proftpd.conf.
+Дописываем строку
+Include /etc/proftpd/sql.conf
+
+А так же уберем комментарий или допишем строку:
+AuthOrder mod_sql.c
+
+Файл /etc/proftpd/sql.conf приводим к следующему виду:
+<IfModule mod_sql.c>
+# Cообщаем, что намерены работать с СУБД MySQL
+SQLBackend mysql
+SQLEngine on
+# Пароли в базе храняться в открытом формате
+SQLAuthTypes Plaintext
+# Подключаемся к БД proftpd пользователем proftpd_user с паролем proftpd_password
+SQLConnectInfo proftpd@localhost proftpd_user proftpd_password
+# Выбираем данные из таблицы users
+SQLUserInfo users username password uid gid homedir shell
+# Аутентифицируем пользователей из этой таблицы
+SQLAuthenticate users*
+# По умолчанию минимальный UserID пользователя и GroupID =999
+SQLMinUserUID 33
+SQLMinUserGID 33
+# На время отладки пишем логи
+SQLLogFile /var/log/proftpd/sql.log
+
+
+Перезапускаем ftp:
+/etc/init.d/proftpd restart
+
+Настройка доступа ftp-пользователей к директориям
+
+Изменяем владельца директории /var/www/test.ru
+сhown www-data:www-data /var/www/test.ru
+
+Выставляем права доступа к директории, иначе увидим permission denied
+chmod 775 /var/www/test.ru
+
+Теперь виртуальные пользователи могут создавать, редактировать и удалять файлы и папки.
+
+Полное описание директив ProFTPd можно найти тут:
+http://www.proftpd.org/docs/directives/configuration_full.html
+А так же есть хорошая документация на русском:
+http://www.bog.pp.ru/work/ProFTPD.html
+----------------------------------------------------------------------------------
+#########################################
+#Установка и настройка ProFTPd Директивы
+#########################################
+
+ProFTPd (http://www.proftpd.org/) - популярный ftp демон под *NIX. Имеет гибкие настройки, стабилен в работе, быстр, достаточно безопасен, компилируется под многие платформы, имеет полезные расширения для работы с MySQL, LDAP и др.
+Установка
+
+На FreeBSD:
+
+Установку производим из портов. Переходим в дерикторию с программой:
+cd /usr/ports/ftp/proftpd
+/usr/ports/ftp/proftpd/>make install && make clean
+
+В появившемся синем окне, выбираем опции с которыми будет собиратся ftp сервер.
+Например, можно собрать с поддержкой БД MySQL с целью хранения в ней пользователей.
+
+После установки, добавляем в автозагрузку:
+/usr/local/etc/rc.d/>echo 'proftpd_enable="YES"' >> /etc/rc.conf
+
+На Debian/Ubuntu:
+Установка выполняется в одну команду:
+sudo apt-get install proftpd
+
+На CentOS/Fedora:
+Установка выполняется командой:
+
+sudo yum -y install proftpd
+Настройка
+
+Переходим к редактированию основного конфигурационного файла:
+vi /usr/local/etc/proftpd.conf (для системы FreeBSD)
+
+vi /etc/proftpd/proftpd.conf (для других систем)
+
+# имя сервера - показывается коннектящимся клиентам
+ServerName "Main FTP server"
+
+# тип запуска сервера
+
+# standalone/inetd - сам или через inetd
+ServerType standalone
+
+# если клиент коннектится не на имя, а на IP или на виртуальный хост
+# не описанный в конфигурационном файле, то при
+
+# установке в `off` он получит отлуп, если же установлено `on` то
+
+# он будет обслужен `сервером по-умолчанию`
+DefaultServer on
+
+# e-mail администратора
+ServerAdmin admin@example.com
+
+# файл где хранится информация о сессиях
+#ScoreboardFile /var/run/proftpd.scoreboard
+
+# порт на котором работает сервер
+Port 21
+
+# Маска с которой создаются новые файлы (маска получается
+# из этого значения, путём его вычитания из 777 - т.е. в даном случае получится
+# маска 755)
+Umask 022
+
+# Максимальное число создаваемых процессов (работает только в standalohe режиме)
+# необходимо для защиты от атак типа `отказ в обслуживании` да и
+# от перегрузки сервера поможет
+MaxInstances 30
+
+# Пользователь от которого работает сервер
+User ftp
+
+# группа, под которой работает сервер
+Group ftp
+
+# куда будут складываться логи
+ExtendedLog /var/log/ftp.log
+TransferLog /var/log/xferlog
+SystemLog /var/log/syslog.log
+
+MaxClients 8 "Достигнут предел на количество клиентов"
+MaxClientsPerHost 8 "Достигнут предел на количество клиентов с Вашего хоста"
+MaxClientsPerUser 8 "Достигнут предел на количество подключений (%m)"
+MaxHostsPerUser 8 "Больше нельзя"
+
+# вывод приветствия после успешного входа
+AccessGrantMsg "Добро пожаловать!!!"
+
+# идентификация
+ServerIdent on "Мой сервер"
+
+# делаем /home/ftp папку, домашней
+DefaultRoot /home/ftp
+
+# запрещаем выходить пользователям за пределы домашней папки (рекомендуется)
+DefaultRoot ~
+MaxLoginAttempts 5 "Количество попыток входа исчерпано"
+
+# Директории
+<Directory ~>
+AllowOverwrite on
+<Limit Write>
+AllowAll
+</Limit>
+<Limit READ>
+AllowAll
+</Limit>
+</Directory>
+
+# Можно установить ограничения по времени (зависит от требований к ftp)
+TimeoutIdle 180
+TimeoutLogin 120
+TimeoutNoTransfer 36
+TimeoutStalled 640
+<br /># <Anonymous /home/ftp>
+
+# пользователь от которого происходит доступ анонимно
+# User ftp
+
+# группа для анонимных пользователей
+# Group ftp
+
+# альясы ананонимоусов (можно будет входить как ftp, а
+# не anonymous)
+# UserAlias anonymous ftp
+
+# максимально число анонимоусов
+# MaxClients <b>10</b> "Извините, максимум %m пользователей - попробуйте подключится позже"
+# <Limit WRITE>
+# DenyAll
+# </Limit>
+# </Anonymous>
+
+После чего запускаем proftpd сервер:
+FreeBSD
+/usr/local/etc/rc.d/>./proftpd.sh start
+
+Starting proftpd.
+Linux системы
+sudo /etc/init.d/proftpd restart
+----------------------------------------------------------------------------------
+#######
+#iSCSI
+#######
+----------------------------------------------------------------------------------
+iSCSI (англ. Internet Small Computer System Interface) — протокол, который базируется на TCP/IP и разработан для установления взаимодействия и управления системами хранения данных, серверами и клиентами.
+
+iSCSI описывает:
+
+    Транспортный протокол для SCSI, который работает поверх TCP.
+    Механизм инкапсуляции SCSI команд в IP сети.
+    Протокол для нового поколения систем хранения данных, которые будут использовать «родной» TCP/IP.
+
+Протокол iSCSI является стандартизованным по RFC 3720. Существует много коммерческих и некоммерческих реализаций этого протокола.
+
+Системы на основе iSCSI могут быть построены на любой достаточно быстрой физической основе, поддерживающей протокол IP, например Gigabit Ethernet или 10G Ethernet.
+----------------------------------------------------------------------------------
+Терминология
+
+Терминология iSCSI во многом основывается на терминологии, использующейся в SCSI:
+
+    initiator — тот, кто устанавливает соединение с целью(target). Чаще всего это узел (в общем случае) осуществляет ввод/вывод на блочные устройства.
+    target — экспортируемый объект. В зависимости от контекста цель(target) называют или целиком экспортирующий узел, или только экспортируемый объект. Сам объект может делиться на lun’ы.
+    Портал — группа целей(targets), которые анонсируются вместе. Чаще всего один узел хранения — один портал.
+    IQN — полное имя участника взаимодействия. На практике существует iqn у инициатора и у цели(target).
+    endpoint — уточнённое имя ресурса, чаще всего включает в себя iqn, номер LUN’а и указание на конкретный метод доступа к нему (например, номер соединения, LUN и IP-адрес, с которого следует получать доступ к устройству).
+    LUN (Logical Unit Number) — номер объекта внутри цели(target). Ближайшим аналогом является раздел диска или отдельный том.
+----------------------------------------------------------------------------------
+LUN или Logical Unit Number — это адрес диска (в ранних версиях) или дискового устройства в сетях хранения (современное использование).
+Использование
+
+Изначально, термин использовался в протоколе SCSI как метод адресации дисков в пределах устройства с одним SCSI Target ID, такого как дисковый массив. LUN не означает отдельный жесткий диск, скорее он определяет виртуальный раздел в RAID-массиве. При этом один и тот же виртуальный раздел массива может иметь разные значения LUN для разных хостов, которым этот LUN назначен. Также возможно наличие на одном хосте одинаковых LUN, принадлежащих разным системам хранения (разным SCSI Target ID).
+
+Таким образом, полный адрес диска (физического раздела жёсткого диска) на SCSI-устройстве складывается из SCSI Target ID (уникального для хоста и определяемого драйвером) и LUN, уникального в пределах SCSI-устройства и назначаемого ему в настройках или автоматически по порядку.
+
+На данный момент, как правило, этот термин используется в сетях хранения данных.
+----------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------
+
+
+
+

@@ -1,0 +1,41 @@
+DB
+=========================================
+character_set_client        	utf8  
+character_set_connection  	utf8        
+character_set_database		latin1
+character_set_results       	utf8        
+character_set_server 		latin1                                          
+character_set_system   		utf8           
+character_sets_dir  		/usr/share/mysql/charsets/          
+collation_connection  		utf8_general_ci               
+collation_database  		latin1_swedish_ci                           
+collation_server  		latin1_swedish_ci                 
+
+
+medtehnika.com.ua
+=========================================
+character_set_database		cp1251   
+collation_database		cp1251_general_ci 
+
+cat /usr/local/directadmin/conf/mysql.conf
+user=da_admin
+passwd=7S7L9tA7Du
+
+
+DROP DATABASE medtehnika_dev;
+
+CREATE DATABASE medtehnika_dev
+  DEFAULT CHARACTER SET utf8
+  DEFAULT COLLATE utf8_general_ci;
+
+grant usage on medtehnika_dev.* to 'da_admin'@'localhost' identified by '7S7L9tA7Du';
+flush privileges;
+
+mysql -u da_admin medtehnika_dev < /home/admin/admin_backup/utf8/medtehnika_dev.sql
+
+
+
+
+
+
+

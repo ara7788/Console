@@ -1,0 +1,1425 @@
+<!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html class=" gecko win js" xmlns="http://www.w3.org/1999/xhtml" xmlns:exsl="http://exslt.org/common" xmlns:ng="http://docbook.org/docbook-ng" xmlns:fb="http://ogp.me/ns/fb#"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/font-awesome.css" rel="stylesheet">
+<title>Глава 3. Высвобождение всей мощи шаблонов Jinja2 - Полное руководство Ansible</title>
+<meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1">
+<meta name="mavenGroupId" content="www.mdl.ru">
+<meta name="MasteringAnsible2nd">
+<meta name="mavenVersionId" content="1.0.0">
+<link rel="home" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html" title="Полное руководство Ansible">
+<link rel="up" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html" title="Полное руководство Ansible">
+<link rel="prev" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html" title="Глава 2. Защита вашей секретной информации в Ansible">
+<link rel="next" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html" title="Глава 4. Условия управления задачами">
+<meta name="git-sha" content="">
+<meta name="buildTime" content="">
+<script src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/ga_002.js" async="" type="text/javascript"></script><script type="text/javascript">
+            //The id for tree cookie
+            var treeCookieId = "mastering-ansible-2nd";
+            var language = "en";
+            var w = new Object();
+            //Localization
+            txt_filesfound = 'Results';
+            txt_enter_at_least_1_char = "You must enter at least one character.";
+            txt_browser_not_supported = "Please enable JavaScript.";
+            txt_please_wait = "Please wait. Search in progress...";
+            txt_results_for = "Results for: ";
+</script>
+<style type="text/css">
+            input {
+            margin-bottom: 5px;
+            margin-top: 2px;
+            }
+
+            .folder {
+            display: block;
+            height: 22px;
+            padding-left: 20px;
+            background: transparent url(/common/jquery/treeview/images/folder.gif) 0 0px no-repeat;
+            }
+</style>
+<link rel="shortcut icon" href="http://onreader.mdl.ru/MdlLogo.gif" type="image/gif">
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/positioning.css">
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/custom.css">
+<link rel="canonical" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html">
+<!--[if IE]>
+	<link rel="stylesheet" type="text/css" href="/common/css/ie.css"/>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery-ui-1.css">
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery_002.css">
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery-1.js"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery-ui-1.js"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery.js"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery_002.js"><!----></script>
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery.css">
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery_003.js">
+<!--jQuery plugin for glossary popups. --></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/htmlFileList.htm"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/htmlFileInfoList.htm"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/nwSearchFnt.js"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/en_stemmer.js">
+<!--//make this scalable to other languages as well.--></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/index-1.htm"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/index-2.htm"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/index-3.htm"><!----></script>
+<script type="text/javascript">
+	    var _gaq = _gaq || [];
+	    _gaq.push(['_setAccount', 'UA-17511903-1']);
+	    
+	    _gaq.push(['_setDomainName', '.openstack.org']);	        
+</script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/ga.js"><!----></script>
+<script language="javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/common.js"></script>
+<link rel="stylesheet" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/googlecode.css">
+<script src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/highlight.js"></script>
+</head>
+<body>
+<!----><script type="text/javascript"><!--
+hljs.initHighlightingOnLoad();
+HeaderName = 'Глава 3. Высвобождение всей мощи шаблонов Jinja2';
+PrevRef = 'Ch02.html';
+UpRef = 'index.html';
+NextRef = 'Ch04.html';//--></script>
+<!----><script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/HeaderAndToolbar.js">
+</script><script type="text/javascript"><!--
+document.write(HeaderAndToolbar); //-->
+</script><div id="header"><div class="string"><div style="overflow: hidden; width: 100%;" id="marquee"><div style="width: 200%; margin-left: -44.0833%;"><span style="width: 50%; display: inline-block; text-align: center;"><a href="http://www.mdl.ru/Solutions/Put.htm?Nme=MdlAccelerator#RX461i">от100k USD решение с 8ю Tesla Volta V100</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="http://www.mdl.ru/Solutions/Put.htm?Nme=EveryPlacePC">23" терминал с 4core ЦПУ/4ГБ/1ТБ от 15тыс.руб.</a></span><span style="width: 50%; display: inline-block; text-align: center;"><a href="http://www.mdl.ru/Solutions/Put.htm?Nme=MdlAccelerator#RX461i">от100k USD решение с 8ю Tesla Volta V100</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="http://www.mdl.ru/Solutions/Put.htm?Nme=EveryPlacePC">23" терминал с 4core ЦПУ/4ГБ/1ТБ от 15тыс.руб.</a></span></div></div></div>	<a onclick="_gaq.push(['_trackEvent', 'Header', 'logo', 'click', 1]);" align="middle" target="_blank" href="http://www.mdl.ru/">	<img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/mdl-reg.jpg" style="position: relative; border-style: none; top: 18%;" alt="Перевод Mdl®" align="middle" height="14" width="40"></a>	<a onclick="_gaq.push(['_trackEvent', 'Header', 'logo', 'click', 1]);" target="_blank" href="https://www.packtpub.com/virtualization-and-cloud/">	<img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/PacktPub-logo.jpg" alt="Документация Virtualization and Cloud" height="44" width="109"></a>	<h1>Глава 3. Высвобождение всей мощи шаблонов Jinja2</h1>	<div id="navheader" align="right"><!----><table class="navLinks"><tbody><tr>		<td><a id="showHideButton" onclick="showHideToc(); _gaq.push(['_trackEvent', 'Header', 'show/hide', 'click', 1]);" class="pointLeft" title="Скрыть дерево оглавления">Боковое поле</a>		</td><td><a accesskey="p" class="navLinkPrevious" onclick="_gaq.push(['_trackEvent', 'Header', 'prevLink', 'click', 1]);" tabindex="5" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html">Предыдущий</a>&nbsp;		  |       <a accesskey="u" class="navLinkUp" onclick="_gaq.push(['_trackEvent', 'Header', 'upLink', 'click', 1]);" tabindex="5" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html">Вверх</a>		  |        <a accesskey="n" class="navLinkNext" onclick="_gaq.push(['_trackEvent', 'Header', 'nextLink', 'click', 1]);" tabindex="5" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html">Следующий</a>		</td></tr></tbody></table>	</div></div><div id="toolbar" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">	<div id="toolbar-left">		<p class="breadcrumbs"><a href="http://cloudcomputing.mdl.ru/">CloudComputing:mdl.ru</a>		<a href="http://onreader.mdl.ru/KVMVirtualizationCookbook/content/Ch08.html">Книга рецептов виртуализации KVM</a>		<a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html">Полное руководство работы с сетями на Python</a>		(<a onclick="_gaq.push(['_trackEvent', 'Header', 'pdfDownload', 'click', 1]);" alt="Купите оригинал" class="pdficon" href="https://www.packtpub.com/networking-and-servers/mastering-ansible-second-edition">		<img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/pdf.png"></a>) &nbsp; 		</p>		<div id="gplusone">			<a id="AskMdl1" href="mailto:modul%40col%2E%72%75" onmouseover="this.href=mail" target="_blank" title="Вопросы? Обсудите их на mdl.ru">			<i class="icon-question"><!----></i></a>&nbsp;&nbsp;			<a id="logABugLink1" href="mailto:modul%40col%2E%72%75" onmouseover="this.href=mail" title="Нашли ошибку? Сообщите о ней на данной странице">			<i class="icon-bug"><!----></i></a>		</div>	</div></div>
+<div style="visibility: visible;" id="content">
+ <div class="part">
+  <div xmlns="" class="titlepage"><div><div><h1 xmlns="http://www.w3.org/1999/xhtml" class="title">
+   Глава 3. Высвобождение всей мощи шаблонов Jinja2
+  </h1></div></div></div>
+
+  <div class="toc"><p><strong>Содержание</strong></p>
+   <dl>
+     <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html">Глава 3. Высвобождение всей мощи шаблонов Jinja2</a></span></dt>
+     <dd><dl>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01">Управляющие структуры</a></span></dt>
+       <dd><dl>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0101">Условные зависимости</a></span></dt>
+         <dd><dl>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010101">Встроенные условные зависимости</a></span></dt>
+       </dl></dd>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0102">Циклы</a></span></dt>
+         <dd><dl>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010201">Фильтрация элементов цикла</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010202">Индексация цикла</a></span></dt>
+       </dl></dd>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0103">Макросы</a></span></dt>
+         <dd><dl>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010301">Макро переменные</a></span></dt>
+           <dd><dl>
+             <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030101">name</a></span></dt>
+             <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030102">arguments</a></span></dt>
+             <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030103">defaults</a></span></dt>
+             <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030104">catch_kwargs</a></span></dt>
+             <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030105">catch_varargs</a></span></dt>
+             <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030106">caller</a></span></dt>
+           </dl></dd>
+         </dl></dd>
+       </dl></dd>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02">Манипуляция данными</a></span></dt>
+       <dd><dl>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0201">Синтаксис</a></span></dt>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0202">Полезные встроенные фильтры</a></span></dt>
+         <dd><dl>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020201">default</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020202">count</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020203">random</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020204">round</a></span></dt>
+       </dl></dd>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0203">Полезные создаваемые Ansible фильтры</a></span></dt>
+         <dd><dl>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020301">Связанные с состоянием задачи фильтры</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020302">shuffle</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020303">Фильтры для обработки имён пути</a></span></dt>
+           <dd><dl>
+             <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030301">basename</a></span></dt>
+             <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030302">dirname</a></span></dt>
+             <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030303">expanduser</a></span></dt>
+       </dl></dd>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020304">Кодирование Base64</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020305">Поиск содержимого</a></span></dt>
+       </dl></dd>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0204">Пропуск неопределённых аргументов</a></span></dt>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0205">Объектные методы Python</a></span></dt>
+         <dd><dl>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020501">Строковые методы</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020502">Методы списков</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020503">Методы int и float</a></span></dt>
+         </dl></dd>
+       </dl></dd>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#03">Сравнение значений</a></span></dt>
+       <dd><dl>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0301">Сравнения</a></span></dt>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0302">Логика</a></span></dt>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0303">Тесты</a></span></dt>
+       </dl></dd>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#03">Выводы</a></span></dt>
+     </dl></dd>
+   </dl>
+  </div>
+  <p>Построение шаблонов является источником жизненной силы Ansible. Начиная с содержимого файла настройки и 
+  вплоть до подстановки переменных в задачах, условных выражений и за их пределами, шаблоны вступают в игру 
+  практически во всех аспектах Ansible. Механизмом шаблонов в Ansible является 
+  <span class="term"><strong class="userinput">Jinja2</strong></span>, некий современный и дружественный 
+  проектированию язык шаблонов для Python. Данная глава охватит ряд современных свойств построения 
+  шаблонов Jinja2:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p>Управляющие структуры</p>
+	 </li><li class="listitem">
+	 <p>Манипуляция данными</p>
+	 </li><li class="listitem">
+	 <p>Сравнения</p>
+	 </li>
+    </ul>
+    </div>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="01"> </a>Управляющие структуры</h3>
+   </div></div></div>
+   <p>В Jinja2 некая управляющая структура ссылается на предметы в некотором шаблоне, которые управляют 
+   самим потоком имеющегося механизма синтаксического разбора данного шаблона. Такие структуры содержат, 
+   но не ограничиваются ими, условия, циклы и макросы. Внутри Jinja2 (в предположении, что применяются 
+   установки по умолчанию), некая управляющая структура появится внутри блоков 
+   <span class="term"><code>{% ... %}</code></span>. Такие открывающие и закрывающие блоки уведомляют 
+   синтаксический анализатор Jinja2 что предоставляется некое управляющее выражение вместо обычного 
+   текста или имени переменной.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0101"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Условные зависимости</span></h4>
+   </div></div></div>
+   <p>Условия внутри некоторого шаблона создают некий путь принятия решения. Имеющийся механизм будет 
+   рассматривать это условие и выбирать из одного или более потенциальных блоков кода. Всегда имеются, как 
+   минимум, два: некий путь если данное условие выполняется (вычисляется как истинное) и некий подразумеваемый 
+   путь <span class="term"><code>else</code></span> некоторого пустого блока.</p>
+   <p>Самим оператором для условий выступает выражение <span class="term"><code>if</code></span>. Это выражение 
+   работате во многом похоже на то, как это происходит в Python. Некий оператор 
+   <span class="term"><code>if</code></span> может объединяться с одним или более не обязательных 
+   <span class="term"><code>elif</code></span> с неким не обязательным окончательным 
+   <span class="term"><code>else</code></span> и, в отличии от Python, требует определяемого в явном виде 
+   <span class="term"><code>endif</code></span>. Приводимый далее пример показывает некий кусочек шаблона файла 
+   <span class="term"><code>config</code></span>, соединяющего воедино замену обычной переменной и некоторой 
+   структуры <span class="term"><code>if else</code></span>:</p>
+	   <pre class="screen"><code class="hljs php">
+setting = {{ setting }}
+{% <span class="hljs-keyword">if</span> feature.enabled %}
+feature = <span class="hljs-keyword">True</span>
+{% <span class="hljs-keyword">else</span> %}
+feature = <span class="hljs-keyword">False</span>
+{% <span class="hljs-keyword">endif</span> %}
+another_setting = {{ another_setting }}
+ 	   </code></pre>
+   <p>В данном примере наша переменная <span class="term"><code>feature.enabled</code></span> проверяется 
+   на предмет того существует ли она и не установлена ли она в значение 
+   <span class="term"><code>False</code></span>. Если это <span class="term"><code>True</code></span>, 
+   тогда применяется текст <span class="term"><code>feature = True</code></span>; в противном случае 
+   используется текст <span class="term"><code>feature = False</code></span>. За пределами данного 
+   управляющего блока имеющийся синтаксический анализатор осуществляет обычную подстановку переменной 
+   для той переменной, которая располагается внутри фигурных скобок. Множество путей может быть определено 
+   с применением некоторого выражения <span class="term"><code>elif</code></span>, которое представляется 
+   имеющемуся синтаксическому анализатору с другой необходимой проверкой в случае, если наша предыдущая 
+   проверка эквивалентна <span class="term"><code>false</code></span>.</p>
+   <p>Чтобы показать построение конкретного шаблона, мы сохраним свой пример шаблона как 
+   <span class="term"><code>demo.j2 </code></span> и затем сделаем некий плейбук с названием 
+   <span class="term"><code>template-demo.yaml</code></span>, который определяет необходимые для применения 
+   переменные и затем использует некий поиск шаблона как часть задачи <span class="term"><code>pause</code></span>
+   для отображения построенного шаблона на экране:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: demo <span class="hljs-keyword">the</span> template
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+  vars:
+    setting: a_val
+    feature:
+      enabled: <span class="hljs-constant">true</span>
+    another_setting: b_val
+  tasks:
+    - <span class="hljs-property">name</span>: pause <span class="hljs-keyword">with</span> render
+      pause:
+      prompt: <span class="hljs-string">"{{ lookup('template', 'demo.j2') }}"</span>
+ 	   </code></pre>
+   <p>исполнение данного плейбука отобразит построенный шаблон на экране при ожидании ввода. Мы можем просто 
+   нажать <span class="term"><code><em>Enter</em></code></span> для завершения этого плейбука:</p>
+	<div class="figure"><a id="Fig0301">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.1</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0301.jpg" height="507" width="731"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Если мы изменим имеющееся значение <span class="term"><code>feature.enabled</code></span> на 
+   <span class="term"><code>False</code></span>, наш вывод будет слегка иным:</p>
+	<div class="figure"><a id="Fig0302">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.2</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0302.jpg" height="500" width="730"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="010101"> </a>
+   <p class="title"><strong>Встроенные условные зависимости</strong></p>
+   <p>Оператор <span class="term"><code>If</code></span> может применяться внутри предложения. Это может быть полезно при 
+   некоторых вариантах, в которых не желательны дополнительные новые строки. Давайте построим некую последовательность событий 
+   при которых нам потребуется определить в качестве <span class="term"><code>API</code></span> либо 
+   <span class="term"><code>cinder</code></span>, либо <span class="term"><code>cinderv2</code></span>:</p>
+	   <pre class="screen"><code class="hljs ruby">
+<span class="hljs-constant">API</span> = cinder{{ <span class="hljs-string">'v2'</span> <span class="hljs-keyword">if</span> api.v2 <span class="hljs-keyword">else</span> <span class="hljs-string">''</span> }}
+ 	   </code></pre>
+   <p>Данный сценарий предполагает, что <span class="term"><code>api.v2</code></span> определена как Булево 
+   <span class="term"><code>True</code></span> или <span class="term"><code>False</code></span>. 
+   Встроенное выражение <span class="term"><code>if</code></span> следует синтаксису 
+   <span class="term"><code>&lt;do something&gt; if &lt;conditional is true&gt; 
+   else &lt;do something else&gt;</code></span>. 
+   В некотором встроенном выражении <span class="term"><code>if</code></span> имеется некий неявный
+   <span class="term"><code>else</code></span>;  однако, такой подразумеваемый 
+   <span class="term"><code>else</code></span> означает вычисление некоторого неопределённого (undefined) 
+   объекта, что обычно создаёт некую ошибку. Мы защитились от такого случая, определив в явном виде 
+   <span class="term"><code>else</code></span>, который задаёт некую строку нулевой длины.</p>
+   <p>Давайте изменим свой плейбук для демонстрации некоей встроенной условной зависимости. На этот раз 
+   мы применим модуль <span class="term"><code>debug</code></span> для построения такого образца шаблона:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: demo <span class="hljs-keyword">the</span> template
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+    vars:
+  api:
+    v2: <span class="hljs-constant">true</span>
+  tasks:
+    - <span class="hljs-property">name</span>: pause <span class="hljs-keyword">with</span> render
+      debug:
+        msg: <span class="hljs-string">"API = cinder{{ 'v2' if api.v2 else '' }}"</span>
+ 	   </code></pre>
+   <p>Исполнение данного плейбука отобразит построенный шаблон:</p>
+	<div class="figure"><a id="Fig0303">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.3</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0303.jpg" height="401" width="728"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Заменив значение <span class="term"><code>api.v2</code></span> на 
+   <span class="term"><code>false</code></span> мы получим другой результат:</p>
+	<div class="figure"><a id="Fig0304">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.4</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0304.jpg" height="406" width="729"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0102"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Циклы</span></h4>
+   </div></div></div>
+   <p>Некоторый цикл позволяет вам делать некие динамически создаваемые разделы в файлах шаблонов и полезен когда 
+   вы знаете что вам придётся работать с неопределённым числом элементов одним и тем же образом. Для старта некоторой 
+   управляющей циклической структуры применяется оператор <span class="term"><code>for</code></span>. Давайте 
+   рассмотрим некоторый простой способ прохода в цикле какого- то списка каталогов в которых некая вымышленная 
+   служба может осуществлять поиск данных:</p>
+	   <pre class="screen"><code class="hljs bash">
+<span class="hljs-comment"># data dirs</span>
+{% <span class="hljs-keyword">for</span> dir <span class="hljs-keyword">in</span> data_<span class="hljs-built_in">dirs</span> %}
+data_dir = {{ dir }}
+{% endfor %}
+ 	   </code></pre>
+   <p>В данном примере мы получим по одной строке <span class="term"><code>data_dir =</code></span> на 
+   элемент внутри определённой переменной <span class="term"><code>data_dirs</code></span>, в предположении что 
+   <span class="term"><code>data_dirs</code></span> является неким списком с по крайней мере одним элементом в 
+   нём. Если такая переменная не является неким списком (или другим итерационным типом) или не определён, будет 
+   выработана некая ошибка. Если данная переменная имеет какой- то итерационный тип, но является пустой, тогда 
+   не будет создано никаких строк. Jinja2 допускает реакцию на такой вариант, а также позволяет подставку в некую 
+   строку, когда не найдено никаких элементов в данной переменной через некое выражение 
+   <span class="term"><code>else</code></span>. В следующем примере допустим, что 
+   <span class="term"><code>data_dirs</code></span> является неким пустым списком:</p>
+	   <pre class="screen"><code class="hljs bash">
+<span class="hljs-comment"># data dirs</span>
+{% <span class="hljs-keyword">for</span> dir <span class="hljs-keyword">in</span> data_<span class="hljs-built_in">dirs</span> %}
+data_dir = {{ dir }}
+{% <span class="hljs-keyword">else</span> %}
+<span class="hljs-comment"># no data dirs found</span>
+{% endfor %}
+ 	   </code></pre>
+   <p>Мы можем проверить это без изменения своего плейбука и файла шаблона снова. Мы обновим 
+   <span class="term"><code>demo.j2</code></span> приведённым выше содержимым и вновь воспользуемся 
+   <span class="term"><code>prompt</code></span> в нашем плейбуке:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: demo <span class="hljs-keyword">the</span> template
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+  vars:
+    data_dirs: []
+  tasks:
+    - <span class="hljs-property">name</span>: pause <span class="hljs-keyword">with</span> render
+      pause:
+        prompt: <span class="hljs-string">"{{ lookup('template', 'demo.j2') }}"</span>
+ 	   </code></pre>
+   <p>исполнение нашего плейбука отобразит следующий результат:</p>
+	<div class="figure"><a id="Fig0305">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.5</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0305.jpg" height="493" width="728"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="010201"> </a>
+   <p class="title"><strong>Фильтрация элементов цикла</strong></p>
+   <p>Циклы можно объединять с условными зависимостями. Внутри некоторой структуры цикла может быть применён 
+   некий оператор <span class="term"><code>if</code></span> для проверки какого- то условия при помощи элемента 
+   данного цикла как части данного условия. Давайте расширим наш пример и защитимся от применения 
+   <span class="term"><code>/</code></span>) в качестве <span class="term"><code>data_dir</code></span>:</p>
+	   <pre class="screen"><code class="hljs bash">
+<span class="hljs-comment"># data dirs</span>
+{% <span class="hljs-keyword">for</span> dir <span class="hljs-keyword">in</span> data_<span class="hljs-built_in">dirs</span> %}
+{% <span class="hljs-keyword">if</span> dir != <span class="hljs-string">"/"</span> %}
+data_dir = {{ dir }}
+{% endif %}
+{% <span class="hljs-keyword">else</span> %}
+<span class="hljs-comment"># no data dirs found</span>
+{% endfor %}
+ 	   </code></pre>
+   <p>Наш предыдущий пример успешно фильтрует все элементы <span class="term"><code>data_dirs</code></span>, 
+   которые являются (<span class="term"><code>/</code></span>), однако требует больше набора текста, чем это 
+   необходимо. Jinja2 предоставляет некий механизм, который позволяет вам легко фильтровать элементы цикла как 
+   часть вашего выражения <span class="term"><code>for</code></span>. Давайте повторим предыдущий пример, 
+   воспользовавшись таким удобством:</p>
+	   <pre class="screen"><code class="hljs bash">
+<span class="hljs-comment"># data dirs</span>
+{% <span class="hljs-keyword">for</span> dir <span class="hljs-keyword">in</span> data_<span class="hljs-built_in">dirs</span> <span class="hljs-keyword">if</span> dir != <span class="hljs-string">"/"</span> %}
+data_dir = {{ dir }}
+{% <span class="hljs-keyword">else</span> %}
+<span class="hljs-comment"># no data dirs found</span>
+{% endfor %}
+ 	   </code></pre>
+   <p>Данная структура не просто требует меньше набора текста, но также правильно определяет счётчик самих 
+   циклов, что будет подробно исследовано в нашем следующем разделе.</p>
+
+   <a id="010202"> </a>
+   <p class="title"><strong>Индексация цикла</strong></p>
+   <p>Счётчик цикла предоставляется бесплатно, давая индекс текущей итерации данного цикла. Будучи переменной, 
+   к нему можно выполнять доступ несколькими разными способами. Приводимая ниже таблица приводит все варианты 
+   доступа к индексам:</p>
+        <table rules="all" style="text-align:left; border-style:none;" id="table0301" width="700">
+        <caption>Таблица 3-1. Способы доступа к индексу цикла</caption>
+		<colgroup><col width="30%"><col width="70%"></colgroup><thead><tr valign="top">
+          <th style="border-bottom:1;border-top:1;">Переменная</th>
+          <th style="border-bottom:1;border-top:1;">Описание</th>
+        </tr></thead><tbody><tr valign="top">
+          <td style="border-style:none;"><p><span class="term"><code>loop.index</code></span></p></td>
+          <td style="border-style:none;"><p>Текущая итерация данного цикла (начиная с <span class="term"><code>1</code></span>)</p></td>
+        </tr><tr valign="top">
+          <td style="border-style:none;"><p><span class="term"><code>loop.index0</code></span></p></td>
+          <td style="border-style:none;"><p>Текущая итерация данного цикла (начиная с <span class="term"><code>0</code></span>)</p></td>
+        </tr><tr valign="top">
+          <td style="border-style:none;"><p><span class="term"><code>loop.revindex</code></span></p></td>
+          <td style="border-style:none;"><p>Общее число итераций до окончания данного цикла (начиная с <span class="term"><code>1</code></span>)</p></td>
+        </tr><tr valign="top">
+          <td style="border-style:none;"><p><span class="term"><code>loop.revindex0</code></span></p></td>
+          <td style="border-style:none;"><p>Общее число итераций до окончания данного цикла (начиная с <span class="term"><code>0</code></span>)</p></td>
+        </tr><tr valign="top">
+          <td style="border-style:none;"><p><span class="term"><code>loop.first</code></span></p></td>
+          <td style="border-style:none;"><p>Булево <span class="term"><code>True</code></span> если это первая итерация</p></td>
+        </tr><tr valign="top">
+          <td style="border-style:none;"><p><span class="term"><code>loop.last</code></span></p></td>
+          <td style="border-style:none;"><p>Булево <span class="term"><code>True</code></span> если это последняя итерация</p></td>
+        </tr><tr valign="top">
+          <td style="border-style:none;"><p><span class="term"><code>loop.first</code></span></p></td>
+          <td style="border-style:none;"><p>Общее число элементов в данной последовательности</p></td>
+        </tr></tbody></table>
+   <p>Наличие информации, относящейся к значению позиции внутри данного цикла, может помочь с логикой, связанной 
+   с тем содержимым, которое предстоит выстроить. Рассматривая наш предыдущий пример, вместо построения множества 
+   строк <span class="term"><code>data_dir</code></span> для выражения каждого каталога данных, мы можем вместо 
+   этого предоставить некую отдельную строку с разделёнными запятой значениями. Без наличия доступа к итерационным 
+   данным цикла это было бы затруднительно, однако, применяя эти данные действия могут быть достаточно простыми. 
+   Ради простоты данный пример предполагает допуск некоей завершающей запятой после самого последнего элемента, а 
+   также что пробельный символы (разделители строк) также разрешены между элементами:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment"># data dirs</span>
+{% <span class="hljs-keyword">for</span> dir <span class="hljs-keyword">in</span> data_dirs <span class="hljs-keyword">if</span> dir != <span class="hljs-string">"/"</span> %}
+{% <span class="hljs-keyword">if</span> loop.<span class="hljs-keyword">first</span> %}
+data_dir = {{ dir }},
+{% <span class="hljs-keyword">else</span> %}
+           {{ dir }},
+{% endif %}
+{% <span class="hljs-keyword">else</span> %}
+<span class="hljs-comment"># no data dirs found</span>
+{% endfor %}
+ 	   </code></pre>
+   <p>Наш предыдущий пример применил переменную <span class="term"><code>loop.first</code></span> чтобы 
+   определить нужно ли строить часть <span class="term"><code>data_dir =</code></span> или ему всего лишь 
+   требуется построить соответствующим образом дополненный пробелами каталог. применяя некий филтр в имеющемся 
+   выражении <span class="term"><code>for</code></span>, мы получим верное значение для 
+   <span class="term"><code>loop.first</code></span>, даже если самый первый элемент в 
+   <span class="term"><code>data_dirs</code></span> является нежелательным 
+   (<span class="term"><code>/</code></span>). Чтобы проверить это, мы вновь видоизменим 
+   <span class="term"><code>demo.j2</code></span> обновлённым шаблоном и поменяем 
+   <span class="term"><code>template-demo.yaml</code></span> чтобы он определял некий 
+   <span class="term"><code>data_dirs</code></span>, содержащий один 
+   <span class="term"><code>/</code></span>, который следует отфильтровать:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: demo <span class="hljs-keyword">the</span> template
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+  vars:
+    data_dirs: ['/', '/foo', '/bar']
+  tasks:
+    - <span class="hljs-property">name</span>: pause <span class="hljs-keyword">with</span> render
+      pause:
+        prompt: <span class="hljs-string">"{{ lookup('template', 'demo.j2') }}"</span>
+ 	   </code></pre>
+   <p>Теперь мы можем выполнить свой плейбук и просмотреть наше построенное содержимое:</p>
+	<div class="figure"><a id="Fig0306">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.6</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0306.jpg" height="503" width="727"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Если в нашем предыдущем примере не допускались завершающие запятые, мы можем воспользоваться встроенным 
+   оператором <span class="term"><code>if</code></span> для определения того что мы выполняем данный цикл и верно 
+   расставили запятые, что отображает следующий пример:</p>
+	   <pre class="screen"><code class="hljs coffeescript">
+<span class="hljs-comment"># data dirs.</span>
+{% <span class="hljs-keyword">for</span> dir <span class="hljs-keyword">in</span> data_dirs <span class="hljs-keyword">if</span> dir != <span class="hljs-string">"/"</span> %}
+{% <span class="hljs-keyword">if</span> <span class="hljs-keyword">loop</span>.first %}
+data_dir = {{ dir }}{{ <span class="hljs-string">','</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">loop</span>.last <span class="hljs-keyword">else</span> <span class="hljs-string">''</span> }}
+{% <span class="hljs-keyword">else</span> %}
+           {{ dir }}{{ <span class="hljs-string">','</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">loop</span>.last <span class="hljs-keyword">else</span> <span class="hljs-string">''</span> }}
+{% endif %}
+{% <span class="hljs-keyword">else</span> %}
+<span class="hljs-comment"># no data dirs found</span>
+{% endfor %}
+ 	   </code></pre>
+   <p>Применение операторов <span class="term"><code>if</code></span> позволяет нам строить некий шаблон, который 
+   будет рисовать некую запятую если в нашем цикле имеется больше элементов, чем передал наш начальный фильтр. 
+   И снова, давайте обновим <span class="term"><code>demo.j2</code></span> с приведённым содержимым и исполним 
+   свой плейбук:</p>
+	<div class="figure"><a id="Fig0307">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.7</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0307.jpg" height="509" width="727"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0103"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Макросы</span></h4>
+   </div></div></div>
+   <p>Проницательный читатель заметит, что в нашем предыдущем примере у нас имелся некий повторяемый код. 
+   Повторяющийся код является врагом любого разработчика и, к счастью, Jinja2 имеет некий способ помочь ему! 
+   Макрос подобен некоторой функции в обычном языке программирования; это вариант определения некоторой 
+   повторяющейся идиомы (шаблона низкого уровня). Некий макрос определяется внутри какого- то блока 
+   <span class="term"><code>{% macro ... %} ... {% endmacro %}</code></span> и имеет имя, а также принимает 
+   ноль или более аргументов. Код внутри некоторого макроса не наследует определённого пространства имён того 
+   блока, который вызывает этот макрос, поэтому все аргументы должны передаваться явным образом. Макрос вызывается 
+   внутри заключённого в фигурные скобки блока по имени, а ноли или более аргументов передаются через круглые 
+   скобки. Давайте создадим некий простой макрос с названием <span class="term"><code>comma</code></span> 
+   для его включения в наш повторяющийся код:</p>
+	   <pre class="screen"><code class="hljs coffeescript">
+{% macro comma(<span class="hljs-keyword">loop</span>) %}
+{{ <span class="hljs-string">','</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">loop</span>.last <span class="hljs-keyword">else</span> <span class="hljs-string">''</span> }}
+{%- endmacro -%}
+<span class="hljs-comment"># data dirs.</span>
+{% <span class="hljs-keyword">for</span> dir <span class="hljs-keyword">in</span> data_dirs <span class="hljs-keyword">if</span> dir != <span class="hljs-string">"/"</span> %}
+{% <span class="hljs-keyword">if</span> <span class="hljs-keyword">loop</span>.first %}
+data_dir = {{ dir }}{{ comma(<span class="hljs-keyword">loop</span>) }}
+{% <span class="hljs-keyword">else</span> %}
+           {{ dir }}{{ comma(<span class="hljs-keyword">loop</span>) }}
+{% endif %}
+{% <span class="hljs-keyword">else</span> %}
+<span class="hljs-comment"># no data dirs found</span>
+{% endfor %}
+ 	   </code></pre>
+   <p>Вызов <span class="term"><code>comma</code></span> и его передача в наш объект 
+   <span class="term"><code>loop</code></span> позволяет данному макросу иучить этот цикл и решить должна ли быть 
+   установлена запятая или нет. Вы могли заметить некие специальные пометки в строке 
+   <span class="term"><code>endmacro</code></span>. Эти маркеры, <span class="term"><code>-</code></span>
+   вслед за <span class="term"><code>%</code></span>, указывают Jinja2 зачищать имеющийся пробельный символ до 
+   и сразу после данного блока. Это делает для нас возможным иметь некий символ разделителя строки между 
+   данным макросом и начинать свой шаблон для удобства чтения без реального построения которое начнётся с 
+   перехода на новую строку при выработке данного шаблона.</p>
+
+   <a id="010301"> </a>
+   <p class="title"><strong>Макро переменные</strong></p>
+   <p>Макрос имеет внутри себя к любому передаваемому позиционно или по ключевому слову аргументу при вызове 
+   такого макроса. Позиционными являются аргументы, которые назначаются переменным на основе того порядка, в 
+   котором они предоставляются, в то время как аргументы с ключевым словом не упорядочены и в явном виде 
+   назначают данные по имени переменной. Аргументы с ключевым словом могут также иметь некое значение по 
+   умолчанию, если они не определены при вызове данного макроса. Также имеются доступными дополнительные 
+   специальные переменные:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p><span class="term"><code>varargs</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>kwargs</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>caller</code></span></p>
+	 </li>
+    </ul>
+    </div>
+   <p>Переменная <span class="term"><code>varargs</code></span> является держательницей места для дополнительных 
+   не ожидаемых позиционных аргументов, передаваемых в данный макрос. Такие значения позиционного аргумента будут 
+   построены получаемым списком <span class="term"><code>varargs</code></span>.</p>
+   <p>Имеющаяся переменная <span class="term"><code>kwargs</code></span> то же самое что и 
+   <span class="term"><code>varargs</code></span>; однако, вместо содержания дополнительных значений позиционных 
+   аргументов, она будет хранить некий хэш дополнительных снабжённых ключом элементов и связанных с ними 
+   значений.</p>
+   <p>Определённая переменная <span class="term"><code>caller</code></span> может использоваться для обратного 
+   вызова к более высокому уровню макроса, который мог вызвать данный макрос (да, макрос может вызывать другой 
+   макрос).</p>
+   <p>Дополнительно к этим трём специальным переменным имеется ряд переменных, которые выставляют внутренние  
+   подробности, относящиеся к самому макросу. Это слегка не просто, но мы пройдём их применение одну за 
+   другой. Для начала давайте взглянем на описание каждой переменной:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p><span class="term"><code>name</code></span>: название самого данного макроса</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>arguments</code></span>: Некий кортеж из соответствующих имён и аргументов, 
+	 принимаемых данным макросом</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>catch_kwargs</code></span>: Булево значение, которое определяется как true 
+	 если данный макрос обращается (и таким образом допускает) к определённой переменной 
+	 <span class="term"><code>kwargs</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>catch_varargs</code></span>: Булево значение, которое определяется как true 
+	 если данный макрос обращается (и таким образом допускает) к определённой переменной 
+	 <span class="term"><code>varargs</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>catch_caller</code></span>: Булево значение, которое определяется как true 
+	 если данный макрос обращается к определённой переменной <span class="term"><code>caller</code></span>
+	 (и таким образом может вызываться из другого макроса)</p>
+	 </li>
+    </ul>
+    </div>
+   <p>Аналогично некоторому классу в Python, эти переменные необходимы для того, чтобы иметь возможность 
+   обращаться по определённому имени самого макроса. Попытка доступа к такому макросу без установленного спереди 
+   имени будет иметь результатом не определённую переменную. Теперь давайте пройдёмся по каждой из них чтобы 
+   продемонстрировать их варианты использования.</p>
+
+   <a id="01030101"> </a>
+   <p class="title"><strong>name</strong></p>
+   <p>Данная переменная <span class="term"><code>name</code></span> на самом деле очень проста. Она всего лишь 
+   предоставляет некий способ доступа к самому названию данного макроса в виде некоторой переменной для последующих 
+   манипуляций или её применения. Следующий шаблон содержит некий макрос, который ссылается по определённому имени 
+   на конкретный макрос чтобы построить свой вывод:</p>
+	   <pre class="screen"><code class="hljs bash">
+{% macro <span class="hljs-built_in">test</span>() %}
+{{ test.name }}
+{%- endmacro -%}
+{{ <span class="hljs-built_in">test</span>() }}
+ 	   </code></pre>
+   <p>Если мы обновим <span class="term"><code>demo.j2</code></span> этим шаблоном и выполним плейбук
+   <span class="term"><code>template-demo.yaml</code></span>, вывод будет следующим:</p>
+	<div class="figure"><a id="Fig0308">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.8</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0308.jpg" height="461" width="731"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="01030102"> </a>
+   <p class="title"><strong>arguments</strong></p>
+   <p>Данная переменная <span class="term"><code>arguments</code></span> является неким кортежем из определённых 
+   аргументов полученных данным макросом. Это те аргументы, которые определены явным образом, не особые 
+   <span class="term"><code>kwargs</code></span> и <span class="term"><code>varargs</code></span>. 
+   Наш предыдущий пример воспроизвёл некий пустой кортеж <span class="term"><code>()</code></span>, 
+   поэтому давайте поменяем его чтобы получить что- то ещё:</p>
+	   <pre class="screen"><code class="hljs bash">
+{% macro <span class="hljs-built_in">test</span>(var_a=<span class="hljs-string">'a string'</span>) %}
+{{ test.arguments }}
+{%- endmacro -%}
+{{ <span class="hljs-built_in">test</span>() }}
+ 	   </code></pre>
+   <p>Построение данного шаблона даст в результате следующее:</p>
+	<div class="figure"><a id="Fig0309">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.9</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0309.jpg" height="464" width="729"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="01030103"> </a>
+   <p class="title"><strong>defaults</strong></p>
+   <p>Эта переменная <span class="term"><code>defaults</code></span> является неким кортежем всех определённых 
+   по умолчанию значений для всех аргументов с ключевыми словами, которые получил в явном виде данный макрос. 
+   Давайте поменяем наш макрос с тем, чтобы он отобразил установленные по умолчанию значения помимо 
+   самих аргументов:</p>
+	   <pre class="screen"><code class="hljs bash">
+{% macro <span class="hljs-built_in">test</span>(var_a=<span class="hljs-string">'a string'</span>) %}
+{{ test.arguments }}
+{%- endmacro -%}
+{{ <span class="hljs-built_in">test</span>() }}
+ 	   </code></pre>
+   <p>Отрисовка данной версией нашего шаблона получает такой результат:</p>
+	<div class="figure"><a id="Fig0310">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.10</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0310.jpg" height="492" width="727"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="01030104"> </a>
+   <p class="title"><strong>catch_kwargs</strong></p>
+   <p>данная переменная определена только если данный макрос сам выполняет доступ к определённой переменной 
+   <span class="term"><code>kwargs</code></span> чтобы захватить дополнительные аргументы с ключевым словом, 
+   которые могут быть ему переданы помимо прочих. Без доступа к данной переменной <span class="term"><code>kwargs</code></span> 
+   любые аргументы с ключевым словом в некотором вызове этого макроса будут иметь результатом некую ошибку 
+   при построении своего шаблона. Точно так же, доступ к <span class="term"><code>catch_kwargs</code></span> 
+   доступа к <span class="term"><code>kwargs</code></span> будет иметь результатом некую ошибку отсутствия 
+   определения. Давайте проведём изменения в нашем шаблоне примера вновь с тем, чтобы мы могли передавать 
+   дополнительные <span class="term"><code>kwargs</code></span>:</p>
+	   <pre class="screen"><code class="hljs bash">
+{% macro <span class="hljs-built_in">test</span>() %}
+{{ kwargs }}
+{{ test.catch_kwargs }}
+{%- endmacro -%}
+{{ <span class="hljs-built_in">test</span>(unexpected=<span class="hljs-string">'surprise'</span>) }}
+ 	   </code></pre>
+   <p>Построенной версией данного шаблона будет:</p>
+	<div class="figure"><a id="Fig0311">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.11</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0311.jpg" height="481" width="728"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="01030105"> </a>
+   <p class="title"><strong>catch_varargs</strong></p>
+   <p>В о многом аналогично <span class="term"><code>catch_kwargs</code></span>, данная переменная существует если 
+   наш макрос осуществляет доступ к переменной <span class="term"><code>varargs</code></span>. Изменив наш 
+   пример ещё раз, мы можем увидеть его в действии:</p>
+	   <pre class="screen"><code class="hljs bash">
+{% macro <span class="hljs-built_in">test</span>() %}
+{{ varargs }}
+{{ test.catch_varargs }}
+{%- endmacro -%}
+{{ <span class="hljs-built_in">test</span>(<span class="hljs-string">'surprise'</span>) }}
+ 	   </code></pre>
+   <p>Результатом построения шаблона будет:</p>
+	<div class="figure"><a id="Fig0312">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.12</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0312.jpg" height="479" width="728"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="01030106"> </a>
+   <p class="title"><strong>caller</strong></p>
+   <p>Переменная <span class="term"><code>caller</code></span> требует некоторых дополнительных пояснений. Некий 
+   макрос может вызывать другой макрос. Такой вызов может быть полезен если некий кусок нашего шаблона будет 
+   применяться много раз, но часть его содержимого изменяется ещё, что может быть легко передаваться неким 
+   параметром макроса. Данная переменная <span class="term"><code>caller</code></span> не является в точности 
+   некоторой переменной; это ничего более кроме некоторой обратной ссылки к самому вызову чтобы получить того 
+   содержимого, которое вызвало данный макрос. Давайте обновим наш шаблон чтобы продемонстрировать вариант 
+   использования:</p>
+	   <pre class="screen"><code class="hljs applescript">
+{% macro test() %}
+The <span class="hljs-type">text</span> <span class="hljs-keyword">from</span> <span class="hljs-keyword">the</span> caller follows:
+{{ caller() }}
+{%- endmacro -%}
+{% call test() %}
+This <span class="hljs-keyword">is</span> <span class="hljs-type">text</span> inside <span class="hljs-keyword">the</span> call
+{% endcall %}
+ 	   </code></pre>
+   <p>Результатом построения будет:</p>
+	<div class="figure"><a id="Fig0313">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.13</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0313.jpg" height="483" width="726"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Некий вызов какого- то макроса всё- таки передаёт аргументы в этот макрос; может быть передана любая 
+   комбинация аргументов или аргументов с ключевыми словами. Если данный макрос применяет 
+   <span class="term"><code>varargs</code></span> или <span class="term"><code>kwargs</code></span>, 
+   тогда и они также могут передаваться дополнительно вместе с остальными. Кроме того, некий макрос может 
+   передавать аргументы обратно вызывающему, да, тоже! Чтобы показать это, давайте создадим пример большего 
+   размера. На это раз наш пример создаст некий файл, применимый для какой- то инвентаризации Ansible:</p>
+	   <pre class="screen"><code class="hljs bash">
+{% macro <span class="hljs-built_in">test</span>(group, hosts) %}
+[{{ group }}]
+{% <span class="hljs-keyword">for</span> host <span class="hljs-keyword">in</span> hosts %}
+{{ host }} {{ <span class="hljs-built_in">caller</span>(host) }}
+{%- endfor %}
+{%- endmacro -%}
+{% call(host) <span class="hljs-built_in">test</span>(<span class="hljs-string">'web'</span>, [<span class="hljs-string">'host1'</span>, <span class="hljs-string">'host2'</span>, <span class="hljs-string">'host3'</span>]) %}
+ssh_host_name={{ host }}.example.name ansible_sudo=<span class="hljs-literal">true</span>
+{% endcall %}
+{% call(host) <span class="hljs-built_in">test</span>(<span class="hljs-string">'db'</span>, [<span class="hljs-string">'db1'</span>, <span class="hljs-string">'db2'</span>]) %}
+ssh_host_name={{ host }}.example.name
+{% endcall %}
+ 	   </code></pre>
+   <p>После его построения результат будет таким:</p>
+	<div class="figure"><a id="Fig0314">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.14</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0314.jpg" height="607" width="728"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Мы вызвали свой макрос <span class="term"><code>test</code></span> дважды, по разу для каждой группы, 
+   которые мы хотели определить. Каждая группа имеет тонкие наборы отличий переменных хостов для применения, 
+   причём они определены в самой стороне, выполнившей вызов. Мы уклонились от излишнего набора кода имея 
+   определённый обратный вызов самой вызывающей стороны, передавая ему название хоста из текущего прохода 
+   цикла.</p>
+   <p>Управляющие блоки предоставляют мощность программирования внутри шаблонов, что делает возможным авторам 
+   шаблона выполнять свои шаблоны более эффективно. Данная действенность не обязательно вступает в игру в 
+   первоначальном проекте такого шаблона; вместо этого реальная эффективность вступает в игру когда необходимы 
+   некие небольшие изменения в каких- то повторяющихся значениях.</p>
+  </div>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="02"> </a>Манипуляция данными</h3>
+   </div></div></div>
+   <p>В то время как управляющие структуры воздействуют на сам поток обработки шаблона, для изменения самого 
+   содержимого некоторых переменных имеется другой инструмент. Этот инструмент называется 
+   <span class="term"><strong class="userinput">фильтром</strong></span>. Фильтры это то же самое, что небольшие 
+   функции или методы, которые могут исполняться с данной переменной. некоторые фильтры работают без аргументов, 
+   другие получают необязательные параметры, а некоторые требуют параметры. Фильтры могут также соединяться 
+   воедино, причём полученный результат действия одного фильтра запитывает определённый следующий и далее. 
+   Jinja2 поставляется с большим числом встроенных фильтров, а Ansible расширяет их многими индивидуальными 
+   фильтрами, доступными для вас при применении Jinja2 с шаблонами, задачами или прочими местами Ansible, 
+   допускающими построение шаблонов.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0201"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Синтаксис</span></h4>
+   </div></div></div>
+   <p>Некий фильтр применяется к какой- то переменной посредством символа конвейера (<span class="term"><code>|</code></span>) 
+   с последующим определённым названием данного фильтра и после него все аргументы для данного фильтра внутри 
+   круглых скобок. Может присутствовать некий пробел между самим именем переменной и символом конвейера, 
+   а также пробел между символом конвейера и именем применяемого фильтра. Например, если вы желаете применить 
+   определённый фильтр <span class="term"><code>lower</code></span> (который изменит все переменные на нижний 
+   регистр) к своей переменной <span class="term"><code>my_word</code></span>, мы можем воспользоваться 
+   следующим синтаксисом:</p>
+	   <pre class="screen"><code class="hljs">
+{{ my_word | lower }}
+ 	   </code></pre>
+   <p>Так как наш фильтр lower не получает никаких аргументов, нет необходимости присоединять некий набор пустых 
+   круглых скобок к нему. Давайте применим другой фильтр <span class="term"><code>replace</code></span>, который 
+   позволяет нам заменять все вхождения подстроки другой подстрокой. В данном примере мы хотим заменить все 
+   вхождения имеющейся подстроки <span class="term"><code>no</code></span> на 
+   <span class="term"><code>yes</code></span> в своей переменной <span class="term"><code>answers</code></span>:</p>
+	   <pre class="screen"><code class="hljs sql">
+{{ answers | <span class="hljs-operator"><span class="hljs-keyword">replace</span>(<span class="hljs-string">'no'</span>, <span class="hljs-string">'yes'</span>) }}
+ 	   </span></code></pre>
+   <p>Применение множества фильтров выполняется простым добавлением большего числа символов конвейера и 
+   дополнительных имён фильтров. Давайте объединим <span class="term"><code>replace</code></span> и
+   <span class="term"><code>lower</code></span> чтобы продемонстрировать этот синтаксис:</p>
+	   <pre class="screen"><code class="hljs sql">
+{{ answers | <span class="hljs-operator"><span class="hljs-keyword">replace</span>(<span class="hljs-string">'no'</span>, <span class="hljs-string">'yes'</span>) | <span class="hljs-keyword">lower</span> }}
+ 	   </span></code></pre>
+   <p>Мы легко можем продемонстрировать это в некотором простом воспроизведении, которое применяет команду 
+   <span class="term"><code>debug</code></span> для построения такой строки:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: demo <span class="hljs-keyword">the</span> template
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+  tasks:
+    - <span class="hljs-property">name</span>: debug <span class="hljs-keyword">the</span> template
+      debug:
+      msg: <span class="hljs-string">"{{ answers | replace('no', 'yes') | lower }}"</span>
+	  </code></pre>
+   <p>Теперь мы можем выполнить свой плейбук и предоставить некое значение для 
+   <span class="term"><code>answers</code></span> в реальном режиме времени:</p>
+	<div class="figure"><a id="Fig0315">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.15</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0315.jpg" height="426" width="730"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0202"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Полезные встроенные фильтры</span></h4>
+   </div></div></div>
+   <p>Полный перечень всех встроенных в Jinja2 фильтров можно найти в имеющейся документации по Jinja2. На момент 
+   написания данной книги имелось более 45 встроенных фильтров, слишком много чтобы описать их здесь. Вместо 
+   этого мы рассмотрим некоторые из наиболее часто применяемых фильтров.</p>
+
+   <a id="020201"> </a>
+   <p class="title"><strong>default</strong></p>
+   <p>Фильтр <span class="term"><code>default</code></span> является неким способом предоставления какого- то значения по 
+   умолчанию для некоторой в противном случае не определённой переменной, что предотвратит Ansible от выработки 
+   ошибки. Это является условным обозначением сложного оператора <span class="term"><code>if</code></span> 
+   проверяющего, что если некая переменная определена до попытки её применения с каким- то условием 
+   <span class="term"><code>else</code></span> для предоставления некоторого отличного значения. Давайте взглянем на 
+   два примера построения одной и той же вещи. Одно применит имеющуюся структуру 
+   <span class="term"><code>if/else</code></span>, в то время как другое воспользуется фильтром 
+   <span class="term"><code>default</code></span>:</p>
+	   <pre class="screen"><code class="hljs coffeescript">
+{% <span class="hljs-keyword">if</span> some_variable <span class="hljs-keyword">is</span> defined %}
+{{ some_variable }}
+{% <span class="hljs-keyword">else</span> %}
+default_value
+{% endif %}
+{{ some_variable | <span class="hljs-reserved">default</span>(<span class="hljs-string">'default_value'</span>) }}
+	  </code></pre>
+   <p>Построенный результат для каждого из этих примеров один и тот же, при этом пример применяющий фильтр 
+   <span class="term"><code>default</code></span> намного быстрее написать и легче прочесть.</p>
+   <p>Хотя <span class="term"><code>default</code></span> и очень полезен, работайте с осторожностью если вы 
+   применяете одну и ту же переменную во множестве мест. Изменение некоторого значения по умолчанию может стать 
+   некоторой преградой и может оказаться более действенным определить эту переменную по умолчанию в самом 
+   воспроизведении или на уровне роли.</p>
+
+   <a id="020202"> </a>
+   <p class="title"><strong>count</strong></p>
+   <p>Фильтр <span class="term"><code>count</code></span> возвратит общую длину некоторой последовательности 
+   или хэша. На самом деле, <span class="term"><code>length</code></span> является синонимом 
+   <span class="term"><code>count</code></span> для выполнения той же самой вещи. Данный фильтр может быть 
+   полезен для выполнения любого вида математических действий с имеющимся размером некоторого набора хостов или 
+   любого другого варианта, при котором требуется знать общее число элементов некоторого набора. Давайте создадим 
+   некий пример в котором мы устанавливаем элемент настройки <span class="term"><code>max_threads</code></span> 
+   для соответствия общему числу хостов в данном воспроизведении:</p>
+	   <pre class="screen"><code class="hljs http">
+<span class="hljs-attribute">max_threads</span>: <span class="hljs-string">{{ play_hosts | count }}</span>
+	  </code></pre>
+
+   <a id="020203"> </a>
+   <p class="title"><strong>random</strong></p>
+   <p>Фильтр <span class="term"><code>random</code></span> применяется для совершения некоторого случайного 
+   выбора в какой- то последовательности. Давайте применим этот фильтр для представления какой- то задачи 
+   некоторому случайному выбору из имеющейся группы <span class="term"><code>db_servers</code></span>:</p>
+	   <pre class="screen"><code class="hljs sql">
+- name: <span class="hljs-operator"><span class="hljs-keyword">backup</span> the <span class="hljs-keyword">database</span>
+  shell: mysqldump -u root nova &gt; /<span class="hljs-keyword">data</span>/nova.<span class="hljs-keyword">backup</span>.<span class="hljs-keyword">sql</span>
+  delegate_to: <span class="hljs-string">"{{ groups['db_servers'] | random }}"</span>
+  run_once: <span class="hljs-literal">true</span>
+	  </span></code></pre>
+
+   <a id="020204"> </a>
+   <p class="title"><strong>round</strong></p>
+   <p>Фильтр <span class="term"><code>round</code></span> присутствует для округления числа. Это может быть 
+   полезно для выполнения вычислений с плавающей запятой с последующим превращением полученного результата 
+   в округлённое целое. Фильтр <span class="term"><code>round</code></span> принимает необязательные 
+   параметры для определения точности (значение по умолчанию <span class="term"><code>0</code></span>) и 
+   какого- то метода округления. Возможными методами округления являются 
+   <span class="term"><code>common</code></span> (округление вниз или вверх, выбирается по умолчанию), 
+   <span class="term"><code>ceil</code></span> (всегда округлять вверх), 
+   <span class="term"><code>floor</code></span> (всегда округлять вниз). В данном примере мы соединяем в цепочку 
+   два фильтра вместе для обычного округления некоторого математического результата с нулевой точностью и 
+   последующим превращением его в некое значение <span class="term"><code>int</code></span>:</p>
+	   <pre class="screen"><code class="hljs cpp">
+{{ math_result | round | <span class="hljs-keyword">int</span> }}
+	  </code></pre>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0203"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Полезные создаваемые Ansible фильтры</span></h4>
+   </div></div></div>
+   <p>Хотя множество фильтров предоставляется в Jinja2, Ansible содержит некоторые дополнительные фильтры, которые 
+   авторы плейбуков могут найти чрезвычайно полезными. Мы здесь опишем некоторые из них.</p>
+
+   <a id="020301"> </a>
+   <p class="title"><strong>Связанные с состоянием задачи фильтры</strong></p>
+   <p>Ansible отслеживает данные задачи для каждой задачи. Эти данные применяются для определения того, что 
+   если некая задача отказала, были ли выполнены некие изменения, либо они все совместно были пропущены. Авторы 
+   плейбуков могут регистрировать результаты некоторой задачи и затем применять фильтры для простой проверки состояния 
+   определённой задачи. Это наиболее часто применяется в условных зависимостях с последующими задачами. 
+   Такие фильтры соответственно именуются <span class="term"><code>failed</code></span>,
+   <span class="term"><code>success</code></span>, <span class="term"><code>changed</code></span> и
+   <span class="term"><code>skipped</code></span>. Каждый из них возвращает некое Булево значение. Вот некий плейбук, 
+   который демонстрирует применение пары из них:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: demo <span class="hljs-keyword">the</span> filters
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+  tasks:
+    - <span class="hljs-property">name</span>: fail a task
+      debug:
+        msg: <span class="hljs-string">"I am not a change"</span>
+      register: derp
+    - <span class="hljs-property">name</span>: only do this <span class="hljs-function_start"><span class="hljs-keyword">on</span></span> change
+      debug:
+        msg: <span class="hljs-string">"You had a change"</span>
+      when: derp | changed
+    - <span class="hljs-property">name</span>: only do this <span class="hljs-function_start"><span class="hljs-keyword">on</span></span> success
+      debug:
+        msg: <span class="hljs-string">"You had a success"</span>
+      when: derp | success
+ 	   </code></pre>
+   <p>Его вывод отображается в следующем снимке экрана:</p>
+	<div class="figure"><a id="Fig0316">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.16</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0316.jpg" height="624" width="727"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="020302"> </a>
+   <p class="title"><strong>shuffle</strong></p>
+   <p>Аналогично описанному ранее фильтру <span class="term"><code>random</code></span>, фильтр 
+   <span class="term"><code>shuffle</code></span> может применяться для производства случайных результатов. 
+   В отличие от фильтра <span class="term"><code>random</code></span>, который выбирает один случайный экземпляр 
+   из некоторого списка, фильтр <span class="term"><code>shuffle</code></span> перетасовывает все элементы в 
+   некоторой последовательности и возвращает полученную последовательность обратно:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: demo <span class="hljs-keyword">the</span> filters
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+  tasks:
+    - <span class="hljs-property">name</span>: shuffle <span class="hljs-keyword">the</span> cards
+      debug:
+        msg: <span class="hljs-string">"{{ ['Ace', 'Queen', 'King', 'Deuce'] | shuffle }}"</span>
+ 	   </code></pre>
+   <p>Вывод этого плейбука отображён ниже:</p>
+	<div class="figure"><a id="Fig0317">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.17</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0317.jpg" height="506" width="726"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="020303"> </a>
+   <p class="title"><strong>Фильтры для обработки имён пути</strong></p>
+   <p>Управление настройкой и оркестрация часто ссылаются на имена пути, причём как правило желательно 
+   иметь лишь часть всего пути. Ansible предоставляет несколько фильтров на подмогу.</p>
+
+   <a id="02030301"> </a>
+   <p class="title"><strong>basename</strong></p>
+   <p>Для получения самой последней части некоторого файла пути воспользуйтесь фильтром 
+   <span class="term"><code>basename</code></span>. Например:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: demo <span class="hljs-keyword">the</span> filters
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+  tasks:
+    - <span class="hljs-property">name</span>: demo basename
+      debug:
+        msg: <span class="hljs-string">"{{ '/var/log/nova/nova-api.log' | basename }}"</span>
+ 	   </code></pre>
+   <p>Его вывод таков:</p>
+	<div class="figure"><a id="Fig0318">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.18</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0318.jpg" height="409" width="729"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="02030302"> </a>
+   <p class="title"><strong>dirname</strong></p>
+   <p>Инверсией <span class="term"><code>basename</code></span> является <span class="term"><code>dirname</code></span>.
+   Вместо того чтобы возвращать только окончательную часть некоторого пути, 
+   <span class="term"><code>dirname</code></span> возвратит всё за исключением такой окончательной части. 
+   Давайте заменим своё предыдущее воспроизведение на применение <span class="term"><code>dirname</code></span> 
+   и выполним его вновь:</p>
+	<div class="figure"><a id="Fig0319">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.19</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0319.jpg" height="402" width="728"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="02030303"> </a>
+   <p class="title"><strong>expanduser</strong></p>
+   <p>Часто пути к различным вещам поставляются с неким ярлыком пользователя, таким как 
+   <span class="term"><code>~/.stackrc</code></span>. Однако некоторые применения могут требовать наличие 
+   полного пути к файлу. Вместо того чтобы усложнять всё вызовами <span class="term"><code>command</code></span>
+   и <span class="term"><code>register</code></span>, имеющийся фильтр <span class="term"><code>expanduser</code></span> 
+   предоставляет некий способ расширения полученного пути в необходимое полное определение. В данном примере 
+   текущим именем пользователя является <span class="term"><code>jkeating</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: demo <span class="hljs-keyword">the</span> filters
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+  tasks:
+    - <span class="hljs-property">name</span>: demo filter
+      debug:
+        msg: <span class="hljs-string">"{{ '~/.stackrc' | expanduser }}"</span>
+ 	   </code></pre>
+   <p>Вывод отображён на снимке экрана ниже:</p>
+	<div class="figure"><a id="Fig0320">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.20</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0320.jpg" height="401" width="727"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="020304"> </a>
+   <p class="title"><strong>Кодирование Base64</strong></p>
+   <p>При чтении содержимого с удалённых хостов, аналогичного применению модулем <span class="term"><code>slurp</code></span>
+   (используемого для чтения содержимого файла с удалённых хостов в некую переменную), полученное содержимое будет 
+   кодировано в <span class="term"><code>Base64</code></span>. Чтобы декодировать такое содержимое, Ansible 
+   предоставляет некий фильтр <span class="term"><code>b64decode</code></span>. Аналогично, если выполняется какая- то
+   задача, которая требует кодированного в <span class="term"><code>Base64</code></span> ввода, обычные строки 
+   могут быть закодированы с помощью фильтра <span class="term"><code>b64encode</code></span>.</p>
+   <p>Давайте считаем содержимое из  своего файла <span class="term"><code>derp</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: demo <span class="hljs-keyword">the</span> filters
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+  tasks:
+    - <span class="hljs-property">name</span>: <span class="hljs-command">read</span> <span class="hljs-type">file</span>
+      slurp:
+        src: derp
+      register: derp
+    - <span class="hljs-property">name</span>: display <span class="hljs-type">file</span> content (undecoded)
+      debug:
+        var: derp.content
+    - <span class="hljs-property">name</span>: display <span class="hljs-type">file</span> content (decoded)
+      debug:
+        var: derp.content | b64decode
+ 	   </code></pre>
+   <p>Вывод отображается на следующем экранном снимке:</p>
+	<div class="figure"><a id="Fig0321">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.21</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0321.jpg" height="621" width="727"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="020305"> </a>
+   <p class="title"><strong>Поиск содержимого</strong></p>
+   <p>Достаточно часто в Ansible требуется отыскать некую строку с подстрокой. В частности, распространённая 
+   задача администратора при запуске команды и выполнения <span class="term"><code>grep</code></span> вывода 
+   для определённой ключевой части данных является повторное построение во многих плейбуках. Хотя это можно 
+   реплицировать и некоторой задачей <span class="term"><code>shell</code></span> для исполнения некоторой 
+   команды и конвейера для вывода в <span class="term"><code>grep</code></span>, а также аккуратной обработки 
+   <span class="term"><code>failed_when</code></span> для перехвата кодов выхода из 
+   <span class="term"><code>grep</code></span>, намного лучшая стратегия состоит в применении некоторой задачи 
+   <span class="term"><code>command</code></span>, <span class="term"><code>register</code></span> полученного 
+   вывода и последующего применения Ansible, осуществляющего фильтрацию regex в последующих условных 
+   зависимостях. Давайте рассмотрим два примера, один с применением методов 
+   <span class="term"><code>shell</code></span>, <span class="term"><code>pipe</code></span>, 
+   <span class="term"><code>grep</code></span> и другого, использующего фильтр 
+   <span class="term"><code>search</code></span>:</p>
+	   <pre class="screen"><code class="hljs sql">
+- name: <span class="hljs-operator"><span class="hljs-keyword">check</span> <span class="hljs-keyword">database</span> <span class="hljs-keyword">version</span>
+  shell: neutron-manage <span class="hljs-keyword">current</span> |grep juno
+  register: neutron_db_ver
+  failed_when: <span class="hljs-literal">false</span>
+- name: <span class="hljs-keyword">upgrade</span> db
+  command: neutron-manage db_sync
+  <span class="hljs-keyword">when</span>: neutron_db_ver|failed
+ 	   </span></code></pre>
+   <p>Наш предыдущий пример работает заставляя Ansible всегда видеть данную задачу как успешную, но предполагает, 
+   что если код выхода из оболочки не нулевой, то такая строка <span class="term"><code>juno</code></span> 
+   не обнаружена в полученном выводе исполненной команды <span class="term"><code>neutron-manage</code></span>. 
+   Данная конструкция рабочая, но слегка тяжеловесна и может маскировать реальные ошибки данной команды. Давайте 
+   попробуем снова с применением имеющегося фильтра <span class="term"><code>search</code></span>:</p>
+	   <pre class="screen"><code class="hljs sql">
+- name: <span class="hljs-operator"><span class="hljs-keyword">check</span> <span class="hljs-keyword">database</span> <span class="hljs-keyword">version</span>
+  command: neutron-manage <span class="hljs-keyword">current</span>
+  register: neutron_db_ver
+- name: <span class="hljs-keyword">upgrade</span> db
+  command: neutron-manage db_sync
+  <span class="hljs-keyword">when</span>: <span class="hljs-keyword">not</span> neutron_db_ver.stdout | search(<span class="hljs-string">'juno'</span>)
+ 	   </span></code></pre>
+   <p>Эта версия намного яснее, чтобы выбрать её, и при этом не маскирует ошибки своей первой задачи.</p>
+   <p>Такой фильтр <span class="term"><code>search</code></span> осуществляет поиск некоторой строки и возвращает 
+   <span class="term"><code>True</code></span> если такая подстрока обнаружена где- то во входной строке. 
+   Если вместо этого требуется точное совпадение, может быть применён фильтр 
+   <span class="term"><code>match</code></span>. Внутри строки <span class="term"><code>search/match</code></span>
+   можно применять полный синтаксис regex Python.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0204"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Пропуск неопределённых аргументов</span></h4>
+   </div></div></div>
+   <p>Переменная <span class="term"><code>omit</code></span> требует неких пояснений. Иногда, когда выполняются 
+   итерации по хэшу данных для построения аргументов задачи, может понадобиться не только предоставить некие 
+   аргументы для каких- то из имеющихся в данном хэше элементов. Даже несмотря на то, что Jinja2 поддерживает 
+   встроенные операторы <span class="term"><code>if</code></span> для условного построения частей какой- то строки, 
+   это не работает как нужно в некоторых задачах Ansible. Как правило, авторы плейбука создают множество задач, 
+   по одной для каждого набора потенциально передаваемых аргументов и применяет условные зависимости для 
+   сортировки членов цикла между каждым набором задачи. Только что добавленная магическая переменная 
+   <span class="term"><code>omit</code></span> решает данную проблему при применении совместно с имеющимся 
+   фильтром <span class="term"><code>default</code></span>. Данная переменная 
+   <span class="term"><code>omit</code></span> удалит такой аргумент той переменной, которая была использована 
+   совместно.</p>
+   <p>Чтобы проиллюстрировать как это работает, давайте рассмотрим некий вариант при котором нам необходимо 
+   установить некий набор пакетов Python с помощью <span class="term"><code>pip</code></span>. Некоторые из 
+   этих пакетов находятся в каком- то списке хэшей с названием <span class="term"><code>pips</code></span>. 
+   Каждый хэш имеет ключ <span class="term"><code>name</code></span> и потенциально ключ 
+   <span class="term"><code>ver</code></span>. Наш первый пример использует две различные задачи для 
+   выполнения такой установки:</p>
+	   <pre class="screen"><code class="hljs applescript">
+- <span class="hljs-property">name</span>: install pips <span class="hljs-keyword">with</span> versions
+  pip: <span class="hljs-property">name</span>={{ <span class="hljs-property">item</span>.<span class="hljs-property">name</span> }} <span class="hljs-property">version</span>={{ <span class="hljs-property">item</span>.ver }}
+  with_items: pips
+  when: <span class="hljs-property">item</span>.ver <span class="hljs-keyword">is</span> defined
+- <span class="hljs-property">name</span>: install pips <span class="hljs-keyword">without</span> versions
+  pip: <span class="hljs-property">name</span>={{ <span class="hljs-property">item</span>.<span class="hljs-property">name</span> }}
+  with_items: pips
+  when: <span class="hljs-property">item</span>.ver <span class="hljs-keyword">is</span> undefined
+ 	   </code></pre>
+   <p>Данная конструкция работает, однако наш цикл выполняет итерации дважды, причём некоторые итерации будут 
+   пропущены в каждой задаче. Наш следующий пример сливает обе задачи в одну и использует переменную 
+   <span class="term"><code>omit</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+- <span class="hljs-property">name</span>: install pips
+  pip: <span class="hljs-property">name</span>={{ <span class="hljs-property">item</span>.<span class="hljs-property">name</span> }} <span class="hljs-property">version</span>={{ <span class="hljs-property">item</span>.ver | default(omit) }}
+  with_items: pips
+ 	   </code></pre>
+   <p>Этот пример короче, яснее и не создаёт дополнительных пропускаемых задач.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0205"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Объектные методы Python</span></h4>
+   </div></div></div>
+   <p>Jinja2 является основанном на Python механизме шаблона. По этой причине, внутри шаблонов доступны методы 
+   объекта Python. Методами объекта являются методы или функции, которые непосредственно доступны по самой 
+   переменной объекта (обычно <span class="term"><code>string</code></span>, <span class="term"><code>list</code></span>,
+   <span class="term"><code>int</code></span> или <span class="term"><code>float</code></span>). Хороший 
+   повод вспомнить это когда вы пишите код Python и можете написать саму переменную, затем точку, после этого 
+   некий вызов метода и потом вы получите доступ сделать то же самое в Jinja2. Внутри Ansible обычно используются 
+   только методы, которые возвращают изменённое содержимое или некое Булево значение. Давайте исследуем 
+   некоторые общие методы объекта, которые могут оказаться полезными в Ansible.</p>
+
+   <a id="020501"> </a>
+   <p class="title"><strong>Строковые методы</strong></p>
+   <p>Строковые методы могут применяться для возврата новой строки или какого- то списка строк, изменённых неким 
+   образом или для проверки такой строки на различные условные зависимости и возврата Булева значения. Некоторые 
+   полезные методы:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p><span class="term"><code>endswith</code></span>: Определяет заканчивается ли данная строка искомой 
+	 подстрокой</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>startswith</code></span>: То же что и <span class="term"><code>endswith</code></span>, 
+	 но для начала строки</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>split</code></span>: Расщепляет определённую строку по символу (значением по умолчанию 
+	 является пробел) на некий список подстрок</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>rsplit</code></span>: То же, что и <span class="term"><code>split</code></span>, но 
+	 начинает работу с конца данной строки и работает в обратном порядке</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>splitlines</code></span>: Разделяет строку по символам новой строки на некий 
+	 список подстрок</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>upper</code></span>: Возвращает некую копию данной строки, переводя всю её в 
+	 верхний регистр</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>lower</code></span>: Возвращает некую копию данной строки, переводя всю её в 
+	 нижнний регистр</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>capitalize</code></span>: Возвращает некую копию данной строки, причём только 
+	 самый первый символ в верхнем регистре</p>
+	 </li>
+    </ul>
+    </div>
+   <p>Мы можем создать некое простое воспроизведение, которое применит некоторые из этих методов в какой- то 
+   отдельной задаче:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: demo <span class="hljs-keyword">the</span> filters
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+  tasks:
+    - <span class="hljs-property">name</span>: <span class="hljs-type">string</span> methods
+      debug:
+        msg: <span class="hljs-string">"{{ 'foo bar baz'.upper().split() }}"</span>
+ 	   </code></pre>
+   <p>Его вывод отображается на приводимом далее снимке экрана:</p>
+	<div class="figure"><a id="Fig0322">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.22</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0322.jpg" height="487" width="728"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Так как это методы объекта, нам необходимо получать к ним доступ с нотацией точки вместо применения 
+   фильтра через <span class="term"><code>|</code></span>.</p>
+
+   <a id="020502"> </a>
+   <p class="title"><strong>Методы списков</strong></p>
+   <p>Всего лишь пара методов изменяет сам список в его местоположении, а не возвращает некий новый список, и 
+   они таковы:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p><span class="term"><code>Index</code></span>: Возвращает самый первый индекс положения некоторого 
+	 предоставленного значения</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>Count</code></span>: Общее число элементов в данном списке</p>
+	 </li>
+    </ul>
+    </div>
+
+   <a id="020503"> </a>
+   <p class="title"><strong>Методы int и float</strong></p>
+   <p>Большая часть методов <span class="term"><code>int</code></span> и
+   <span class="term"><code>float</code></span> не представляют пользы в Ansible.</p>
+   <p>Порой наши переменные не в том точно формате, который нам желателен. Однако, вместо определения ещё и ещё 
+   переменных, которые слегка видоизменяют одно и то же содержимое, мы можем просто применять фильтры Jinja2 
+   для выполнения манипуляций для себя в различных местах, которые требуют такого изменения. Это позволит нам 
+   оставаться эффективными при определении своих данных, предотвращает от многих дублирований переменных и задач, 
+   которые может понадобиться изменять в дальнейшем.</p>
+  </div>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="03"> </a>Сравнение значений</h3>
+   </div></div></div>
+   <p>Сравнение применяется во многих местах в Ansible. Задача условных зависимостей состоит в сравнениях. 
+   Управляющие структуры Jinja2 часто применяют сравнения. некие фильтры также применяют сравнения. Чтобы 
+   управиться с применением Jinja2 в Ansible, важно понимать какие сравнения доступны.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0301"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Сравнения</span></h4>
+   </div></div></div>
+   <p>Как и большинство языков, Jinja2 снабжён достаточным стандартным набором выражений сравнений, которые вы 
+   бы могли ожидать, которые будут выдавать Булево <span class="term"><code>true</code></span> или
+   <span class="term"><code>false</code></span>.</p>
+   <p>Выражения в Jinja2 следующие:</p>
+        <table rules="all" style="text-align:left; border-style:none;" id="table0302" width="700">
+        <caption>Таблица 3-2. Выражения сравнения в Jinja2</caption>
+		<colgroup><col width="30%"><col width="70%"></colgroup><thead><tr valign="top">
+          <th style="border-bottom:1;border-top:1;">Выражение</th>
+          <th style="border-bottom:1;border-top:1;">Описание</th>
+        </tr></thead><tbody><tr valign="top">
+          <td style="border-style:none;"><p><span class="term"><code>==</code></span></p></td>
+          <td style="border-style:none;"><p>Сравнивает два объекта на их эквивалентность</p></td>
+        </tr><tr valign="top">
+          <td style="border-style:none;"><p><span class="term"><code>!=</code></span></p></td>
+          <td style="border-style:none;"><p>Сравнивает два объекта на их не эквивалентность</p></td>
+        </tr><tr valign="top">
+          <td style="border-style:none;"><p><span class="term"><code>&gt;</code></span></p></td>
+          <td style="border-style:none;"><p><span class="term"><code>true</code></span> если значение левой 
+		  стороны больше чем значение справа</p></td>
+        </tr><tr valign="top">
+          <td style="border-style:none;"><p><span class="term"><code>&lt;</code></span></p></td>
+          <td style="border-style:none;"><p><span class="term"><code>true</code></span> если значение левой 
+		  стороны меньше чем значение справа</p></td>
+        </tr><tr valign="top">
+          <td style="border-style:none;"><p><span class="term"><code>&gt;=</code></span></p></td>
+          <td style="border-style:none;"><p><span class="term"><code>true</code></span> если значение левой 
+		  стороны больше чем значение справа или эквивалентно ему</p></td>
+        </tr><tr valign="top">
+          <td style="border-style:none;"><p><span class="term"><code>&lt;=</code></span></p></td>
+          <td style="border-style:none;"><p><span class="term"><code>true</code></span> если значение левой 
+		  стороны меньше чем значение справа или эквивалентно ему</p></td>
+        </tr></tbody></table>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0302"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Логика</span></h4>
+   </div></div></div>
+   <p>Логика помогает группировать два или более сравнений вместе. Каждое сравнение называется здесь операндом.</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p><span class="term"><code>And</code></span>: Возвращает <span class="term"><code>true</code></span> 
+	 если и левый и правый операнды имеют значение <span class="term"><code>true</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>Or</code></span>: Возвращает <span class="term"><code>true</code></span>, если 
+	 значение левого или правого операнда имеет значение <span class="term"><code>true</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>Not</code></span>: Выполняет отрицание значения операнда</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>()</code></span>: Обёртывает операнды вместе для формирования операнда 
+	 большего размера</p>
+	 </li>
+    </ul>
+    </div>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0303"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Тесты</span></h4>
+   </div></div></div>
+   <p>Некая проверка в Jinja2 применяется чтобы посмотреть имеется ли некое значение чем- нибудь. На самом 
+   деле для инициации некоторого теста применяется оператор <span class="term"><code>is</code></span>. 
+   Тесты применяются в любом месте, где нужен некий Булев результат, например в выражении 
+   <span class="term"><code>if</code></span> и задачах условных зависимостей. имеется множество встроенных 
+   проверок, однако мы выделим некоторые из наиболее полезных:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p><span class="term"><code>Defined</code></span>: Возвращает <span class="term"><code>true</code></span> 
+	 если данная переменная определена</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>Undefined</code></span>: Противоположность 
+	 <span class="term"><code>Defined</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>None</code></span>: Возвращает <span class="term"><code>true</code></span> 
+	 если данная переменная определена, но не имеет значения</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>Even</code></span>: Возвращает <span class="term"><code>true</code></span> 
+	 если данное число делится на два без остатка</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>odd</code></span>: Возвращает <span class="term"><code>true</code></span> 
+	 если данное число не делится на два без остатка</p>
+	 </li>
+    </ul>
+    </div>
+   <p>Мы можем создать некий плейбук, которые продемонстрирует некоторые из таких сравнений значений:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: demo <span class="hljs-keyword">the</span> logic
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+  vars:
+    num1: <span class="hljs-number">10</span>
+    num3: <span class="hljs-number">10</span>
+  tasks:
+    - <span class="hljs-property">name</span>: logic <span class="hljs-keyword">and</span> comparison
+      debug:
+        msg: <span class="hljs-string">"Can you read me?"</span>
+      when: num1 &gt;= num3 <span class="hljs-keyword">and</span> num1 <span class="hljs-keyword">is</span> even <span class="hljs-keyword">and</span> num2 <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> defined
+ 	   </code></pre>
+   <p>Вывод приводится в следующем снимке экрана:</p>
+	<div class="figure"><a id="Fig0323">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 3.23</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0323.jpg" height="404" width="726"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+  </div>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="03"> </a>Выводы</h3>
+   </div></div></div>
+   <p>Jinja2 является мощным языком, который применяется в Ansible. Он применяется не только для генерации 
+   содержимого файла, но также используется для того чтобы сделать части плейбуков более динамичными. 
+   Мастерство работы с Jinja2 жизненно важно для создания и манипуляций элегантными и действенными плейбуками 
+   и ролями.</p>
+   <p>В своей следующей главе мы изучим более глубоко возможность Ansible по определению того, что 
+   составляет некое изменение или отказ для задач внутри какого- то воспроизведения.</p>
+  </div>
+
+ </div>
+
+<!----><script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/FooterAndSidebar.js">
+</script><script type="text/javascript"><!--</div id="content"> is inside next code
+document.write(FooterAndSidebar);//-->
+</script><script src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/f.js" id="eXF-mstansb2-0" async="" defer="defer"></script><a title="eXTReMe Tracker - Free Website Statistics" id="eXTReMe-Free-mstansb2" target="_blank" href="http://extremetracking.com/free?login=mstansb2"><img src="data:image/gif;base64,R0lGODlhKQAmAPcAAAAAAP////C3ueChpqplbMiQmFgXIkwWH9J5jbFnd/PP16+SmmMmUZphjdWyzggACAcEB5pjmmFNZiUIOaWEvZx7xlMrjyoTVq+usqWc8wIAISQYslJNoi0mzSklcFJN1iooVQEANXBvzZ+e7QgITg0NbhwdkBAQSmlptnd3mM/P/ZWVr4+PlI2NkoyMkQwSqRATa4aI2GRr4zlCjDFCpXOM597n//f//11cWlxbWVhXVVpYVmZkYl9dW2poZmlnZWhmZGdlY5SEeyYICIwxMXssLHUrK85aWlElJUojI0MgIAwJCf3n50I+Pk5KSk1JSUtHR0pGRlBMTBUUFEVCQkI/P0A9PUtISEpHRxoZGf/39zo4OEA+PiQjIyIhISopKSkoKCcmJiYlJSsqKnR0dHNzc3Jycm5ubmxsbGRkZGJiYldXV0xMTEtLS0JCQj8/Pz4+Pj09PTw8PDk5OTQ0NDMzMzIyMjExMSsrKyoqKiUlJSMjIyAgIB0dHRwcHBsbGxoaGhkZGRgYGBcXFxUVFRQUFBISEhERERAQEA0NDQwMDAsLCwoKCgkJCQgICAcHBwYGBgUFBQQEBAMDAwICAgEBAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAJYALAAAAAApACYAAAj/AM+kGUiwoMGDCBMSPKNmjcOHECNKnEjxYcM2GDNq3Mixo8eMa9i8GUmypMmRcOLIWQnnpEuSbNzQmUmzJs06d6hgecIDSBAsXOrYHFrTzRw8SJMqRToGSxkWGKJKbYEmx5alWJHOsbOnq9evXayUiboihVmzK1ZEdbFDzNe3Xe3k+UO3bt0+OqCukOABBAwPHkyYmIGiQlQzW/zYXZxHD6HHkB9nwbFgLwkSfwdz2MwZRdQyVQgZKkS6EGQ9fBCpXo0oUI/KIEicgCG4s4jbIlCgoICBjJMkB4wkUMJINR8/ipIrF3SFxYrYJ0AENkGDBgoRMWKMGBEjN4UFRwQE/xjPpEhyP4EaqVe/KAoZDCBCyC5RQjCND7cz6Nc/4vYABQMQYAASTCiwRCOBDALJggsC4gMGKYRwwmz1mbDBfSKMkIEKDiDgQAb9xYCBD18AAIACAkAAySCESOKiJJE08V58E8JAm4UdfCDDhjYg8F8F3Hm2ghQAIKEFAZRIQkghkzQ5ySNQrMCCBhPOJtgLG+RYw4Y3DMBEAAPEUAN2Iw4hABMGVDJJIYZU4mYliPyAgQRUnlDCjVjmuKMKXSrwJQW4jUiAFkSYWIkhbb45xYx12ljfCy/oyaOXCvjJwW0YDACmiQAcmqibgTA6IQn0mQCpnhqqgIAWCiBQIA0cNP8QgABDcHroIZwC0IeoJ5D6aKSoZhCBFiqIUIAWCzTABBNIOJLrIbga6gWj8mFWYZ56yjCsAzFwoGkATBDwRSHPRmtiGA+CoIF8FF6JpQUEfPCBBUw4cBsDBTSwABnjlpsrGA/SWa21j5YwgBYNzFvvdRxYwEFvXzjLKbS5FiIFC1OuexkMpb5QggIBKGABvQ5wxoFaJEpsIsWcOoIEAQWoOzDH9V1QKcI2O+AwBxJgwIIU5PrL6RB+LpCCBhpvzPEF9SqghQEKOODBDB6kAHHQE5sLwLEEBPxACOzORgIDWkRggBYIRO1BCTP4LEWJuQLAMgAMBICAxVCB8IAGl13RdsGxDZxwcNQTeLDCAinHLXe0QzBBKwBfXDynBnszQAATrIIAAgNfLjAByuOqnLWJRhJgoiORk7GABBIUALICDEgYHwGzNjBi6IovTjoTDAyNr9NasErnuiFozoAAAwhBYiGiC23AlwMI4DTmTAxQAAERYJwCxmphQAABb2Od+9wG/AdggEh8EbkPZGCMweEskOHD2/3mPjqnDwwxxAO5OlKI+lIIoADpxzz7Cc2Ap/NfaRYoPgTqzoEQjODKtCbBCipubhbM4MQSocEOmigRAQEAOw==" style="border:0;border-radius:4px;height:38px;width:41px;" alt="eXTReMe Tracker - Free Website Statistics"></a><script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/main.js"><!----></script><div class="logabug" style="text-align: center"><a id="AskMdl002" href="javascript:tocall()" onmouseover="this.href=mail" target="_blank"><i class="icon-question"><!----></i>Вопросы? Обсудите их на mdl.ru</a><br><a id="logABugLink2" href="https://bugs.launchpad.net/openstack-manuals/+filebug?field.title=MasteringAnsible2nd&amp;field.comment=%0A%0A-----------------------------------%0ABuilt:%202017-06-29T17:43:47+00:00%0Agit%20SHA:%2013fb30b7c263d715eee84f0ca1a16df79697eb88%0AURL:%20http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html%0Asource%20File:%20file:a35-prades%0Axml:id:%20mastering-ansible-2nd" onmouseover="this.href=mail" target="_blank"><i class="icon-bug"><!----></i>Нашли ошибку? Сообщите о ней на данной странице</a></div><script language="JavaScript">	  var sourceFile = "source File: file:a35-prades";	  var xmlId = "xml:id: mastering-ansible-2nd";	  var lineFeed = "%0A";	  var docUrl = "URL: " + window.location;	  var bugTitle = "MasteringAnsible2nd";	  var buildTime = "Built: 2017-06-29T17:43:47+00:00";	  var gitSha = "git SHA: 13fb30b7c263d715eee84f0ca1a16df79697eb88";	  var fieldComment = encodeURI(buildTime) +  lineFeed + encodeURI(gitSha) + lineFeed + encodeURI(docUrl) + lineFeed + encodeURI(sourceFile) + lineFeed + encodeURI(xmlId);	  logABug(bugTitle,fieldComment);	</script>   <hr><div class="itemizedlist">	<ul class="itemizedlist" type="disc"><p>Дополнительные ссылки:</p>	 <li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/KVMVirtualizationCookbook/content/Ch08.html" target="_top">Книга рецептов виртуализации KVM</a> Константин Иванов, Packt Publishing, июнь 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringCeph/content/index.html" target="_top">Полное руководство Ceph</a> Ник Фиск, Packt Publishing, май 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/ContainerizationWithLXC/content/index.html" target="_top"> Контейнеризация при помощи LXC</a> Константин Иванов, Packt Publishing, март 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/CephCookbook/content/index.html" target="_top">Книга рецептов Ceph</a> Каран Сингх, Packt Publishing, февраль 2016</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/LearningCeph2ed/content/index.html" target="_top">Изучаем Ceph</a>, 2е изд., Энтони Д`Атри, Вайбхав Бхембре, Каран Сингх, Packt Publishing, октябрь 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/LearningCeph/content/index.html" target="_top">Изучаем Ceph</a> Каран Сингх, Packt Publishing, январь 2015</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringProxmox.2ed/content/index.html" target="_top">Proxmox. Полное руководство</a>. 2е изд., Васим Ахмед, Packt Publishing, май 2016</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/ProxmoxCookbook/content/index.html" target="_top">Книга рецептов Proxmox. Главы 1-6, Дополнения: Преобразование OpenVZ в LXC, Организация ограждения</a> Васим Ахмед, Packt Publishing, август 2015</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/VirtualizationComplete/content/index.html" target="_top">Полная виртуализация. Базовая коммерческая редакция</a>: Proxmox-freeNAS-Zentyal-pfSense. Ли Р. Сюрбер, февраль 2016</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html" target="_top">Полное руководство Ansible</a>. 2е изд., Джесс Китинг, май 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringZabbix.2ed/content/Ch04.html" target="_top">Zabbix. Полное руководство</a>. 2е изд., Андреа Далле Ваккье, сентябрь 2015</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html" target="_top">Полное руководство работы с сетями на Python</a>. Эрик Чоу, Июнь 2017</p>	 </li>    </ul>   </div>      <hr><div class="legal"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html">Уведомление о правах</a><hr><br><table style="border-style: none;" align="left" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-style: none; text-align:left;" valign="top" width="80%">Перевод: Copyright ©&nbsp;2017 &nbsp;<img alt="mdl.ru" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/mdl-reg.jpg" widht="35" style="border-style: none;" height="12">.<br>All rights reserved.<br>Ссылки обязательны (Refs and links are obligatory).</td><td border="0" style="border-style: none; text-align:right;" valign="top" width="20%"><em><a href="http://www.mdl.ru/">http://www.mdl.ru</a><br> <br><a href="http://onreader.mdl.ru/sddc-mdl-portfolio.pdf">портфолио SD DC</a></em></td></tr><tr><td colspan="2" border="0"> <a href="http://www.mdl.ru/Solutions/Put.htm?Nme=CanonOffer"><img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/MFUoffer170420-610x315.jpg" "width="610&quot;" heigh="315"></a></td></tr></tbody></table></div><div><div id="leftnavigation" style="padding-top:3px; background-color:white;">	<div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs"><ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all"><li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#treeDiv" tabindex="1"><span class="contentsTab">Содержание</span></a></li>	<li class="ui-state-default ui-corner-top"><a href="#searchDiv" tabindex="1"><span class="searchTab">Поиск</span></a></li></ul>	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom" id="treeDiv"><img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%203.%20%D0%92%D1%8B%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D1%81%D0%B5%D0%B9%20%D0%BC%D0%BE%D1%89%D0%B8%20%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%BE%D0%B2%20Jinja2%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/loading.gif" alt="загрузка таблицы содержания..." id="tocLoading" style="display:none;">	<div id="ulTreeDiv" style="" class="thisisthat">	<ul id="tree" class="filetree treeview"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Preface">Предисловие<sup>~</sup></a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Covers">Что охватывает эта книга</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#You_need">Что вам нужно для этой книги</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#For_Who">Для кого эта книга</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Conventions">Соглашения</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Feedback">Обратная связь с читателями</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Support">Поддержка пользователей</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#DownloadingExamples">Загрузка кодов примеров</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Errata">Опечатки</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Piracy">Незаконное тиражирование</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Questions">Вопросы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html">Глава 1. Архитектура системы и проектирование Ansible</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#01">Версии и конфигурации Ansible</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#02">Разбор учёта ресурсов и исходных данных</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0201">Статичный учёт ресурсов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0202">Переменные данные учёта ресурсов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0203">Динамическая инвентаризация</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0204">Добавления учёта ресурсов времени исполнения</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0205">Ограничения учёта ресурсов</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#03">Синтаксический разбор плейбуков</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0301">Порядок операций</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0302">Допущения относительных путей</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0303">Директивы поведения воспроизведения</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0304">Стратегии исполнения</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0305">Выбор хоста для воспроизведений и задач</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0306">Имена воспроизведений и задач</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#04">Транспортировка и исполнение модуля</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0401">Ссылка на модуль</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0402">Аргументы модуля</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0403">Транспортировка и исполнение модуля</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#040301">Производительность задачи</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#05">Типы и положение переменных</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0501">Типы переменных</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#06">Доступ к внешним данным</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#07">Старшинство переменных</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0701">Порядок старшинства</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0702">Слияние хэшей</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#08">Выводы</a></span></li></ul></li><li class="collapsable" tabindex="2"><div class="hitarea collapsable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html">Глава 2. Защита вашей секретной информации в Ansible</a></span><ul style="display: block;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#01">Шифрование неподвижных данных</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0101">Вещи, которые может шифровать Vault</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0102">Создание новых зашифрованных файлов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#010201">Приглашение ко вводу пароля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#010202">Файл пароля</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#010203">Сценарий пароля</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0103">Шифрование существующих файлов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0104">Изменение зашифрованных файлов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0105">Чередование паролей зашифрованных файлов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0106">Расшифровка зашифрованных файлов</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0107">Исполнение плейбуков Ansible c зашифрованными файлами</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#02">Защита секретной информации при работе</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0201">Секретная информация, передаваемая на удалённые хосты</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0202">Секретная информация, протоколируемая в удалённые или локальные файлы</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#03">Выводы</a></span></li></ul></li><li class="collapsable" tabindex="2"><div class="hitarea collapsable-hitarea"></div><span class="file"><a class="" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html">Глава 3. Высвобождение всей мощи шаблонов Jinja2</a></span><ul style="display: block;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a class="" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01">Управляющие структуры</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0101">Условные зависимости</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010101">Встроенные условные зависимости</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0102">Циклы</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010201">Фильтрация элементов цикла</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010202">Индексация цикла</a></span></li></ul></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0103">Макросы</a></span><ul style="display: none;"><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010301">Макро переменные</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030101">name</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030102">arguments</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030103">defaults</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030104">catch_kwargs</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030105">catch_varargs</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030106">caller</a></span></li></ul></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a class="" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02">Манипуляция данными</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0201">Синтаксис</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0202">Полезные встроенные фильтры</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020201">default</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020202">count</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020203">random</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020204">round</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0203">Полезные создаваемые Ansible фильтры</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020301">Связанные с состоянием задачи фильтры</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020302">shuffle</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020303">Фильтры для обработки имён пути</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030301">basename</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030302">dirname</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030303">expanduser</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020304">Кодирование Base64</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020305">Поиск содержимого</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0204">Пропуск неопределённых аргументов</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0205">Объектные методы Python</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020501">Строковые методы</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020502">Методы списков</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020503">Методы int и float</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a class="" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#03">Сравнение значений</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0301">Сравнения</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0302">Логика</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0303">Тесты</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#03">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html">Глава 4. Условия управления задачами</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#01">Определение отказа</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0101">Игнорирование ошибок</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0102">Определение условия ошибки</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#02">Определение изменения</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0201">Особая обработка семейства команд</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0202">Неотложное изменение</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#03">Восстановление после ошибки</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0301">rescue</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0302">always</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#04">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html">Глава 5. Компоновка повторно используемого содержания и ролей Ansible</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#01">Концепции включения задач, обработчика, переменной и плейбука</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0101">Включения задач</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010101">Передача значений переменных во включённые задачи</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010102">Передача сложных данных во включённые задачи</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010103">Условные включения задач</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010104">Помеченные включения задач</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0102">Включения задач с циклами</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0103">Включения обработчиков</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0104">Включения переменных</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010401">vars_files</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010402">Динамические включения vars_files</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010403">include_vars</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010404">extra-vars</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0105">Включения плейбуков</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#02">Роли</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0201">Структура ролей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020101">Задачи</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020102">Обработчики</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020103">Переменные</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020104">Модули и встраиваемые модули</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020105">Зависимости</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020106">Файлы и шаблоны</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020107">Собираем всё вместе</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0202">Зависимости ролей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020201">Переменные зависимости ролей</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020202">Тэги</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020203">Условные зависимости ролей</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0203">Приложения ролей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020301">Смешанные роли и задачи</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020302">Включения ролей</a></span></li></ul></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0204">Совместное использование ролей</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020401">Ansible Galaxy</a></span></li></ul></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#03">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html">Глава 6. Минимизация времени простоя и накатывания развёртываний</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#01">Обновления на месте</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#02">Расширение вовне и контрактация</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#03">Быстрые отказы</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0301">Опция any_errors_fatal</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0302">Опция max_fail_percentage</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0303">Форсирование обработки</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#04">Минимизация срывов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0401">Откладывание срывов</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0402">Одноразовое исполнение разрушающих задач</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#05">Построение в серию отдельных задач</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#06">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html">Глава 7. Поиск неисправностей Ansible</a><sup>~</sup></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#01">Ведение журналов и подробности плейбуков</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0101">Подробности</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0102">Ведение журнала</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#02">Самонаблюдение переменной</a></span><ul style="display: none;"><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0201">Подэлементы переменной</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#020101">Сопоставление подэлементов и методов объектов Python</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#03">Исполнение отладочного кода</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0301">Отладка плейбуков</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0302">Отладка локального кода</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030201">Отладка кода учёта ресурсов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030202">Отладка кода плейбуков</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030203">Отладка кода исполнителя</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030204">Отладка удалённого кода</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030205">Отладка действия встраиваемого модуля</a></span></li></ul></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#04">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html">Глава 8. Расширение Ansible</a><sup>...</sup></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#01">Разработка модулей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0101">Построение базового модуля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0102">Пользовательские модули</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0103">Простой модуль</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#010301">Документирование модуля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#010302">Предоставление фактических данных</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#010303">Режим проверки</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#01030301">Поддержка режима проверки</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#01030302">Обработка режима проверки</a></span></li></ul></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#02">Разработка встраиваемых модулей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0201">Тип подключения встраиваемого модуля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0202">Встраиваемые модули оболочки</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0203">Встраиваемые модули поиска</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0204">Встраиваемые модули переменных</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0205">Встраиваемые модули кэширования фактов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0206">Встраиваемые модули обратного вызова</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0207">Встраиваемые модули действия</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0208">Встраиваемые модули распространения</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#03">Разработка встраиваемых модулей динамического учёта резервов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0301">Просмотр хостов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0302">Просмотр переменных хостов</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0303">Простой встраиваемый модуль учёта ресурсов</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#030301">Оптимизация производительности сценария</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04">Участие в проекте Ansible</a></span><ul style="display: none;"><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0401">Представление содействия</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#040101">Репозиторий Ansible</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#040102">Исполнение тестов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04010201">Тестирование модуля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04010202">Интеграция тестов</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04010203">Стиль кодирования тестов</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#040103">Выполнение запроса пула</a></span></li></ul></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#05">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html">Глава 9. Предоставление инфраструктуры</a><sup>~</sup></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#01">Управление облачной инфраструктурой</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0101">Создание серверов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#010101">Загрузка виртуальных серверов</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#010102">Добавление учёта ресурсов в реальном времени</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0102">Использование исходного кода учёта ресурсов OpenStack</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#02">Взаимодействие с контейнерами Docker</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0201">Построение образов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0202">Построение контейнеров без Dockerfile</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0203">Учёт Docker</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#03">Предварительный просмотр контейнера Ansible</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0301">Init</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0302">Build</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0303">Run</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#04">Выводы</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ix01.html">Указатель<sup>-</sup></a></span></li></ul>	</div></div>		<div class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide" id="searchDiv">	 <div id="search"><form onsubmit="Verifie(ditaSearch_Form);return false" name="ditaSearch_Form" class="searchForm">	  <fieldset class="searchFieldSet"><legend>Поиск</legend><center><input id="textToSearch" name="textToSearch" class="searchText" type="text"> &nbsp; <input onclick="Verifie(ditaSearch_Form)" class="searchButton" value="Go" id="doSearch" type="button"></center></fieldset></form>	 </div>	<div id="searchResults"><center>		</center></div>	<p class="searchHighlight"><a href="#" onclick="toggleHighlight()">Подсветка поиска (Вкл/Выкл)</a>	</p>	</div></div></div></div>
+
+</div></body><div style="display:none" id="sp_console_event"></div></html>

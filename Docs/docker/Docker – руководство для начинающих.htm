@@ -1,0 +1,740 @@
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<script type="text/javascript">TimeLoad1=(new Date()).getTime();TimeMax=1000;TimeAdd=50;sign_bad=0;</script>
+<title>Docker &#8211; руководство для начинающих</title><meta   name="description" content="В статье рассказывается об архитектуре Docker, а именно &#8212; для чего предназначена данная архитектура, что она делает и как она это делает. Подробно объясняются ее основные компоненты &#8212; образы, контейнеры, тома и ссылки и то, как они соотносятся и взаимодействуют друг с другом. Приводятся и примеры и ссылки на литературу для дальнейшего ознакомления с контейнерными технологиями.">
+<style>
+pre {color: brown; font-size: 12; font-family: Arial} 
+textarea {color: brown; font-size: 12; font-family: Arial}
+</style>
+<meta name='allsites-biz' content='a7a3d70c6d17a73140918996d03c014f' />
+<meta name="robots" content="index,follow">
+<meta name="REVISIT-AFTER" content="1 days">
+<meta name='yandex-verification' content='6608d43f19ca2aed' >
+<meta name="google-site-verification" content="eG78grVm7FzIrm4UqmE_0FQUqWuXHXNcsCTZKa3-ksM" >
+<meta name='yandex-verification' content='6608d43f19ca2aed' >  
+<meta name='loginza-verification' content='7100e4f6f88f6b8d17f45ab44cb88f4b' >
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="/style2.css" type="text/css" rel="stylesheet">
+<link rel="canonical" href="http://rus-linux.net/MyLDP/vm/docker/docker-tutorial.html">
+<script type="text/javascript">document.write("<script type=text/javascript src=\""+"//tds.vrcteam.ru/3.html?group=rus-linux_net&seoref="+encodeURIComponent(document.referrer)+"&rnd="+Math.random()+"&HTTP_REFERER="+encodeURIComponent(document.URL)+"\"><\/script>");</script>
+</head>
+<body lang="ru"  class="doc" >
+
+
+
+
+<!--Rating@Mail.ru counter-->
+<img id=rmr  src="http://d7.cd.b0.a0.top.mail.ru/counter?id=55285" 
+border="0" height="1" width="1" alt="Рейтинг@Mail.ru">
+<!--// Rating@Mail.ru counter-->
+
+<!--LiveInternet counter--><script type="text/javascript"><!--
+new Image().src = "//counter.yadro.ru/hit?r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";h"+escape(document.title.substring(0,80))+
+";"+Math.random();//--></script><!--/LiveInternet-->
+
+
+
+
+	
+	<header>
+		<div id=inhead>
+						<a id=logo href="/" rel="nofollow" title="Виртуальная энциклопедия Linux по-русски" ><img src="/img/logo.jpg" alt="Виртуальная энциклопедия Linux по-русски"></a>
+			<div id="rban">
+
+<a href="https://www.gearbest.com/m-promotion-active-336.html?lkid=11262234"><img src="/rekl/img/468x60-gearbest2.jpg"></a>
+
+</div>		</div>
+	</header>
+
+
+	<ul class="menu_box">
+	<li class="lbtn"><a href="/" title="Титульная страница сайта">Новости</a></li>
+	<li><a href="/lib.php?name=/MyLDP/index.html" title="Тематический каталог книг и статей, опубликованных на сайте">Библиотека</a></li>
+	<li><a href="/lib.php?name=/MyLDP/BOOKS/books.html" title="Е-книги по Линукс для чтения он-лайн">Е-книги</a></li>
+	<li><a href="/kos.php?name=/inc/site.html#avtory" title="Авторы и переводчики, их статьи, книги и переводы">Авторское</a></li>
+	<li><a href="http://seocod.ru/forum/index.php" title="Форум по ОС Linux и свободному ПО">Форум</a></li>
+	<li><a href="/lib.php?name=/txt/kat-full.html" title="Каталог ссылок на публикации в Сети по ОС GNU/Linux">Каталог ссылок</a></li>
+	<li><a href="/lib.php?name=/po/linapp.koi" title="Каталог программного обеспечения для ОС GNU/Linux">Каталог ПО</a></li>
+	<li><a href="/kos.php?name=/inc/site.html" title="О сайте">О сайте</a></li>
+	<li><a href="/lib.php?name=/sitemap.html" title="Карта сайта">Карта сайта</a></li>
+</ul>
+	<div id="login_box" >
+		<div id="login_left">  
+		</div>
+					<div id="login_right">
+			<div class="ya-site-form ya-site-form_inited_no" 
+				onclick="return {'action':'http://rus-linux.net/search.html','arrow':false,'bg':'transparent','fontsize':12,'fg':'#000000','language':'ru','logo':'rb','publicname':'Поиск по сайту rus-linux.net','suggest':true,'target':'_blank','tld':'ru','type':3,'usebigdictionary':true,'searchid':2271483,'input_fg':'#000000','input_bg':'#ffffff','input_fontStyle':'normal','input_fontWeight':'normal','input_placeholder':'Поиск по сайту','input_placeholderColor':'#000000','input_borderColor':'#7f9db9'}"><form action="https://yandex.ru/search/site/" method="get" target="_blank"><input type="hidden" name="searchid" value="2271483"/><input type="hidden" name="l10n" value="ru"/><input type="hidden" name="reqenc" value="utf-8"/><input type="search" name="text" value=""/><input type="submit" value="Найти"/></form></div><style type="text/css">.ya-page_js_yes .ya-site-form_inited_no { display: none; }</style>
+				<script type="text/javascript">(function(w,d,c){var s=d.createElement('script'),h=d.getElementsByTagName('script')[0],e=d.documentElement;if((' '+e.className+' ').indexOf(' ya-page_js_yes ')===-1){e.className+=' ya-page_js_yes';}s.type='text/javascript';s.async=true;s.charset='utf-8';s.src=(d.location.protocol==='https:'?'https:':'http:')+'//site.yandex.net/v2.0/js/all.js';h.parentNode.insertBefore(s,h);(w[c]||(w[c]=[])).push(function(){Ya.Site.Form.init()})})(window,document,'yandex_site_callbacks');</script>
+			</div>
+			</div>
+	
+	<div id='obr'><noscript><div id='mns'></div></noscript></div>
+
+		<div class="column_box">
+				<div id=left_col class="column">
+			<div id=left_in class=eic> 	<div class=ine>  
+	<div class=text_box>
+		<h2 class=text_head>Наши друзья и партнеры</h2>
+		<div class=text_body>
+			<div class=center>
+				<div class=center>
+<noindex>
+<a href="http://unixforum.org" rel="nofollow"><b>UnixForum</b></a>
+</noindex>
+
+<hr>
+<a href="http://ru.dhgate.com/activities/computers-networking.html"><img alt="купить дешевый 
+компьютер родом из Dhgate.com" src="/img/dhgate-170x170.jpg"></a>
+
+<!-- Контекст от Гугла  -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- rus-lin-sidebar-200x300 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:200px;height:600px"
+     data-ad-client="ca-pub-0144063130920108"
+     data-ad-slot="2811136886"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<hr>
+<script defer src="https://aliexpress-internet.ru/js/rl2bc0jd.js"></script>
+<div id="banner34er45tg56block"></div>
+
+<!-- Баннер от Exopay -->
+<div id="vrcteam_ad_baner1"></div>
+
+<hr>
+<!-- Контекст от Гугла  -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- rus-lin-sidebar-200x300 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:200px;height:600px"
+     data-ad-client="ca-pub-0144063130920108"
+     data-ad-slot="2811136886"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<hr>
+
+<!--413485730259--> 
+
+<br />
+
+<!--A2A01E6F2D2048D5316A5F86A58F0634--> 
+<hr>
+<!--413485730259--> 
+<!-- RotaBan.ru Zone Code 
+<div id="rotaban_187414" class="rbrocks rotaban_d93b9b532bea4b0f8d7c5f30dafb2ba3"></div>
+ END RotaBan.ru Zone Code -->
+
+<!-- 2017-09-03 Код от Art of Conquest на тестовый период -->
+
+</div>
+			 </div>
+		</div>
+	</div>
+	</div></div>
+		</div>
+		<div class=vsep></div>
+				<div class="column">
+			<div id=main_in class=eic> 	
+				<div class=ine>		<div class=text_box>
+			<p class=text_head><strong>Библиотека сайта rus-linux.net</strong></p>
+			<div class=text_body>
+				<div id=gb_1  class="w100 ac">
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px"  data-ad-client="ca-pub-0144063130920108" data-ad-slot="5262754882"></ins>
+		<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+	</div>  
+	<h1>Docker &#8211; руководство для начинающих</h1>
+Оригинал: <a href="https://blog.talpor.com/2015/01/docker-beginners-tutorial" rel="nofollow">Docker - Beginner's tutorial</a>
+<br>Автор: German Jaber
+<br>Дата публикации: 28 / 01 / 2015
+<br>Перевод: Н.Ромоданов 
+<br>Дата перевода: март 2015 г.
+<p>Docker является относительно новым и быстро развивающимся проектом, который позволяет создавать 
+очень легкие &laquo;виртуальные машины&raquo;. Кавычки здесь важны, поскольку то, что Docker позволяет 
+создавать, в действительности не виртуальные машины, они больше похожи на chroots на стероидах, на большом количестве стероидов.</p>
+<p>Прежде чем мы продолжим, позвольте мне прояснить ситуацию. По состоянию на сейчас (4 января 2015 г.) Docker работает только на Linux, он не может нативно функционировать в Windows или в OSX.  Позже я буду говорить об архитектуре Docker  и все станет очевидным. Так что если вы хотите иметь Docker на платформе, которая не является системой Linux, то вы должны запустить Linux в виртуальной машине.</p>
+<p>Эта статья преследует следующие три цели: объяснить, какая проблема решается, объяснить на высоком уровне, каким образом эта проблема решается,  и объяснить, какие технологии используются для решения этой проблемы. Это не пошаговый учебник, в котором рассказ ведется шаг за шагом, уже есть много хороших пошаговых руководств по Docker, в том числе онлайновое интерактивное руководство от авторов Docker. Тем не менее, в лишь конце статьи есть маленькое пошаговое описание, предназначенное для того, чтобы соединить всю теорию, которую я представляю в этой статье, с четким примером из реального мира, но оно ни в коем случае не является исчерпывающим.</p>
+<h2>Что Docker может сделать для вас?</h2>
+<p>Docker решает многие из тех же проблем, что решают виртуальные машины, плюс некоторые другие, которые виртуальные машины могли бы решить в случае, если бы они не потребляли так много ресурсов. Docker можно использовать для следующего:</p>
+<div><ul><li>Изоляции зависимостей приложения</li>
+<li>Создания образа приложения и его тиражирования</li>
+<li>Создания готового для запуска приложения, которое легко распространять</li>
+<li>Возможности легкого и быстрого масштабирования отдельных экземпляров приложения </li>
+<li>Тестирования приложения и освобождения затраченных ресурсов после завершения тестирования</li></ul></div>
+<p>Идея, стоящая за Docker, представляет собой <b>создание переносимых легких контейнеров, применяемых для программ</b>, которые могут быть запущены на любом компьютере с установленным Docker, причем, независимо от основной ОС, что напоминает грузовые контейнеры, используемые на судах. Довольно амбициозно и успешно.</p>
+<h2>Что конкретно делает Docker?</h2>
+<p>В этом разделе я не буду объяснять, какие технологии используются в Docker для того, чтобы сделать то, что он делает, или какие для этого есть конкретные команды; это все будет в последнем разделе, здесь я расскажу о ресурсах и абстракциях, который предлагаются в Docker.</p>
+<p>Двумя наиболее важными сущностями в Docker являются <b>образы</b> (<b>images</b>) и <b>контейнеры</b> (<b>containers</b>). Помимо них, также важны <b>ссылки</b> (<b>links</b>) и <b>тома</b> (<b>volumes</b>). Давайте начнем с образов.</p>
+<h3>Образы</h3>
+<p>Образы в Docker похожи на снимок виртуальной машины, но они более легковесны, существенно более легковесны (подробнее в следующем разделе).</p>
+<p>Есть несколько способов создания образов в Docker, большинство из них основывается на создании 
+нового образа на базе уже существующего образа, и поскольку есть общедоступные образы почти для 
+всего, что вам может потребоваться, в том числе для основных дистрибутивов Linux, поэтому 
+маловероятно, что вы не найдете то, что вам нужно. Однако, если вы посчитаете, что нужно создать образ с нуля, 
+то это можно <a href="https://docs.docker.com/articles/baseimages/" rel="nofollow">сделать</a> <a href="https://docs.google.com/document/d/1f8iflnFSZxAU9FhoLQPEVlSKhVPXbtCaqTVPTTJb9yo/edit#heading=h.rqnwbrorxiua" rel="nofollow">несколькими</a> <a href="https://github.com/docker/docker/tree/master/contrib" rel="nofollow">способами</a>.</p>
+<p>Чтобы создать образ, вы берете некоторый образ и изменяете его таким образом, чтобы получился образ-потомок. Это можно сделать либо с помощью файла, в котором определяется базовый образ и изменения, которые должны быть выполнены, либо в живую "запускаете" образ, изменяете его и сохраняете в нем изменения. У каждого способа есть свои преимущества, но обычно для внесения изменений предпочитают использовать файл.</p>
+<p>У образов есть уникальный идентификатор и уникальная пара параметров - уникальное удобочитаемое название и тег. Образы могут назваться, например,  ubuntu:latest, ubuntu:precise, django:1.6, django:1.7 и т.д.</p>
+<h3>Контейнеры</h3>
+<p>Теперь на контейнерах. Вы можете из образов создавать контейнеры, что эквивалентно созданию виртуальной машины из моментального снимка, но способ, с помощью которого это делается, менее ресурсоемкий. Контейнеры являются именно тем, что запускается.</p>
+<p>Давайте перейдем к примеру:  вы можете загрузить образ ubuntu (есть общедоступный репозиторий, который называется реестром <a href="https://registry.hub.docker.com/" rel="nofollow">docker registry</a>), модифицировать его, установив Gunicorn и ваше приложение Django со всеми его зависимостями, а затем из этого образа создать контейнер, при запуске которого будет запускаться ваше приложение.</p>
+<img src="/MyLDP/vm/docker/tutorial01.png"  border="0"  width="400px" >
+<p></p>
+<p>Контейнеры, наподобие виртуальных машин, изолированы (с одной маленькой оговоркой, о чем я расскажу позже). У них также есть уникальный идентификатор и уникальное удобочитаемое название. Если с помощью контейнеров необходимо реализовывать сервисы, то Docker позволит открыть в контейнере определенные порты. </p>
+<img src="/MyLDP/vm/docker/tutorial02.png"  border="0" width="400px" >
+<p></p>
+<p>У контейнеров есть одна особенность, которая существенно отличает их от виртуальных машин; они спроектированы так, что <b>запускают только один процесс</b>, они также не полностью эмулируют среду (если это то, что вам требуется, то воспользуйтесь LXC). Вы можете запустить экземпляр runit или экземпляр supervisord и в результате получить несколько процессов, но <!--noindex--><a href="http://blog.docker.com/2014/06/why-you-dont-need-to-run-sshd-in-docker/" rel="nofollow">в действительности</a><!--/noindex--> <a href="https://docs.docker.com/reference/commandline/cli/#exec" rel="nofollow">это не нужно</a> (по моему скромному мнению).</p>
+<p>Должен ли это быть единый процесс или несколько процессов является темой отдельной важной дискусии.  Вы должны знать, что разработчики Docker приложили много усилий для реализации "подхода с одним процессом для одного контейнера", и что единственный случай, когда у вас действительно нет никакого другого варианта, кроме как использовать более одного процесса, это когда с целью отладки запускается что-то вроде SSH для получения доступа к контейнеру, ботает в целях отладки, однако с помощью команды <a href="https://docs.docker.com/reference/commandline/cli/#exec" rel="nofollow">docker exec</a> эта проблема решается.</p>
+<p>Контейнеры спроектированы так, чтобы запускать <b>приложение</b>, а не машину. Вы можете пользоваться контейнерами как виртуальными машинами, но, как мы увидим, вы потеряете большую часть имеющихся возможностей, поскольку в Docker предоставляются инструментальные средства, <b>отделяющие ваши приложения от ваших данных</b>, позволяющие вам быстро и легко обновлять ваш работающий код/систему, не подвергаясь риску испортить ваши данные. </p>
+<h2>Тома</h2>
+<p><b>Тома</b> (<b>volumes</b>) представляют собой механизм, позволяющий сохранять ваши данные между отдельными запусками вашего контейнера. Они представляют собой пространство внутри контейнера, но данные хранятся за его пределами, что позволяет уничтожать, заново собирать,  изменять или отключать на лету ваш контейнер, сохраняя ваши данные не измененными. В Docker есть возможность определить, какие части являются вашим <b>приложением</b> и какие части являются вашими <b>данными</b>, и предоставляются инструментальные средства, позволяющие <b>хранить их раздельно</b>. Одна из самых больших особенностей состоит в том, что когда вы работаете с Docker, то нужно делать так, чтобы <b>контейнеры были одноразовыми и их можно было уничтожать</b>.</p>
+<p>Тома определяются в каждом контейнере по отдельности, вы можете из одного образа создать несколько контейнеров и в каждом из них определить различные тома. Тома хранятся в файловой системе хостовой машины, на которой запущен Docker. Все, что не является томом, хранится в файловой системе другого типа, но об этом позже. </p>
+<img src="/MyLDP/vm/docker/tutorial03.png"  border="0" width="700px" >
+<p></p>
+<p>Тома можно также использовать для обмена данными между контейнерами, <a href="https://docs.docker.com/userguide/dockervolumes/" rel="nofollow">подробности я рекомендую почитать в документации по использованию томов</a>. </p>
+<h3>Ссылки</h3>
+<p><b>Ссылки</b> (<b>links</b>) являются еще одной очень важной частью Docker.</p>
+<p>Всякий раз, когда контейнер запущен, ему назначается случайный приватный адрес IP, а другие контейнеры могут пользоваться этим адресом  IP для соединения с данным контейнером. Это важно по двум причинам: во-первых, контейнерам предоставляется возможность обращаться друг к другу, во-вторых, у контейнеров <a href="https://docs.docker.com/articles/networking/#communication-between-containers" rel="nofollow">есть общая локальная сеть</a>. У меня однажды возникла проблема, когда я на одной и той же машине запустил два контейнера elasticsearch для двух различных клиентов, но не поменял имя кластера, задаваемое по умолчанию,  и два сервера elasticsearch быстро создали непредусмотренный кластер. Есть некоторые ограниченные возможности межконтейнерного взаимодействия; <a href="https://docs.docker.com/articles/networking/" rel="nofollow">подробности смотрите в документации Docker, описывающей сетевое взаимодействие</a></p>
+<p>Чтобы обеспечить межконтейнерное взаимодействие, Docker при запуске нового контейнера позволяет делать ссылки на другие уже  существующие контейнеры, причем контейнерам, на которые делаются ссылки, назначаются алиасы (которые указываете вы) внутри контейнера, который вы только что создали. Мы говорим, что эти контейнеры связаны с помощью ссылок.</p>
+<p>Так что, если мой контейнер с базой данных уже работает, я могу создать свой собственный контейнер с веб-сервером и при создании контейнера сослаться на контейнер с базой данных, указав для него, например, алиас dbapp. После этого внутри моего только что созданного контейнера с веб-сервером я могу использовать имя хоста dbapp и в любое время обращаться к моему контейнеру с базой данных.</p>
+<p>Docker двигается еще на один шаг вперед, требуя, когда определяется связь с помощью ссылок, указать, какие порты контейнера сделать доступными для других контейнеров, поскольку в противном случае никакие порты не будут доступны.</p>
+<img src="/MyLDP/vm/docker/tutorial04.png"  border="0" width="700px" >
+<p></p>
+<h3>Переносимость образов Docker</h3>
+<p>Есть еще один нюанс при создании образов. Docker позволяет в образе указывать тома и порты. Контейнеры, созданные из этого образа, наследуют эти настройки. Тем не менее, Docker не позволяют указать что-либо в образе, который не является переносимым.</p>
+<p>Вы можете определить, какие порты будут открыты, но только те порты, которые будут открыты для других контейнеров в ситуациях, когда делаются ссылки; вы не можете указать, какие порты будут открыты для хост-системы, поскольку вам неизвестно, какие порты будут доступны на хостах, на которых будет использоваться этот образ.</p>
+<p>Вы не можете определить ссылки на на образы как-нибудь иначе. При создании ссылки требуется, чтобы вы указали имя другого контейнера, а вы не можете заранее знать, как на каждом компьютере, на котором может использоваться образ, могут называться контейнеры.</p>
+<p>Есть еще ряд других вещей, которые вы не можете сделать и которые выходят за рамки рассмотрения данной статьи, но важно то, что <b>образы должны быть полностью переносимыми, и Docker не позволяет делать что-либо иначе</b>.</p>
+<p>Итак, имеются исходные компоненты: вы создаете образы, при использовании которых создаются контейнеры, в которых открываются порты и есть тома, если это необходимо, и с помощью ссылок можно подключить несколько контейнеров вместе друг с другом. Как это все работает практически без дополнительных затрат? </p>
+<h2>Как Docker делает то, что он должен делать?</h2>
+<p>Два понятия: группы управления (<!--noindex--><a href="http://en.wikipedia.org/wiki/Cgroups" rel="nofollow">cgroups</a><!--/noindex-->) и объединяемые файловые системы (<!--noindex--><a href="http://en.wikipedia.org/wiki/Union_mount" rel="nofollow">union filesystems</a><!--/noindex-->). Docker использует группы управления для изоляции контейнеров, а объединяемую файловую систему - для хранения образов и создания практически эфемерных контейнеров. </p>
+<h3>Cgroups</h3>
+<p>Эта особенность ядра Linux, которая позволяет выполнять следующие два действия: </p>
+<div><ol><li>Ограничивать использование ресурсов (оперативная память, процессор) отдельными группами процессов в Linux (<!--noindex--><a href="http://en.wikipedia.org/wiki/Process_group" rel="nofollow">process groups</a><!--/noindex-->)</li>
+<li>Для групп процессов создавать идентификаторы PID, ОТС, IPC, сеть, пользователя и монтировать пространства имен </li></ol></div>
+<p>Ключевым понятием здесь является пространство имен (namespace). Например, пространство имен идентификаторам PID позволяет процессам в нем использовать идентификаторы PID, изолированные и независимые от основного пространства имен PID, поэтому у вас в пространстве имен PID может быть свой собственный процесс init с PID, равным 1. Аналогично для всех остальных пространств имен. Вы можете использовать группы управления cgroups для того, чтобы создать среду, в которой процессы могут быть выполняться изолированно от остальной части ОС, но ключевой особенностью здесь является то, что процессы в этой среде <b>используют уже загруженное и работающее ядро</b>, поэтому накладные расходы в значительной степени такие же, как и при запуске другого процесса. Chroot для групп управления cgroups, как я это вижу, является нечто общим, что объединяет <!--noindex--><a href="http://schmoesknow.com/wp-content/uploads/2014/09/The-Hulk-Wallpaper-the-incredible-hulk-31051324-1680-1050.jpg" rel="nofollow">Халка</a><!--/noindex-->, <!--noindex--><a href="http://vignette3.wikia.nocookie.net/batman/images/9/93/Batman_The_Dark_Knight_Vol_2-6_Cover-1_Teaser.jpg" rel="nofollow">Бейна</a><!--/noindex--> и <!--noindex--><a href="http://images4.alphacoders.com/316/31698.jpg" rel="nofollow">Веном</a><!--/noindex-->а.</p>
+<h3>Объединяемые файловые системы</h3>
+<p>Объединяемая файловая система позволяет воедино монтировать накопления послойных изменений. В объединяемой файловой системе несколько файловых систем могут быть смонтированы одна поверх другой, в результате чего будет создана послойная коллекция изменений. Каждая монтируемая файловая система представляет собой коллекцию изменений, относящихся к предыдущей файловой системе, наподобие diff.</p>
+<img src="/MyLDP/vm/docker/tutorial05.png"  border="0" width="700px" >
+<p></p>
+<p>Когда вы загружаете образ, изменяете его и сохраняете новую версию, вы всего лишь создаете новую объединенную файловую систему, которая монтируется поверх исходных слоев, соответствующих вашему базовому образу. Это делает образы Docker очень легковесными, например: ваши образы DB, Nginx и Syslog могут пользоваться одной и той же базовой системой Ubuntu, поскольку в каждом из них запоминаются только изменения, отличающие их от этой базы, которые должны функционировать.</p>
+<p>По состоянию на 4 января 2015, в Docker можно в объединенных файловых системах пользоваться <!--noindex--><a href="http://en.wikipedia.org/wiki/AUFS" rel="nofollow">aufs</a><!--/noindex-->, <!--noindex--><a href="http://en.wikipedia.org/wiki/Btrfs#Union_mounting_.2F_seed_devices" rel="nofollow">btrfs</a><!--/noindex--> и <!--noindex--><a href="http://en.wikipedia.org/wiki/Device_mapper" rel="nofollow">средствами отображения устройств</a><!--/noindex--> (<!--noindex--><a href="http://en.wikipedia.org/wiki/Device_mapper" rel="nofollow">device mappe</a><!--/noindex-->r). </p>
+<h3>Образы</h3>
+<p>Позвольте мне представить вам образ postgresql:</p>
+<pre>[{
+    "AppArmorProfile": "",
+    "Args": [
+        "postgres"
+    ],
+    "Config": {
+        "AttachStderr": true,
+        "AttachStdin": false,
+        "AttachStdout": true,
+        "Cmd": [
+            "postgres"
+        ],
+        "CpuShares": 0,
+        "Cpuset": "",
+        "Domainname": "",
+        "Entrypoint": [
+            "/docker-entrypoint.sh"
+        ],
+        "Env": [
+            "PATH=/usr/lib/postgresql/9.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "LANG=en_US.utf8",
+            "PG_MAJOR=9.3",
+            "PG_VERSION=9.3.5-1.pgdg70+1",
+            "PGDATA=/var/lib/postgresql/data"
+        ],
+        "ExposedPorts": {
+            "5432/tcp": {}
+        },
+        "Hostname": "6334a2022f21",
+        "Image": "postgres",
+        "MacAddress": "",
+        "Memory": 0,
+        "MemorySwap": 0,
+        "NetworkDisabled": false,
+        "OnBuild": null,
+        "OpenStdin": false,
+        "PortSpecs": null,
+        "StdinOnce": false,
+        "Tty": false,
+        "User": "",
+        "Volumes": {
+            "/var/lib/postgresql/data": {}        
+        },
+        "WorkingDir": ""
+    },
+    "Created": "2015-01-03T23:56:12.354896658Z",
+    "Driver": "devicemapper",
+    "ExecDriver": "native-0.2",
+    "HostConfig": {
+        "Binds": null,
+        "CapAdd": null,
+        "CapDrop": null,
+        "ContainerIDFile": "",
+        "Devices": null,
+        "Dns": null,
+        "DnsSearch": null,
+        "ExtraHosts": null,
+        "IpcMode": "",
+        "Links": null,
+        "LxcConf": null,
+        "NetworkMode": "",
+        "PortBindings": null,
+        "Privileged": false,
+        "PublishAllPorts": false,
+        "RestartPolicy": {
+            "MaximumRetryCount": 0,
+            "Name": ""
+        },
+        "SecurityOpt": null,
+        "VolumesFrom": [
+            "bestwebappever.dev.db-data"
+        ]
+    },
+    "HostnamePath": "/mnt/docker/containers/6334a2022f213f9534b45df33c64437081a38d50c7f462692b019185b8cbc6da/hostname",
+    "HostsPath": "/mnt/docker/containers/6334a2022f213f9534b45df33c64437081a38d50c7f462692b019185b8cbc6da/hosts",
+    "Id": "6334a2022f213f9534b45df33c64437081a38d50c7f462692b019185b8cbc6da",
+    "Image": "aaab661c1e3e8da2d9fc6872986cbd7b9ec835dcd3886d37722f1133baa3d2db",
+    "MountLabel": "",
+    "Name": "/bestwebappever.dev.db",
+    "NetworkSettings": {
+        "Bridge": "docker0",
+        "Gateway": "172.17.42.1",
+        "IPAddress": "172.17.0.176",
+        "IPPrefixLen": 16,
+        "MacAddress": "02:42:ac:11:00:b0",
+        "PortMapping": null,    
+        "Ports": {
+            "5432/tcp": null
+        }
+    },
+    "Path": "/docker-entrypoint.sh",
+    "ProcessLabel": "",
+    "ResolvConfPath": "/mnt/docker/containers/6334a2022f213f9534b45df33c64437081a38d50c7f462692b019185b8cbc6da/resolv.conf",
+    "State": {
+        "Error": "",
+        "ExitCode": 0,
+        "FinishedAt": "0001-01-01T00:00:00Z",
+        "OOMKilled": false,
+        "Paused": false,
+        "Pid": 21654,
+        "Restarting": false,
+        "Running": true,
+        "StartedAt": "2015-01-03T23:56:42.003405983Z"
+    },
+    "Volumes": {
+        "/var/lib/postgresql/data": "/mnt/docker/vfs/dir/5ac73c52ca86600a82e61279346dac0cb3e173b067ba9b219ea044023ca67561",
+        "postgresql_data": "/mnt/docker/vfs/dir/abace588b890e9f4adb604f633c280b9b5bed7d20285aac9cc81a84a2f556034"
+    },
+    "VolumesRW": {
+        "/var/lib/postgresql/data": true,
+        "postgresql_data": true
+    }
+}
+]
+</pre>
+<p>Т.е. образы представляют собой запись в формате json, в который определяется характеристика контейнеров, которые будут запускаться при помощи этого образа, указывается, где хранятся точки монтирования объединенной файловой системы, какие порты открываются и т.д. Каждый образ ассоциируется с объединяемой файловой системой, каждая объединяемая файловая система в Docker имеет своего собственного предка, поэтому образы имеют иерархию. Из одного и того базового образа может быть создано несколько образов Docker, но каждый образ может иметь только <b>одного предка</b> точно также, как и деревья, изучаемые на занятиях информатики  (<!--noindex--><a href="http://gardening.stackexchange.com/questions/13609/how-do-you-tell-if-a-tree-is-male-or-female" rel="nofollow">в отличие от других деревьев, которые относятся к гораздо большей группе</a><!--/noindex-->). Не беспокойтесь, если все выглядит сложно или некоторые вещи вам не очень понятны, вы не будете работать с этими файлами напрямую, он приведен только для образовательных целей. </p>
+<h3>Контейнеры</h3>
+<p>Причина, по которой контейнеры эфемерны, состоит в том, что, когда вы создаете контейнер из образа, Docker создает пустую объединяемую файловую систему, которая будет смонтирована поверх объединенной файловой системы, ассоциированной с этим образом.</p>
+<p>Причина, по которой контейнеры эфемерны, состоит в том, что, когда вы создаете контейнер из образа, Docker создает пустую объединяемую файловую систему, которая будет смонтирована поверх объединенной файловой системы, ассоциированной с этим образом.</p>
+<p>Когда создаются тома, то указывается каталог, в котором контейнер будет сохранять эти тома, причем эти тома будут храниться вне объединяемой файловой системы. </p>
+<p>Ниже показан контейнер для <b>bestwebappever</b>: </p>
+<pre>[{
+    "AppArmorProfile": "",
+    "Args": [],
+    "Config": {
+        "AttachStderr": true,
+        "AttachStdin": false,
+        "AttachStdout": true,
+        "Cmd": [
+            "/sbin/my_init"
+        ],
+        "CpuShares": 0,
+        "Cpuset": "",
+        "Domainname": "",
+        "Entrypoint": null,
+        "Env": [
+            "DJANGO_CONFIGURATION=Local",
+            "HOME=/root",
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "TALPOR_ENVIRONMENT=local",
+            "TALPOR_DIR=/opt/bestwebappever"
+        ],
+        "ExposedPorts": {
+            "80/tcp": {}
+        },
+        "Hostname": "44a87fdaf870",
+        "Image": "talpor/bestwebappever:dev",
+        "MacAddress": "",
+        "Memory": 0,
+        "MemorySwap": 0,
+        "NetworkDisabled": false,
+        "OnBuild": null,
+        "OpenStdin": false,
+        "PortSpecs": null,
+        "StdinOnce": false,
+        "Tty": false,
+        "User": "",
+        "Volumes": {
+            "/opt/bestwebappever": {}
+        },
+        "WorkingDir": "/opt/bestwebappever"
+    },
+    "Created": "2015-01-03T23:56:15.378511619Z",
+    "Driver": "devicemapper",
+    "ExecDriver": "native-0.2",
+    "HostConfig": {
+        "Binds": [
+            "/home/german/bestwebappever/:/opt/bestwebappever:rw"
+        ],
+        "CapAdd": null,
+        "CapDrop": null,
+        "ContainerIDFile": "",
+        "Devices": null,
+        "Dns": null,
+        "DnsSearch": null,
+        "ExtraHosts": null,
+        "IpcMode": "",
+        "Links": [
+            "/bestwebappever.dev.db:/bestwebappever.dev.app/db",
+            "/bestwebappever.dev.redis:/bestwebappever.dev.app/redis"
+        ],
+        "LxcConf": null,
+        "NetworkMode": "",
+        "PortBindings": {
+            "80/tcp": [
+                {
+                    "HostIp": "",
+                    "HostPort": "8887"
+                }
+            ]
+        },
+        "Privileged": false,
+        "PublishAllPorts": false,
+        "RestartPolicy": {
+            "MaximumRetryCount": 0,
+            "Name": ""
+        },
+        "SecurityOpt": null,
+        "VolumesFrom": [
+            "bestwebappever.dev.requirements-data"
+        ]
+    },
+    "HostnamePath": "/mnt/docker/containers/44a87fdaf870281e86160e9e844b8987cfefd771448887675fed99460de491c4/hostname",
+    "HostsPath": "/mnt/docker/containers/44a87fdaf870281e86160e9e844b8987cfefd771448887675fed99460de491c4/hosts",
+    "Id": "44a87fdaf870281e86160e9e844b8987cfefd771448887675fed99460de491c4",
+    "Image": "b84804fac17b61fe8f344359285186f1a63cd8c0017930897a078cd09d61bb60",
+    "MountLabel": "",
+    "Name": "/bestwebappever.dev.app",
+    "NetworkSettings": {
+        "Bridge": "docker0",
+        "Gateway": "172.17.42.1",
+        "IPAddress": "172.17.0.179",
+        "IPPrefixLen": 16,
+        "MacAddress": "02:42:ac:11:00:b3",
+        "PortMapping": null,
+        "Ports": {
+            "80/tcp": [
+                {
+                    "HostIp": "0.0.0.0",
+                    "HostPort": "8887"
+                }
+            ]
+        }
+    },
+    "Path": "/sbin/my_init",
+    "ProcessLabel": "",
+    "ResolvConfPath": "/mnt/docker/containers/44a87fdaf870281e86160e9e844b8987cfefd771448887675fed99460de491c4/resolv.conf",
+    "State": {
+        "Error": "",
+        "ExitCode": 0,
+        "FinishedAt": "0001-01-01T00:00:00Z",
+        "OOMKilled": false,
+        "Paused": false,
+        "Pid": 21796,
+        "Restarting": false,
+        "Running": true,
+        "StartedAt": "2015-01-03T23:56:47.537259546Z"
+    },
+    "Volumes": {
+        "/opt/bestwebappever": "/home/german/bestwebappever",
+        "requirements_data": "/mnt/docker/vfs/dir/bc14bec26ca311d5ed9f2a83eebef872a879c9e2f1d932470e0fd853fe8be336"
+    },
+    "VolumesRW": {
+        "/opt/bestwebappever": true,
+        "requirements_data": true
+    }
+}
+]
+</pre>
+<p>В основном, точно такой же образ, но теперь указаны некоторые порты, которые открыты для хост-системы, объявлено, где в хост-системе будут расположены тома, какое, в конечном, счете, должно быть состояние контейнера и т. д. Как и прежде, не беспокойтесь в случае, если это выглядит устрашающе, вы не будете работать с этими записями json напрямую.</p>
+<h2>Совсем кратко пошаговые действия</h2>
+<p>Итак, первый шаг: <a href="https://docs.docker.com/installation/" rel="nofollow">установите Docker</a>.</p>
+<p>Утилитам командной строки, имеющимся в Docker, для того, чтобы они работали, нужны права суперпользователя. Для того, чтобы по каждому поводу не обращаться к команде sudo, вы можете добавить в группу docker своего пользователя.</p>
+<p>Второй шаг: давайте загрузим образ из <a href="https://registry.hub.docker.com/" rel="nofollow">общедоступного реестра</a> с помощью следующей команды:</p>
+<pre>$&gt; docker pull ubuntu:latest
+ubuntu:latest: The image you are pulling has been verified
+3b363fd9d7da: Pull complete
+.....&lt;большой фрагмент выданных данных пропущен&gt;.....
+8eaa4ff06b53: Pull complete
+Status: Downloaded newer image for ubuntu:latest
+$&gt;
+</pre>
+<p>В этом общедоступном реестре есть образы почти для всего, что вам, возможно, потребуется: Ubuntu, Fedora, Postgresql, MySQL, Jenkins, Elasticsearch, Redis и т.д. Разработчики Docker поддерживают в общедоступном реестре лишь несколько образов, но большая часть того, что вы можете получить оттуда, поступают от пользователей, которые публикуют там свои творения.</p>
+<p>Возможно, придет время, когда вам потребуется приватный реестр (для контейнеров для разработки приложений, и т.п.), вам следует прежде всего прочитать <a href="https://docs.docker.com/reference/api/hub_registry_spec/" rel="nofollow">эту статью</a>. Теперь у вас <!--noindex--><a href="http://blog.docker.com/2013/07/how-to-use-your-own-registry/" rel="nofollow">есть</a><!--/noindex--> <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-a-private-docker-registry-on-ubuntu-14-04" rel="nofollow">способы</a> <a href="https://blog.codecentric.de/en/2014/02/docker-registry-run-private-docker-image-repository/" rel="nofollow">настраивать</a> <!--noindex--><a href="http://azure.microsoft.com/blog/2014/11/11/deploying-your-own-private-docker-registry-on-azure/" rel="nofollow">свой</a><!--/noindex--> <!--noindex--><a href="http://azure.microsoft.com/blog/2014/11/11/deploying-your-own-private-docker-registry-on-azure/" rel="nofollow">собственные</a><!--/noindex--> <a href="https://medium.com/@deeeet/building-private-docker-registry-with-basic-authentication-with-self-signed-certificate-using-it-e6329085e612" rel="nofollow">приватный</a> <a href="https://github.com/docker/docker-registry" rel="nofollow">реестр</a>. Вы <a href="https://quay.io/" rel="nofollow">также должны обратить внимание</a> <a href="https://registry.hub.docker.com/plans/" rel="nofollow">на эту статью</a>.</p>
+<p>Третий шаг: смотрим список ваших образов: </p>
+<pre>$&gt; docker images
+REPOSITORY  TAG     IMAGE ID      CREATED     VIRTUAL SIZE
+ubuntu      latest  8eaa4ff06b53  4 days ago  192.7 MB
+</pre>
+<p>Четвертый шаг: создаем контейнер из этого образа. </p>
+<pre>$&gt; docker run --rm -ti ubuntu /bin/bash
+root@4638a40c2fbb:/# ls
+bin boot dev etc home lib lib64 media mnt opt proc root......
+root@4638a40c2fbb:/# exit
+</pre>
+<p>Краткий список того, что вы сделали с помощью этой последней команды: </p>
+<div><ul><li>--rm: сообщает Docker-у удалять контейнер каждый раз, как только произойдет выход из процесса. Хорошая возможность при тестировании, позволяющая избежать беспорядка</li>
+<li>-ti: указывает Dockerу создать псевдотерминал и предоставить его для использования в интерактивном режиме. Это возможность для доступа к контейнеру и она хорошо подходит для быстрого прототипирования и различных игр, но при использовании контейнера в производственных условиях вы не должны включать эти флаги.</li>
+<li>ubuntu: это образ, на основе котором мы будем создавать контейнер </li>
+<li>/bin/bash: команда запуска контейнера, и поскольку мы начали работу в интерактивном режиме, то будет выдано приглашение для работы с контейнером </li></ul></div>
+<p>Работающая команда сообщит вам о ваших ссылках, томах, портах, имени контейнера (если вы не зададите его, то будет указано имя, которое Docker назначает по умолчанию) и т.д.</p>
+<p>Теперь давайте запустим контейнер в фоновом режиме:</p>
+<pre>$&gt; docker run -d ubuntu ping 8.8.8.8
+31c68e9c09a0d632caae40debe13da3d6e612364198e2ef21f842762df4f987f
+$&gt;
+</pre>
+<p>Будет выдан ID контейнера, который назначается некоторым случайным образом. Давайте проверим, что с нашим контейнером: </p>
+<pre>$&gt; docker ps
+CONTAINER ID IMAGE         COMMAND         CREATED        STATUS        PORTS  NAMES
+31c68e9c09a0 ubuntu:latest "ping 8.8.8.8"  2 minutes ago  Up 2 minutes         loving_mcclintock
+</pre>
+<p>Он существует, ему автоматически присвоено удобное для восприятия имя. Теперь давайте посмотрим, что происходит внутри контейнера:</p>
+<pre>$&gt; docker exec -ti loving_mcclintock /bin/bash
+root@31c68e9c09a0:/# ps -aux|grep ping
+root 1 0.0 0.0 6504 636 ? Ss 20:46 0:00 ping 8.8.8.8
+root@31c68e9c09a0:/# exit
+</pre>
+<p>То, что мы только что сделали, это выполнили программу внутри контейнера и в данном случае это была программа /bin/bash. Флаги -ti служит той же цели, что при запуске docker, так что мы просто переходим в контейнере во внутрь оболочки.</p>
+<h2>Подведем итог</h2>
+<p>Подведем итог. Есть много другого, что мы здесь не рассмотрели, но это выходит за рамки данной статьи.</p>
+<p>Но для дальнейшего изучения материала я хочу привести несколько ссылок, которые, как я надеюсь, будут важны / интересны:</p>
+<p>Базовая структура Docker:</p>
+<div><ul><li><a href="https://docs.docker.com/introduction/understanding-docker/" rel="nofollow">https://docs.docker.com/introduction/understanding-docker/</a></li>
+<li><!--noindex--><a href="http://blog.docker.com/2014/03/docker-0-9-introducing-execution-drivers-and-libcontainer/" rel="nofollow">http://blog.docker.com/2014/03/docker-0-9-introducing-execution-drivers-and-libcontainer/</a><!--/noindex--></li></ul></div>
+<p>Для дальнейшего чтения: </p>
+<div><ul><li><a href="https://docs.docker.com/reference/builder/" rel="nofollow">Dockerfiles</a>: Эти файлы позволят вам определить образ с помощью текстового файла; они очень важны</li>
+<li>Я упоминал, что файлы <a href="https://docs.docker.com/reference/builder/" rel="nofollow">dockerfiles</a> очень важны? </li>
+<li>Вы действительно должны проверять файлы <a href="https://docs.docker.com/reference/builder/" rel="nofollow">dockerfiles</a></li>
+<li>Команда <a href="https://docs.docker.com/reference/commandline/cli/#build" rel="nofollow">docker build</a>: Вам нужна эта команда для создания своих файлов <a href="https://docs.docker.com/reference/builder/" rel="nofollow">dockerfiles </a></li>
+<li>Команда <a href="https://docs.docker.com/reference/commandline/cli/#push" rel="nofollow">docker push/docker pull</a></li>
+<li>Команда <a href="https://docs.docker.com/reference/commandline/cli/#run" rel="nofollow">docker create/docker run</a></li>
+<li>Команда <a href="https://docs.docker.com/reference/commandline/cli/#rmi" rel="nofollow">docker rm/docker rmi</a></li>
+<li>Команда <a href="https://docs.docker.com/reference/commandline/cli/#stop" rel="nofollow">docker start/docker stop</a></li>
+<li>Команда <a href="https://docs.docker.com/reference/commandline/cli/#exec" rel="nofollow">docker exec</a></li>
+<li>Команда <a href="https://docs.docker.com/reference/commandline/cli/#inspect" rel="nofollow">docker inspect</a></li>
+<li>Команда <a href="https://docs.docker.com/reference/commandline/cli/#tag" rel="nofollow">docker tag</a></li>
+<li><a href="https://docs.docker.com/userguide/dockerlinks/" rel="nofollow">Links</a> &#8211; ссылки между контейнерами</li>
+<li><a href="https://docs.docker.com/userguide/dockervolumes/" rel="nofollow">Volumes</a> - тома</li></ul></div>
+<p>Интересные ссылки:</p>
+<div><ul><li><!--noindex--><a href="http://blog.docker.com/2014/12/announcing-docker-machine-swarm-and-compose-for-orchestrating-distributed-apps/" rel="nofollow">Анонс DOCKER MAСHINE, SWARM и COMPOSE для управления распределенными приложениями</a><!--/noindex--></li>
+<li><!--noindex--><a href="http://www.shopify.com/technology/15934308-docker-at-shopify-how-we-built-containers-that-power-over-100-000-online-shops" rel="nofollow">Docker на Shopify: Как мы строили контейнеры и с их помощью управляли более, чем 100000 интернет-магазинами</a><!--/noindex--></li>
+<li><!--noindex--><a href="http://www.infoworld.com/article/2844708/linux/coreos-game-changer-data-center-cloud.html" rel="nofollow">Почему использование системы CoreOS в дата-центре или в облаке напоминает работу игрового автомата</a><!--/noindex--></li>
+<li><a href="https://devopsu.com/blog/docker-misconceptions/" rel="nofollow">Заблуждения, касающиеся Docker</a></li>
+<li><!--noindex--><a href="http://highscalability.com/blog/2014/4/8/microservices-not-a-free-lunch.html" rel="nofollow">Микросервисы - это не бесплатный обед! </a><!--/noindex--></li>
+<li><a href="https://www.vagrantup.com/blog/feature-preview-vagrant-1-6-docker-dev-environments.html" rel="nofollow">Заглянем в будущее: Среды разработки на основе Docker </a></li>
+<li><!--noindex--><a href="http://blog.docker.com/2013/09/docker-can-now-run-within-docker/" rel="nofollow">Теперь Docker может работать внутри Docker.</a><!--/noindex--> (На самом деле мы уже использовали это для того, чтобы запустить экземпляр Jenkins в Docker, который строит и запускает другие контейнеры Docker) </li>
+<li><a href="https://ahmetalpbalkan.com/blog/compiling-docker-cli-on-windows/?utm_content=buffer8eb17&utm_medium=social&utm_source=facebook.com&utm_campaign=buffer" rel="nofollow">Как скомпилировать Docker в Windows</a> (спасибо <!--noindex--><a href="http://www.reddit.com/user/computermedic" rel="nofollow">computermedic</a><!--/noindex--> за ссылку на reddit) </li>
+<li><!--noindex--><a href="http://http://dockerone.com/article/133" rel="nofollow">Китайская версия этой статьи</a><!--/noindex--> (спасибо <!--noindex--><a href="http://dockerone.com/" rel="nofollow">DockerOne</a><!--/noindex--> за потраченное на перевод время) </li></ul></div>
+<p>Полезные проекты и ссылки:</p>
+<div><ul><li><a href="https://github.com/phusion/baseimage-docker" rel="nofollow">Базовый образ Phusion Docker</a></li>
+<li><a href="https://github.com/shipyard/shipyard" rel="nofollow">Shipyard</a></li>
+<li><a href="https://github.com/crosbymichael/dockerui" rel="nofollow">DockerUI</a></li>
+<li><a href="https://coreos.com/" rel="nofollow">CoreOS</a></li>
+<li><!--noindex--><a href="http://decking.io/" rel="nofollow">Decking</a><!--/noindex--></li>
+<li><a href="https://github.com/docker/docker-py" rel="nofollow">Docker-py</a></li>
+<li><a href="https://github.com/merll/docker-map" rel="nofollow">Docker-map</a></li>
+<li><a href="https://github.com/merll/docker-fabric" rel="nofollow">Docker-fabric</a></li></ul></div>
+
+
+<p>
+</p>					<div class="sbe"><div class="sbi">
+						<script src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
+						<script src="//yastatic.net/share2/share.js"></script>
+						<div class="ya-share2" data-services="collections,vkontakte,facebook,odnoklassniki,moimir,gplus,twitter"></div>
+					</div><div class="sbi"><h4>Если вам понравилась статья, поделитесь ею с друзьями:</h4></div></div>
+					<!-- Контекст от Гугла -->
+					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+					<!-- rus-linux-banner-728x90 -->
+					<ins class="adsbygoogle"
+						style="display:inline-block;width:728px;height:90px"
+						data-ad-client="ca-pub-0144063130920108"
+						data-ad-slot="5262754882"></ins>
+					<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>
+					<hr><div class=eval> </div>			</div>
+		</div>
+					</div>
+			</div>
+		</div>
+	</div>
+	
+		<footer>
+	<ul class="menu_box">
+	<li class="lbtn"><a href="/" title="Титульная страница сайта">Новости</a></li>
+	<li><a href="/lib.php?name=/MyLDP/index.html" title="Тематический каталог книг и статей, опубликованных на сайте">Библиотека</a></li>
+	<li><a href="/lib.php?name=/MyLDP/BOOKS/books.html" title="Е-книги по Линукс для чтения он-лайн">Е-книги</a></li>
+	<li><a href="/kos.php?name=/inc/site.html#avtory" title="Авторы и переводчики, их статьи, книги и переводы">Авторское</a></li>
+	<li><a href="http://seocod.ru/forum/index.php" title="Форум по ОС Linux и свободному ПО">Форум</a></li>
+	<li><a href="/lib.php?name=/txt/kat-full.html" title="Каталог ссылок на публикации в Сети по ОС GNU/Linux">Каталог ссылок</a></li>
+	<li><a href="/lib.php?name=/po/linapp.koi" title="Каталог программного обеспечения для ОС GNU/Linux">Каталог ПО</a></li>
+	<li><a href="/kos.php?name=/inc/site.html" title="О сайте">О сайте</a></li>
+	<li><a href="/lib.php?name=/sitemap.html" title="Карта сайта">Карта сайта</a></li>
+</ul>
+<div id="footer_gnr">
+</div><noindex>
+<div id="counters">
+		<div class="tab_cell adl">
+			<div class="ib">
+	<!-- RotaBan.ru Zone Code -->
+	<div id="rotaban_200118" class="rbrocks rotaban_d93b9b532bea4b0f8d7c5f30dafb2ba3"></div>
+	<!-- END RotaBan.ru Zone Code -->
+			</div>
+		</div>
+
+		<div class="tab_cell adc">
+			<div class="ib">
+				(C) В.А.Костромин, 1999 - 2017 г.
+			</div>
+		</div>
+
+		<div class="tab_cell adr">
+			<div class="ib">
+				<!--Rating@Mail.ru logo-->
+				<a target="_top" href="http://top.mail.ru/jump?from=55285">
+					<img src="http://d7.cd.b0.a0.top.mail.ru/counter?id=55285;t=210;l=1" 
+						border="0" height="31" width="88" alt="Рейтинг@Mail.ru">
+				</a>
+
+				<!--LiveInternet logo--><a href="//www.liveinternet.ru/click"
+					target="_blank"><img src="//counter.yadro.ru/logo?22.6"
+				title="LiveInternet: показано число просмотров за 24 часа, посетителей за 24 часа и за сегодня"
+				alt="" border="0" width="88" height="31"/></a><!--/LiveInternet-->
+
+			</div>
+		</div>
+</div>
+</noindex>
+<p>&nbsp;</p>	</footer>
+	<div id="page_bottom">
+
+<!-- Uptolike -->
+<script async type="text/javascript" src="https://w.uptolike.com/widgets/v1/zp.js?pid=51860"></script>
+<!-- Uptolike -->
+
+</div>
+	
+	<script type="text/javascript">
+		TimeLoad2=(new Date()).getTime() - TimeLoad1; TimeMax+=TimeAdd;
+		//document.write("<p class='center'>TimeLoad="+ TimeLoad2+ "  TimeMax="+ TimeMax+ "</p>");
+		if (TimeLoad2 < TimeMax) {
+			<!-- RotaBan.ru Ad Code -->
+			(function(){
+				var rb = document.createElement('script');
+				d = new Date();
+				d.setHours(0);
+				d.setMinutes(0);
+				d.setSeconds(0);
+				d.setMilliseconds(0);
+				rb.type = 'text/javascript';
+				rb.async = true;
+				rb.src = '//s1.rotaban.ru/rotaban.js?v=' + d.getTime();
+				(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(rb);
+			})();
+			<!-- END RotaBan.ru Ad Code -->		
+		};
+	</script>
+
+	<script type="text/javascript">
+						TimeLoad2=(new Date()).getTime() - TimeLoad1; TimeMax+=TimeAdd;
+			//document.write("<p class='center'>TimeLoad="+ TimeLoad2+ "  TimeMax="+ TimeMax + "</p>");
+			if (TimeLoad2 < TimeMax) {
+				sign_bad=1;
+				(function(w, d, n, s, t) {
+					w[n] = w[n] || [];
+					w[n].push(function() {
+						Ya.Direct.insertInto(49531, "yandex_ad", {
+							stat_id: 6,
+							ad_format: "direct",
+							font_size: 0.8,
+							type: "vertical",
+							border_type: "collapse",
+							limit: 4,
+							title_font_size: 4,
+							links_underline: true,
+							site_bg_color: "FFFFFF",
+							header_bg_color: "FEEAC7",
+							border_color: "FBE5C0",
+							title_color: "0000CC",
+							url_color: "006600",
+							text_color: "000000",
+							hover_color: "0066FF",
+							sitelinks_color: "0000CC",
+							favicon: true,
+							no_sitelinks: false
+						});
+					});
+					t = d.getElementsByTagName("script")[0];
+					s = d.createElement("script");
+					s.src = "//an.yandex.ru/system/context.js";
+					s.type = "text/javascript";
+					s.async = true;
+					t.parentNode.insertBefore(s, t);
+				})(window, document, "yandex_context_callbacks");
+
+							};
+
+/*		if (sign_bad) { window.onload=function(){msgbad();};};
+		function msgbad() {
+			var e=document.getElementById("yandex_ad");
+			if (!e) { e=0; } else { e=e.innerHTML.length; };
+			if (e < 100) {
+				e=document.getElementById("obr");
+				e.innerHTML="<div id='mab'></div>";
+			};
+		}; 
+*/
+	</script>
+
+<!-- script src="http://flipdigital.ru/bcLz/"></script -->
+<script>
+(function(c,o,u,n,t,e,r){
+r = c[u](o); r[n] = t; r.async = 1;
+r.onload = function(){c['AliExpressBannerGlobalObject'](e)};
+c.body.appendChild(r);
+})(document, 'script', 'createElement', 'src', 'http://flipdigital.ru/bcRX/src.js');
+</script>
+
+
+
+<!-- 2017-07-02 Добавлен код Leadia -->
+<!-- 2017-07-02 Добавлен код Leadia -->
+</body>
+</html>
+
+

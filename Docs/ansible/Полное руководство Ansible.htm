@@ -1,0 +1,808 @@
+<!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html class=" gecko win js" xmlns="http://www.w3.org/1999/xhtml" xmlns:exsl="http://exslt.org/common" xmlns:ng="http://docbook.org/docbook-ng" xmlns:fb="http://ogp.me/ns/fb#"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body>,
+<meta name="Keywords" content="Ansible, Ansible Galaxy, Jinja2, Jinja2 control structures, OpenStack inventory source, playbook parsing, playbooks inclusion, remote code debugging, role dependencies, role sharing, role structure, role variables, secrets transmitted to remote hosts, shell plugins, simple inventory plugin, task variables, tasks inclusion">
+<link href="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/font-awesome.css" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/shCoreDefault.css">
+<script src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/ga_002.js" async="" type="text/javascript"></script><script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/shCore.js"><!----></script>
+<script type="text/javascript">
+               SyntaxHighlighter.config.space = ' ';
+               SyntaxHighlighter.all();
+</script>
+<title>Полное руководство Ansible</title>
+<meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1">
+<meta name="mavenGroupId" content="www.mdl.ru">
+<meta name="mavenArtifactId" content="MasteringAnsible2nd">
+<meta name="mavenVersionId" content="1.0.0">
+<meta name="description" content="Освойте все возможности передовой работы с помощью Ansible.">
+<link rel="home" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html" title="Полное руководство Ansible">
+<link rel="prev" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ix01.html" title="Индекс">
+<link rel="next" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html" title="Глава 1. Архитектура системы и проектирование Ansible">
+<meta name="git-sha" content="">
+<meta name="buildTime" content="">
+<script type="text/javascript">
+            //The id for tree cookie
+            var treeCookieId = "mastering-ansible-2nd";
+            var language = "en";
+            var w = new Object();
+            //Localization
+            txt_filesfound = 'Results';
+            txt_enter_at_least_1_char = "You must enter at least one character.";
+            txt_browser_not_supported = "Please enable JavaScript.";
+            txt_please_wait = "Please wait. Search in progress...";
+            txt_results_for = "Results for: ";
+</script>
+<style type="text/css">
+            input {
+            margin-bottom: 5px;
+            margin-top: 2px;
+            }
+
+            .folder {
+            display: block;
+            height: 22px;
+            padding-left: 20px;
+            background: transparent url(/common/jquery/treeview/images/folder.gif) 0 0px no-repeat;
+            }
+            
+</style>
+<link rel="shortcut icon" href="http://onreader.mdl.ru/MdlLogo.gif" type="image/gif">
+<link rel="stylesheet" type="text/css" href="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/positioning.css">
+<link rel="stylesheet" type="text/css" href="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/custom.css">
+<link rel="canonical" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html">
+<!--[if IE]>
+	<link rel="stylesheet" type="text/css" href="/common/css/ie.css"/>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery-ui-1.css">
+<link rel="stylesheet" type="text/css" href="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery_002.css">
+<script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery-1.js"><!----></script>
+<script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery-ui-1.js"><!----></script>
+<script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery.js"><!----></script>
+<script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery_002.js"><!----></script>
+<link rel="stylesheet" type="text/css" href="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery.css">
+<script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery_003.js">
+<!--jQuery plugin for glossary popups. --></script>
+<script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/htmlFileList.htm"><!----></script>
+<script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/htmlFileInfoList.htm"><!----></script>
+<script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/nwSearchFnt.js"><!----></script>
+<script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/en_stemmer.js">
+<!--//make this scalable to other languages as well.--></script>
+<script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/index-1.htm"><!----></script>
+<script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/index-2.htm"><!----></script>
+<script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/index-3.htm"><!----></script>
+<script type="text/javascript">
+	    var _gaq = _gaq || [];
+	    _gaq.push(['_setAccount', 'UA-17511903-1']);
+	    
+	    _gaq.push(['_setDomainName', '.openstack.org']);	        
+</script>
+<script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/ga.js"><!----></script>
+<script language="javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/common.js"></script>
+<link rel="stylesheet" href="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/googlecode.css">
+<script src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/highlight.js"></script>
+
+
+<!----><script type="text/javascript"><!--
+hljs.initHighlightingOnLoad();
+HeaderName = 'Полное руководство Ansible';
+PrevRef = 'Ix01.html';
+UpRef = 'index.html';
+NextRef = 'Ch01.html';//-->
+</script>
+<!----><script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/HeaderAndToolbar.js">
+</script><script type="text/javascript"><!--
+document.write(HeaderAndToolbar); //-->
+</script><div id="header"><div class="string"><div style="overflow: hidden; width: 100%;" id="marquee"><div style="width: 200%; margin-left: -84.875%;"><span style="width: 50%; display: inline-block; text-align: center;"><a href="http://www.mdl.ru/Solutions/Put.htm?Nme=MdlAccelerator#RX461i">от100k USD решение с 8ю Tesla Volta V100</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="http://www.mdl.ru/Solutions/Put.htm?Nme=EveryPlacePC">23" терминал с 4core ЦПУ/4ГБ/1ТБ от 15тыс.руб.</a></span><span style="width: 50%; display: inline-block; text-align: center;"><a href="http://www.mdl.ru/Solutions/Put.htm?Nme=MdlAccelerator#RX461i">от100k USD решение с 8ю Tesla Volta V100</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="http://www.mdl.ru/Solutions/Put.htm?Nme=EveryPlacePC">23" терминал с 4core ЦПУ/4ГБ/1ТБ от 15тыс.руб.</a></span></div></div></div>	<a onclick="_gaq.push(['_trackEvent', 'Header', 'logo', 'click', 1]);" align="middle" target="_blank" href="http://www.mdl.ru/">	<img src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/mdl-reg.jpg" style="position: relative; border-style: none; top: 18%;" alt="Перевод Mdl®" align="middle" height="14" width="40"></a>	<a onclick="_gaq.push(['_trackEvent', 'Header', 'logo', 'click', 1]);" target="_blank" href="https://www.packtpub.com/virtualization-and-cloud/">	<img src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/PacktPub-logo.jpg" alt="Документация Virtualization and Cloud" height="44" width="109"></a>	<h1>Полное руководство Ansible</h1>	<div id="navheader" align="right"><!----><table class="navLinks"><tbody><tr>		<td><a id="showHideButton" onclick="showHideToc(); _gaq.push(['_trackEvent', 'Header', 'show/hide', 'click', 1]);" class="pointLeft" title="Скрыть дерево оглавления">Боковое поле</a>		</td><td><a accesskey="p" class="navLinkPrevious" onclick="_gaq.push(['_trackEvent', 'Header', 'prevLink', 'click', 1]);" tabindex="5" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ix01.html">Предыдущий</a>&nbsp;		  |       <a accesskey="u" class="navLinkUp" onclick="_gaq.push(['_trackEvent', 'Header', 'upLink', 'click', 1]);" tabindex="5" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html">Вверх</a>		  |        <a accesskey="n" class="navLinkNext" onclick="_gaq.push(['_trackEvent', 'Header', 'nextLink', 'click', 1]);" tabindex="5" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html">Следующий</a>		</td></tr></tbody></table>	</div></div><div id="toolbar" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">	<div id="toolbar-left">		<p class="breadcrumbs"><a href="http://cloudcomputing.mdl.ru/">CloudComputing:mdl.ru</a>		<a href="http://onreader.mdl.ru/KVMVirtualizationCookbook/content/Ch08.html">Книга рецептов виртуализации KVM</a>		<a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html">Полное руководство работы с сетями на Python</a>		(<a onclick="_gaq.push(['_trackEvent', 'Header', 'pdfDownload', 'click', 1]);" alt="Купите оригинал" class="pdficon" href="https://www.packtpub.com/networking-and-servers/mastering-ansible-second-edition">		<img src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/pdf.png"></a>) &nbsp; 		</p>		<div id="gplusone">			<a id="AskMdl1" href="javascript:tocall()" onmouseover="this.href=mail" target="_blank" title="Вопросы? Обсудите их на mdl.ru">			<i class="icon-question"><!----></i></a>&nbsp;&nbsp;			<a id="logABugLink1" href="https://bugs.launchpad.net/openstack-manuals/+filebug?field.title=MasteringAnsible2nd&amp;field.comment=%0A%0A-----------------------------------%0ABuilt:%202017-06-29T17:43:47+00:00%0Agit%20SHA:%2013fb30b7c263d715eee84f0ca1a16df79697eb88%0AURL:%20http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html%0Asource%20File:%20file:a35-prades%0Axml:id:%20mastering-ansible-2nd" onmouseover="this.href=mail" title="Нашли ошибку? Сообщите о ней на данной странице">			<i class="icon-bug"><!----></i></a>		</div>	</div></div>
+<div id="content">
+<div class="book">
+<div style="visibility: visible;" xmlns="" class="titlepage">
+ <div>
+ <div><h1 xmlns="http://www.w3.org/1999/xhtml" class="title">
+  Полное руководство Ansible</h1>
+ </div>
+ <div>
+  <div xmlns="http://www.w3.org/1999/xhtml" class="author"><h3 class="author"><span class="firstname"> <span class="surname"></span></span></h3>
+   <div class="affiliation"><p><span class="orgname">Джесс Китинг</span></p>
+   </div>
+  </div>
+ </div>
+<div class="section">
+    <div xmlns="" class="titlepage"><div><div>
+     <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="Copyright">&nbsp;</a> </h3>
+    </div></div></div>
+   <p xmlns="http://www.w3.org/1999/xhtml" class="copyright">Copyright © 2017 Packt Publishing</p>
+ <div>
+  <div xmlns="http://www.w3.org/1999/xhtml" class="legalnotice">
+   <a id="d9e16">
+   <table frame="void" id="d9e17"><colgroup><col width="10%"><col width="90%"></colgroup><tbody><tr><td>
+   <a class="link" href="https://www.packtpub.com/books/info/packt/terms-and-conditions" alt="Постановления и условия" target="_top">
+   <div class="informalfigure">
+    <div class="mediaobject" align="center">
+	 <img src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/by.png" align="middle">
+    </div>
+   </div></a></td><td>
+   <p>Данный документ предоставляется по лицензии
+   <a class="link" href="http://creativecommons.org/licenses/by/3.0/legalcode" target="_top"><span class="bold"><strong>
+   Creative Commons Attribution 3.0 License</strong></span>, 
+   за исключением разделов со специальными оговорками. </a></p>
+   <p><a class="link" href="http://creativecommons.org/licenses/by/3.0/legalcode" target="_top">
+   http://creativecommons.org/licenses/by/3.0/legalcode</a></p></td></tr></tbody></table>
+  </a></div><a id="d9e16">
+</a></div><a id="d9e16">
+  <p>Первая публикация на английском языке: Ноябрь 2017</p>
+  <p>Второе издание на английском языке: Май 2017</p>
+  <p>Ссылка на продукт: 1270317</p>
+<p>Все права защищены. Никакая часть этой книги не может быть воспроизведена, сохранена в поисковой системе или 
+передана в любой форме или любыми средствами без предварительного письменного разрешения издателя, 
+за исключением случаев кратких цитат, встроенных в критические статьи и обзоры.</p>
+<p>При подготовке этой книги были предприняты все усилия чтобы гарантировать точность представленной информации.
+Тем не менее, информация, содержащаяся в этой книге, продаётся без гарантии в явном или неявном виде.
+Ни авторы, ни Packt Publishing, ни их дилеры и дистрибьюторы не будут нести ответственность за любые убытки, 
+вызванные или предположительно вызванные прямо или косвенно этой книгой.</p>
+<p>Packt Publishing пыталась предоставить информацию о товарных знаках обо всех компаниях и продуктов, 
+упомянутых в данной книге для надлежащего использования капиталов.
+Тем не менее, Packt Publishing не может гарантировать точность этой информации.</p>
+<p>Опубликовано Packt Publishing Ltd.</p>
+<p>Livery Place</p>
+<p>35 Livery Street</p>
+<p>Birmingham B3 2PB, UK</p>
+<p>ISBN-13 978-1-78712-568-1</p>
+</a><p><a id="d9e16"></a><a class="link" href="http://www.packtpub.com/" target="_top">www.packtpub.com</a></p>
+<p xmlns="http://www.w3.org/1999/xhtml" class="pubdate">2017-06-29</p>
+
+<div class="section">
+ <div xmlns="" class="titlepage"><div><div>
+  <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="Credits">&nbsp;</a>Состав исполнителей</h3>
+ </div></div></div>
+ <dl><dt><strong>Авторы</strong></dt>
+  <dd><dl>
+   <dt>Джесс Китинг</dt>
+  </dl></dd>
+ </dl>
+ <dl><dt><strong>Рецензент</strong></dt>
+  <dd><dl>
+   <dt>Сринивас Макам</dt>
+  </dl></dd>
+ </dl>
+ <dl><dt><strong>Редактор выпуска</strong></dt>
+  <dd><dl>
+   <dt>Прачи Бишт</dt>  
+  </dl></dd>
+ </dl>
+ <dl><dt><strong>Редактор разработки содержания</strong></dt>
+  <dd><dl>
+   <dt>Труша Шриян</dt>  
+  </dl></dd>
+ </dl>
+ <dl><dt><strong>Технический редактор</strong></dt>
+  <dd><dl>
+   <dt>Варша Шивхэйр</dt>  
+  </dl></dd>
+ </dl>
+ <dl><dt><strong>Литературный редактор</strong></dt>
+  <dd><dl>
+   <dt>Safis Editing</dt>  
+  </dl></dd>
+ </dl>
+ <dl><dt><strong>Координатор проекта</strong></dt>
+  <dd><dl>
+   <dt>Кинджал Бейри</dt>  
+  </dl></dd>
+ </dl>
+ <dl><dt><strong>Корректор</strong></dt>
+  <dd><dl>
+   <dt>Safis Editing</dt>  
+  </dl></dd>
+ </dl>
+ <dl><dt><strong>Составитель указателя</strong></dt>
+  <dd><dl>
+   <dt>Прейтик Широдкар</dt>  
+  </dl></dd>
+ </dl>
+ <dl><dt><strong>Координатор производства</strong></dt>
+  <dd><dl>
+   <dt>Найлиш Мохайт</dt>  
+  </dl></dd>
+ </dl>
+ <dl><dt><strong>Графика</strong></dt>
+  <dd><dl>
+   <dt>Кирк Д'Пенья</dt>  
+  </dl></dd>
+ </dl>
+</div>
+
+ <div class="section">
+ <div xmlns="" class="titlepage"><div><div>
+  <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="Authors">&nbsp;</a>Об авторах</h3>
+ </div></div></div>
+ <p><strong>Джесс Китинг</strong> является опытным пользователем Ansible, постоянным участником и пропагандистом. 
+ Он является активным участником проекта Linux и сообщества открытого кода на протяжении более пятнадцати лет. 
+ Он обладает опытом из первых рук из различной деятельности ИТ, разработки программного обеспечения, а также 
+ администрирования крупномасштабных систем. Он выступал с представлениями на многочисленных конференциях и 
+ встречах, а также написал множество статей на разнообразные темы.</p>
+
+<div class="section">
+ <div xmlns="" class="titlepage"><div><div>
+  <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="Reviewers">&nbsp;</a>Рецензент</h3>
+ </div></div></div>
+ <p><span class="term"><strong class="userinput">Сринивас Макам</strong></span> 
+ .</p>
+</div>
+ 
+</div>
+
+<div class="section">
+ <div xmlns="" class="titlepage"><div><div>
+  <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="PacktPub">&nbsp;</a>www.PacktPub.com</h3>
+ </div></div></div>
+</div>
+
+</div>
+
+<div class="toc"><p><strong><a id="ToC">&nbsp;</a>Содержание</strong></p>
+ <dd><dl>
+   <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Preface">Предисловие</a></span></dt>
+   <dd><dl>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Covers">Что охватывает эта книга</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#You_need">Что вам нужно для этой книги</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#For_Who">Для кого эта книга</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Conventions">Соглашения</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Feedback">Обратная связь с читателями</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Support">Поддержка пользователей</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#DownloadingExamples">Загрузка кодов примеров</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#DownloadingColorImages">цветных изображений данной книги</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Errata">Опечатки</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Piracy">Незаконное тиражирование</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Questions">Вопросы</a></span></dt>
+   </dl></dd>
+   <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html">Глава 1. Архитектура системы и проектирование Ansible</a></span></dt>
+   <dd><dl>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#01">Введение в систему хранения Ceph</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#02">История и эволюция Ceph</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0201">Редакции Ceph</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#03">Что нового со времени первой редакции</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#04">Будущее хранения</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0401">Ceph как решение облачного хранения</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0402">Ceph является программно определяемым</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0403">Архитектура следующего поколения</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0404">RAID - конец эпохи</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0405">Блочное хранилище Ceph</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#05">Ceph в противовес остальным</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0501">GPFS</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0502">iRODS</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0503">HDFS</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0504">Lustre</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0505">Gluster</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0506">Ceph</a></span></dt>
+     </dl></dd>
+     <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#06">Выводы</a></span></dt>
+   </dl></dd>
+   <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html">Глава 2. Компоненты и службы Ceph</a></span></dt>
+   <dd><dl>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#01">Введение</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#02">Центральные компоненты</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0201">RADOS</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0202">MON</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0203">OSD</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0204">Диспетчер Ceph</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0205">RGW</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0206">Хост администратора</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0207">MDS</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0208">Сообщество</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#03">Центральные службы</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0201">RADOS</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#03">Выводы</a></span></dt>
+   </dl></dd>
+   <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html">Глава 3. Высвобождение всей мощи шаблонов Jinja2</a></span></dt><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html">
+   </a><dd><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html"></a><dl><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html">
+     </a><dt><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html"><span class="section"></span></a><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01">Управляющие структуры</a></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0101">Условные зависимости</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010101">Встроенные условные зависимости</a></span></dt>
+       </dl></dd>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0102">Циклы</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010201">Фильтрация элементов цикла</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010202">Индексация цикла</a></span></dt>
+       </dl></dd>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0103">Макросы</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010301">Макро переменные</a></span></dt>
+         <dd><dl>
+           <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030101">name</a></span></dt>
+           <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030102">arguments</a></span></dt>
+           <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030103">defaults</a></span></dt>
+           <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030104">catch_kwargs</a></span></dt>
+           <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030105">catch_varargs</a></span></dt>
+           <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030106">caller</a></span></dt>
+         </dl></dd>
+       </dl></dd>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02">Манипуляция данными</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0201">Синтаксис</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0202">Полезные встроенные фильтры</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020201">default</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020202">count</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020203">random</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020204">round</a></span></dt>
+       </dl></dd>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0203">Полезные создаваемые Ansible фильтры</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020301">Связанные с состоянием задачи фильтры</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020302">shuffle</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020303">Фильтры для обработки имён пути</a></span></dt>
+         <dd><dl>
+           <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030301">basename</a></span></dt>
+           <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030302">dirname</a></span></dt>
+           <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030303">expanduser</a></span></dt>
+         </dl></dd>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020304">Кодирование Base64</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020305">Поиск содержимого</a></span></dt>
+       </dl></dd>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0204">Пропуск неопределённых аргументов</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0205">Объектные методы Python</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020501">Строковые методы</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020502">Методы списков</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020503">Методы int и float</a></span></dt>
+       </dl></dd>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#03">Сравнение значений</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0301">Сравнения</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0302">Логика</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0303">Тесты</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#03">Выводы</a></span></dt>
+   </dl></dd>
+   <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html">Глава 4. Условия управления задачами</a></span></dt>
+   <dd><dl>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#01">Определение отказа</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0101">Игнорирование ошибок</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0102">Определение условия ошибки</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#02">Определение изменения</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0201">Особая обработка семейства команд</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0202">Неотложное изменение</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#03">Восстановление после ошибки</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0301">rescue</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0302">always</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#04">Выводы</a></span></dt>
+   </dl></dd>
+   <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html">Глава 5. Компоновка повторно используемого содержания и ролей Ansible</a></span></dt>
+   <dd><dl>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#01">Концепции включения задач, обработчика, переменной и плейбука</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0101">Включения задач</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010101">Передача значений переменных во включённые задачи</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010102">Передача сложных данных во включённые задачи</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010103">Условные включения задач</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010104">Помеченные включения задач</a></span></dt>
+       </dl></dd>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0102">Включения задач с циклами</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0103">Включения обработчиков</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0104">Включения переменных</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010401">vars_files</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010402">Динамические включения vars_files</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010403">include_vars</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010404">extra-vars</a></span></dt>
+       </dl></dd>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0105">Включения плейбуков</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#02">Роли</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0201">Структура ролей</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020101">Задачи</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020102">Обработчики</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020103">Переменные</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020104">Модули и встраиваемые модули</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020105">Зависимости</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020106">Файлы и шаблоны</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020107">Собираем всё вместе</a></span></dt>
+       </dl></dd>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0202">Зависимости ролей</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020201">Переменные зависимости ролей</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020202">Тэги</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020203">Условные зависимости ролей</a></span></dt>
+       </dl></dd>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0203">Приложения ролей</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020301">Смешанные роли и задачи</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020302">Включения ролей</a></span></dt>
+       </dl></dd>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0204">Совместное использование ролей</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020401">Ansible Galaxy</a></span></dt>
+       </dl></dd>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#03">Выводы</a></span></dt>
+   </dl></dd>
+   <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html">Глава 6. Минимизация времени простоя и накатывания развёртываний</a></span></dt>
+   <dd><dl>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#01">Обновления на месте</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#02">Расширение вовне и контрактация</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#03">Быстрые отказы</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0301">Опция any_errors_fatal</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0302">Опция max_fail_percentage</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0303">Форсирование обработки</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#04">Минимизация срывов</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0401">Откладывание срывов</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0402">Одноразовое исполнение разрушающих задач</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#05">Построение в серию отдельных задач</a></span></dt>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#06">Выводы</a></span></dt>
+   </dl></dd>
+   <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html">Глава 7. Поиск неисправностей Ansible</a></span></dt>
+   <dd><dl>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#01">Ведение журналов и подробности плейбуков</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0101">Подробности</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0102">Ведение журнала</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#02">Самонаблюдение переменной</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0201">Подэлементы переменной</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#020101">Сопоставление подэлементов и методов объектов Python</a></span></dt>
+       </dl></dd>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#03">Исполнение отладочного кода</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0301">Отладка плейбуков</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0302">Отладка локального кода</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030201">Отладка кода учёта ресурсов</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030202">Отладка кода плейбуков</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030203">Отладка кода исполнителя</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030204">Отладка удалённого кода</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030205">Отладка действия встраиваемого модуля</a></span></dt>
+       </dl></dd>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#04">Выводы</a></span></dt>
+   </dl></dd>
+   <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html">Глава 8. Расширение Ansible</a></span></dt>
+   <dd><dl>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#01">Разработка модулей</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0101">Построение базового модуля</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0102">Пользовательские модули</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0103">Простой модуль</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#010301">Документирование модуля</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#010302">Предоставление фактических данных</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#010303">Режим проверки</a></span></dt>
+         <dd><dl>
+           <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#01030301">Поддержка режима проверки</a></span></dt>
+           <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#01030302">Обработка режима проверки</a></span></dt>
+         </dl></dd>
+       </dl></dd>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#02">Разработка встраиваемых модулей</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0201">Тип подключения встраиваемого модуля</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0202">Встраиваемые модули оболочки</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0203">Встраиваемые модули поиска</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0204">Встраиваемые модули переменных</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0205">Встраиваемые модули кэширования фактов</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0206">Встраиваемые модули обратного вызова</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0207">Встраиваемые модули действия</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0208">Встраиваемые модули распространения</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#03">Разработка встраиваемых модулей динамического учёта резервов</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0301">Просмотр хостов</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0302">Просмотр переменных хостов</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0303">Простой встраиваемый модуль учёта ресурсов</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#030301">Оптимизация производительности сценария</a></span></dt>
+       </dl></dd>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04">Участие в проекте Ansible</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0401">Представление содействия</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#040101">Репозиторий Ansible</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#040102">Исполнение тестов</a></span></dt>
+         <dd><dl>
+           <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04010201">Тестирование модуля</a></span></dt>
+           <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04010202">Интеграция тестов</a></span></dt>
+           <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04010203">Стиль кодирования тестов</a></span></dt>
+         </dl></dd>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#040103">Выполнение запроса пула</a></span></dt>
+       </dl></dd>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#05">Выводы</a></span></dt>
+   </dl></dd>
+   <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html">Глава 9. Предоставление инфраструктуры</a></span></dt>
+   <dd><dl>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#01">Управление облачной инфраструктурой</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0101">Создание серверов</a></span></dt>
+       <dd><dl>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#010101">Загрузка виртуальных серверов</a></span></dt>
+         <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#010102">Добавление учёта ресурсов в реальном времени</a></span></dt>
+       </dl></dd>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0102">Использование исходного кода учёта ресурсов OpenStack</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#02">Взаимодействие с контейнерами Docker</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0201">Построение образов</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0202">Построение контейнеров без Dockerfile</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0203">Учёт Docker</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#03">Предварительный просмотр контейнера Ansible</a></span></dt>
+     <dd><dl>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0301">Init</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0302">Build</a></span></dt>
+       <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0303">Run</a></span></dt>
+     </dl></dd>
+     <dt><span class="section"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#04">Выводы</a></span></dt>
+   </dl></dd>
+   <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ix01.html">Указатель</a></span></dt>
+ </dl></dd>
+</div>
+ 
+
+<div class="section">
+ <div xmlns="" class="titlepage"><div><div>
+  <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="Preface">&nbsp;</a>Предисловие</h3>
+ </div></div></div>
+ <p>
+ .</p>
+ 
+ <div class="section">
+  <div xmlns="" class="titlepage"><div><div>
+   <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="Covers">&nbsp;</a>Что охватывает эта книга</h4>
+  </div></div></div>
+ </div>
+ <p><span class="emphasis"><em><a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html" target="_top">Глава 1. Архитектура системы и проектирование Ansible</a></em></span> 
+ </p>
+ <p><span class="emphasis"><em><a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html" target="_top">Глава 2. Защита вашей секретной информации в Ansible</a></em></span> 
+ </p>
+ <p><span class="emphasis"><em><a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html" target="_top">Глава 3. Высвобождение всей мощи шаблонов Jinja2</a></em></span> 
+ </p>
+ <p><span class="emphasis"><em><a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html" target="_top">Глава 4. Условия управления задачами</a></em></span> 
+ </p>
+ <p><span class="emphasis"><em><a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html" target="_top">Глава 5. Компоновка повторно используемого содержания и ролей Ansible</a></em></span> 
+ </p>
+ <p><span class="emphasis"><em><a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html" target="_top">Глава 6. Минимизация времени простоя и накатывания развёртываний</a></em></span> 
+ </p>
+ <p><span class="emphasis"><em><a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html" target="_top">Глава 7. Поиск неисправностей Ansible</a></em></span> 
+ </p>
+ <p><span class="emphasis"><em><a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html" target="_top">Глава 8. Расширение Ansible</a></em></span> 
+ </p>
+ <p><span class="emphasis"><em><a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html" target="_top">Глава 9. Предоставление инфраструктуры</a></em></span> 
+ </p>
+ 
+ <div class="section">
+  <div xmlns="" class="titlepage"><div><div>
+   <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="You_need">&nbsp;</a>Что вам нужно для этой книги</h4>
+  </div></div></div>
+ </div>
+ <p>Чтобы следовать всем предоставляемым этой книгой примерам, вам понадобится доступ к вычислительной платформе, 
+ способной исполнять Ansible. В настоящее время Ansible может работать на любой машине с установленным на ней 
+ Python 2.6 или 2.7 (Windows не поддерживается в качестве управляющей машины). Это включает в себя Red Hat, 
+ Debian, CentOS, OS X, любые из BSD и тому подобное. </p>
+ <p>Данная книга применяет выпуск Ansible 2.2.x.x.</p>
+ <p>Инструкции по установке Ansible можно найти на <a class="link" href="http://docs.ansible.com/ansible/intro_installation.html" target="_top">http://docs.ansible.com/ansible/intro_installation.html</a>.</p>
+ <p>Некоторые примеры использования Docker, инструкции по установке Docker версии 1.12.6 могут быть найдены на
+ <a class="link" href="http://www.docker.com/community-edition" target="_top">http://www.docker.com/community-edition</a>.</p>
+
+ <div class="section">
+  <div xmlns="" class="titlepage"><div><div>
+   <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="For_Who">&nbsp;</a>Для кого эта книга</h4>
+  </div></div></div>
+ </div>
+ <p>Эта книга предназначена разработчикам и операторам Ansible, которые имеют представление об основных элементах 
+ и приложениях, но в настоящее время в поиске расширения своих познаний относительно применения автоматизации с 
+ помощью Ansible.</p>
+
+ <div class="section">
+  <div xmlns="" class="titlepage"><div><div>
+   <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="Conventions">&nbsp;</a>Соглашения</h4>
+  </div></div></div>
+ </div>
+ <p>В данной книге вы найдёте ряд текстовых стилей, которые делают разницу между различными видами 
+ информации. Здесь мы приводим некоторые примеры этих стилей и объяснение их назначения.</p>
+ <p>Кодовые слова в тексте, имена таблиц базы данных, имена папок, имена файлов, расширения файлов, 
+ имена путей, модели URL-адресов, ввод пользователя, и регулировки Twitter представлены следующим образом:
+ "Мы применим это в некотором операторе <span class="term"><code>failed_when</code></span>.</p>
+ <p>Блок кода записываются следующим образом:</p>
+	   <pre class="screen"><code class="hljs applescript">
+- <span class="hljs-property">name</span>: query sessions
+  command: /sbin/iscsiadm –m session
+  register: sessions
+  failed_when: sessions.rc <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> (<span class="hljs-number">0</span>, <span class="hljs-number">21</span>) 	   </code></pre>
+ <p>Когда мы хотим привлечь ваше внимание к некоторой определённой части блока кода, соответствующие строки и 
+ элементы выделяются жирным шрифтом:</p>
+ <p>Любой ввод и вывод командной строки записываются так:</p>
+	   <pre class="screen"><strong><code class="hljs ruby">
+<span class="hljs-variable">$ </span>source ./hacking/env-setup
+       </code></strong></pre>
+ <p><span class="term"><strong class="userinput">Новые термины</strong></span> и 
+ <span class="term"><strong class="userinput">важные слова</strong></span> отображаются жирным шрифтом. Слова, 
+ которые вы видите на экране, например, в меню или блоках диалогов появляются в тексте следующим образом: 
+ "Переместитесь в <span class="term"><strong class="userinput">Networking support | Networking options | 
+ 802.1d Ethernet Bridging </strong></span> и выберите либо <span class="term"><strong class="userinput">Y</strong></span>
+ для компиляции всей функциональности моста в данном ядре, либо 
+ <span class="term"><strong class="userinput">M</strong></span> для компиляции его в виде отдельного 
+ модуля."</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Предостережения или важные замечания появляются в блоках подобных этому.</p></td></tr></tbody></table>
+     </div>
+	 <div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+      <table summary="Предостережение" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+      <img alt="[Предостережение]" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/warning.png"></td><th align="left">Предостережение</th></tr><tr><td align="left" valign="top">
+      <p>
+	  .</p></td></tr></tbody></table>
+     </div>
+	 <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+        <table summary="Совет" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+        <img alt="[Совет]" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/tip.png"></td><th align="left">Совет</th></tr><tr><td align="left" valign="top">
+        <p>Советы и ловкие приёмы возникают таким образом.</p></td></tr></tbody></table>
+      </div>
+
+ <div class="section">
+  <div xmlns="" class="titlepage"><div><div>
+   <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="Feedback">&nbsp;</a>Обратная связь с читателями</h4>
+  </div></div></div>
+ </div>
+ <p>Обращения наших читателей всегда приветствуются. Дайте нам знать что вы думаете об этой книге - что 
+ вам нравится или не нравится. Обратная связь с читателями важна нам, так как помогает нам разрабатывать 
+ издания, от которых вы на самом деле получите максимальную пользу.</p>
+ <p>Для отправки обычного отклика просто пошлите электронное письмо на адрес 
+ <a class="link" href="mailto:feedback@packtpub.com" target="_top">feedback@packtpub.com</a> с упоминанием 
+ заголовка книги в теме вашего сообщения.</p>
+ <p>Если у вас существует тема, в которой у вас имеется опыт и вы заинтересованы либо в написании, либо во 
+ вкладе в книгу, обратитесь к руководству по адресу <a class="link" href="http://www.packtpub.com/authors" target="_top">www.packtpub.com/authors</a>.</p>
+
+ <div class="section">
+  <div xmlns="" class="titlepage"><div><div>
+   <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="Support">&nbsp;</a>Поддержка пользователей</h4>
+  </div></div></div>
+ </div>
+ <p>Теперь, когда вы являетесь гордым владельцем книги Packt, у нас есть целый ряд моментов для помощи вам 
+ в получении максимальной выгоды от вашей покупки.</p>
+
+ <div class="section">
+  <div xmlns="" class="titlepage"><div><div>
+   <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="DownloadingExamples">&nbsp;</a>Загрузка примеров кода</h4>
+  </div></div></div>
+ </div>
+ <p>Вы можете загрузить файлы примеров кода по адресу из своей учётной записи: <a class="link" href="http://www.packtpub.com/" target="_top">http://www.packtpub.com</a>. Если вы приобрели книгу где- либо ещё,
+ вы можете посетить <a class="link" href="http://www.packtpub.com/support" target="_top">http://www.packtpub.com/support</a> и зарегистрироваться для получения этих файлов по 
+ электронной почте непосредственно на свой адрес.</p>
+ <p>Вы можете загрузить эти файлы с кодом выполнив следующие шаги:</p>
+   <div class="orderedlist">
+   <ol class="orderedlist" type="1"><li class="listitem">
+     <p>Зарегистрируйтесь на нашем вебсайте при помощи своего адреса электронной почты и пароля.</p>
+	 </li><li class="listitem">
+     <p>Переместите указатель мыши на закладку <span class="term"><strong class="userinput">SUPPORT</strong></span>
+	 в верхней части.</p>
+	 </li><li class="listitem">
+     <p>Кликните по <span class="term"><strong class="userinput">Code Downloads &amp; Errata</strong></span>.</p>
+	 </li><li class="listitem">
+     <p>Введите название книги в блок <span class="term"><strong class="userinput">Search</strong></span>.</p>
+	 </li><li class="listitem">
+     <p>Выберите книгу для которой вы ищете для загрузки файлы исходного кода.</p>
+	 </li><li class="listitem">
+     <p>В ниспадающем меню выберите где вы приобрели эту книгу.</p>
+	 </li><li class="listitem">
+     <p>Кликните по <span class="term"><strong class="userinput">Code Download</strong></span>.</p>
+	 </li>
+   </ol>
+   </div>
+ <p>Вы также можете загрузить фалы кодов кликнув по кнопке <span class="term"><strong class="userinput">Code 
+ Files</strong></span> вебстраницы на вебсайте Packt Publishing. Доступ к данной странице может быть получен 
+ путём ввода названия книги в блоке <span class="term"><strong class="userinput">Search</strong></span>.
+ Отметим, что вы должны быть зарегистрированы со своеЙ учётной записью Packt.</p>
+ <p>После загрузки убедитесь, пожалуйста, что вы раззиповали или раскрыли эту папку при помощи самой последней
+ версии:</p>
+   <div class="orderedlist">
+   <ol class="orderedlist" type="1"><li class="listitem">
+     <p>WinRAR / 7-Zip для Windows</p>
+	 </li><li class="listitem">
+     <p>Zipeg / iZip / UnRarX для Mac</p>
+	 </li><li class="listitem">
+     <p>7-Zip / PeaZip для Linux</p>
+	 </li>
+   </ol>
+   </div>
+ <p>Пакет с кодом для данной книги также размещён на GitHub по адресу 
+ <a class="link" href="https://github.com/PacktPublishing/Mastering-Ansible-Second-Edition" target="_top">https://github.com/PacktPublishing/Mastering-Ansible-Second-Edition</a>. 
+ У нас также имеются прочие наборы из нашего богатого каталога книг и видео доступные на
+ <a class="link" href="https://github.com/PacktPublishing/" target="_top">https://github.com/PacktPublishing/</a>. 
+ Следите за ними!</p>
+
+  <div class="section">
+  <div xmlns="" class="titlepage"><div><div>
+   <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="DownloadingColorImages">&nbsp;</a>Загрузка цветных изображений данной книги</h4>
+   <p>Также мы снабжаем вас неким PDF файлом, который имеет цветные изображения применяемых в данной книге снимков 
+   экрана/ схем. Эти цветные изображения помогут вам лучше понять все изменения в имеющемся выводе. Вы можете 
+   загрузить этот файл с 
+   <a class="link" href="https://www.packtpub.com/sites/default/files/downloads/MasteringAnsibleSecondEdition_ColorImages.pdf" target="_top">https://www.packtpub.com/sites/default/files/downloads/MasteringAnsibleSecondEdition_ColorImages.pdf</a>.</p>
+  </div></div></div>
+  </div>
+
+  <div class="section">
+  <div xmlns="" class="titlepage"><div><div>
+   <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="Errata">&nbsp;</a>Опечатки</h4>
+  </div></div></div>
+  </div>
+ <p>Хотя мы и предприняли все меры чтобы обеспечить точность нашего содержимого, ошибки всё- таки возможны.
+ Если вы обнаружили ошибку в нашей книге - возможно, ошибку в тексте или в коде - мы будем признательны если 
+ вы сообщите об этом нам. Сделав это, вы можете предостеречь остальных читателей от разочарования и помочь 
+ нам улучшить последующие версии данной книги. Если вы обнаружили ошибку, пожалуйста, сообщите о ней посетив 
+ <a class="link" href="http://www.packtpub.com/submit-errata" target="_top">www.packtpub.com/submit-errata</a>,
+ выбрав вашу книгу, кликнув на ссылку <span class="term"><strong class="userinput">Errata Submission 
+ Form</strong></span>, и заполнив подробности найденной вами ошибки. Когда ваша ошибка будет проверена, вы 
+ получите уведомление и ошибка будет выложена на наш веб- сайт или добавлена в какой- нибудь перечень 
+ существующих ошибок с заголовком раздела <span class="term"><strong class="userinput">Errata</strong></span>.</p>
+ <p>Для просмотра ранее выявленных ошибок посетите <a class="link" href="https://www.packtpub.com/books/content/support" target="_top">www.packtpub.com/books/content/support</a>
+ и введите название нужной книги в поле поиска. Необходимая информация появится в разделе 
+ <span class="term"><strong class="userinput">Errata</strong></span>.</p>
+
+ <div class="section">
+  <div xmlns="" class="titlepage"><div><div>
+   <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="Piracy">&nbsp;</a>Незаконное тиражирование</h4>
+  </div></div></div>
+ </div>
+ <p>Пиратство, защищённых авторским правом материалов в Интернете является постоянной проблемой во всех 
+ средствах массовой информации. В Packt мы подходим к защите наших авторских прав и лицензий очень серьёзно. 
+ Если вы столкнётесь с какой-либо незаконной копией наших работ в любой форме в Интернете, пожалуйста, 
+ предоставьте нам сразу адрес местонахождения или имя веб-сайта, чтобы мы могли принять меры.
+ {<span class="emphasis"><em>Прим. пер.: Согласно закону об авторском праве РФ, авторские права 
+ на перевод принадлежат авторам этого перевода. Данным переводом, по нашему мнению, мы служим популяризации 
+ основных стратегических направлений развития тем Packt. В случае наличия конструктивных предложений, 
+ готовы к тесному сотрудничеству.</em></span>}</p>
+ <p>Пожалуйста, обратитесь по адресу <a class="link" href="mailto:copyright@packtpub.com" target="_top">copyright@packtpub.com</a> со ссылкой на материалы содержащие признаки нарушения 
+ авторских прав.</p>
+ <p>Мы выражаем вам признательность в защите наших авторов и нашей возможности доносить до вас 
+ имеющего ценность содержимого.</p>
+
+ <div class="section">
+  <div xmlns="" class="titlepage"><div><div>
+   <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="Questions">&nbsp;</a>Вопросы</h4>
+  </div></div></div>
+ </div>
+ <p>Если у вас есть проблемы по любым сторонам данной книги, вы можете контактировать с нами по адресу 
+ <a class="link" href="mailto:questions@packtpub.com" target="_top">questions@packtpub.com</a> и мы 
+ предпримем все меры в отношении ваших проблем.</p>
+</div>
+
+</div>
+
+
+<!----><script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/FooterAndSidebar.js">
+</script><script type="text/javascript"><!--</div id="content"> is inside next code
+document.write(FooterAndSidebar); //-->
+</script><script src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/f.js" id="eXF-mstansb2-0" async="" defer="defer"></script><a title="eXTReMe Tracker - Free Website Statistics" id="eXTReMe-Free-mstansb2" target="_blank" href="http://extremetracking.com/free?login=mstansb2"><img src="data:image/gif;base64,R0lGODlhKQAmAPcAAAAAAP////C3ueChpqplbMiQmFgXIkwWH9J5jbFnd/PP16+SmmMmUZphjdWyzggACAcEB5pjmmFNZiUIOaWEvZx7xlMrjyoTVq+usqWc8wIAISQYslJNoi0mzSklcFJN1iooVQEANXBvzZ+e7QgITg0NbhwdkBAQSmlptnd3mM/P/ZWVr4+PlI2NkoyMkQwSqRATa4aI2GRr4zlCjDFCpXOM597n//f//11cWlxbWVhXVVpYVmZkYl9dW2poZmlnZWhmZGdlY5SEeyYICIwxMXssLHUrK85aWlElJUojI0MgIAwJCf3n50I+Pk5KSk1JSUtHR0pGRlBMTBUUFEVCQkI/P0A9PUtISEpHRxoZGf/39zo4OEA+PiQjIyIhISopKSkoKCcmJiYlJSsqKnR0dHNzc3Jycm5ubmxsbGRkZGJiYldXV0xMTEtLS0JCQj8/Pz4+Pj09PTw8PDk5OTQ0NDMzMzIyMjExMSsrKyoqKiUlJSMjIyAgIB0dHRwcHBsbGxoaGhkZGRgYGBcXFxUVFRQUFBISEhERERAQEA0NDQwMDAsLCwoKCgkJCQgICAcHBwYGBgUFBQQEBAMDAwICAgEBAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAJYALAAAAAApACYAAAj/AM+kGUiwoMGDCBMSPKNmjcOHECNKnEjxYcM2GDNq3Mixo8eMa9i8GUmypMmRcOLIWQnnpEuSbNzQmUmzJs06d6hgecIDSBAsXOrYHFrTzRw8SJMqRToGSxkWGKJKbYEmx5alWJHOsbOnq9evXayUiboihVmzK1ZEdbFDzNe3Xe3k+UO3bt0+OqCukOABBAwPHkyYmIGiQlQzW/zYXZxHD6HHkB9nwbFgLwkSfwdz2MwZRdQyVQgZKkS6EGQ9fBCpXo0oUI/KIEicgCG4s4jbIlCgoICBjJMkB4wkUMJINR8/ipIrF3SFxYrYJ0AENkGDBgoRMWKMGBEjN4UFRwQE/xjPpEhyP4EaqVe/KAoZDCBCyC5RQjCND7cz6Nc/4vYABQMQYAASTCiwRCOBDALJggsC4gMGKYRwwmz1mbDBfSKMkIEKDiDgQAb9xYCBD18AAIACAkAAySCESOKiJJE08V58E8JAm4UdfCDDhjYg8F8F3Hm2ghQAIKEFAZRIQkghkzQ5ySNQrMCCBhPOJtgLG+RYw4Y3DMBEAAPEUAN2Iw4hABMGVDJJIYZU4mYliPyAgQRUnlDCjVjmuKMKXSrwJQW4jUiAFkSYWIkhbb45xYx12ljfCy/oyaOXCvjJwW0YDACmiQAcmqibgTA6IQn0mQCpnhqqgIAWCiBQIA0cNP8QgABDcHroIZwC0IeoJ5D6aKSoZhCBFiqIUIAWCzTABBNIOJLrIbga6gWj8mFWYZ56yjCsAzFwoGkATBDwRSHPRmtiGA+CoIF8FF6JpQUEfPCBBUw4cBsDBTSwABnjlpsrGA/SWa21j5YwgBYNzFvvdRxYwEFvXzjLKbS5FiIFC1OuexkMpb5QggIBKGABvQ5wxoFaJEpsIsWcOoIEAQWoOzDH9V1QKcI2O+AwBxJgwIIU5PrL6RB+LpCCBhpvzPEF9SqghQEKOODBDB6kAHHQE5sLwLEEBPxACOzORgIDWkRggBYIRO1BCTP4LEWJuQLAMgAMBICAxVCB8IAGl13RdsGxDZxwcNQTeLDCAinHLXe0QzBBKwBfXDynBnszQAATrIIAAgNfLjAByuOqnLWJRhJgoiORk7GABBIUALICDEgYHwGzNjBi6IovTjoTDAyNr9NasErnuiFozoAAAwhBYiGiC23AlwMI4DTmTAxQAAERYJwCxmphQAABb2Od+9wG/AdggEh8EbkPZGCMweEskOHD2/3mPjqnDwwxxAO5OlKI+lIIoADpxzz7Cc2Ap/NfaRYoPgTqzoEQjODKtCbBCipubhbM4MQSocEOmigRAQEAOw==" style="border:0;border-radius:4px;height:38px;width:41px;" alt="eXTReMe Tracker - Free Website Statistics"></a><script type="text/javascript" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/main.js"><!----></script><div class="logabug" style="text-align: center"><a id="AskMdl002" href="javascript:tocall()" onmouseover="this.href=mail" target="_blank"><i class="icon-question"><!----></i>Вопросы? Обсудите их на mdl.ru</a><br><a id="logABugLink2" href="https://bugs.launchpad.net/openstack-manuals/+filebug?field.title=MasteringAnsible2nd&amp;field.comment=%0A%0A-----------------------------------%0ABuilt:%202017-06-29T17:43:47+00:00%0Agit%20SHA:%2013fb30b7c263d715eee84f0ca1a16df79697eb88%0AURL:%20http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html%0Asource%20File:%20file:a35-prades%0Axml:id:%20mastering-ansible-2nd" onmouseover="this.href=mail" target="_blank"><i class="icon-bug"><!----></i>Нашли ошибку? Сообщите о ней на данной странице</a></div><script language="JavaScript">	  var sourceFile = "source File: file:a35-prades";	  var xmlId = "xml:id: mastering-ansible-2nd";	  var lineFeed = "%0A";	  var docUrl = "URL: " + window.location;	  var bugTitle = "MasteringAnsible2nd";	  var buildTime = "Built: 2017-06-29T17:43:47+00:00";	  var gitSha = "git SHA: 13fb30b7c263d715eee84f0ca1a16df79697eb88";	  var fieldComment = encodeURI(buildTime) +  lineFeed + encodeURI(gitSha) + lineFeed + encodeURI(docUrl) + lineFeed + encodeURI(sourceFile) + lineFeed + encodeURI(xmlId);	  logABug(bugTitle,fieldComment);	</script>   <hr><div class="itemizedlist">	<ul class="itemizedlist" type="disc"><p>Дополнительные ссылки:</p>	 <li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/KVMVirtualizationCookbook/content/Ch08.html" target="_top">Книга рецептов виртуализации KVM</a> Константин Иванов, Packt Publishing, июнь 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringCeph/content/index.html" target="_top">Полное руководство Ceph</a> Ник Фиск, Packt Publishing, май 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/ContainerizationWithLXC/content/index.html" target="_top"> Контейнеризация при помощи LXC</a> Константин Иванов, Packt Publishing, март 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/CephCookbook/content/index.html" target="_top">Книга рецептов Ceph</a> Каран Сингх, Packt Publishing, февраль 2016</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/LearningCeph2ed/content/index.html" target="_top">Изучаем Ceph</a>, 2е изд., Энтони Д`Атри, Вайбхав Бхембре, Каран Сингх, Packt Publishing, октябрь 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/LearningCeph/content/index.html" target="_top">Изучаем Ceph</a> Каран Сингх, Packt Publishing, январь 2015</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringProxmox.2ed/content/index.html" target="_top">Proxmox. Полное руководство</a>. 2е изд., Васим Ахмед, Packt Publishing, май 2016</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/ProxmoxCookbook/content/index.html" target="_top">Книга рецептов Proxmox. Главы 1-6, Дополнения: Преобразование OpenVZ в LXC, Организация ограждения</a> Васим Ахмед, Packt Publishing, август 2015</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/VirtualizationComplete/content/index.html" target="_top">Полная виртуализация. Базовая коммерческая редакция</a>: Proxmox-freeNAS-Zentyal-pfSense. Ли Р. Сюрбер, февраль 2016</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html" target="_top">Полное руководство Ansible</a>. 2е изд., Джесс Китинг, май 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringZabbix.2ed/content/Ch04.html" target="_top">Zabbix. Полное руководство</a>. 2е изд., Андреа Далле Ваккье, сентябрь 2015</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html" target="_top">Полное руководство работы с сетями на Python</a>. Эрик Чоу, Июнь 2017</p>	 </li>    </ul>   </div>      <hr><div class="legal"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html">Уведомление о правах</a><hr><br><table style="border-style: none;" align="left" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-style: none; text-align:left;" valign="top" width="80%">Перевод: Copyright ©&nbsp;2017 &nbsp;<img alt="mdl.ru" src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/mdl-reg.jpg" widht="35" style="border-style: none;" height="12">.<br>All rights reserved.<br>Ссылки обязательны (Refs and links are obligatory).</td><td border="0" style="border-style: none; text-align:right;" valign="top" width="20%"><em><a href="http://www.mdl.ru/">http://www.mdl.ru</a><br> <br><a href="http://onreader.mdl.ru/sddc-mdl-portfolio.pdf">портфолио SD DC</a></em></td></tr><tr><td colspan="2" border="0"> <a href="http://www.mdl.ru/Solutions/Put.htm?Nme=CanonOffer"><img src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/MFUoffer170420-610x315.jpg" "width="610&quot;" heigh="315"></a></td></tr></tbody></table></div><div><div id="leftnavigation" style="padding-top:3px; background-color:white;">	<div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs"><ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all"><li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#treeDiv" tabindex="1"><span class="contentsTab">Содержание</span></a></li>	<li class="ui-state-default ui-corner-top"><a href="#searchDiv" tabindex="1"><span class="searchTab">Поиск</span></a></li></ul>	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom" id="treeDiv"><img src="%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/loading.gif" alt="загрузка таблицы содержания..." id="tocLoading" style="display:none;">	<div id="ulTreeDiv" style="" class="thisisthat">	<ul id="tree" class="filetree treeview"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Preface">Предисловие<sup>~</sup></a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Covers">Что охватывает эта книга</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#You_need">Что вам нужно для этой книги</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#For_Who">Для кого эта книга</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Conventions">Соглашения</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Feedback">Обратная связь с читателями</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Support">Поддержка пользователей</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#DownloadingExamples">Загрузка кодов примеров</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Errata">Опечатки</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Piracy">Незаконное тиражирование</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Questions">Вопросы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html">Глава 1. Архитектура системы и проектирование Ansible</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#01">Версии и конфигурации Ansible</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#02">Разбор учёта ресурсов и исходных данных</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0201">Статичный учёт ресурсов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0202">Переменные данные учёта ресурсов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0203">Динамическая инвентаризация</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0204">Добавления учёта ресурсов времени исполнения</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0205">Ограничения учёта ресурсов</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#03">Синтаксический разбор плейбуков</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0301">Порядок операций</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0302">Допущения относительных путей</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0303">Директивы поведения воспроизведения</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0304">Стратегии исполнения</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0305">Выбор хоста для воспроизведений и задач</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0306">Имена воспроизведений и задач</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#04">Транспортировка и исполнение модуля</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0401">Ссылка на модуль</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0402">Аргументы модуля</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0403">Транспортировка и исполнение модуля</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#040301">Производительность задачи</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#05">Типы и положение переменных</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0501">Типы переменных</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#06">Доступ к внешним данным</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#07">Старшинство переменных</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0701">Порядок старшинства</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0702">Слияние хэшей</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#08">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html">Глава 2. Защита вашей секретной информации в Ansible</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#01">Шифрование неподвижных данных</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0101">Вещи, которые может шифровать Vault</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0102">Создание новых зашифрованных файлов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#010201">Приглашение ко вводу пароля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#010202">Файл пароля</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#010203">Сценарий пароля</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0103">Шифрование существующих файлов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0104">Изменение зашифрованных файлов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0105">Чередование паролей зашифрованных файлов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0106">Расшифровка зашифрованных файлов</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0107">Исполнение плейбуков Ansible c зашифрованными файлами</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#02">Защита секретной информации при работе</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0201">Секретная информация, передаваемая на удалённые хосты</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0202">Секретная информация, протоколируемая в удалённые или локальные файлы</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#03">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html">Глава 3. Высвобождение всей мощи шаблонов Jinja2</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01">Управляющие структуры</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0101">Условные зависимости</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010101">Встроенные условные зависимости</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0102">Циклы</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010201">Фильтрация элементов цикла</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010202">Индексация цикла</a></span></li></ul></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0103">Макросы</a></span><ul style="display: none;"><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010301">Макро переменные</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030101">name</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030102">arguments</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030103">defaults</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030104">catch_kwargs</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030105">catch_varargs</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030106">caller</a></span></li></ul></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02">Манипуляция данными</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0201">Синтаксис</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0202">Полезные встроенные фильтры</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020201">default</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020202">count</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020203">random</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020204">round</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0203">Полезные создаваемые Ansible фильтры</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020301">Связанные с состоянием задачи фильтры</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020302">shuffle</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020303">Фильтры для обработки имён пути</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030301">basename</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030302">dirname</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030303">expanduser</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020304">Кодирование Base64</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020305">Поиск содержимого</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0204">Пропуск неопределённых аргументов</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0205">Объектные методы Python</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020501">Строковые методы</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020502">Методы списков</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020503">Методы int и float</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#03">Сравнение значений</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0301">Сравнения</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0302">Логика</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0303">Тесты</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#03">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html">Глава 4. Условия управления задачами</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#01">Определение отказа</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0101">Игнорирование ошибок</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0102">Определение условия ошибки</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#02">Определение изменения</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0201">Особая обработка семейства команд</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0202">Неотложное изменение</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#03">Восстановление после ошибки</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0301">rescue</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0302">always</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#04">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html">Глава 5. Компоновка повторно используемого содержания и ролей Ansible</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#01">Концепции включения задач, обработчика, переменной и плейбука</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0101">Включения задач</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010101">Передача значений переменных во включённые задачи</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010102">Передача сложных данных во включённые задачи</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010103">Условные включения задач</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010104">Помеченные включения задач</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0102">Включения задач с циклами</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0103">Включения обработчиков</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0104">Включения переменных</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010401">vars_files</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010402">Динамические включения vars_files</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010403">include_vars</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010404">extra-vars</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0105">Включения плейбуков</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#02">Роли</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0201">Структура ролей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020101">Задачи</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020102">Обработчики</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020103">Переменные</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020104">Модули и встраиваемые модули</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020105">Зависимости</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020106">Файлы и шаблоны</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020107">Собираем всё вместе</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0202">Зависимости ролей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020201">Переменные зависимости ролей</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020202">Тэги</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020203">Условные зависимости ролей</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0203">Приложения ролей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020301">Смешанные роли и задачи</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020302">Включения ролей</a></span></li></ul></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0204">Совместное использование ролей</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020401">Ansible Galaxy</a></span></li></ul></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#03">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html">Глава 6. Минимизация времени простоя и накатывания развёртываний</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#01">Обновления на месте</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#02">Расширение вовне и контрактация</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#03">Быстрые отказы</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0301">Опция any_errors_fatal</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0302">Опция max_fail_percentage</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0303">Форсирование обработки</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#04">Минимизация срывов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0401">Откладывание срывов</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0402">Одноразовое исполнение разрушающих задач</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#05">Построение в серию отдельных задач</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#06">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html">Глава 7. Поиск неисправностей Ansible</a><sup>~</sup></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#01">Ведение журналов и подробности плейбуков</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0101">Подробности</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0102">Ведение журнала</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#02">Самонаблюдение переменной</a></span><ul style="display: none;"><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0201">Подэлементы переменной</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#020101">Сопоставление подэлементов и методов объектов Python</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#03">Исполнение отладочного кода</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0301">Отладка плейбуков</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0302">Отладка локального кода</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030201">Отладка кода учёта ресурсов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030202">Отладка кода плейбуков</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030203">Отладка кода исполнителя</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030204">Отладка удалённого кода</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030205">Отладка действия встраиваемого модуля</a></span></li></ul></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#04">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html">Глава 8. Расширение Ansible</a><sup>...</sup></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#01">Разработка модулей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0101">Построение базового модуля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0102">Пользовательские модули</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0103">Простой модуль</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#010301">Документирование модуля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#010302">Предоставление фактических данных</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#010303">Режим проверки</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#01030301">Поддержка режима проверки</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#01030302">Обработка режима проверки</a></span></li></ul></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#02">Разработка встраиваемых модулей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0201">Тип подключения встраиваемого модуля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0202">Встраиваемые модули оболочки</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0203">Встраиваемые модули поиска</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0204">Встраиваемые модули переменных</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0205">Встраиваемые модули кэширования фактов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0206">Встраиваемые модули обратного вызова</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0207">Встраиваемые модули действия</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0208">Встраиваемые модули распространения</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#03">Разработка встраиваемых модулей динамического учёта резервов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0301">Просмотр хостов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0302">Просмотр переменных хостов</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0303">Простой встраиваемый модуль учёта ресурсов</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#030301">Оптимизация производительности сценария</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04">Участие в проекте Ansible</a></span><ul style="display: none;"><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0401">Представление содействия</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#040101">Репозиторий Ansible</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#040102">Исполнение тестов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04010201">Тестирование модуля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04010202">Интеграция тестов</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04010203">Стиль кодирования тестов</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#040103">Выполнение запроса пула</a></span></li></ul></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#05">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html">Глава 9. Предоставление инфраструктуры</a><sup>~</sup></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#01">Управление облачной инфраструктурой</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0101">Создание серверов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#010101">Загрузка виртуальных серверов</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#010102">Добавление учёта ресурсов в реальном времени</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0102">Использование исходного кода учёта ресурсов OpenStack</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#02">Взаимодействие с контейнерами Docker</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0201">Построение образов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0202">Построение контейнеров без Dockerfile</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0203">Учёт Docker</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#03">Предварительный просмотр контейнера Ansible</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0301">Init</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0302">Build</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0303">Run</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#04">Выводы</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ix01.html">Указатель<sup>-</sup></a></span></li></ul>	</div></div>		<div class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide" id="searchDiv">	 <div id="search"><form onsubmit="Verifie(ditaSearch_Form);return false" name="ditaSearch_Form" class="searchForm">	  <fieldset class="searchFieldSet"><legend>Поиск</legend><center><input id="textToSearch" name="textToSearch" class="searchText" type="text"> &nbsp; <input onclick="Verifie(ditaSearch_Form)" class="searchButton" value="Go" id="doSearch" type="button"></center></fieldset></form>	 </div>	<div id="searchResults"><center>		</center></div>	<p class="searchHighlight"><a href="#" onclick="toggleHighlight()">Подсветка поиска (Вкл/Выкл)</a>	</p>	</div></div></div></div>
+
+</div></div></div></body><div style="display:none" id="sp_console_event"></div></html>

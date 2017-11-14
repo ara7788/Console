@@ -1,0 +1,1528 @@
+<!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html class=" gecko win js" xmlns="http://www.w3.org/1999/xhtml" xmlns:exsl="http://exslt.org/common" xmlns:ng="http://docbook.org/docbook-ng" xmlns:fb="http://ogp.me/ns/fb#"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/font-awesome.css" rel="stylesheet">
+<title>Глава 5. Компоновка повторно используемого содержания и ролей Ansible - Полное руководство Ansible</title>
+<meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1">
+<meta name="mavenGroupId" content="www.mdl.ru">
+<meta name="MasteringAnsible2nd">
+<meta name="mavenVersionId" content="1.0.0">
+<link rel="home" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html" title="Полное руководство Ansible">
+<link rel="up" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html" title="Полное руководство Ansible">
+<link rel="prev" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html" title="Глава 4. Условия управления задачами">
+<link rel="next" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html" title="Глава 6. Минимизация времени простоя и накатывания развёртываний">
+<meta name="git-sha" content="">
+<meta name="buildTime" content="">
+<script src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/ga_002.js" async="" type="text/javascript"></script><script type="text/javascript">
+            //The id for tree cookie
+            var treeCookieId = "mastering-ansible-2nd";
+            var language = "en";
+            var w = new Object();
+            //Localization
+            txt_filesfound = 'Results';
+            txt_enter_at_least_1_char = "You must enter at least one character.";
+            txt_browser_not_supported = "Please enable JavaScript.";
+            txt_please_wait = "Please wait. Search in progress...";
+            txt_results_for = "Results for: ";
+</script>
+<style type="text/css">
+            input {
+            margin-bottom: 5px;
+            margin-top: 2px;
+            }
+
+            .folder {
+            display: block;
+            height: 22px;
+            padding-left: 20px;
+            background: transparent url(/common/jquery/treeview/images/folder.gif) 0 0px no-repeat;
+            }
+</style>
+<link rel="shortcut icon" href="http://onreader.mdl.ru/MdlLogo.gif" type="image/gif">
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/positioning.css">
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/custom.css">
+<link rel="canonical" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html">
+<!--[if IE]>
+	<link rel="stylesheet" type="text/css" href="/common/css/ie.css"/>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery-ui-1.css">
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery.css">
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery-1.js"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery-ui-1.js"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery.js"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery_002.js"><!----></script>
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery_002.css">
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/jquery_003.js">
+<!--jQuery plugin for glossary popups. --></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/htmlFileList.htm"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/htmlFileInfoList.htm"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/nwSearchFnt.js"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/en_stemmer.js">
+<!--//make this scalable to other languages as well.--></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/index-1.htm"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/index-2.htm"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/index-3.htm"><!----></script>
+<script type="text/javascript">
+	    var _gaq = _gaq || [];
+	    _gaq.push(['_setAccount', 'UA-17511903-1']);
+	    
+	    _gaq.push(['_setDomainName', '.openstack.org']);	        
+</script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/ga.js"><!----></script>
+<script language="javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/common.js"></script>
+<link rel="stylesheet" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/googlecode.css">
+<script src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/highlight.js"></script>
+</head>
+<body>
+<!----><script type="text/javascript"><!--
+hljs.initHighlightingOnLoad();
+HeaderName = 'Глава 5. Компоновка повторно используемого содержания и ролей Ansible';
+PrevRef = 'Ch04.html';
+UpRef = 'index.html';
+NextRef = 'Ch06.html';//--></script>
+<!----><script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/HeaderAndToolbar.js">
+</script><script type="text/javascript"><!--
+document.write(HeaderAndToolbar); //-->
+</script><div id="header"><div class="string"><div style="overflow: hidden; width: 100%;" id="marquee"><div style="width: 200%; margin-left: -22.0833%;"><span style="width: 50%; display: inline-block; text-align: center;"><a href="http://www.mdl.ru/Solutions/Put.htm?Nme=MdlAccelerator#RX461i">от100k USD решение с 8ю Tesla Volta V100</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="http://www.mdl.ru/Solutions/Put.htm?Nme=EveryPlacePC">23" терминал с 4core ЦПУ/4ГБ/1ТБ от 15тыс.руб.</a></span><span style="width: 50%; display: inline-block; text-align: center;"><a href="http://www.mdl.ru/Solutions/Put.htm?Nme=MdlAccelerator#RX461i">от100k USD решение с 8ю Tesla Volta V100</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="http://www.mdl.ru/Solutions/Put.htm?Nme=EveryPlacePC">23" терминал с 4core ЦПУ/4ГБ/1ТБ от 15тыс.руб.</a></span></div></div></div>	<a onclick="_gaq.push(['_trackEvent', 'Header', 'logo', 'click', 1]);" align="middle" target="_blank" href="http://www.mdl.ru/">	<img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/mdl-reg.jpg" style="position: relative; border-style: none; top: 18%;" alt="Перевод Mdl®" align="middle" height="14" width="40"></a>	<a onclick="_gaq.push(['_trackEvent', 'Header', 'logo', 'click', 1]);" target="_blank" href="https://www.packtpub.com/virtualization-and-cloud/">	<img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/PacktPub-logo.jpg" alt="Документация Virtualization and Cloud" height="44" width="109"></a>	<h1>Глава 5. Компоновка повторно используемого содержания и ролей Ansible</h1>	<div id="navheader" align="right"><!----><table class="navLinks"><tbody><tr>		<td><a id="showHideButton" onclick="showHideToc(); _gaq.push(['_trackEvent', 'Header', 'show/hide', 'click', 1]);" class="pointLeft" title="Скрыть дерево оглавления">Боковое поле</a>		</td><td><a accesskey="p" class="navLinkPrevious" onclick="_gaq.push(['_trackEvent', 'Header', 'prevLink', 'click', 1]);" tabindex="5" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html">Предыдущий</a>&nbsp;		  |       <a accesskey="u" class="navLinkUp" onclick="_gaq.push(['_trackEvent', 'Header', 'upLink', 'click', 1]);" tabindex="5" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html">Вверх</a>		  |        <a accesskey="n" class="navLinkNext" onclick="_gaq.push(['_trackEvent', 'Header', 'nextLink', 'click', 1]);" tabindex="5" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html">Следующий</a>		</td></tr></tbody></table>	</div></div><div id="toolbar" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">	<div id="toolbar-left">		<p class="breadcrumbs"><a href="http://cloudcomputing.mdl.ru/">CloudComputing:mdl.ru</a>		<a href="http://onreader.mdl.ru/KVMVirtualizationCookbook/content/Ch08.html">Книга рецептов виртуализации KVM</a>		<a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html">Полное руководство работы с сетями на Python</a>		(<a onclick="_gaq.push(['_trackEvent', 'Header', 'pdfDownload', 'click', 1]);" alt="Купите оригинал" class="pdficon" href="https://www.packtpub.com/networking-and-servers/mastering-ansible-second-edition">		<img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/pdf.png"></a>) &nbsp; 		</p>		<div id="gplusone">			<a id="AskMdl1" href="javascript:tocall()" onmouseover="this.href=mail" target="_blank" title="Вопросы? Обсудите их на mdl.ru">			<i class="icon-question"><!----></i></a>&nbsp;&nbsp;			<a id="logABugLink1" href="https://bugs.launchpad.net/openstack-manuals/+filebug?field.title=MasteringAnsible2nd&amp;field.comment=%0A%0A-----------------------------------%0ABuilt:%202017-06-29T17:43:47+00:00%0Agit%20SHA:%2013fb30b7c263d715eee84f0ca1a16df79697eb88%0AURL:%20http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html%0Asource%20File:%20file:a35-prades%0Axml:id:%20mastering-ansible-2nd" onmouseover="this.href=mail" title="Нашли ошибку? Сообщите о ней на данной странице">			<i class="icon-bug"><!----></i></a>		</div>	</div></div>
+<div style="visibility: visible;" id="content">
+ <div class="part">
+  <div xmlns="" class="titlepage"><div><div><h1 xmlns="http://www.w3.org/1999/xhtml" class="title">
+   Глава 5. Компоновка повторно используемого содержания и ролей Ansible
+  </h1></div></div></div>
+
+  <div class="toc"><p><strong>Содержание</strong></p>
+   <dl>
+     <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html">Глава 5. Компоновка повторно используемого содержания и ролей Ansible</a></span></dt>
+     <dd><dl>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#01">Концепции включения задач, обработчика, переменной и плейбука</a></span></dt>
+       <dd><dl>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0101">Включения задач</a></span></dt>
+         <dd><dl>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010101">Передача значений переменных во включённые задачи</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010102">Передача сложных данных во включённые задачи</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010103">Условные включения задач</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010104">Помеченные включения задач</a></span></dt>
+       </dl></dd>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0102">Включения задач с циклами</a></span></dt>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0103">Включения обработчиков</a></span></dt>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0104">Включения переменных</a></span></dt>
+         <dd><dl>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010401">vars_files</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010402">Динамические включения vars_files</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010403">include_vars</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010404">extra-vars</a></span></dt>
+       </dl></dd>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0105">Включения плейбуков</a></span></dt>
+       </dl></dd>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#02">Роли</a></span></dt>
+       <dd><dl>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0201">Структура ролей</a></span></dt>
+         <dd><dl>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020101">Задачи</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020102">Обработчики</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020103">Переменные</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020104">Модули и встраиваемые модули</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020105">Зависимости</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020106">Файлы и шаблоны</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020107">Собираем всё вместе</a></span></dt>
+       </dl></dd>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0202">Зависимости ролей</a></span></dt>
+         <dd><dl>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020201">Переменные зависимости ролей</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020202">Тэги</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020203">Условные зависимости ролей</a></span></dt>
+       </dl></dd>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0203">Приложения ролей</a></span></dt>
+         <dd><dl>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020301">Смешанные роли и задачи</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020302">Включения ролей</a></span></dt>
+       </dl></dd>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0204">Совместное использование ролей</a></span></dt>
+         <dd><dl>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020401">Ansible Galaxy</a></span></dt>
+         </dl></dd>
+       </dl></dd>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#03">Выводы</a></span></dt>
+     </dl></dd>
+   </dl>
+  </div>
+  <p>Для многих проектов может быть достаточно простого, одиночного плейбука Ansible. По мере того как время идёт 
+  и проекты растут, добавляются дополнительные файлы плейбуков и переменных, а файлы задач могут расщепляться. 
+  Прочие проекты внутри некоторой организации могут пожелать повторно применять некое имеющееся содержимое; 
+  либо сами проекты добавляются в имеющееся дерево каталога, либо всё желательное содержимое может копироваться 
+  во множество проектов. По мере того как растёт сложность и размер ваших вариантов применения, очень желательно 
+  нечто большее чем некая неопределённая организация полезных плейбуков, файлов задач и файлов переменных. 
+  Создание такой иерархии может быть внушающей страх и это способно пояснить почему многие применения Ansible 
+  начинаются с простых и всего лишь перерастают в некую лучшую организацию когда разбросанные файлы становятся 
+  громоздкими и трудными для сопровождения. Осуществление такой миграции может быть затруднительной и способно 
+  потребовать повторного написания значительных частей плейбуков, что может ещё больше задержать усилия 
+  реорганизации.</p>
+  <p>В данной главе мы обсудим все имеющиеся наилучшие практические навыки для смешивания, повторного применения 
+  и хорошей организации содержимого внутри Ansible. Изучаемые в данной главе уроки помогут разработчикам 
+  проектировать содержимое Ansible для хорошего роста внутри имеющегося проекта, избегая потребности в сложном 
+  повторном проектировании работы впоследствии. Ниже приводится набросок того что мы обсудим:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p>Задачи, обработчики, переменные и плейбуки, включая основные понятия</p>
+	 </li><li class="listitem">
+	 <p>Роли (структуры, значения по умолчанию, зависимости)</p>
+	 </li><li class="listitem">
+	 <p>Проектирование верхнего уровня плейбуков для применения ролей (тегов и прочих недостающих в ролях вещей)</p>
+	 </li><li class="listitem">
+	 <p>Совместное применение ролей в проектах (зависимости через репозитории подобные git, galaxy)
+	 </p>
+	 </li>
+    </ul>
+    </div>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="01"> </a>Концепции включения задач, обработчика, переменной и плейбука</h3>
+   </div></div></div>
+   <p>Самым первым шагом в понимании того как действенно организовывать некую структуру проекта Ansible является 
+   овладение понятием вложения файлов. Такое действие вложения файлов позволяет содержимому определяться в 
+   особом для некоторой темы файле, который может быть включённым (вложенным) в другие файлы один раз или более в рамках 
+   какого- то проекта. Такая функциональность включения поддерживает имеющуюся концепцию Не повторять себя самого
+   (<span class="term"><strong class="userinput">DRY</strong></span>, 
+   <span class="term"><strong class="userinput">Don't Repeat Yourself</strong></span>)
+   </p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0101"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Включения задач</span></h4>
+   </div></div></div>
+   <p>Файлы задач являются файлами <span class="term"><code>YAML</code></span>, которые определяют одну или 
+   более задач. Эти задачи не связаны напрямую в какие бы то ни было воспроизведение или плейбук; они присутствуют 
+   просто как некий список задач. На эти файлы могут ссылаться плейбуки или другие файлы задач посредством 
+   имеющегося оператора <span class="term"><code>include</code></span>. Данный оператор принимает некий путь к 
+   какому- то файлу задач и, как мы усвоили в <a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html" target="_top">Главе 1, Архитектура 
+   системы и проектирование Ansible</a>, такой путь может быть относительным для того файла, который применяет 
+   эту ссылку.</p>
+   <p>Для демонстрации того, как применять такой оператор <span class="term"><code>include</code></span> чтобы 
+   включать задачи, давайте создадим некое простое воспроизведение, которое включает некий файл задач с какими то 
+   задачами отладки внутри него. Вначале мы напишем свой файл плейбука, и мы озаглавим его 
+   <span class="term"><code>includer.yaml</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: task inclusion
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+  tasks:
+    - <span class="hljs-property">name</span>: non-included task
+      debug:
+        msg: <span class="hljs-string">"I am not included"</span>
+
+    - include: more-tasks.yaml
+ 	   </code></pre>
+   <p>Затем мы создадим в некотором каталоге, который содержит <span class="term"><code>includer.yaml</code></span>
+   файл <span class="term"><code>more-tasks.yaml</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: included task <span class="hljs-number">1</span>
+  debug:
+    msg: <span class="hljs-string">"I am the first included task"</span>
+
+  - <span class="hljs-property">name</span>: included task <span class="hljs-number">2</span>
+    debug:
+      msg: <span class="hljs-string">"I am the second included task"</span>
+ 	   </code></pre>
+   <p>Теперь мы исполним свой плейбук чтобы посмотреть на его вывод:</p>
+	<div class="figure"><a id="Fig0501">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.1</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0501.jpg" height="672" width="735"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Мы можем отчётливо видеть свои задачи из исполнения данного файла <span class="term"><code>include</code></span>. 
+   Поскольку этот оператор <span class="term"><code>include</code></span>был применён внутри данного 
+   раздела воспроизведения задач, эти включённые задачи были исполнены внутри данного воспроизведения. На самом 
+   деле если мы должны были добавить некую задачу в своё воспроизведение после данного оператора 
+   <span class="term"><code>include</code></span>, мы бы увидели, что имеющийся порядок исполнения следует 
+   так, как если бы эти задачи из данного включённого файла имелись в том месте, где был применён сам оператор
+   <span class="term"><code>include</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+tasks:
+  - <span class="hljs-property">name</span>: non-included task
+    debug:
+      msg: <span class="hljs-string">"I am not included"</span>
+
+    - include: more-tasks.yaml
+
+    - <span class="hljs-property">name</span>: <span class="hljs-keyword">after</span>-included tasks
+      debug:
+        msg: <span class="hljs-string">"I run last"</span>
+ 	   </code></pre>
+   <p>Если мы исполним свой видоизменённый плейбук, мы увидим тот порядок задач, который мы ожидаем:</p>
+	<div class="figure"><a id="Fig0502">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.2</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0502.jpg" height="796" width="731"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Разбивая такие задачи на их собственные файлы мы можем включать их множество раз или во множество 
+   плейбуков. Если нам когда- то придётся изменить одну из этих задач, нам только нужно изменить некий 
+   отдельный файл вне зависимости от того из какого числа мест имеются ссылки на этот файл.</p>
+
+   <a id="010101"> </a>
+   <p class="title"><strong>Передача значений переменных во включённые задачи</strong></p>
+   <p>Порой мы желаем разделить некий набор задач, но иметь эти задачи действующими слегка отличным образом в 
+   зависимости от переменных данных. Наш оператор <span class="term"><code>include</code></span> позволяет 
+   нам определять и переписывать переменные данные во время их включения. Такая сфера данного определения 
+   имеется только внутри определяемых файлов включения задач (и всех прочих файлов, которые могут включаться в 
+   них). Чтобы проиллюстрировать такую возможность, давайте создадим некий новый сценарий при котором нам 
+   нужно выполнить touch {<span class="emphasis"><em>Прим. пер.: изменить время последнего изменения или создать 
+   файл</em></span>} для пары файлов, причём каждый из них в своём собственном пути каталога. Вместо написания двух 
+   задач файлов для каждого файла (один для создания такого каталога и другой для контакта с самим файлом), мы 
+   создадим некий файл задачи с обеими задачами который будет применять имена переменных в теле задач. Затем мы 
+   включим этот файл задачи дважды, причём каждый раз передадим в него разные данные. Вначале мы проделаем это 
+   с имеющимся файлом задач <span class="term"><code>files.yaml</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: create leading path
+  <span class="hljs-type">file</span>:
+    path: <span class="hljs-string">"{{ path }}"</span>
+    state: directory
+
+- <span class="hljs-property">name</span>: touch <span class="hljs-keyword">the</span> <span class="hljs-type">file</span>
+  <span class="hljs-type">file</span>:
+    path: <span class="hljs-string">"{{ path + '/' + file }}"</span>
+    state: touch
+ 	   </code></pre>
+   <p>Далее мы создадим необходимое воспроизведение чтобы включить тот файл задач, который мы только что создали, 
+   совместно с этим передав переменные данные для переменных определённого пути и файла:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: touch files
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+  tasks:
+    - include: files.yaml         vars:
+        path: /tmp/foo
+        <span class="hljs-type">file</span>: herp
+
+    - include: files.yaml         vars:
+        path: /tmp/foo
+        <span class="hljs-type">file</span>: derp
+ 	   </code></pre>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Предоставляемое при включении файлов определения переменных может быть либо в виде встроенного формата 
+	   <span class="term"><code>key=value</code></span>, либо в проиллюстрированном выше формате 
+	   <span class="term"><code>key:value</code></span> внутри некоторого хэша 
+	   <span class="term"><code>vars</code></span>.</p></td></tr></tbody></table>
+     </div>
+   <p>Когда мы выполним этот плейбук, мы увидим выполненными четыре задачи, по две задачи из 
+   <span class="term"><code>files.yaml</code></span> дважды. При этом наш второй набор должен иметь результатом только 
+   одно изменение, так как его путь один и тот же в обоих наборах:</p>
+	<div class="figure"><a id="Fig0503">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.3</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0503.jpg" height="816" width="732"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="010102"> </a>
+   <p class="title"><strong>Передача сложных данных во включённые задачи</strong></p>
+   <p>Когда желательна передача сложных данных во включаемые задачи, например, некий список или хэш, может применяться 
+   альтернативный синтаксис при включении такого файла. Давайте повторим свой последний вариант, только на 
+   этот раз вместо включения своего файла задачи дважды мы включим его один раз и передадим некий хэш необходимых 
+   путей и файлов. Для начала мы поработаем над своим фалом задач:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: create leading path
+  <span class="hljs-type">file</span>:
+    path: <span class="hljs-string">"{{ item.value.path }}"</span>
+    state: directory
+  with_dict: <span class="hljs-string">"{{ files }}"</span>
+
+- <span class="hljs-property">name</span>: touch <span class="hljs-keyword">the</span> <span class="hljs-type">file</span>
+  <span class="hljs-type">file</span>:
+    path: <span class="hljs-string">"{{ item.value.path + '/' + item.key }}"</span>
+    state: touch
+  with_dict: <span class="hljs-string">"{{ files }}"</span>
+ 	   </code></pre>
+   <p>Теперь мы видоизменим свой плейбук чтобы предоставлять необходимый хэш 
+   <span class="term"><code>files</code></span> в некотором отдельном выражении
+   <span class="term"><code>include</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: touch files
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+  tasks:
+    - include: files.yaml
+      vars:
+        files:
+          herp:
+            path: /tmp/foo
+          derp:
+            path: /tmp/foo
+ 	   </code></pre>
+   <p>Если мы исполним эти новый плейбук и файл задач, мы должны видеть аналогичный, но слегка отличающийся вывод, 
+   причём его конечный результат состоит в определённом каталоге <span class="term"><code>/tmp/foo</code></span>,
+   уже имеющемся на своём месте и необходимыми двумя файлами <span class="term"><code>herp</code></span> и
+   <span class="term"><code>derp</code></span> для выполнения с ними команды touch:</p>
+	<div class="figure"><a id="Fig0504">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.4</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0504.jpg" height="756" width="734"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Такое применение передачи в виде некоторого хэша данных позволяет для вашего растущего набора сущностей 
+   создание выражений в вашем главном плейбуке без роста общего числа выражений
+   <span class="term"><code>include</code></span>.</p>
+
+   <a id="010103"> </a>
+   <p class="title"><strong>Условные включения задач</strong></p>
+   <p>Аналогично передаче данных во включаемые файлы, в них также могут передаваться и условные зависимости. 
+   Это осуществляется присоединением некоторого выражения <span class="term"><code>when</code></span> в 
+   ваш оператор включения. Такое условие не должно вызывать Ansible выполнять конкретную проверку для определения 
+   того следует или нет включать данный файл; место этого оно указывает Ansible добавить такую устловную 
+   зависимость в каждую без исключения задачу внутри данного включаемого файла (а также во все прочие файлы, 
+   которые может включать обсуждаемый файл).</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Не существует возможности условного включения файла. Файлы всегда будут включены; однако, некоторая 
+	   задача может применяться к каждой задаче внутри в соотвествии с условной зависимостью.</p></td></tr></tbody></table>
+     </div>
+   <p>Давайте продемонстрируем это изменив свой первый пример, который включает простые выражения отладки. 
+   Мы добавим некоторую условную зависимость и передадим её совместно с некоторыми данными для применения такой 
+   зависимости. Для начала давайте изменим свой плейбук:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: task inclusion
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+  tasks:
+    - include: more-tasks.yaml
+      when: <span class="hljs-property">item</span> | bool       vars:
+        a_list:
+          - <span class="hljs-constant">true</span>
+          - <span class="hljs-constant">false</span>
+ 	   </code></pre>
+   <p>Затем модифицируем <span class="term"><code> more-tasks.yaml</code></span> для цикла по имеющейся 
+   переменной <span class="term"><code>a_list</code></span> внутри каждой задачи:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: included task <span class="hljs-number">1</span>
+  debug:
+    msg: <span class="hljs-string">"I am the first included task"</span>
+  with_items: <span class="hljs-string">"{{ a_list }}"</span>
+
+- <span class="hljs-property">name</span>: include task <span class="hljs-number">2</span>
+  debug:
+    msg: <span class="hljs-string">"I am the second included task"</span>
+  with_items: <span class="hljs-string">"{{ a_list }}"</span>
+ 	   </code></pre>
+   <p>Теперь давайте выполним этот плейбук и рассмотрим свой новый вывод:</p>
+	<div class="figure"><a id="Fig0505">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.5</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0505.jpg" height="678" width="731"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Мы можем видеть некую пропускаемую итераций в каждой из задач, а именно, ту итерацию, в которой данный 
+   элемент вычисляет Булево значение false. Важно помнить, что все хосты будут находить значение всех включённых 
+   задач. Не имеется никакого способа повлиять на то, чтобы Ansible не включил некий файл для какого- то 
+   подмножества хостов. Самое большое, для каждой из задач внутри некоторой иерархии включения может быть 
+   применена некая условная зависимость с тем, чтобы эти включённые задачи могли бы быть пропущены. Единственный 
+   метод для включения задач на основе фактов хостов состоит в применении подключаемого метода действия 
+   <span class="term"><code>group_by</code></span> для создания динамических групп на основании фактов хостов. 
+   Затем вы можете предоставлять таким группам их собственные воспроизведения для включения особых задач. 
+   Данное упражнение оставляем самому читателю.</p>
+
+   <a id="010104"> </a>
+   <p class="title"><strong>Помеченные включения задач</strong></p>
+   <p>При включении файлов задач имеется возможность пометить все эти задачи внутри данного файла. Для определения 
+   одного или более тегов используется ключ <span class="term"><code>tags</code></span> для его применения ко всем 
+   имеющимся задачам внутри данной включаемой иерархии. Такая возможность пометки на момент включения может 
+   предохранять сам данный файл задач лишённым статичности относительно того как эти задачи должны помечаться и 
+   может позволить включение некоторого набора задач множество раз, но при этом с различными передаваемыми данными 
+   и тегами.</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Теги могут быть определены в определённом выражении <span class="term"><code>include</code></span> или 
+	   в самом воспроизведении для охвата всех включений (и прочих задач) в некотором заданном воспроизведении.</p></td></tr></tbody></table>
+     </div>
+   <p>Давайте создадим некую простую демонстрацию чтобы проиллюстрировать как могут применяться теги. Мы начнём 
+   с некоторого плейбука, который включает некий файл задач дважды, причём всякий раз с неким отличным именем тега и 
+   другими переменными данными:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: task inclusion
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+  tasks:
+    - include: more-tasks.yaml         vars:
+        data: <span class="hljs-keyword">first</span>
+      tags: <span class="hljs-keyword">first</span>
+
+    - include: more-tasks.yaml         vars:
+        data: <span class="hljs-keyword">second</span>
+      tags: <span class="hljs-keyword">second</span>
+ 	   </code></pre>
+   <p>Теперь мы обновим <span class="term"><code>more-tasks.yaml</code></span> для выполнения чего- нибудь с 
+   предоставляемыми данными:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: included task
+  debug:
+    msg: <span class="hljs-string">"My data is {{ data }}"</span>
+ 	   </code></pre>
+   <p>Если мы выполним этот плейбук без выбора тегов, мы увидим эту задачу исполненной дважды:</p>
+	<div class="figure"><a id="Fig0506">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.6</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0506.jpg" height="574" width="734"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Теперь, если мы выберем какой тег исполнять, допустим, второй через видоизменение наших аргументов 
+   <span class="term"><code>ansible-playbook</code></span>, мы должны увидеть что только будет исполнена только это 
+   вхождение нашей включённой задачи:</p>
+	<div class="figure"><a id="Fig0507">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.7</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0507.jpg" height="470" width="734"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Наш пример использует аргумент командной строки <span class="term"><code>--tags</code></span> для указания 
+   того какую помеченную задачу исполнить. Некий другой аргумент, <span class="term"><code>--skip-tags</code></span>, 
+   позволяет выразить обратное действие, а именно: какие помеченные задачи не исполнять.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0102"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Включения задач с циклами</span></h4>
+   </div></div></div>
+   <p>Включения задач могут объединяться также с циклами. При добавлении некоторого цикла 
+   <span class="term"><code>with_</code></span> в какое- то включение задач, все задачи внутри этого файла будут 
+   исполнены с той переменной <span class="term"><code>item</code></span>, которая придерживает место для текущего 
+   значения данного цикла. Весь включаемый файл целиком будет повторно исполняться пока такой цикл не обойдёт 
+   все элементы. Давайте обновим свой пример воспроизведения чтобы продемонстрировать это:</p>
+	   <pre class="screen"><code class="hljs applescript">
+- <span class="hljs-property">name</span>: task inclusion
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+  tasks:
+    - include: more-tasks.yaml
+      with_items:
+        - one
+        - two
+ 	   </code></pre>
+   <p>Нам также нужно обновить свой файл <span class="term"><code>more-tasks.yaml</code></span> чтобы 
+   применить свой <span class="term"><code>item</code></span> цикла:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: included task <span class="hljs-number">1</span>
+  debug:
+    msg: <span class="hljs-string">"I am the first included task with {{ item }}"</span>
+- <span class="hljs-property">name</span>: included task <span class="hljs-number">2</span>
+  debug:
+    msg: <span class="hljs-string">"I am the second included task with {{ item }}"</span>
+ 	   </code></pre>
+   <p>После выполнения мы можем сказать, что задачи 1 и 2 исполнены по одному разу для каждого 
+   <span class="term"><code>item</code></span> в данном цикле:</p>
+	<div class="figure"><a id="Fig0508">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.8</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0508.jpg" height="879" width="733"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Цикличность при включении является неким мощным понятием, однако оно привносит одну сложность. Что если внутри 
+   данного включаемого файла имелись задачи, которые имеют свои собственные циклы? Будет иметься некое противоречие 
+   определяемой переменной <span class="term"><code>item</code></span>, приводящее к неожиданным результатам. По 
+   этой причине в версии Ansible 2.1 было добавлено свойство <span class="term"><code>loop_control</code></span>. 
+   Помимо прочих вещей, эта функциональность предоставляет некий метод именования той переменной, которая применяется 
+   в конкретном цикле вместо определённой по умолчанию переменной <span class="term"><code>item</code></span>. 
+   Применяя такую функциональность, мы можем различать те <span class="term"><code>item</code></span>, которые 
+   поступают извне данного включения от всех <span class="term"><code>item</code></span>, используемых внутри 
+   данного включения. Чтобы продемонстрировать это мы добавим некое управление <span class="term"><code>loop_var</code></span>
+   в своё внешнее включение:</p>
+	   <pre class="screen"><code class="hljs markdown">
+<span class="hljs-bullet">- </span>include: more-tasks.yaml
+  with_items:
+<span class="hljs-code">    - one</span>
+<span class="hljs-code">    - two</span>
+  loop_control:
+<span class="hljs-code">    loop_var: include_item</span>
+ 	   </code></pre>
+   <p>Внутри <span class="term"><code>more-tasks.yaml</code></span> мы будем иметь некую задачу со своим собственным 
+   циклом, применяющим имеющийся <span class="term"><code>include_item</code></span> и свою локальную переменную 
+   <span class="term"><code>item</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: included task <span class="hljs-number">1</span>
+  debug:
+    msg: <span class="hljs-string">"I combine {{ item }} and {{ include_item }}"</span>
+  with_items:
+    - a
+    - b
+ 	   </code></pre>
+   <p>После исполнения мы видим, что задача <span class="term"><code>1</code></span> исполнилась дважды для 
+   каждого включённого цикла и что применены две обе имеющиеся переменный цикла:</p>
+	<div class="figure"><a id="Fig0509">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.9</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0509.jpg" height="838" width="735"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Кроме того также имеется другое управление циклом, такое как <span class="term"><code>label</code></span>, 
+   которое определит что показывается на экране в выводе данной задачи для данного значения 
+   <span class="term"><code>item</code></span> (что полезно для предотвращения приведения в беспорядок вашего 
+   экрана большими структурами данных) и <span class="term"><code>pause</code></span>, предоставляя возможность 
+   <span class="term"><code>pause</code></span> (простановки) на некоторое определённое число секунд между каждым 
+   циклом.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0103"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Включения обработчиков</span></h4>
+   </div></div></div>
+   <p>Обработчики в сущности являются задачами. Они являются неким набором потенциальных задач, включаемых посредством 
+   уведомлений от прочих задач. Раз они являются таковыми, задачи обработчика могут включаться в точности как 
+   это можно делать с обычными задачами. Оператор <span class="term"><code>include</code></span> допустим внутри 
+   определённого блока <span class="term"><code>handlers</code></span>.</p>
+   <p>В отличии от включений задач переменные данные не могут передаваться при включении задач обработчика. 
+   Однако, имеется возможность подключать некую условную зависимость в какому- то включению обработчика чтобы 
+   применять такое условие для всех обработчиков внутри данного файла.</p>
+   <p>Давайте создадим некий пример для демонстрации. Вначале мы создадим некий плейбук, имеющий какую- то 
+   задачу, которая всегда будет изменяться и которая включает некий файл задач обработчика и присоединяет 
+   отдельную условную зависимость к этому включению:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: touch files
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+tasks:
+  - <span class="hljs-property">name</span>: a task
+    debug:
+      msg: <span class="hljs-string">"I am a changing task"</span>
+    changed_when: <span class="hljs-constant">true</span>
+    notify: a handler
+
+handlers:
+  - include: handlers.yaml
+    when: foo | default('<span class="hljs-constant">true</span>') | bool
+ 	   </code></pre>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>При оценивании некоторой переменной, которая может быть определена за пределами какого- то плейбука, 
+	   лучше применять имеющийся фильтр <span class="term"><code>bool</code></span> чтобы гарантировать что 
+	   строки будут преобразованы надлежащим образом в свои Булевы значения.</p></td></tr></tbody></table>
+     </div>
+   <p>Затем мы создадим <span class="term"><code>handlers.yaml</code></span> для определения своих задач 
+   обработчика:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: a handler
+  debug:
+    msg: <span class="hljs-string">"handling a thing"</span>
+ 	   </code></pre>
+   <p>Если исполнить этот плейбук без предоставления каких- либо последующих данных, мы должны обнаружить 
+   включение своего обработчика:</p>
+	<div class="figure"><a id="Fig0510">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.10</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0510.jpg" height="552" width="733"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Теперь давайте выполним этот плейбук вновь; на это раз мы определим <span class="term"><code>foo</code></span>
+   значением false и как некую <span class="term"><code>extra-var</code></span> для своих аргументов исполения
+   <span class="term"><code>ansible-playbook</code></span>:</p>
+	<div class="figure"><a id="Fig0511">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.11</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0511.jpg" height="530" width="731"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>На этот раз, поскольку <span class="term"><code>foo</code></span> оценивается как 
+   <span class="term"><code>false</code></span>, наш включаемый обработчик пропускается.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0104"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Включения переменных</span></h4>
+   </div></div></div>
+   <p>Переменные также могут разделяться на загружаемые файлы. Это позволяет совместно применять переменные 
+   во множестве воспроизведений или плейбуков, либо включать переменные данные, которые располагаются за 
+   пределами каталога данного проекта (например, секретные данные). Файлы переменных являются простыми файлами 
+   в формате YAML, предоставляющими ключи и значения. В отличии от файлов включения задач, включения переменных 
+   не могут включать и далее дополнительные файлы.</p>
+   <p>Переменные могут включаться тремя различными способами; через <span class="term"><code>vars_files</code></span>, 
+   через <span class="term"><code>include_vars</code></span> или посредством
+   <span class="term"><code>--extra-vars</code></span> (<span class="term"><code>-e</code></span>).</p>
+
+   <a id="010401"> </a>
+   <p class="title"><strong>vars_files</strong></p>
+   <p>Ключ <span class="term"><code>vars_files</code></span> является директивой воспроизведения. Он определяет 
+   некий перечень файлов для считывания с целью загрузки переменных данных. Эти файлы считываются и синтаксически 
+   разбираются в тот момент, когда выполняется синтаксический анализ самого рассматриваемого плейбука. В точности 
+   как и для включаемых задач и обработчиков, имеющийся путь является относительным в рассматриваемому файлу для 
+   искомого файла ссылки.</p>
+   <p>Вот некий пример воспроизведения, которое загружает переменные из некоторого файла:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: vars
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+  vars_files:
+    - variables.yaml
+
+  tasks:
+    - <span class="hljs-property">name</span>: a task
+      debug:
+        msg: <span class="hljs-string">"I am a {{ name }}"</span>
+ 	   </code></pre>
+   <p>Теперь нам нужно создать <span class="term"><code>variables.yaml</code></span> в том же самом каталоге что  
+   и наш плейбук:</p>
+	   <pre class="screen"><code class="hljs http">
+<span class="hljs-attribute">name</span>: <span class="hljs-string">derp</span>
+ 	   </code></pre>
+   <p>Исполнение нашего плейбука отобразит, что значение этой именованной переменной надлежащим образом 
+   получено из исходного кода в нашем файле <span class="term"><code>variables.yaml</code></span>:</p>
+	<div class="figure"><a id="Fig0512">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.12</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0512.jpg" height="409" width="733"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+
+   <a id="010402"> </a>
+   <p class="title"><strong>Динамические включения vars_files</strong></p>
+   <p>При определённых обстоятельствах может быть желательным параметризировать имеющиеся файлы переменных, 
+   подлежащие загрузке. Это возможно сделать благодаря применению переменной в качестве части самого названия 
+   файла; однако эта переменная должна иметь некоторое значение, определённое на момент синтаксического анализа 
+   рассматриваемого плейбука, в точности как и при применении переменных в названиях задач. Давайте обновим свой 
+   пример воспроизведения для загрузки некоего переменного файла на основании тех данных, которые предоставляются 
+   на момент исполнения:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: vars
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+  vars_files:
+    - <span class="hljs-string">"{{ varfile }}"</span>
+
+  tasks:
+    - <span class="hljs-property">name</span>: a task
+      debug:
+        msg: <span class="hljs-string">"I am a {{ name }}"</span>
+ 	   </code></pre>
+   <p>Теперь, когда мы выполним этот плейбук, мы предоставим определённое значение для 
+   <span class="term"><code>varfile</code></span> с помощью аргумента <span class="term"><code>-e</code></span>:</p>
+	<div class="figure"><a id="Fig0513">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.13</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0513.jpg" height="428" width="730"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Дополнительно к необходимости определения самого значения переменной на момент исполнения, сам подлежащий 
+   загрузке файл также должен иметься во время исполнения. Даже если некая ссылка на какой- то файл является 
+   четвёртым воспроизведением вниз по отдельному плейбуку и такой файл сам по себе создаётся в имеющемся первом 
+   воспроизведении, если такой файл не существует на момент исполнения, 
+   <span class="term"><code>ansible-playbook</code></span> выдаст сообщение об ошибке.</p>
+
+   <a id="010403"> </a>
+   <p class="title"><strong>include_vars</strong></p>
+   <p>Нашим вторым методом для включения переменных данных из файлов является имеющийся модуль 
+   <span class="term"><code>include_vars</code></span>. Этот модуль загрузит переменные в виде некого действия 
+   задачи и будет выполнен на каждом хосте. В отличии от большинства модулей, этот модуль исполняется локально на 
+   самом хосте Ansible; вследствие этого все пути всё ещё являются относительными к самому файлу исполняемого 
+   воспроизведения. Так как все загрузки переменных выполняются как некая задача, оценка переменных в данном 
+   имени файла происходит при исполнении такой задачи. Переменные данные  в этом <span class="term"><code>file name</code></span> 
+   могут быть особенными для хоста и определяться к некоторой предыдущей задаче. Кроме того, этот файл сам по себе 
+   не должен существовать на момент исполнения; он может быть также создан какой- то предыдущей задачей. Это 
+   очень мощная и гибкая концепция, которая может влечь за собой очень динамичные плейбуки при надлежащем 
+   применении.</p>
+   <p>Прежде чем мы двинемся далее, давайте продемонстрируем некое простое применение 
+   <span class="term"><code>include_vars</code></span> изменив наше имеющееся воспроизведение чтобы загрузить 
+   определённый файл переменных в качестве задачи:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: vars
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+  tasks:
+    - <span class="hljs-property">name</span>: load variables
+      include_vars: <span class="hljs-string">"{{ varfile }}"</span>
+
+    - <span class="hljs-property">name</span>: a task
+      debug:
+        msg: <span class="hljs-string">"I am a {{ name }}"</span>
+ 	   </code></pre>
+   <p>Иполнение этого плейбука оста1тся тем же самым и наш вывод только слегка отличается от предыдущих итераций:</p>
+	<div class="figure"><a id="Fig0514">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.14</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0514.jpg" height="509" width="732"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>В точности как и для остальных задач, для загрузки более одного файла в отдельной задаче могут применяться 
+   цикличность. Это в особенности действенно при использовании специального цикла 
+   <span class="term"><code>with_first_found</code></span> для итераций по некоторому списку всё более общих имён 
+   файлов пока не будет загружен искомый файл. Давайте продемонстрируем это изменив своё воспроизведение для 
+   применения собранных фактов хоста чтобы предпринять попытку и загрузить некий файл переменных, специфичный для 
+   определённого дистрибутива, особенного для конкретного семейства дистрибутива или, в конце концов, некоторого 
+   файла по умолчанию:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: vars
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">true</span>
+
+  tasks:
+    - <span class="hljs-property">name</span>: load variables
+      include_vars: <span class="hljs-string">"{{ item }}"</span>
+      with_first_found:
+        - <span class="hljs-string">"{{ ansible_distribution }}.yaml"</span>
+        - <span class="hljs-string">"{{ ansible_os_family }}.yaml"</span>
+        - variables.yaml
+
+  - <span class="hljs-property">name</span>: a task
+    debug:
+      msg: <span class="hljs-string">"I am a {{ name }}"</span>
+ 	   </code></pre>
+   <p>Исполнение должно выглядеть очень похоже на предыдущие прогоны, только на этот раз мы обнаружим созданную 
+   фактами задачу и мы не передаём совместно никакие дополнительные данные при данном исполнении:</p>
+	<div class="figure"><a id="Fig0515">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.15</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0515.jpg" height="613" width="733"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Из данного вывода мы также можем видеть какой файл был определён для загрузки. В данном случае был загружен 
+   <span class="term"><code>variables.yaml</code></span>, поскольку два прочих файла не существуют. Такая 
+   практика общеупотребима для загрузки переменных, которые являются особенными для операционной системы данного 
+   хоста в запросе. Переменные для различных операционных систем могут быть записаны в соответствующим образом 
+   именованных файлах. Применяя определённую переменную <span class="term"><code>ansible-distribution</code></span>, 
+   которая заполняется полученными фактическими данными, файлы переменных, которые используют значения 
+   <span class="term"><code>ansible-distribution</code></span> как часть своего имени могут загружаться при помощи 
+   аргумента <span class="term"><code>with_first_found</code></span>. В некотором файле может быть предоставлен 
+   какой- то набор переменных по умолчанию, который не применяет никаких переменных данных в качестве защиты от 
+   неисправностей.</p>
+
+   <a id="010404"> </a>
+   <p class="title"><strong>extra-vars</strong></p>
+   <p>Самый последний метод загрузки переменных данных из некоторого файла состоит в ссылке на некий путь файла при
+   помощи аргумента <span class="term"><code>--extra-vars</code></span> (или <span class="term"><code>-e</code></span>) 
+   для <span class="term"><code>ansible-playbook</code></span>. Обычно этот аргумент ожидается в виде некоторого набора 
+   данных <span class="term"><code>key=value</code></span>; однако, если представляется некий путь файла и он имеет 
+   префикс с символом <span class="term"><code>@</code></span>, Ansible считает весь файл целиком для загруки 
+   переменных данных. Давайте видоизменим один из своих более ранних примеров в котором мы применяли 
+   <span class="term"><code>-e</code></span> и вместо определения некой переменной прямо в командной строке мы 
+   включим определённый файл переменных который уже написан нами:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: vars
+  hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+  tasks:
+    - <span class="hljs-property">name</span>: a task
+      debug:
+        msg: <span class="hljs-string">"I am a {{ name }}"</span>
+ 	   </code></pre>
+   <p>Когда мы предоставим некий путь после имеющегося символа <span class="term"><code>@</code></span>, такой 
+   путь является относительным для нашего текущего рабочего каталога, причём вне зависимости от того где 
+   располагается сам этот плейбук. Давайте исполним наш плейбук и предоставим некий путь к 
+   <span class="term"><code>variables.yaml</code></span>:</p>
+	<div class="figure"><a id="Fig0516">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.16</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0516.jpg" height="429" width="733"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>При включении некоторого файла переменных с определённым аргументом 
+	   <span class="term"><code>--extra-vars</code></span>, этот файл должен существовать на момент исполнения 
+	   <span class="term"><code>ansible-playbook</code></span>.</p></td></tr></tbody></table>
+     </div>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0105"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Включения плейбуков</span></h4>
+   </div></div></div>
+   <p>Файлы плейбука могут включать прочие файлы плейбуков целиком. Такая конструкция может быть полезной для 
+   связывания воедино нескольких независимых плейбуков в какой- то больший, более выразительный плейбук. Включение 
+   плейбука слегка более примитивное чем включение задач. Вы не можете выполнять подстановку переменных при 
+   включении некоторого плейбука, вы не можете применять условные зависимости и вы не можете применять теги ни 
+   в каоком виде. Такие подлежащие включению файлы плейбуков также должны существовать на момент исполнения.</p>
+  </div>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="02"> </a>Роли</h3>
+   </div></div></div>
+   <p>Разобравшись с функционированием имеющихся включений переменных, задач, обработчиков и плейбуков мы можем 
+   переместиться к более продвинутой теме <span class="term"><strong class="userinput">Ролей</strong></span>. 
+   Роля выходят за рамки основной структуры нексольких плейбуков небольшого числа разделённых файлов для ссылки. 
+   Роли предоставляют некую структуру для полностью независимых или взаимно зависимых коллекций переменных, задач, 
+   файлов, шаблонов и модулейю Каждая роль обычно ограничена определённой темой или желаемым конечным результатом, 
+   причём все необходимые шаги для достижения этого результата либо внутри самой этой роли, либо в иных ролях, 
+   перечисленных как зависимости. Сами по себе роли не являются плейбуками. Не имеется никакого способа напрямую 
+   исполнять какую- то роль. Роли не имеют установок для какого хоста эта роль будет применена. Тем клеем, который 
+   связывает все хосты из вашего учёта ресурсов с ролями, которые должны применяться к этим хостам, являются 
+   плейбуки верхнего уровня.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0201"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Структура ролей</span></h4>
+   </div></div></div>
+   <p>Роли имеют структурную схему на уровне своей файловой системы. Такая структура существует для предоставления 
+   автоматизации по включению задач, обработчиков, переменных, модулей и зависимостей ролей. Данная структура 
+   также позволяет легко ссылаться на файлы и шаблоны из любого места в рамках такой роли.</p>
+   <p>Все роли располагаются в некотором подкаталоге архива какого- то плейбука, в своём каталоге 
+   <span class="term"><code>roles/</code></span>. Конечно, это настраивается посредством имеющегося общего 
+   ключа настройки <span class="term"><code>roles_path</code></span>, однако давайте останемся с этим определением 
+   по умолчанию. Каждая роль сама по себе некое дерево каталога. Именем роли является само название каталога внутри 
+   <span class="term"><code>roles/</code></span>. Каждая роль имеет некое число подкаталогов со специальным 
+   значением, которое работает когад некая роль применяется к какому- то набору хостов.</p>
+   <p>Некая роль может содержать все эти элементы или всего лишь один из них. Опущенные элементы просто игнорируются. 
+   Некоторые роли существуют просто чтобы предоставить общие обработчики по некоторому проекту. Прочие роли 
+   существуют как некая отдельная точка зависимости, которая в свою очередь зависит от ряда прочих ролей.</p>
+
+   <a id="020101"> </a>
+   <p class="title"><strong>Задачи</strong></p>
+   <p>Сам файл задачи является основной плотью некоторой роли. Если существует 
+   <span class="term"><code>roles/&lt;role_name&gt;/tasks/main.yaml</code></span>, 
+   все имеющиеся там задачи и все прочие файлы, которые они включают будут встроены в данное воспроизведение и 
+   исполнятся.</p>
+
+   <a id="020102"> </a>
+   <p class="title"><strong>Обработчики</strong></p>
+   <p>Аналогично задачам, обработчики автоматически загружаются из 
+   <span class="term"><code>roles/&lt;role_name&gt;/handlers/main.yaml</code></span>, 
+   если этот файл существует. На эти обработчики могут ссылаться любые задачи внутри данной роли, или любые задачи 
+   внутри любой другой роли, которая перечисляется этой ролью в качестве зависимости.</p>
+
+   <a id="020103"> </a>
+   <p class="title"><strong>Переменные</strong></p>
+   <p>Существует два вида переменных, которые могут быть определены в некоторой роли. Имеются переменные роли, 
+   загружаемые из <span class="term"><code>roles/&lt;role_name&gt;/vars/main.yaml</code></span>, а также 
+   существуют значения по умолчанию роли, которые загружаются из 
+   <span class="term"><code>roles/&lt;role_name&gt;/defaults/main.yaml</code></span>. 
+   Основная разница между <span class="term"><code>vars</code></span> и <span class="term"><code>defaults</code></span>
+   имеет отношение к порядку приоритета. Дл подробного описания имеющегося порядка отсылаем вас к 
+   <a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html" target="_top">Главе 1, Архитектура системы и проектирование Ansible</a>. 
+   Определения по умолчанию роли являются самым нижним порядком переменных. Буквально, любое прочее определение 
+   некоторой переменной будет более предпочтительно в сравнении с с некоторым значением по умолчанию роли. Значения 
+   по умолчанию роли можно представлять как держатель места для реальных данных, некоторой справкой какие переменные 
+   могут заинтересовать какого- то разработчика при определении особых для площадки значений. Переменные роли, с другой 
+   стороны, имеют некий высший порядок приоритета. Пременные роли могут переназначаться, однако обычно они применяются 
+   когда на один и тот же набор данных ссылаются более одного раза внутри какой- то роли. Если этот набор данных должен 
+   быть переопределён некими значениями локальной площадки, тогда такая переменная должна быть перечислена в имеющихся 
+   значениях по умолчанию этой роли вместо того чтобы быть представленной в переменных этой роли.</p>
+
+   <a id="020104"> </a>
+   <p class="title"><strong>Модули и встраиваемые модули</strong></p>
+   <p>Некая роль может включать персональные модули также как и встраиваемые модули. Хотя сам проект Ansible 
+   достаточно хорош в отношении просмотра и принятия представленных модулей, имеются определённые случаи при 
+   которых может быть нежелательным или даже незаконным представление некоторого персонального модуля вверх 
+   проекта. В таких случаях предоставление определённого модуля с конкретной ролью может быть наилучшим вариантом. 
+   Модули могут загружаться из <span class="term"><code>roles/&lt;role_name&gt;/library/</code></span> и 
+   могут применяться любой задачей в данной роли или любой последующей роли. Представленные в таком пути модули 
+   перепишут все прочие копии того же самого названия модуля в любом прочем месте в данной файловой системе, 
+   что может быть неким способом распространять дополнительную функциональность в некий модуль ядра прежде чем эта 
+   функциональность будет принята в восходящем потоке проекта и выпущена с некоторой новой версией Ansible.</p>
+   <p>Аналогично, встраиваемые модули часто применяются для настройки поведения Ansible неким способом, который 
+   имеет смысл для какой- то особенной среды и не подходит для сотоварищей в восходящем потоке проекта. Встраиваемые 
+   модули могут распространяться как часть некоторой роли, что может быть проще чем установка в явном виде 
+   встраиваемых модулей на каждом хосте, который будет действовать как некий управляющий хост Ansible. Вcтраиваемые 
+   модули автоматически загружаются если они обнаружены внутри какой- то роли в одном из следующих подкаталогов:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p><span class="term"><code>action_plugins</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>lookup_plugins</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>callback_plugins</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>connection_plugins</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>filter_plugins</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>strategy_plugins</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>cache_plugins</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>test_plugins</code></span></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>shell_plugins</code></span></p>
+	 </li>
+    </ul>
+    </div>
+
+   <a id="020105"> </a>
+   <p class="title"><strong>Зависимости</strong></p>
+   <p>Роли могут выражать некую зависимость от другой роли. Общей практикой является установка всех ролей звисящими 
+   от некоторой общей роли, такой как задачи, обработчики, модули и тому подобноею Эти роли могут зависеть только 
+   от того, что должно быть определено только один раз. Когда Ansible обрабатывает некую роль для некоего набора 
+   хостов, он вначале просматривает все зависимости, которые определены в 
+   <span class="term"><code>roles/&lt;role_name&gt;/meta/main.yaml</code></span>.
+   Если какие- либо из них определены, эта роль будет обрабатываться и все задачи внутри будут исполнены (после 
+   проверки также и всех перечисленных внутри зависимостей) пока, прежде чем запустятся задачи данной начальной 
+   роли, не будут завершены все зависимости. Более глубоко мы опишем зависимости роли позже в данной главе.</p>
+
+   <a id="020106"> </a>
+   <p class="title"><strong>Файлы и шаблоны</strong></p>
+   <p>Модули задачи и обработчиков могут иметь относительные ссылки внутри 
+   <span class="term"><code>roles/&lt;role_name&gt;/files/</code></span>. 
+   Такое имя файла может предоставляться без какого бы то нибыло префикса и будет иметь источником 
+   <span class="term"><code>roles/&lt;role_name&gt;/files/&lt;file_name&gt;</code></span>. 
+   Относительные префиксы также допускаются при доступе к файлам внутри подкаталогов 
+   <span class="term"><code>roles/&lt;role_name&gt;/files/</code></span>. 
+   Такие модули как <span class="term"><code>template</code></span>, <span class="term"><code>copy</code></span>
+   и <span class="term"><code>script</code></span> могут также получать преимущества этого.</p>
+   <p>Аналогично, применяемые модулем <span class="term"><code>template</code></span> шаблоны могут иметь ссылки 
+   относительно <span class="term"><code>roles/&lt;role_name&gt;/templates/</code></span>. 
+   Данный код примера использует некий относительный путь для загрузки своего шаблона 
+   <span class="term"><code>derp.j2</code></span> из полного пути
+   <span class="term"><code>roles/&lt;role_name&gt;/templates/herp/derp.j2</code></span>:</p>
+	   <pre class="screen"><code class="hljs cpp">
+- name: configure herp
+  <span class="hljs-keyword">template</span>:
+    src: herp/derp.j2
+    dest: /etc/herp/derp.j2
+ 	   </code></pre>
+
+   <a id="020107"> </a>
+   <p class="title"><strong>Собираем всё вместе</strong></p>
+   <p>Для иллюстрации того как может выглядеть полная структура роли, вот некоторый пример с названием 
+   <span class="term"><code>demo</code></span>:</p>
+	   <pre class="screen"><code class="hljs">
+roles/demo
+├── defaults
+│   └── main.yaml
+├── files
+│   └── foo
+├── handlers
+│   └── main.yaml
+├── library
+│   └── samplemod.py
+├── meta
+│   └── main.yaml
+├── tasks
+│   └── main.yaml
+├── templates
+│   └── bar.j2
+└── vars
+    └── main.yaml
+ 	   </code></pre>
+   <p>При создании некоторой роли требуются не все каталоги или файлы. Обрабатываться будут только те файлы, 
+   которые присутствуют.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0202"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Зависимости ролей</span></h4>
+   </div></div></div>
+   <p>Как уже устанавливалось, роли могут зависеть от других ролей. Эти взаимосвязи имеют название 
+   <span class="term"><code>dependencies</code></span> и они описываются в файле 
+   <span class="term"><code>meta/main.yaml</code></span> некоторой роли. Этот файл ожидает какого- то хэша 
+   данных верхнего уровня с неким ключом <span class="term"><code>dependencies</code></span>; все данные внутри 
+   являются неким споиском ролей:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+dependencies:
+  - role: common
+  - role: apache
+ 	   </code></pre>
+   <p>В данном примере Ansible полностью обработает вначале роль <span class="term"><code>common</code></span> 
+   (и все зависимости, которые она может выражать), прежде чем продолжит со второй ролью 
+   <span class="term"><code>apache</code></span> и затем в конце концов запустит задачи своей роли.</p>
+   <p>Зависимости могут иметь ссылки по имени без какого бы то ни было префикса если присутствуют внутри той 
+   же самой структуры каталога или располагаются внутри имеющихся настроенными 
+   <span class="term"><code>roles_path</code></span>. В противном случае для указания местоположения роли могут 
+   применяться полные пути:</p>
+	   <pre class="screen"><code class="hljs http">
+<span class="hljs-attribute">role</span>: <span class="hljs-string">/opt/ansible/site-roles/apache</span>
+ 	   </code></pre>
+   <p>При выражении некоторой зависимости имеется возможность передачи данных совместно с такой зависисомтью. Эти данные 
+   могут быть переменными, тегами или даже условными зависимостями.</p>
+
+   <a id="020201"> </a>
+   <p class="title"><strong>Переменные зависимости ролей</strong></p>
+   <p>Передаваемые совместно с перечнем зависимостей переменные будут переписывать значения для соответствующих 
+   переменных, определяемых в <span class="term"><code>defaults/main.yaml</code></span> или 
+   <span class="term"><code>vars/main.yaml</code></span>. Это может быть полезным для использования некоей общей 
+   роли подобной роли <span class="term"><code>apache</code></span> в качестве зависимости при предоставлении 
+   особенных данных, таких как какой порт открывать в имеющемся межсетевом экране или какой модуль 
+   <span class="term"><code>apache</code></span> включать. Переменные выражаются как дополнительные ключи для 
+   данного перечисления роли. Давайте обновим свой пример чтобы добавить простые и сложные переменные в наши две 
+   зависимости:</p>
+	   <pre class="screen"><code class="hljs python">
+---
+dependencies:
+  - role: common
+    simple_var_a: <span class="hljs-keyword">True</span>
+    simple_var_b: <span class="hljs-keyword">False</span>
+  - role: apache
+    complex_var:
+    key1: value1
+    key2: value2
+  short_list:
+    - <span class="hljs-number">8080</span>
+    - <span class="hljs-number">8081</span>
+ 	   </code></pre>
+   <p>При предоставлении переменных данных зависимости имеется два зарезервированных имени, которые не могут 
+   применяться в качестве переменных роли: <span class="term"><code>tags</code></span> и
+   <span class="term"><code>when</code></span>. Первое используется для передачи данных тегов в некую роль, а 
+   второе для передачи условных зависимостей в эту же роль.</p>
+
+   <a id="020202"> </a>
+   <p class="title"><strong>Тэги</strong></p>
+   <p>Теги могут применяться для всех имеющихся задач, обнаруженных внутри некоторой зависимости роли. Эти функции 
+   во многом аналогичны тому способу, ктором теги могут применяться для включения файлов задач, как это 
+   описывалось ранее в данной главе. Их синтаксис простой;  ключ <span class="term"><code>tags</code></span> 
+   может быть неким отдельным элементом или каким- то списком. Для демонстрации давайте добавим некие теги в свой 
+   пример списка зависимости:</p>
+	   <pre class="screen"><code class="hljs python">
+---
+dependencies:
+  - role: common
+    simple_var_a: <span class="hljs-keyword">True</span>
+    simple_var_b: <span class="hljs-keyword">False</span>
+    tags: common_demo
+  - role: apache
+    complex_var:
+      key1: value1
+      key2: value2
+    short_list:
+      - <span class="hljs-number">8080</span>
+      - <span class="hljs-number">8081</span>
+    tags:
+      - apache_demo
+      - <span class="hljs-number">8080</span>
+      - <span class="hljs-number">8181</span>
+ 	   </code></pre>
+   <p>Как и в случае с добавлением тегов во включаемые файлы задач, все те задачи, которые обнаружены внутри 
+   некоторой зависимости (и любой зависимости внутри этой иерархии) получат предоставляемые марекры (теги).</p>
+
+   <a id="020203"> </a>
+   <p class="title"><strong>Условные зависимости ролей</strong></p>
+   <p>Хотя и невозможно предотвратить текущую обработку некоторой зависимости роли с помощью некоторого условия, 
+   имеется возможность пропуска всех имеющихся задач внутри какой- то иерархии зависимости роли применив 
+   некое условие к какой- то зависимости. Это также отражает всю функциональность включения задач с условиями. 
+   Для выражения этого условия применяется ключ <span class="term"><code>when</code></span>. И вновь мы 
+   увеличим свой пример добавив некую зависимость для демонстрации имеющегося синтаксиса:</p>
+	   <pre class="screen"><code class="hljs python">
+---
+dependencies:
+  - role: common
+    simple_var_a: <span class="hljs-keyword">True</span>
+    simple_var_b: <span class="hljs-keyword">False</span>
+    tags: common_demo
+  - role: apache
+    complex_var:
+      key1: value1
+      key2: value2
+    short_list:
+      - <span class="hljs-number">8080</span>
+      - <span class="hljs-number">8081</span>
+    tags:
+      - apache_demo
+      - <span class="hljs-number">8080</span>
+      - <span class="hljs-number">8181</span>
+    when: backend_server == <span class="hljs-string">'apache'</span>
+ 	   </code></pre>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0203"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Приложения ролей</span></h4>
+   </div></div></div>
+   <p>Роли не являются воспроизведениями. У них нет какого- либо представления о том на каких хостах задачи 
+   этой роли должны исполняться, какие методы соединения применять, работать или нет последовательно или 
+   любое иное поведение воспроизедения, описанное в <a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html" target="_top">Главе 1, 
+   Архитектура системы и проектирование Ansible</a>. Роли должны применяться внутри некоторого воспроизведения 
+   внутри какого- то плейбука, в котором могут быть выражены все эти заключения.</p>
+   <p>Чтобы применить некую роль внутри какого- то воспроизведения применяется оператор 
+   <span class="term"><code>when</code></span>. Этот оператор ожидает некий список ролей для применения к имеющимся 
+   хостам в этом воспроизведении. Во многом как и с описанием зависимостей роли, при определении применяемых ролей, 
+   вместе с ними могут передаваться данные, такие как переменные, теги и условия. Его синтаксис в точности 
+   такой же.</p>
+   <p>Для демонстрации применения ролей внутри некоторого воспроизведения давайте создадим какую- то простую роль 
+   и применим её в простом плейбуке. Вначале даввайте построим такую род с названием 
+   <span class="term"><code>simple</code></span>, которая будеи иметь неую отдельную задачу 
+   <span class="term"><code>debug</code></span> в 
+   <span class="term"><code>roles/simple/tasks/main.yaml</code></span>, печатающую то значение некоторой переменной 
+   по умолчанию роли, которая определена в <span class="term"><code>roles/simple/defaults/main.yaml</code></span>. 
+   Во- первых давайте поработаем с самим файлом задачи:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: print a variable
+  debug:
+    var: derp
+ 	   </code></pre>
+   <p>Далее мы напишем свой файл по умолчанию в какой- то единственной переменной, 
+   <span class="term"><code>derp</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+derp: herp
+ 	   </code></pre>
+   <p>Для исполнения такой роли мы запишем некий плейбук с единственным воспроизведением для применения этой 
+   роли. Мы вызовем свой плейбук <span class="term"><code>roleplay.yaml</code></span>, причём он расположен 
+   в том же самом уровне каталога, что и сам каталог <span class="term"><code>roles/</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+  roles:
+    - role: simple
+ 	   </code></pre>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Если с этой ролью не предоставляются никакие данные, может применяться некий альтернативный синтаксис, 
+	   который всего лишь перечисляет все роли для применения вместо отображённого нами хэша. Однако, для 
+	   согласованности, как мне кажется, будет лучше всегда применять один и тот же синтаксис в рамках 
+	   одного проекта.</p></td></tr></tbody></table>
+     </div>
+   <p>Мы повторно применим свой список ресурсов <span class="term"><code>mastery-hosts</code></span> из 
+   предыдущих глав и выполним свой плейбук:</p>
+	<div class="figure"><a id="Fig0517">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.17</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0517.jpg" height="407" width="734"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Благодаря магии ролей имеющееся значение переменной <span class="term"><code>derp</code></span> было 
+   автоматически загружено из значений роли по умолчанию. Конечно, мы можем переопределить такое значение по 
+   умолчанию при применении данной роли. Давайте изменим свой плейбук и применим некое новое значение для 
+   <span class="term"><code>derp</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+  roles:
+    - role: simple
+      derp: newval
+ 	   </code></pre>
+   <p>На этот раз, при нашем исполнении мы обнаружим в качестве значения для 
+   <span class="term"><code>derp</code></span> <span class="term"><code>newval</code></span>:</p>
+	<div class="figure"><a id="Fig0518">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.18</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0518.jpg" height="407" width="733"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Внутри некоторого отдельного воспроизведения может применяться множество ролей. Ключ  
+   <span class="term"><code>roles:</code></span> ожидает некий перечень значений. Для применения большего числа ролей 
+   просто добавьте дополнительные:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+  roles:
+    - role: simple
+      derp: newval
+    - role: second_role
+      othervar: value
+    - role: third_role
+    - role: another_role
+ 	   </code></pre>
+
+   <a id="020301"> </a>
+   <p class="title"><strong>Смешанные роли и задачи</strong></p>
+   <p>Обработчики для некоторого воспроизведения мелькают во множестве мест. Если имеется некий блок
+   <span class="term"><code>pre_tasks</code></span>, обработчики вспыхивают после исполнения всех 
+   <span class="term"><code>pre_tasks</code></span>. Затем исполняются блоки 
+   <span class="term"><code>roles</code></span> и  <span class="term"><code>tasks</code></span>
+   (первыми роли, затем задачи в зависимости от того порядка, в котором они записаны в данном плейбуке), после чего 
+   вновь вспыхнут обработчики. Наконец, если имеется блок <span class="term"><code>post_tasks</code></span>, 
+   обработчики мелькнут снова после того как исполнится <span class="term"><code>post_tasks</code></span>. 
+   Конечно, обработчики могут мигнут в любой момент времени с вызовом 
+   <span class="term"><code>meta: flush_handlers</code></span>. Давайте расширим свой 
+   <span class="term"><code>roleplay.yaml</code></span> чтобы продемонстрировать все различные разы, когда могут 
+   вкючаться обработчики:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- hosts: localhost
+  gather_facts: <span class="hljs-constant">false</span>
+
+  pre_tasks:
+    - <span class="hljs-property">name</span>: pretask
+      debug:
+        msg=<span class="hljs-string">"a pre task"</span>
+      changed_when: <span class="hljs-constant">true</span>
+      notify: <span class="hljs-command">say</span> hi
+
+roles:
+    - role: simple
+      derp: newval
+
+tasks:
+    - <span class="hljs-property">name</span>: task
+      debug:
+        msg: <span class="hljs-string">"a task"</span>
+      changed_when: <span class="hljs-constant">true</span>
+      notify: <span class="hljs-command">say</span> hi
+
+post_tasks:
+    - <span class="hljs-property">name</span>: posttask
+      debug:
+        msg: <span class="hljs-string">"a post task"</span>
+      changed_when: <span class="hljs-constant">true</span>
+      notify: <span class="hljs-command">say</span> hi
+
+handlers:
+- <span class="hljs-property">name</span>: <span class="hljs-command">say</span> hi
+debug:
+msg=<span class="hljs-string">"hi
+ 	   </span></code></pre>
+   <p>Мы также заменим свой пример задачи роли чтобы также отметить обработчик 
+   <span class="term"><code>say hi</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: print a variable
+  debug:
+    var: derp
+  changed_when: <span class="hljs-constant">true</span>
+  notify: <span class="hljs-command">say</span> hi
+ 	   </code></pre>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Это работает только потому, что наш обработчик <span class="term"><code>say hi</code></span> был 
+	   определён в том воспроизведении, который вызывается имеющейся ролью 
+	   <span class="term"><code>simple</code></span>. Если такой обработчик не определён, возникнет некая ошибка. 
+	   Будет лучше только уведомлять обработчики, которые имеются внутри той же самой роли или любой роли, 
+	   отмеченной как некая зависимость.</p></td></tr></tbody></table>
+     </div>
+   <p>Исполнение нашего плейбука должно иметь результатом вызов имеющегося обработчика 
+   <span class="term"><code>say hi</code></span> суммарно три раза: один раз для 
+   <span class="term"><code>pre_tasks</code></span>, один раз для  
+   <span class="term"><code>roles</code></span> и <span class="term"><code>tasks</code></span>, а также один раз 
+   для <span class="term"><code>post_tasks</code></span>:</p>
+   <p>
+   <span class="term"><code>pre_tasks</code></span>,
+   <span class="term"><code>roles</code></span>,
+   <span class="term"><code>tasks</code></span>,
+   <span class="term"><code>post_tasks</code></span>
+   </p>
+	<div class="figure"><a id="Fig0519">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.19</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0519.jpg" height="890" width="572"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Хотя тот порядок, в котором <span class="term"><code>pre_tasks</code></span>, 
+   <span class="term"><code>roles</code></span>, <span class="term"><code>tasks</code></span> и 
+   <span class="term"><code>post_tasks</code></span> записаны в воспроизведении не влияет на тот порядок, в котором 
+   эти разделы исполняются, лучше записывать их именно в том порядке, в котором они выполняются. Именно этот 
+   визуальный сигнал чтобы помочь запомнить данный порядок и избежать путаницы при последующем прочтении 
+   данного плейбука.</p>
+
+   <a id="020302"> </a>
+   <p class="title"><strong>Включения ролей</strong></p>
+   <p>Для Ansible версии 2.2 в качестве некоторого предварительного технического предложения сделан дотсупным 
+   новый подключаемый модуль действия,<span class="term"><code>include_role</code></span>. Этот 
+   подключаемый модуль применяется в некоторой задаче для включения и исполнения некоторой целой роли напрямую из 
+   какой- то задачи. Это интересная концепция которая всё ещё находится в состоянии оценки и нет гарантии что 
+   она останется доступной в последующих выпусках. Следует избегать данную функциональность с целью 
+   надёжности.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0204"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Совместное использование ролей</span></h4>
+   </div></div></div>
+   <p>Одним из преимуществ применения ролей является имеющаяся возможность совместно применять такие роли по 
+   воспроизведениям, плейбукам, целым пространствам проекта и даже по всем организациям. Роли разрабатываются 
+   чтобы они были самостоятельными (или ясно отражать зависимость ролей), поэтому они могут существовать вне 
+   некоторого пространства проекта в котором располагается тот плейбук, который применяет данную роль. Роли могут 
+   быть установленными в совместно применяемых путях в некотором хосте Ansible или они могут распространяться 
+   через управление исходными кодами.</p>
+
+   <a id="020401"> </a>
+   <p class="title"><strong>Ansible Galaxy</strong></p>
+   <p><a class="link" href="https://galaxy.ansible.com/" target="_top">Ansible Galaxy</a> является общеупотребимым 
+   хабом для поиска и совместного применения ролей Ansible. Этот вебсайт може посетить любой чтобы пройтись по 
+   имеющимся ролям и обзорам; плюс пользователи, которые создают некую регистрацию могут предоставлять обзоры 
+   тех ролей, которые они проверили. Роли из Galaxy могут выгружаться при помощи утилиты 
+   <span class="term"><code>ansible-galaxy</code></span>, предоставляемой в Ansible.</p>
+   <p>Эта утилита <span class="term"><code>ansible-galaxy</code></span> может соединяться с вебсайтом Ansible Galaxy
+   и устанавливать роли из него. Данная утилита по умолчанию устанавливает роли в 
+   <span class="term"><code>/etc/ansible/roles</code></span>. Если настроен 
+   <span class="term"><code>roles_path</code></span> или если предоставляется с помощью 
+   <span class="term"><code>--roles-path</code></span> (или <span class="term"><code>-p</code></span>) 
+   некий путь времени исполнения, все роли будут установлены там вместо этого. Если какая- то роль была установлена 
+   в <span class="term"><code>roles_path</code></span> или предоставленный путь, 
+   <span class="term"><code>ansible-galaxy</code></span> может перечислить её и также показывать информацию о ней. 
+   Для демонстрации применения <span class="term"><code>ansible-galaxy</code></span> давайте воспользуемся им 
+   чтобы установить некую роль чтобы управлять <span class="term"><code>known_hosts</code></span> для 
+   <span class="term"><code>ssh</code></span> из Ansible Galaxy, требующего 
+   <span class="term"><code>username.rolename</code></span>, поскольку множество пользователей могут выгружать 
+   роли с одним и тем же именем. В данном случае нам нужна роль <span class="term"><code>docker_ubuntu</code></span> 
+   от определённого пользователя <span class="term"><code>angstwad</code></span>:</p>
+	<div class="figure"><a id="Fig0520">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.20</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0520.jpg" height="185" width="731"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Теперь мы можем воспользоваться этой ролью по ссылке <span class="term"><code>angstwad.docker_ubuntu</code></span>
+   в некотором воспроизведении или другом блоке зависимостей ролей. Мы также можем перечислить её и получить 
+   информацию о ней воспользовавшись своей утилитой <span class="term"><code>ansible-galaxy</code></span>:</p>
+	<div class="figure"><a id="Fig0511">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.21</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0521.jpg" 890"="" width="653 height="><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Наш вывод ограничен сверху 37 строками во избежание отображения всего содержимого 
+   <span class="term"><code>README.md</code></span>. неокторые из данных, подлежащих отображению этой командой 
+   информации располагаются в самой роли, в файле <span class="term"><code>meta/main.yaml</code></span>. 
+   Изначально мы увидели только информацию о зависимостях в данном файле и возможно не было смысла называть 
+   данный каталог <span class="term"><code>meta</code></span>, однако теперь мы видим что в этом файле также 
+   располагаются прочие метаданные:</p>
+	<div class="figure"><a id="Fig0522">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.22</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0522.jpg" height="613" width="734"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Данная утилита <span class="term"><code>ansible-galaxy</code></span> также может помочь с созданием новых 
+   ролей. имеющийся метод <span class="term"><code>init</code></span> создаст некий скелет дерева каталога для 
+   такой роли помимо того, что заполнит имеющийся файл <span class="term"><code>meta/main.yaml</code></span> 
+   заполнителем места для связанных с Galaxy данных. Этот метод <span class="term"><code>init</code></span> 
+   получает некое разнообразие параметров, что отражено в его справочной информации:</p>
+	<div class="figure"><a id="Fig0523">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.23</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0523.jpg" height="388" width="732"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Давайте продемонстрируем данную возможность создав некую новую роль в своём рабочем каталоге с названием 
+   <span class="term"><code>autogen</code></span>:</p>
+	<div class="figure"><a id="Fig0524">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.24</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0524.jpg" height="512" width="734"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Для ролей, которые не пригодны для Ansible Galaxy, напроимер, те роли, которые связаны с внутренними 
+   системами, <span class="term"><code>ansible-galaxy</code></span> может выполнять установку напрямую с 
+   некоторого URL git. Вместо простого предоставления названия роли для установки таким методом, вместо этого 
+   может быть предоставлен некий полный URL git с необяательным параметром версии. Например, если мы желаем 
+   установить свою роль <span class="term"><code>foowhiz</code></span> с нашего сервера git, мы можем просто 
+   сделать следующее:</p>
+	<div class="figure"><a id="Fig0525">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.25</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0525.jpg" height="102" width="732"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Без указания информации о версии , будет применена ветвь <span class="term"><code>master</code></span>. 
+   Без данных назввания, такое имя будет определено из самого URL. Чтобы предоставить некую версию, добавьте в 
+   конец запятую и строку с номером версии, которую поймёт этот git, например, как некий тег или название 
+   ветви, например, <span class="term"><code>v1</code></span>:</p>
+	<div class="figure"><a id="Fig0526">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.26</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0526.jpg" height="105" width="732"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Некое название для такой роли может быть добавлен с другой запятой, которая следует после определения 
+   строкового имени. Если вам нужно предоставить некое имя, но вы не желаете указывать какую бы то ни было версию, 
+   для места версии всё же требуется пустой слот. Например:</p>
+	<div class="figure"><a id="Fig0527">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.27</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0527.jpg" height="104" width="732"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Роли также могут устанавливаться напрямую из tarball, а также путём предоставления URL к такому 
+   tarball в месте полного URL git или имени некоторой роли для доставки с Ansible Galaxy.</p>
+   <p>Когда нам нужно устанавливать много ролей для какого- то проекта, имеется возможность определять множество 
+   ролей для выгрузки и установки в некотором файле с форматом YAML, который заканчивается 
+   <span class="term"><code>.yaml</code></span> (или <span class="term"><code>.yml</code></span>). Имеющийся 
+   формат данного файла позволяет вам определять множество ролей из большого числа источников и сохраняет 
+   вашу возможность определять версии и названия роли. Кроме того, может перечисляться метод управления 
+   источником кода (в настоящее время поддерживаются только  <span class="term"><code>git</code></span> и 
+   <span class="term"><code>hg</code></span>):</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- src: &lt;<span class="hljs-property">name</span> <span class="hljs-keyword">or</span> url
+  <span class="hljs-property">version</span>: &lt;optional <span class="hljs-property">version</span>&gt;
+  <span class="hljs-property">name</span>: &lt;optional <span class="hljs-property">name</span> override&gt;
+  scm: &lt;optional defined source control mechanism&gt;
+ 	   </code></pre>
+   <p>Чтобы установить все роли из некоторого файла  воспользуйтесь параметром 
+   <span class="term"><code>--roles-file</code></span> (<span class="term"><code>-r</code></span>) со 
+   своим методом установки:</p>
+	<div class="figure"><a id="Fig0528">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 5.28</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/Fig0528.jpg" height="103" width="730"><br>
+	 <span></span>
+	 </div></div>
+	</div><br class="figure-break">
+  </div>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="03"> </a>Выводы</h3>
+   </div></div></div>
+   <p>Ansible предоставляет определённую возможность делить содержимое логически на раздельные файлы. Эта 
+   возможность помогает разработчикам проекта не повторять один и тот же код снова и снова. Роли внутри Ansible 
+   проводят эту возможность на шаг далее и обёртывают некоторой магией сами пути имеющегося содержимого. 
+   Роли имеют возможность настройки, повторного использования, переносимости и совместного использования блоков 
+   функциональности. Ansible Galaxy существует ккак некий хаб сообщества для того чтобы разработчики могли найти, 
+   отранжировать и совместно применять роли. Инструмент командной строки <span class="term"><code>ansible-galaxy</code></span> 
+   предоставляет некий метод взаимодейтсвия с Ansible Galaxy или прочими механизмами совместных ресурсов. Такие 
+   возможности и инструменты помогают с организацией и писпользованием общего кода.</p>
+   <p>В своей следующей главе мы охватим различные стратегии разработки и обновления и те свойства Ansible, 
+   которые полезны для каждой стратегии.</p>
+  </div>
+ </div>
+
+<!----><script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/FooterAndSidebar.js">
+</script><script type="text/javascript"><!--</div id="content"> is inside next code
+document.write(FooterAndSidebar);//-->
+</script><script src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/f.js" id="eXF-mstansb2-0" async="" defer="defer"></script><a title="eXTReMe Tracker - Free Website Statistics" id="eXTReMe-Free-mstansb2" target="_blank" href="http://extremetracking.com/free?login=mstansb2"><img src="data:image/gif;base64,R0lGODlhKQAmAPcAAAAAAP////C3ueChpqplbMiQmFgXIkwWH9J5jbFnd/PP16+SmmMmUZphjdWyzggACAcEB5pjmmFNZiUIOaWEvZx7xlMrjyoTVq+usqWc8wIAISQYslJNoi0mzSklcFJN1iooVQEANXBvzZ+e7QgITg0NbhwdkBAQSmlptnd3mM/P/ZWVr4+PlI2NkoyMkQwSqRATa4aI2GRr4zlCjDFCpXOM597n//f//11cWlxbWVhXVVpYVmZkYl9dW2poZmlnZWhmZGdlY5SEeyYICIwxMXssLHUrK85aWlElJUojI0MgIAwJCf3n50I+Pk5KSk1JSUtHR0pGRlBMTBUUFEVCQkI/P0A9PUtISEpHRxoZGf/39zo4OEA+PiQjIyIhISopKSkoKCcmJiYlJSsqKnR0dHNzc3Jycm5ubmxsbGRkZGJiYldXV0xMTEtLS0JCQj8/Pz4+Pj09PTw8PDk5OTQ0NDMzMzIyMjExMSsrKyoqKiUlJSMjIyAgIB0dHRwcHBsbGxoaGhkZGRgYGBcXFxUVFRQUFBISEhERERAQEA0NDQwMDAsLCwoKCgkJCQgICAcHBwYGBgUFBQQEBAMDAwICAgEBAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAJYALAAAAAApACYAAAj/AM+kGUiwoMGDCBMSPKNmjcOHECNKnEjxYcM2GDNq3Mixo8eMa9i8GUmypMmRcOLIWQnnpEuSbNzQmUmzJs06d6hgecIDSBAsXOrYHFrTzRw8SJMqRToGSxkWGKJKbYEmx5alWJHOsbOnq9evXayUiboihVmzK1ZEdbFDzNe3Xe3k+UO3bt0+OqCukOABBAwPHkyYmIGiQlQzW/zYXZxHD6HHkB9nwbFgLwkSfwdz2MwZRdQyVQgZKkS6EGQ9fBCpXo0oUI/KIEicgCG4s4jbIlCgoICBjJMkB4wkUMJINR8/ipIrF3SFxYrYJ0AENkGDBgoRMWKMGBEjN4UFRwQE/xjPpEhyP4EaqVe/KAoZDCBCyC5RQjCND7cz6Nc/4vYABQMQYAASTCiwRCOBDALJggsC4gMGKYRwwmz1mbDBfSKMkIEKDiDgQAb9xYCBD18AAIACAkAAySCESOKiJJE08V58E8JAm4UdfCDDhjYg8F8F3Hm2ghQAIKEFAZRIQkghkzQ5ySNQrMCCBhPOJtgLG+RYw4Y3DMBEAAPEUAN2Iw4hABMGVDJJIYZU4mYliPyAgQRUnlDCjVjmuKMKXSrwJQW4jUiAFkSYWIkhbb45xYx12ljfCy/oyaOXCvjJwW0YDACmiQAcmqibgTA6IQn0mQCpnhqqgIAWCiBQIA0cNP8QgABDcHroIZwC0IeoJ5D6aKSoZhCBFiqIUIAWCzTABBNIOJLrIbga6gWj8mFWYZ56yjCsAzFwoGkATBDwRSHPRmtiGA+CoIF8FF6JpQUEfPCBBUw4cBsDBTSwABnjlpsrGA/SWa21j5YwgBYNzFvvdRxYwEFvXzjLKbS5FiIFC1OuexkMpb5QggIBKGABvQ5wxoFaJEpsIsWcOoIEAQWoOzDH9V1QKcI2O+AwBxJgwIIU5PrL6RB+LpCCBhpvzPEF9SqghQEKOODBDB6kAHHQE5sLwLEEBPxACOzORgIDWkRggBYIRO1BCTP4LEWJuQLAMgAMBICAxVCB8IAGl13RdsGxDZxwcNQTeLDCAinHLXe0QzBBKwBfXDynBnszQAATrIIAAgNfLjAByuOqnLWJRhJgoiORk7GABBIUALICDEgYHwGzNjBi6IovTjoTDAyNr9NasErnuiFozoAAAwhBYiGiC23AlwMI4DTmTAxQAAERYJwCxmphQAABb2Od+9wG/AdggEh8EbkPZGCMweEskOHD2/3mPjqnDwwxxAO5OlKI+lIIoADpxzz7Cc2Ap/NfaRYoPgTqzoEQjODKtCbBCipubhbM4MQSocEOmigRAQEAOw==" style="border:0;border-radius:4px;height:38px;width:41px;" alt="eXTReMe Tracker - Free Website Statistics"></a><script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/main.js"><!----></script><div class="logabug" style="text-align: center"><a id="AskMdl002" href="javascript:tocall()" onmouseover="this.href=mail" target="_blank"><i class="icon-question"><!----></i>Вопросы? Обсудите их на mdl.ru</a><br><a id="logABugLink2" href="https://bugs.launchpad.net/openstack-manuals/+filebug?field.title=MasteringAnsible2nd&amp;field.comment=%0A%0A-----------------------------------%0ABuilt:%202017-06-29T17:43:47+00:00%0Agit%20SHA:%2013fb30b7c263d715eee84f0ca1a16df79697eb88%0AURL:%20http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html%0Asource%20File:%20file:a35-prades%0Axml:id:%20mastering-ansible-2nd" onmouseover="this.href=mail" target="_blank"><i class="icon-bug"><!----></i>Нашли ошибку? Сообщите о ней на данной странице</a></div><script language="JavaScript">	  var sourceFile = "source File: file:a35-prades";	  var xmlId = "xml:id: mastering-ansible-2nd";	  var lineFeed = "%0A";	  var docUrl = "URL: " + window.location;	  var bugTitle = "MasteringAnsible2nd";	  var buildTime = "Built: 2017-06-29T17:43:47+00:00";	  var gitSha = "git SHA: 13fb30b7c263d715eee84f0ca1a16df79697eb88";	  var fieldComment = encodeURI(buildTime) +  lineFeed + encodeURI(gitSha) + lineFeed + encodeURI(docUrl) + lineFeed + encodeURI(sourceFile) + lineFeed + encodeURI(xmlId);	  logABug(bugTitle,fieldComment);	</script>   <hr><div class="itemizedlist">	<ul class="itemizedlist" type="disc"><p>Дополнительные ссылки:</p>	 <li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/KVMVirtualizationCookbook/content/Ch08.html" target="_top">Книга рецептов виртуализации KVM</a> Константин Иванов, Packt Publishing, июнь 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringCeph/content/index.html" target="_top">Полное руководство Ceph</a> Ник Фиск, Packt Publishing, май 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/ContainerizationWithLXC/content/index.html" target="_top"> Контейнеризация при помощи LXC</a> Константин Иванов, Packt Publishing, март 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/CephCookbook/content/index.html" target="_top">Книга рецептов Ceph</a> Каран Сингх, Packt Publishing, февраль 2016</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/LearningCeph2ed/content/index.html" target="_top">Изучаем Ceph</a>, 2е изд., Энтони Д`Атри, Вайбхав Бхембре, Каран Сингх, Packt Publishing, октябрь 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/LearningCeph/content/index.html" target="_top">Изучаем Ceph</a> Каран Сингх, Packt Publishing, январь 2015</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringProxmox.2ed/content/index.html" target="_top">Proxmox. Полное руководство</a>. 2е изд., Васим Ахмед, Packt Publishing, май 2016</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/ProxmoxCookbook/content/index.html" target="_top">Книга рецептов Proxmox. Главы 1-6, Дополнения: Преобразование OpenVZ в LXC, Организация ограждения</a> Васим Ахмед, Packt Publishing, август 2015</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/VirtualizationComplete/content/index.html" target="_top">Полная виртуализация. Базовая коммерческая редакция</a>: Proxmox-freeNAS-Zentyal-pfSense. Ли Р. Сюрбер, февраль 2016</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html" target="_top">Полное руководство Ansible</a>. 2е изд., Джесс Китинг, май 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringZabbix.2ed/content/Ch04.html" target="_top">Zabbix. Полное руководство</a>. 2е изд., Андреа Далле Ваккье, сентябрь 2015</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html" target="_top">Полное руководство работы с сетями на Python</a>. Эрик Чоу, Июнь 2017</p>	 </li>    </ul>   </div>      <hr><div class="legal"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html">Уведомление о правах</a><hr><br><table style="border-style: none;" align="left" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-style: none; text-align:left;" valign="top" width="80%">Перевод: Copyright ©&nbsp;2017 &nbsp;<img alt="mdl.ru" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/mdl-reg.jpg" widht="35" style="border-style: none;" height="12">.<br>All rights reserved.<br>Ссылки обязательны (Refs and links are obligatory).</td><td border="0" style="border-style: none; text-align:right;" valign="top" width="20%"><em><a href="http://www.mdl.ru/">http://www.mdl.ru</a><br> <br><a href="http://onreader.mdl.ru/sddc-mdl-portfolio.pdf">портфолио SD DC</a></em></td></tr><tr><td colspan="2" border="0"> <a href="http://www.mdl.ru/Solutions/Put.htm?Nme=CanonOffer"><img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/MFUoffer170420-610x315.jpg" "width="610&quot;" heigh="315"></a></td></tr></tbody></table></div><div><div id="leftnavigation" style="padding-top:3px; background-color:white;">	<div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs"><ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all"><li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#treeDiv" tabindex="1"><span class="contentsTab">Содержание</span></a></li>	<li class="ui-state-default ui-corner-top"><a href="#searchDiv" tabindex="1"><span class="searchTab">Поиск</span></a></li></ul>	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom" id="treeDiv"><img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%205.%20%D0%9A%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%BD%D0%BE%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%BE%D0%B3%D0%BE%20%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D1%80%D0%BE%D0%BB%D0%B5%D0%B9%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20Ansible_files/loading.gif" alt="загрузка таблицы содержания..." id="tocLoading" style="display:none;">	<div id="ulTreeDiv" style="" class="thisisthat">	<ul id="tree" class="filetree treeview"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Preface">Предисловие<sup>~</sup></a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Covers">Что охватывает эта книга</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#You_need">Что вам нужно для этой книги</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#For_Who">Для кого эта книга</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Conventions">Соглашения</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Feedback">Обратная связь с читателями</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Support">Поддержка пользователей</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#DownloadingExamples">Загрузка кодов примеров</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Errata">Опечатки</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Piracy">Незаконное тиражирование</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html#Questions">Вопросы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html">Глава 1. Архитектура системы и проектирование Ansible</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#01">Версии и конфигурации Ansible</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#02">Разбор учёта ресурсов и исходных данных</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0201">Статичный учёт ресурсов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0202">Переменные данные учёта ресурсов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0203">Динамическая инвентаризация</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0204">Добавления учёта ресурсов времени исполнения</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0205">Ограничения учёта ресурсов</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#03">Синтаксический разбор плейбуков</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0301">Порядок операций</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0302">Допущения относительных путей</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0303">Директивы поведения воспроизведения</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0304">Стратегии исполнения</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0305">Выбор хоста для воспроизведений и задач</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0306">Имена воспроизведений и задач</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#04">Транспортировка и исполнение модуля</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0401">Ссылка на модуль</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0402">Аргументы модуля</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0403">Транспортировка и исполнение модуля</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#040301">Производительность задачи</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#05">Типы и положение переменных</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0501">Типы переменных</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#06">Доступ к внешним данным</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#07">Старшинство переменных</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0701">Порядок старшинства</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#0702">Слияние хэшей</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#08">Выводы</a></span></li></ul></li><li class="collapsable" tabindex="2"><div class="hitarea collapsable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html">Глава 2. Защита вашей секретной информации в Ansible</a></span><ul style="display: block;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#01">Шифрование неподвижных данных</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0101">Вещи, которые может шифровать Vault</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0102">Создание новых зашифрованных файлов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#010201">Приглашение ко вводу пароля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#010202">Файл пароля</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#010203">Сценарий пароля</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0103">Шифрование существующих файлов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0104">Изменение зашифрованных файлов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0105">Чередование паролей зашифрованных файлов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0106">Расшифровка зашифрованных файлов</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0107">Исполнение плейбуков Ansible c зашифрованными файлами</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#02">Защита секретной информации при работе</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0201">Секретная информация, передаваемая на удалённые хосты</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#0202">Секретная информация, протоколируемая в удалённые или локальные файлы</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch02.html#03">Выводы</a></span></li></ul></li><li class="collapsable" tabindex="2"><div class="hitarea collapsable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html">Глава 3. Высвобождение всей мощи шаблонов Jinja2</a></span><ul style="display: block;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01">Управляющие структуры</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0101">Условные зависимости</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010101">Встроенные условные зависимости</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0102">Циклы</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010201">Фильтрация элементов цикла</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010202">Индексация цикла</a></span></li></ul></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0103">Макросы</a></span><ul style="display: none;"><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#010301">Макро переменные</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030101">name</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030102">arguments</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030103">defaults</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030104">catch_kwargs</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030105">catch_varargs</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#01030106">caller</a></span></li></ul></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02">Манипуляция данными</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0201">Синтаксис</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0202">Полезные встроенные фильтры</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020201">default</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020202">count</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020203">random</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020204">round</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0203">Полезные создаваемые Ansible фильтры</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020301">Связанные с состоянием задачи фильтры</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020302">shuffle</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020303">Фильтры для обработки имён пути</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030301">basename</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030302">dirname</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#02030303">expanduser</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020304">Кодирование Base64</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020305">Поиск содержимого</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0204">Пропуск неопределённых аргументов</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0205">Объектные методы Python</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020501">Строковые методы</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020502">Методы списков</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#020503">Методы int и float</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#03">Сравнение значений</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0301">Сравнения</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0302">Логика</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#0303">Тесты</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html#03">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html">Глава 4. Условия управления задачами</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#01">Определение отказа</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0101">Игнорирование ошибок</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0102">Определение условия ошибки</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#02">Определение изменения</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0201">Особая обработка семейства команд</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0202">Неотложное изменение</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#03">Восстановление после ошибки</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0301">rescue</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#0302">always</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch04.html#04">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html">Глава 5. Компоновка повторно используемого содержания и ролей Ansible</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#01">Концепции включения задач, обработчика, переменной и плейбука</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0101">Включения задач</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010101">Передача значений переменных во включённые задачи</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010102">Передача сложных данных во включённые задачи</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010103">Условные включения задач</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010104">Помеченные включения задач</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0102">Включения задач с циклами</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0103">Включения обработчиков</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0104">Включения переменных</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010401">vars_files</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010402">Динамические включения vars_files</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010403">include_vars</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#010404">extra-vars</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0105">Включения плейбуков</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#02">Роли</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0201">Структура ролей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020101">Задачи</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020102">Обработчики</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020103">Переменные</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020104">Модули и встраиваемые модули</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020105">Зависимости</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020106">Файлы и шаблоны</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020107">Собираем всё вместе</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0202">Зависимости ролей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020201">Переменные зависимости ролей</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020202">Тэги</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020203">Условные зависимости ролей</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0203">Приложения ролей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020301">Смешанные роли и задачи</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020302">Включения ролей</a></span></li></ul></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#0204">Совместное использование ролей</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#020401">Ansible Galaxy</a></span></li></ul></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch05.html#03">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html">Глава 6. Минимизация времени простоя и накатывания развёртываний</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#01">Обновления на месте</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#02">Расширение вовне и контрактация</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#03">Быстрые отказы</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0301">Опция any_errors_fatal</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0302">Опция max_fail_percentage</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0303">Форсирование обработки</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#04">Минимизация срывов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0401">Откладывание срывов</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#0402">Одноразовое исполнение разрушающих задач</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#05">Построение в серию отдельных задач</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch06.html#06">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a class="" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html">Глава 7. Поиск неисправностей Ansible</a><sup>~</sup></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#01">Ведение журналов и подробности плейбуков</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0101">Подробности</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0102">Ведение журнала</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#02">Самонаблюдение переменной</a></span><ul style="display: none;"><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0201">Подэлементы переменной</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#020101">Сопоставление подэлементов и методов объектов Python</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#03">Исполнение отладочного кода</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0301">Отладка плейбуков</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#0302">Отладка локального кода</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030201">Отладка кода учёта ресурсов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030202">Отладка кода плейбуков</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030203">Отладка кода исполнителя</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030204">Отладка удалённого кода</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#030205">Отладка действия встраиваемого модуля</a></span></li></ul></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch07.html#04">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file hover"><a class="hover" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html">Глава 8. Расширение Ansible</a><sup>...</sup></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#01">Разработка модулей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0101">Построение базового модуля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0102">Пользовательские модули</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0103">Простой модуль</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#010301">Документирование модуля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#010302">Предоставление фактических данных</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#010303">Режим проверки</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#01030301">Поддержка режима проверки</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#01030302">Обработка режима проверки</a></span></li></ul></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#02">Разработка встраиваемых модулей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0201">Тип подключения встраиваемого модуля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0202">Встраиваемые модули оболочки</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0203">Встраиваемые модули поиска</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0204">Встраиваемые модули переменных</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0205">Встраиваемые модули кэширования фактов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0206">Встраиваемые модули обратного вызова</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0207">Встраиваемые модули действия</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0208">Встраиваемые модули распространения</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#03">Разработка встраиваемых модулей динамического учёта резервов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0301">Просмотр хостов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0302">Просмотр переменных хостов</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0303">Простой встраиваемый модуль учёта ресурсов</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#030301">Оптимизация производительности сценария</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04">Участие в проекте Ansible</a></span><ul style="display: none;"><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#0401">Представление содействия</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#040101">Репозиторий Ansible</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#040102">Исполнение тестов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04010201">Тестирование модуля</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04010202">Интеграция тестов</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#04010203">Стиль кодирования тестов</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#040103">Выполнение запроса пула</a></span></li></ul></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch08.html#05">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html">Глава 9. Предоставление инфраструктуры</a><sup>~</sup></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#01">Управление облачной инфраструктурой</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0101">Создание серверов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#010101">Загрузка виртуальных серверов</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#010102">Добавление учёта ресурсов в реальном времени</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0102">Использование исходного кода учёта ресурсов OpenStack</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#02">Взаимодействие с контейнерами Docker</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0201">Построение образов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0202">Построение контейнеров без Dockerfile</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0203">Учёт Docker</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#03">Предварительный просмотр контейнера Ansible</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0301">Init</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0302">Build</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#0303">Run</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch09.html#04">Выводы</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ix01.html">Указатель<sup>-</sup></a></span></li></ul>	</div></div>		<div class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide" id="searchDiv">	 <div id="search"><form onsubmit="Verifie(ditaSearch_Form);return false" name="ditaSearch_Form" class="searchForm">	  <fieldset class="searchFieldSet"><legend>Поиск</legend><center><input id="textToSearch" name="textToSearch" class="searchText" type="text"> &nbsp; <input onclick="Verifie(ditaSearch_Form)" class="searchButton" value="Go" id="doSearch" type="button"></center></fieldset></form>	 </div>	<div id="searchResults"><center>		</center></div>	<p class="searchHighlight"><a href="#" onclick="toggleHighlight()">Подсветка поиска (Вкл/Выкл)</a>	</p>	</div></div></div></div>
+
+</div></body><div data="{&quot;a&quot;:&quot;setShowingSafe&quot;,&quot;f&quot;:false}" style="display:none" id="sp_console_event"></div></html>

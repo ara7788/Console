@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths js_active  vc_desktop  vc_transform " lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	
+	
+			
+						<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+		
+	<title>Simple Helix |   Install MySQL 5.6 on CentOS 7 / RHEL 7</title>
+
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://www.simplehelix.com/xmlrpc.php">
+	<link rel="shortcut icon" type="image/x-icon" href="https://wpstage.simplehelix.com/wp-content/uploads/2017/03/favicon-1.png">
+	<link rel="apple-touch-icon" href="https://wpstage.simplehelix.com/wp-content/uploads/2017/03/favicon-1.png">
+	<!--[if gte IE 9]>
+		<style type="text/css">
+			.gradient {
+				 filter: none;
+			}
+		</style>
+	<![endif]-->
+
+	<link href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/css.css" rel="stylesheet" type="text/css">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Simple Helix » Feed" href="https://www.simplehelix.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Simple Helix » Comments Feed" href="https://www.simplehelix.com/comments/feed/">
+		<div style="display: none;" id="fit-vids-style" class="fit-vids-style">­<style>                 .fluid-width-video-wrapper {                   width: 100%;                                position: relative;                         padding: 0;                            min-height: 1px;                         }                                                                                       .fluid-width-video-wrapper iframe,          .fluid-width-video-wrapper object,          .fluid-width-video-wrapper embed {             position: absolute;                         top: 0;                                     left: 0;                                    width: 100%;                                height: 100%;                            }                                         </style></div><script id="hs-script-loader" type="text/javascript" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/638721.js"></script><script src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/lazyload.js" async=""></script><script src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/638721_002.js" id="hs-analytics"></script><script src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/tracking.js" async="" type="text/javascript"></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.simplehelix.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=526e70c0f912e0d0d846e2822ecb3e6b"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b===c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script defer="defer" type="text/javascript" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/wp-emoji-release.js"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="yarppWidgetCss-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/widget.css" type="text/css" media="all">
+<link rel="stylesheet" id="layerslider-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/layerslider.css" type="text/css" media="all">
+<link rel="stylesheet" id="ls-google-fonts-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/css_002.css" type="text/css" media="all">
+<link rel="stylesheet" id="wp-job-manager-applications-frontend-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/frontend.css" type="text/css" media="all">
+<link rel="stylesheet" id="chosen-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/chosen.css" type="text/css" media="all">
+<link rel="stylesheet" id="wp-job-manager-frontend-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/frontend_002.css" type="text/css" media="all">
+<link rel="stylesheet" id="mailchimp-for-wp-checkbox-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/checkbox.css" type="text/css" media="all">
+<link rel="stylesheet" id="mailchimp-for-wp-form-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/form.css" type="text/css" media="all">
+<link rel="stylesheet" id="country_dropdown-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/jquery.css" type="text/css" media="all">
+<link rel="stylesheet" id="default_style-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="qode-font-awesome-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/font-awesome.css" type="text/css" media="all">
+<link rel="stylesheet" id="stylesheet-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/stylesheet.css" type="text/css" media="all">
+<link rel="stylesheet" id="style_dynamic-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/style_dynamic.css" type="text/css" media="all">
+<link rel="stylesheet" id="responsive-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/responsive.css" type="text/css" media="all">
+<link rel="stylesheet" id="style_dynamic_responsive-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/style_dynamic_responsive.css" type="text/css" media="all">
+<link rel="stylesheet" id="js_composer_front-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/js_composer.css" type="text/css" media="all">
+<link rel="stylesheet" id="custom_css-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/custom_css.css" type="text/css" media="all">
+<link rel="stylesheet" id="tablepress-default-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/tablepress-combined.css" type="text/css" media="all">
+<link rel="stylesheet" id="yarpp-thumbnails-yarpp-thumbnail-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/styles_thumbnails.css" type="text/css" media="all">
+<link rel="stylesheet" id="childstyle-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/style_002.css" type="text/css" media="all">
+<link rel="stylesheet" id="hubspot-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/hubspot.css" type="text/css" media="all">
+<script type="text/javascript" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/jquery.js"></script>
+<script type="text/javascript" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/jquery-migrate.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var LS_Meta = {"v":"6.5.1"};
+/* ]]> */
+</script>
+<script type="text/javascript" data-cfasync="false" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/greensock.js"></script>
+<script type="text/javascript" data-cfasync="false" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/layerslider.js"></script>
+<script type="text/javascript" data-cfasync="false" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/layerslider_002.js"></script>
+<meta name="generator" content="Powered by LayerSlider 6.5.1 - Multi-Purpose, Responsive, Parallax, Mobile-Friendly Slider Plugin for WordPress.">
+<!-- LayerSlider updates and docs at: https://layerslider.kreaturamedia.com -->
+<link rel="https://api.w.org/" href="https://www.simplehelix.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.simplehelix.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.simplehelix.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Getting serious about WordPress security" href="https://www.simplehelix.com/blog/uncategorized/wordpress-security-reaches-critical-status-crappy-working-title/">
+<link rel="next" title="Dirty COW exploit" href="https://www.simplehelix.com/blog/news/dirty-cow-exploit/">
+
+<link rel="canonical" href="https://www.simplehelix.com/blog/screencasts/install-mysql-5-6-on-centos-7-rhel-7/">
+<link rel="shortlink" href="https://www.simplehelix.com/?p=18400">
+<link rel="alternate" type="application/json+oembed" href="https://www.simplehelix.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.simplehelix.com%2Fblog%2Fscreencasts%2Finstall-mysql-5-6-on-centos-7-rhel-7%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://www.simplehelix.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.simplehelix.com%2Fblog%2Fscreencasts%2Finstall-mysql-5-6-on-centos-7-rhel-7%2F&amp;format=xml">
+<script type="text/javascript">
+(function(url){
+	if(/(?:Chrome\/26\.0\.1410\.63 Safari\/537\.31|WordfenceTestMonBot)/.test(navigator.userAgent)){ return; }
+	var addEvent = function(evt, handler) {
+		if (window.addEventListener) {
+			document.addEventListener(evt, handler, false);
+		} else if (window.attachEvent) {
+			document.attachEvent('on' + evt, handler);
+		}
+	};
+	var removeEvent = function(evt, handler) {
+		if (window.removeEventListener) {
+			document.removeEventListener(evt, handler, false);
+		} else if (window.detachEvent) {
+			document.detachEvent('on' + evt, handler);
+		}
+	};
+	var evts = 'contextmenu dblclick drag dragend dragenter dragleave dragover dragstart drop keydown keypress keyup mousedown mousemove mouseout mouseover mouseup mousewheel scroll'.split(' ');
+	var logHuman = function() {
+		var wfscr = document.createElement('script');
+		wfscr.type = 'text/javascript';
+		wfscr.async = true;
+		wfscr.src = url + '&r=' + Math.random();
+		(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(wfscr);
+		for (var i = 0; i < evts.length; i++) {
+			removeEvent(evts[i], logHuman);
+		}
+	};
+	for (var i = 0; i < evts.length; i++) {
+		addEvent(evts[i], logHuman);
+	}
+})('//www.simplehelix.com/?wordfence_logHuman=1&hid=AA5182FA9847EC741453DFE8359D2F6E');
+</script><meta name="generator" content="Powered by Visual Composer - drag and drop page builder for WordPress.">
+<!--[if lte IE 9]><link rel="stylesheet" type="text/css" href="https://www.simplehelix.com/wp-content/plugins/js_composer/assets/css/vc_lte_ie9.min.css" media="screen"><![endif]--><!--[if IE  8]><link rel="stylesheet" type="text/css" href="https://www.simplehelix.com/wp-content/plugins/js_composer/assets/css/vc-ie8.min.css" media="screen"><![endif]-->		<style type="text/css" id="wp-custom-css">
+			/*
+You can add your own CSS here.
+
+Click the help icon above to learn more.
+
+
+.carousel-inner h2 {
+text-shadow:none !important;}
+*/		</style>
+	<noscript><style type="text/css"> .wpb_animate_when_almost_visible { opacity: 1; }</style></noscript><script data-no-minify="1">(function(w,d){function a(){var b=d.createElement("script");b.async=!0;b.src="https://www.simplehelix.com/wp-content/plugins/wp-rocket/inc/front/js/lazyload.1.0.2.min.js";var a=d.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)}w.attachEvent?w.attachEvent("onload",a):w.addEventListener("load",a,!1)})(window,document);</script>	
+<script src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/a" async="" type="text/javascript"></script><style type="text/css">#livechat-full {width: 270px !important;height: 332px !important;}</style></head>
+
+<body class="post-template-default single single-post postid-18400 single-format-standard  qode-child-theme-ver-1.0.0 qode-theme-ver-2.2 strata-child wpb-js-composer js-comp-ver-4.12 vc_responsive">
+	
+				<div class="ajax_loader"><div class="ajax_loader_1"><div class="ajax_loader_html"></div></div></div>
+				<div class="wrapper">
+	<div class="wrapper_inner">
+	<!-- Google Analytics start -->
+		<!-- Google Analytics end -->
+	
+
+<header class="page_header has_top scroll_top  stick     sticky sticky_animate">
+	<div class="header_inner clearfix">
+	
+		<form role="search" id="searchform" action="https://www.simplehelix.com/" class="qode_search_form" method="get">
+		            <div class="container">
+            <div class="container_inner clearfix">
+        
+		<i class="fa fa-search"></i>
+		<input placeholder="Search" name="s" class="qode_search_field" autocomplete="off" type="text">
+		<input value="Search" type="submit">
+
+		<div class="qode_search_close">
+            <a href="#">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+		                </div>
+            </div>
+        	</form>
+
+		<div class="header_top_bottom_holder">
+			<div class="header_top clearfix" style="">
+							<div class="container">
+					<div class="container_inner clearfix">
+								<div class="left">
+						<div class="inner">
+						<div class="header-widget widget_text header-left-widget">			<div class="textwidget"><span class="q_social_icon_holder"><a href="https://twitter.com/simplehelix" target="_blank"><i class="fa fa-twitter fa-lg simple_social" style="color: #ffffff;"></i></a></span>
+<span class="q_social_icon_holder"><a href="https://www.facebook.com/simplehelix" target="_blank"><i class="fa fa-facebook fa-lg simple_social" style="color: #ffffff;"></i></a></span>
+<span class="q_social_icon_holder"><a href="https://plus.google.com/+Simplehelix/posts" target="_blank"><i class="fa fa-google-plus fa-lg simple_social" style="color: #ffffff;"></i></a></span>
+<span class="q_social_icon_holder"><a href="https://instagram.com/simplehelix" target="_blank"><i class="fa fa-instagram fa-lg simple_social" style="color: #ffffff;"></i></a></span>
+<span class="q_social_icon_holder"><a href="https://www.youtube.com/user/SimpleHelix" target="_blank"><i class="fa fa-youtube fa-lg simple_social" style="color: #ffffff;"></i></a></span></div>
+		</div>						</div>
+					</div>
+					<div class="right">
+						<div class="inner">
+						<div class="header-widget widget_text header-right-widget">			<div class="textwidget"><div data-id="eP9n2M75zWC" class="livechat_button"><a href="" onclick="LC_API.open_chat_window({source:'button'});return false;">Live Chat</a></div></div>
+		</div><div class="header-widget widget_nav_menu header-right-widget"><div class="menu-top-header-menu-container"><ul id="menu-top-header-menu" class="menu"><li id="menu-item-13529" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-13529"><a href="https://manage.simplehelix.com/">Support</a></li>
+<li id="menu-item-12468" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12468"><a href="https://manage.simplehelix.com/clientarea.php">Client Login</a></li>
+<li id="menu-item-12469" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12469"><a href="https://manage.simplehelix.com/cart.php">Order</a></li>
+</ul></div></div>						</div>
+					</div>
+									</div>
+				</div>
+					</div>
+		<div class="header_bottom clearfix" style="">
+						<div class="container">
+					<div class="container_inner clearfix">
+								<div class="header_inner_left">
+						<div class="mobile_menu_button"><span><i class="fa fa-bars"></i></span></div>
+						<div class="logo_wrapper">
+														<div class="q_logo"><a style="height: 60px; visibility: visible;" href="https://www.simplehelix.com/"><img style="height: 100%;" class="normal" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/logo_2017.png" alt="Logo"><img style="height: 100%;" class="light" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/logo_2017-1.png" alt="Logo"><img style="height: 100%;" class="dark" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/logo_2017-2.png" alt="Logo"><img style="height: 100%;" class="sticky" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/logo_2017.png" alt="Logo"></a></div>
+							
+						</div>
+                        					</div>
+																		<div class="header_inner_right">
+                                <div class="side_menu_button_wrapper right">
+                                    <div class="side_menu_button">
+                                                                                                                            <a class="search_button" href="javascript:void(0)">
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                        
+                                                                            </div>
+                                </div>
+							</div>
+												<nav class="main_menu drop_down right">
+						<ul id="menu-navigation" class=""><li id="nav-menu-item-14263" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home  narrow"><a href="https://www.simplehelix.com/" class=""><i class="menu_icon fa blank"></i><span>Home</span></a></li>
+<li id="nav-menu-item-14264" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub wide"><a href="#" class=""><i class="menu_icon fa blank"></i><span>Hosting Solutions</span><i class="q_menu_arrow fa fa-angle-down"></i></a>
+<div style="left: -514.5px; height: 0px;" class="second bellow_header"><div class="inner"><ul style="width: 1049px;">
+	<li style="height: 303px;" id="nav-menu-item-14803" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children sub"><a href="https://www.simplehelix.com/managed-hosting/magento/" class=""><i class="menu_icon fa blank"></i><span>Magento Hosting</span><i class="q_menu_arrow fa fa-angle-right"></i></a>
+	<ul>
+		<li id="nav-menu-item-14460" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children "><a href="#" class=""><i class="menu_icon fa blank"></i><span>Community Edition</span><i class="q_menu_arrow fa fa-angle-down"></i></a>
+		<ul>
+			<li id="nav-menu-item-14786" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/magento/community-shared-hosting/" class=""><i class="menu_icon fa blank"></i><span>Shared Hosting</span></a></li>
+			<li id="nav-menu-item-14785" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/magento/community-cloud-hosting/" class=""><i class="menu_icon fa blank"></i><span>Cloud Hosting</span></a></li>
+			<li id="nav-menu-item-15740" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/magento/community-dedicated-hosting/" class=""><i class="menu_icon fa blank"></i><span>Dedicated Servers</span></a></li>
+		</ul>
+</li>
+		<li id="nav-menu-item-14461" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children "><a href="#" class=""><i class="menu_icon fa blank"></i><span>Enterprise Edition</span><i class="q_menu_arrow fa fa-angle-down"></i></a>
+		<ul>
+			<li id="nav-menu-item-14802" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/magento/enterprise-cloud-hosting/" class=""><i class="menu_icon fa blank"></i><span>Cloud Hosting</span></a></li>
+			<li id="nav-menu-item-15741" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/magento/enterprise-dedicated-hosting/" class=""><i class="menu_icon fa blank"></i><span>Dedicated Servers</span></a></li>
+		</ul>
+</li>
+	</ul>
+</li>
+	<li style="height: 303px;" id="nav-menu-item-15118" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children sub"><a href="https://www.simplehelix.com/managed-hosting/wordpress/" class=""><i class="menu_icon fa blank"></i><span>WordPress Hosting</span><i class="q_menu_arrow fa fa-angle-right"></i></a>
+	<ul>
+		<li id="nav-menu-item-15033" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/wordpress/shared-hosting/" class=""><i class="menu_icon fa blank"></i><span>Blog Hosting</span></a></li>
+		<li id="nav-menu-item-15117" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/wordpress/cloud-hosting/" class=""><i class="menu_icon fa blank"></i><span>Cloud Hosting</span></a></li>
+		<li id="nav-menu-item-15141" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/wordpress/dedicated-hosting/" class=""><i class="menu_icon fa blank"></i><span>Dedicated Servers</span></a></li>
+	</ul>
+</li>
+	<li style="height: 303px;" id="nav-menu-item-15183" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children sub"><a href="https://www.simplehelix.com/managed-hosting/prestashop/" class=""><i class="menu_icon fa blank"></i><span>PrestaShop Hosting</span><i class="q_menu_arrow fa fa-angle-right"></i></a>
+	<ul>
+		<li id="nav-menu-item-15184" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/prestashop/shared-hosting/" class=""><i class="menu_icon fa blank"></i><span>Shared Hosting</span></a></li>
+		<li id="nav-menu-item-15236" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/prestashop/prestashop-cloud-hosting/" class=""><i class="menu_icon fa blank"></i><span>Cloud Hosting</span></a></li>
+		<li id="nav-menu-item-15242" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/prestashop/dedicated-hosting/" class=""><i class="menu_icon fa blank"></i><span>Dedicated Servers</span></a></li>
+	</ul>
+</li>
+	<li style="height: 303px;" id="nav-menu-item-14469" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub"><a href="#" class=""><i class="menu_icon fa blank"></i><span>Hosting</span><i class="q_menu_arrow fa fa-angle-right"></i></a>
+	<ul>
+		<li id="nav-menu-item-17257" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children "><a href="https://www.simplehelix.com/managed-hosting/" class=""><i class="menu_icon fa blank"></i><span>Managed Hosting</span><i class="q_menu_arrow fa fa-angle-down"></i></a>
+		<ul>
+			<li id="nav-menu-item-15266" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/shared-hosting/" class=""><i class="menu_icon fa blank"></i><span>Shared Hosting</span></a></li>
+			<li id="nav-menu-item-15256" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/dedicated-hosting/" class=""><i class="menu_icon fa blank"></i><span>Dedicated Servers</span></a></li>
+			<li id="nav-menu-item-14276" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/custom-servers/" class=""><i class="menu_icon fa fa-apple"></i><span>Custom Servers</span></a></li>
+		</ul>
+</li>
+		<li id="nav-menu-item-17258" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children "><a href="https://www.simplehelix.com/cloud-hosting/" class=""><i class="menu_icon fa blank"></i><span>Cloud Hosting</span><i class="q_menu_arrow fa fa-angle-down"></i></a>
+		<ul>
+			<li id="nav-menu-item-14272" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/cloud-hosting/vmware/" class=""><i class="menu_icon fa blank"></i><span>VMware</span></a></li>
+			<li id="nav-menu-item-15664" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/cloud-hosting/xen-cloud-hosting/" class=""><i class="menu_icon fa blank"></i><span>Xen</span></a></li>
+			<li id="nav-menu-item-18090" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/cloud-hosting/amazon-web-services-aws/" class=""><i class="menu_icon fa blank"></i><span>AWS</span></a></li>
+		</ul>
+</li>
+	</ul>
+</li>
+</ul></div></div>
+</li>
+<li id="nav-menu-item-18815" class="menu-item menu-item-type-post_type menu-item-object-page  narrow"><a href="https://www.simplehelix.com/datacenter/" class=""><i class="menu_icon fa blank"></i><span>Data Center</span></a></li>
+<li id="nav-menu-item-14283" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub wide"><a href="#" class=""><i class="menu_icon fa blank"></i><span>Services</span><i class="q_menu_arrow fa fa-angle-down"></i></a>
+<div style="left: -493.5px; height: 0px;" class="second bellow_header"><div class="inner"><ul style="width: 513px;">
+	<li style="height: 205px;" id="nav-menu-item-16157" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children sub"><a href="https://www.simplehelix.com/services/ssl/" class=""><i class="menu_icon fa blank"></i><span>SSL Certificates</span><i class="q_menu_arrow fa fa-angle-right"></i></a>
+	<ul>
+		<li id="nav-menu-item-16156" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/ssl/symantec/" class=""><i class="menu_icon fa blank"></i><span>Symantec</span></a></li>
+		<li id="nav-menu-item-16731" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/ssl/comodo/" class=""><i class="menu_icon fa blank"></i><span>Comodo</span></a></li>
+		<li id="nav-menu-item-16551" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/ssl/rapidssl/" class=""><i class="menu_icon fa blank"></i><span>RapidSSL</span></a></li>
+		<li id="nav-menu-item-16591" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/ssl/geotrust/" class=""><i class="menu_icon fa blank"></i><span>GeoTrust</span></a></li>
+		<li id="nav-menu-item-16687" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/ssl/thawte/" class=""><i class="menu_icon fa blank"></i><span>Thawte</span></a></li>
+		<li id="nav-menu-item-16712" class="menu-item menu-item-type-post_type menu-item-object-page "></li>
+	</ul>
+</li>
+	<li style="height: 205px;" id="nav-menu-item-16251" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub"><a href="#" class=""><i class="menu_icon fa blank"></i><span>Other</span><i class="q_menu_arrow fa fa-angle-right"></i></a>
+	<ul>
+		<li id="nav-menu-item-14290" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/google-solutions/" class=""><i class="menu_icon fa blank"></i><span>Google Solutions</span></a></li>
+		<li id="nav-menu-item-17832" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/cloudflare/" class=""><i class="menu_icon fa blank"></i><span>CloudFlare CDN</span></a></li>
+		<li id="nav-menu-item-14287" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/colocation/" class=""><i class="menu_icon fa blank"></i><span>Colocation</span></a></li>
+		<li id="nav-menu-item-14288" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/magento-upgrades/" class=""><i class="menu_icon fa blank"></i><span>Magento Upgrades</span></a></li>
+		<li id="nav-menu-item-14455" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/dedicated-hosting/hosting-addons/" class=""><i class="menu_icon fa blank"></i><span>Hosting Addons</span></a></li>
+	</ul>
+</li>
+</ul></div></div>
+</li>
+<li id="nav-menu-item-14294" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub narrow"><a href="#" class=""><i class="menu_icon fa blank"></i><span>Company</span><i class="q_menu_arrow fa fa-angle-down"></i></a>
+<div style="height: 0px;" class="second bellow_header"><div class="inner"><ul>
+	<li id="nav-menu-item-14296" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/company/" class=""><i class="menu_icon fa blank"></i><span>About Us</span></a></li>
+	<li id="nav-menu-item-14299" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/company/affiliates/" class=""><i class="menu_icon fa blank"></i><span>Affiliate Program</span></a></li>
+	<li id="nav-menu-item-14300" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/company/jobs/" class=""><i class="menu_icon fa blank"></i><span>Careers</span></a></li>
+	<li id="nav-menu-item-14301" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/company/policies/" class=""><i class="menu_icon fa blank"></i><span>Policies</span></a></li>
+</ul></div></div>
+</li>
+<li id="nav-menu-item-14303" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent  narrow"><a href="https://www.simplehelix.com/blog/" class=""><i class="menu_icon fa blank"></i><span>Blog</span></a></li>
+<li id="nav-menu-item-14304" class="menu-item menu-item-type-post_type menu-item-object-page  narrow"><a href="https://www.simplehelix.com/contact/" class=""><i class="menu_icon fa blank"></i><span>Contact</span></a></li>
+</ul>						</nav>
+																<nav class="mobile_menu">
+						<ul id="menu-navigation-1" class=""><li id="mobile-menu-item-14263" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home "><a href="https://www.simplehelix.com/" class=""><span>Home</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+<li id="mobile-menu-item-14264" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=""><span>Hosting Solutions</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a>
+<ul class="sub_menu">
+	<li id="mobile-menu-item-14803" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub"><a href="https://www.simplehelix.com/managed-hosting/magento/" class=""><span>Magento Hosting</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a>
+	<ul class="sub_menu">
+		<li id="mobile-menu-item-14460" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=""><span>Community Edition</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a>
+		<ul class="sub_menu">
+			<li id="mobile-menu-item-14786" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/magento/community-shared-hosting/" class=""><span>Shared Hosting</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+			<li id="mobile-menu-item-14785" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/magento/community-cloud-hosting/" class=""><span>Cloud Hosting</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+			<li id="mobile-menu-item-15740" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/magento/community-dedicated-hosting/" class=""><span>Dedicated Servers</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		</ul>
+</li>
+		<li id="mobile-menu-item-14461" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=""><span>Enterprise Edition</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a>
+		<ul class="sub_menu">
+			<li id="mobile-menu-item-14802" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/magento/enterprise-cloud-hosting/" class=""><span>Cloud Hosting</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+			<li id="mobile-menu-item-15741" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/magento/enterprise-dedicated-hosting/" class=""><span>Dedicated Servers</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		</ul>
+</li>
+	</ul>
+</li>
+	<li id="mobile-menu-item-15118" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub"><a href="https://www.simplehelix.com/managed-hosting/wordpress/" class=""><span>WordPress Hosting</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a>
+	<ul class="sub_menu">
+		<li id="mobile-menu-item-15033" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/wordpress/shared-hosting/" class=""><span>Blog Hosting</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		<li id="mobile-menu-item-15117" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/wordpress/cloud-hosting/" class=""><span>Cloud Hosting</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		<li id="mobile-menu-item-15141" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/wordpress/dedicated-hosting/" class=""><span>Dedicated Servers</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+	</ul>
+</li>
+	<li id="mobile-menu-item-15183" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub"><a href="https://www.simplehelix.com/managed-hosting/prestashop/" class=""><span>PrestaShop Hosting</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a>
+	<ul class="sub_menu">
+		<li id="mobile-menu-item-15184" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/prestashop/shared-hosting/" class=""><span>Shared Hosting</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		<li id="mobile-menu-item-15236" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/prestashop/prestashop-cloud-hosting/" class=""><span>Cloud Hosting</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		<li id="mobile-menu-item-15242" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/prestashop/dedicated-hosting/" class=""><span>Dedicated Servers</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+	</ul>
+</li>
+	<li id="mobile-menu-item-14469" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=""><span>Hosting</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a>
+	<ul class="sub_menu">
+		<li id="mobile-menu-item-17257" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub"><a href="https://www.simplehelix.com/managed-hosting/" class=""><span>Managed Hosting</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a>
+		<ul class="sub_menu">
+			<li id="mobile-menu-item-15266" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/shared-hosting/" class=""><span>Shared Hosting</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+			<li id="mobile-menu-item-15256" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/dedicated-hosting/" class=""><span>Dedicated Servers</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+			<li id="mobile-menu-item-14276" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/custom-servers/" class=""><span>Custom Servers</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		</ul>
+</li>
+		<li id="mobile-menu-item-17258" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub"><a href="https://www.simplehelix.com/cloud-hosting/" class=""><span>Cloud Hosting</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a>
+		<ul class="sub_menu">
+			<li id="mobile-menu-item-14272" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/cloud-hosting/vmware/" class=""><span>VMware</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+			<li id="mobile-menu-item-15664" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/cloud-hosting/xen-cloud-hosting/" class=""><span>Xen</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+			<li id="mobile-menu-item-18090" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/cloud-hosting/amazon-web-services-aws/" class=""><span>AWS</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		</ul>
+</li>
+	</ul>
+</li>
+</ul>
+</li>
+<li id="mobile-menu-item-18815" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/datacenter/" class=""><span>Data Center</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+<li id="mobile-menu-item-14283" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=""><span>Services</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a>
+<ul class="sub_menu">
+	<li id="mobile-menu-item-16157" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children  has_sub"><a href="https://www.simplehelix.com/services/ssl/" class=""><span>SSL Certificates</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a>
+	<ul class="sub_menu">
+		<li id="mobile-menu-item-16156" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/ssl/symantec/" class=""><span>Symantec</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		<li id="mobile-menu-item-16731" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/ssl/comodo/" class=""><span>Comodo</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		<li id="mobile-menu-item-16551" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/ssl/rapidssl/" class=""><span>RapidSSL</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		<li id="mobile-menu-item-16591" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/ssl/geotrust/" class=""><span>GeoTrust</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		<li id="mobile-menu-item-16687" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/ssl/thawte/" class=""><span>Thawte</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		<li id="mobile-menu-item-16712" class="menu-item menu-item-type-post_type menu-item-object-page "></li>
+	</ul>
+</li>
+	<li id="mobile-menu-item-16251" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=""><span>Other</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a>
+	<ul class="sub_menu">
+		<li id="mobile-menu-item-14290" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/google-solutions/" class=""><span>Google Solutions</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		<li id="mobile-menu-item-17832" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/cloudflare/" class=""><span>CloudFlare CDN</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		<li id="mobile-menu-item-14287" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/colocation/" class=""><span>Colocation</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		<li id="mobile-menu-item-14288" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/services/magento-upgrades/" class=""><span>Magento Upgrades</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+		<li id="mobile-menu-item-14455" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/managed-hosting/dedicated-hosting/hosting-addons/" class=""><span>Hosting Addons</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li id="mobile-menu-item-14294" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub"><a href="#" class=""><span>Company</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a>
+<ul class="sub_menu">
+	<li id="mobile-menu-item-14296" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/company/" class=""><span>About Us</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+	<li id="mobile-menu-item-14299" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/company/affiliates/" class=""><span>Affiliate Program</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+	<li id="mobile-menu-item-14300" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/company/jobs/" class=""><span>Careers</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+	<li id="mobile-menu-item-14301" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/company/policies/" class=""><span>Policies</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+</ul>
+</li>
+<li id="mobile-menu-item-14303" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent "><a href="https://www.simplehelix.com/blog/" class=""><span>Blog</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+<li id="mobile-menu-item-14304" class="menu-item menu-item-type-post_type menu-item-object-page "><a href="https://www.simplehelix.com/contact/" class=""><span>Contact</span><span class="mobile_arrow"><i class="fa fa-angle-right"></i><i class="fa fa-angle-down"></i></span></a></li>
+</ul>					</nav>
+								</div>
+				</div>
+				</div>
+	</div>
+	</div>
+</header>
+			<a class="on" id="back_to_top" href="#">
+			<span class="fa-stack">
+				<i class="fa fa-angle-up " style=""></i>
+			</span>
+		</a>
+				<div style="min-height: 90px; padding-top: 144px; margin-bottom: 516px;" class="content ">
+						<div class="content_inner  ">
+																<div class="title_outer title_without_animation" data-height="229">
+		<div class="title title_size_small position_left " style="height:229px;">
+			<div class="image not_responsive"></div>
+										<div class="title_holder" style="padding-top:144px;height:85px;">
+					<div class="container">
+						<div class="container_inner clearfix">
+								<div class="title_subtitle_holder">
+																	<h1><span>Install MySQL 5.6 on CentOS 7 / RHEL 7</span></h1>
+																	
+																				<div class="breadcrumb"> <div class="breadcrumbs"><div class="breadcrumbs_inner"><a href="https://www.simplehelix.com/">Home</a><span class="delimiter"> / </span><a href="https://www.simplehelix.com/blog/category/hosting-tools/">Hosting Tools</a> <span class="delimiter"> / </span><span class="current">Install MySQL 5.6 on CentOS 7 / RHEL 7</span></div></div></div>
+																	</div>
+														</div>
+					</div>
+				</div>
+					</div>
+	</div>
+								<div class="container">
+					<div class="container_inner">
+				
+												
+							<div class="two_columns_75_25 background_color_sidebar grid2 clearfix">
+								<div class="column1">
+											
+									<div class="column_inner">
+										<div class="blog_holder blog_single">	
+													<article id="post-18400" class="post-18400 post type-post status-publish format-standard has-post-thumbnail hentry category-hosting-tools category-server-technology category-tips category-screencasts">
+			<div class="post_content_holder">
+										<div class="post_image">
+	                        <img src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/DatabaseImage.jpg" class="attachment-full size-full wp-post-image" alt="" srcset="https://www.simplehelix.com/wp-content/uploads/2016/03/DatabaseImage.jpg 2560w, https://www.simplehelix.com/wp-content/uploads/2016/03/DatabaseImage-300x225.jpg 300w, https://www.simplehelix.com/wp-content/uploads/2016/03/DatabaseImage-768x576.jpg 768w, https://www.simplehelix.com/wp-content/uploads/2016/03/DatabaseImage-1024x768.jpg 1024w" sizes="(max-width: 2560px) 100vw, 2560px" height="1920" width="2560">						</div>
+								<div class="post_text">
+					<h2>Install MySQL 5.6 on CentOS 7 / RHEL 7</h2>
+					<div class="post_description">
+						<div class="post_description_left">
+							<span class="date"><i class="fa fa-clock-o"></i>13:23 25 March</span>
+							in <a href="https://www.simplehelix.com/blog/category/hosting-tools/" rel="category tag">Hosting Tools</a>, <a href="https://www.simplehelix.com/blog/category/server-technology/" rel="category tag">Server Technology</a>, <a href="https://www.simplehelix.com/blog/category/tips/" rel="category tag">Tips</a>, <a href="https://www.simplehelix.com/blog/category/screencasts/" rel="category tag">Tutorials</a>                            <span class="post_author">
+                                by                                <a class="post_author_link" href="https://www.simplehelix.com/blog/author/gcagle/">Simple Helix Marketing</a>
+                            </span>
+						</div>
+						<div class="post_description_right">
+																						<div class="blog_like">
+									<a href="#" class="qode-like" id="qode-like-18400" title="Like this"><i class="fa fa-thumbs-o-up"></i><span class="qode-like-count">1<span> Like</span></span></a>								</div>
+														<div class="blog_share"><div class="social_share_holder"><a href="javascript:void(0)" target="_self"><span class="social_share_icon"></span><span class="social_share_title">Share</span></a><div class="social_share_dropdown"><div class="inner_arrow"></div><div class="inner_arrow2"></div><ul><li class="facebook_share"><a title="Share on Facebook" href="javascript:void(0)" onclick="window.open('http://www.facebook.com/sharer.php?s=100&amp;p[title]=Install+MySQL+5.6+on+CentOS+7+%2F+RHEL+7&amp;p[url]=https%3A%2F%2Fwww.simplehelix.com%2Fblog%2Fscreencasts%2Finstall-mysql-5-6-on-centos-7-rhel-7%2F&amp;p[images][0]=https://www.simplehelix.com/wp-content/uploads/2016/03/DatabaseImage.jpg&amp;p[summary]=Install+MySQL+5.6+on+CentOS+7+%2F+RHEL+7+MySQL+is+a+popular+open-source+relational+database+management+system+widely+used+by+a+number+of+web+platforms+including+Magento+and+WordPress.+With+the+release+of+RHEL+7%2C+MySQL+is+no+longer+included+in+the+default+RHEL+%2F+CentOS+7+repositories+and+has+been+replaced+by+MariaDB.+MariaDB+is+an+excellent+platform+that+is+considered+to+be...', 'sharer', 'toolbar=0,status=0,width=620,height=280');"><i class="fa fa-facebook"></i><span class="share_text">Facebook</span></a></li><li class="twitter_share"><a href="#" onclick="popUp=window.open('http://twitter.com/home?status=Install+MySQL+5.6+on+CentOS+7+%2F+RHEL+7+MySQL+is+a+popular+open-source+relational+database+management+system+widely+https://www.simplehelix.com/blog/screencasts/install-mysql-5-6-on-centos-7-rhel-7/', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false;"><i class="fa fa-twitter"></i><span class="share_text">Twitter</span></a></li><li class="google_share"><a href="#" onclick="popUp=window.open('https://plus.google.com/share?url=https%3A%2F%2Fwww.simplehelix.com%2Fblog%2Fscreencasts%2Finstall-mysql-5-6-on-centos-7-rhel-7%2F', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false"><i class="fa fa-google-plus"></i><span class="share_text">Google+</span></a></li><li class="linkedin_share"><a href="#" onclick="popUp=window.open('http://linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fwww.simplehelix.com%2Fblog%2Fscreencasts%2Finstall-mysql-5-6-on-centos-7-rhel-7%2F&amp;title=Install+MySQL+5.6+on+CentOS+7+%2F+RHEL+7', 'popupwindow', 'scrollbars=yes,width=800,height=400');popUp.focus();return false"><i class="fa fa-linkedin"></i><span class="share_text">LinkedIn</span></a></li></ul></div></div></div>						</div>
+					</div>	
+					<h3>Install MySQL 5.6 on CentOS 7 / RHEL 7</h3>
+<p>MySQL is a popular open-source relational database management system 
+widely used by a number of web platforms including Magento and 
+WordPress. With the release of RHEL 7, MySQL is no longer included in 
+the default RHEL / CentOS 7 repositories and has been replaced by 
+MariaDB.</p>
+<p>MariaDB is an excellent platform that is <a href="https://mariadb.com/kb/en/mariadb/mariadb-vs-mysql-compatibility/">considered to be a drop-in replacement</a>
+ for MySQL, however, there are some features specific to MySQL 5.6 that 
+have not yet been ported. At the time of this writing, the 
+Magento&nbsp;&nbsp;2.x platform specifically requires MySQL 5.6 for this
+ reason.</p>
+<p>If you find yourself needing MySQL 5.6 on a RHEL / CentOS 7 
+environment, have no fear, the installation is very simple and just 
+requires a few short steps.</p>
+<p>First, ensure that your system is completely up-to-date before we make any changes:</p>
+<blockquote><p>sudo yum update</p></blockquote>
+<p>&nbsp;</p>
+<h3>1 – Install MySQL Community Repository</h3>
+<hr>
+<p>&nbsp;</p>
+<p>We recommend using the <a href="https://dev.mysql.com/downloads/repo/yum/">official MySQL community repository</a> for the installation.</p>
+<p>Download and install it using the following:</p>
+<blockquote><p>sudo rpm 
+-Uvh&nbsp;http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+ sudo rpm -ivh mysql-community-release-el7-5.noarch.rpm</p>
+<p>sudo yum update</p></blockquote>
+<p>&nbsp;</p>
+<h3>2 – Install MySQL</h3>
+<hr>
+<p>&nbsp;</p>
+<p>Now that the repository is installed, we can proceed to install MySQL
+ (note that you may need to remove MariaDB if it was previously 
+installed):</p>
+<blockquote><p>sudo yum install mysql-server</p></blockquote>
+<p>&nbsp;</p>
+<h3>3 – Start MySQL and Enable on Boot</h3>
+<hr>
+<p>&nbsp;</p>
+<p>We can now&nbsp;proceed to start the newly installed MySQL service and enable it to start on boot:</p>
+<blockquote><p>sudo systemctl start mysqld</p>
+<p>sudo systemctl enable mysqld</p></blockquote>
+<p>&nbsp;</p>
+<h3>4 – Harden MySQL</h3>
+<hr>
+<p>&nbsp;</p>
+<p>It would now be a good idea to proceed to run the <strong>mysql_secure_installation</strong>
+ script that addresses several security concerns in the default MySQL 
+installation. You can read more about what this script addresses in the <a href="https://dev.mysql.com/doc/refman/5.6/en/mysql-secure-installation.html">MySQL Reference Manual</a>.</p>
+<blockquote><p>sudo mysql_secure_installation</p></blockquote>
+<p>&nbsp;</p>
+<h3>5 – Finished!</h3>
+<hr>
+<p>&nbsp;</p>
+<p>Congratulations! You have now finished the installation of MySQL 5.6 
+and can now proceed to configure and use it for your applications such 
+as <a href="http://devdocs.magento.com/guides/v2.0/install-gde/bk-install-guide.html">Magento 2</a>!</p>
+<div class="yarpp-related">
+<h3>Related posts:</h3>
+<div class="yarpp-thumbnails-horizontal">
+<a class="yarpp-thumbnail" href="https://www.simplehelix.com/blog/uncategorized/installing-and-configuring-pure-ftpd-on-centos-7/" title="Installing and Configuring Pure-FTPD on CentOS 7">
+<img src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/iStock_000068758033_Large-120x120.jpg" class="attachment-yarpp-thumbnail size-yarpp-thumbnail wp-post-image" alt="" srcset="https://www.simplehelix.com/wp-content/uploads/2015/08/iStock_000068758033_Large-120x120.jpg 120w, https://www.simplehelix.com/wp-content/uploads/2015/08/iStock_000068758033_Large-150x150.jpg 150w, https://www.simplehelix.com/wp-content/uploads/2015/08/iStock_000068758033_Large-520x520.jpg 520w, https://www.simplehelix.com/wp-content/uploads/2015/08/iStock_000068758033_Large-45x45.jpg 45w" sizes="(max-width: 120px) 100vw, 120px" height="120" width="120"><span class="yarpp-thumbnail-title">Installing and Configuring Pure-FTPD on CentOS 7</span></a>
+<a class="yarpp-thumbnail" href="https://www.simplehelix.com/blog/magento/magento-hosting-progressive-server-performance-improvements/" title="Magento Hosting: Progressive Server Performance Improvements">
+<span class="yarpp-thumbnail-default"><img src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/default.png"></span><span class="yarpp-thumbnail-title">Magento Hosting: Progressive Server Performance Improvements</span></a>
+<a class="yarpp-thumbnail" href="https://www.simplehelix.com/blog/magento/installing-magento-from-the-command-line/" title="Installing Magento from the Command Line">
+<span class="yarpp-thumbnail-default"><img src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/default.png"></span><span class="yarpp-thumbnail-title">Installing Magento from the Command Line</span></a>
+<a class="yarpp-thumbnail" href="https://www.simplehelix.com/blog/screencasts/how-to-make-site-backups/" title="How to Make Site Backups">
+<img src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/blog_image09.png" class="attachment-yarpp-thumbnail size-yarpp-thumbnail wp-post-image" alt="" srcset="https://www.simplehelix.com/wp-content/uploads/2014/08/blog_image09.png 1100w, https://www.simplehelix.com/wp-content/uploads/2014/08/blog_image09-300x168.png 300w, https://www.simplehelix.com/wp-content/uploads/2014/08/blog_image09-1024x576.png 1024w, https://www.simplehelix.com/wp-content/uploads/2014/08/blog_image09-345x198.png 345w" sizes="(max-width: 120px) 100vw, 120px" height="68" width="120"><span class="yarpp-thumbnail-title">How to Make Site Backups</span></a>
+</div>
+</div>
+				</div>
+			</div>
+		
+					
+	</article>										</div>
+										
+										<br><br> 
+									</div>
+								</div>	
+								<div class="column2"> 
+										<div class="column_inner">
+		<aside>
+							
+			<div id="search-6" class="widget widget_search posts_holder"><form role="search" method="get" id="searchform" action="https://www.simplehelix.com/">
+    <div><label class="screen-reader-text" for="s">Search for:</label>
+        <input placeholder="Search Here" name="s" id="s" type="text">
+        <input id="searchsubmit" value="" type="submit">
+    </div>
+</form></div><div id="text-13" class="widget widget_text posts_holder">			<div class="textwidget"><div style="background-color:#fbfbfb; border-radius:4px; padding:10px 12px 15px 12px;"><h5><strong>Find Your Hosting Solution Today!</strong></h5>
+<a href="https://manage.simplehelix.com/cart.php" target="_self" class="qbutton  small" style="color: #fff; font-style: bold; ">Contact Us</a><img src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/airplane.png" style="padding-right:10px; margin-top:-5px;" align="right"></div>
+</div>
+		</div><div id="yarpp_widget-2" class="widget widget_yarpp_widget posts_holder"><h5>Related Posts</h5><div class="yarpp-related-widget">
+<ol><li><a href="https://www.simplehelix.com/blog/uncategorized/installing-and-configuring-pure-ftpd-on-centos-7/" rel="bookmark">Installing and Configuring Pure-FTPD on CentOS 7</a></li><li><a href="https://www.simplehelix.com/blog/magento/magento-hosting-progressive-server-performance-improvements/" rel="bookmark">Magento Hosting: Progressive Server Performance Improvements</a></li><li><a href="https://www.simplehelix.com/blog/magento/installing-magento-from-the-command-line/" rel="bookmark">Installing Magento from the Command Line</a></li><li><a href="https://www.simplehelix.com/blog/screencasts/how-to-make-site-backups/" rel="bookmark">How to Make Site Backups</a></li></ol>
+</div>
+</div><style>
+.rpwe-block ul{list-style:none!important;margin-left:0!important;padding-left:0!important;}.rpwe-block li{border-bottom:1px solid #eee;margin-bottom:10px;padding-bottom:10px;list-style-type: none;}.rpwe-block a{display:inline!important;text-decoration:none;}.rpwe-block h3{background:none!important;clear:none;margin-bottom:0!important;margin-top:0!important;font-weight:400;font-size:12px!important;line-height:1.5em;}.rpwe-thumb{border:1px solid #EEE!important;box-shadow:none!important;margin:2px 10px 2px 0;padding:3px!important;}.rpwe-summary{font-size:12px;}.rpwe-time{color:#bbb;font-size:11px;}.rpwe-comment{color:#bbb;font-size:11px;padding-left:5px;}.rpwe-alignleft{display:inline;float:left;}.rpwe-alignright{display:inline;float:right;}.rpwe-aligncenter{display:block;margin-left: auto;margin-right: auto;}.rpwe-clearfix:before,.rpwe-clearfix:after{content:"";display:table !important;}.rpwe-clearfix:after{clear:both;}.rpwe-clearfix{zoom:1;}
+</style>
+	<div id="rpwe_widget-2" class="widget rpwe_widget recent-posts-extended posts_holder"><h5>Recent Posts</h5><div class="rpwe-block "><ul class="rpwe-ul"><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="https://www.simplehelix.com/blog/events/grand-opening-huntsville-data-center/" rel="bookmark"><img class="rpwe-alignleft rpwe-thumb" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/https-2F2Fcdn.png" alt="Join Us for the Grand Opening of our Huntsville, AL Data Center"></a><h3 class="rpwe-title"><a href="https://www.simplehelix.com/blog/events/grand-opening-huntsville-data-center/" title="Permalink to Join Us for the Grand Opening of our Huntsville, AL Data Center" rel="bookmark">Join Us for the Grand Opening of our Huntsville, AL Data Center</a></h3><time class="rpwe-time published" datetime="2017-07-11T10:18:31+00:00">July 11, 2017</time></li><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="https://www.simplehelix.com/blog/magento/magento-paypal-ipn-patch/" rel="bookmark"><img class="rpwe-alignleft rpwe-thumb" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/iStock-500392931-55x55.jpg" alt="Magento Paypal IPN Patch"></a><h3 class="rpwe-title"><a href="https://www.simplehelix.com/blog/magento/magento-paypal-ipn-patch/" title="Permalink to Magento Paypal IPN Patch" rel="bookmark">Magento Paypal IPN Patch</a></h3><time class="rpwe-time published" datetime="2017-06-14T15:27:53+00:00">June 14, 2017</time></li><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="https://www.simplehelix.com/blog/magento/magento-versions-upgrade-paths/" rel="bookmark"><img class="rpwe-alignleft rpwe-thumb" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/iStock-537438920-55x55.jpg" alt="Magento Versions &amp; Upgrade paths"></a><h3 class="rpwe-title"><a href="https://www.simplehelix.com/blog/magento/magento-versions-upgrade-paths/" title="Permalink to Magento Versions &amp; Upgrade paths" rel="bookmark">Magento Versions &amp; Upgrade paths</a></h3><time class="rpwe-time published" datetime="2017-06-01T10:09:06+00:00">June 1, 2017</time></li><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="https://www.simplehelix.com/blog/magento/free-ssl-replacement-for-symantec-certificates/" rel="bookmark"><img class="rpwe-alignleft rpwe-thumb" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/iStock-93286105-55x55.jpg" alt="Free SSL replacement for Symantec certificates"></a><h3 class="rpwe-title"><a href="https://www.simplehelix.com/blog/magento/free-ssl-replacement-for-symantec-certificates/" title="Permalink to Free SSL replacement for Symantec certificates" rel="bookmark">Free SSL replacement for Symantec certificates</a></h3><time class="rpwe-time published" datetime="2017-03-30T14:13:06+00:00">March 30, 2017</time></li><li class="rpwe-li rpwe-clearfix"><a class="rpwe-img" href="https://www.simplehelix.com/blog/magento/imagine-2017/" rel="bookmark"><img class="rpwe-alignleft rpwe-thumb" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/Screen-Shot-2017-03-29-at-10.png" alt="Imagine 2017"></a><h3 class="rpwe-title"><a href="https://www.simplehelix.com/blog/magento/imagine-2017/" title="Permalink to Imagine 2017" rel="bookmark">Imagine 2017</a></h3><time class="rpwe-time published" datetime="2017-03-29T10:05:16+00:00">March 29, 2017</time></li></ul></div><!-- Generated by http://wordpress.org/plugins/recent-posts-widget-extended/ --></div><div id="categories-5" class="widget widget_categories posts_holder"><h5>Categories</h5><label class="screen-reader-text" for="cat">Categories</label><select name="cat" id="cat" class="postform">
+	<option selected="selected" value="-1">Select Category</option>
+	<option class="level-0" value="133">CDN</option>
+	<option class="level-0" value="278">Cloud Computing</option>
+	<option class="level-0" value="457">Cloud Hosting Benefits</option>
+	<option class="level-0" value="134">Dedicated Hosting</option>
+	<option class="level-0" value="412">e-Cart Tips</option>
+	<option class="level-0" value="469">E-cart Tips</option>
+	<option class="level-0" value="415">E-commerce Solutions</option>
+	<option class="level-0" value="135">eCommerce</option>
+	<option class="level-0" value="31">Events</option>
+	<option class="level-0" value="136">Hosting Tools</option>
+	<option class="level-0" value="129">Magento</option>
+	<option class="level-0" value="257">Maintenance</option>
+	<option class="level-0" value="413">Managed Hosting Benefits</option>
+	<option class="level-0" value="132">News</option>
+	<option class="level-0" value="190">Security</option>
+	<option class="level-0" value="137">Server Technology</option>
+	<option class="level-0" value="252">Shared Hosting</option>
+	<option class="level-0" value="414">Simple Helix Support</option>
+	<option class="level-0" value="196">Specials</option>
+	<option class="level-0" value="336">Spotlight</option>
+	<option class="level-0" value="409">Testimonials</option>
+	<option class="level-0" value="131">Tips</option>
+	<option class="level-0" value="130">Tutorials</option>
+	<option class="level-0" value="1">Uncategorized</option>
+	<option class="level-0" value="468">Videos</option>
+</select>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "cat" );
+	function onCatChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value > 0 ) {
+			location.href = "https://www.simplehelix.com/?cat=" + dropdown.options[ dropdown.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onCatChange;
+})();
+/* ]]> */
+</script>
+
+</div><div id="archives-2" class="widget widget_archive posts_holder"><h5>Archives</h5>		<label class="screen-reader-text" for="archives-dropdown-2">Archives</label>
+		<select id="archives-dropdown-2" name="archive-dropdown" onchange="document.location.href=this.options[this.selectedIndex].value;">
+			
+			<option selected="selected" value="">Select Month</option>
+				<option value="https://www.simplehelix.com/blog/2017/07/"> July 2017 </option>
+	<option value="https://www.simplehelix.com/blog/2017/06/"> June 2017 </option>
+	<option value="https://www.simplehelix.com/blog/2017/03/"> March 2017 </option>
+	<option value="https://www.simplehelix.com/blog/2017/02/"> February 2017 </option>
+	<option value="https://www.simplehelix.com/blog/2017/01/"> January 2017 </option>
+	<option value="https://www.simplehelix.com/blog/2016/12/"> December 2016 </option>
+	<option value="https://www.simplehelix.com/blog/2016/11/"> November 2016 </option>
+	<option value="https://www.simplehelix.com/blog/2016/10/"> October 2016 </option>
+	<option value="https://www.simplehelix.com/blog/2016/03/"> March 2016 </option>
+	<option value="https://www.simplehelix.com/blog/2016/02/"> February 2016 </option>
+	<option value="https://www.simplehelix.com/blog/2016/01/"> January 2016 </option>
+	<option value="https://www.simplehelix.com/blog/2015/12/"> December 2015 </option>
+	<option value="https://www.simplehelix.com/blog/2015/11/"> November 2015 </option>
+	<option value="https://www.simplehelix.com/blog/2015/10/"> October 2015 </option>
+	<option value="https://www.simplehelix.com/blog/2015/09/"> September 2015 </option>
+	<option value="https://www.simplehelix.com/blog/2015/08/"> August 2015 </option>
+	<option value="https://www.simplehelix.com/blog/2015/07/"> July 2015 </option>
+	<option value="https://www.simplehelix.com/blog/2015/06/"> June 2015 </option>
+	<option value="https://www.simplehelix.com/blog/2015/05/"> May 2015 </option>
+	<option value="https://www.simplehelix.com/blog/2015/04/"> April 2015 </option>
+	<option value="https://www.simplehelix.com/blog/2015/03/"> March 2015 </option>
+	<option value="https://www.simplehelix.com/blog/2015/02/"> February 2015 </option>
+	<option value="https://www.simplehelix.com/blog/2015/01/"> January 2015 </option>
+	<option value="https://www.simplehelix.com/blog/2014/12/"> December 2014 </option>
+	<option value="https://www.simplehelix.com/blog/2014/11/"> November 2014 </option>
+	<option value="https://www.simplehelix.com/blog/2014/10/"> October 2014 </option>
+	<option value="https://www.simplehelix.com/blog/2014/09/"> September 2014 </option>
+	<option value="https://www.simplehelix.com/blog/2014/08/"> August 2014 </option>
+	<option value="https://www.simplehelix.com/blog/2014/07/"> July 2014 </option>
+	<option value="https://www.simplehelix.com/blog/2014/06/"> June 2014 </option>
+	<option value="https://www.simplehelix.com/blog/2014/05/"> May 2014 </option>
+	<option value="https://www.simplehelix.com/blog/2014/04/"> April 2014 </option>
+	<option value="https://www.simplehelix.com/blog/2014/03/"> March 2014 </option>
+	<option value="https://www.simplehelix.com/blog/2014/02/"> February 2014 </option>
+	<option value="https://www.simplehelix.com/blog/2014/01/"> January 2014 </option>
+	<option value="https://www.simplehelix.com/blog/2013/12/"> December 2013 </option>
+	<option value="https://www.simplehelix.com/blog/2013/11/"> November 2013 </option>
+	<option value="https://www.simplehelix.com/blog/2013/10/"> October 2013 </option>
+	<option value="https://www.simplehelix.com/blog/2013/09/"> September 2013 </option>
+	<option value="https://www.simplehelix.com/blog/2013/08/"> August 2013 </option>
+	<option value="https://www.simplehelix.com/blog/2013/07/"> July 2013 </option>
+	<option value="https://www.simplehelix.com/blog/2013/06/"> June 2013 </option>
+	<option value="https://www.simplehelix.com/blog/2013/05/"> May 2013 </option>
+	<option value="https://www.simplehelix.com/blog/2013/04/"> April 2013 </option>
+	<option value="https://www.simplehelix.com/blog/2013/03/"> March 2013 </option>
+	<option value="https://www.simplehelix.com/blog/2013/02/"> February 2013 </option>
+	<option value="https://www.simplehelix.com/blog/2013/01/"> January 2013 </option>
+	<option value="https://www.simplehelix.com/blog/2012/12/"> December 2012 </option>
+	<option value="https://www.simplehelix.com/blog/2012/09/"> September 2012 </option>
+	<option value="https://www.simplehelix.com/blog/2012/08/"> August 2012 </option>
+	<option value="https://www.simplehelix.com/blog/2012/07/"> July 2012 </option>
+	<option value="https://www.simplehelix.com/blog/2012/06/"> June 2012 </option>
+	<option value="https://www.simplehelix.com/blog/2012/05/"> May 2012 </option>
+	<option value="https://www.simplehelix.com/blog/2012/04/"> April 2012 </option>
+	<option value="https://www.simplehelix.com/blog/2012/02/"> February 2012 </option>
+	<option value="https://www.simplehelix.com/blog/2011/10/"> October 2011 </option>
+	<option value="https://www.simplehelix.com/blog/2011/09/"> September 2011 </option>
+	<option value="https://www.simplehelix.com/blog/2011/05/"> May 2011 </option>
+	<option value="https://www.simplehelix.com/blog/2011/04/"> April 2011 </option>
+	<option value="https://www.simplehelix.com/blog/2011/02/"> February 2011 </option>
+	<option value="https://www.simplehelix.com/blog/2010/06/"> June 2010 </option>
+	<option value="https://www.simplehelix.com/blog/2010/05/"> May 2010 </option>
+	<option value="https://www.simplehelix.com/blog/2010/04/"> April 2010 </option>
+	<option value="https://www.simplehelix.com/blog/2010/03/"> March 2010 </option>
+	<option value="https://www.simplehelix.com/blog/2010/02/"> February 2010 </option>
+	<option value="https://www.simplehelix.com/blog/2010/01/"> January 2010 </option>
+	<option value="https://www.simplehelix.com/blog/2009/12/"> December 2009 </option>
+	<option value="https://www.simplehelix.com/blog/2009/11/"> November 2009 </option>
+	<option value="https://www.simplehelix.com/blog/2009/10/"> October 2009 </option>
+	<option value="https://www.simplehelix.com/blog/2009/07/"> July 2009 </option>
+	<option value="https://www.simplehelix.com/blog/2009/06/"> June 2009 </option>
+	<option value="https://www.simplehelix.com/blog/2009/05/"> May 2009 </option>
+	<option value="https://www.simplehelix.com/blog/2009/04/"> April 2009 </option>
+	<option value="https://www.simplehelix.com/blog/2009/03/"> March 2009 </option>
+	<option value="https://www.simplehelix.com/blog/2009/02/"> February 2009 </option>
+	<option value="https://www.simplehelix.com/blog/2009/01/"> January 2009 </option>
+
+		</select>
+		</div><div id="mc4wp_widget-2" class="widget widget_mc4wp_widget posts_holder"><h5>Newsletter</h5><!-- MailChimp for WP Pro v2.5.6 --><div id="mc4wp-form-1" class="form mc4wp-form mc4wp-form-13869 mc4wp-ajax"><form method="post" action="https://www.simplehelix.com/blog/screencasts/install-mysql-5-6-on-centos-7-rhel-7/"><p>
+	<input id="mc4wp_email" name="EMAIL" placeholder="Email address" required="" type="email">
+</p>
+
+<p>
+	<input value="Sign Up" type="submit">
+</p><textarea name="_mc4wp_required_but_not_really" style="display: none !important;"></textarea><input name="_mc4wp_form_id" value="13869" type="hidden"><input name="_mc4wp_form_instance" value="1" type="hidden"><input name="_mc4wp_form_submit" value="1" type="hidden"><input name="_mc4wp_form_nonce" value="12b121bf99" type="hidden"><span class="mc4wp-ajax-loader" style="display: none !important;"></span></form><div class="mc4wp-response"></div></div><!-- / MailChimp for WP Pro --></div>		</aside>
+	</div>
+								</div>
+							</div>
+											</div>
+				</div>
+			</div>						
+	
+
+
+				<div class="content_bottom">
+					</div>
+				
+	</div>
+</div>
+	<footer class="uncover">
+		<div class="footer_inner clearfix">
+				<div class="footer_top_holder">
+			<div class="footer_top">
+								<div class="container">
+					<div class="container_inner">
+																	<div class="three_columns clearfix">
+								<div class="column1">
+									<div class="column_inner">
+										<div id="text-10" class="widget widget_text">			<div class="textwidget"><img class="footer_logo" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/footer_logo_stack-1.png" alt="logo">
+
+<div class="separator  transparent   " style="margin-top:2px;margin-bottom:3px;"></div>
+
+
+165 West Park Loop<br>
+Huntsville, AL 35806<br>
+<div class="separator  transparent   " style="margin-top:5px;margin-bottom:5px;"></div>
+
+Email: <a href="mailto:sales@simplehelix.com">sales@simplehelix.com</a><br>
+<div class="separator  transparent   " style="margin-top:5px;margin-bottom:5px;"></div>
+
+US: <a href="tel:18669630424">1.866.963.0424</a><br>
+UK: <a href="tel:08081893147">0.808.189.3147</a><br>
+Australia: <a href="tel:1800779662">1.800.779.662</a><br>
+Germany: <a href="tel:08001833171">08001833171</a><br>
+<div class="separator  transparent   " style="margin-top:5px;margin-bottom:5px;"></div>
+
+Fax: 1.256.573.1016
+
+<div class="separator  transparent   " style="margin-top:10px;margin-bottom:10px;"></div>
+
+
+<span class="q_social_icon_holder"><a href="https://twitter.com/simplehelix" target="_blank"><i class="fa fa-twitter fa-2x simple_social" style=""></i></a></span>
+
+<span class="q_social_icon_holder"><a href="https://www.facebook.com/simplehelix" target="_blank"><i class="fa fa-facebook fa-2x simple_social" style=""></i></a></span>
+
+<span class="q_social_icon_holder"><a href="https://plus.google.com/+Simplehelix/posts" target="_blank"><i class="fa fa-google-plus fa-2x simple_social" style=""></i></a></span>
+
+<span class="q_social_icon_holder"><a href="https://www.linkedin.com/company/simple-helix" target="_blank"><i class="fa fa-linkedin fa-2x simple_social" style=""></i></a></span>
+</div>
+		</div>									</div>
+								</div>
+								<div class="column2">
+									<div class="column_inner">
+										<div id="text-14" class="widget widget_text">			<div class="textwidget"></div>
+		</div>									</div>
+								</div>
+								<div class="column3">
+									<div class="column_inner">
+																			</div>
+								</div>
+							</div>
+															</div>
+				</div>
+							</div>
+		</div>
+						<div class="footer_bottom_holder">
+			<div class="footer_bottom">
+							<div class="textwidget"><span><span style="padding:0 15px 0 15px">© 2017 Simple Helix, LLC - All Rights Reserved</span>  |  <span style="padding:0 15px 0 15px"><a href="https://www.simplehelix.com/company/policies/"> Terms of Service </a></span>   </span></div>
+					<div class="textwidget"><script src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/email-decode.js"></script><script type="text/javascript">
+var __lc = {};
+__lc.license = 3169692;
+__lc.group = 2;
+
+(function() {
+	var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+	lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+})();
+</script></div>
+					</div>
+		</div>
+				</div>
+	</footer>
+</div>
+
+
+<!-- Start of Async HubSpot Analytics Code for WordPress v1.9.4 -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "blog-post"]);
+(function(d,s,i,r) {
+  if (d.getElementById(i)){return;}
+  var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+  n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/638721.js';
+  e.parentNode.insertBefore(n, e);
+})(document, "script", "hs-analytics", 300000);
+</script>
+<!-- End of Async HubSpot Analytics Code -->
+<script type="text/javascript">
+                jQuery('.mc4wp-form').find('[type="submit"]').click(function () {
+                    jQuery(this).parents('.mc4wp-form').addClass('mc4wp-form-submitted');
+                });
+			</script><link rel="stylesheet" id="yarppRelatedCss-css" href="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/related.css" type="text/css" media="all">
+<script type="text/javascript">
+/* <![CDATA[ */
+var qodeLike = {"ajaxurl":"https:\/\/www.simplehelix.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/qode-like.js"></script>
+<script type="text/javascript" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/plugins.js"></script>
+<script type="text/javascript" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/default_dynamic.js"></script>
+<script type="text/javascript" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/default.js"></script>
+<script type="text/javascript" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/custom_js.js"></script>
+<script type="text/javascript" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/comment-reply.js"></script>
+<script type="text/javascript" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/js_composer_front.js"></script>
+<script type="text/javascript" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/wp-embed.js"></script>
+<script type="text/javascript" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/jquery_002.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var mc4wp_vars = {"ajaxurl":"https:\/\/www.simplehelix.com\/wp-admin\/admin-ajax.php","ajaxloader":{"enabled":true,"imgurl":"https:\/\/www.simplehelix.com\/wp-content\/plugins\/mailchimp-for-wp-pro\/assets\/img\/ajax-loader.gif"}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/ajax-forms.js"></script>
+
+	<script src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/get_dynamic_config.js"></script><script src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/get_static_config.js"></script><script src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/localization.js"></script><div style="position: fixed; bottom: 0px; right: 15px; width: 240px; height: 53px; overflow: hidden; visibility: visible; z-index: 2147483639; background: transparent none repeat scroll 0% 0%; border: 0px none; transition: transform 0.2s ease-in-out 0s; opacity: 1; transform: translateY(0%); padding: 0px 15px;" id="livechat-compact-container"><iframe title="LiveChat Minimized Widget" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/a.htm" id="livechat-compact-view" style="position: relative;top: 20px;left: 0;width: 100%;border: 0;padding: 0;margin: 0;float: none;background: none" scrolling="no" allowtransparency="true" frameborder="0"></iframe><a id="livechat-badge" href="#" onclick="LC_API.show_full_view({source:'minimized click'});return false" style="position: absolute;display: block;visibility: hidden;height: 16px;padding: 0 4px;line-height: 16px;background: #f00;color: #fff;font-size: 10px;text-decoration: none;font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, Verdana, sans-serif;border-radius: 3px;box-shadow: 0 -1px 0px #f00, -1px 0 0px #f00, 1px 0 0px #f00, 0 1px 0px #f00, 0 0 2px #000;border-top: 1px solid #f99;width: 16px;border-radius: 50%;box-shadow: none;border-top: 0;padding: 0;text-align: center;font-family: 'Lato', sans-serif;top: 12px;left: 20px"></a></div><div style="position: fixed; bottom: 0px; right: 15px; width: 400px; height: 450px; overflow: hidden; visibility: hidden; z-index: -1; background: transparent none repeat scroll 0% 0%; border: 0px none; transition: transform 0.2s ease-in-out 0s; transform: translateY(100%); opacity: 0;" id="livechat-full"><iframe style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; width: 100%; height: 100%; border: 0px none; padding: 0px; margin: 0px; float: none; background: transparent none repeat scroll 0% 0%;" allowtransparency="true" scrolling="no" title="LiveChat Widget" name="livechat-full-view" id="livechat-full-view" src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/open_chat.htm" frameborder="0"></iframe></div><div style="text-align: left; display: none; z-index: 16777261;" id="lc_invite_layer"></div><div style="background-color: rgb(0, 0, 0); position: fixed; left: 0px; top: 0px; z-index: 16777260; display: none; width: 100%; height: 100%;" id="lc_overlay_layer"></div><script src="Simple%20Helix%20_%20Install%20MySQL%205.6%20on%20CentOS%207%20_%20RHEL%207_files/ping" id="livechat-ping"></script></body><div data="{&quot;a&quot;:&quot;setShowingSafe&quot;,&quot;f&quot;:false}" style="display:none" id="sp_console_event"></div></html>

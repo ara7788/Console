@@ -1,0 +1,1407 @@
+<!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html class=" gecko win js" xmlns="http://www.w3.org/1999/xhtml" xmlns:exsl="http://exslt.org/common" xmlns:ng="http://docbook.org/docbook-ng" xmlns:fb="http://ogp.me/ns/fb#"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/font-awesome.css" rel="stylesheet">
+<title>Глава 4. Инфраструктура автоматизации Python - основы Ansible - Полное руководство работы с сетями на Python</title>
+<meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1">
+<meta name="mavenGroupId" content="www.mdl.ru">
+<meta name="MasteringPythonNetworking">
+<meta name="mavenVersionId" content="1.0.0">
+<link rel="home" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html" title="Полное руководство работы с сетями на Python">
+<link rel="up" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html" title="Полное руководство работы с сетями на Python">
+<link rel="prev" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html" title="Глава 3. Работа с сетями через API и движимое намерениями проектирование сетей">
+<link rel="next" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html" title="Глава 5. Инфраструктура автоматизации Python - дополнительные вопросы Ansible">
+<meta name="git-sha" content="">
+<meta name="buildTime" content="">
+<script src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/ga_002.js" async="" type="text/javascript"></script><script type="text/javascript">
+            //The id for tree cookie
+            var treeCookieId = "mastering-python-networking";
+            var language = "en";
+            var w = new Object();
+            //Localization
+            txt_filesfound = 'Results';
+            txt_enter_at_least_1_char = "You must enter at least one character.";
+            txt_browser_not_supported = "Please enable JavaScript.";
+            txt_please_wait = "Please wait. Search in progress...";
+            txt_results_for = "Results for: ";
+</script>
+<style type="text/css">
+            input {
+            margin-bottom: 5px;
+            margin-top: 2px;
+            }
+
+            .folder {
+            display: block;
+            height: 22px;
+            padding-left: 20px;
+            background: transparent url(/common/jquery/treeview/images/folder.gif) 0 0px no-repeat;
+            }
+</style>
+<link rel="shortcut icon" href="http://onreader.mdl.ru/MdlLogo.gif" type="image/gif">
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/positioning.css">
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/custom.css">
+<link rel="canonical" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html">
+<!--[if IE]>
+	<link rel="stylesheet" type="text/css" href="/common/css/ie.css"/>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/jquery-ui-1.css">
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/jquery_002.css">
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/jquery-1.js"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/jquery-ui-1.js"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/jquery.js"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/jquery_002.js"><!----></script>
+<link rel="stylesheet" type="text/css" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/jquery.css">
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/jquery_003.js">
+<!--jQuery plugin for glossary popups. --></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/htmlFileList.htm"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/htmlFileInfoList.htm"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/nwSearchFnt.js"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/en_stemmer.js">
+<!--//make this scalable to other languages as well.--></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/index-1.htm"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/index-2.htm"><!----></script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/index-3.htm"><!----></script>
+<script type="text/javascript">
+	    var _gaq = _gaq || [];
+	    _gaq.push(['_setAccount', 'UA-17511903-1']);
+	    
+	    _gaq.push(['_setDomainName', '.openstack.org']);	        
+</script>
+<script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/ga.js"><!----></script>
+<script language="javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/common.js"></script>
+<link rel="stylesheet" href="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/googlecode.css">
+<script src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/highlight.js"></script>
+</head>
+<body>
+<!----><script type="text/javascript"><!--
+hljs.initHighlightingOnLoad();
+HeaderName = 'Глава 4. Инфраструктура автоматизации Python - основы Ansible';
+PrevRef = 'Ch03.html';
+UpRef = 'index.html';
+NextRef = 'Ch05.html';//--></script>
+<!----><script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/HeaderAndToolbar.js">
+</script><script type="text/javascript"><!--
+document.write(HeaderAndToolbar); //-->
+</script><div id="header"><div class="string"><div style="overflow: hidden; width: 100%;" id="marquee"><div style="width: 200%; margin-left: -55.6083%;"><span style="width: 50%; display: inline-block; text-align: center;"><a href="http://www.mdl.ru/Solutions/Put.htm?Nme=MdlAccelerator#RX461i">от100k USD решение с 8ю Tesla Volta V100</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="http://www.mdl.ru/Solutions/Put.htm?Nme=EveryPlacePC">23" терминал с 4core ЦПУ/4ГБ/1ТБ от 15тыс.руб.</a></span><span style="width: 50%; display: inline-block; text-align: center;"><a href="http://www.mdl.ru/Solutions/Put.htm?Nme=MdlAccelerator#RX461i">от100k USD решение с 8ю Tesla Volta V100</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="http://www.mdl.ru/Solutions/Put.htm?Nme=EveryPlacePC">23" терминал с 4core ЦПУ/4ГБ/1ТБ от 15тыс.руб.</a></span></div></div></div>	<a onclick="_gaq.push(['_trackEvent', 'Header', 'logo', 'click', 1]);" align="middle" target="_blank" href="http://www.mdl.ru/">	<img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/mdl-reg.jpg" style="position: relative; border-style: none; top: 18%;" alt="Перевод Mdl®" align="middle" height="14" width="40"></a>	<a onclick="_gaq.push(['_trackEvent', 'Header', 'logo', 'click', 1]);" target="_blank" href="https://www.packtpub.com/virtualization-and-cloud/">	<img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/PacktPub-logo.jpg" alt="Документация Virtualization and Cloud" height="44" width="109"></a>	<h1>Глава 4. Инфраструктура автоматизации Python - основы Ansible</h1>	<div id="navheader" align="right"><!----><table class="navLinks"><tbody><tr>		<td><a id="showHideButton" onclick="showHideToc(); _gaq.push(['_trackEvent', 'Header', 'show/hide', 'click', 1]);" class="pointLeft" title="Скрыть дерево оглавления">Боковое поле</a>		</td><td><a accesskey="p" class="navLinkPrevious" onclick="_gaq.push(['_trackEvent', 'Header', 'prevLink', 'click', 1]);" tabindex="5" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html">Предыдущий</a>&nbsp;		  |       <a accesskey="u" class="navLinkUp" onclick="_gaq.push(['_trackEvent', 'Header', 'upLink', 'click', 1]);" tabindex="5" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html">Вверх</a>		  |        <a accesskey="n" class="navLinkNext" onclick="_gaq.push(['_trackEvent', 'Header', 'nextLink', 'click', 1]);" tabindex="5" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html">Следующий</a>		</td></tr></tbody></table>	</div></div><div id="toolbar" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">	<div id="toolbar-left">		<p class="breadcrumbs"><a href="http://cloudcomputing.mdl.ru/">CloudComputing:mdl.ru</a>		<a href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html">Полное руководство Ansible, 2е изд.</a>		<a href="http://onreader.mdl.ru/UnixTheTextbook.3ed/content/Ch10.html">Главное пособие Unix. 3 ред.</a>		(<a onclick="_gaq.push(['_trackEvent', 'Header', 'pdfDownload', 'click', 1]);" alt="Купите оригинал" class="pdficon" href="https://www.packtpub.com/networking-and-servers/mastering-python-networking">		<img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/pdf.png"></a>) &nbsp; 		</p>		<div id="gplusone">			<a id="AskMdl1" href="javascript:tocall()" onmouseover="this.href=mail" target="_blank" title="Вопросы? Обсудите их на mdl.ru">			<i class="icon-question"><!----></i></a>&nbsp;&nbsp;			<a id="logABugLink1" href="https://bugs.launchpad.net/openstack-manuals/+filebug?field.title=MasteringPythonNetworking&amp;field.comment=%0A%0A-----------------------------------%0ABuilt:%202017-06-29T17:43:47+00:00%0Agit%20SHA:%2013fb30b7c263d715eee84f0ca1a16df79697eb88%0AURL:%20http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html%0Asource%20File:%20file:a35-prades%0Axml:id:%20mastering-python-networking" onmouseover="this.href=mail" title="Нашли ошибку? Сообщите о ней на данной странице">			<i class="icon-bug"><!----></i></a>		</div>	</div></div>
+<div style="visibility: visible;" id="content">
+ <div class="part">
+  <div xmlns="" class="titlepage"><div><div><h1 xmlns="http://www.w3.org/1999/xhtml" class="title">
+   Глава 4. Инфраструктура автоматизации Python - основы Ansible
+  </h1></div></div></div>
+
+  <div class="toc"><p><strong>Содержание</strong></p>
+   <dl>
+     <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html">Глава 4. Инфраструктура автоматизации Python - основы Ansible</a></span></dt>
+     <dd><dl>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#01">Быстрый пример Ansible</a></span></dt>
+       <dd><dl>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0101">Установка управляющего узла</a></span></dt>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0102">Ваш первый плейбук Ansible</a></span></dt>
+         <dd><dl>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#010201">Авторизация общедоступного ключа</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#010202">Файл учёта ресурсов</a></span></dt>
+           <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#010203">Наш первый плейбук</a></span></dt>
+         </dl></dd>
+       </dl></dd>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#02">Преимущества Ansible</a></span></dt>
+       <dd><dl>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0201">Отсутствие агента</a></span></dt>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0202">Идемпотентность</a></span></dt>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0203">Простота и расширяемость</a></span></dt>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0204">Поддержка производителями</a></span></dt>
+       </dl></dd>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#03">Архитектура Ansible</a></span></dt>
+       <dd><dl>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0301">YAML</a></span></dt>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0302">Учёт ресурсов</a></span></dt>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0303">Переменные</a></span></dt>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0304">Шаблоны Jinja2</a></span></dt>
+       </dl></dd>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#04">Сетевые модули Ansible</a></span></dt>
+       <dd><dl>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0401">Локальные соединения и факты</a></span></dt>
+         <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0402">Параметры provider</a></span></dt>
+       </dl></dd>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#05">Пример Cisco Ansible</a></span></dt>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#06">Пример Juniper Ansible</a></span></dt>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#07">Пример Arista Ansible</a></span></dt>
+       <dt><span class="chapter"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#08">Выводы</a></span></dt>
+     </dl></dd>
+   </dl>
+  </div>
+  <p>Наши предыдущие две главы постепенно вводили различные способы взаимодействия с сетевыми устройствами. 
+  В <a class="link" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html" target="_top">Главе 2, Взаимодействие с сетевым устройством на нижнем уровне</a> 
+  мы обсудили Pexpect и Paramiko, которые автоматически управляют интерактивными сеансами. В <a class="link" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html" target="_top">Главе 3, Работа с сетями через API и для достижения целей</a> мы обнаружили, 
+  что сетевые среды связаны не только с индивидуальные устройства, поскольку именно они являются для нас неким способом 
+  соединения отдельных частей воедино, но наша общая цель обычно требует более высокой бизнес логики. Например, 
+  представим себе всю эту иерархию умозрительного процесса, начиная с формирования нашей бизнес- цели и вплоть до 
+  реального выполнения действий на сетевом уровне (при этом его вершина находится ближе к бизнес- логике): мы 
+  рассмотрели различные API, которые представляют некий структурированный подход обратной связи от устройства а 
+  также некоторую хорошо определённую структуру команд. Оба этих метода находятся на достаточно низком уровне, что 
+  означает, что мы сосредоточены на определённом индивидуальном устройстве, посредством которого мы выполняем свои 
+  действия.</p>
+  <p>Однажды утром вы просыпаетесь и думаете про себя, что у вас имеется ценная информация о вашей сетевой среде, 
+  поэтому вам следует предпринять некие меры предосторожности в отношении своих сетевых устройств, чтобы сделать их 
+  более безопасными!</p>
+  <p>Затем вы начинаете подразделять данную цель на активных элемента, с которых следует начинать:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p>Обновление всех устройств до самой последней версии программного обеспечения, которое потребует:</p>
+     <ol class="orderedlist" type="1"><li class="listitem">
+       <p>Загрузку необходимого образа на соответствующее устройство.</p>
+	   </li><li class="listitem">
+       <p>Сообщение данному устройству необходимости выполнить загрузку с такого нового образа.</p>
+	   </li><li class="listitem">
+       <p>Мы выполняем перезагрузку данного устройства.</p>
+	   </li><li class="listitem">
+       <p>Проверка того, что данное устройство работает под управлением нового образа программного обеспечения.</p>
+	   </li>
+     </ol>
+	 </li><li class="listitem">
+	 <p>Настройка соответствующего списка доступа к имеющимся сетевым устройствам, которая включает в себя:</p>
+     <ol class="orderedlist" type="1"><li class="listitem">
+       <p>Построение необходимого списка доступа для данного устройства.</p>
+	   </li><li class="listitem">
+       <p>Настройка данного списка доступа через тот интерфейс, который в большинстве случаев находится в 
+	   соответствующем разделе настройки интерфейса, подлежащего применению к самому интерфейсу.</p>
+	   </li>
+     </ol>
+	 </li>
+    </ul>
+    </div>
+  <p>Будучи ориентированным на автоматизацию инженером Python вы приступаете к написанию сценариев с использованием 
+  Pexpect, Paramiko или API. Однако как вы можете обнаружить, любая сетевая задача представляет собой некую цель с 
+  её реальным исполнение в самом конце все операции. В течении длительного периода времени все инженеры будут 
+  транслировать свою бизнес логику в сетевые команды, затем мы документирум их в стандартные процедуры обработки 
+  с тем, чтобы мы могли возвращаться обратно к данному процессу либо самостоятельно, либо через своих коллег.</p>
+  <p>В этой и следующей главе мы начнём обсуждать некое средство автоматизации с открытым исходным кодом с названием 
+  <span class="term"><strong class="userinput">Ansible</strong></span>. Именно это средство упрощает весь процесс 
+  перехода от бизнес логики к сетевым командам. Оно способно настраивать системы, развёртывать программное 
+  обеспечение, а также координировать некое сочетание задач. Ansible написан на Python и проявляется как одно из самых 
+  ведущих инструментов автоматизации, поддерживаемое производителями сетевого оборудования.</p>
+  <p>В данной главе мы рассмотрим следующие вопросы:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p>Некий пример Ansible на скорую руку</p>
+	 </li><li class="listitem">
+	 <p>Все преимущества Ansible</p>
+	 </li><li class="listitem">
+	 <p>Архитектуру Ansible</p>
+	 </li><li class="listitem">
+	 <p>Модули и примеры Ansible Cisco</p>
+	 </li><li class="listitem">
+	 <p>Модули и примеры Ansible Juniper</p>
+	 </li><li class="listitem">
+	 <p>Модули и примеры Ansible Arista</p>
+	 </li>
+    </ul>
+    </div>
+  <p>На момент написания данной книги выпуск Ansible 2.2 был совместим с Python 2.6 и 2.7, а также с 
+  с технической экспертизой поддержки для Python 3. Однако, в точности как в случае с Python, многие полезные 
+  свойства Ansible поступают через модули расширения предлагаемые сообществом. После того как модуль ядра пройдёт 
+  проверку на стабильность с Python 3 (надеемся, в скором будущем), потребуется некоторое время для переноса всех 
+  имеющихся модулей расширения с Python 2 на Python 3. На протяжении всей оставшейся книги мы будем применять 
+  для Ansible Python 2.7.</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Для получения самой последней информации по поддержке Ansible Python 3 проверьте 
+	   <a class="link" href="http://docs.ansible.com/ansible/python_3_support.html" target="_top">http://docs.ansible.com/ansible/python_3_support.html</a>
+	   .</p></td></tr></tbody></table>
+     </div>
+  <p>Как уже говорилось в предыдущей главе, я полагаюсь на изучение на примерах. В точности как и сам лежащий в основе 
+  Ansible код Python, весь синтаксис для конструкция Ansible достаточно прост  для понимания если вы не работали 
+  с Ansible прежде. Если у вас имеется некий опыт работы с YAML и Jinja2, вы быстро воссоздадите необходимую 
+  взаимосвязь между самим синтаксисом и всеми предназначенными для этого процедурами. Давайте для начала взглянем 
+  на некий пример.</p>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="01"> </a>Быстрый пример Ansible</h3>
+   </div></div></div>
+   <p>Как и все прочие инструменты автоматизации, Ansible вначале стартует с управляющего сервера прежде чем расшириться 
+   до управления всем сетевым оборудованием. Для основной части все модули и то, что в Ansible называется плейбуками 
+   (планами) одинаковы для серверных модулей и модулей сетевых устройств, однако всё же имеются некоторые различия. 
+   По этой причине полезно для начала рассмотреть пример такого сервера и позднее обрисовать сравнения когда мы начнём 
+   просмотр сетевых модулей.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0101"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Установка управляющего узла</span></h4>
+   </div></div></div>
+   <p>Для начала давайте проясним ту терминологию, которую мы будем применять в контексте Ansible. Мы будем называть 
+   все виртуальные машины с установленным Ansible управляющими машинами, а машины под их управлением целевыми машинами 
+   или управляемыми узлами. Ansible может устанавливаться на большинство имеющихся систем Unix с единственной 
+   зависимостью от Python 2.6 или 2.7; текущий Windows не поддерживается в качестве основной управляющей машины. 
+   Хост Windows всё ещё может управляться Ansible, так как он только не поддерживается в качестве самой управляющей 
+   машины.</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Когда Windows 10 приспособится к Linux Ubuntu, Ansible вскоре будет готов исполняться также и под 
+	   Windows.</p></td></tr></tbody></table>
+     </div>
+   <p>В требованиях к управляющему узлу вы можете заметить, что требуется Python 2.4 или более поздняя версия. 
+   Это справедливо для управления целевыми узлами с операционными системами, подобными Linux, однако очевидно, 
+   что не всё сетевое окружение поддерживает Python. Мы увидим как это требование обходится для сетевых модулей.</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Для машин Windows, все лежащие в основе модули написаны в PowerShell, средстве автоматизации Microsoft и 
+	   её инфраструктуре управления настройкой.</p></td></tr></tbody></table>
+     </div>
+   <p>Мы установим Ansible на свою виртуальную машину Ubuntu, а за инструкциями по установке на прочих операционных 
+   системах проверьте наличие документации по установке (<a class="link" href="http://docs.ansible.com/ansible/intro_installation.html" target="_top">http://docs.ansible.com/ansible/intro_installation.html</a>). Далее вы увидите все шаги для установки 
+   необходимых программных пакетов.</p>
+	   <pre class="screen"><strong><code class="hljs sql">
+$ sudo apt-get <span class="hljs-operator"><span class="hljs-keyword">install</span> software-properties-common
+$ sudo apt-<span class="hljs-keyword">add</span>-repository ppa:ansible/ansible
+$ sudo apt-<span class="hljs-keyword">get</span> <span class="hljs-keyword">update</span>
+$ sudo apt-<span class="hljs-keyword">get</span> <span class="hljs-keyword">install</span> ansible
+ 	   </span></code></strong></pre>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>У вас может возникнуть соблазн просто воспользоваться для установки <span class="term"><code>pip install 
+	   ansible</code></span>, однако далее это может повлечь определённые проблемы. Следуйте всем инструкциям по 
+	   установке на страницах документации Ansible для своей операционной системы.</p></td></tr></tbody></table>
+     </div>
+   <p>Теперь вы можете выполнить быструю проверку:</p>
+	   <pre class="screen"><strong><code class="hljs applescript">
+$ ansible <span class="hljs-comment">--version</span>
+ansible <span class="hljs-number">2.2</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span>
+ config <span class="hljs-type">file</span> = /etc/ansible/ansible.cfg
+ configured module search path = Default w/o overrides
+ 	   </code></strong></pre>
+   <p>Итак, мы готовы рассмотреть некий пример.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0102"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Ваш первый плейбук Ansible</span></h4>
+   </div></div></div>
+   <p>Наш первый плейбук (план) будет содержать следующие шаги:</p>
+   <div class="orderedlist">
+   <ol class="orderedlist" type="1"><li class="listitem">
+     <p>Проверка того, что наш управляющий узел может применять авторизацию на основе ключа.</p>
+	 </li><li class="listitem">
+     <p>Создание некоторого файла учёта ресурсов.</p>
+	 </li><li class="listitem">
+     <p>Создание некоего плейбука.</p>
+	 </li><li class="listitem">
+     <p>Его исполнение и проверка.</p>
+	 </li>
+   </ol>
+   </div>
+
+   <a id="010201"> </a>
+   <p class="title"><strong>Авторизация общедоступного ключа</strong></p>
+   <p>Самый первый момент подлежащий исполнению, это скопировать ваш общедоступный ключ SSH с вашей управляющей 
+   машины на нужную вам целевую машину. Полное руководство по Инфраструктуре общедоступных ключей выходит за рамки 
+   данной книги, но вото быстрая прогулка по вашему управляющему узлу:</p>
+	   <pre class="screen"><strong><code class="hljs ruby">
+<span class="hljs-variable">$ </span>ssh-keygen -t rsa &lt;&lt;&lt;&lt; создание пары ключей public-private на вашей машине хоста
+<span class="hljs-variable">$ </span>cat ~<span class="hljs-regexp">/.ssh/id</span>_rsa.pub &lt;&lt;&lt;&lt; копирование всего содержимого данного вывода и помещение его в файл ~<span class="hljs-regexp">/.ssh/authorized</span>_keys на необходимом вам целевом хосте
+ 	   </code></strong></pre>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Вы можете прочесть дополнительную информацию о PKI в <a class="link" href="https://en.wikipedia.org/wiki/Public_key_infrastructure" target="_top">https://en.wikipedia.org/wiki/Public_key_infrastructure</a>.
+	   {<span class="emphasis"><em>Прим. пер.: также см. <a class="link" href="https://ru.wikipedia.org/wiki/%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0_%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D1%82%D1%8B%D1%85_%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%B9" target="_top">https://ru.wikipedia.org/wiki/Инфраструктура_открытых_ключей</a>, <a class="link" href="http://support.mdl.ru/kimmo.suominen.com/docs/ssh/index.htm" target="_top">Приступая к работе с SSH</a> 
+	   (Kimmo Suominen), 
+	   <a class="link" href="http://onreader.mdl.ru/MasteringWindowsServer2016/content/Ch04.html" target="_top">Глава 4. Сертификаты в Windows Server 2016</a> (Mastering Windows Server 2016), 
+	   <a class="link" href="http://onreader.mdl.ru/WindowsServer2016Cookbook/content/Ch04.html" target="_top">Глава 4. Работа с сертификатами</a> (Windows Server 2016 Cookbook),
+	   <a class="link" href="http://onreader.mdl.ru/ProLinuxSystemAdministration.2ed/content/Ch10.html#04" target="_top">Безопасная оболочка</a> (Pro Linux System Administration, 2ed),
+	   <a class="link" href="http://onreader.mdl.ru/HowLinuxWorks2/content/Ch10.html#03" target="_top">10.3 Безопасная оболочка (SSH)</a> (How Linux Works, 2ed)</em></span>}.</p></td></tr></tbody></table>
+     </div>
+   <p>Так как мы используем аутентификацию на основании ключа, мы можем отключить аутентификацию на базе пароля 
+   в своём удалённом узле и быть в состоянии большей безопасности. Теперь вы в состоянии выполнить 
+   <span class="term"><code>ssh</code></span> с управляющего узла к удалённому узлу без применения своего публичного 
+   ключа и без приглашения на ввод пароля.</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Можете ли вы автоматизировать самое начальное копирование общедоступного ключа? Это возможно, однако 
+	   очень сильно зависит от вашего варианта применения, применяемых правил, а также среды. Это сопоставимо с 
+	   первоначальной установкой консоли для сетевого снаряжения с целью установки первоначальной доступности IP. 
+	   Вы автоматизировали это? Почему, или почему нет?</p></td></tr></tbody></table>
+     </div>
+
+   <a id="010202"> </a>
+   <p class="title"><strong>Файл учёта ресурсов</strong></p>
+   <p>Нам не нужен Ansible если у нас нет удалённых целей для управления, не так ли? Всё начинается с того факта, 
+   что нам необходимо управлять некоторой задачей на каком- то удалённом хосте. Тот способ, которым мы описываем 
+   такую потенциальную цель является неким файлом хоста. Мы либо уже можем иметь этот файл, определяющий такой 
+   удалённый хост где- то в <span class="term"><code>/etc/ansible/hosts</code></span>, либо воспользоваться 
+   опцией <span class="term"><code>-i</code></span> для определения расположения данного файла. Что касается 
+   лично меня, я предпочитаю иметь такой файл в том же самом каталоге, где находится мой плейбук.</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Технически этот файл может называться настолько длинным, насколько это допускает 
+	   <a class="link" href="http://www.mdl.ru/Solutions/Put.htm?Nme=FixingFilenames" target="_top">формат</a>. 
+	   Однако, следуя данному соглашению, вы потенциально вы можете уберечь себя и своих коллег в дальнейшем от 
+	   определённой головной боли.</p></td></tr></tbody></table>
+     </div>
+   <p>Файл учёта ресурсов (описи, inventory) является простым, обычным текстовым файлом в стиле INI который 
+   устанавливает ваши цели. По умолчанию это может быть либо FQDN DNS, либо адрес IP:</p>
+	   <pre class="screen"><strong><code class="hljs ruby">
+<span class="hljs-variable">$ </span>cat hosts
+<span class="hljs-number">192.168</span>.<span class="hljs-number">199.170</span>
+ 	   </code></strong></pre>
+   <p>Теперь мы можем воспользоваться опцией командной строки для проверки Ansible и его файла хоста:</p>
+	   <pre class="screen"><strong><code class="hljs ruby">
+<span class="hljs-variable">$ </span>ansible -i hosts <span class="hljs-number">192.168</span>.<span class="hljs-number">199.170</span> -m ping
+<span class="hljs-prompt">192.168.199.170 | SUCCESS =&gt;</span> {
+ <span class="hljs-string">"changed"</span><span class="hljs-symbol">:</span> false,
+ <span class="hljs-string">"ping"</span><span class="hljs-symbol">:</span> <span class="hljs-string">"pong"</span>
+}
+ 	   </code></strong></pre>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>По умолчанию Ansible предполагает что тот же самый пользователь, который исполняет данный плейбук, 
+	   присутствует и на данном удалённом хосте. Например, я исполняю данный плейбук локально под именем 
+	   <span class="term"><code>echou</code></span>; тот же самый пользователь также должен иметься на моём 
+	   удалённом хосте. Если вы желаете осуществлять исполнение под другим пользователем, вы можете воспользоваться 
+	   опцией <span class="term"><code>-u</code></span> при выполнении, то есть
+	   <span class="term"><code>-u REMOTE_USER</code></span>.</p></td></tr></tbody></table>
+     </div>
+   <p>Предыдущая строка считывает что мы будем применять свой файл хоста в качестве необходимого файла учёта 
+   ресурсов и выполняет модуль <span class="term"><code>ping</code></span> на данном хосте с именем 
+   <span class="term"><code>192.168.199.170</code></span>.</p>
+   <p><span class="term"><code>ping</code></span> (<a class="link" href="http://docs.ansible.com/ansible/ping_module.html" target="_top">http://docs.ansible.com/ansible/ping_module.html</a>) является простейшим модулем проверки, который 
+   выполняет соединение с определённым удалённым хостом, проверяет применимость установки Python и возвращает в 
+   случае успеха отклик <span class="term"><code>pong</code></span>.</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Вы можете также взглянуть на список всех постоянно расширяющиеся модулей 
+	   <a class="link" href="http://docs.ansible.com/ansible/list_of_all_modules.html" target="_top">http://docs.ansible.com/ansible/list_of_all_modules.html</a>, если у вас имеются какие- либо 
+	   вопросы о применении имеющихся модулей, которые поставляются с Ansible.</p></td></tr></tbody></table>
+     </div>
+   <p>Если вы получили ошибку ключа хоста, это достаточно распространено, так как данный ключ хоста не 
+   расположен в вашем файле <span class="term"><code>known_hosts</code></span> и обычно находится в 
+   <span class="term"><code>~/.ssh/known_hosts</code></span>. Вы можете либо выполнить соединение ssh к данному 
+   хосту и ответить <span class="term"><code>yes</code></span> при добавлении данного хоста, или же вы можете 
+   запретить такую проверку в <span class="term"><code>/etc/ansible/ansible.cfg</code></span> или 
+   <span class="term"><code>~/.ansible.cfg</code></span> с помощью такого кода:</p>
+	   <pre class="screen"><code class="hljs ini">
+<span class="hljs-title">[defaults]</span>
+<span class="hljs-setting">host_key_checking = <span class="hljs-value"><span class="hljs-keyword">False</span></span></span>
+ 	   </code></pre>
+   <p>Теперь, когда у нас имеется проверенный файл описи, мы можем сделать свой первый плейбук (план).</p>
+
+   <a id="010203"> </a>
+   <p class="title"><strong>Наш первый плейбук</strong></p>
+   <p>Плейбук является планом Ansible по описанию того что бы мы хотели сделать с данными хостами при помощи 
+   модулей. Именно здесь мы будеи проводить большую часть своего времени в качестве операторов при работе с 
+   Ansible. Если мы строим некий дом для игр на дереве, плейбук будет нашим руководством, модули будут нашими 
+   инструментами, а опись ресурсов будет теми компонентами, с которыми вы будете работать применяя эти инструменты.</p>
+   <p>Плейбук разработан с целью быть доступным для чтения человеком в формате YAML. Мы взглянем на общий синтаксис 
+   и применение в следующем разделе по архитектуре Ansible {<span class="emphasis"><em>Прим. пер.: для больших 
+   подробностей обратитесь к <a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html" target="_top">Глава 1. Архитектура системы и проектирование Ansible</a> нашего перевода 2-го издания "Полного 
+   руководства Ansible"</em></span>}. На данный момент мы сосредоточимся на исполнении некоторого примера 
+   чтобы рассмотреть и почувствовать Ansible.</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Первоначально под YAML понимался <span class="emphasis"><em>Yet Another Markup Language</em></span> 
+	   (Ещё один язык разметки), однако в настоящее время, <a class="link" href="http://yaml.org/" target="_top">yaml.org</a>, перепрофилировал этот акроним на <span class="emphasis"><em>YAML Ain't 
+	   Markup Language</em></span> (YAML не язык разметки) для своей управляемой данными сущности.</p></td></tr></tbody></table>
+     </div>
+   <p>Давайте взглянем на простой плейбук в 6 строк, <span class="term"><code>df_playbook.yml</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- hosts: <span class="hljs-number">192.168</span><span class="hljs-number">.199</span><span class="hljs-number">.170</span>
+
+  tasks:
+  - <span class="hljs-property">name</span>: проверить использование диска
+    shell: df &gt; df_temp.txt
+ 	   </code></pre>
+   <p>В любом заданном плейбуке вы можете иметь множество воспроизведений (play). В данном случае у нас есть 
+   одно воспроизведение (строки 2 - 6). В данном воспроизведении может присутствовать множество задач, но у 
+   нас также есть только одна (строки 4 - 6) с названием, описывающим основную цель данного задания и модуль 
+   <span class="term"><code>shell</code></span>, получающий в качестве аргумента 
+   <span class="term"><code>df</code></span>. Модуль <span class="term"><code>shell</code></span> берёт команду 
+   из своего аргумента и выполняет её на определённом удалённом хосте. В данном случае мы исполняем команду 
+   <span class="term"><code>df</code></span> для проверки используемости диска и копирования вывода в некий файл 
+   с названием <span class="term"><code>df_temp.txt</code></span>.</p>
+   <p>Мы можем исполнить данный плейбук посредством такого кода:</p>
+	   <pre class="screen"><strong><code class="hljs markdown">
+$ ansible-playbook -i hosts df_playbook.yml
+PLAY [192.168.199.170] <span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span>**
+
+TASK [setup] <span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span>**
+ok: [192.168.199.170]
+
+TASK [check disk usage] <span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-emphasis">***</span>
+changed: [192.168.199.170]
+
+PLAY RECAP <span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-emphasis">***</span>*
+192.168.199.170 : ok=2 changed=1 unreachable=0 failed=0
+ 	   </code></strong></pre>
+   <p>Если вы зарегистрируетесь на данном управляемом хосте (у меня <span class="term"><code>92.168.199.170</code></span>), 
+   вы обнаружите что там будет иметься файл <span class="term"><code>df_temp.txt</code></span>, содержащий 
+   вывод команды <span class="term"><code>df</code></span>.  Клёво, да?</p>
+   <p>Заметим, что на самом деле имелись исполненными две задачи, даже хотя мы определили только одну 
+   задачу в данном плейбуке; сам модуль установки автоматически добавляется по умолчанию. Он исполняется 
+   Ansible для получения информации о данном удалённом хосте, и которая может применяться позже в данном плейбуке.
+   Например, один из тех фактов, который получил модуль установки это сведения об операционной системе. Данный 
+   плейбук может в дальнейшем указать применять <span class="term"><code>apt</code></span> для хостов на 
+   основе Debian и <span class="term"><code>yum</code></span> для хостов на основе Red Hat для установки новых 
+   пакетов.</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Если вы любопытствуете по поводу имеющегося вывода некоего модуля установки, вы можете обнаружить 
+	   какую информацию получает Ansible через <span class="term"><code>$ ansible -i hosts &lt;host&gt; 
+	   -m setup</code></span>.</p></td></tr></tbody></table>
+     </div>
+   <p>Под капотом имеется ряд моментов, которые происходят для задач, например копирование определённого сценария 
+   Python, копирование полученного вывода файла в некий временный файл, затем перехват данного вывода и удаление 
+   сделанного временного файла. На текущий момент мы можем безопасно игнорировать все эти лежащие в основе 
+   подробности, пока они нам не потребуются.</p>
+   <p>Важно чтобы мы полностью поняли тот простой процесс, который мы только что прошли, так как мы будем 
+   возвращаться к этим элементам позже в данной главе. Я целенаправленно выбрал некий пример сервера для 
+   представления здесь, так как они будут иметь больше смысла по мере того, как мы будем погружаться в свои 
+   сетевые модули и когда нам понадобится отклоняться от них (помните, мы упоминали, что интерпретатор Python, 
+   скорее всего, не входит в состав ваших сетевых средств?)</p>
+   <p>Поздравляем с выполнением вашего первого плейбука Ansible! Мы ознакомимся дополнительно с архитектурой 
+   Ansible, однако на текущий момент давайте рассмотрим почему Ansible хорошо подходит для сетевого управления. 
+   Помните, что Ansible написан на Python, поэтому раз мы более знакомы с данной инфраструктурой, мы можем 
+   применять Python для ей расширения!</p>
+   <p></p>
+  </div>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="02"> </a>Преимущества Ansible</h3>
+   </div></div></div>
+   <p>Помимо Ansible имеется множество базовых конструкция автоматизации инфраструктуры, а именно Chef, Puppet и 
+   SaltStack {<span class="emphasis"><em>Прим. пер.: CFEngine, Otto, xCAT и <a class="link" href="https://en.wikipedia.org/wiki/Comparison_of_open-source_configuration_management_software" target="_top">пр.</a></em></span>}. Каждая такая структура предлагает свои собственные уникальные свойства и 
+   модели и при этом нет правильных инструментов, которые подходят всем организациям. В данном разделе я бы хотел 
+   перечислить некоторые из имеющихся преимуществ Ansible и почему я рассматриваю его как некий хороший инструмент 
+   для автоматизации сетевой среды.</p>
+   <p>С точки зрения сетевой инженерии, а не просто с одной из перечисленных ниже позиций, я полагаю что именно 
+   сочетание всех приводимых причин делают Ansible идеальным для автоматизации сетевых сред.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0201"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Отсутствие агента</span></h4>
+   </div></div></div>
+   <p>В отличии от некоторых из своих одноранговых собратьев, Ansible не требует какой- то строгой модели 
+   хозяин - клиент. Нет никакого программного обеспечения или агента, которые необходимо устанавливать на клиенте 
+   для обратного взаимодействия со своим сервером. Как вы можете понять из предыдущего примера, вместо того чтобы 
+   полагаться на агентов удалённых хостов, Ansible применяет SSH для помещения своих изменений в определённый 
+   удалённый хост. Это колоссально для управления сетевыми устройствами , так как производители сетевых средств 
+   обычно неохотно допускают программное обеспечение сторонних разработчиков в свои платформы. SSH, с другой стороны, 
+   уже имеется в их сетевом оборудовании. Такой менталитет слегка изменился за последние несколько лет, но в целом 
+   SSH является общим знаменателем для любого сетевого оборудования, в то время как поддержка агентов управления 
+   настройками нет.</p>
+   <p>Так как на обслуживаемом удалённом хосте нет никакого агента, Ansible применяет модель помещения (push) для 
+   активной доставки всех изменений в обрабатываемое устройство, что противоположно модели извлечения (pull), при которой 
+   сам агент изымает всю информацию из  имеющегося сервера хозяина (master). Модель активной доставки (push), с моей 
+   точки зрения, более предсказуема (deterministic), поскольку всё появляется с самой управляющей машины.</p>
+   <p>И опять же, вся важность работы без агента невозможно не выделить достаточным образом, когда дело доходит до 
+   работы с имеющимся сетевым оборудованием. Исменно это обычно одна из основных причин того, почему сетевые операторы 
+   и производители заключают в обьятья Ansible.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0202"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Идемпотентность</span></h4>
+   </div></div></div>
+   <p>Соглсно Википедии, идемпотентность является тем свойством определённой операции с математике и вычислительной 
+   науке, которое может применяться множество раз  без изменения конечного результата при выходе за рамки своего 
+   начального применения (<a class="link" href="https://en.wikipedia.org/wiki/Idempotence" target="_top">https://en.wikipedia.org/wiki/Idempotence</a> {<span class="emphasis"><em>Прим. пер.: 
+   <a class="link" href="https://ru.wikipedia.org/wiki/%D0%98%D0%B4%D0%B5%D0%BC%D0%BF%D0%BE%D1%82%D0%B5%D0%BD%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%8C" target="_top">идемпотентность</a></em></span>}).
+   Говоря более простыми словами, это означает, что исполнение одной и той же продудуры снова и снова не 
+   изменяет данную систему после самого первого применения. {<span class="emphasis"><em>Прим. пер.: например, 
+   сложение с нулём, операция модуля числа или определения остатка от деления, вычисление наибольшего общего делителя 
+   и т.п.</em></span>}. Ansible слу.ит цели быть индеподентным, что хорошо для сетевых операций, требующих 
+   определённой упорядоченности в операциях.</p>
+   <p>Преимущество индепотентности лучше сравнить со сценариями Pexpext и Paramiko, которые мы уже написали. 
+   Помните, что эти сценарии бвли написаны для активной доставки команд, как если бы некий инженер сидел за 
+   своим терминалом. Если бы вы исполнили этот сценарий 10 раз, то получили бы 10 внесений изменений таким сценарием. 
+   В случае с Ansible плейбуком, выполняющим те же самые изменения, что и подход с Pexpext и Paramiko, вначале 
+   будет проверена имеющаяся настройка устройства и данный плейбук исполнится только если эти изменения отсутствуют.</p>
+   <p>Наличие иденпотентности означает, что мы можем повторно выполнять данный плейбук без какого бы то ни было 
+   беспокойства о том, что будут выполнены не нужные изменения. Это будет важно, поскольку нам необходимо 
+   автоматически проверять непротиворечивость состояния без каких бы то ни было дополнительных накладных 
+   расходов.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0203"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Простота и расширяемость</span></h4>
+   </div></div></div>
+   <p>Ansible написан на Python и использует YAML для языка плейбуков (планов), причём оба рассматриваются как 
+   относительно простые для изучения. Помните синтаксис Cisco IOS? Именно этот особый для отрасли язык был единственно 
+   применимым при управлении вми устройств Cisco IOS или прочим аналогичным структурированным оборудованием; 
+   этот язык совсем не бл языком для общих целей за пределами ограниченной сферы деятельности. К счастью, в отличии 
+   от прочих инструментов автоматизации, нет никакого дополнительного особенного для данной области языка или DSL для 
+   изучения Ansible, так как YAML и Python оба являются широко применяемыми языками.</p>
+   <p>Как вы могди видеть из предыдущего примера, даже если вы никогда раньше не встречали YAML, легко просто догадаться 
+   что данный плейбук пытается сделать. Помимо  прочего, Ansible пользуется Jinja2 в качетве механизма шаблонов, который 
+   является достаточно распространённым инструсентом, применяемым веб структурами Python, такими как Django и Falsk, 
+   поэтому данное знание переносимо.</p>
+   <p>Я не могу не сказать достаточно об расширяемости Ansible. Как проиллюстрировано в приведённом примере, Ansible 
+   начинался имея на уме автоматизацию серверов (в первую очередь Linux). Затем он ответвился на управление машинами 
+   Windows при помощи PowerShell. Поскольку всё больше и больше людей в данной отрасли начинали принимать Ansible, 
+   сетевая среда стала той темой, которая стала привлекать всё большее внимание. В Ansible были наняты и заимствованы 
+   правильные люди и команды, начали вовлекаться профессионалы сетевых сред, а пользователи стали запрашивать у 
+   производителей поддержку. Начиная с Ansible 2.0, работа с сетевыми средами стала гражданином первого класса наравне 
+   с управлением серверами. Вся экосистема живая и здоровая.</p>
+   <p>В точности как и сообщество Python, сообщество Ansible дружественно и его позиция состоит в вовлечении новых 
+   сообщников и идей. У меня есть опыт работы в команде новичков и попытка понять как стать участником и как писать 
+   модули. Я могу засвидетельствовать, что меня всегда приветственно встречали и отдавали дань уважения моему 
+   мнению.</p>
+   <p>Простота и расширяемость в действительности говорят много хорошего о доказательстве будущего. Весь технологический 
+   мир быстро развивается, и мы непрерывно пытаемся к нему приспосабливаться. Разве не здорово обучиться некоторой 
+   технологии один раз и продолжать применять её независимо от последних тенденций? Очевидно, что никто не обладает 
+   кристаллическим шаром для точного предсказания своего будущего, однако послужной список Ansible положительно 
+   свидетельствует о его будущем приспособлении к окружению.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0204"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Поддержка производителями</span></h4>
+   </div></div></div>
+   <p>
+   Посмотри м правде в глаза, мы не живём в вакууме. Мы просыпаемся каждый день с необходимостью иметь дело с 
+   сетевым оборудованием, выпускаемым различными производителями. Мы видели разницу между Pexpect и API в 
+   предыдущих главах и такая интеграция API, несомненно, не возникла из чего- то невидимого. Всякому производителю 
+   необходимо вкладываться временем и инженерными ресурсами в осуществление интеграции. Готовность определённого 
+   производителя поддерживать технологию имеет большое значение в нашем мире. К счастью, все крупные поставщики 
+   поддерживают Ansible, о чём ясно свидетельствуют всё возрастающая доступность сетевых модулей
+   (<a class="link" href="http://docs.ansible.com/ansible/list_of_network_modules.html" target="_top">http://docs.ansible.com/ansible/list_of_network_modules.html</a>).</p>
+   <p>Почему производители поддерживают Ansible больше чем прочие средства автоматизации? Способность работы без 
+   агента, несомненно, способствует, так как SSH как единственная зависимость значительно снижает порог входа. 
+   Выступавшие со стороны поставщика инженеры знают, что процесс запроса функции обычно длится несколько месяцев и 
+   имеет множество препятствий для перехода к ней. Всякий раз когда добавляется новая функция, это означает, что 
+   тратится больше времени на тестирование воздействия случайных факторов, проверку совместимости, обзоры 
+   интеграции и многое другое. Понижение входного порога обычно является первым шагом в получении поддержки 
+   производителей.</p>
+   <p>Тот факт, что Ansible основывается на Python, языке, который нравится многим сетевым профессионалам, 
+   является другим великим движителем для поддержки производителей. Что касается таких производителей, как Juniper 
+   и Arista, которые уже сделали существенные инвестиции в PyEZ и Pyeapi, они могут легко получить усиление 
+   от всех существующих модулей и быстро интегрировать свои свойства в Ansible. Как вы увидите в нашей следующей 
+   главе, мы можем применять свои имеющиеся знания Python чтобы легко писать свои собственные модули.</p>
+   <p>Ansible уже имел достаточно большое число продвигаемых сообществом модулей, прежде чем он сосредоточился на 
+   сетевых средах. Процесс содействия является чем-то подобным готовке и приживанию, или чем более открытым является 
+   проект исходного кода, тем он состоятельнее. Основная команда Ansible привычна к работе с сообществом в отношении 
+   представления и содействия.</p>
+   <p>Другой причиной для возрастающей поддержки сетевых производителей также связана с возможностью Ansible 
+   предоставить поставщикам возможность выражать свою силу в контексте данного модуля. В следующем разделе мы 
+   увидим, что помимо SSH, определённый модуль Ansible может исполняться локально и взаимодействовать с такими
+   устройствами применяя API. Это гарантирует, что такие поставщики могут отразить свои самые последние и самые 
+   лучшие функции как только они сделают свои API доступными. С точки зрения сетевых специалистов это означает, 
+   что вы можете применять эти функции при выборе поставщиков при использовании Ansible в качестве платформы 
+   автоматизации.</p>
+   <p>Мы уделили достаточно много места обсуждению поддержки производителя так как я ощущаю, что это часто 
+   упускается из виду в истории Ansible. Присутствие производителей, желающих вложить свой вес в данный 
+   инструментарий означает что вы, сетевой инженер, можете спать спокойно по ночам, зная что следующий большой 
+   предмет в сети будет иметь высокую вероятность поддержки Ansible и вы не будете связаны своим текущим 
+   производителем по мере роста потребностей вашей сетевой среды.</p>
+  </div>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="03"> </a>Архитектура Ansible</h3>
+   </div></div></div>
+   <p>Архитектура Ansible состоит из плейбуков, воспроизведений и задач. Давайте взглянем на
+   <span class="term"><code>df_playbook.yml</code></span>, который мы уже разглядывали:</p>
+	<div class="figure"><a id="Fig0401">&nbsp;</a>
+	 <p class="title"><strong>Рисунок 1</strong></p>
+	 <div class="figure-contents"><div class="mediaobject">
+	 <img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/Fig0401.jpg" height="151" width="479"><br>
+	 <span>Плейбук Ansible</span>
+	 </div></div>
+	</div><br class="figure-break">
+   <p>Весь данный файл называется плейбуком (планом) и он содержит одно или более воспроизведений (play). Каждое 
+   воспроизведение состоит из одной или более задач. В нашем простом примере у нас имеется только одно воспроизведение,
+   которое, в свою очередь, состоит из единственной задачи. В данном разделе мы рассмотрим следующее:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p><span class="term"><strong class="userinput">YAML</strong></span>: Этот формат интенсивно применяется в 
+	 Ansible для выражения плейбуков и переменных.</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><strong class="userinput">Inventory</strong></span> (Учёт ресурсов): Опись, в которой вы 
+	 можете определять хосты и группы хостов из своей инфраструктуры. Вы также можете опционально определять в данном файле 
+	 учёта ресурсов переменные хостов и групп.</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><strong class="userinput">Variables</strong></span>: Всякое сетевое устройство является особенным.
+	 Оно имеет отличительное имя хоста, IP, связи с соседями и так далее. Переменные позволяют нам иметь некий 
+	 стандартный набор воспроизведений, всё ещё сохраняя при этом различия.</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><strong class="userinput">Templates</strong></span>: Шаблоны не представляют ничего нового в 
+	 сетевой среде. На самом деле вы скорее всего используете их, просто не подозревая что они имеют такое название. 
+	 Что мы обычно делаем, когда нам необходимо предоставить некое новое устройство или заменить RMA? Мы копируем имеющиеся 
+	 старые настройки и заменяем все обнаруженные различия, такие как имя хоста и IP адрес LoopBack. Ansible 
+	 поддерживает стандарт своих шаблонов в формате Jinja2, во что мы углубимся подробнее.</p>
+	 </li>
+    </ul>
+    </div>
+   <p>В следующей главе мы обсудим некоторые дополнительные разделы, такие как условные зависимости, циклы, блоки, 
+   обработчики, роли плейбуков и то, как они могут быть включены в управление сетевой средой.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0301"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">YAML</span></h4>
+   </div></div></div>
+   <p>YAML является синтаксисом, применяемым для плейбуков и прочих файлов в Ansible. Официальная документация YAML 
+   содержит полные спецификации синтаксиса. Вот некоторая компактная версия, относящаяся к наиболее распространённым 
+   применениям для Ansible:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p>YAML начинается с трёх тире (<span class="term"><code>---</code></span>)</p>
+	 </li><li class="listitem">
+	 <p>Пробельный отступ применяется для отражения структуры при её выстраивании, в точности как в Python</p>
+	 </li><li class="listitem">
+	 <p>Комментарии начинаются с символа "решётка" (<span class="term"><code>#</code></span>)</p>
+	 </li><li class="listitem">
+	 <p>Список участников обозначается начинающим тире (<span class="term"><code>-</code></span>) при 
+	 единственном участнике в строке</p>
+	 </li><li class="listitem">
+	 <p>Список также может выделяться квадратными скобками (<span class="term"><code>[]</code></span>) с 
+	 разделяемыми запятой (<span class="term"><code>,</code></span>) элементами.</p>
+	 </li><li class="listitem">
+	 <p>Словари выражаются парой ключ:значение с двоеточием (<span class="term"><code>:</code></span>)
+	 для их разделения.</p>
+	 </li><li class="listitem">
+	 <p>Словари могут выделяться фигурными скобками (<span class="term"><code>{}</code></span>) с разделяемыми 
+	 запятой (<span class="term"><code>,</code></span>) элементами</p>
+	 </li><li class="listitem">
+	 <p>Строки могут не выделяться цитированием, но также могут заключаться в двойные 
+	 (<span class="term"><code>""</code></span>) или одинарные 
+	 (<span class="term"><code>''</code></span>) кавычки.</p>
+	 </li>
+    </ul>
+    </div>
+   <p>Как вы можете видеть, YAML хорошо соответствует типам данных JSON и Python. Если бы я переписал свой предыдущий 
+   пример <span class="term"><code>df_playbook.yml</code></span> в <span class="term"><code>df_playbook.json</code></span>, 
+   это выглядело бы следующим образом:</p>
+	   <pre class="screen"><code class="hljs json">
+[
+  {
+    "<span class="hljs-attribute">hosts</span>": <span class="hljs-value"><span class="hljs-string">"192.168.199.170"</span></span>,
+    "<span class="hljs-attribute">tasks</span>": <span class="hljs-value">[
+      <span class="hljs-string">"name"</span>: <span class="hljs-string">"check disk usage"</span>,
+      <span class="hljs-string">"shell"</span>: <span class="hljs-string">"df &gt; df_temp.txt"</span>
+    ]
+  </span>}
+]
+ 	   </code></pre>
+   <p>Очевидно, что это не допустимый плейбук, однако его цель состоит в том, чтобы помочь уяснить формат YAML при 
+   помощи сравнения с форматом JSON. По большей части, комментарии (<span class="term"><code>#</code></span>), 
+   списки (<span class="term"><code>-</code></span>) и словари (<span class="term"><code>ключ:значение</code></span>) 
+   являются тем, что вы видите в некотором плейбуке.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0302"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Учёт ресурсов</span></h4>
+   </div></div></div>
+   <p>По умолчанию Ansible просматривает файл <span class="term"><code>/etc/ansible/hosts</code></span> 
+   на наличие хостов, определённых в его плейбуке. Как уже упоминалось, я нахожу более вразумительным определять 
+   такой файл хостов при помощи параметра <span class="term"><code>-i</code></span>, как мы это делали до данного 
+   момента. Чтобы расширить свой предыдущий пример, мы можем составить свой файл инвентаризации хостов таким 
+   образом:</p>
+	   <pre class="screen"><code class="hljs makefile">
+[ubuntu]
+192.168.199.170
+
+[nexus]
+192.168.199.148
+192.168.199.149
+
+[nexus:vars]
+<span class="hljs-constant">username</span>=cisco
+<span class="hljs-constant">password</span>=cisco
+
+[nexus_by_name]
+switch1 ansible_host=192.168.199.148
+switch2 ansible_host=192.168.199.149
+ 	   </code></pre>
+   <p>Как мы можем догадаться, озаглавливающие квадратные скобки определяют названия групп, поэтому позже в 
+   своём плейбуке мы можем указывать именно эту группу. Например, в <span class="term"><code>cisco_1.yml</code></span>
+   и <span class="term"><code>cisco_2.yml</code></span> я могу осуществить соединение со всеми хостами определёнными 
+   под названием группы <span class="term"><code>nexus</code></span> указав в качестве имени группы 
+   <span class="term"><strong class="userinput"><code>nexus</code></strong></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: Configure SNMP Contact
+  hosts: <span class="hljs-string">"nexus"</span>
+  gather_facts: <span class="hljs-constant">false</span>
+  connection: <span class="hljs-keyword">local</span>
+&lt;пропуск&gt;
+ 	   </code></pre>
+   <p>Некий хост может присутствовать более чем в одной группе. Группа может также иметь вложения с потомками:</p>
+	   <pre class="screen"><code class="hljs css">
+<span class="hljs-attr_selector">[cisco]</span>
+<span class="hljs-tag">router1</span>
+<span class="hljs-tag">router2</span>
+
+<span class="hljs-attr_selector">[arista]</span>
+<span class="hljs-tag">switch1</span>
+<span class="hljs-tag">switch2</span>
+
+<span class="hljs-attr_selector">[datacenter:children]</span>
+<span class="hljs-tag">cisco</span>
+<span class="hljs-tag">arista</span>
+ 	   </code></pre>
+   <p>В предыдущем примере группа datacenter содержит и участников <span class="term"><code>cisco</code></span> и
+   <span class="term"><code>arista</code></span>.</p>
+   <p>В своём следующем разделе мы обсудим переменные. Но вы можете также опционально определять переменные, 
+   относящиеся к имеющимся хостам и группам в своём файле учёта ресурсов. В нашем примере файла описи, 
+   [<span class="term"><code>nexus:vars</code></span>] определяет переменные для всей группы nexus. Переменная 
+   <span class="term"><code>ansible_host</code></span> определяет изменяемое значение для всех имеющихся хостов в той же 
+   самой строке.</p>
+   <p>Для получения дополнительной информации по файлу учёта ресурсов обращайтесь к официальной документации
+   <a class="link" href="http://docs.ansible.com/ansible/intro_inventory.html" target="_top">http://docs.ansible.com/ansible/intro_inventory.html</a> {<span class="emphasis"><em>Прим. пер.: 
+   и нашему переводу 2го  издания <a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch01.html#02" target="_top">Полного руководства Ansible</a> Джесса Китинга</em></span>}.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0303"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Переменные</span></h4>
+   </div></div></div>
+   <p>Мы немного обсудили переменные в разделе учёта ресурсов. Так как наши управляемые узлы не совпадают в 
+   точности, нам необходимо приспосабливать имеющиеся отличия через переменные. Имена переменных должны состоять 
+   из буквенных символов, цифр и знаков подчёркивания, причём всегда начинаться с некоторой буквы. Переменные 
+   обычно определяются в трёх местах:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p>Плейбуке</p>
+	 </li><li class="listitem">
+	 <p>Файле учёта ресурсов</p>
+	 </li><li class="listitem">
+	 <p>Отдельных файлов и ролей в виде файлов, подлежащих включению. </p>
+	 </li>
+    </ul>
+    </div>
+   <p>Давайте взглянем на некоторый пример определения переменных в некотором плейбуке 
+   <span class="term"><code>cisco_1.yml</code></span>:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: Configure SNMP Contact
+  hosts: <span class="hljs-string">"nexus"</span>
+  gather_facts: <span class="hljs-constant">false</span>
+  connection: <span class="hljs-keyword">local</span>
+
+<strong>vars</strong>:
+  cli:
+    host: <span class="hljs-string">"{{ inventory_hostname }}"</span>
+    username: cisco
+    password: cisco
+    transport: cli
+
+  tasks:
+    - <span class="hljs-property">name</span>: configure snmp contact
+      nxos_snmp_contact:
+        contact: TEST_1
+        state: present
+        provider: <span class="hljs-string">"{{ cli }}"</span>
+	
+      register: output
+
+    - <span class="hljs-property">name</span>: show output
+      debug:
+        var: output
+ 	   </code></pre>
+   <p>Вы можете видеть конкретное определение переменной <span class="term"><code>cli</code></span> в имеющемся 
+   разделе vars, которое применяется в вашей задаче <span class="term"><code>nxos_snmp_contact</code></span>.</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Для получения дополнительной информации по модулю <span class="term"><code>nxos_snmp_contact</code></span> 
+	   проверьте информацию в документации интернет- ресурса <a class="link" href="http://docs.ansible.com/ansible/nxos_snmp_contact_module.html" target="_top">http://docs.ansible.com/ansible/nxos_snmp_contact_module.html</a>.</p></td></tr></tbody></table>
+     </div>
+   <p>Чтобы ссылаться не некую переменную, вы пользуетесь соглашениями системы шаблонов Jinja2 двойных 
+   фигурных скобок. Вам не нужно помещать кавычки вокруг этих фигурных скобок, только если вы не начинаете с 
+   них некоторое значение. Я обычно нахожу более простым помещать кавычки в любом случае.</p>
+   <p>Вы также можете заметить присутствие ссылки <span class="term"><code>{{ inventory_hostname }}</code></span>, 
+   которая не объявлена в данном плейбуке. Это одна из определённых по умолчанию переменных, которую Ansible 
+   предоставляет автоматически и иногда её называют волшебной переменной.</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Имеется достаточно много волшебных переменных и вы можете найти полный список в имеющейся документации 
+	   <a class="link" href="http://docs.ansible.com/ansible/playbooks_variables.html#magic-variables-and-how-toaccess-information-about-other-hosts" target="_top">http://docs.ansible.com/ansible/playbooks_variables.html#magic-variables-and-how-toaccess-information-about-other-hosts</a>.</p></td></tr></tbody></table>
+     </div>
+   <p>В предыдущем разделе мы объявили переменные в некотором файле учёта ресурсов:</p>
+	   <pre class="screen"><code class="hljs makefile">
+[nexus:vars]
+<span class="hljs-constant">username</span>=cisco
+<span class="hljs-constant">password</span>=cisco
+
+[nexus_by_name]
+switch1 ansible_host=192.168.199.148
+switch2 ansible_host=192.168.199.149
+ 	   </code></pre>
+   <p>Чтобы применять все переменные в данном файле учёта ресурсов вместо объявления их в своём плейбуке давайте 
+   добавим необходимые переменные групп для <span class="term"><code>[nexus_by_name]</code></span> в своём 
+   файле хоста:</p>
+	   <pre class="screen"><code class="hljs makefile">
+[nexus_by_name]
+switch1 ansible_host=192.168.199.148
+switch2 ansible_host=192.168.199.149
+[nexus_by_name:vars]
+<span class="hljs-constant">username</span>=cisco
+<span class="hljs-constant">password</span>=cisco
+ 	   </code></pre>
+   <p>Затем измените этот плейбук, <span class="term"><code>cisco_2.yml</code></span> чтобы ссылаться на данные 
+   переменные:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: Configure SNMP Contact
+  hosts: <span class="hljs-string">"nexus_by_name"</span>
+  gather_facts: <span class="hljs-constant">false</span>
+  connection: <span class="hljs-keyword">local</span>
+
+  vars:
+    cli:
+      host: <span class="hljs-string">"{{ ansible_host }}"</span>
+      username: <span class="hljs-string">"{{ username }}"</span>
+      password: <span class="hljs-string">"{{ password }}"</span>
+      transport: cli
+
+  tasks:
+    - <span class="hljs-property">name</span>: configure snmp contact
+      nxos_snmp_contact:
+        contact: TEST_1
+        state: present
+        provider: <span class="hljs-string">"{{ cli }}"</span>
+
+      register: output
+
+    - <span class="hljs-property">name</span>: show output
+      debug:
+        var: output
+ 	   </code></pre>
+   <p>Отметим, что в данном примере мы ссылаемся на имеющуюся в файле учёта ресурсов группу 
+   <span class="term"><code>nexus_by_name</code></span>, переменную хоста <span class="term"><code>ansible_host</code></span> 
+   и групповые переменные имени пользователя и пароля. Это является хорошим способом сокрытия имеющихся имени пользователя 
+   и пароля в некотором защищённом на запись файле и публиковать данный плейбук без опасения выставления на обзор 
+   ваших чувствительных данных.</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Чтобы ознакомиться с дополнительными примерами переменных обратитесь к документации Ansible 
+	   <a class="link" href="http://docs.ansible.com/ansible/playbooks_variables.html" target="_top">http://docs.ansible.com/ansible/playbooks_variables.html</a>.</p></td></tr></tbody></table>
+     </div>
+   <p>Для доступа к сложным данным, предоставляемым во встраиваемых структурах данных, вы можете применять две 
+   различные нотации. Отметим, что в своей задаче <span class="term"><code>nexus_by_name</code></span> мы 
+   зарегистрировали имеющийся вывод в некоторой переменной и отобразили его при помощи своего модуля отладки. Вы 
+   можете обнаружить нечто подобное: </p>
+	   <pre class="screen"><strong><code class="hljs sql">
+TASK [<span class="hljs-operator"><span class="hljs-keyword">show</span> <span class="hljs-keyword">output</span>]
+*************************************************************
+ok: [switch1] =&gt; {
+ <span class="hljs-string">"output"</span>: {
+  <span class="hljs-string">"changed"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-string">"end_state"</span>: {
+      <span class="hljs-string">"contact"</span>: <span class="hljs-string">"TEST_1"</span>
+    },
+  <span class="hljs-string">"existing"</span>: {
+     <span class="hljs-string">"contact"</span>: <span class="hljs-string">"TEST_1"</span>
+    },
+  <span class="hljs-string">"proposed"</span>: {
+     <span class="hljs-string">"contact"</span>: <span class="hljs-string">"TEST_1"</span>
+    },
+  <span class="hljs-string">"updates"</span>: []
+ }
+}
+ 	   </span></code></strong></pre>
+   <p>Для получения доступа к вложенным данным мы можем применить следующую нотацию, описанную в
+   <span class="term"><code>cisco_3.yml</code></span>:</p>
+	   <pre class="screen"><code class="hljs markdown">
+msg: '{{ output[<span class="hljs-link_label">"end_state"</span>][<span class="hljs-link_reference">"contact"</span>] }}'
+msg: '{{ output.end_state.contact }}'
+ 	   </code></pre>
+   <p>Вы получите только указанное значение:</p>
+	   <pre class="screen"><strong><code class="hljs markdown">
+ TASK [<span class="hljs-link_label">show output in output["end_state"</span>][<span class="hljs-link_reference">"contact"</span>]]
+ <span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span>**
+ok: [switch1] =&gt; {
+ "msg": "TEST_1"
+} 
+ok: [switch2] =&gt; {
+ "msg": "TEST_1"
+} 
+
+TASK [show output in output.end_state.contact]
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-emphasis">***</span>
+ok: [switch1] =&gt; {
+ "msg": "TEST_1"
+} 
+ok: [switch2] =&gt; {
+ "msg": "TEST_1"
+}
+ 	   </code></strong></pre>
+   <p>Наконец, мы упомянули что переменные также могут храниться в некотором отдельном файле. Чтобы посмотреть 
+   как мы можем использовать переменные в файле роли или включаемом файле, нам следует получить немного дополнительных 
+   примеров к себе на поясной ремень, так как они слегка более сложны чтобы сразу начинать с них. Мы рассмотрим примеры 
+   ролей в своей следующей главе.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0304"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Шаблоны Jinja2</span></h4>
+   </div></div></div>
+   <p>В предыдущем разделе мы применили переменные с синтаксисом Jinja2 
+   <span class="term"><code>{{ variable }}</code></span>. Хотя вы можете делать в Jinja2 множество сложных вещей, 
+   к счастью, для того чтобы начать нам необходимо всего несколько основных моментов.</p>
+     <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+	   <table summary="Замечание" border="0"><tbody><tr><td rowspan="2" align="center" valign="top" width="25">
+	   <img alt="[Замечание]" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/note.png"></td><th align="left">Замечание</th></tr><tr><td align="left" valign="top">
+	   <p>Jinja2 (<a class="link" href="http://jinja.pocoo.org/" target="_top">http://jinja.pocoo.org/</a>)
+	   является полностью укомплектованным мощным механизмом шаблонов для Python. Он широко применяется в 
+	   веб конструкциях Python таких как Django и Flask.</p></td></tr></tbody></table>
+     </div>
+   <p>На текущий момент просто достаточно иметь в виду, что Ansible использует Jinja2 в качестве механизма шаблонов. 
+   Мы повторно вернёмся к вопросам фильтров, проверок и поиска Jinja2 когда до них дойдёт дело. Вы можете найти 
+   дополнительную информацию по шаблонам Jinja2 Ansible здесь: <a class="link" href="http://docs.ansible.com/ansible/playbooks_templating.html" target="_top">http://docs.ansible.com/ansible/playbooks_templating.html</a> {<span class="emphasis"><em>Прим. пер.: 
+   см. также в скором времени наш перевод <a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/Ch03.html" target="_top">Главы 3, Высвобождение всей мощи шаблонов Jinja2</a> 2го издания "Полного руководства 
+   Ansible".</em></span>}</p>
+  </div>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="04"> </a>Сетевые модули Ansible</h3>
+   </div></div></div>
+   <p>Ansible первоначально разрабатывался для управления узлами с полными операционными системами, такими как Linux 
+   и Windows; затем он был расширен на сетевые устройства. Вы уже могли заметить тонкие отличия в плейбуках которые 
+   мы применяли до сих пор, такие как наличие строк <span class="term"><code>gather_facts: false</code></span> и 
+   <span class="term"><code>connection: local</code></span>; мы пройдёмся чуть ближе чтобы посмотреть на эти 
+   отличия.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0401"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Локальные соединения и факты</span></h4>
+   </div></div></div>
+   <p>Модули Ansible являются кодом Python, исполняемым по умолчанию на удалённых хостах. Из- за того факта, что большая 
+   часть сетевого оборудования не выставляет Python напрямую, мы почти всегда исполняем свой плейбук локально. 
+   Это означает, что данный плейбук (план) вначале интерпретируется локально и команды или настройки активно 
+   доставляются (push out) позже по мере необходимости.</p>
+   <p>Напомним, что данные удалённого хоста были собраны через модуль установки, который был добавлен по умолчанию. 
+   Поскольку мы выполняем данный плейбук локально, данный модуль установки собирает все факты на своём локальном 
+   хосте вместо удалённого хоста. Это, естественно не требуется, поэтому после установки соединения в локальное мы можем 
+   уменьшить этот не нужный этап установив значение сбора фактов в Ложь.</p>
+
+   <div xmlns="" class="titlepage"><div><div>
+    <h4 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="0402"> </a>
+	<span style="color:#FEFEFE; background-color:#888888; padding:0.5em;">Параметры provider</span></h4>
+   </div></div></div>
+   <p>В <a class="link" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html" target="_top">Главе 2, Взаимодействие с сетевым устройством на нижнем 
+   уровне</a> и в <a class="link" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html" target="_top">Главе 3, Работа с сетями через API и для 
+   достижения целей</a>, с сетевым оборудованием можно было устанавливать соединение и через SSH, и через API, 
+   в зависимости от его платформы и редакции программного обеспечения. Все ключевые модули сетевых устройств 
+   реализуют некий аргумент <span class="term"><code>provider</code></span>, который является сборником 
+   аргументов, применяемых для определения того как соединяться с данным сетевым устройством. Некоторые модули 
+   поддерживают только <span class="term"><code>cli</code></span>, в то время как какие- то поддерживают 
+   прочие значения, например, Arista EAPI и Cisco NXAPI. Именно здесь демонстрируется философия Ansible 
+   "позволить производителю сиять". Определённый модуль будет иметь документацию по поводу того какой 
+   транспортный модуль поддерживается.</p>
+   <p>Некоторые из основных аргументов, поддерживаемых таким транспортом перечислены здесь:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p><span class="term"><code>host</code></span>: определяет удалённый хост</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>port</code></span>: определяет порт для соединения</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>username</code></span>: это имя того пользователя, который должен иметь 
+	 аутентификацию</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>password</code></span>: это значение пароля для аутентификации</p>
+	 <p></p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>transport</code></span>: это тип транспорта для данного соединения</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>authorize</code></span>: включает эскалацию привилегий для требующих этого
+	 устройств</p>
+	 </li><li class="listitem">
+	 <p><span class="term"><code>auth_pass</code></span>: определяет пароль необходимой эскалации 
+	 привилегий</p>
+	 </li>
+    </ul>
+    </div>
+   <p>Как мы можем видеть, не все аргументы могут потребовать определения. Например, для нашего предыдущего 
+   плейбука наш пользователь всегда имел полномочия администратора после регистрации, тем самым, у нас не было 
+   необходимости определять конкретную авторизацию или аргументы <span class="term"><code>auth_pass</code></span>.</p>
+   <p>Эти аргументы просто переменные, поэтому они следуют тем же самым правилам для старшинства переменных. 
+   Например,  если я изменил <span class="term"><code>cisco_3.yml</code></span> на 
+   <span class="term"><code>cisco_4.yml</code></span>, то наблюдаю следующее старшинство:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: Configure SNMP Contact
+  hosts: <span class="hljs-string">"nexus_by_name"</span>
+  gather_facts: <span class="hljs-constant">false</span>
+  connection: <span class="hljs-keyword">local</span>
+
+  vars:
+    cli:
+    host: <span class="hljs-string">"{{ ansible_host }}"</span>
+    username: <span class="hljs-string">"{{ username }}"</span>
+    password: <span class="hljs-string">"{{ password }}"</span>
+    transport: cli
+
+  tasks:
+    - <span class="hljs-property">name</span>: configure snmp contact
+      nxos_snmp_contact:
+        contact: TEST_1
+        state: present
+        username: cisco123
+        password: cisco123
+        provider: <span class="hljs-string">"{{ cli }}"</span>
+
+      register: output
+
+    - <span class="hljs-property">name</span>: show output <span class="hljs-keyword">in</span> output[<span class="hljs-string">"end_state"</span>][<span class="hljs-string">"contact"</span>]
+      debug:
+        msg: '{{ output[<span class="hljs-string">"end_state"</span>][<span class="hljs-string">"contact"</span>] }}'
+
+    - <span class="hljs-property">name</span>: show output <span class="hljs-keyword">in</span> output.end_state.contact
+      debug:
+        msg: '{{ output.end_state.contact }}'
+ 	   </code></pre>
+   <p>Имя пользователя и пароль, определяемые на данном уровне задачи перепишут те имя пользователя и пароль, 
+   которые имелись на уровне вашего плейбука. Я получу следующую ошибку когда попробую выполнить соединение, 
+   так как данный пользователь отсутствует в этом устройстве:</p>
+	   <pre class="screen"><code class="hljs markdown">
+PLAY [Configure SNMP Contact]
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span>
+TASK [configure snmp contact]
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span>
+fatal: [switch2]: FAILED! =&gt; {"changed": false, "failed": true,
+"msg": "failed to connect to 192.168.199.149:22"}
+fatal: [switch1]: FAILED! =&gt; {"changed": false, "failed": true,
+"msg": "failed to connect to 192.168.199.148:22"}
+to retry, use: --limit
+@/home/echou/Master<span class="hljs-emphasis">_Python_</span>Networking/Chapter4/cisco_4.retry
+
+PLAY RECAP
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-emphasis">***</span>*
+switch1 : ok=0 changed=0 unreachable=0 failed=1
+switch2 : ok=0 changed=0 unreachable=0 failed=1
+ 	   </code></pre>
+  </div>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="05"> </a>Пример Cisco Ansible</h3>
+   </div></div></div>
+   <p>Поддержка Cisco в Ansible разбита на категории по операционным системам: IOS, IOSXR и NXOS. Мы 
+   уже видели ряд примеров NXOS, поэтому в данном разделе давайте попробуем управлять устройствами на 
+   основе IOS.</p>
+   <p>Наш файл хоста будет содержать два хоста, <span class="term"><code>R1</code></span> и 
+   <span class="term"><code>R2</code></span>:</p>
+	   <pre class="screen"><code class="hljs makefile">
+[ios_devices]
+R1 ansible_host=192.168.24.250
+R2 ansible_host=192.168.24.251
+
+[ios_devices:vars]
+<span class="hljs-constant">username</span>=cisco
+<span class="hljs-constant">password</span>=cisco
+ 	   </code></pre>
+   <p>Наш плейбук <span class="term"><code>cisco_5.yml</code></span> будет применять модуль 
+   <span class="term"><code>ios_command</code></span> для выполнения произвольных команд отображения:</p>
+	   <pre class="screen"><code class="hljs sql">
+<span class="hljs-comment">---</span>
+- name: IOS <span class="hljs-operator"><span class="hljs-keyword">Show</span> Commands
+  <span class="hljs-keyword">hosts</span>: <span class="hljs-string">"ios_devices"</span>
+  gather_facts: <span class="hljs-literal">false</span>
+  <span class="hljs-keyword">connection</span>: <span class="hljs-keyword">local</span>
+
+  vars:
+    cli:
+      host: <span class="hljs-string">"{{ ansible_host }}"</span>
+      username: <span class="hljs-string">"{{ username }}"</span>
+      <span class="hljs-keyword">password</span>: <span class="hljs-string">"{{ password }}"</span>
+      transport: cli
+
+    tasks:
+      - name: ios <span class="hljs-keyword">show</span> commands
+        ios_command:
+          commands:
+            - <span class="hljs-keyword">show</span> <span class="hljs-keyword">version</span> | i IOS
+            - <span class="hljs-keyword">show</span> run | i hostname
+          provider: <span class="hljs-string">"{{ cli }}"</span>
+
+        register: <span class="hljs-keyword">output</span>
+
+      - name: <span class="hljs-keyword">show</span> <span class="hljs-keyword">output</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">output</span>[<span class="hljs-string">"end_state"</span>][<span class="hljs-string">"contact"</span>]
+        debug:
+          <span class="hljs-keyword">var</span>: <span class="hljs-keyword">output</span>
+ 	   </span></code></pre>
+   <p>Тот результат, который мы могли бы ожидать при выводе данной команды отображения:</p>
+	   <pre class="screen"><strong><code class="hljs markdown">
+$ ansible-playbook -i ios<span class="hljs-emphasis">_hosts cisco_</span>5.yml
+
+PLAY [IOS Show Commands]
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span>
+
+TASK [ios show commands]
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span>
+ok: [R1]
+ok: [R2]
+
+TASK [<span class="hljs-link_label">show output in output["end_state"</span>][<span class="hljs-link_reference">"contact"</span>]]
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span>**
+ok: [R1] =&gt; {
+ "output": {
+ "changed": false,
+ "stdout": [
+ "Cisco IOS Software, 7200 Software (C7200-A3JK9S-M), Version 12.4(25g), RELEASE SOFTWARE (fc1)",
+ "hostname R1"
+ ],
+ "stdout_lines": [
+ [
+ "Cisco IOS Software, 7200 Software (C7200-A3JK9S-M), Version 12.4(25g), RELEASE SOFTWARE (fc1)"
+ ],
+ [
+ "hostname R1"
+ ]
+ ]
+ }
+} 
+ok: [R2] =&gt; {
+ "output": {
+ "changed": false,
+ "stdout": [
+ "Cisco IOS Software, 7200 Software (C7200-A3JK9S-M), Version 12.4(25g), RELEASE SOFTWARE (fc1)",
+ "hostname R2"
+ ],
+ "stdout_lines": [
+ [
+ "Cisco IOS Software, 7200 Software (C7200-A3JK9S-M), Version 12.4(25g), RELEASE SOFTWARE (fc1)"
+ ],
+ [
+ "hostname R2"
+ ]
+ ]
+ }
+}
+ 
+PLAY RECAP
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-emphasis">***</span>*
+  R1 : ok=2 changed=0 unreachable=0 failed=0
+  R2 : ok=2 changed=0 unreachable=0 failed=0
+ 	   </code></strong></pre>
+   <p>Я бы хотел указать на несколько моментов проиллюстрированных в данном примере:</p>
+  	<div class="itemizedlist">
+	<ul class="itemizedlist" type="disc">
+	 <li class="listitem">
+	 <p>Сам плейбук при сравнении NXOS и IOS в основном идентичен
+	 </p>
+	 </li><li class="listitem">
+	 <p>Имеющийся синтаксис модулей <span class="term"><code>nxos_snmp_contact</code></span> и 
+	 <span class="term"><code>ios_command </code></span> следует тому же самому шаблону с единственной 
+	 разницей между самими аргументами для этих модулей</p>
+	 </li><li class="listitem">
+	 <p>Версия IOS для данного устройства достаточно старая с отсутствием распознавания API, однако все 
+	 модули всё ещё будут иметь тот же самый вид и восприятие</p>
+	 </li>
+    </ul>
+    </div>
+   <p>Как мы можем обнаружить в данном примере, когда у нас имеется выведенным основной синтаксис для всех 
+   плейбуков, тонкие различия зависят от лежащего в основе модуля.</p>
+  </div>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="06"> </a>Пример Juniper Ansible</h3>
+   </div></div></div>
+   <p>Модулю Ansible Juniper необходим пакет PyEZ Juniper и NETCONF. Если вы проследовали рецептом из примера 
+   API <a class="link" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html" target="_top">Главе 3, Работа с сетями через API и для достижения 
+   целей</a>, вы готовы продолжить. Если нет, вернитесь назад в раздел за инструкциями по установке, а также 
+   некоторыми сценариями проверки, чтобы убедиться в работоспособности PyEZ. Также необходим пакет Python 
+   с названием <span class="term"><code>jxmlease</code></span>:</p>
+	   <pre class="screen"><strong><code class="hljs ruby">
+<span class="hljs-variable">$ </span>sudo pip install jxmlease
+ 	   </code></strong></pre>   <p></p>
+   <p>В своём файле хостов мы определим все устройства и переменные соединений:</p>
+	   <pre class="screen"><code class="hljs makefile">
+[junos_devices]
+J1 ansible_host=192.168.24.252
+
+[junos_devices:vars]
+<span class="hljs-constant">username</span>=juniper
+<span class="hljs-constant">password</span>=juniper!
+ 	   </code></pre>
+   <p>В своём модуле проверки мы применим модуль <span class="term"><code>junos_facts</code></span> для сбора 
+   основных фактов для данного устройства. Этот модуль эквивалентен модулю установки и становится удобным если нам 
+   необходимо предпринять действия в зависимости от возвращаемого результата. Отметим другие значения транспорта и 
+   порта в привозимом здесь примере:</p>
+	   <pre class="screen"><code class="hljs applescript">
+<span class="hljs-comment">---</span>
+- <span class="hljs-property">name</span>: Get Juniper Device Facts
+  hosts: <span class="hljs-string">"junos_devices"</span>
+  gather_facts: <span class="hljs-constant">false</span>
+  connection: <span class="hljs-keyword">local</span>
+
+  vars:
+    netconf:
+    host: <span class="hljs-string">"{{ ansible_host }}"</span>
+    username: <span class="hljs-string">"{{ username }}"</span>
+    password: <span class="hljs-string">"{{ password }}"</span>
+    port: <span class="hljs-number">830</span>
+    transport: netconf
+
+  tasks:
+    - <span class="hljs-property">name</span>: collect default <span class="hljs-keyword">set</span> <span class="hljs-keyword">of</span> facts
+      junos_facts:
+        provider: <span class="hljs-string">"{{ netconf }}"</span>
+
+      register: output
+
+    - <span class="hljs-property">name</span>: show output
+      debug:
+        var: output
+ 	   </code></pre>
+   <p>После исполнения вы получите такой вывод от устройства Juniper:</p>
+	   <pre class="screen"><strong><code class="hljs markdown">
+PLAY [Get Juniper Device Facts]
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-emphasis">***</span>
+
+TASK [collect default set of facts]
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-emphasis">***</span>*
+ok: [J1]
+
+TASK [show output]
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span>*
+ok: [J1] =&gt; {
+  "output": {
+  "ansible_facts": {
+  "HOME": "/var/home/juniper",
+  "domain": "python",
+  "fqdn": "master.python",
+  "has_2RE": false,
+  "hostname": "master",
+  "ifd_style": "CLASSIC",
+  "model": "olive",
+  "personality": "UNKNOWN",
+  "serialnumber": "",
+  "switch_style": "NONE",
+  "vc_capable": false,
+  "version": "12.1R1.9",
+  "version_info": {
+  "build": 9,
+  "major": [
+  12,
+  1
+  ],
+  "minor": "1",
+  "type": "R"
+  }
+  },
+  "changed": false
+  }
+} 
+
+PLAY RECAP
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-emphasis">***</span>*
+J1 : ok=2 changed=0 unreachable=0 failed=0
+ 	   </code></strong></pre>
+  </div>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="07"> </a>Пример Arista Ansible</h3>
+   </div></div></div>
+   <p>Данный завершающий пример модуля, который мы рассмотрим, будет модулем команд Arista. На данный момент 
+   мы достаточно знакомы с синтаксисом и структурой своего плейбука. Устройство Arista может быть настроено на 
+   использование транспорта <span class="term"><code>cli</code></span> или <span class="term"><code>eapi</code></span>, 
+   таким образом, для данного примера мы воспользуемся <span class="term"><code>cli</code></span>.</p>
+   <p>Вот применяемый файл хостов:</p>
+	   <pre class="screen"><code class="hljs">
+[eos_devices]
+A1 ansible_host=192.168.199.158
+ 	   </code></pre>
+   <p>Сам плейбук также аналогичен тому что мы уже видели:</p>
+	   <pre class="screen"><code class="hljs sql">
+<span class="hljs-comment">---</span>
+- name: EOS <span class="hljs-operator"><span class="hljs-keyword">Show</span> Commands
+  <span class="hljs-keyword">hosts</span>: <span class="hljs-string">"eos_devices"</span>
+  gather_facts: <span class="hljs-literal">false</span>
+  <span class="hljs-keyword">connection</span>: <span class="hljs-keyword">local</span>
+
+  vars:
+    cli:
+      host: <span class="hljs-string">"{{ ansible_host }}"</span>
+      username: <span class="hljs-string">"arista"</span>
+      <span class="hljs-keyword">password</span>: <span class="hljs-string">"arista"</span>
+      authorize: <span class="hljs-literal">true</span>
+      transport: cli
+
+    tasks:
+      - name: eos <span class="hljs-keyword">show</span> commands
+        eos_command:
+          commands:
+            - <span class="hljs-keyword">show</span> <span class="hljs-keyword">version</span> | i Arista
+          provider: <span class="hljs-string">"{{ cli }}"</span>
+
+        register: <span class="hljs-keyword">output</span>
+
+      - name: <span class="hljs-keyword">show</span> <span class="hljs-keyword">output</span>
+        debug:
+          <span class="hljs-keyword">var</span>: <span class="hljs-keyword">output</span>
+ 	   </span></code></pre>
+   <p>Весь вывод отобразит ту стандартную выдачу, которую мы могли бы ожидать из командной строки:</p>
+	   <pre class="screen"><strong><code class="hljs markdown">
+PLAY [EOS Show Commands]
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span>
+
+TASK [eos show commands]
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span>
+ok: [A1]
+
+TASK [show output]
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span>*
+ok: [A1] =&gt; {
+ "output": {
+ "changed": false,
+ "stdout": [
+ "Arista DCS-7050QX-32-F"
+ ],
+ "stdout_lines": [
+ [
+ "Arista DCS-7050QX-32-F"
+ ]
+ ],
+ "warnings": []
+ }
+} 
+
+PLAY RECAP
+<span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-strong">*****</span><span class="hljs-emphasis">***</span>*
+A1 : ok=2 changed=0 unreachable=0 failed=0
+ 	   </code></strong></pre>
+  </div>
+
+  <div class="section">
+   <div xmlns="" class="titlepage"><div><div>
+    <h3 xmlns="http://www.w3.org/1999/xhtml" class="title"><a id="08"> </a>Выводы</h3>
+   </div></div></div>
+   <p>В данной главе мы предприняли большой тур по структуре автоматизации с открытым исходным кодом Ansible. 
+   В отличии от сценариев сетевой автоматизации на основе Pexpect или API Ansible предоставляет более высокий 
+   уровень абстракции вызывая плейбуки (планы) для автоматизации ваших сетевых устройств.</p>
+   <p>Ansible изначально конструировался для управления серверами и позже был расширен на сетевые устройства; 
+   по этой причине мы взглянули на некий пример сервера. Затем мы провели сравнение и выделили отличия когда 
+   перешли к плейбукам для сетевых устройств. Позже мы рассмотрели примеры плейбуков для устройств Cisco IOS, 
+   Juniper JUNOS и Arista EOS.</p>
+   <p>В следующей главе мы усилим свои знания, полученные в данной главе и начнём рассматривать некоторые 
+   дополнительные свойства Ansible.</p>
+  </div>
+
+ </div>
+
+<!----><script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/FooterAndSidebar.js">
+</script><script type="text/javascript"><!--</div id="content"> is inside next code
+document.write(FooterAndSidebar);//-->
+</script><script src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/f.js" id="eXF-mstptnnw-0" async="" defer="defer"></script><a title="eXTReMe Tracker - Free Website Statistics" id="eXTReMe-Free-mstptnnw" target="_blank" href="http://extremetracking.com/free?login=mstptnnw"><img src="data:image/gif;base64,R0lGODlhKQAmAPcAAAAAAP////C3ueChpqplbMiQmFgXIkwWH9J5jbFnd/PP16+SmmMmUZphjdWyzggACAcEB5pjmmFNZiUIOaWEvZx7xlMrjyoTVq+usqWc8wIAISQYslJNoi0mzSklcFJN1iooVQEANXBvzZ+e7QgITg0NbhwdkBAQSmlptnd3mM/P/ZWVr4+PlI2NkoyMkQwSqRATa4aI2GRr4zlCjDFCpXOM597n//f//11cWlxbWVhXVVpYVmZkYl9dW2poZmlnZWhmZGdlY5SEeyYICIwxMXssLHUrK85aWlElJUojI0MgIAwJCf3n50I+Pk5KSk1JSUtHR0pGRlBMTBUUFEVCQkI/P0A9PUtISEpHRxoZGf/39zo4OEA+PiQjIyIhISopKSkoKCcmJiYlJSsqKnR0dHNzc3Jycm5ubmxsbGRkZGJiYldXV0xMTEtLS0JCQj8/Pz4+Pj09PTw8PDk5OTQ0NDMzMzIyMjExMSsrKyoqKiUlJSMjIyAgIB0dHRwcHBsbGxoaGhkZGRgYGBcXFxUVFRQUFBISEhERERAQEA0NDQwMDAsLCwoKCgkJCQgICAcHBwYGBgUFBQQEBAMDAwICAgEBAf///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAJYALAAAAAApACYAAAj/AM+kGUiwoMGDCBMSPKNmjcOHECNKnEjxYcM2GDNq3Mixo8eMa9i8GUmypMmRcOLIWQnnpEuSbNzQmUmzJs06d6hgecIDSBAsXOrYHFrTzRw8SJMqRToGSxkWGKJKbYEmx5alWJHOsbOnq9evXayUiboihVmzK1ZEdbFDzNe3Xe3k+UO3bt0+OqCukOABBAwPHkyYmIGiQlQzW/zYXZxHD6HHkB9nwbFgLwkSfwdz2MwZRdQyVQgZKkS6EGQ9fBCpXo0oUI/KIEicgCG4s4jbIlCgoICBjJMkB4wkUMJINR8/ipIrF3SFxYrYJ0AENkGDBgoRMWKMGBEjN4UFRwQE/xjPpEhyP4EaqVe/KAoZDCBCyC5RQjCND7cz6Nc/4vYABQMQYAASTCiwRCOBDALJggsC4gMGKYRwwmz1mbDBfSKMkIEKDiDgQAb9xYCBD18AAIACAkAAySCESOKiJJE08V58E8JAm4UdfCDDhjYg8F8F3Hm2ghQAIKEFAZRIQkghkzQ5ySNQrMCCBhPOJtgLG+RYw4Y3DMBEAAPEUAN2Iw4hABMGVDJJIYZU4mYliPyAgQRUnlDCjVjmuKMKXSrwJQW4jUiAFkSYWIkhbb45xYx12ljfCy/oyaOXCvjJwW0YDACmiQAcmqibgTA6IQn0mQCpnhqqgIAWCiBQIA0cNP8QgABDcHroIZwC0IeoJ5D6aKSoZhCBFiqIUIAWCzTABBNIOJLrIbga6gWj8mFWYZ56yjCsAzFwoGkATBDwRSHPRmtiGA+CoIF8FF6JpQUEfPCBBUw4cBsDBTSwABnjlpsrGA/SWa21j5YwgBYNzFvvdRxYwEFvXzjLKbS5FiIFC1OuexkMpb5QggIBKGABvQ5wxoFaJEpsIsWcOoIEAQWoOzDH9V1QKcI2O+AwBxJgwIIU5PrL6RB+LpCCBhpvzPEF9SqghQEKOODBDB6kAHHQE5sLwLEEBPxACOzORgIDWkRggBYIRO1BCTP4LEWJuQLAMgAMBICAxVCB8IAGl13RdsGxDZxwcNQTeLDCAinHLXe0QzBBKwBfXDynBnszQAATrIIAAgNfLjAByuOqnLWJRhJgoiORk7GABBIUALICDEgYHwGzNjBi6IovTjoTDAyNr9NasErnuiFozoAAAwhBYiGiC23AlwMI4DTmTAxQAAERYJwCxmphQAABb2Od+9wG/AdggEh8EbkPZGCMweEskOHD2/3mPjqnDwwxxAO5OlKI+lIIoADpxzz7Cc2Ap/NfaRYoPgTqzoEQjODKtCbBCipubhbM4MQSocEOmigRAQEAOw==" style="border:0;border-radius:4px;height:38px;width:41px;" alt="eXTReMe Tracker - Free Website Statistics"></a><script type="text/javascript" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/main.js"><!----></script><div class="logabug" style="text-align: center"><a id="AskMdl002" href="javascript:tocall()" onmouseover="this.href=mail" target="_blank"><i class="icon-question"><!----></i>Вопросы? Обсудите их на mdl.ru</a><br><a id="logABugLink2" href="https://bugs.launchpad.net/openstack-manuals/+filebug?field.title=MasteringPythonNetworking&amp;field.comment=%0A%0A-----------------------------------%0ABuilt:%202017-06-29T17:43:47+00:00%0Agit%20SHA:%2013fb30b7c263d715eee84f0ca1a16df79697eb88%0AURL:%20http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html%0Asource%20File:%20file:a35-prades%0Axml:id:%20mastering-python-networking" onmouseover="this.href=mail" target="_blank"><i class="icon-bug"><!----></i>Нашли ошибку? Сообщите о ней на данной странице</a></div><script language="JavaScript">	  var sourceFile = "source File: file:a35-prades";	  var xmlId = "xml:id: mastering-python-networking";	  var lineFeed = "%0A";	  var docUrl = "URL: " + window.location;	  var bugTitle = "MasteringPythonNetworking";	  var buildTime = "Built: 2017-06-29T17:43:47+00:00";	  var gitSha = "git SHA: 13fb30b7c263d715eee84f0ca1a16df79697eb88";	  var fieldComment = encodeURI(buildTime) +  lineFeed + encodeURI(gitSha) + lineFeed + encodeURI(docUrl) + lineFeed + encodeURI(sourceFile) + lineFeed + encodeURI(xmlId);	  logABug(bugTitle,fieldComment);	</script>   <hr><div class="itemizedlist">	<ul class="itemizedlist" type="disc"><p>Дополнительные ссылки:</p>	 <li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/KVMVirtualizationCookbook/content/Ch08.html" target="_top">Книга рецептов виртуализации KVM</a> Константин Иванов, Packt Publishing, июнь 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringCeph/content/index.html" target="_top">Полное руководство Ceph</a> Ник Фиск, Packt Publishing, май 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/ContainerizationWithLXC/content/index.html" target="_top"> Контейнеризация при помощи LXC</a> Константин Иванов, Packt Publishing, март 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/CephCookbook/content/index.html" target="_top">Книга рецептов Ceph</a> Каран Сингх, Packt Publishing, февраль 2016</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/LearningCeph2ed/content/index.html" target="_top">Изучаем Ceph</a>, 2е изд., Энтони Д`Атри, Вайбхав Бхембре, Каран Сингх, Packt Publishing, октябрь 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/LearningCeph/content/index.html" target="_top">Изучаем Ceph</a> Каран Сингх, Packt Publishing, январь 2015</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringProxmox.2ed/content/index.html" target="_top">Proxmox. Полное руководство</a>. 2е изд., Васим Ахмед, Packt Publishing, май 2016</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/ProxmoxCookbook/content/index.html" target="_top">Книга рецептов Proxmox. Главы 1-6, Дополнения: Преобразование OpenVZ в LXC, Организация ограждения</a> Васим Ахмед, Packt Publishing, август 2015</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/VirtualizationComplete/content/index.html" target="_top">Полная виртуализация. Базовая коммерческая редакция</a>: Proxmox-freeNAS-Zentyal-pfSense. Ли Р. Сюрбер, февраль 2016</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringAnsible2nd/content/index.html" target="_top">Полное руководство Ansible</a>. 2е изд., Джесс Китинг, май 2017</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringZabbix.2ed/content/Ch04.html" target="_top">Zabbix. Полное руководство</a>. 2е изд., Андреа Далле Ваккье, сентябрь 2015</p>	 </li><li class="listitem">	 <p><a class="link" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html" target="_top">Полное руководство работы с сетями на Python</a>. Эрик Чоу, Июнь 2017</p>	 </li>    </ul>   </div>      <hr><div class="legal"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html">Уведомление о правах</a><hr><br><table style="border-style: none;" align="left" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-style: none; text-align:left;" valign="top" width="80%">Перевод: Copyright ©&nbsp;2017 &nbsp;<img alt="mdl.ru" src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/mdl-reg.jpg" widht="35" style="border-style: none;" height="12">.<br>All rights reserved.<br>Ссылки обязательны (Refs and links are obligatory).</td><td border="0" style="border-style: none; text-align:right;" valign="top" width="20%"><em><a href="http://www.mdl.ru/">http://www.mdl.ru</a><br> <br><a href="http://onreader.mdl.ru/sddc-mdl-portfolio.pdf">портфолио SD DC</a></em></td></tr><tr><td colspan="2" border="0"> <a href="http://www.mdl.ru/Solutions/Put.htm?Nme=CanonOffer"><img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/MFUoffer170420-610x315.jpg" "width="610&quot;" heigh="315"></a></td></tr></tbody></table></div><div><div id="leftnavigation" style="padding-top:3px; background-color:white;">	<div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs"><ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all"><li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#treeDiv" tabindex="1"><span class="contentsTab">Содержание</span></a></li>	<li class="ui-state-default ui-corner-top"><a href="#searchDiv" tabindex="1"><span class="searchTab">Поиск</span></a></li></ul>	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom" id="treeDiv"><img src="%D0%93%D0%BB%D0%B0%D0%B2%D0%B0%204.%20%D0%98%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8%20Python%20-%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20Ansible%20-%20%D0%9F%D0%BE%D0%BB%D0%BD%D0%BE%D0%B5%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D1%81%D0%B5%D1%82%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%20Python_files/loading.gif" alt="загрузка таблицы содержания..." id="tocLoading" style="display:none;">	<div id="ulTreeDiv" style="" class="thisisthat">	<ul id="tree" class="filetree treeview"><li class="collapsable" tabindex="2"><div class="hitarea collapsable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html#Preface">Предисловие<sup>~</sup></a></span><ul style="display: block;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html#Covers">Что охватывает эта книга</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html#You_need">Что вам нужно для этой книги</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html#For_Who">Для кого эта книга</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html#Conventions">Соглашения</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html#Feedback">Обратная связь с читателями</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html#Support">Поддержка пользователей</a></span></li><li tabindex="2"><span class="file"><a class="" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html#DownloadingExamples">Загрузка кодов примеров</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html#Errata">Опечатки</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html#Piracy">Незаконное тиражирование</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/index.html#Questions">Вопросы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html">Глава 1. Обзор комплекта протокола TCP/IP и языка Python</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#01">Обзор Интернета</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#0101">Серверы, хосты и сетевые компоненты</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#0102">Появление центров обработки данных</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#010201">Корпоративные центры обработки данных</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#010202">Облачные центры обработки данных</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#010203">Граничные центры обработки данных</a></span></li></ul></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#02">Модель OSI</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#03">Модели клиент- сервер</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#04">Комплекты сетевого протокола</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#0401">TCP</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#040101">Функции и характеристики TCP</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#040102">Сообщения TCP и обмен данными</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#0402">UDP</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#0402">IP</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#040201">NAT IP и безопасность</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#040202">Понятия маршрутизации IP</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#05">Обзор языка Python</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#0501">Версии Python</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#0502">Операционная система</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#0503">Исполнение программ Python</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#0504">Встроенные типы Python</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#050401">Тип None</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#050402">Числа</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#050403">Последовательности</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#050404">Соответствия</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#050405">Множества</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#0505">Операторы Python</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#0506">Инструменты управления потоком Python</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#0507">Функции Python</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#0508">Классы Python</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#0509">Модули и пакеты Python</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch01.html#06">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html">Глава 2. Взаимодействие с сетевым устройством на нижнем уровне</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#01">Вызовы CLI</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#02">Построение виртуальной лаборатории</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0201">Cisco VIRL</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#020101">Уловки VIRL</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0202">Cisco DevNet и dCloud</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0203">GNS3</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#03">Библиотека Python Pexpect</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0301">Установка</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0302">Обзор Pexpect</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0303">Наша первая программа ожидания</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0304">Дополнительная функциональность Pexpect</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0305">Pexpect и SSH</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0306">СОбираем всё воедино для Pexpect</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#04">Библиотека Python Paramiko</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0401">Установка Paramiko</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0402">Обзор Paramiko</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0403">Наша первая программа Paramiko</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0404">Дополнительная функциональность Paramiko</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#040401">Paramiko для серверов</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0405">Собираем всё воедино для Paramiko</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#05">Заглядывая вперёд</a></span><ul style="display: none;"><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#0501">Недостатки Pexpect и Paramiko в сравнении с прочими инструментами</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#050101">Идемпотентное взаимодействие сетевых устройств</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#050102">Плохая автоматизация ускоряет плохие вещи</a></span></li></ul></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch02.html#06">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html">Глава 3. Работа с сетями через API и движимое намерениями проектирование сетей</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#01">Инфраструктура как код Python</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#0101">Сопоставление анализа терминальных данных и структурированного вывода API</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#0102">Моделирование данных для инфраструктуры как код</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#02">API и ACI Cisco</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#0201">Cisco NX-API</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#020101">Установка лабораторного ПО и подготовка устройства</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#020102">Примеры NX-API</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#0202">Cisco и модель YANG</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#0203">Cisco ACI</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#03">API Python для сетевых сред Juniper</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#0301">Juniper и NETCONF</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#030101">Подготовка устройства</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#030102">Примеры Juniper NETCONF</a></span></li></ul></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#0302">Juniper PyEZ для разработчиков</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#030201">Установка и подготовка</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#030202">Примеры PyEZ</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#04">API Python Arista</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#0401">Управление eAPI Arista</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#040101">Подготовка eAPI</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#040102">Примеры eAPI</a></span></li></ul></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#0402">Библиотека Arista Pyeapi</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#040201">Установка Pyeapi</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#040202">Примеры PyEZ</a></span></li></ul></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#05">Нейтральные к производителю библиотеки</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch03.html#06">Выводы</a></span></li></ul></li><li class="collapsable" tabindex="2"><div class="hitarea collapsable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html">Глава 4. Инфраструктура автоматизации Python - основы Ansible</a></span><ul style="display: block;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#01">Быстрый пример Ansible</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0101">Установка управляющего узла</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0102">Ваш первый плейбук Ansible</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#010201">Авторизация общедоступного ключа</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#010202">Файл учёта ресурсов</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#010203">Наш первый плейбук</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#02">Преимущества Ansible</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0201">Отсутствие агента</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0202">Идемпотентность</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0203">Простота и расширяемость</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0204">Поддержка производителями</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#03">Архитектура Ansible</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0301">YAML</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0302">Учёт ресурсов</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0303">Переменные</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0304">Шаблоны Jinja2</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#04">Сетевые модули Ansible</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0401">Локальные соединения и факты</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#0402">Параметры provider</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#05">Пример Cisco Ansible</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#06">Пример Juniper Ansible</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#07">Пример Arista Ansible</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch04.html#08">Выводы</a></span></li></ul></li><li class="collapsable" tabindex="2"><div class="hitarea collapsable-hitarea"></div><span class="file"><a class="" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html">Глава 5. Инфраструктура автоматизации Python - дополнительные вопросы Ansible</a></span><ul style="display: block;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#01">Условные зависимости Ansible</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#0101">Оператор when</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#0102">Условные зависимости сетевого модуля</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#02">Циклы Ansible</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#0201">Стандартные циклы</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#0202">Циклы по словарям</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a class="" href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#03">Шаблоны</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#0301">Шаблоны Jinja2</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#0302">Циклы Jinja2</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#0303">Условные зависимости Jinja2</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#04">Группы и переменные хостов</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#0401">Переменные групп</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#0402">Переменные хостов</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#05">Кладовая Ansible</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#06">Включения и роли Ansible</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#0601">Оператор включения</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#0602">Роли Ansible</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#07">Написание вашего собственного пользовательского модуля</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#0701">Самый первый пользовательский модуль</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#0702">Второй пользовательский модуль</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch05.html#08">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html">Глава 6. Сетевая безопасность с помощью Python</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#01">Установка лаборатории</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#02">Python Scapy</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#0201">Установка Scapy</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#0202">Примеры взаимодействия</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#0203">Снифинг</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#0204">Сканирование порта TCP</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#0205">Сборка ping</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#0206">Обычные атаки</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#0207">Ресурсы Scapy</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#03">Списки доступа</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#0301">Реализация списков доступа при помощи Ansible</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#0302">Списки доступа MAC</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#04">Поиск в системных журналах</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#0401">Поиск при помощи регулярных выражений</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#05">Прочие инструменты</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#0501">Частные VLAN</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#0501">UFW через Python</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch06.html#06">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html">Глава 7. Мониторинг сетей при помощи Python - Часть 1</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#01">Установка лаборатории</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#02">SNMP</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#0201">Установка</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#0202">PySNMP</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#03">Визуализация Python</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#0301">Matplotlib</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#030101">Установка</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#030102">Первый пример Matplotlib</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#030103">Результаты Matplotlib для SNMP</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#030104">Дополнительные ресурсы Matplotlib</a></span></li></ul></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#0302">Pygal</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#030201">Установка</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#030202">Первый пример Pygal</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#030203">Результаты Pygal для SNMP</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#030204">Дополнительные ресурсы Pygal</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#04">Python для Cacti</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#0401">Установка</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#0402">Сценарий Python как источник входных данных</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch07.html#05">Выводы</a></span></li></ul></li><li class="collapsable" tabindex="2"><div class="hitarea collapsable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html">Глава 8. Мониторинг сетей при помощи Python - Часть 2</a></span><ul style="display: block;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#01">Graphviz</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#0101">Установка лаборатории</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#0102">Установка</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#0103">Примеры Graphviz</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#0104">Python в примерах Graphviz</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#0105">Отображение LLDP соседей</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#010501">Получение информации</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#010502">Сценарий Python синтаксического анализа</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#010503">Окончательный плейбук</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#02">Основанный на потоках мониторинг</a></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#0201">Синтаксический анализ NetFlow при помощи Python</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#020101">Сокет и структура Python</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#0202">Мониторинг обмена ntop</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#020201">Расширение Python для ntop</a></span></li></ul></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#0203">sFlow</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#020301">SFlowtool и sFlow-RT с применением Python</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#03">Elasticsearch (стек ELK)</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#0301">Установка хостинга службы ELK</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#0302">Формат logstash</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#0303">Вспомогательный сценарий Python для форматирования logstash</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch08.html#04">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html">Глава 9. Построение сетевых веб служб с применением Python</a><sup>...</sup></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#01">Сравнение веб инфраструктур Python</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#02">Flask и установка лаборатории</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#03">Введение в Flask</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#0301">Клиент HTTPie</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#0302">Маршрутизация URL</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#0303">Переменные URL</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#0304">Генерация URL</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#0305">Возврат jsonify</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#04">API статического содержимого</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#0401">Flask-SQLAlchemy</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#0402">API содержимого сети</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#0403">API устройств</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#0404">API идентификаторов устройств</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#0405">Возврат jsonify</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#05">API динамического содержимого</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#0501">Асинхронные операции</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#06">Безопасность</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#07">Дополнительные ресурсы</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch09.html#08">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch10.html">Глава 10. Основы OpenFlow</a><sup>~</sup></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch10.html#01">Установка лаборатории</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch10.html#02">Введение в OpenFlow</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch10.html#0201">Основные операции</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch10.html#0202">Сопоставление OpenFlow 1.0 и 1.3</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch10.html#03">Mininet</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch10.html#04">Контроллер Ryu при помощи Python</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch10.html#0401">Команды Open vSwitch</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch10.html#0402">Приложение межсетевого экрана Ryu</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch10.html#05">Коммутатор OpenFlow 2 уровня</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch10.html#0501">Планирование вашего приложения</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch10.html#0502">Компоненты приложения</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch10.html#06">Контроллер POX</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch10.html#07">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html">Глава 11. Дополнительные темы OpenFlow</a><sup>~</sup></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#01">Установка</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#02">Работа с OpenFlow при помощи Riu</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#03">Изучение пакета</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#04">Статический маршрутизатор</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#0401">Топология Mininet</a></span></li><li class="expandable lastExpandable" tabindex="2"><div class="hitarea expandable-hitarea lastExpandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#0402">Код контроллера Riu</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#040201">Установка потока Riu</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#040202">Создание пакета Riu</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#040203">Конечный результат</a></span></li></ul></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#05">Маршрутизатор с API</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#0501">Kонтроллер Riu с API</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#0502">Примеры использования API</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#06">Маршрутизатор BGP при помощи OpenFlow</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#0601">Установка исследуемого маршрутизатора</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#0602">Python с библиотекой диктора BGP</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#0603">Приложение Ryu BGP</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#07">Межсетевой экран при помощи OpenFlow</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch11.html#08">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch12.html">Глава 12. OpenStack, OpenDaylight и NFV</a><sup>~</sup></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch12.html#01">OpenStack</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch12.html#0101">Обзор OpenStack</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch12.html#0102">Сетевая среда OpenStack</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch12.html#0103">Попробуйте OpenStack</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch12.html#02">OpenDaylight</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch12.html#0201">Обзор программирования OpenDaylight</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch12.html#0202">Пример OpenDaylight</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch12.html#0203">Попробуйте OpenStack</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch12.html#03">Выводы</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html">Глава 13. Гибридные SDN</a><sup>~</sup></span><ul style="display: none;"><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#01">Подготовка сетевой среды</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0101">Ваше знакомство с имеющимися инфраструктурами и инструментами</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0102">Стандартизация сетевой среды</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0103">Создание минимально жизнеспособных продуктов</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0104">Непреклонное экспериментирование</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#02">Развёртывание Grenfield</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#03">Резервный контроллер</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0301">Пример со множественным контроллером</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#04">Пример миграции BGP</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0401">Сегментация миграции</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0402">Установка VIRL и Mininet</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0403">Настройка устройства Cisco</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0404">Диктор Ryu BGP</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0405">Mininet и маршрутизатор REST</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0406">Результат и проверка</a></span></li></ul></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#05">Ещё пример BGP</a></span><ul style="display: none;"><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0501">Опрос JSONRPC поверх WebSocket</a></span></li></ul></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#06">Интеграция мониторинга</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#07">Безопасное соединение TLS</a></span></li><li class="expandable" tabindex="2"><div class="hitarea expandable-hitarea"></div><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#08">Выбор физического коммутатора</a></span><ul style="display: none;"><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0801">Лаборатория коммутаторов OpenFlow</a></span></li><li tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0802">Имеющиеся на рынке коммутаторы</a></span></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#0803">Коммутаторы Whitebox</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ch13.html#09">Выводы</a></span></li></ul></li><li class="last" tabindex="2"><span class="file"><a href="http://onreader.mdl.ru/MasteringPythonNetworking/content/Ix01.html">Указатель<sup>-</sup></a></span></li></ul>	</div></div>		<div class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide" id="searchDiv">	 <div id="search"><form onsubmit="Verifie(ditaSearch_Form);return false" name="ditaSearch_Form" class="searchForm">	  <fieldset class="searchFieldSet"><legend>Поиск</legend><center><input id="textToSearch" name="textToSearch" class="searchText" type="text"> &nbsp; <input onclick="Verifie(ditaSearch_Form)" class="searchButton" value="Go" id="doSearch" type="button"></center></fieldset></form>	 </div>	<div id="searchResults"><center>		</center></div>	<p class="searchHighlight"><a href="#" onclick="toggleHighlight()">Подсветка поиска (Вкл/Выкл)</a>	</p>	</div></div></div></div>
+
+</div></body><div style="display:none" id="sp_console_event"></div></html>

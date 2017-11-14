@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html itemscope="itemscope" itemtype="http://schema.org/Article" lang="ru-RU" prefix="og: http://ogp.me/ns#">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<title>Знакомство с Ansible. Часть1: введение | Let&#039;sclearITup</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />
+	<link rel="pingback" href="https://letsclearitup.com.ua/xmlrpc.php" />
+	<!--[if lt IE 9]>
+	<script src="https://letsclearitup.com.ua/wp-content/themes/independent-publisher/js/html5.js" type="text/javascript"></script>
+	<![endif]-->
+	
+<!-- All in One SEO Pack 2.3.10.2 by Michael Torbert of Semper Fi Web Design[254,351] -->
+<link rel="author" href="https://plus.google.com/u/0/+%D0%95%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9%D0%9B%D0%B5%D0%B1%D0%B5%D0%B4%D1%8C/posts" />
+<meta name="description"  content="Давайте разберемся с системой конфигурации Ansible! В этой статье рассмотрим некоторые важные особенности, установим и настроим Ansible на сервере под упр" />
+
+<meta name="keywords" itemprop="keywords" content="ansible,debian,ansible playbook,ansible file,ansible ssh,ansible modules,install ansible,установка ansible,давайте разберемся,let\'s clear it up,ubuntu" />
+
+<link rel="canonical" href="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html" />
+			<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-64873290-1', 'auto');
+			
+			ga('send', 'pageview');
+			</script>
+<!-- /all in one seo pack -->
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Let&#039;sclearITup &raquo; Лента" href="https://letsclearitup.com.ua/feed" />
+<link rel="alternate" type="application/rss+xml" title="Let&#039;sclearITup &raquo; Лента комментариев" href="https://letsclearitup.com.ua/comments/feed" />
+<link rel="alternate" type="application/rss+xml" title="Let&#039;sclearITup &raquo; Лента комментариев к &laquo;Знакомство с Ansible. Часть1: введение&raquo;" href="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html/feed" />
+<link rel='stylesheet' id='genericons-css'  href='https://letsclearitup.com.ua/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='independent-publisher-jetpack-sharing-enhancements-css'  href='https://letsclearitup.com.ua/wp-content/themes/independent-publisher/css/jetpack-sharing-enhancements.css?ver=1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='independent-publisher-jetpack-sharing-label-enhancements-css'  href='https://letsclearitup.com.ua/wp-content/themes/independent-publisher/css/jetpack-sharing-label-enhancements.css?ver=1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='independent-publisher-style-css'  href='https://letsclearitup.com.ua/wp-content/themes/independent-publisher/style.css?ver=4.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='social-logos-css'  href='https://letsclearitup.com.ua/wp-content/plugins/jetpack/_inc/social-logos/social-logos.min.css?ver=1' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='https://letsclearitup.com.ua/wp-content/plugins/jetpack/css/jetpack.css?ver=4.3.2' type='text/css' media='all' />
+<script type='text/javascript' src='https://letsclearitup.com.ua/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='https://letsclearitup.com.ua/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var related_posts_js_options = {"post_heading":"h4"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://letsclearitup.com.ua/wp-content/plugins/jetpack/modules/related-posts/related-posts.js?ver=20150408'></script>
+<script type='text/javascript' src='https://letsclearitup.com.ua/wp-content/themes/independent-publisher/js/fade-post-title.js?ver=4.6.1'></script>
+<script type='text/javascript' src='https://letsclearitup.com.ua/wp-content/themes/independent-publisher/js/enhanced-comment-form.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='https://letsclearitup.com.ua/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://letsclearitup.com.ua/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://letsclearitup.com.ua/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Решение проблем после обновления SVN до 1.8.14' href='https://letsclearitup.com.ua/debian/reshenie-problem-posle-obnovleniya-svn-do-1-8-14.html' />
+<link rel='next' title='Восстановление программных RAID-массивов' href='https://letsclearitup.com.ua/debian/vosstanovlenie-programmnyih-raid-massivov.html' />
+<meta name="generator" content="WordPress 4.6.1" />
+<link rel='shortlink' href='https://letsclearitup.com.ua/?p=562' />
+<link rel="alternate" type="application/json+oembed" href="https://letsclearitup.com.ua/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fletsclearitup.com.ua%2Fubuntu%2Fznakomstvo-s-ansible-chast1-vvedenie.html" />
+<link rel="alternate" type="text/xml+oembed" href="https://letsclearitup.com.ua/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fletsclearitup.com.ua%2Fubuntu%2Fznakomstvo-s-ansible-chast1-vvedenie.html&#038;format=xml" />
+
+<link rel='dns-prefetch' href='//jetpack.wordpress.com'>
+<link rel='dns-prefetch' href='//s0.wp.com'>
+<link rel='dns-prefetch' href='//s1.wp.com'>
+<link rel='dns-prefetch' href='//s2.wp.com'>
+<link rel='dns-prefetch' href='//public-api.wordpress.com'>
+<link rel='dns-prefetch' href='//0.gravatar.com'>
+<link rel='dns-prefetch' href='//1.gravatar.com'>
+<link rel='dns-prefetch' href='//2.gravatar.com'>
+<style type='text/css'>img#wpstats{display:none}</style><meta property="og:type" content="article" />
+<meta property="og:title" content="Знакомство с Ansible. Часть1: введение" />
+<meta property="og:url" content="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html" />
+<meta property="og:description" content="Ansible – одна из систем управления конфигурациями (автоматизации настройки и развертывания серверов). Особенность Ansible – наличие управляющего сервера, с которого отправляются команды или наборы инструкций (playbooks) на удаленные хосты посредством протокола SSH. Ansible успешно решает следующие задачи: правильная и быстрая настройка серверов до нужной конфигурации; управление развертыванием облачных серверов (через API, с помощью Docker); установка [&hellip;]" />
+
+
+		<!--WordPress Theme Customizer CSS-->
+		<style type="text/css">
+
+			/* Background Color */
+
+			.site { background-color:#ffffff; }
+
+			/* Comment Form Background Color */
+
+			
+			/* Text Color */
+
+			body,input,select,textarea { color:#000000; }
+			.format-aside .entry-content a, .format-aside .entry-content a:hover, .format-aside .entry-content a:visited, .format-aside .entry-content a:active, .format-aside .entry-content a:focus { color:#000000; }
+			.format-quote .entry-content a, .format-quote .entry-content a:hover, .format-quote .entry-content a:visited, .format-quote .entry-content a:active, .format-quote .entry-content a:focus { color:#000000; }
+			.post-excerpts .format-standard .entry-content a, .post-excerpts .format-standard .entry-content a:focus, .post-excerpts .format-standard .entry-content a:hover, .post-excerpts .format-standard .entry-content a:active, .post-excerpts .format-standard .entry-content a:visited { color:#000000; }
+			.post-excerpts .format-chat .entry-content a, .post-excerpts .format-chat .entry-content a:focus, .post-excerpts .format-chat .entry-content a:hover, .post-excerpts .format-chat .entry-content a:active, .post-excerpts .format-chat .entry-content a:visited { color:#000000; }
+
+			/* Link Color */
+
+			a, a:visited, a:hover, a:focus, a:active { color:#57ad68; }
+			.enhanced-excerpts .enhanced-excerpt-read-more a, .enhanced-excerpts .enhanced-excerpt-read-more a:hover { color:#57ad68; }
+			.post-excerpts .sticky.format-standard .entry-content a, .post-excerpts .sticky.format-standard .entry-content a:focus, .post-excerpts .sticky.format-standard .entry-content a:hover, .post-excerpts .sticky.format-standard .entry-content a:active, .post-excerpts .sticky.format-standard .entry-content a:visited { color:#57ad68; }
+			.post-excerpts .format-standard.show-full-content-first-post .entry-content a { color:#57ad68; }
+			.post-excerpts .format-standard .entry-content a.moretag { color:#57ad68; }
+			.post-excerpts .format-standard .entry-content a.more-link { color:#57ad68; }
+			.read-more a, .read-more a:hover { color:#57ad68; }
+			.entry-title a:hover { color:#57ad68; }
+			.entry-meta a:hover { color:#57ad68; }
+			.site-footer a:hover { color:#57ad68; }
+			blockquote { border-color:#57ad68; }
+			#infinite-footer .blog-credits a, #infinite-footer .blog-credits a:hover { color:#57ad68; }
+			#nprogress .bar { background:#57ad68; }
+			#nprogress .spinner-icon { border-top-color:#57ad68; }
+			#nprogress .spinner-icon { border-left-color:#57ad68; }
+			#nprogress .peg { box-shadow:0 0 10px #57ad68, 0 0 5px #57ad68; }
+
+			button, html input[type="button"], input[type="reset"], input[type="submit"], button:hover, html input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover { background:#57ad68; /* Old browsers */ }
+			button, html input[type="button"], input[type="reset"], input[type="submit"], button:hover, html input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover { background: -moz-linear-gradient(top, #57ad68 60%, #57ad68 100%); /* FF3.6+ */ }
+			button, html input[type="button"], input[type="reset"], input[type="submit"], button:hover, html input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover { background: -webkit-gradient(linear, left top, left bottom, color-stop(60%, #57ad68), color-stop(100%, #57ad68)); /* Chrome,Safari4+ */ }
+			button, html input[type="button"], input[type="reset"], input[type="submit"], button:hover, html input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover { background: -webkit-linear-gradient(top, #57ad68 60%, #57ad68 100%); /* Chrome10+,Safari5.1+ */ }
+			button, html input[type="button"], input[type="reset"], input[type="submit"], button:hover, html input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover { background: -o-linear-gradient(top, #57ad68 60%, #57ad68 100%); /* Opera 11.10+ */ }
+			button, html input[type="button"], input[type="reset"], input[type="submit"], button:hover, html input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover { background: -ms-linear-gradient(top, #57ad68 60%, #57ad68 100%); /* IE10+ */ }
+			button, html input[type="button"], input[type="reset"], input[type="submit"], button:hover, html input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover { background: linear-gradient(top, #57ad68 60%, #57ad68 100%); /* W3C */ }
+
+			/* Header Text Color */
+
+			.site-published { color:#000000; }
+			.site-title a { color:#000000; }
+			h1,h2,h3,h4,h5,h6 { color:#000000; }
+			.entry-title a { color:#000000; }
+			.author .archive-title a { color:#000000; }
+			.author .archive-title a { color:#000000; }
+
+			/* Primary Meta Text Color */
+
+									
+			/* Secondary Meta Text Color */
+
+																											
+		</style>
+		<!--/WordPress Theme Customizer CSS-->
+
+	
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Знакомство с Ansible. Часть1: введение" />
+<meta property="og:url" content="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html" />
+<meta property="og:description" content="Ansible – одна из систем управления конфигурациями (автоматизации настройки и развертывания серверов). Особенность Ansible – наличие управляющего сервера, с которого отправляются команды или наборы…" />
+<meta property="article:published_time" content="2015-10-19T07:12:11+00:00" />
+<meta property="article:modified_time" content="2016-05-05T07:25:03+00:00" />
+<meta property="og:site_name" content="Let&#039;sclearITup" />
+<meta property="og:image" content="https://letsclearitup.com.ua/wp-content/uploads/2015/10/2.png" />
+<meta property="og:image:width" content="593" />
+<meta property="og:image:height" content="207" />
+<meta property="og:locale" content="ru_RU" />
+<meta name="twitter:card" content="summary" />
+<style type="text/css" id="syntaxhighlighteranchor"></style>
+<link rel="icon" href="https://letsclearitup.com.ua/wp-content/uploads/2015/11/cropped-favicon-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://letsclearitup.com.ua/wp-content/uploads/2015/11/cropped-favicon-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" href="https://letsclearitup.com.ua/wp-content/uploads/2015/11/cropped-favicon-180x180.png" />
+<meta name="msapplication-TileImage" content="https://letsclearitup.com.ua/wp-content/uploads/2015/11/cropped-favicon-270x270.png" />
+</head>
+
+<body class="single single-post postid-562 single-format-standard" itemscope="itemscope" itemtype="http://schema.org/WebPage">
+
+
+
+<div id="page" class="hfeed site">
+	<header id="masthead" class="site-header" role="banner" itemscope itemtype="http://schema.org/WPHeader">
+
+		<div class="site-header-info">
+								<a class="site-logo" href="https://letsclearitup.com.ua/" title="Let&#039;sclearITup" rel="home">
+				<img class="no-grav" src="https://letsclearitup.com.ua/wp-content/uploads/2015/07/DSC.jpg" height="1530" width="1454" alt="Let&#039;sclearITup" />
+			</a>
+				<h1 class="site-title">
+			<a href="https://letsclearitup.com.ua/" title="Let&#039;sclearITup" rel="home">Let&#039;sclearITup</a>
+		</h1>
+		<h2 class="site-description">Давайте разберемся!</h2>
+					</div>
+
+							<nav role="navigation" class="site-navigation main-navigation">
+				<a class="screen-reader-text skip-link" href="#content" title="Skip to content">Skip to content</a>
+
+													<div class="menu"><ul><li class="page_item page-item-2"><a href="https://letsclearitup.com.ua/about">Обо мне</a></li><li class="page_item page-item-887"><a href="https://letsclearitup.com.ua/hochu-primu-v-dar">Приму в дар</a></li></ul></div>
+				
+			</nav><!-- .site-navigation .main-navigation -->
+		
+			</header>
+	<!-- #masthead .site-header -->
+
+	<div id="main" class="site-main">
+	<div id="primary" class="content-area">
+		<main id="content" class="site-content" role="main">
+
+			
+				
+<article id="post-562" class="post-562 post type-post status-publish format-standard hentry category-ansible category-debian category-ubuntu tag-ansible tag-debian" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+	
+<header class="entry-header">
+	<h1 class="entry-title" itemprop="name">Знакомство с Ansible. Часть1: введение</h1>
+		<h2 class="entry-title-meta">
+			<span class="entry-title-meta-author">
+				<span class="byline"><span class="author vcard"><a class="url fn n" href="https://letsclearitup.com.ua" title="Показать все записи от Евгений Лебедь" rel="author">Евгений Лебедь</a></span></span>			</span>
+			<span class="entry-title-meta-post-date">
+				<a href="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html" title="Знакомство с Ansible. Часть1: введение" rel="bookmark"><time class="entry-date" datetime="2015-10-19T10:12:11+00:00" pubdate="pubdate">19.10.2015</time></a>			</span>
+			<span class="entry-title-meta-view">
+				3868			</span>
+		</h2>
+
+	
+</header>
+	<!-- .entry-header -->
+	<div class="entry-content" itemprop="mainContentOfPage">
+		<p><a href="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html"><img src="https://letsclearitup.com.ua/wp-content/uploads/2015/12/ansible.png" alt="ansible" width="1200" height="630" class="aligncenter size-full wp-image-763" srcset="https://letsclearitup.com.ua/wp-content/uploads/2015/12/ansible.png 1200w, https://letsclearitup.com.ua/wp-content/uploads/2015/12/ansible-300x158.png 300w, https://letsclearitup.com.ua/wp-content/uploads/2015/12/ansible-1024x538.png 1024w, https://letsclearitup.com.ua/wp-content/uploads/2015/12/ansible-700x368.png 700w" sizes="(max-width: 1200px) 100vw, 1200px" /></a><a href="http://docs.ansible.com/" target="_blank"><strong>Ansible</strong></a> – одна из систем управления конфигурациями (автоматизации настройки и развертывания серверов). Особенность <strong>Ansible</strong> – наличие управляющего сервера, с которого отправляются команды или наборы инструкций (<cite>playbooks</cite>) на удаленные хосты посредством протокола SSH.<br />
+<span id="more-562"></span></p>
+<p><strong>Ansible</strong> успешно решает следующие задачи:</p>
+<ul>
+<li>правильная и быстрая настройка серверов до нужной конфигурации;</li>
+<li>управление развертыванием облачных серверов (через API, с помощью Docker);</li>
+<li>установка и обновление приложений;</li>
+<li>координация звеньев инфраструктуры для выполнения развертываний;</li>
+<li>централизованный сбор логов.</li>
+</ul>
+<p><strong>Ansible</strong> не требует установки на удаленные хосты клиентских приложений, так как подключается к ним по протоколу SSH &#8212; это и есть главное отличие от других инструментов управления конфигурациями. </p>
+<p>Чтобы &#171;пощупать&#187; <strong>Ansible</strong> потребуется один управляющий сервер и несколько хостов для настройки. На управляющем сервере у нас установлена операционная система Debian Wheezy, на удаленных хостах &#8212; Ubuntu 14.04.</p>
+<p>Установка <strong>Ansible</strong> не должна вызывать трудностей:</p>
+<ul>
+<li>перед установкой обновим имеющиеся в системе пакеты:</li>
+</ul>
+<pre>apt-get update && apt-get upgrade</pre>
+<ul>
+<li>непосредственно установка <strong>Ansible</strong>:</li>
+</ul>
+<pre>echo 'deb http://http.debian.net/debian wheezy-backports main' > /etc/apt/sources.list.d/backports.list
+apt-get update
+apt-get -t wheezy-backports install "ansible"</pre>
+<p>Для настройки <strong>Ansible</strong> используется файл конфигурации <abbr>ansible.cfg</abbr>, который может находиться в таких местах:</p>
+<ul>
+<li><abbr>./ansible.cfg</abbr> – в текущем каталоге;</li>
+<li><abbr>~/.ansible.cfg</abbr> — в домашнем каталоге;</li>
+<li><abbr>/etc/ansible/ansible.cfg</abbr> — в каталоге, созданном при установке через менеджер пакетов (наш случай).</li>
+</ul>
+<blockquote><p><strong>Примечание.</strong> Некоторые параметры или даже всю конфигурацию также можно переопределить в <cite>playbook</cite> или переменных окружения.</p></blockquote>
+<p>Параметров настройки <strong>Ansible</strong> <a href="http://docs.ansible.com/ansible/intro_configuration.html" target="_blank">довольно много</a>, вот некоторые из наиболее часто используемых:</p>
+<ul>
+<li><code>hostfile:</code> &#8212; путь к inventory file, содержит список ip-адресов (или имен) хостов для подключения;</li>
+<li><code>library:</code> &#8212; путь к модулям <strong>Ansible</strong>;</li>
+<li><code>forks:</code> &#8212; кол-во потоков, которые может создать <strong>Ansible</strong>;</li>
+<li><code>sudo_user:</code> &#8212; пользователь, от которого запускаются команды/инструкции на удаленных хостах;</li>
+<li><code>remote_port:</code> &#8212; порт для подключения по протоколу SSH;</li>
+<li><code>host_key_checking:</code> &#8212; включить/отключить проверку SSH–ключа на удаленном хосте;</li>
+<li><code>timeout:</code> &#8212; таймаут подключения по SSH;</li>
+<li><code>log_path:</code> &#8212; путь к файлу логов.</li>
+</ul>
+<p>Перечислим имена удаленных хостов, с которыми будем проводить эксперименты в файле <abbr>/etc/ansible/hosts</abbr>. Для этого:</p>
+<ul>
+<li>переходим в каталог <abbr>/etc/ansible</abbr>:</li>
+</ul>
+<pre>cd /etc/ansible</pre>
+<ul>
+<li>переименуем существующий файл <abbr>hosts</abbr>:</li>
+</ul>
+<pre>mv hosts hosts.orig</pre>
+<ul>
+<li>и создадим новый файл <abbr>hosts</abbr>:</li>
+</ul>
+<pre>touch hosts</pre>
+<p>Содержимое файла будет следующим:</p>
+<pre>[test]
+test-1
+test-2</pre>
+<p>Также нужно сгенерировать на управляющем сервере ключ для доступа к удаленным хостам по SSH, для этого используем утилиту <cite>ssh-keygen</cite>. Копируем публичный ключ на удаленные хосты утилитой <cite>ssh-copy-id</cite>.</p>
+<p>Для проверки правильности настройки <strong>Ansible</strong> делаем следующее:</p>
+<ul>
+<li>пингуем удаленные хосты:</li>
+</ul>
+<pre>ansible test -m ping
+test-1 | success >> {
+    "changed": false, 
+    "ping": "pong"
+}
+
+test-2 | success >> {
+    "changed": false, 
+    "ping": "pong"
+}
+</pre>
+<ul>
+<li>просмотрим информацию об использовании оперативной памяти на удаленных хостах:</li>
+</ul>
+<pre>ansible test -a "free -h"
+test-1 | success | rc=0 >>
+             total       used       free     shared    buffers     cached
+Mem:          7.6G       6.4G       1.2G       471M        64M       1.2G
+-/+ buffers/cache:       5.2G       2.4G
+Swap:         4.0G       616M       3.4G
+
+test-2 | success | rc=0 >>
+             total       used       free     shared    buffers     cached
+Mem:          3.9G       3.3G       573M       333M       4.8M       442M
+-/+ buffers/cache:       2.9G       1.0G
+Swap:         4.0G       1.7G       2.3G
+</pre>
+<p>Работа с наборами инструкций (<cite>playbooks</cite>) &#8212; главная задача <strong>Ansible</strong>. Наборы инструкций содержат задачи и должны быть описаны в формате YAML. Задача использует часть кода-модуля, который может быть написан на любом языке программирования (но есть одно важное требование &#8212; сообщения от модулей должны быть в формате JSON).</p>
+<p>Несколько слов о правилах написания YAML-файлов:</p>
+<ul>
+<li>все YAML-файлы должны начинаться с <code>"---"</code>. Эта часть формата YAML означает начало документа;</li>
+<li>члены списка должны начинаться с пробела или <code>"-"</code> и иметь одинаковые отступы от начала строки;</li>
+<li>комментарии начинаются с символа <code>"#"</code>;</li>
+<li>словарь описывается в виде «ключ» <code>": "</code> «значение» и может быть представлен в сокращенной форме.</li>
+</ul>
+<p>В <cite>playbook</cite> может находиться список удаленных хостов, переменных пользователя, задач, обработчиков (как уже упоминалось ранее, здесь можно переопределять параметры конфигурации). Каждый набор инструкций (за исключением ролей) обязательно должен иметь поле <code>hosts:</code>. Кроме этого, набор инструкций содержит задачи &#8212; список действий, которые нужно выполнить на удаленных хостах.</p>
+<p>Давайте разберемся с синтаксисом конкретного набора инструкций на примере установки web-сервера <cite>nginx</cite>:</p>
+<ul>
+<li>создаем каталог, для хранения наших <cite>playbooks</cite>:</li>
+</ul>
+<pre>mkdir /etc/ansible/playbooks</pre>
+<ul>
+<li>в каталоге <abbr>/etc/ansible/playbooks</abbr> создаем файл <abbr>install_nginx.yml</abbr>:</li>
+</ul>
+<pre>touch /etc/ansible/playbooks/install_nginx.yml</pre>
+<p>Содержимое файла следующее:</p>
+<pre>---
+- hosts: test
+  tasks:
+
+  - name: Install package nginx
+    apt: name=nginx update_cache=yes
+    sudo: yes
+
+  - name: Starting service nginx
+    service: name=nginx state=started
+    sudo: yes
+</pre>
+<p>В данном примере поле <code>hosts:</code> содержит группу, на которой будет запущена задача (test).</p>
+<blockquote><p><strong>Примечание.</strong> Узнать, на каких хостах будет происходить работа, можно командой:</p>
+<pre>ansible-playbook <имя_набора_инструкций> --list-host</pre>
+</blockquote>
+<p>Поле <code>tasks:</code> содержит имена задач (<em>Install package nginx</em> и <em>Starting service nginx</em>), имена модулей, которые должны выполняться (<em>apt</em> и <em>service</em>) и аргументы, необходимые для выполнения модуля (для первого это <em>name=nginx update_cache=yes</em>, для второго &#8212; <em>name=nginx state=started</em>).<br />
+Дополнительно указано, что для выполнения задач необходимы права суперпользователя (<em>sudo: yes</em>).</p>
+<p>Запустить только что созданный набор инструкций можно следующей командой:</p>
+<pre>ansible-playbook install_nginx.yml 
+
+PLAY [test] ****************************************************************** 
+
+GATHERING FACTS *************************************************************** 
+ok: [test-1]
+ok: [test-2]
+
+TASK: [Install package nginx] ************************************************* 
+changed: [test-1]
+changed: [test-2]
+
+TASK: [Starting service nginx] ************************************************ 
+ok: [test-1]
+ok: [test-2]
+
+PLAY RECAP ******************************************************************** 
+test-1                 : ok=3    changed=1    unreachable=0    failed=0   
+test-2                 : ok=3    changed=1    unreachable=0    failed=0   
+</pre>
+<p>После выполнения набора инструкций убедимся что <cite>nginx</cite> корректно установлен на удаленные хосты:<br />
+<a href="https://letsclearitup.com.ua/wp-content/uploads/2015/10/2.png"><img src="https://letsclearitup.com.ua/wp-content/uploads/2015/10/2.png" alt="nginx установлен и работает" width="593" height="207" class="aligncenter size-full wp-image-570" srcset="https://letsclearitup.com.ua/wp-content/uploads/2015/10/2.png 593w, https://letsclearitup.com.ua/wp-content/uploads/2015/10/2-300x105.png 300w" sizes="(max-width: 593px) 100vw, 593px" /></a><br />
+На этом все, в <a href="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast-2-razbor-vyivoda-playbook.html" target="_blank">следующей статье</a> разберем вывод данного <cite>playbook</cite> и продолжим разбираться с <strong>Ansible</strong>.</p>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-562" class="share-twitter sd-button share-icon" href="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html?share=twitter" target="_blank" title="Нажмите, чтобы поделиться на Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-562" class="share-facebook sd-button share-icon" href="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html?share=facebook" target="_blank" title="Нажмите здесь, чтобы поделиться контентом на Facebook."><span>Facebook</span></a></li><li class="share-custom share-custom-"><a rel="nofollow" data-shared="" class="share-custom share-custom- sd-button share-icon" href="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html?share=custom-1461568213" target="_blank" title="Нажмите, чтобы поделиться в Вконтакте"><span style="background-image:url(&quot;https://letsclearitup.com.ua/wp-content/uploads/2015/12/vk-grey.png&quot;);">Вконтакте</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-562" class="share-google-plus-1 sd-button share-icon" href="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html?share=google-plus-1" target="_blank" title="Нажмите, чтобы поделиться в Google+"><span>Google</span></a></li><li class="share-linkedin"><a rel="nofollow" data-shared="sharing-linkedin-562" class="share-linkedin sd-button share-icon" href="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html?share=linkedin" target="_blank" title="Нажмите, чтобы поделиться на LinkedIn"><span>LinkedIn</span></a></li><li class="share-end"></li></ul></div></div></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	
+</div>					</div>
+	<!-- .entry-content -->
+
+	<footer class="entry-meta">
+		 
+
+					<div id="share-comment-button">
+				<button>
+					<i class="share-comment-icon"></i>Написать Комментарий				</button>
+			</div>
+		
+			</footer>
+	<!-- .entry-meta -->
+
+</article><!-- #post-562 -->
+
+				
+	<div id="commentform-top"></div> <!-- do not remove; used by jQuery to move the comment reply form here -->
+			
+		<div id="respond" class="comment-respond">
+			<h3 id="reply-title" class="comment-reply-title">Добавить комментарий <small><a rel="nofollow" id="cancel-comment-reply-link" href="/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html" style="display:none;">Отменить ответ</a></small></h3>
+			<form id="commentform" class="comment-form">
+				<iframe src="https://jetpack.wordpress.com/jetpack-comment/?blogid=103259130&#038;postid=562&#038;comment_registration=0&#038;require_name_email=1&#038;stc_enabled=1&#038;stb_enabled=1&#038;show_avatars=0&#038;avatar_default=mystery&#038;greeting=%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%B8%D1%82%D1%8C+%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B9&#038;greeting_reply=%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%B8%D1%82%D1%8C+%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B9+%D0%B4%D0%BB%D1%8F+%25s&#038;color_scheme=light&#038;lang=ru_RU&#038;jetpack_version=4.3.2&#038;sig=fcc1e4851e292117027f32c1b27e5984afa7ccb6#parent=https%3A%2F%2Fletsclearitup.com.ua%2Fubuntu%2Fznakomstvo-s-ansible-chast1-vvedenie.html" allowtransparency="false" style="width:100%; height: 430px;border:0;" frameBorder="0" scrolling="no" name="jetpack_remote_comment" id="jetpack_remote_comment"></iframe>
+			</form>
+		</div>
+
+		
+		<input type="hidden" name="comment_parent" id="comment_parent" value="" />
+
+		
+
+	<div id="comments" class="comments-area">
+				
+			
+			
+			<ol class="commentlist">
+						<li class="comment even thread-even depth-1" id="li-comment-65">
+		<article id="comment-65" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+										<cite class="fn">1</cite>									</div>
+				<!-- .comment-author .vcard -->
+				<div class="comment-meta commentmetadata">
+					<a href="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html#comment-65">
+						<time pubdate datetime="2016-05-05T09:09:18+00:00">
+							05.05.2016						</time>
+					</a>
+									</div>
+				<!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content "><p>клевая статья. спасибо. (Ошибка в ссылке &#171;в следующей статье&#187; &#8212; httsp -&gt; https)</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html?replytocom=65#respond' onclick='return addComment.moveForm( "comment-65", "65", "respond", "562" )' aria-label='Комментарий к записи 1'>Ответить 1</a>			</div>
+			<!-- .reply -->
+		</article><!-- #comment-## -->
+	<ul class="children">
+		<li class="comment byuser comment-author-e-lebed bypostauthor odd alt depth-2" id="li-comment-66">
+		<article id="comment-66" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+										<cite class="fn"><a href='http://letsclearitup.com.ua/' rel='external nofollow' class='url'>Евгений Лебедь</a></cite>									</div>
+				<!-- .comment-author .vcard -->
+				<div class="comment-meta commentmetadata">
+					<a href="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html#comment-66">
+						<time pubdate datetime="2016-05-05T09:26:04+00:00">
+							05.05.2016						</time>
+					</a>
+									</div>
+				<!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content "><p>Спасибо, исправил!</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html?replytocom=66#respond' onclick='return addComment.moveForm( "comment-66", "66", "respond", "562" )' aria-label='Комментарий к записи Евгений Лебедь'>Ответить Евгений</a>			</div>
+			<!-- .reply -->
+		</article><!-- #comment-## -->
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+			</ol><!-- .commentlist -->
+
+			
+		
+		
+		
+							
+							
+	</div><!-- #comments .comments-area -->
+
+
+			
+		</main>
+		<!-- #content .site-content -->
+	</div><!-- #primary .content-area -->
+
+<div id="secondary" class="widget-area" role="complementary">
+					<aside id="blog_subscription-3" class="widget jetpack_subscription_widget"><h1 class="widget-title">Подписаться на блог по эл. почте</h1>
+			<form action="#" method="post" accept-charset="utf-8" id="subscribe-blog-blog_subscription-3">
+				<div id="subscribe-text"></div>					<p id="subscribe-email">
+						<label id="jetpack-subscribe-label" for="subscribe-field-blog_subscription-3">
+							E-mail адрес						</label>
+						<input type="email" name="email" required="required" class="required" value="" id="subscribe-field-blog_subscription-3" placeholder="E-mail адрес" />
+					</p>
+
+					<p id="subscribe-submit">
+						<input type="hidden" name="action" value="subscribe" />
+						<input type="hidden" name="source" value="https://letsclearitup.com.ua/ubuntu/znakomstvo-s-ansible-chast1-vvedenie.html" />
+						<input type="hidden" name="sub-type" value="widget" />
+						<input type="hidden" name="redirect_fragment" value="blog_subscription-3" />
+												<input type="submit" value="Подписаться" name="jetpack_subscriptions_widget" />
+					</p>
+							</form>
+
+			<script>
+			/*
+			Custom functionality for safari and IE
+			 */
+			(function( d ) {
+				// In case the placeholder functionality is available we remove labels
+				if ( ( 'placeholder' in d.createElement( 'input' ) ) ) {
+					var label = d.querySelector( 'label[for=subscribe-field-blog_subscription-3]' );
+						label.style.clip 	 = 'rect(1px, 1px, 1px, 1px)';
+						label.style.position = 'absolute';
+						label.style.height   = '1px';
+						label.style.width    = '1px';
+						label.style.overflow = 'hidden';
+				}
+
+				// Make sure the email value is filled in before allowing submit
+				var form = d.getElementById('subscribe-blog-blog_subscription-3'),
+					input = d.getElementById('subscribe-field-blog_subscription-3'),
+					handler = function( event ) {
+						if ( '' === input.value ) {
+							input.focus();
+
+							if ( event.preventDefault ){
+								event.preventDefault();
+							}
+
+							return false;
+						}
+					};
+
+				if ( window.addEventListener ) {
+					form.addEventListener( 'submit', handler, false );
+				} else {
+					form.attachEvent( 'onsubmit', handler );
+				}
+			})( document );
+			</script>
+				
+</aside><aside id="search-3" class="widget widget_search"><form method="get" id="searchform" action="https://letsclearitup.com.ua/" role="search">
+	<label for="s" class="screen-reader-text">Поиск</label>
+	<input type="text" class="field" name="s" value="" id="s" placeholder="Поиск &hellip;" />
+	<input type="submit" class="submit" name="submit" id="searchsubmit" value="Поиск" />
+</form>
+</aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h1 class="widget-title">Свежие записи</h1>		<ul>
+					<li>
+				<a href="https://letsclearitup.com.ua/debian/ustanovka-i-nastroyka-glusterfs-server-3-5-2-v-os-debian.html">Установка и настройка GlusterFS-server 3.5.2 в ОС Debian</a>
+						</li>
+					<li>
+				<a href="https://letsclearitup.com.ua/ubuntu/kak-ubrat-warning-remote-host-identification-has-changed.html">Как убрать WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED</a>
+						</li>
+					<li>
+				<a href="https://letsclearitup.com.ua/ubuntu/vklyuchenie-swap-fayla-v-linux.html">Включение swap-файла в Linux</a>
+						</li>
+					<li>
+				<a href="https://letsclearitup.com.ua/ubuntu/prakticheskie-primeryi-ispolzovaniya-date.html">Практические примеры использования date</a>
+						</li>
+					<li>
+				<a href="https://letsclearitup.com.ua/debian/ustanovka-trac-git-nginx-v-os-debian-jessie.html">Установка trac + git + nginx в ОС Debian Jessie</a>
+						</li>
+				</ul>
+		</aside>		<aside id="archives-2" class="widget widget_archive"><h1 class="widget-title">Архивы</h1>		<ul>
+			<li><a href='https://letsclearitup.com.ua/2016/10'>Октябрь 2016</a></li>
+	<li><a href='https://letsclearitup.com.ua/2016/09'>Сентябрь 2016</a></li>
+	<li><a href='https://letsclearitup.com.ua/2016/08'>Август 2016</a></li>
+	<li><a href='https://letsclearitup.com.ua/2016/07'>Июль 2016</a></li>
+	<li><a href='https://letsclearitup.com.ua/2016/06'>Июнь 2016</a></li>
+	<li><a href='https://letsclearitup.com.ua/2016/05'>Май 2016</a></li>
+	<li><a href='https://letsclearitup.com.ua/2016/04'>Апрель 2016</a></li>
+	<li><a href='https://letsclearitup.com.ua/2016/03'>Март 2016</a></li>
+	<li><a href='https://letsclearitup.com.ua/2016/02'>Февраль 2016</a></li>
+	<li><a href='https://letsclearitup.com.ua/2016/01'>Январь 2016</a></li>
+	<li><a href='https://letsclearitup.com.ua/2015/12'>Декабрь 2015</a></li>
+	<li><a href='https://letsclearitup.com.ua/2015/11'>Ноябрь 2015</a></li>
+	<li><a href='https://letsclearitup.com.ua/2015/10'>Октябрь 2015</a></li>
+	<li><a href='https://letsclearitup.com.ua/2015/09'>Сентябрь 2015</a></li>
+	<li><a href='https://letsclearitup.com.ua/2015/08'>Август 2015</a></li>
+	<li><a href='https://letsclearitup.com.ua/2015/07'>Июль 2015</a></li>
+		</ul>
+		</aside><aside id="categories-2" class="widget widget_categories"><h1 class="widget-title">Рубрики</h1>		<ul>
+	<li class="cat-item cat-item-50"><a href="https://letsclearitup.com.ua/category/ansible" >ansible</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="https://letsclearitup.com.ua/category/asterisk" >asterisk</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="https://letsclearitup.com.ua/category/backup" >backup</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="https://letsclearitup.com.ua/category/bash" >bash</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="https://letsclearitup.com.ua/category/corosync" >corosync</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://letsclearitup.com.ua/category/debian" >debian</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="https://letsclearitup.com.ua/category/drbd" >drbd</a>
+</li>
+	<li class="cat-item cat-item-137"><a href="https://letsclearitup.com.ua/category/esxi" >esxi</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="https://letsclearitup.com.ua/category/exim" >exim</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://letsclearitup.com.ua/category/monitoring" >monitoring</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://letsclearitup.com.ua/category/mysql" >mysql</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://letsclearitup.com.ua/category/nginx" >nginx</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="https://letsclearitup.com.ua/category/pacemaker" >pacemaker</a>
+</li>
+	<li class="cat-item cat-item-154"><a href="https://letsclearitup.com.ua/category/prometheus" >prometheus</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="https://letsclearitup.com.ua/category/redis" >redis</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="https://letsclearitup.com.ua/category/rsync" >rsync</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="https://letsclearitup.com.ua/category/scripts" >scripts</a>
+</li>
+	<li class="cat-item cat-item-119"><a href="https://letsclearitup.com.ua/category/sphinxsearch" >sphinxsearch</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://letsclearitup.com.ua/category/ubuntu" >ubuntu</a>
+</li>
+		</ul>
+</aside>	</div><!-- #secondary .widget-area -->
+
+</div><!-- #main .site-main -->
+
+<footer id="colophon" class="site-footer" itemscope="itemscope" itemtype="http://schema.org/WPFooter" role="contentinfo">
+	<div class="site-info">
+		 Copyright &#169; 2016 <a href="http://letsclearitup.com.ua" title="Давайте разберемся!">Let&#039;sclearITup</a>	</div>
+	<!-- .site-info -->
+
+<!--LiveInternet counter--><script type="text/javascript"><!--
+document.write("<a href='//www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t14.4;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число просмотров за 24"+
+" часа, посетителей за 24 часа и за сегодня' "+
+"border='0' width='88' height='31'><\/a>")
+//--></script><!--/LiveInternet-->
+
+<!-- begin of Top100 code -->
+<script id="top100Counter" type="text/javascript" src="https://scounter.rambler.ru/top100.jcn?3131209"></script>
+<noscript>
+<a href="http://top100.rambler.ru/navi/3131209/">
+<img src="https://scounter.rambler.ru/top100.cnt?3131209" alt="Rambler's Top100" border="0" />
+</a>
+</noscript>
+<!-- end of Top100 code -->
+
+<!-- I.UA counter --><a href="http://www.i.ua/" target="_blank" onclick="this.href='http://i.ua/r.php?196836';" title="Rated by I.UA">
+<script type="text/javascript"><!--
+iS='http'+(window.location.protocol=='https:'?'s':'')+
+'://r.i.ua/s?u196836&p8&n'+Math.random();
+iD=document;if(!iD.cookie)iD.cookie="b=b; path=/";if(iD.cookie)iS+='&c1';
+iS+='&d'+(screen.colorDepth?screen.colorDepth:screen.pixelDepth)
++"&w"+screen.width+'&h'+screen.height;
+iT=iR=iD.referrer.replace(iP=/^[a-z]*:\/\//,'');iH=window.location.href.replace(iP,'');
+((iI=iT.indexOf('/'))!=-1)?(iT=iT.substring(0,iI)):(iI=iT.length);
+if(iT!=iH.substring(0,iI))iS+='&f'+escape(iR);
+iS+='&r'+escape(iH);
+iD.write('<img src="'+iS+'" border="0" width="88" height="31" />');
+//--></script></a><!-- End of I.UA counter -->
+
+</footer><!-- #colophon .site-footer -->
+</div><!-- #page .hfeed .site -->
+
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/letsclearitup.com.ua\/ubuntu\/znakomstvo-s-ansible-chast1-vvedenie.html":562};
+	</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201643'></script>
+<script type='text/javascript' src='https://letsclearitup.com.ua/wp-content/themes/independent-publisher/js/skip-link-focus-fix.js?ver=20130115'></script>
+<script type='text/javascript' src='https://letsclearitup.com.ua/wp-includes/js/comment-reply.min.js?ver=4.6.1'></script>
+<script type='text/javascript' src='https://letsclearitup.com.ua/wp-includes/js/wp-embed.min.js?ver=4.6.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://letsclearitup.com.ua/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js?ver=4.3.2'></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-google-plus-1', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-linkedin', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+</script>
+
+		<!--[if IE]>
+		<script type="text/javascript">
+		if ( 0 === window.location.hash.indexOf( '#comment-' ) ) {
+			// window.location.reload() doesn't respect the Hash in IE
+			window.location.hash = window.location.hash;
+		}
+		</script>
+		<![endif]-->
+		<script type="text/javascript">
+			var comm_par_el = document.getElementById( 'comment_parent' ),
+			    comm_par = (comm_par_el && comm_par_el.value) ? comm_par_el.value : '',
+			    frame = document.getElementById( 'jetpack_remote_comment' ),
+			    tellFrameNewParent;
+
+			tellFrameNewParent = function() {
+				if ( comm_par ) {
+					frame.src = "https://jetpack.wordpress.com/jetpack-comment/?blogid=103259130&postid=562&comment_registration=0&require_name_email=1&stc_enabled=1&stb_enabled=1&show_avatars=0&avatar_default=mystery&greeting=%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%B8%D1%82%D1%8C+%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B9&greeting_reply=%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%B8%D1%82%D1%8C+%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B9+%D0%B4%D0%BB%D1%8F+%25s&color_scheme=light&lang=ru_RU&jetpack_version=4.3.2&sig=fcc1e4851e292117027f32c1b27e5984afa7ccb6#parent=https%3A%2F%2Fletsclearitup.com.ua%2Fubuntu%2Fznakomstvo-s-ansible-chast1-vvedenie.html" + '&replytocom=' + parseInt( comm_par, 10 ).toString();
+				} else {
+					frame.src = "https://jetpack.wordpress.com/jetpack-comment/?blogid=103259130&postid=562&comment_registration=0&require_name_email=1&stc_enabled=1&stb_enabled=1&show_avatars=0&avatar_default=mystery&greeting=%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%B8%D1%82%D1%8C+%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B9&greeting_reply=%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%B8%D1%82%D1%8C+%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B9+%D0%B4%D0%BB%D1%8F+%25s&color_scheme=light&lang=ru_RU&jetpack_version=4.3.2&sig=fcc1e4851e292117027f32c1b27e5984afa7ccb6#parent=https%3A%2F%2Fletsclearitup.com.ua%2Fubuntu%2Fznakomstvo-s-ansible-chast1-vvedenie.html";
+				}
+			};
+
+	
+			if ( 'undefined' !== typeof addComment ) {
+				addComment._Jetpack_moveForm = addComment.moveForm;
+
+				addComment.moveForm = function( commId, parentId, respondId, postId ) {
+					var returnValue = addComment._Jetpack_moveForm( commId, parentId, respondId, postId ), cancelClick, cancel;
+
+					if ( false === returnValue ) {
+						cancel = document.getElementById( 'cancel-comment-reply-link' );
+						cancelClick = cancel.onclick;
+						cancel.onclick = function() {
+							var cancelReturn = cancelClick.call( this );
+							if ( false !== cancelReturn ) {
+								return cancelReturn;
+							}
+
+							if ( !comm_par ) {
+								return cancelReturn;
+							}
+
+							comm_par = 0;
+
+							tellFrameNewParent();
+
+							return cancelReturn;
+						};
+					}
+
+					if ( comm_par == parentId ) {
+						return returnValue;
+					}
+
+					comm_par = parentId;
+
+					tellFrameNewParent();
+
+					return returnValue;
+				};
+			}
+
+	
+			if ( window.postMessage ) {
+				if ( document.addEventListener ) {
+					window.addEventListener( 'message', function( event ) {
+						if ( "https:\/\/jetpack.wordpress.com" !== event.origin ) {
+							return;
+						}
+
+						jQuery( frame ).height( event.data );
+					} );
+				} else if ( document.attachEvent ) {
+					window.attachEvent( 'message', function( event ) {
+						if ( "https:\/\/jetpack.wordpress.com" !== event.origin ) {
+							return;
+						}
+
+						jQuery( frame ).height( event.data );
+					} );
+				}
+			}
+		</script>
+
+	<script type='text/javascript' src='https://stats.wp.com/e-201643.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:4.3.2',blog:'103259130',post:'562',tz:'2',srv:'letsclearitup.com.ua'} ]);
+	_stq.push([ 'clickTrackerInit', '103259130', '562' ]);
+</script>
+
+</body>
+</html>

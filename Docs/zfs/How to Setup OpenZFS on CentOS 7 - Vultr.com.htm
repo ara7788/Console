@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html class=" no-touchevents"><head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>How to Setup OpenZFS on CentOS 7 - Vultr.com</title>
+		<meta name="keywords" content="Vultr docs, tutorials, how to, vps, server">
+			<meta name="description" content="Deploy high performance SSD VPS on the worldwide Vultr network in 60 seconds. Sign up for free and start hosting virtual servers today!">
+	
+	<!-- Facebook -->
+	<meta property="og:url" content="https://www.vultr.com">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Vultr: High Performance SSD Cloud.">
+	<meta property="og:description" content="We are simplifying the cloud. One Login, Eight Countries, Fifteen Cities, Infinite Possibilities.">
+	<meta property="og:site_name" content="Vultr">
+	<meta property="og:image" content="https://www.vultr.com/dist/img/bird-fast-v2.png">
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@Vultr">
+	<meta name="twitter:creator" content="@Vultr">
+	<meta name="twitter:title" content="Vultr: High Performance SSD Cloud">
+	<meta name="twitter:description" content="We are simplifying the cloud. One Login, Eight Countries, Fifteen Cities, Infinite Possibilities.">
+	<meta name="twitter:image:src" content="https://www.vultr.com/dist/img/bird-fast-v2.png" alt="Vultr Twitter">
+
+	<!-- Fix chrome language detection -->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Language" content="en">
+
+	<!-- Styles -->
+	<link href="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/core.htm" rel="stylesheet">
+	<link href="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/main_002.htm" rel="stylesheet">
+	<link href="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/panel.htm" rel="stylesheet">
+	<link href="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/global.htm" rel="stylesheet">
+	<style>
+		@font-face {
+			font-family: 'icons';
+			src:url('/dist/fonts/icons/icons.eot?v=317');
+			src:url('/dist/fonts/icons/icons.eot?v=317') format('embedded-opentype'),
+			url('/dist/fonts/icons/icons.ttf?v=317') format('truetype'),
+			url('/dist/fonts/icons/icons.woff?v=317') format('woff'),
+			url('/dist/fonts/icons/icons.svg?v=317') format('svg');
+			font-weight: normal;
+			font-style: normal;
+		}
+	</style>
+	
+	<!--[if lt IE 9]>
+	<script src="/dist/js/selectivizr-min.js"></script>
+	<script src="/dist/js/html5shiv.min.js"></script>
+	<script src="/dist/js/respond.min.js"></script>
+	<![endif]-->
+
+<style></style><script async="true" type="text/javascript" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/roundtrip.js"></script><script async="true" type="text/javascript" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/E23RMKDBEFAEXMXLWK3IWO"></script><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img style="border-style:none;" alt="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/out_003.gif" width="1" height="1"><img style="border-style:none;" alt="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/out_002.gif" width="1" height="1"><img style="border-style:none;" alt="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/out_006.gif" width="1" height="1"><img style="border-style:none;" alt="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/out_011.gif" width="1" height="1"><img style="border-style:none;" alt="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/out_008.gif" width="1" height="1"></div><script type="text/javascript" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/sendrolling.js"></script><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img style="border-style:none;" alt="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/out.gif" width="1" height="1">
+<img style="border-style:none;" alt="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/out_004.gif" width="1" height="1">
+<img style="border-style:none;" alt="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/out_005.gif" width="1" height="1">
+<img style="border-style:none;" alt="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/out_010.gif" width="1" height="1">
+<img style="border-style:none;" alt="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/out_012.gif" width="1" height="1">
+<img style="border-style:none;" alt="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/out_009.gif" width="1" height="1">
+<img style="border-style:none;" alt="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/out_013.gif" width="1" height="1">
+<img style="border-style:none;" alt="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/out_007.gif" width="1" height="1">
+</div></head>
+<body>
+
+<div class="page-wrapper">
+	<div class="page-navbar navbar-fixed navbar-visible">
+		<nav class="navbar">
+			<div class="container">
+				<button class="navbar-toggle btn btn-link btn-icon" type="button"><i><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></i></button>
+				<div class="navbar-header">
+					<a class="navbar-brand" href="https://www.vultr.com/"></a>
+					<a href="https://my.vultr.com/" class="navbar-login btn btn-link btn-icon"><i class="zmdi zmdi-account-o zmdi-hc-fw"></i></a>
+				</div>
+				<div class="navbar-container">
+					<ul class="nav navbar-nav navbar-main">
+						<li>
+							<a href="https://www.vultr.com/">Home</a>
+						</li>
+						<li class="dropdown">
+							<a href="https://www.vultr.com/pricing/" data-toggle="dropdown" onclick="document.location='/pricing/';">Pricing</a>
+							<ul class="dropdown-menu">
+								<li><a href="https://www.vultr.com/pricing/">Vultr Cloud Compute (VC2)</a></li>
+								<li><a href="https://www.vultr.com/pricing/blockstorage/">Block Storage</a></li>
+								<li><a href="https://www.vultr.com/pricing/dedicatedcloud/">Dedicated Instances</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="https://www.vultr.com/features/">Features</a>
+						</li>
+												<li class="dropdown">
+							<a href="https://www.vultr.com/" data-toggle="dropdown" onclick="document.location='/faq/';">Resources</a>
+							<ul class="dropdown-menu">
+								<li><a href="https://www.vultr.com/faq/">FAQ</a></li>
+								<li><a href="https://www.vultr.com/api/">API</a></li>
+								<li><a href="https://www.vultr.com/metadata/">Metadata</a></li>
+								<li><a href="https://www.vultr.com/docs/">Vultr Docs</a></li>
+								<li><a href="https://www.vultr.com/benchmarks/">Benchmarks</a></li>
+								<li><a href="https://www.vultr.com/status/">Server Status</a></li>
+															</ul>
+						</li>
+						<li class="dropdown">
+							<a href="https://www.vultr.com/about/" data-toggle="dropdown" onclick="document.location='/about/';">Company</a>
+							<ul class="dropdown-menu">
+								<li><a href="https://www.vultr.com/about/">About Us</a></li>
+								<li><a href="https://www.vultr.com/about/team/">Our Team</a></li>
+								<li><a href="https://www.vultr.com/news/">News</a></li>
+								<li><a href="https://www.vultr.com/sla/">SLA</a></li>
+								<li><a href="https://www.vultr.com/contact/">Contact</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav navbar-buttons">
+													<li><a href="https://my.vultr.com/" class="btn btn-outline btn-light">Log In</a></li>
+							<li><a href="https://www.vultr.com/register/" class="btn btn-dark">Create Account</a></li>
+											</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<!-- /.page-navbar -->
+	
+    
+    <div class="page-banner page-banner-subpage page-banner-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-5 col-sm-6">
+                    <div class="banner-slogan">
+                        <h2 class="slogan-title h1">Vultr Docs</h2>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-7 col-sm-6">
+                    <div class="banner-search">
+                        <form method="get" action="/docs/search/">
+                                                        <div class="input-icon">
+                                <input name="query" class="form-control input-lg" placeholder="Search articles " autocomplete="off" type="text">
+                                <button type="submit" class="btn btn-link btn-icon btn-lg"><i class="zmdi zmdi-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-breadcrumbs">
+                <ul>
+                                                                                                        <li><a href="https://www.vultr.com/docs/">Categories</a><i class="zmdi zmdi-arrow-right"></i></li>
+                                                                        
+                                                                        
+            <li class="active"><span>View Article</span></li>
+                                                                                        </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.page-banner -->
+        
+    <div class="page-main">
+        <div class="container">
+
+            <div class="doc_container">
+
+                <div class="doc_header">
+                    <h1>How to Setup OpenZFS on CentOS 7</h1>
+                    <div>
+                        Modified on: Thu, Sep 1, 2016 at 4:22 pm EST<br>
+                    </div>
+                    <div>
+                                                    <a class="doc_tag" href="https://www.vultr.com/docs/category/centos/">CentOS</a>
+                                                    <a class="doc_tag" href="https://www.vultr.com/docs/category/linux-guides/">Linux Guides</a>
+                                                    <a class="doc_tag" href="https://www.vultr.com/docs/category/system-admin/">System Admin</a>
+                                            </div>
+                </div>
+
+                <div class="doc_content">
+                    <p>OpenZFS is the open source implementation of ZFS 
+which is an advanced and highly scalable storage platform. Although ZFS 
+was originally designed for Sun Solaris, you can use ZFS on most of 
+major Linux distributions with the help of the ZFS on Linux project, a 
+part of the OpenZFS project.</p>
+
+<p>In this article, I will show you how to setup OpenZFS on CentOS 7. 
+Additionally, I will list some basic ZFS-related commands to help you 
+learn about OpenZFS.</p>
+
+<h3>Prerequisites</h3>
+
+<ul>
+<li>A fresh Vultr CentOS 7 server instance with no less than 2GB of memory. 8GB or more of memory will provide the best performance.</li>
+<li>An instance of <a href="https://www.vultr.com/docs/block-storage">block storage</a> in the same region, being attached to the above server instance.</li>
+<li>A <a href="https://www.vultr.com/docs/how-to-use-sudo-on-debian-centos-and-freebsd">sudo user</a>.</li>
+</ul>
+
+<h3>Step 1: Update the system</h3>
+
+<p>Log into your Vultr CentOS 7 system as a sudo user, and then update 
+the system to the latest stable status using the following commands:</p>
+
+<pre><code>sudo yum install epel-release -y
+sudo yum update -y
+sudo shutdown -r now
+</code></pre>
+
+<p>After the reboot, use the same sudo user to log in again.</p>
+
+<h3>Step 2: Install OpenZFS</h3>
+
+<p>In order to install OpenZFS the easy way, you need to install the OpenZFS YUM repo:</p>
+
+<pre><code>sudo yum localinstall --nogpgcheck http://archive.zfsonlinux.org/epel/zfs-release$(rpm -E %dist).noarch.rpm
+</code></pre>
+
+<p>Use the following command to verify the installation:</p>
+
+<pre><code>gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+</code></pre>
+
+<p>The fingerprint on the screen should be the exact same as below:</p>
+
+<pre><code>pub  2048R/F14AB620 2013-03-21 ZFS on Linux &lt;zfs@zfsonlinux.org&gt;
+      Key fingerprint = C93A FFFD 9F3F 7B03 C310  CEB6 A9D5 A1C0 F14A B620
+sub  2048R/99685629 2013-03-21
+</code></pre>
+
+<p>Since we are using a distribution-provided kernel in this article, 
+you can install the kABI-tracking kmods instead of the default DKMS 
+style packages. This arrangement will prevent ZFS from being rebuilt 
+after any kernel update from now on.</p>
+
+<pre><code>sudo vi /etc/yum.repos.d/zfs.repo
+</code></pre>
+
+<p>Change the third line:</p>
+
+<pre><code>baseurl=http://archive.zfsonlinux.org/epel/7/$basearch/
+</code></pre>
+
+<p>to:</p>
+
+<pre><code>baseurl=http://archive.zfsonlinux.org/epel/7/kmod/$basearch/
+</code></pre>
+
+<p>Save and quit:</p>
+
+<pre><code>:wq!
+</code></pre>
+
+<p>Install OpenZFS using YUM:</p>
+
+<pre><code>sudo yum install zfs
+</code></pre>
+
+<p>Reboot the system in order to make the kernel load ZFS-related modules:</p>
+
+<pre><code>sudo shutdown -r now
+</code></pre>
+
+<p>After the reboot, use the below command to verify the installation:</p>
+
+<pre><code>lsmod | grep zfs
+</code></pre>
+
+<p>The output should resemble:</p>
+
+<pre><code>zfs                  2794866  3
+zunicode              331170  1 zfs
+zavl                   15236  1 zfs
+zcommon                55411  1 zfs
+znvpair                89086  2 zfs,zcommon
+spl                    92029  3 zfs,zcommon,znvpair
+</code></pre>
+
+<h3>Step 3: Some basic OpenZFS commands</h3>
+
+<p>In order to test the functionality of OpenZFS, first of all, you need
+ to prepare several storage devices which can be hard disks and/or 
+partitions of a hard disk. Here, we will create 6 partitions on the 
+attached block storage <code>/dev/vdb</code> and use them to demonstrate some basic OpenZFS commands.</p>
+
+<pre><code>sudo parted -s /dev/vdb mklabel gpt
+sudo parted -s /dev/vdb unit mib mkpart primary 0% 15%
+sudo parted -s /dev/vdb unit mib mkpart primary 15% 30%
+sudo parted -s /dev/vdb unit mib mkpart primary 30% 45%
+sudo parted -s /dev/vdb unit mib mkpart primary 45% 60%
+sudo parted -s /dev/vdb unit mib mkpart primary 60% 75%
+sudo parted -s /dev/vdb unit mib mkpart primary 75% 90%
+</code></pre>
+
+<p>You can use the following commands to confirm your operations, and the 6 partitions will be <code>/dev/vdb1</code>, <code>/dev/vdb2</code>, <code>/dev/vdb3</code>, <code>/dev/vdb4</code>, <code>/dev/vdb5</code>, and <code>/dev/vdb6</code>.</p>
+
+<pre><code>sudo parted -l
+ls -l /dev/vdb*
+</code></pre>
+
+<p>OpenZFS has two main utilities: <code>zpool</code> and <code>zfs</code>. the <code>zpool</code> utility is in charge of creating and maintaining ZFS pools using storage devices, and the <code>zfs</code> utility is responsible for creating and maintaining datasets.</p>
+
+<h4>Samples of using the zpool utility:</h4>
+
+<p>1) Create a ZFS pool</p>
+
+<p>You can create a ZFS pool "zfspool1" using one or more storage devices:</p>
+
+<pre><code>sudo zpool create zfspool1 vdb1
+</code></pre>
+
+<p>or</p>
+
+<pre><code>sudo zpool create zfspool2 vdb2 vdb3 vdb5
+</code></pre>
+
+<p>Check the status of ZFS pools:</p>
+
+<pre><code>sudo zpool status
+</code></pre>
+
+<p>Before testing other OpenZFS commands, use the following commands to destroy the ZFS pools you setup earlier:</p>
+
+<pre><code>sudo zpool destroy zfspool1
+sudo zpool destroy zfspool2
+</code></pre>
+
+<p>2) Create a ZFS pool and make two or more storage devices mirrored.</p>
+
+<p>Use <code>/dev/vdb1</code> and <code>/dev/vdb2</code> to create a ZFS pool, and both of them are configured as mirrored:</p>
+
+<pre><code>sudo zpool create zfspool3 mirror vdb1 vdb2
+</code></pre>
+
+<p>If necessary, you can also make those storage devices three-or-more-way-mirrored:</p>
+
+<pre><code>sudo zpool create zfspool4 mirror vdb3 vdb4 vdb5
+</code></pre>
+
+<p>Again, confirm your setup using the following command:</p>
+
+<pre><code>sudo zpool status
+</code></pre>
+
+<p>Then destroy the two ZFS pools:</p>
+
+<pre><code>sudo zpool destroy zfspool3
+sudo zpool destroy zfspool4
+</code></pre>
+
+<p>3) Create a ZFS pool and establish a raidz array using two or more storage devices</p>
+
+<pre><code>sudo zpool create zfspool5 raidz vdb1 vdb2
+</code></pre>
+
+<p>Again, confirm your setup and destroy this ZFS pool:</p>
+
+<pre><code>sudo zpool status
+sudo zpool destroy zfspool5
+</code></pre>
+
+<h4>Samples of using the zfs utility:</h4>
+
+<p>Before using the zfs utility, create a ZFS pool consisting of 3 storage devices:</p>
+
+<pre><code>sudo zpool create zfspool6 vdb1 vdb3 vdb5
+</code></pre>
+
+<p>1) Add a storage device for the ZFS pool.</p>
+
+<pre><code>sudo zpool add zfspool6 vdb6
+</code></pre>
+
+<p><strong>Note</strong>: You cannot remove these storage devices from the pool directly because they are partitions rather than hard disks.</p>
+
+<p>2) Create a filesystem for each of these storage devices.</p>
+
+<pre><code>sudo zfs create zfspool6/vdb1
+sudo zfs create zfspool6/vdb3
+sudo zfs create -o mountpoint=/test zfspool6/vdb5
+sudo zfs create -o compression=gzip zfspool6/vdb6
+</code></pre>
+
+<p>Explanations about the above commands:</p>
+
+<ul>
+<li>The first command created a ZFS filesystem "zfspool6/vdb1" which was then mounted to the default location <code>/zfspool6/vdb1</code>.</li>
+<li>The second command executed in the same fashion: creating a ZFS filesystem "zfspool6/vdb3" and then mounting it to <code>/zfspool6/vdb3</code>.</li>
+<li>The third command created a ZFS filesystem "zfspool6/vdb5" which was then mounted to a specified location <code>/test</code>.</li>
+<li>The fourth command created a gzip-compressed ZFS filesystem "zfspool6/vdb6" which was then mounted to the default location <code>/zfspool6/vdb6</code>.</li>
+</ul>
+
+<p>After that, if you want to change the mounting point of a storage device:</p>
+
+<pre><code>sudo zfs set mountpoint=/vdb3 zfspool6/vdb3
+</code></pre>
+
+<p>If you want to setup or modify the compression method:</p>
+
+<pre><code>sudo zfs set compression=gzip zfspool6/vdb3
+sudo zfs set compression=lz4 zfspool6/vdb6
+</code></pre>
+
+<p>Use the following command to confirm the compression method:</p>
+
+<pre><code>sudo zfs get -r compression zfspool6/vdb3
+</code></pre>
+
+<p>List all of the ZFS filesystems on your system:</p>
+
+<pre><code>sudo zfs list
+</code></pre>
+
+<p>If a storage filesystem is no longer necessary, you can destroy it using the following command:</p>
+
+<pre><code>sudo zfs destroy zfspool6/vdb5
+</code></pre>
+
+<p>That concludes our tutorial. The contents in this article are only 
+introductory, and you can learn more about OpenZFS from its official 
+website. Thank you for reading.</p>
+
+
+                </div>
+
+                <div class="doc_footer">
+                                    </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    
+    <div class="page-main docs-contribute">
+        <div class="container">
+
+            <div class="doc_container">
+                <div class="section-row section-center last">
+                    <h2 class="section-title">Want to contribute ?</h2>
+                    <div class="actions multi p-b-0">
+                        <a href="https://www.vultr.com/docs/submit/" class="btn btn-lg btn-primary btn-outline">Submit your Article</a>
+                                                    <a href="https://www.vultr.com/docs/suggest/?title=how-to-setup-openzfs-on-centos-7" class="btn btn-lg btn-primary btn-outline">Suggest an Update</a>
+                                                <a href="https://www.vultr.com/docs/request/" class="btn btn-lg btn-primary btn-outline">Request an Article</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    	<div class="page-section section-blue section-center">
+		<div class="container">
+			<h2 class="section-title">Get started in the SSD Cloud!</h2>
+
+			<form method="post" action="/register/" class="register-form">
+				<input name="action" value="+ChmPPZDTwIJMEHw3WqXDpBkzt6yDUCVaVzhzVaXrnpsIFwpeq6L9yzcIl+oTJiFupHFYR/4FlR/qAbzXuuIRw==" type="hidden">
+								<input style="display: none;" name="email" autocomplete="off">
+
+				<div class="register-container">
+					<div class="form-group">
+						<input name="9d9f36261bb4a2e48e8c184b18d7865c" class="form-control input-lg" placeholder="Email Address" required="" type="text">
+					</div>
+					<div class="form-group">
+						<input name="password" class="form-control input-lg" placeholder="Password" required="" type="password">
+					</div>
+					<button class="btn btn-primary-light btn-lg" type="submit">Create Account</button>
+				</div>
+			</form>
+
+		</div>
+	</div>
+	<!-- /.page-section -->
+
+	<div class="page-footer">
+		<footer class="footer-nav">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-3">
+						<h4>Pricing</h4>
+						<ul>
+							<li><a href="https://www.vultr.com/pricing/">Vultr Cloud Compute (VC2)</a></li>
+							<li><a href="https://www.vultr.com/pricing/blockstorage/">Block Storage</a></li>
+							<li><a href="https://www.vultr.com/pricing/dedicatedcloud/">Dedicated Instances</a></li>
+							<li><a href="https://www.vultr.com/ddos/">DDoS Protection</a></li>
+						</ul>
+					</div>
+					<div class="col-xs-3">
+						<h4>Features</h4>
+						<ul>
+							<li><a href="https://www.vultr.com/features/">Vultr Cloud Compute (VC2)</a></li>
+							<li><a href="https://www.vultr.com/features/blockstorage/">Block Storage</a></li>
+							<li><a href="https://www.vultr.com/features/dedicatedcloud/">Dedicated Cloud</a></li>
+							<li><a href="https://www.vultr.com/locations/">Datacenter Locations</a></li>
+							<li><a href="https://www.vultr.com/features/controlpanel/">Control Panel</a></li>
+							<li><a href="https://www.vultr.com/operating-systems/">Operating Systems</a></li>
+							<li><a href="https://www.vultr.com/features/uploadiso/">Upload ISO</a></li>
+							<li><a href="https://www.vultr.com/apps/">One-Click Apps</a></li>
+							<li><a href="https://www.vultr.com/features/bgp/">Bring Your IP Space</a></li>
+						</ul>
+					</div>
+					<div class="col-xs-3">
+						<h4>Resources</h4>
+						<ul>
+							<li><a href="https://www.vultr.com/faq/">FAQ</a></li>
+							<li><a href="https://www.vultr.com/api/">API</a></li>
+							<li><a href="https://www.vultr.com/docs/">Vultr Docs</a></li>
+							<li><a href="https://www.vultr.com/benchmarks/">Benchmarks</a></li>
+							<li><a href="https://www.vultr.com/status/">Server Status</a></li>
+														<li><a href="https://www.vultr.com/legal/tos/">Legal</a></li>
+							<li><a href="https://www.vultr.com/tools/">Toolbox</a></li>
+						</ul>
+					</div>
+					<div class="col-xs-3">
+						<h4>Company</h4>
+						<ul>
+							<li><a href="https://www.vultr.com/about/">About Us</a></li>
+														<li><a href="https://www.vultr.com/about/team/">Our Team</a></li>
+							<li><a href="https://www.vultr.com/news/">News</a></li>
+							<li><a href="https://www.vultr.com/affiliate/">Logos &amp; Banners</a></li>
+							<li><a href="https://www.vultr.com/corporate/careers/">Careers</a></li>
+							<li><a href="https://www.vultr.com/sla/">SLA</a></li>
+							<li><a href="https://www.vultr.com/contact/">Contact</a></li>
+							<li><a href="https://www.vultr.com/coupons/">Coupons</a></li>
+							<li></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<footer class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 col-lg-push-6 col-xs-12">
+						<ul class="nav">
+							<li><a href="https://www.vultr.com/legal/tos/">Terms of Service</a></li>
+							<li><a href="https://www.vultr.com/legal/use_policy/">AUP / DMCA</a></li>
+							<li><a href="https://www.vultr.com/legal/privacy/">Privacy Policy</a></li>
+						</ul>
+						<ul class="social">
+							<li><a href="https://www.facebook.com/Vultr/" class="btn btn-primary btn-circle btn-icon btn-outline btn-sm"><i class="zmdi zmdi-facebook"></i></a></li>
+							<li><a href="https://www.twitter.com/vultr/" class="btn btn-primary btn-circle btn-icon btn-outline btn-sm"><i class="zmdi zmdi-twitter"></i></a></li>
+						</ul>
+					</div>
+					<div class="col-lg-6 col-lg-pull-6 col-xs-12">
+						<p class="footer-copyright">
+							Copyright 2017 © Vultr Holdings Corporation. All rights reserved.
+							<small>VULTR is a registered trademark of Vultr Holdings Corporation.</small>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<!-- /.page-footer -->
+	
+	</div>
+
+<!-- Scripts -->
+<script src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/bat.js" async=""></script><script async="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/uwt.js"></script><script src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/828098694004178.js" async=""></script><script src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/571256413046247.js" async=""></script><script async="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/fbevents.js"></script><script async="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/analytics.js"></script><script src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/jquery.htm"></script>
+<script src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/core_002.htm"></script>
+<script src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/main.htm"></script>
+<script src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/global_002.htm"></script>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-1366737-18', 'auto');
+ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 858656304;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/conversion.js">
+</script><iframe name="google_conversion_frame" title="Google conversion frame" src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/858656304/?random=1500953251600&amp;cv=8&amp;fst=1500953251600&amp;num=1&amp;fmt=1&amp;guid=ON&amp;eid=376635471&amp;u_h=689&amp;u_w=1280&amp;u_ah=689&amp;u_aw=1280&amp;u_cd=24&amp;u_his=1&amp;u_tz=0&amp;u_java=false&amp;u_nplug=0&amp;u_nmime=0&amp;frm=0&amp;url=https%3A%2F%2Fwww.vultr.com%2Fdocs%2Fhow-to-setup-openzfs-on-centos-7&amp;ref=http%3A%2F%2Fyandex.ua%2Fclck%2Fjsredir%3Ffrom%3Dyandex.ua%253Bsearch%252F%253Bweb%253B%253B%26text%3D%26etext%3D1492.4VL_qShwLNqp1zQuTtW5-TxWBx0nNSqVoUYJAZAuvTPJ3H0xF2hTaO_VJP_H7t5HqbTKaP2w2HQWj1QSfn_xGQ.af5bf333d5ceac469e852cfe446e424cf2902533%26uuid%3D%26state%3DPEtFfuTeVD5kpHnK9lio9dFa2ePbDzX7fH_cbK-eu2V8J4cbFpzDXWwD9FlNNMwOVp0aq-AxJ5446X6vKsL6Fw%2C%2C%26%26cst%3DAiuY0DBWFJ5Hyx_fyvalFFaAcGyYoXzwvsyA-TAYj304f-Gtjyf2lSSouGY9YAKYMkwfelD5r6Zf_Wp9ntgjqYK3NNLB7kYyA-1YvLNe2feq6LBPKOC5h7kabcxcJ6Cc5ts6kST2N7j1DagvB75xyWzLSId5_Q3WTnsMDwSCgtxANT3UA_XyBnf4y-LVTUmE&amp;tiba=How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" frameborder="0" width="300" height="13"></iframe><iframe name="google_cookie_match_frame" title="Google cookie match frame" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/pixel.htm" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" style="display:none" scrolling="no" frameborder="0" width="1" height="1"></iframe>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/858656304/?guid=ON&amp;script=0"/>
+</div>
+</noscript>
+<script type="text/javascript">
+    adroll_adv_id = "DUKHAKVYIJASHDUBG4V7RE";
+    adroll_pix_id = "E23RMKDBEFAEXMXLWK3IWO";
+    (function () {
+        var _onload = function(){
+            if (document.readyState && !/loaded|complete/.test(document.readyState)){setTimeout(_onload, 10);return}
+            if (!window.__adroll_loaded){__adroll_loaded=true;setTimeout(_onload, 50);return}
+            var scr = document.createElement("script");
+            var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+            scr.setAttribute('async', 'true');
+            scr.type = "text/javascript";
+            scr.src = host + "/j/roundtrip.js";
+            ((document.getElementsByTagName('head') || [null])[0] ||
+                document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+        };
+        if (window.addEventListener) {window.addEventListener('load', _onload, false);}
+        else {window.attachEvent('onload', _onload)}
+    }());
+</script>
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '828098694004178');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=828098694004178&ev=PageView&noscript=1"/></noscript>
+<script>
+!function(e,n,u,a){e.twq||(a=e.twq=function(){a.exe?a.exe.apply(a,arguments):
+a.queue.push(arguments);},a.version='1',a.queue=[],t=n.createElement(u),
+t.async=!0,t.src='//static.ads-twitter.com/uwt.js',s=n.getElementsByTagName(u)[0],
+s.parentNode.insertBefore(t,s))}(window,document,'script');
+// Insert Twitter Pixel ID and Standard Event data below
+twq('init','nuyim');
+twq('track','PageView');
+</script>
+<script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"5624299"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script><noscript><img src="//bat.bing.com/action/0?ti=5624299&Ver=2" height="0" width="0" style="display:none; visibility: hidden;" /></noscript>
+
+
+
+
+<div style="width:0px; height:0px; display:none; visibility:hidden;" id="batBeacon0.5388942409056341"><img style="width:0px; height:0px; display:none; visibility:hidden;" id="batBeacon0.6311939096904847" alt="" src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/0.txt" width="0" height="0"></div><script src="How%20to%20Setup%20OpenZFS%20on%20CentOS%207%20-%20Vultr.com_files/adsct" type="text/javascript"></script></body></html>

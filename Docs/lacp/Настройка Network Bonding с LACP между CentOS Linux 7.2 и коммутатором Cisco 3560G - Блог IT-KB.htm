@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html class="ie ie8" lang="ru-RU" prefix="og: http://ogp.me/ns#">
+<![endif]-->
+<!--[if !(IE 8)  ]><!-->
+<html prefix="og: http://ogp.me/ns#" lang="ru-RU"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<title>Настройка Network Bonding с LACP между CentOS Linux 7.2 и коммутатором Cisco 3560G - Блог IT-KB</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="HandheldFriendly" content="true">
+<meta http-equiv="imagetoolbar" content="no">
+<meta name="format-detection" content="telephone=no">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://blog.it-kb.ru/xmlrpc.php">
+
+<!-- This site is optimized with the Yoast SEO plugin v5.0.2 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/">
+<link rel="publisher" href="https://plus.google.com/115134238896229141625">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Настройка Network Bonding с LACP между CentOS Linux 7.2 и коммутатором Cisco 3560G - Блог IT-KB">
+<meta property="og:description" content="На серверах имеющих несколько сетевых интерфейсов каждый отдельно взятый интерфейс можно использовать под какую-то выделенную задачу, например отдельный интерфейс под трафик управления хостом и отдельный интерфейс под трафик периодического резервного копирования. Может возникнуть мысль о том, что такая конфигурация имеет свои плюсы, например, позволяет максимально жёстко разграничить утилизацию интерфейсов под особенности разных задач. Но на этом плюсы, пожалуй, и заканчиваются. Ибо при таком подходе может получиться так, что один интерфейс будет постоянно чем-то чрезмерно нагружен, а другой интерфейс будет периодически полностью простаивать. К тому же, в такой схеме каждый из физических интерфейсов будет выступать как конкретная сущность, при выходе из строя которой будет происходить остановка того или иного сетевого сервиса, жёстко связанного с этой сущностью. C точки зрения повышения доступности и балансировки нагрузки, более эффективными методом использования нескольких сетевых интерфейсов сервера является объединение этих интерфейсов в логические сущности с использованием технологий Network Bonding и Network Teaming. В этой заметке на конкретном примере мы рассмотрим то, как с помощью технологии Network Bonding в ОС CentOS Linux 7.2 можно организовать объединение физических сетевых интерфейсов сервера в логический сетевой интерфейс (bond), а уже поверх него создать виртуальные сетевые интерфейсы под разные задачи и сетевые службы с изоляцией по разным VLAN. Агрегирование каналов между коммутатором и сервером будет выполняться с помощью протокола Link Aggregation Control Protocol (LACP) регламентированного документом IEEE 802.3ad. Использование LACP, с одной стороны, обеспечит высокую доступность агрегированного канала, так как выход из строя любого из линков между сервером и коммутатором не приведёт к потери доступности сетевых сервисов сервера, и с другой стороны, обеспечит равномерную балансировку нагрузки между физическими сетевыми интерфейсами сервера. Настройка в нашем примере будет выполняться как на стороне коммутатора (на примере коммутатора Cisco Catalyst WS-C3560G), так и на стороне Linux-сервера с двумя сетевыми интерфейсами (на примере сервера HP ProLiant DL360 G5 с контроллерами Broadcom NetXtreme II BCM5708/HP NC373i) Настройка">
+<meta property="og:url" content="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/">
+<meta property="og:site_name" content="Блог IT-KB">
+<meta property="article:publisher" content="https://www.facebook.com/blog.it.kb">
+<meta property="article:tag" content="802.1q">
+<meta property="article:tag" content="802.3ad">
+<meta property="article:tag" content="8021q">
+<meta property="article:tag" content="8023ad">
+<meta property="article:tag" content="BCM5708">
+<meta property="article:tag" content="Bond">
+<meta property="article:tag" content="Bonding">
+<meta property="article:tag" content="Broadcom">
+<meta property="article:tag" content="C3560">
+<meta property="article:tag" content="Catalyst">
+<meta property="article:tag" content="CentOS">
+<meta property="article:tag" content="CentOS 7">
+<meta property="article:tag" content="Channel-Group">
+<meta property="article:tag" content="Cisco">
+<meta property="article:tag" content="DL360">
+<meta property="article:tag" content="dot1q">
+<meta property="article:tag" content="ethtool">
+<meta property="article:tag" content="G5">
+<meta property="article:tag" content="High Availability">
+<meta property="article:tag" content="HP">
+<meta property="article:tag" content="ifcfg">
+<meta property="article:tag" content="IOS">
+<meta property="article:tag" content="iperf">
+<meta property="article:tag" content="LACP">
+<meta property="article:tag" content="LAG">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Load Balancing">
+<meta property="article:tag" content="MTU">
+<meta property="article:tag" content="NC373i">
+<meta property="article:tag" content="Networking">
+<meta property="article:tag" content="NetworkManager">
+<meta property="article:tag" content="NetXtreme">
+<meta property="article:tag" content="NIC Bonding">
+<meta property="article:tag" content="nload">
+<meta property="article:tag" content="nmcli">
+<meta property="article:tag" content="Port-Channel">
+<meta property="article:tag" content="ProLiant">
+<meta property="article:tag" content="RHEL">
+<meta property="article:tag" content="RHEL 7">
+<meta property="article:tag" content="Trunk">
+<meta property="article:tag" content="Virtualization">
+<meta property="article:tag" content="VLAN">
+<meta property="article:section" content="CentOS">
+<meta property="article:published_time" content="2016-06-20T16:03:58+00:00">
+<meta property="article:modified_time" content="2016-09-19T11:00:35+00:00">
+<meta property="og:updated_time" content="2016-09-19T11:00:35+00:00">
+<meta property="og:image" content="https://blog.it-kb.ru/wp-content/uploads/2016/06/image_thumb-135.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="На серверах имеющих несколько сетевых интерфейсов каждый отдельно взятый интерфейс можно использовать под какую-то выделенную задачу, например отдельный интерфейс под трафик управления хостом и отдельный интерфейс под трафик периодического резервного копирования. Может возникнуть мысль о том, что такая конфигурация имеет свои плюсы, например, позволяет максимально жёстко разграничить утилизацию интерфейсов под особенности разных задач. Но на этом плюсы, пожалуй, и заканчиваются. Ибо при таком подходе может получиться так, что один интерфейс будет постоянно чем-то чрезмерно нагружен, а другой интерфейс будет периодически полностью простаивать. К тому же, в такой схеме каждый из физических интерфейсов будет выступать как конкретная сущность, при выходе из строя которой будет происходить остановка того или иного сетевого сервиса, жёстко связанного с этой сущностью. C точки зрения повышения доступности и балансировки нагрузки, более эффективными методом использования нескольких сетевых интерфейсов сервера является объединение этих интерфейсов в логические сущности с использованием технологий Network Bonding и Network Teaming. В этой заметке на конкретном примере мы рассмотрим то, как с помощью технологии Network Bonding в ОС CentOS Linux 7.2 можно организовать объединение физических сетевых интерфейсов сервера в логический сетевой интерфейс (bond), а уже поверх него создать виртуальные сетевые интерфейсы под разные задачи и сетевые службы с изоляцией по разным VLAN. Агрегирование каналов между коммутатором и сервером будет выполняться с помощью протокола Link Aggregation Control Protocol (LACP) регламентированного документом IEEE 802.3ad. Использование LACP, с одной стороны, обеспечит высокую доступность агрегированного канала, так как выход из строя любого из линков между сервером и коммутатором не приведёт к потери доступности сетевых сервисов сервера, и с другой стороны, обеспечит равномерную балансировку нагрузки между физическими сетевыми интерфейсами сервера. Настройка в нашем примере будет выполняться как на стороне коммутатора (на примере коммутатора Cisco Catalyst WS-C3560G), так и на стороне Linux-сервера с двумя сетевыми интерфейсами (на примере сервера HP ProLiant DL360 G5 с контроллерами Broadcom NetXtreme II BCM5708/HP NC373i) Настройка">
+<meta name="twitter:title" content="Настройка Network Bonding с LACP между CentOS Linux 7.2 и коммутатором Cisco 3560G - Блог IT-KB">
+<meta name="twitter:site" content="@Blog_IT_KB">
+<meta name="twitter:image" content="https://blog.it-kb.ru/wp-content/uploads/2016/06/image_thumb-135.png">
+<meta name="twitter:creator" content="@Blog_IT_KB">
+<!-- / Yoast SEO plugin. -->
+
+<link rel="dns-prefetch" href="https://s0.wp.com/">
+<link rel="dns-prefetch" href="https://secure.gravatar.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Блог IT-KB » Лента" href="https://blog.it-kb.ru/feed/">
+<link rel="alternate" type="application/rss+xml" title="Блог IT-KB » Лента комментариев" href="https://blog.it-kb.ru/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Блог IT-KB » Лента комментариев к «Настройка Network Bonding с LACP между CentOS Linux 7.2 и коммутатором Cisco 3560G»" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/feed/">
+		<script src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/watch.js" async="" type="text/javascript"></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/blog.it-kb.ru\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.8"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b===c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script defer="defer" type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/wp-emoji-release.js"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="contact-form-7-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/styles.css" type="text/css" media="all">
+<link rel="stylesheet" id="bootstrap-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/bootstrap.css" type="text/css" media="all">
+<link rel="stylesheet" id="bootstrap-responsive-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/bootstrap-responsive.css" type="text/css" media="all">
+<link rel="stylesheet" id="zAlive-style-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="zAlive-wp-pagenavi-style-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/zAlive_wp_pagenavi.css" type="text/css" media="all">
+<link rel="stylesheet" id="read-offline-shortcode-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/read-offline-shortcode.css" type="text/css" media="all">
+<link rel="stylesheet" id="read-offline-embed-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/read-offline-embed.css" type="text/css" media="all">
+<link rel="stylesheet" id="read-offline-css-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/read-offline.css" type="text/css" media="all">
+<!--[if lte IE 8]>
+<link rel='stylesheet' id='jetpack-carousel-ie8fix-css'  href='https://blog.it-kb.ru/wp-content/plugins/jetpack/modules/carousel/jetpack-carousel-ie8fix.css?ver=20121024' type='text/css' media='all' />
+<![endif]-->
+<link rel="stylesheet" id="social-logos-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/social-logos.css" type="text/css" media="all">
+<link rel="stylesheet" id="jetpack_css-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/jetpack.css" type="text/css" media="all">
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/jquery_003.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/jquery-migrate.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var related_posts_js_options = {"post_heading":"h4"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/related-posts.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/read-offline-wp.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/read-offline-ga.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/spin.js"></script><style type="text/css"></style>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/jquery_002.js"></script>
+<link rel="https://api.w.org/" href="https://blog.it-kb.ru/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blog.it-kb.ru/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blog.it-kb.ru/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 4.8">
+<link rel="shortlink" href="https://wp.me/p3QByM-3S0">
+<link rel="alternate" type="application/json+oembed" href="https://blog.it-kb.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fblog.it-kb.ru%2F2016%2F06%2F20%2Fnetwork-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://blog.it-kb.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fblog.it-kb.ru%2F2016%2F06%2F20%2Fnetwork-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability%2F&amp;format=xml">
+<style type="text/css">
+.sfs-subscriber-count { width: 88px; overflow: hidden; height: 26px; color: #424242; font: 9px Verdana, Geneva, sans-serif; letter-spacing: 1px; }
+.sfs-count { width: 86px; height: 17px; line-height: 17px; margin: 0 auto; background: #ccc; border: 1px solid #909090; border-top-color: #fff; border-left-color: #fff; }
+.sfs-count span { display: inline-block; height: 11px; line-height: 12px; margin: 2px 1px 2px 2px; padding: 0 2px 0 3px; background: #e4e4e4; border: 1px solid #a2a2a2; border-bottom-color: #fff; border-right-color: #fff; }
+.sfs-stats { font-size: 6px; line-height: 6px; margin: 1px 0 0 1px; word-spacing: 2px; text-align: center; text-transform: uppercase; }
+</style>
+
+<link rel="dns-prefetch" href="https://widgets.wp.com/">
+<link rel="dns-prefetch" href="https://s0.wp.com/">
+<link rel="dns-prefetch" href="https://0.gravatar.com/">
+<link rel="dns-prefetch" href="https://1.gravatar.com/">
+<link rel="dns-prefetch" href="https://2.gravatar.com/">
+<link rel="dns-prefetch" href="https://jetpack.wordpress.com/">
+<link rel="dns-prefetch" href="https://s1.wp.com/">
+<link rel="dns-prefetch" href="https://s2.wp.com/">
+<link rel="dns-prefetch" href="https://public-api.wordpress.com/">
+<link rel="dns-prefetch" href="https://v0.wordpress.com/">
+<style type="text/css">.broken_link, a.broken_link {
+	text-decoration: line-through;
+}</style><style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #bec3c6; }
+</style>
+			<style type="text/css" id="wp-custom-css">
+				body {
+	font-family: Verdana, Tahoma;
+	font-size: 11.5px;
+}
+
+h1,h2,h3,h4,h5,h6,a,a:hover {
+	color: #004080;
+}
+
+.article > h1,#main .article > h3,.article-content h1 {
+	font-size: 16px;
+	line-height: 20px;
+	letter-spacing: -.05em;
+}
+
+.article .article-content {
+	margin-top: 15px;
+	color: #333;
+	font-size: 10px;
+}
+
+.article .article-content p {
+	line-height: inherit;
+}
+
+.article-content table, .comment-content table {
+	background: #FFF;
+	color: #000000;
+	border: 2px solid #CCC;
+	border-collapse: collapse;
+	line-height: 130%;
+	width: 100%;
+	font-family: Verdana, Tahoma;
+	font-size: 10px;
+}
+
+.article-content td, .comment-content td {
+	border: 1px solid #CCC;
+	padding: 3px 10px;
+	text-align: left;
+	vertical-align: top;
+}
+
+.entry-content .more-link {
+	clear: both;
+	float: right;
+	font-weight: normal;
+	font-size: 12px;
+}
+
+.wpcf7 input[type="text"] {
+	width: 60%;
+}
+
+.wpcf7 input[type="email"] {
+	width: 40%;
+}
+
+.wpcf7 textarea.wpcf7-textarea {
+	width: 60%;
+}			</style>
+		<script src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/rate.php" charset="utf-8"></script><style type="text/css">.dropdown-submenu:hover>.dropdown-menu{display:none}</style><link rel="stylesheet" type="text/css" id="gravatar-card-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/services.css"><style id="pd_popup_holder_style_7095907_post_14880" type="text/css">#pd_popup_holder_7095907_post_14880 { position:absolute; display:none; width:350px; height:auto; top:0px; left:0px; z-index:10000; border:solid 1px #CCC; background-color:white; padding:0px 15px;font-family:Arial,Sans;box-shadow: -10px 10px 20px rgba(0, 0, 0, .5);-webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, .25);-moz-box-shadow: 0px 0px 6px rgba(0, 0, 0, .25); }</style></head>
+<body class="post-template-default single single-post postid-14880 single-format-standard custom-background">
+  <div id="header">
+    <div class="navbar container">
+      <div class="navbar-inner">
+        				<div class="brand">
+          <a href="https://blog.it-kb.ru/" title="Блог IT-KB" rel="home">Блог IT-KB</a>
+        </div>
+                <ul class="nav">
+          <li id="menu-item-13337" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-13337"><a href="https://wiki.it-kb.ru/">Вики</a></li>
+<li id="menu-item-7280" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7280"><a href="https://forum.it-kb.ru/">Форум</a></li>
+<li id="menu-item-12728" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-12728"><a href="https://blog.it-kb.ru/">О нас</a>
+<ul class="sub-menu">
+	<li id="menu-item-7126" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7126"><a href="https://blog.it-kb.ru/about-this-blog/">Команда авторов</a></li>
+	<li id="menu-item-12729" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-12729"><a href="https://blog.it-kb.ru/cform/">Контактная форма</a></li>
+</ul>
+</li>
+        </ul>
+              <form class="pull-right input-append" id="searchbox" method="get" action="https://blog.it-kb.ru/">
+          <input name="s" id="s" placeholder="Введите строку поиска..." type="text">
+          <button type="submit" class="btn">Поиск</button>
+        </form>
+            </div>
+    </div>
+      <div id="site-description" class="tagline tagline-hidden container visible-desktop">
+      <p>Собрание заметок об информационных технологиях</p>
+    </div>
+    </div>
+    <div id="content" class="container ">
+    <div class="content-two-columns clearfix">      <div id="main">
+                  <div id="post-14880" class="article clearfix post-14880 post type-post status-publish format-standard hentry category-centos category-cisco category-linux category-networking category-red-hat-enterprise-linux-server category-virtualization tag-802-1q tag-802-3ad tag-8021q tag-8023ad tag-bcm5708 tag-bond tag-bonding tag-broadcom tag-c3560 tag-catalyst tag-centos tag-centos-7 tag-channel-group tag-cisco tag-dl360 tag-dot1q tag-ethtool tag-g5 tag-high-availability tag-hp tag-ifcfg tag-ios tag-iperf tag-lacp tag-lag tag-linux tag-load-balancing tag-mtu tag-nc373i tag-networking tag-networkmanager tag-netxtreme tag-nic-bonding tag-nload tag-nmcli tag-port-channel tag-proliant tag-rhel tag-rhel-7 tag-trunk tag-virtualization tag-vlan">
+        
+	
+  <h1 class="entry-title">Настройка Network Bonding с LACP между CentOS Linux 7.2 и коммутатором Cisco 3560G</h1>
+          
+                
+        <div class="entry-meta entry-meta-primary  clearfix">
+          <span class="info-date info-icon entry-date date updated">20.06.2016</span>
+          <span class="info-author info-icon visible-desktop vcard author"><cite class="fn">Автор:<a href="https://blog.it-kb.ru/author/blogroot/" title="Перейти на сайт Алексей Максимов" rel="author external">Алексей Максимов</a></cite></span>
+          <div class="pull-right">
+            <span class="info-view info-icon">4&nbsp;795 Просмотров</span>            <span class="info-comment info-icon visible-desktop">
+              <a href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/#comments" class="comments-link">5 комментариев</a>            </span>
+          </div>
+        </div>          <div class="entry-content clearfix">
+    <p><a href="https://blog.it-kb.ru/wp-content/uploads/2016/06/image-133.png"><img title="image" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; float: left; padding-top: 0px; padding-left: 0px; margin: 8px 10px 10px 0px; display: inline; padding-right: 0px; border-top-width: 0px" alt="image" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/image_thumb-135.png" align="left" border="0" height="48" width="48"></a><font size="2">На
+ серверах имеющих несколько сетевых интерфейсов каждый отдельно взятый 
+интерфейс можно использовать под какую-то выделенную задачу, например 
+отдельный интерфейс под трафик управления хостом и отдельный интерфейс 
+под трафик периодического резервного копирования. Может возникнуть мысль
+ о том, что такая конфигурация имеет свои плюсы, например, позволяет 
+максимально жёстко разграничить утилизацию интерфейсов под особенности 
+разных задач. Но на этом плюсы, пожалуй, и заканчиваются. Ибо при таком 
+подходе может получиться так, что один интерфейс будет постоянно чем-то 
+чрезмерно нагружен, а другой интерфейс будет периодически полностью 
+простаивать. К тому же, в такой схеме каждый из физических интерфейсов 
+будет выступать как конкретная сущность, при выходе из строя которой 
+будет происходить остановка того или иного сетевого сервиса, жёстко 
+связанного с этой сущностью. C точки зрения повышения доступности и 
+балансировки нагрузки, более эффективными методом использования 
+нескольких сетевых интерфейсов сервера является объединение этих 
+интерфейсов в логические сущности с использованием технологий <strong>Network Bonding</strong> и <strong>Network Teaming</strong>.</font></p>
+<p><font size="2">В этой заметке на конкретном примере мы рассмотрим то, как с помощью технологии <strong>Network Bonding</strong> в ОС <strong>CentOS Linux 7.2</strong> можно организовать объединение физических сетевых интерфейсов сервера в логический сетевой интерфейс (<strong>bond</strong>), а уже поверх него создать виртуальные сетевые интерфейсы под разные задачи и сетевые службы с изоляцией по разным <strong>VLAN</strong>. Агрегирование каналов между коммутатором и сервером будет выполняться с помощью протокола <strong>Link Aggregation Control Protocol</strong> (<strong>LACP</strong>) регламентированного документом <strong>IEEE 802.3ad</strong>.
+ Использование LACP, с одной стороны, обеспечит высокую доступность 
+агрегированного канала, так как выход из строя любого из линков между 
+сервером и коммутатором не приведёт к потери доступности сетевых 
+сервисов сервера, и с другой стороны, обеспечит равномерную балансировку
+ нагрузки между физическими сетевыми интерфейсами сервера. Настройка в 
+нашем примере будет выполняться как на стороне коммутатора (на примере 
+коммутатора <strong>Cisco Catalyst WS-C3560G</strong>), так и на стороне Linux-сервера с двумя сетевыми интерфейсами (на примере сервера <strong>HP ProLiant DL360 G5</strong> с контроллерами <strong>Broadcom NetXtreme II BCM5708</strong>/<strong>HP NC373i</strong>)</font></p>
+<p><span id="more-14880"></span></p>
+<h5>Настройка конфигурации LACP на коммутаторе Cisco</h5>
+<p><font size="2">Активация механизмов <strong>LACP</strong> на коммутаторе <strong>Cisco</strong> сводится к созданию виртуальной группы портов <strong>channel-group</strong> и включению в эту группу нужных нам портов коммутатора. </font></p>
+<p><font size="2">Очищаем существующую конфигурацию портов коммутатора, которые будем включать в channel-group (в нашем примере это будут порты <font color="#800000">21</font> и <font color="#800000">22</font>):</font> </p>
+<pre><font size="2">switch# <strong><font color="#000000">configure terminal</font></strong>
+switch(config)# <font color="#000000"><strong>default interface range </strong></font><font color="#400000">Gi0/21-22</font></font></pre>
+<p><font size="2">Создаём channel-group и включаем в неё нужные нам порты коммутатора, предварительно эти отключив порты:</font></p>
+<pre><font size="2">switch(config)# <font color="#000000"><strong>interface range </strong></font><font color="#400000">Gi0/21-22</font>
+switch(config-if-range)# <strong><font color="#000000">shutdown</font></strong>
+switch(config-if-range)# <font color="#000000"><strong>channel-group </strong><font color="#400000">2</font><strong> mode </strong></font><font color="#400000">active</font>
+<font color="#666666">Creating a port-channel interface Port-channel 2</font>
+switch(config-if-range)# <strong><font color="#000000">no shutdown</font></strong>
+switch(config-if-range)# <strong><font color="#000000">exit</font></strong></font></pre>
+<p><font size="2">Вносим изменения в свойства появившегося виртуального интерфейса Port-channel2:</font> </p>
+<pre><font size="2">switch(config)# <font color="#000000"><strong>interface </strong></font><font color="#400000">Port-channel2</font>
+switch(config-if)# <strong><font color="#000000">description</font></strong> <font color="#400000">LACP channel for KOM-AD01-VM32</font>
+switch(config-if)# <strong><font color="#000000">switchport trunk encapsulation </font><font color="#000000">dot1q</font></strong>
+switch(config-if)# <strong><font color="#000000">switchport trunk allowed vlan</font></strong> <font color="#400000">1,2,4</font>
+switch(config-if)# <strong><font color="#000000">switchport mode trunk</font></strong> <br>switch(config-if)# <strong><font color="#400000">exit</font></strong></font></pre>
+<p><font size="2">Изменения в свойствах первого порта-участника channel-group вносим минимальные, так как основные параметры наследуются портом с виртуального интерфейса channel-group:</font> </p>
+<pre><font size="2">switch(config)# <strong><font color="#000000">interface</font></strong> <font color="#400000">GigabitEthernet0/21</font>
+switch(config-if)# <strong><font color="#000000">description</font></strong> <font color="#400000">LACP channel for KOM-AD01-VM32 (port enp3s0)</font><br>switch(config-if)# <strong><font color="#000000">channel-protocol</font></strong> <strong><font color="#000000">lacp</font></strong> <br>switch(config-if)# <strong><font color="#000000">exit</font></strong></font> </pre>
+<p><font size="2">Вносим изменения в свойства второго порта-участника channel-group:</font> </p>
+<pre><font size="2">switch(config)# <strong><font color="#000000">interface</font></strong> <font color="#400000">GigabitEthernet0/22</font>
+switch(config-if)# <strong><font color="#000000">description</font></strong> <font color="#400000">LACP channel for KOM-AD01-VM32 (port enp5s0)</font>
+switch(config-if)# <strong><font color="#000000">channel-protocol lacp</font></strong></font></pre>
+<p><font size="2">Не забываем сохранить изменения:</font></p>
+<pre><font size="2">switch(config-if)# <strong><font color="#000000">end</font></strong>
+switch# <strong><font color="#000000">write</font></strong></font></pre>
+<p><font size="2">Проверяем итоговую конфигурацию портов:</font></p>
+<pre><font size="2">switch# <font color="#000000"><strong>show running-config</strong></font>
+
+<font color="#666666">...
+interface Port-channel2
+  description LACP Channel for KOM-AD01-VM32
+  switchport trunk encapsulation dot1q
+  switchport trunk allowed vlan 1,2,4
+  switchport mode trunk
+...
+interface GigabitEthernet0/21
+  description LACP channel for KOM-AD01-VM32 (port enp3s0)
+  switchport trunk encapsulation dot1q
+  switchport trunk allowed vlan 1,2,4
+  switchport mode trunk
+  channel-protocol lacp
+  channel-group 2 mode active
+...
+interface GigabitEthernet0/22
+  description LACP channel for KOM-AD01-VM32 (port enp5s0)
+  switchport trunk encapsulation dot1q
+  switchport trunk allowed vlan 1,2,4
+  switchport mode trunk
+  channel-protocol lacp
+  channel-group 2 mode active
+...</font></font></pre>
+<p><font size="2">Проверяем статус подключения портов:</font></p>
+<pre><font size="2">switch# <strong><font color="#000000">show interfaces status<br></font></strong><font color="#666666">...
+Gi0/21  LACP channel for K  <font color="#c0504d">suspended</font>  trunk&nbsp; a-full a-1000 10/100/1000BaseTX<br>Gi0/22  LACP channel for K  <font color="#c0504d">suspended</font>  trunk  a-full a-1000 10/100/1000BaseTX<br>...
+Po2     LACP channel for K  <font color="#c0504d">notconnect</font>&nbsp;&nbsp; unassigned&nbsp;&nbsp; auto&nbsp;&nbsp; auto
+...</font></font></pre>
+<p><font size="2">До тех пор, пока на стороне нашего Linux-сервера не будет настроен LACP, статус портов будет отображаться как <strong>suspended</strong>/<strong>notconnect</strong>, а после настройки статус должен будет измениться на <strong>connected</strong> (это можно будет проверить позже):</font></p>
+<pre><font size="2">switch# <strong><font color="#000000">show interfaces status<br></font></strong><font color="#666666">...
+Gi0/21  LACP channel for K  connected  trunk&nbsp; a-full a-1000 10/100/1000BaseTX<br>Gi0/22  LACP channel for K  connected  trunk  a-full a-1000 10/100/1000BaseTX<br>...
+Po2     LACP channel for K  connected  trunk  a-full a-1000
+...</font></font></pre>
+<p><font size="2">Проверяем внутренний статус LACP:</font></p>
+<pre><font size="2">switch# <strong><font color="#000000">show lacp internal</font></strong>
+
+<font color="#666666">Flags:  S - Device is requesting Slow LACPDUs
+        F - Device is requesting Fast LACPDUs
+        A - Device is in Active mode       P - Device is in Passive mode
+...
+Channel group 2
+                            LACP port     Admin     Oper    Port     Port
+Port      Flags   State     Priority      Key       Key     Number   State
+Gi0/21    SA      <font color="#c0504d">susp</font>      32768         0x2       0x2     0x15     0x7D
+Gi0/22    SA      <font color="#c0504d">susp</font>      32768         0x2       0x2     0x16     0x7D
+...</font></font></pre>
+<p><font size="2">Здесь аналогично, до тех пор, пока на стороне нашего Linux-сервера не будет настроен LACP, статус LACP будет соответствующий, а после настройки статус должен будет измениться:</font></p>
+<pre><font size="2">switch# <strong><font color="#000000">show lacp internal</font></strong>
+<font color="#666666">...
+Channel group 2
+                            LACP port     Admin     Oper    Port     Port
+Port      Flags   State     Priority      Key       Key     Number   State
+Gi0/21    SA      bndl      32768         0x2       0x2     0x15     0x3D
+Gi0/22    SA      bndl      32768         0x2       0x2     0x16     0x3D
+...</font></font></pre>
+<p><font size="2">Теперь можем перейти к настройке <strong>Network Bonding</strong> с <strong>LACP</strong> на стороне Linux-сервера.</font></p>
+<p>&nbsp;</p>
+<h5>Настройка Network Bonding c LACP в CentOS Linux 7.2</h5>
+<p><font size="2">Проверим наличие модуля поддержки <strong>bonding</strong> (команда должна отработать без ошибок):</font></p>
+<pre><font size="2"># <font color="#000000"><strong>modinfo </strong></font><font color="#400000">bonding</font></font></pre>
+<p><font size="2">В ниже представленном примере мы рассмотрим сценарий настройки логического <strong>bond</strong>-интерфейса <font color="#800000">bond0</font> (<strong>master</strong>-интерфейс), членами которого будут два имеющихся в сервере физических интерфейса <font color="#800000">enp3s0</font> и <font color="#800000">enps5s0</font> (<strong>slave</strong>-интерфейсы). А затем на созданном bond-интерфейсе мы создадим дочерний VLAN-интерфейс, имеющий доступ к изолированной тегированной сети с определённым номером VLAN. Всю настройку мы будем выполнять путём прямой правки файлов интерфейсов.</font></p>
+<p><font size="2">Создадим файл с конфигурацией нового агрегирующего интерфейса <font color="#800000">bond0</font>:</font> </p>
+<pre><font size="2"># <strong><font color="#000000">nano</font></strong> <font color="#400000">/etc/sysconfig/network-scripts/ifcfg-bond0</font></font></pre>
+<p><font size="2">Наполним файл параметрами бонда <font color="#800000">bond0</font>:</font> </p>
+<pre><font color="#646b86"><font size="2">DEVICE=<font color="#c0504d">bond0</font>
+NAME=<font color="#c0504d">bond0</font>
+TYPE=Bond
+BONDING_MASTER=<font color="#c0504d">yes</font><br>IPV6INIT=no<br>MTU=9000</font><br></font><font color="#646b86" size="2">ONBOOT=yes<br></font><font color="#646b86" size="2">USERCTL=no<br>NM_CONTROLLED=no
+BOOTPROTO=none
+BONDING_OPTS="mode=<font color="#c0504d">802.3ad</font> xmit_hash_policy=<font color="#c0504d">layer2+3</font> lacp_rate=<font color="#c0504d">1</font> miimon=<font color="#c0504d">100</font>"</font></pre>
+<p><font size="2">Опции <strong>BONDING_OPTS</strong> можно передавать и через файл <font color="#800000">/etc/modprobe.d/bonding.conf</font>, но вместо этого лучше использовать файлы <font color="#800000">ifcfg-bond*.</font> Исключением здесь является лишь глобальный параметр <strong>max_bonds</strong>. Это замечание описано в документе </font><a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Network_Bonding_Using_the_Command_Line_Interface.html#sec-Create_a_Channel_Bonding_Interface" target="_blank"><font size="2">Create a Channel Bonding Interface</font></a><font size="2">.</font></p>
+<p><font size="2">Получить информацию о всех возможных опциях <strong>BONDING_OPTS </strong>и вариантах их значений можно в документе </font><a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Using_Channel_Bonding.html" target="_blank"><font size="2">Using Channel Bonding</font></a><font size="2">.</font></p>
+<p><font size="2">В нашем примере используется несколько опций:</font></p>
+<ul>
+<li><font size="2"><strong>mode</strong>=<font color="#800000">802.3ad</font>, который определяет режим работы bond-а (bonding policy). В нашем случае выбран режим с использованием протокола LACP. Этот режим для корректной работы должен поддерживаться и коммутатором, к которому подключаются сетевые интерфейсы bond-а. </font>
+</li><li><font size="2"><strong>lacp_rate</strong>=<font color="#800000">fast</font>, который заставляет bonding-интерфейс отсылать пакеты LACPDU ежесекундно, в то время как значение по умолчанию <font color="#800000">slow</font>, которое определяет 30-секундный интервал. </font>
+</li><li><font size="2"><strong>xmit_hash_policy</strong>=<font color="#800000">layer2+3</font>, который определяет режим вычисления хешей при организации балансировки нагрузки между интерфейсами бонда. Эта опция используется только для режимов работы бонда (ранее описанный mode) поддерживающих балансировку нагрузки, таких как <font color="#800000">balance-xor</font> и <font color="#800000">802.3ad</font>. Значение <font color="#800000">layer2+3</font> говорит о том, что для вычисления хешей будут использоваться как MAC адреса получателей/отправителей пакета, так и их IP адреса, если это возможно. Значение по умолчанию для этой опции – <font color="#800000">layer2</font>, что определяет вычисление хеша только по MAC-адресам. </font>
+</li><li><font size="2"><strong>miimon</strong>=<font color="#800000">100</font>, который определяет количество миллисекунд для мониторинга состояния линка с помощью механизмов MII, который, к слову говоря, должен поддерживаться физическим сетевым контроллером. Значение опции miimon по умолчанию – 0, что значит, что данный функционал не используется.</font> </li>
+</ul>
+<p><font size="2">Чтобы проверить то, может ли наш сетевой контроллер работать с MII, можно выполнить:</font></p>
+<pre><font size="2"># <strong><font color="#000000">ethtool</font></strong> <font color="#400000">enp3s0</font> | <strong><font color="#000000">grep</font></strong> <font color="#400000">"Link detected:"</font>
+
+<font color="#666666">Link detected: </font><font color="#c0504d">yes</font></font></pre>
+<p><font size="2">Значение <font color="#800000">yes</font> в данном случае говорит о поддержке MII.</font></p>
+<p><font size="2">Если вы используете режим <strong>active-backup </strong>bonding, то есть </font><a href="https://access.redhat.com/node/28421/Configuring_VLAN_devices_over_a_bonded_interface" target="_blank"><font size="2">рекомендация</font></a><font size="2"> настраивать дополнительную опцию bond-интерфейса: <strong>fail_over_mac</strong>=<font color="#800000">1</font>. Как я понял, это нужно для того, чтобы использовать для bond в качестве основного MAC-адреса, MAC-адрес backup-интерфейса, что позволит сократить время потери соединений в процессе fail-over. </font></p>
+<p><font size="2">Создадим файл с конфигурацией <strong>slave</strong>-интерфейсов, то есть физических Ethernet-портов, которые будут участниками <font color="#800000">bond0</font> (файл скорее всего уже существует, так что просто отредактируем его под свою задачу):</font> </p>
+<pre><font size="2"># <strong><font color="#000000">nano</font></strong> <font color="#400000">/etc/sysconfig/network-scripts/ifcfg-enp3s0</font></font></pre>
+<p><font size="2">Содержимое файла</font> </p>
+<pre><font color="#646b86" size="2">DEVICE=<font color="#c0504d">enp3s0</font>
+NAME=<font color="#c0504d">bond0-slave0</font>
+TYPE=Ethernet<br>MTU=9000
+BOOTPROTO=none
+ONBOOT=yes<br>MASTER=<font color="#c0504d">bond0</font>
+SLAVE=<font color="#c0504d">yes</font><br></font><font color="#646b86" size="2">USERCTL=no <br>NM_CONTROLLED=no</font><font color="#c0504d"> </font></pre>
+<p><font size="2">Второй <strong>slave</strong>-интерфейс настраиваем по аналогии:</font> </p>
+<pre><font size="2"># <strong><font color="#000000">nano</font></strong> <font color="#400000">/etc/sysconfig/network-scripts/ifcfg-enp5s0</font></font></pre>
+<p><font size="2">Параметры файла аналогичные за исключением параметров <strong>DEVICE</strong> и <strong>NAME</strong></font></p>
+<pre><font color="#646b86" size="2">DEVICE=<font color="#c0504d">enp5s0</font>
+NAME=<font color="#c0504d">bond0-slave1</font>
+TYPE=Ethernet<br>MTU=9000
+BOOTPROTO=none
+ONBOOT=yes<br>MASTER=bond0
+SLAVE=yes<br></font><font color="#646b86" size="2">USERCTL=no<br>NM_CONTROLLED=no</font><font color="#c0504d"> </font></pre>
+<p><font size="2">Если используется служба <strong>NetworkManager</strong>, то перезагрузим её конфигурацию с учётном созданных/изменённых файлов <font color="#800000">ifcfg-*</font>:</font></p>
+<pre><font size="2"># <strong><font color="#000000">nmcli con reload</font></strong></font></pre>
+<p><font size="2">Перезапускаем <strong>slave</strong>-интерфейсы:</font> </p>
+<div align="justify">
+<pre><font size="2"># <font color="#000000"><strong>ifdown </strong><font color="#400000">enp3s0</font> &amp;&amp; <strong>ifup </strong></font><font color="#400000">enp3s0</font> 
+# <font color="#000000"><strong>ifdown </strong><font color="#400000">enp5s0</font><strong> </strong>&amp;&amp; <strong>ifup </strong></font><font color="#400000">enp5s0</font></font></pre>
+</div>
+<p><font size="2">Если отдельное отключение/включение интерфейсов приводит к ошибкам (это возможно в случае если ранее подключения контролировались службой NetworkManager), то перезапускаем сеть полностью:</font> </p>
+<pre><font size="2"># <font color="#000000"><strong>service </strong><font color="#400000">network</font> <strong>restart</strong></font></font></pre>
+<p><font size="2">Убедимся в том, что созданные интерфейсы успешно запущены со статусом <strong>UP</strong> и заданными нами настройками, например обратим внимание на размер MTU.</font></p>
+<p></p><pre><font size="2"># <strong><font color="#000000">ip link show</font></strong>
+<font color="#666666">...
+2: <font color="#c0504d">enp3s0</font>: <broadcast ,multicast,slave,up,lower_up=""> mtu 9000 qdisc mq <font color="#c0504d">master bond0</font> state <font color="#c0504d">UP</font> mode DEFAULT qlen 1000
+    link/ether 00:1f:28:0a:f7:f4 brd ff:ff:ff:ff:ff:ff
+3: <font color="#c0504d">enp5s0</font>: <broadcast ,multicast,slave,up,lower_up=""> mtu 9000 qdisc mq <font color="#c0504d">master bond0</font> state <font color="#c0504d">UP</font> mode DEFAULT qlen 1000
+    link/ether 00:1f:28:0a:f7:f4 brd ff:ff:ff:ff:ff:ff
+4: <font color="#c0504d">bond0</font>: <broadcast ,multicast,master,up,lower_up=""> mtu 9000 qdisc noqueue state <font color="#c0504d">UP</font> mode DEFAULT
+    link/ether 00:1f:28:0a:f7:f4 brd ff:ff:ff:ff:ff:ff</broadcast></broadcast></broadcast></font></font><br></pre>
+<p><font size="2">Итак, bond создан и запущен в работу, и теперь переходим к созданию виртуальных интерфейсов с поддержкой VLAN поверх нашего bond-а.</font></p>
+<p><font size="2">Проверим наличие модуля поддержки <strong>VLAN</strong> (команда должна отработать без ошибок)</font></p>
+<pre><font size="2"># <strong><font color="#000000">modprobe</font></strong> <font color="#400000">8021q</font></font></pre>
+<p><font size="2">Под каждый отдельный VLAN-интерфейс создаём конфигурационные файлы в каталоге <font color="#800000">/etc/sysconfig/network-scripts</font> по типу <font color="#800000">ifcfg-bond</font><font color="#800000"><font color="#0000ff">&lt;</font>номер бонда<font color="#0000ff">&gt;</font>.<font color="#0000ff">&lt;</font>номер VLAN-а</font><font color="#0000ff">&gt;</font>. Например создадим конфигурационный файл для bond-интерфейса <font color="#800000">bond0</font> с <strong>VLAN 2</strong></font> </p>
+<pre><font size="2"># <strong><font color="#000000">nano</font></strong> <font color="#400000">/etc/sysconfig/network-scripts/ifcfg-bond0.2</font></font></pre>
+<p><font size="2">Содержимое файла:</font> </p>
+<pre><font color="#646b86" size="2">DEVICE=<font color="#c0504d">bond0.2</font><br>NAME=<font color="#c0504d">bond0-vlan2</font>
+BOOTPROTO=none
+ONBOOT=yes <br>USERCTL=no <br></font><font color="#646b86"><font size="2">NM_CONTROLLED=no <br>VLAN=<font color="#c0504d">yes</font><br>MTU=1500&nbsp; <br>IPV4_FAILURE_FATAL=yes<br>IPV6INIT=no
+IPADDR=<font color="#c0504d">10.1.0.32</font>
+PREFIX=<font color="#c0504d">24</font><br>GATEWAY=<font color="#c0504d">10.1.0.1</font><br>DNS1=<font color="#c0504d">10.1.0.9</font><br>DNS2=<font color="#c0504d">10.1.1.8</font><br>DOMAIN=<font color="#c0504d">holding.com</font></font> <br></font></pre>
+<p><font size="2">Попробуем поднять созданный VLAN-интерфейс или опять-же просто перезапускаем сеть:</font> </p>
+<pre><font size="2"># <strong><font color="#000000">ifup</font></strong> <font color="#400000">ifcfg-bond0.2</font><br># <strong><font color="#000000">service</font></strong> <font color="#400000">network</font> <strong><font color="#000000">restart</font></strong></font></pre>
+<p><font size="2">Чтобы разнообразные сетевые службы, используемые на нашем сервере приняли во внимание изменение сетевой конфигурации, можно перезапустить их, либо просто перезагрузить сервер.</font></p>
+<p><font size="2">Убедимся в том, что VLAN-интерфейс поднялся с указанными нами настройками:</font></p>
+<pre><font size="2"># <strong><font color="#000000">ip link show</font></strong>
+<font color="#666666">...
+<br>5: <font color="#c0504d">bond0.2@bond0</font>: <broadcast ,multicast,up,lower_up=""> mtu 1500 qdisc noqueue state <font color="#c0504d">UP</font> mode DEFAULT
+    link/ether 00:1f:28:0a:f7:f4 brd ff:ff:ff:ff:ff:ff</broadcast></font></font></pre>
+<p><font size="2">Аналогичным образом мы можем создать на сервере столько выделенных виртуальных VLAN интерфейсов, сколько потребуется для разделения трафика между разными задачами и сетевыми службами исполняемыми на сервере. </font></p>
+<p><font size="2">Проверяем статус работы <font color="#800000">bond0</font>:</font></p>
+<pre><font size="2"># <font color="#000000"><strong>cat </strong></font><font color="#400000">/proc/net/bonding/bond0</font>
+
+<font color="#666666">Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011)
+
+Bonding Mode: IEEE 802.3ad Dynamic link aggregation
+Transmit Hash Policy: <font color="#c0504d">layer2+3</font> (2)
+MII Status: <font color="#c0504d">up</font>
+MII Polling Interval (ms): <font color="#c0504d">100</font>
+Up Delay (ms): 0
+Down Delay (ms): 0
+
+<font color="#c0504d">802.3ad info</font>
+LACP rate: <font color="#c0504d">fast</font>
+Min links: 0
+Aggregator selection policy (ad_select): stable
+Active Aggregator Info:
+        Aggregator ID: 1
+        Number of ports: <font color="#c0504d">2</font>
+        Actor Key: 9
+        Partner Key: 2
+        Partner Mac Address: <font color="#c0504d">00:1c:f8:57:bd:50</font>
+
+Slave Interface: <font color="#c0504d">enp3s0</font>
+MII Status: <font color="#c0504d">up</font>
+Speed: 1000 Mbps
+Duplex: full
+Link Failure Count: 0
+Permanent HW addr: 00:1f:28:0a:f7:f4
+Slave queue ID: 0
+Aggregator ID: 1
+Actor Churn State: none
+Partner Churn State: none
+Actor Churned Count: 0
+Partner Churned Count: 0
+details actor lacp pdu:
+    system priority: 65535
+    port key: 9
+    port priority: 255
+    port number: <font color="#c0504d">1</font>
+    port state: 63
+details partner lacp pdu:
+    system priority: 32768
+    oper key: 2
+    port priority: 32768
+    port number: <font color="#c0504d">21</font>
+    port state: 61
+
+Slave Interface: <font color="#c0504d">enp5s0</font>
+MII Status: <font color="#c0504d">up</font>
+Speed: 1000 Mbps
+Duplex: full
+Link Failure Count: 0
+Permanent HW addr: 00:1f:29:0a:f7:f8
+Slave queue ID: 0
+Aggregator ID: 1
+Actor Churn State: none
+Partner Churn State: none
+Actor Churned Count: 0
+Partner Churned Count: 0
+details actor lacp pdu:
+    system priority: 65535
+    port key: 9
+    port priority: 255
+    port number: <font color="#c0504d">2</font>
+    port state: 63
+details partner lacp pdu:
+    system priority: 32768
+    oper key: 2
+    port priority: 32768
+    port number: <font color="#c0504d">22</font>
+    port state: 61</font></font></pre>
+<p><font size="2">Если в секции <strong>802.3ad info</strong> значение параметра <strong>Partner Mac Address</strong> не содержит MAC-адреса коммутатора, а вместо этого видно значение 00:00:00:00:00:00, это значит то, что обмен пакетами LACPDU с коммутатором по какой-то причине не выполняется (либо на стороне коммутатора неправильно настроен LACP, либо коммутатор вовсе его не поддерживает)</font></p>
+<p><font size="2">На этом этапе агрегированный LACP линк между коммутатором и сервером можно считать настроенным. На стороне коммутатора убедимся в том, что вывод ранее упомянутых команд изменился:</font></p>
+<pre><font size="2">switch# <strong><font color="#000000">show interfaces status</font></strong>
+switch# <strong><font color="#000000">show lacp internal</font></strong></font></pre>
+<p><font size="2">Теперь можно переходить к заключительному этапу – проверкам нашего LACP соединения на предмет устойчивости соединения при отказе любого из портов на стороне коммутатора/сервера а также на предмет корректности балансировки нагрузки.</font></p>
+<p>&nbsp;</p>
+<h5>Проверка высокой доступности соединения</h5>
+<p><font size="2">Теперь попробуем проверить устойчивость нашего LACP-соединения. Для этого запустим с любой сторонней системы, например с рабочей станции администратора, <strong>ping</strong> IP-адреса <strong>bond</strong>-интерфейса сервера</font> </p>
+<pre><font size="2"><strong><font color="#000000">ping</font></strong> <font color="#000000">-t</font> <font color="#400000">10.1.0.32</font></font></pre>
+<p><font size="2">Подключимся к коммутатору Cisco и выполним отключение одного из портов, входящих в группу channel-group, обеспечивающей со стороны коммутатора LACP-соединение.</font> </p>
+<pre><font size="2">switch# <strong><font color="#000000">configure terminal</font></strong>
+switch(config)# <strong><font color="#000000">int</font></strong> <font color="#400000">Gi0/21</font>
+switch(config-if)# <strong><font color="#000000">shutdown</font></strong></font></pre>
+<p><font size="2">Убедимся в том, что запущенная утилита ping не отражает факт потери пакетов. Если всё в порядке, включим отключенный порт коммутатора, а затем отключим второй порт входящий в группу channel-group:</font> </p>
+<pre><font size="2">switch(config-if)# <strong><font color="#000000">no shutdown</font></strong>
+switch(config-if)# <strong><font color="#000000">exit</font></strong>
+switch(config)# <font color="#000000"><strong>int</strong></font> <font color="#400000">Gi0/22</font>
+switch(config-if)# <strong><font color="#000000">shutdown</font></strong>
+switch(config-if)# <strong><font color="#000000">no shutdown</font></strong>
+switch(config-if)# <strong><font color="#000000">end</font></strong></font></pre>
+<p><font size="2">Снова проверим, что ping не имеет потерь пакетов. Если всё в порядке, включим отключенный порт коммутатора и будем считать, что наше LACP-соединение Cisco channel-group &lt;-&gt; Linux bond успешно отрабатывает ситуацию потери соединения на любом из интерфейсов коммутатора, входящих в channel-group. Аналогичную проверку можно выполнить и со стороны Linux сервера попеременно отключая интерфейсы входящие в bond:</font> </p>
+<pre><font size="2"># <strong><font color="#000000">ifdown</font></strong> <font color="#400000">enp3s0</font>
+# <strong><font color="#000000">ifup</font></strong> <font color="#400000">enp3s0</font>
+# <strong><font color="#000000">ifdown</font></strong> <font color="#400000">enp5s0</font>
+# <strong><font color="#000000">ifup</font></strong> <font color="#400000">enp5s0</font></font></pre>
+<p><font size="2">Здесь между включением первого интерфейса и отключением второго для чистоты эксперимента нужно сделать небольшую паузу (5-7 секунд), чтобы LACP-линк смог полностью перестроиться для того, чтобы не было потерь пакетов. Если же эту паузу не сделать, то несколько пакетов может таки потеряться, но потом соединение всё-же будет автоматически восстановлено.</font></p>
+<p>&nbsp;</p>
+<h5>Проверка балансировки нагрузки соединения </h5>
+<p><font size="2">Чтобы проверить факт того, что трафик действительно распределяется по интерфейсам bond-а, воспользуемся немного более сложной процедурой тестирования, для которой используем три компьютера, то есть сам наш сервер <font color="#800000">KOM-AD01-VM32</font> (IP: <font color="#800000">10.1.0.32</font>) и любые два Linux-компьютера, например <font color="#800000">KOM-AD01-SRV01</font> (IP: <font color="#800000">10.1.0.11</font>) и <font color="#800000">KOM-AD01-SRV02</font> (IP: <font color="#800000">10.1.0.12</font>). Установим на все три компьютера две утилиты - <strong>iperf</strong> (для тестирования скорости) и <strong>nload</strong> (для отображения нагрузки интерфейсов в реальном времени).</font></p>
+<p><font size="2">Начнем с проверки <strong>входящего трафика</strong>. </font></p>
+<p><font size="2">Установим на проверяемом сервере <font color="#800000">KOM-AD01-VM32</font> утилиты <strong>iperf</strong> и <strong>nload</strong> а затем на время теста выключим <strong>брандмауэр</strong> (либо можете создать разрешающее правило для порта, который будет слушать запущенный серверный iperf, по умолчанию это <strong>TCP 5001</strong>). Запустим утилиту iperf в режиме сервера (с ключом<strong> -s</strong>), то есть ориентированную на приём трафика:</font> </p>
+<pre><font size="2"># <strong><font color="#000000">yum -y install</font></strong> <font color="#400000">iperf nload<br></font># <strong><font color="#000000">service</font></strong> <font color="#400000">firewalld</font> <font color="#000000"><strong>stop</strong></font><br># <strong><font color="#000000">iperf -s</font></strong><br><br><font color="#666666">------------------------------------------------------------<br>Server listening on TCP port 5001<br>TCP window size: 85.3 KByte (default)<br>------------------------------------------------------------</font></font><br></pre>
+<p><font size="2">Здесь же, но в отдельной консоли, запустим утилиту <strong>nload</strong>, которая в реальном времени будет показывать нам статистические значения нагрузки на интерфейсы. В качестве параметров укажем названия интерфейсов, за нагрузкой которых нужно следить:</font></p>
+<pre><font size="2"># <strong><font color="#000000">nload</font></strong> <font color="#400000">enp3s0 enp5s0</font></font></pre>
+<p><font size="2">Затем выполняем отсылку трафика с помощью <strong>iperf</strong> (в режиме клиента) с компьютеров <font color="#800000">KOM-AD01-SRV01</font> и <font color="#800000">KOM-AD01-SRV02</font> (запустим одинаковую команду одновременно на обоих этих компьютерах):</font> </p>
+<pre><font size="2"># <font color="#000000"><strong>iperf</strong> -c <font color="#400000">10.1.0.32</font> -t <font color="#400000">600</font> -i <font color="#400000">2</font> -b </font><font color="#400000">100m</font></font></pre>
+<p><font size="2">В качестве параметров <strong>iperf</strong> укажем следующие значения:</font></p>
+<ul>
+<li><font size="2"><strong>-c</strong> – работа в режиме клиента (отсылка трафика)</font>
+</li><li><font size="2"><font color="#800000">10.1.0.32</font> - IP адрес сервера, на который клиент iperf будет посылать трафик (<font color="#800000">KOM-AD01-VM32</font>)</font>
+</li><li><font size="2"><strong>-t</strong> <font color="#800000">600</font> – время, в течение которого будет выполняться отсылка трафика (600 секунд) </font>
+</li><li><font size="2"><strong>-i</strong> <font color="#800000">2 </font>- интервал в секундах для вывода статистической информации об отсылке трафика на экран (каждые 2 секунды)</font>
+</li><li><font size="2"><strong><font color="#000000">-b</font></strong> <font color="#800000">100m</font> – размер пропускной способности сети, которую будет пытаться задействовать iperf при отсылке трафика (в нашем случае 100 мегабит/с) </font></li>
+</ul>
+<p><font size="2">После того, как iperf в режиме клиента начнёт работу на обоих серверах, переходим на проверяемый сервер <font color="#800000">KOM-AD01-VM32</font> и наблюдаем за статистикой <strong>nload</strong>. На начальном экране увидим статистику по входящему и исходящему трафику по первому интерфейсу (<font color="#800000">enp3s0</font>). Обращаем внимание на значения по входящему трафику:</font></p>
+<pre><font color="#666666" size="2">Device <font color="#c0504d">enp3s0</font> (1/2):
+===========================================================================================
+<font color="#c0504d">Incoming</font>:
+############################################################  Curr: <font color="#c0504d">98.64 MBit/s</font>
+############################################################  Avg: <font color="#c0504d">99.14 MBit/s</font>
+############################################################  Min: 0.00 Bit/s
+############################################################  Max: 197.12 MBit/s
+############################################################  Ttl: 120.64 GByte
+...</font></pre>
+<p><font size="2">Чтобы увидеть статистику по следующему интерфейсу (<font color="#800000">enp5s0</font>) просто нажмём <strong>Enter</strong>:</font></p>
+<pre><font size="2">Device <font color="#c0504d">enp5s0</font> (2/2):
+===========================================================================================
+<font color="#c0504d">Incoming</font>:
+<font color="#666666">############################################################  Curr:</font> <font color="#c0504d">97.93 MBit/s</font>
+<font color="#666666">############################################################  Avg:</font> <font color="#c0504d">97.97 MBit/s</font>
+<font color="#666666">############################################################  Min: 0.00 Bit/s
+############################################################  Max: 196.68 MBit/s
+############################################################  Ttl: 40.56 GByte
+...</font></font></pre>
+<p><font size="2">Как видим, скорость на обоих интерфейсах распределена равномерно и равна примерно 100 мегабит/с, значит балансировка входящего трафика работает успешно.</font></p>
+<p align="center"><font size="3">***</font></p>
+<p><font size="2">Далее, по аналогичной методике, протестируем механизм балансировки нагрузки для <strong>трафика исходящего</strong> с нашего подопытного сервера <font color="#800000">KOM-AD01-VM32</font>. Для этого <strong>iperf</strong> будет запускаться на компьютерах <font color="#800000">KOM-AD01-SRV01</font>/<font color="#800000">KOM-AD01-SRV02</font> в режиме сервера, принимающего трафик. Запустим одинаковую команду на обоих этих компьютерах, не забывая при этом про необходимость открытия порта для сервера <strong>iperf</strong>:</font> </p>
+<pre><font size="2"># <font color="#000000"><strong>iperf -s</strong></font></font></pre>
+<p><font size="2">А на компьютере <font color="#800000">KOM-AD01-VM32</font> утилиту <strong>iperf</strong> запускаем в режиме клиента, отправляющего трафик на компьютеры <font color="#800000">KOM-AD01-SRV01</font>/<font color="#800000">KOM-AD01-SRV02</font>, используя при этом запуск из двух разных консолей:</font> </p>
+<pre><font size="2"># <font color="#000000"><strong>iperf</strong> -c <font color="#400000">10.1.0.11</font> -t <font color="#400000">600</font> -i <font color="#400000">2</font> -b </font><font color="#400000">100m<br><font color="#000000"><font color="#333333">#</font><strong> iperf</strong> -c <font color="#400000">10.1.0.12</font> -t <font color="#400000">600</font> -i <font color="#400000">2</font> -b </font><font color="#400000">100m</font><br></font></font></pre>
+<p><font size="2">Запускаем на компьютере <font color="#800000">KOM-AD01-VM32</font> третью консоль и наблюдаем за ситуацией в <strong>nload</strong></font></p>
+<pre><font size="2"># <strong><font color="#000000">nload</font></strong> <font color="#400000">enp3s0 enp5s0</font></font></pre>
+<p><font size="2">На этот раз обращаем внимание на исходящий трафик на первом интерфейсе…</font></p>
+<pre><font color="#666666" size="2">Device <font color="#c0504d">enp3s0</font> (1/2):
+============================================================================================
+...
+<font color="#c0504d">Outgoing</font>:
+#############################################################  Curr: <font color="#c0504d">102.88 MBit/s</font>
+#############################################################  Avg: <font color="#c0504d">51.36 MBit/s</font>
+#############################################################  Min: 0.00 Bit/s
+#############################################################  Max: 111.24 MBit/s
+#############################################################  Ttl: 1.53 GByte</font></pre>
+<p><font size="2">…и исходящий трафик на втором интерфейсе…</font></p>
+<pre><font color="#666666" size="2">Device <font color="#c0504d">enp5s0</font> (2/2):
+============================================================================================
+...
+<font color="#c0504d">Outgoing</font>:
+#############################################################  Curr: <font color="#c0504d">101.16 MBit/s</font>
+#############################################################  Avg: <font color="#c0504d">59.73 MBit/s</font>
+#############################################################  Min: 5.14 kBit/s
+#############################################################  Max: 110.71 MBit/s
+#############################################################  Ttl: 1.89 GByte</font></pre>
+<p><font size="2">Как видим, трафик распределён по разным интерфейсам нашего bond-a, значит балансировка исходящего трафика работает успешно.</font></p>
+<p><font size="2">Если ранее на время теста отключался брандмауэр, то по окончанию теста не забываем включить его обратно:</font></p>
+<pre><font size="2"># <font color="#000000"><strong>service </strong><font color="#400000">firewalld</font> <strong>start</strong></font></font></pre>
+<p><font size="2">На этом всё.</font></p>
+<p>&nbsp;</p>
+<p><strong>Дополнительные источники информации</strong>:</p>
+<ul>
+<li><a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/ch-Configure_Network_Bonding.html" target="_blank"><font size="2">Red Hat Enterprise Linux 7 Networking Guide - Chapter 4. Configure Network Bonding</font></a>
+</li><li><a href="https://access.redhat.com/node/28421/Configuring_VLAN_devices_over_a_bonded_interface" target="_blank"><font size="2">RedHat Knowledgebase - How to use bonded interfaces in specific applications?&nbsp; [доступ ограничен]</font></a>
+</li><li><a href="http://kb.h1host.ru/article/view?id=111" target="_blank" class="broken_link"><font size="2">kb.h1host.ru - Настройка объединения портов (bonding) Cisco IOS и CentOS LACP</font></a>
+</li><li><a href="http://www.theirek.com/blog/2014/03/22/nastroika-sieti-v-linux-centos-sviazkoi-bond-plus-vlans" target="_blank" class="broken_link"><font size="2">Irek Fasihov - Пример настройки сети в Linux CentOS 6.5 связкой Bond+VLAN's</font></a>
+</li><li><a href="http://www.alsigned.ru/?p=2896" target="_blank"><font size="2">Блог "Админа Маньяка" - Настройка bonding на CentOS 6</font></a>
+</li><li><a href="https://www.youtube.com/watch?v=CbW2Co6WlD4" target="_blank"><font size="2">Venkat Nagappan - CentOS 7: Set up Network Teaming &amp; Bridging [RHCE7]</font></a>
+</li><li><a href="https://www.centos.org/forums/viewtopic.php?f=50&amp;t=47474" target="_blank"><font size="2">CentOS 7 Networking Support Forum - Problem with 2 phys interfaces -&gt; teamed -&gt; vlan –&gt; bridges</font></a>
+</li><li><a href="http://xgu.ru/wiki/%D0%90%D0%B3%D1%80%D0%B5%D0%B3%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2" target="_blank"><font size="2">xgu.ru wiki - Агрегирование каналов</font></a>
+</li><li><a href="http://backdrift.org/lacp-configure-network-bonding-linux" target="_blank"><font size="2">backdrift - LACP – How to Configure Network Bonding in Linux</font></a>
+</li><li><a href="http://www.russika.ru/t.php?t=5227" target="_blank"><font size="2">Сэйги В.Е. - Протокол LACP</font></a></li>
+</ul>
+<div style="display: inline-block;" class="pd-rating" id="pd_rating_holder_7095907_post_14880"><div class="rating-icons" id="pd_rate_7095907_post_14880" style="float:left;"><div class="rating-star-icon" onmouseout="PDRTJS_7095907_post_14880.rebuild();" onclick="PDRTJS_7095907_post_14880.rate(1);" onmouseover="PDRTJS_7095907_post_14880.hover(1);" id="PDRTJS_7095907_post_14880_stars_1" style="background-size: 32px 48px !important; cursor: pointer; width: 16px; height: 16px; line-height: 16px; background: url(https://polldaddy.com/images/ratings/star-yellow-sml.png) top left; float: left; padding: 0px; margin: 0px; margin-right: 1px;">&nbsp;</div><div class="rating-star-icon" onmouseout="PDRTJS_7095907_post_14880.rebuild();" onclick="PDRTJS_7095907_post_14880.rate(2);" onmouseover="PDRTJS_7095907_post_14880.hover(2);" id="PDRTJS_7095907_post_14880_stars_2" style="background-size: 32px 48px !important; cursor: pointer; width: 16px; height: 16px; line-height: 16px; background: url(https://polldaddy.com/images/ratings/star-yellow-sml.png) top left; float: left; padding: 0px; margin: 0px; margin-right: 1px;">&nbsp;</div><div class="rating-star-icon" onmouseout="PDRTJS_7095907_post_14880.rebuild();" onclick="PDRTJS_7095907_post_14880.rate(3);" onmouseover="PDRTJS_7095907_post_14880.hover(3);" id="PDRTJS_7095907_post_14880_stars_3" style="background-size: 32px 48px !important; cursor: pointer; width: 16px; height: 16px; line-height: 16px; background: url(https://polldaddy.com/images/ratings/star-yellow-sml.png) top left; float: left; padding: 0px; margin: 0px; margin-right: 1px;">&nbsp;</div><div class="rating-star-icon" onmouseout="PDRTJS_7095907_post_14880.rebuild();" onclick="PDRTJS_7095907_post_14880.rate(4);" onmouseover="PDRTJS_7095907_post_14880.hover(4);" id="PDRTJS_7095907_post_14880_stars_4" style="background-size: 32px 48px !important; cursor: pointer; width: 16px; height: 16px; line-height: 16px; background: url(https://polldaddy.com/images/ratings/star-yellow-sml.png) top left; float: left; padding: 0px; margin: 0px; margin-right: 1px;">&nbsp;</div><div class="rating-star-icon" onmouseout="PDRTJS_7095907_post_14880.rebuild();" onclick="PDRTJS_7095907_post_14880.rate(5);" onmouseover="PDRTJS_7095907_post_14880.hover(5);" id="PDRTJS_7095907_post_14880_stars_5" style="background-size: 32px 48px !important; cursor: pointer; width: 16px; height: 16px; line-height: 16px; background: url(https://polldaddy.com/images/ratings/star-yellow-sml.png) top left; float: left; padding: 0px; margin: 0px; margin-right: 1px;">&nbsp;</div></div><span style="float:left;">&nbsp;</span><div id="rating_info_7095907_post_14880" style="display:block;float:left;background:url(https://polldaddy.com/images/ratings/info.png) no-repeat 3px 2px;width:16px;height:16px;cursor:pointer; null " onclick="javascript:PDRTJS_7095907_post_14880.togglePopup();return false;"><span style="display:none;">i</span></div><div class="pd_popup_holder" id="pd_popup_holder_7095907_post_14880">&nbsp;</div><div class="rating-msg" id="PDRTJS_7095907_post_14880_msg" style="float:left; padding-left: 5px; text-align: left; font:normal normal /16px ; color: #000000;">3 Оценок</div><p style="padding: 0px; margin: 0px; clear: both;"></p></div>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Поделиться ссылкой на эту запись:</h3><div class="sd-content"><ul><li class="share-print"><a rel="nofollow" data-shared="" class="share-print sd-button share-icon" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/#print" target="_blank" title="Нажмите для печати"><span>Печать</span></a></li><li class="share-email share-service-visible"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?share=email&amp;nb=1" target="_blank" title="Послать это другу"><span>по электронной почте</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-14880" class="share-facebook sd-button share-icon" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?share=facebook&amp;nb=1" target="_blank" title="Нажмите здесь, чтобы поделиться контентом на Facebook."><span>Facebook<span class="share-count">1</span></span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-14880" class="share-twitter sd-button share-icon" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?share=twitter&amp;nb=1" target="_blank" title="Нажмите, чтобы поделиться на Twitter"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-14880" class="share-google-plus-1 sd-button share-icon" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?share=google-plus-1&amp;nb=1" target="_blank" title="Нажмите, чтобы поделиться в Google+"><span>Google</span></a></li><li class="share-skype"><a rel="nofollow" data-shared="sharing-skype-14880" class="share-skype sd-button share-icon" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?share=skype&amp;nb=1" target="_blank" title="Поделиться в Skype"><span>Skype</span></a></li><li class="share-linkedin"><a rel="nofollow" data-shared="sharing-linkedin-14880" class="share-linkedin sd-button share-icon" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?share=linkedin&amp;nb=1" target="_blank" title="Нажмите, чтобы поделиться на LinkedIn"><span>LinkedIn</span></a></li><li class="share-tumblr"><a rel="nofollow" data-shared="" class="share-tumblr sd-button share-icon" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?share=tumblr&amp;nb=1" target="_blank" title="Нажмите, чтобы поделиться записями на Tumblr"><span>Tumblr</span></a></li><li class="share-telegram"><a rel="nofollow" data-shared="" class="share-telegram sd-button share-icon" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?share=telegram&amp;nb=1" target="_blank" title="Нажмите, чтобы поделиться в Telegram"><span>Telegram</span></a></li><li class="share-jetpack-whatsapp"><a rel="nofollow" data-shared="" class="share-jetpack-whatsapp sd-button share-icon" href="whatsapp://send?text=%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20https%3A%2F%2Fblog.it-kb.ru%2F2016%2F06%2F20%2Fnetwork-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability%2F" target="_blank" title="Нажмите, чтобы поделиться в WhatsApp"><span>WhatsApp</span></a></li><li class="share-reddit"><a rel="nofollow" data-shared="" class="share-reddit sd-button share-icon" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?share=reddit&amp;nb=1" target="_blank" title="Нажмите, чтобы поделиться на Reddit"><span>Reddit</span></a></li><li class="share-pocket"><a rel="nofollow" data-shared="" class="share-pocket sd-button share-icon" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?share=pocket&amp;nb=1" target="_blank" title="Нажмите, чтобы поделиться записями на Pocket"><span>Pocket</span></a></li><li class="share-pinterest"><a rel="nofollow" data-shared="sharing-pinterest-14880" class="share-pinterest sd-button share-icon" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?share=pinterest&amp;nb=1" target="_blank" title="Нажмите, чтобы поделиться записями на Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div>
+<div style="display: block;" id="jp-relatedposts" class="jp-relatedposts">
+	
+<div class="jp-relatedposts-items jp-relatedposts-items-minimal jp-relatedposts-grid "><p class="jp-relatedposts-post jp-relatedposts-post0" data-post-id="4551" data-post-format="false"><span class="jp-relatedposts-post-title"><a data-position="0" data-origin="14880" rel="nofollow" title="Отделяем трафик резервного копирования System Center 2012 DPM
+
+В прошлой заметке мы рассмотрели пример создания отдельного сетевого сегмента для отделения трафика миграции Hyper-V Shared Nothing Live Migration. В этой заметке на примере тех же двух серверов виртуализации рассмотрим пример создания отдельного сетевого сегмента для отделения трафика резервного копирования System Center 2012 DPM. Дополнительно в этом примере появляется физический…" href="https://blog.it-kb.ru/2013/05/25/system-center-2012-dpm-network-on-separate-nic/" class="jp-relatedposts-post-a">Отделяем трафик резервного копирования System Center 2012 DPM</a></span><span class="jp-relatedposts-post-date">25.05.2013</span><span class="jp-relatedposts-post-context">В "Microsoft System Center"</span></p><p class="jp-relatedposts-post jp-relatedposts-post1" data-post-id="15423" data-post-format="false"><span class="jp-relatedposts-post-title"><a data-position="1" data-origin="14880" rel="nofollow" title="CentOS Linux 7.2 и HP Array Config Utility (ACU) для управления устаревшими контроллерами HP Smart Array
+
+Ранее я рассматривал пример развёртывания набора утилит HP System Management Tools на сервере HP ProLiant DL360 G5 с CentOS Linux 7.2. В составе этого набора упоминалась и утилита HPE Smart Storage Administrator (SSA), позволяющая управлять контроллерами семейства HP Smart Array. Однако если с помощью SSA мы захотим управлять устаревшими контроллерами…" href="https://blog.it-kb.ru/2016/08/26/install-hp-array-config-utility-acu-on-centos-linux-7-2-for-hp-smart-array-controllers-as-6400-management/" class="jp-relatedposts-post-a">CentOS Linux 7.2 и HP Array Config Utility (ACU) для управления устаревшими контроллерами HP Smart Array</a></span><span class="jp-relatedposts-post-date">26.08.2016</span><span class="jp-relatedposts-post-context">В "CentOS"</span></p><p class="jp-relatedposts-post jp-relatedposts-post2" data-post-id="14693" data-post-format="false"><span class="jp-relatedposts-post-title"><a data-position="2" data-origin="14880" rel="nofollow" title="Настройка CentOS Linux 7.2 на сервере HP ProLiant DL360 G5. Установка HP System Management Tools
+
+В предыдущих заметках мы произвели установку ОС CentOS Linux 7.2 на сервер HP ProLiant DL360 G5 и рассмотрели примеры последующего обновления драйверов и firmware для встроенных сетевых контроллеров HP NC373i, а также оптических контроллеров HP FC2242SR/FC1242SR. На этот раз, в качестве завершающего этапа пост-установочных процедур, мы рассмотрим пример установки на…" href="https://blog.it-kb.ru/2016/06/07/centos-linux-7-2-on-hp-proliant-dl360-g5-install-hp-system-management-tools-add-repo-sh-script-snmp-hp-health-system-management-homepage-smh-hpssa-vca/" class="jp-relatedposts-post-a">Настройка CentOS Linux 7.2 на сервере HP ProLiant DL360 G5. Установка HP System Management Tools</a></span><span class="jp-relatedposts-post-date">07.06.2016</span><span class="jp-relatedposts-post-context">В "CentOS"</span></p></div></div>      </div>
+          
+        <div class="entry-meta entry-meta-secondary clearfix">
+          <div class="container-s container-category clearfix">
+            <span class="info-category info-icon">Опубликовано в&nbsp;:&nbsp;</span>
+            <a href="https://blog.it-kb.ru/category/centos/" rel="category tag">CentOS</a> , <a href="https://blog.it-kb.ru/category/cisco/" rel="category tag">Cisco</a> , <a href="https://blog.it-kb.ru/category/linux/" rel="category tag">Linux</a> , <a href="https://blog.it-kb.ru/category/networking/" rel="category tag">Networking</a> , <a href="https://blog.it-kb.ru/category/red-hat-enterprise-linux-server/" rel="category tag">Red Hat Enterprise Linux Server</a> , <a href="https://blog.it-kb.ru/category/virtualization/" rel="category tag">Virtualization</a>          </div>
+          <div class="container-s container-tag clearfix">
+            <span class="info-tag info-icon">Метки&nbsp;:&nbsp;</span>
+            <a href="https://blog.it-kb.ru/tag/802-1q/" rel="tag">802.1q</a> , <a href="https://blog.it-kb.ru/tag/802-3ad/" rel="tag">802.3ad</a> , <a href="https://blog.it-kb.ru/tag/8021q/" rel="tag">8021q</a> , <a href="https://blog.it-kb.ru/tag/8023ad/" rel="tag">8023ad</a> , <a href="https://blog.it-kb.ru/tag/bcm5708/" rel="tag">BCM5708</a> , <a href="https://blog.it-kb.ru/tag/bond/" rel="tag">Bond</a> , <a href="https://blog.it-kb.ru/tag/bonding/" rel="tag">Bonding</a> , <a href="https://blog.it-kb.ru/tag/broadcom/" rel="tag">Broadcom</a> , <a href="https://blog.it-kb.ru/tag/c3560/" rel="tag">C3560</a> , <a href="https://blog.it-kb.ru/tag/catalyst/" rel="tag">Catalyst</a> , <a href="https://blog.it-kb.ru/tag/centos/" rel="tag">CentOS</a> , <a href="https://blog.it-kb.ru/tag/centos-7/" rel="tag">CentOS 7</a> , <a href="https://blog.it-kb.ru/tag/channel-group/" rel="tag">Channel-Group</a> , <a href="https://blog.it-kb.ru/tag/cisco/" rel="tag">Cisco</a> , <a href="https://blog.it-kb.ru/tag/dl360/" rel="tag">DL360</a> , <a href="https://blog.it-kb.ru/tag/dot1q/" rel="tag">dot1q</a> , <a href="https://blog.it-kb.ru/tag/ethtool/" rel="tag">ethtool</a> , <a href="https://blog.it-kb.ru/tag/g5/" rel="tag">G5</a> , <a href="https://blog.it-kb.ru/tag/high-availability/" rel="tag">High Availability</a> , <a href="https://blog.it-kb.ru/tag/hp/" rel="tag">HP</a> , <a href="https://blog.it-kb.ru/tag/ifcfg/" rel="tag">ifcfg</a> , <a href="https://blog.it-kb.ru/tag/ios/" rel="tag">IOS</a> , <a href="https://blog.it-kb.ru/tag/iperf/" rel="tag">iperf</a> , <a href="https://blog.it-kb.ru/tag/lacp/" rel="tag">LACP</a> , <a href="https://blog.it-kb.ru/tag/lag/" rel="tag">LAG</a> , <a href="https://blog.it-kb.ru/tag/linux/" rel="tag">Linux</a> , <a href="https://blog.it-kb.ru/tag/load-balancing/" rel="tag">Load Balancing</a> , <a href="https://blog.it-kb.ru/tag/mtu/" rel="tag">MTU</a> , <a href="https://blog.it-kb.ru/tag/nc373i/" rel="tag">NC373i</a> , <a href="https://blog.it-kb.ru/tag/networking/" rel="tag">Networking</a> , <a href="https://blog.it-kb.ru/tag/networkmanager/" rel="tag">NetworkManager</a> , <a href="https://blog.it-kb.ru/tag/netxtreme/" rel="tag">NetXtreme</a> , <a href="https://blog.it-kb.ru/tag/nic-bonding/" rel="tag">NIC Bonding</a> , <a href="https://blog.it-kb.ru/tag/nload/" rel="tag">nload</a> , <a href="https://blog.it-kb.ru/tag/nmcli/" rel="tag">nmcli</a> , <a href="https://blog.it-kb.ru/tag/port-channel/" rel="tag">Port-Channel</a> , <a href="https://blog.it-kb.ru/tag/proliant/" rel="tag">ProLiant</a> , <a href="https://blog.it-kb.ru/tag/rhel/" rel="tag">RHEL</a> , <a href="https://blog.it-kb.ru/tag/rhel-7/" rel="tag">RHEL 7</a> , <a href="https://blog.it-kb.ru/tag/trunk/" rel="tag">Trunk</a> , <a href="https://blog.it-kb.ru/tag/virtualization/" rel="tag">Virtualization</a> , <a href="https://blog.it-kb.ru/tag/vlan/" rel="tag">VLAN</a>          </div>
+        </div>        </div>
+            
+<div id="comments" class="clearfix comments-area">
+		<h2 class="comments-title">
+			Всего комментариев: 5            <a class="gotocomment" href="#respond">Комментировать</a>
+      		</h2>
+
+		<ol class="commentlist">
+			    <li class="comment even thread-even depth-1" id="li-comment-26374">
+      <div id="comment-26374" class="comment comment-parent clearfix">
+        <div class="comment-meta comment-avatar pull-left">
+          <img id="grav-255456771843cd9cbaf49937445eb089-0" alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/255456771843cd9cbaf49937445eb089.png" srcset="https://secure.gravatar.com/avatar/255456771843cd9cbaf49937445eb089?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo grav-hashed grav-hijack" height="48" width="48">        </div>
+        <div class="comment-body">
+          <div class="comment-info comment-author vcard">
+            <cite class="fn">Сергей <span>/ </span></cite><time datetime="2016-06-20T16:15:03+00:00">20.06.2016 16:15</time>          </div><!-- .comment-meta -->
+
+          
+          <div class="comment-content comment clearfix">
+            <p>Почему во всех инструкциях по данному вопросу, в настройках  сетевых интерфейсов в CentOS выставляют такой MTU аж 9000 с какой целью ? Объясните пожалуйста. Спасибо</p>
+            
+          </div><!-- .comment-content -->
+
+          <div class="function-bar">
+                        <a rel="nofollow" class="comment-reply-link" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?replytocom=26374#respond" onclick='return addComment.moveForm( "comment-26374", "26374", "respond", "14880" )' aria-label="Комментарий к записи Сергей">Ответить</a>          </div><!-- .reply -->
+        </div>
+      </div><!-- #comment-## -->
+    <ol class="children">
+    <li class="comment byuser comment-author-blogroot bypostauthor odd alt depth-2" id="li-comment-26375">
+      <div id="comment-26375" class="comment comment-parent clearfix">
+        <div class="comment-meta comment-avatar pull-left">
+          <img id="grav-4cb503a6f1d24201c7054238d7dedb05-0" alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/4cb503a6f1d24201c7054238d7dedb05.jpg" srcset="https://secure.gravatar.com/avatar/4cb503a6f1d24201c7054238d7dedb05?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo grav-hashed grav-hijack" height="48" width="48">        </div>
+        <div class="comment-body">
+          <div class="comment-info comment-author vcard">
+            <cite class="fn"><a href="https://blog.it-kb.ru/author/blogroot/" rel="external nofollow" target="_blank">Алексей Максимов</a> <span>/ Автор записи</span></cite><time datetime="2016-06-20T16:27:32+00:00">20.06.2016 16:27</time>          </div><!-- .comment-meta -->
+
+          
+          <div class="comment-content comment clearfix">
+            <p>Потому что bond-интерфейс по сути является корневым для виртуальных интерфейсов, которые будут далее создаваться на его основе. Среди этих интерфейсов более верхнего уровня нередко используются интерфейсы под такие задачи как, например, периодическое полное резервное копирование или, например, миграция виртуальных машин. Так вот для таких интерфейсов принято использовать MTU максимально возможного размера. Поэтому на корневом bond-интерфейсе, ровно как и на его физических slave-интерфейсах, выставляется увеличенный размер MTU, чтобы его можно было потом использовать на виртуальных интерфейсах более высокого уровня. А для интерфейсов верхнего уровня не требующих большого MTU (например интерфейс управления хостом) выставляется более скромное значение MTU, так как там в большинстве случаев поддержка Jumbo Frame не требуется.</p>
+            
+          </div><!-- .comment-content -->
+
+          <div class="function-bar">
+                        <a rel="nofollow" class="comment-reply-link" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?replytocom=26375#respond" onclick='return addComment.moveForm( "comment-26375", "26375", "respond", "14880" )' aria-label="Комментарий к записи Алексей Максимов">Ответить</a>          </div><!-- .reply -->
+        </div>
+      </div><!-- #comment-## -->
+    <ol class="children">
+    <li class="comment even depth-3" id="li-comment-26376">
+      <div id="comment-26376" class="comment comment-parent clearfix">
+        <div class="comment-meta comment-avatar pull-left">
+          <img id="grav-255456771843cd9cbaf49937445eb089-1" alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/255456771843cd9cbaf49937445eb089.png" srcset="https://secure.gravatar.com/avatar/255456771843cd9cbaf49937445eb089?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo grav-hashed grav-hijack" height="48" width="48">        </div>
+        <div class="comment-body">
+          <div class="comment-info comment-author vcard">
+            <cite class="fn">Сергей <span>/ </span></cite><time datetime="2016-06-20T16:28:54+00:00">20.06.2016 16:28</time>          </div><!-- .comment-meta -->
+
+          
+          <div class="comment-content comment clearfix">
+            <p>Спасибо.</p>
+            
+          </div><!-- .comment-content -->
+
+          <div class="function-bar">
+                        <a rel="nofollow" class="comment-reply-link" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?replytocom=26376#respond" onclick='return addComment.moveForm( "comment-26376", "26376", "respond", "14880" )' aria-label="Комментарий к записи Сергей">Ответить</a>          </div><!-- .reply -->
+        </div>
+      </div><!-- #comment-## -->
+    <ol class="children">
+    <li class="comment odd alt depth-4" id="li-comment-26377">
+      <div id="comment-26377" class="comment comment-parent clearfix">
+        <div class="comment-meta comment-avatar pull-left">
+          <img id="grav-1df3e1569c4ff6e2b5b837ed40e17696-0" alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/1df3e1569c4ff6e2b5b837ed40e17696.jpg" srcset="https://secure.gravatar.com/avatar/1df3e1569c4ff6e2b5b837ed40e17696?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo grav-hashed grav-hijack" height="48" width="48">        </div>
+        <div class="comment-body">
+          <div class="comment-info comment-author vcard">
+            <cite class="fn"><a href="http://tplus.net/" rel="external nofollow" target="_blank">Юрий Быков</a> <span>/ </span></cite><time datetime="2016-06-20T17:09:19+00:00">20.06.2016 17:09</time>          </div><!-- .comment-meta -->
+
+          
+          <div class="comment-content comment clearfix">
+            <p>В вики кратко говорится почему обычно именно 9000  - <a href="https://ru.wikipedia.org/wiki/Jumbo-%D0%BA%D0%B0%D0%B4%D1%80" rel="nofollow">https://ru.wikipedia.org/wiki/Jumbo-%D0%BA%D0%B0%D0%B4%D1%80</a></p>
+            
+          </div><!-- .comment-content -->
+
+          <div class="function-bar">
+                        <a rel="nofollow" class="comment-reply-link" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/?replytocom=26377#respond" onclick='return addComment.moveForm( "comment-26377", "26377", "respond", "14880" )' aria-label="Комментарий к записи Юрий Быков">Ответить</a>          </div><!-- .reply -->
+        </div>
+      </div><!-- #comment-## -->
+    </li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="pingback even thread-odd thread-alt depth-1" id="comment-26885">
+      <p>
+        <span class="ping-title">Обратная ссылка:</span>
+        <a class="ping-link" href="https://blog.it-kb.ru/2016/09/16/install-ovirt-4-0-part-4-about-ssh-soft-fencing-and-hard-fencing-over-hp-proliant-ilo2-power-managment-agent-and-test-of-high-availability/">Развёртывание и настройка oVirt 4.0. Часть 4. Fencing как средство повышения доступности хостов и виртуальных машин | Блог IT-KB </a>
+        <span class="delimiter">/</span>
+        <time class="ping-time" datetime="2016-09-16T14:57:17+00:00">16.09.2016 14:57</time>                
+      </p>
+    </li><!-- #comment-## -->
+		</ol><!-- .commentlist -->
+
+		
+		
+</div><!-- #comments .comments-area -->
+
+		<div id="respond" class="comment-respond">
+							<h3 id="reply-title" class="comment-reply-title">Добавить комментарий <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/#respond" style="display:none;">Отменить ответ</a></small></h3>
+						<form id="commentform" class="comment-form">
+				<iframe scrolling="no" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/a.htm" style="width: 100%; height: 55px; border: 0px none;" name="jetpack_remote_comment" class="jetpack_remote_comment" id="jetpack_remote_comment"></iframe>
+				<!--[if !IE]><!-->
+				<script>
+					document.addEventListener( 'DOMContentLoaded', function () {
+						var commentForms = document.getElementsByClassName( 'jetpack_remote_comment' );
+						for ( var i = 0; i < commentForms.length; i++ ) {
+							commentForms[i].allowTransparency = false;
+							commentForms[i].scrolling = 'no';
+						}
+					} );
+				</script>
+				<!--<![endif]-->
+			<input value="1500948581396" name="ak_js" id="ak_js" type="hidden"></form>
+		</div>
+
+		
+		<input name="comment_parent" id="comment_parent" value="" type="hidden">
+
+		    </div>
+    
+  <div id="sidebar" class="visible-desktop">
+  <div id="text-16" class="widget widget_text"><h3 class="widget-title widget_primary_title">VEEAM Software<b class="caret"></b></h3>			<div class="textwidget"><a gjpwjtw="" href="https://ad.doubleclick.net/ddm/jump/N410401.2579010BLOG.IT-KB.RU/B10754509.143828701;sz=338x120;ord=%5Btimestamp%5D?" hidden=""> <img style="display: none ! important;" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/B10754509.png" alt="Advertisement" border="0" height="120" hidden="" width="338"></a></div>
+		</div><div id="zalive_widget_recentcomments-2" class="widget widget_zalive_widget_recentcomments"><h3 class="widget-title widget_primary_title">Последние комментарии<b class="caret"></b></h3><ul><li class="clearfix"><img id="grav-663e6b3a5fb3ec00db3ef668fda24953-0" alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/663e6b3a5fb3ec00db3ef668fda24953.jpg" srcset="https://secure.gravatar.com/avatar/663e6b3a5fb3ec00db3ef668fda24953?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo grav-hashed grav-hijack visible-desktop" height="40" width="40"><div class="comment-data"><a class="title" href="https://blog.it-kb.ru/2016/09/10/install-ovirt-4-0-part-1-create-two-node-hosted-engine-cluster-with-shared-fc-san-storage/#comment-30167" title="on Развёртывание и настройка oVirt 4.0. Часть 1. Создание кластера виртуализации в конфигурации Hosted Engine">По поводу отключения обновлений resolve.conf нашел</a><span class="comment_author detailed visible-desktop">From <span class="author">Евгений</span>&nbsp;&nbsp;<span class="date">2017-07-20 20:09:36</span></span></div></li>
+<li class="clearfix"><img id="grav-4dbb33e3646beadf36e287dc2915501a-0" alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/4dbb33e3646beadf36e287dc2915501a.jpg" srcset="https://secure.gravatar.com/avatar/4dbb33e3646beadf36e287dc2915501a?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo grav-hashed grav-hijack visible-desktop" height="40" width="40"><div class="comment-data"><a class="title" href="https://blog.it-kb.ru/2011/10/15/computer-block-lock-out-via-screen-saver-timeout-and-password-protect-with-gpp-group-policy-preferences/#comment-30165" title="on Настраиваем блокировку компьютера при простое через screen saver с помощью Group Policy Preferences">и тогда можно применить к группе компьютеров или п</a><span class="comment_author detailed visible-desktop">From <span class="author">Алексей</span>&nbsp;&nbsp;<span class="date">2017-07-20 16:42:17</span></span></div></li>
+<li class="clearfix"><img id="grav-4dbb33e3646beadf36e287dc2915501a-1" alt="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/4dbb33e3646beadf36e287dc2915501a.jpg" srcset="https://secure.gravatar.com/avatar/4dbb33e3646beadf36e287dc2915501a?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo grav-hashed grav-hijack visible-desktop" height="40" width="40"><div class="comment-data"><a class="title" href="https://blog.it-kb.ru/2011/10/15/computer-block-lock-out-via-screen-saver-timeout-and-password-protect-with-gpp-group-policy-preferences/#comment-30164" title="on Настраиваем блокировку компьютера при простое через screen saver с помощью Group Policy Preferences">может быть настройки электропитания в GPP? можно л</a><span class="comment_author detailed visible-desktop">From <span class="author">Алексей</span>&nbsp;&nbsp;<span class="date">2017-07-20 16:35:51</span></span></div></li>
+</ul></div><div id="blog_subscription-2" class="widget jetpack_subscription_widget"><h3 class="widget-title widget_primary_title">E-mail подписка на блог<b class="caret"></b></h3>
+			<form action="#" method="post" accept-charset="utf-8" id="subscribe-blog-blog_subscription-2">
+				<div id="subscribe-text"><p>Вы можете подписаться на уведомления по электронной почте о появлении новых записей блога.<br>
+Уже подписалось: 296 </p>
+</div>					<p id="subscribe-email">
+						<label style="clip: rect(1px, 1px, 1px, 1px); position: absolute; height: 1px; width: 1px; overflow: hidden;" id="jetpack-subscribe-label" for="subscribe-field-blog_subscription-2">
+							E-mail адрес						</label>
+						<input name="email" required="required" class="required" id="subscribe-field-blog_subscription-2" placeholder="E-mail адрес" type="email">
+					</p>
+
+					<p id="subscribe-submit">
+						<input name="action" value="subscribe" type="hidden">
+						<input name="source" value="https://blog.it-kb.ru/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/" type="hidden">
+						<input name="sub-type" value="widget" type="hidden">
+						<input name="redirect_fragment" value="blog_subscription-2" type="hidden">
+												<input value="Подписаться" name="jetpack_subscriptions_widget" type="submit">
+					</p>
+							</form>
+
+			<script>
+			/*
+			Custom functionality for safari and IE
+			 */
+			(function( d ) {
+				// In case the placeholder functionality is available we remove labels
+				if ( ( 'placeholder' in d.createElement( 'input' ) ) ) {
+					var label = d.querySelector( 'label[for=subscribe-field-blog_subscription-2]' );
+						label.style.clip 	 = 'rect(1px, 1px, 1px, 1px)';
+						label.style.position = 'absolute';
+						label.style.height   = '1px';
+						label.style.width    = '1px';
+						label.style.overflow = 'hidden';
+				}
+
+				// Make sure the email value is filled in before allowing submit
+				var form = d.getElementById('subscribe-blog-blog_subscription-2'),
+					input = d.getElementById('subscribe-field-blog_subscription-2'),
+					handler = function( event ) {
+						if ( '' === input.value ) {
+							input.focus();
+
+							if ( event.preventDefault ){
+								event.preventDefault();
+							}
+
+							return false;
+						}
+					};
+
+				if ( window.addEventListener ) {
+					form.addEventListener( 'submit', handler, false );
+				} else {
+					form.attachEvent( 'onsubmit', handler );
+				}
+			})( document );
+			</script>
+				
+</div><div id="rss_links-2" class="widget widget_rss_links"><h3 class="widget-title widget_primary_title">RSS подписка<b class="caret"></b></h3><p><a target="_self" href="https://blog.it-kb.ru/feed/" title="Подписаться на Записи"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/orange-small.png" alt="RSS Feed"></a>&nbsp;<a target="_self" href="https://blog.it-kb.ru/feed/" title="Подписаться на Записи">RSS - Записи</a></p><p><a target="_self" href="https://blog.it-kb.ru/comments/feed/" title="Подписаться на Комментарии"><img src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/orange-small.png" alt="RSS Feed"></a>&nbsp;<a target="_self" href="https://blog.it-kb.ru/comments/feed/" title="Подписаться на Комментарии">RSS - Комментарии</a></p>
+</div><div id="text-12" class="widget widget_text">			<div class="textwidget">Подписчиков на записи: 600
+<br>Подписчиков на комментарии: 13</div>
+		</div><div id="tag_cloud-2" class="widget widget_tag_cloud"><h3 class="widget-title widget_primary_title">Облако меток<b class="caret"></b></h3><div class="tagcloud"><a href="https://blog.it-kb.ru/tag/active-directory/" class="tag-cloud-link tag-link-51 tag-link-position-1" style="font-size: 15.098591549296pt;" aria-label="Active Directory (58 элементов)">Active Directory</a>
+<a href="https://blog.it-kb.ru/tag/backup/" class="tag-cloud-link tag-link-68 tag-link-position-2" style="font-size: 10.366197183099pt;" aria-label="Backup (33 элемента)">Backup</a>
+<a href="https://blog.it-kb.ru/tag/centos/" class="tag-cloud-link tag-link-468 tag-link-position-3" style="font-size: 11.352112676056pt;" aria-label="CentOS (37 элементов)">CentOS</a>
+<a href="https://blog.it-kb.ru/tag/centos-7/" class="tag-cloud-link tag-link-989 tag-link-position-4" style="font-size: 10.366197183099pt;" aria-label="CentOS 7 (33 элемента)">CentOS 7</a>
+<a href="https://blog.it-kb.ru/tag/cluster/" class="tag-cloud-link tag-link-58 tag-link-position-5" style="font-size: 9.3802816901408pt;" aria-label="Cluster (29 элементов)">Cluster</a>
+<a href="https://blog.it-kb.ru/tag/configmgr/" class="tag-cloud-link tag-link-36 tag-link-position-6" style="font-size: 15.295774647887pt;" aria-label="ConfigMgr (59 элементов)">ConfigMgr</a>
+<a href="https://blog.it-kb.ru/tag/debian/" class="tag-cloud-link tag-link-440 tag-link-position-7" style="font-size: 8.9859154929577pt;" aria-label="Debian (28 элементов)">Debian</a>
+<a href="https://blog.it-kb.ru/tag/dpm/" class="tag-cloud-link tag-link-21 tag-link-position-8" style="font-size: 14.901408450704pt;" aria-label="DPM (57 элементов)">DPM</a>
+<a href="https://blog.it-kb.ru/tag/exchange/" class="tag-cloud-link tag-link-685 tag-link-position-9" style="font-size: 8.3943661971831pt;" aria-label="Exchange (26 элементов)">Exchange</a>
+<a href="https://blog.it-kb.ru/tag/exchange-server/" class="tag-cloud-link tag-link-52 tag-link-position-10" style="font-size: 13.12676056338pt;" aria-label="Exchange Server (46 элементов)">Exchange Server</a>
+<a href="https://blog.it-kb.ru/tag/forefront/" class="tag-cloud-link tag-link-23 tag-link-position-11" style="font-size: 8.3943661971831pt;" aria-label="Forefront (26 элементов)">Forefront</a>
+<a href="https://blog.it-kb.ru/tag/free-software/" class="tag-cloud-link tag-link-645 tag-link-position-12" style="font-size: 15.492957746479pt;" aria-label="Free software (61 элемент)">Free software</a>
+<a href="https://blog.it-kb.ru/tag/group-policy/" class="tag-cloud-link tag-link-75 tag-link-position-13" style="font-size: 12.929577464789pt;" aria-label="Group Policy (45 элементов)">Group Policy</a>
+<a href="https://blog.it-kb.ru/tag/hardware/" class="tag-cloud-link tag-link-640 tag-link-position-14" style="font-size: 13.718309859155pt;" aria-label="Hardware (49 элементов)">Hardware</a>
+<a href="https://blog.it-kb.ru/tag/hp/" class="tag-cloud-link tag-link-641 tag-link-position-15" style="font-size: 17.267605633803pt;" aria-label="HP (74 элемента)">HP</a>
+<a href="https://blog.it-kb.ru/tag/hyper-v/" class="tag-cloud-link tag-link-66 tag-link-position-16" style="font-size: 14.112676056338pt;" aria-label="Hyper-V (51 элемент)">Hyper-V</a>
+<a href="https://blog.it-kb.ru/tag/linux/" class="tag-cloud-link tag-link-657 tag-link-position-17" style="font-size: 18.845070422535pt;" aria-label="Linux (91 элемент)">Linux</a>
+<a href="https://blog.it-kb.ru/tag/monitoring/" class="tag-cloud-link tag-link-474 tag-link-position-18" style="font-size: 8.7887323943662pt;" aria-label="Monitoring (27 элементов)">Monitoring</a>
+<a href="https://blog.it-kb.ru/tag/open-source/" class="tag-cloud-link tag-link-719 tag-link-position-19" style="font-size: 10.366197183099pt;" aria-label="Open Source (33 элемента)">Open Source</a>
+<a href="https://blog.it-kb.ru/tag/opsmgr/" class="tag-cloud-link tag-link-45 tag-link-position-20" style="font-size: 10.366197183099pt;" aria-label="OpsMgr (33 элемента)">OpsMgr</a>
+<a href="https://blog.it-kb.ru/tag/powershell/" class="tag-cloud-link tag-link-29 tag-link-position-21" style="font-size: 22pt;" aria-label="PowerShell (132 элемента)">PowerShell</a>
+<a href="https://blog.it-kb.ru/tag/rds/" class="tag-cloud-link tag-link-82 tag-link-position-22" style="font-size: 11.154929577465pt;" aria-label="RDS (36 элементов)">RDS</a>
+<a href="https://blog.it-kb.ru/tag/red-hat/" class="tag-cloud-link tag-link-465 tag-link-position-23" style="font-size: 8pt;" aria-label="Red Hat (25 элементов)">Red Hat</a>
+<a href="https://blog.it-kb.ru/tag/sccm/" class="tag-cloud-link tag-link-38 tag-link-position-24" style="font-size: 17.070422535211pt;" aria-label="SCCM (73 элемента)">SCCM</a>
+<a href="https://blog.it-kb.ru/tag/scom/" class="tag-cloud-link tag-link-9 tag-link-position-25" style="font-size: 15.295774647887pt;" aria-label="SCOM (59 элементов)">SCOM</a>
+<a href="https://blog.it-kb.ru/tag/script/" class="tag-cloud-link tag-link-263 tag-link-position-26" style="font-size: 11.154929577465pt;" aria-label="Script (36 элементов)">Script</a>
+<a href="https://blog.it-kb.ru/tag/security/" class="tag-cloud-link tag-link-658 tag-link-position-27" style="font-size: 9.5774647887324pt;" aria-label="Security (30 элементов)">Security</a>
+<a href="https://blog.it-kb.ru/tag/sharepoint/" class="tag-cloud-link tag-link-61 tag-link-position-28" style="font-size: 14.112676056338pt;" aria-label="SharePoint (52 элемента)">SharePoint</a>
+<a href="https://blog.it-kb.ru/tag/sharepoint-2013/" class="tag-cloud-link tag-link-289 tag-link-position-29" style="font-size: 10.366197183099pt;" aria-label="SharePoint 2013 (33 элемента)">SharePoint 2013</a>
+<a href="https://blog.it-kb.ru/tag/sql-server/" class="tag-cloud-link tag-link-10 tag-link-position-30" style="font-size: 14.901408450704pt;" aria-label="SQL Server (57 элементов)">SQL Server</a>
+<a href="https://blog.it-kb.ru/tag/sql-server-2012/" class="tag-cloud-link tag-link-11 tag-link-position-31" style="font-size: 8pt;" aria-label="SQL Server 2012 (25 элементов)">SQL Server 2012</a>
+<a href="https://blog.it-kb.ru/tag/system-center/" class="tag-cloud-link tag-link-183 tag-link-position-32" style="font-size: 15.69014084507pt;" aria-label="System Center (62 элемента)">System Center</a>
+<a href="https://blog.it-kb.ru/tag/system-center-2012/" class="tag-cloud-link tag-link-651 tag-link-position-33" style="font-size: 14.112676056338pt;" aria-label="System Center 2012 (51 элемент)">System Center 2012</a>
+<a href="https://blog.it-kb.ru/tag/system-center-2012-r2/" class="tag-cloud-link tag-link-223 tag-link-position-34" style="font-size: 17.859154929577pt;" aria-label="System Center 2012 R2 (80 элементов)">System Center 2012 R2</a>
+<a href="https://blog.it-kb.ru/tag/troubleshooting/" class="tag-cloud-link tag-link-31 tag-link-position-35" style="font-size: 12.338028169014pt;" aria-label="Troubleshooting (42 элемента)">Troubleshooting</a>
+<a href="https://blog.it-kb.ru/tag/ubuntu/" class="tag-cloud-link tag-link-347 tag-link-position-36" style="font-size: 11.549295774648pt;" aria-label="Ubuntu (38 элементов)">Ubuntu</a>
+<a href="https://blog.it-kb.ru/tag/ubuntu-server-14-04/" class="tag-cloud-link tag-link-348 tag-link-position-37" style="font-size: 8.7887323943662pt;" aria-label="Ubuntu Server 14.04 (27 элементов)">Ubuntu Server 14.04</a>
+<a href="https://blog.it-kb.ru/tag/update/" class="tag-cloud-link tag-link-22 tag-link-position-38" style="font-size: 14.704225352113pt;" aria-label="Update (55 элементов)">Update</a>
+<a href="https://blog.it-kb.ru/tag/upgrade/" class="tag-cloud-link tag-link-41 tag-link-position-39" style="font-size: 11.746478873239pt;" aria-label="Upgrade (39 элементов)">Upgrade</a>
+<a href="https://blog.it-kb.ru/tag/virtualization/" class="tag-cloud-link tag-link-643 tag-link-position-40" style="font-size: 13.521126760563pt;" aria-label="Virtualization (48 элементов)">Virtualization</a>
+<a href="https://blog.it-kb.ru/tag/web-server/" class="tag-cloud-link tag-link-262 tag-link-position-41" style="font-size: 8.3943661971831pt;" aria-label="Web Server (26 элементов)">Web Server</a>
+<a href="https://blog.it-kb.ru/tag/windows-server/" class="tag-cloud-link tag-link-801 tag-link-position-42" style="font-size: 8.3943661971831pt;" aria-label="Windows Server (26 элементов)">Windows Server</a>
+<a href="https://blog.it-kb.ru/tag/windows-server-2012/" class="tag-cloud-link tag-link-20 tag-link-position-43" style="font-size: 12.338028169014pt;" aria-label="Windows Server 2012 (42 элемента)">Windows Server 2012</a>
+<a href="https://blog.it-kb.ru/tag/windows-server-2012-r2/" class="tag-cloud-link tag-link-207 tag-link-position-44" style="font-size: 15.69014084507pt;" aria-label="Windows Server 2012 R2 (62 элемента)">Windows Server 2012 R2</a>
+<a href="https://blog.it-kb.ru/tag/wsus/" class="tag-cloud-link tag-link-43 tag-link-position-45" style="font-size: 8.7887323943662pt;" aria-label="WSUS (27 элементов)">WSUS</a></div>
+</div><div id="text-15" class="widget widget_text"><h3 class="widget-title widget_primary_title">Онлайн-курсы Ильи Рудь {С купоном}<b class="caret"></b></h3>			<div class="textwidget"><p><a href="https://www.udemy.com/virtualization-hyper-v-scvmm/?couponCode=ITKB-HV-39" target="_blank" rel="noopener"><img style="background-image: none; float: left; padding-top: 0px; padding-left: 0px; margin: 3px 15px 0px 0px; display: inline; padding-right: 0px; border-width: 0px;" title="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/System-Center-and-Hyper-V.png" alt="" align="left" border="0" height="48" width="48"></a><a href="https://www.udemy.com/virtualization-hyper-v-scvmm/?couponCode=ITKB-HV-39" target="_blank" rel="noopener"><b>Виртуализация на основе Hyper-V и System Center VMM</b></a><br>Курс в 22 лекции [5.5 часов]&nbsp;</p>
+<hr style="display: block; border: 1px solid #ccc; border-style: solid none none none; margin: 0.5em auto 0.5em auto;">
+<p><a href="https://www.udemy.com/network-services-windows-server-2016/?couponCode=ITKB-SERVER-31" target="_blank" rel="noopener"><img style="background-image: none; float: left; padding-top: 0px; padding-left: 0px; margin: 3px 15px 0px 0px; display: inline; padding-right: 0px; border-width: 0px;" title="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/ws2016.png" alt="" align="left" border="0" height="48" width="48"></a><a href="https://www.udemy.com/network-services-windows-server-2016/?couponCode=ITKB-SERVER-31" target="_blank" rel="noopener"><b>Базовые инфраструктурные сервисы Windows Server 2016</b></a><br>Курс в 23 лекции [6 часов]&nbsp;</p>
+<hr style="display: block; border: 1px solid #ccc; border-style: solid none none none; margin: 0.5em auto 0.5em auto;">
+<p><a href="https://www.udemy.com/migration-exchange-2016/?couponCode=it-kbru-migexch" target="_blank" rel="noopener"><img style="background-image: none; float: left; padding-top: 0px; padding-left: 0px; margin: 3px 15px 0px 0px; display: inline; padding-right: 0px; border-width: 0px;" title="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/IRud-Ex10to16.png" alt="" align="left" border="0" height="48" width="48"></a><a href="https://www.udemy.com/migration-exchange-2016/?couponCode=it-kbru-migexch" target="_blank" rel="noopener"><b>Миграция на Exchange Server 2016 c Exchange Server 2010/2013</b></a><br>Курс в 12 лекций [3 часа]&nbsp;</p>
+<hr style="display: block; border: 1px solid #ccc; border-style: solid none none none; margin: 0.5em auto 0.5em auto;">
+<p><a href="https://www.udemy.com/plan-and-deploy-exchange-2016/?couponCode=it-kbru-exch" target="_blank" rel="noopener"><img style="background-image: none; float: left; padding-top: 0px; padding-left: 0px; margin: 3px 15px 0px 0px; display: inline; padding-right: 0px; border-width: 0px;" title="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/IRud-Ex16Install.png" alt="" align="left" border="0" height="48" width="48"></a><a href="https://www.udemy.com/plan-and-deploy-exchange-2016/?couponCode=it-kbru-exch" target="_blank" rel="noopener"><b>Планирование и установка<br>Microsoft Exchange Server 2016</b></a><br>Курс в 24 лекции [5.5 часов]&nbsp;</p>
+<hr style="display: block; border: 1px solid #ccc; border-style: solid none none none; margin: 0.5em auto 0.5em auto;">
+<p><a href="https://www.udemy.com/admin-exchange-2016/?couponCode=ITKB-EX-ADM" target="_blank" rel="noopener"><img style="background-image: none; float: left; padding-top: 0px; padding-left: 0px; margin: 3px 15px 0px 0px; display: inline; padding-right: 0px; border-width: 0px;" title="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/IRud-Ex16Adm.png" alt="" align="left" border="0" height="48" width="48"></a><a href="https://www.udemy.com/admin-exchange-2016/?couponCode=ITKB-EX-ADM" target="_blank" rel="noopener"><b>Администрирование<br>Microsoft Exchange Server 2016</b></a><br>Курс в 36 лекций [9 часов]&nbsp;</p>
+<hr style="display: block; border: 1px solid #ccc; border-style: solid none none none; margin: 0.5em auto 0.5em auto;">
+<p><a href="https://www.udemy.com/plan-and-deploy-skype-for-business-server-2015/?couponCode=it-kbru-skype" target="_blank" rel="noopener"><img style="background-image: none; float: left; padding-top: 0px; padding-left: 0px; margin: 3px 15px 0px 0px; display: inline; padding-right: 0px; border-width: 0px;" title="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/IRud-SfB15.png" alt="" align="left" border="0" height="48" width="48"></a><a href="https://www.udemy.com/plan-and-deploy-skype-for-business-server-2015/?couponCode=it-kbru-skype" target="_blank" rel="noopener"><b>Планирование и установка Microsoft Skype for Business Server 2015</b></a><br>Курс в 26 лекций [5.5 часов]&nbsp;</p>
+<hr style="display: block; border: 1px solid #ccc; border-style: solid none none none; margin: 0.5em auto 0.5em auto;">
+<p><a href="https://www.udemy.com/enterprise-voice-skype-for-business-server-2015/?couponCode=ITKB-VOICE-35" target="_blank" rel="noopener"><img style="background-image: none; float: left; padding-top: 0px; padding-left: 0px; margin: 3px 15px 0px 0px; display: inline; padding-right: 0px; border-width: 0px;" title="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/sfb2015tel.png" alt="" align="left" border="0" height="48" width="48"></a><a href="https://www.udemy.com/enterprise-voice-skype-for-business-server-2015/?couponCode=ITKB-VOICE-35" target="_blank" rel="noopener"><b>Телефония на базе<br>Skype for Business Server 2015</b></a><br>Курс в 21 лекцию [4.5 часов]</p>
+</div>
+		</div><div id="archives-2" class="widget widget_archive"><h3 class="widget-title widget_primary_title">Архив записей<b class="caret"></b></h3>		<label class="screen-reader-text" for="archives-dropdown-2">Архив записей</label>
+		<select id="archives-dropdown-2" name="archive-dropdown" onchange="document.location.href=this.options[this.selectedIndex].value;">
+			
+			<option selected="selected" value="">Выберите месяц</option>
+				<option value="https://blog.it-kb.ru/2017/07/"> Июль 2017 &nbsp;(1)</option>
+	<option value="https://blog.it-kb.ru/2017/06/"> Июнь 2017 &nbsp;(2)</option>
+	<option value="https://blog.it-kb.ru/2017/05/"> Май 2017 &nbsp;(4)</option>
+	<option value="https://blog.it-kb.ru/2017/04/"> Апрель 2017 &nbsp;(8)</option>
+	<option value="https://blog.it-kb.ru/2017/03/"> Март 2017 &nbsp;(8)</option>
+	<option value="https://blog.it-kb.ru/2017/02/"> Февраль 2017 &nbsp;(8)</option>
+	<option value="https://blog.it-kb.ru/2017/01/"> Январь 2017 &nbsp;(5)</option>
+	<option value="https://blog.it-kb.ru/2016/12/"> Декабрь 2016 &nbsp;(4)</option>
+	<option value="https://blog.it-kb.ru/2016/11/"> Ноябрь 2016 &nbsp;(10)</option>
+	<option value="https://blog.it-kb.ru/2016/10/"> Октябрь 2016 &nbsp;(14)</option>
+	<option value="https://blog.it-kb.ru/2016/09/"> Сентябрь 2016 &nbsp;(13)</option>
+	<option value="https://blog.it-kb.ru/2016/08/"> Август 2016 &nbsp;(8)</option>
+	<option value="https://blog.it-kb.ru/2016/07/"> Июль 2016 &nbsp;(1)</option>
+	<option value="https://blog.it-kb.ru/2016/06/"> Июнь 2016 &nbsp;(9)</option>
+	<option value="https://blog.it-kb.ru/2016/05/"> Май 2016 &nbsp;(7)</option>
+	<option value="https://blog.it-kb.ru/2016/04/"> Апрель 2016 &nbsp;(6)</option>
+	<option value="https://blog.it-kb.ru/2016/03/"> Март 2016 &nbsp;(12)</option>
+	<option value="https://blog.it-kb.ru/2016/02/"> Февраль 2016 &nbsp;(17)</option>
+	<option value="https://blog.it-kb.ru/2016/01/"> Январь 2016 &nbsp;(4)</option>
+	<option value="https://blog.it-kb.ru/2015/12/"> Декабрь 2015 &nbsp;(7)</option>
+	<option value="https://blog.it-kb.ru/2015/11/"> Ноябрь 2015 &nbsp;(9)</option>
+	<option value="https://blog.it-kb.ru/2015/10/"> Октябрь 2015 &nbsp;(12)</option>
+	<option value="https://blog.it-kb.ru/2015/09/"> Сентябрь 2015 &nbsp;(2)</option>
+	<option value="https://blog.it-kb.ru/2015/08/"> Август 2015 &nbsp;(6)</option>
+	<option value="https://blog.it-kb.ru/2015/07/"> Июль 2015 &nbsp;(3)</option>
+	<option value="https://blog.it-kb.ru/2015/05/"> Май 2015 &nbsp;(5)</option>
+	<option value="https://blog.it-kb.ru/2015/04/"> Апрель 2015 &nbsp;(9)</option>
+	<option value="https://blog.it-kb.ru/2015/03/"> Март 2015 &nbsp;(10)</option>
+	<option value="https://blog.it-kb.ru/2015/02/"> Февраль 2015 &nbsp;(3)</option>
+	<option value="https://blog.it-kb.ru/2015/01/"> Январь 2015 &nbsp;(3)</option>
+	<option value="https://blog.it-kb.ru/2014/12/"> Декабрь 2014 &nbsp;(5)</option>
+	<option value="https://blog.it-kb.ru/2014/11/"> Ноябрь 2014 &nbsp;(8)</option>
+	<option value="https://blog.it-kb.ru/2014/10/"> Октябрь 2014 &nbsp;(11)</option>
+	<option value="https://blog.it-kb.ru/2014/09/"> Сентябрь 2014 &nbsp;(6)</option>
+	<option value="https://blog.it-kb.ru/2014/08/"> Август 2014 &nbsp;(8)</option>
+	<option value="https://blog.it-kb.ru/2014/07/"> Июль 2014 &nbsp;(4)</option>
+	<option value="https://blog.it-kb.ru/2014/06/"> Июнь 2014 &nbsp;(12)</option>
+	<option value="https://blog.it-kb.ru/2014/05/"> Май 2014 &nbsp;(4)</option>
+	<option value="https://blog.it-kb.ru/2014/04/"> Апрель 2014 &nbsp;(12)</option>
+	<option value="https://blog.it-kb.ru/2014/03/"> Март 2014 &nbsp;(10)</option>
+	<option value="https://blog.it-kb.ru/2014/02/"> Февраль 2014 &nbsp;(10)</option>
+	<option value="https://blog.it-kb.ru/2014/01/"> Январь 2014 &nbsp;(4)</option>
+	<option value="https://blog.it-kb.ru/2013/12/"> Декабрь 2013 &nbsp;(5)</option>
+	<option value="https://blog.it-kb.ru/2013/11/"> Ноябрь 2013 &nbsp;(8)</option>
+	<option value="https://blog.it-kb.ru/2013/10/"> Октябрь 2013 &nbsp;(10)</option>
+	<option value="https://blog.it-kb.ru/2013/09/"> Сентябрь 2013 &nbsp;(14)</option>
+	<option value="https://blog.it-kb.ru/2013/08/"> Август 2013 &nbsp;(5)</option>
+	<option value="https://blog.it-kb.ru/2013/07/"> Июль 2013 &nbsp;(3)</option>
+	<option value="https://blog.it-kb.ru/2013/05/"> Май 2013 &nbsp;(5)</option>
+	<option value="https://blog.it-kb.ru/2013/04/"> Апрель 2013 &nbsp;(6)</option>
+	<option value="https://blog.it-kb.ru/2013/03/"> Март 2013 &nbsp;(2)</option>
+	<option value="https://blog.it-kb.ru/2013/02/"> Февраль 2013 &nbsp;(4)</option>
+	<option value="https://blog.it-kb.ru/2013/01/"> Январь 2013 &nbsp;(8)</option>
+	<option value="https://blog.it-kb.ru/2012/12/"> Декабрь 2012 &nbsp;(19)</option>
+	<option value="https://blog.it-kb.ru/2012/11/"> Ноябрь 2012 &nbsp;(4)</option>
+	<option value="https://blog.it-kb.ru/2012/10/"> Октябрь 2012 &nbsp;(4)</option>
+	<option value="https://blog.it-kb.ru/2012/09/"> Сентябрь 2012 &nbsp;(3)</option>
+	<option value="https://blog.it-kb.ru/2012/08/"> Август 2012 &nbsp;(8)</option>
+	<option value="https://blog.it-kb.ru/2012/07/"> Июль 2012 &nbsp;(6)</option>
+	<option value="https://blog.it-kb.ru/2012/06/"> Июнь 2012 &nbsp;(10)</option>
+	<option value="https://blog.it-kb.ru/2012/05/"> Май 2012 &nbsp;(18)</option>
+	<option value="https://blog.it-kb.ru/2012/04/"> Апрель 2012 &nbsp;(6)</option>
+	<option value="https://blog.it-kb.ru/2012/03/"> Март 2012 &nbsp;(7)</option>
+	<option value="https://blog.it-kb.ru/2012/02/"> Февраль 2012 &nbsp;(7)</option>
+	<option value="https://blog.it-kb.ru/2012/01/"> Январь 2012 &nbsp;(6)</option>
+	<option value="https://blog.it-kb.ru/2011/12/"> Декабрь 2011 &nbsp;(3)</option>
+	<option value="https://blog.it-kb.ru/2011/11/"> Ноябрь 2011 &nbsp;(4)</option>
+	<option value="https://blog.it-kb.ru/2011/10/"> Октябрь 2011 &nbsp;(12)</option>
+	<option value="https://blog.it-kb.ru/2011/09/"> Сентябрь 2011 &nbsp;(7)</option>
+	<option value="https://blog.it-kb.ru/2011/08/"> Август 2011 &nbsp;(9)</option>
+	<option value="https://blog.it-kb.ru/2011/07/"> Июль 2011 &nbsp;(2)</option>
+	<option value="https://blog.it-kb.ru/2011/06/"> Июнь 2011 &nbsp;(3)</option>
+	<option value="https://blog.it-kb.ru/2011/05/"> Май 2011 &nbsp;(5)</option>
+	<option value="https://blog.it-kb.ru/2011/04/"> Апрель 2011 &nbsp;(8)</option>
+	<option value="https://blog.it-kb.ru/2011/03/"> Март 2011 &nbsp;(9)</option>
+	<option value="https://blog.it-kb.ru/2011/02/"> Февраль 2011 &nbsp;(7)</option>
+	<option value="https://blog.it-kb.ru/2011/01/"> Январь 2011 &nbsp;(9)</option>
+	<option value="https://blog.it-kb.ru/2010/12/"> Декабрь 2010 &nbsp;(8)</option>
+	<option value="https://blog.it-kb.ru/2010/11/"> Ноябрь 2010 &nbsp;(9)</option>
+	<option value="https://blog.it-kb.ru/2010/10/"> Октябрь 2010 &nbsp;(7)</option>
+	<option value="https://blog.it-kb.ru/2010/08/"> Август 2010 &nbsp;(1)</option>
+	<option value="https://blog.it-kb.ru/2010/06/"> Июнь 2010 &nbsp;(2)</option>
+	<option value="https://blog.it-kb.ru/2010/05/"> Май 2010 &nbsp;(2)</option>
+	<option value="https://blog.it-kb.ru/2010/04/"> Апрель 2010 &nbsp;(5)</option>
+	<option value="https://blog.it-kb.ru/2010/03/"> Март 2010 &nbsp;(2)</option>
+	<option value="https://blog.it-kb.ru/2010/02/"> Февраль 2010 &nbsp;(26)</option>
+
+		</select>
+		</div><div id="zalive_widget_mostcommentedandrandomarticles-2" class="widget widget_zalive_widget_mostcommentedandrandomarticles visible-desktop">      <ul class="nav nav-tabs row-fluid">
+        <li class="widget-title span6 active"><a href="#hot-article" data-toggle="tab">Самое обсуждаемое<b class="caret"></b></a></li>
+        <li class="widget-title span6"><a href="#random-article" data-toggle="tab">Случайные записи<b class="caret"></b></a></li>
+      </ul>
+      <div class="tab-content">
+        <ul class="tab-pane active" id="hot-article">
+                    <li><a href="https://blog.it-kb.ru/2013/09/05/remote-desktop-services-rds-rd-session-host-and-web-access-in-farm-high-availability-rd-connection-broker-in-nlb-cluster-on-windows-server-2012/" title="Remote Desktop Services – Строим отказоустойчивую ферму RD Connection Broker на базе Windows Server 2012">Remote Desktop Services – Строим отказоустойчивую ферму RD Connection Broker на базе Windows Server 2012</a><span class="detailed comment-number"> (<a href="https://blog.it-kb.ru/2013/09/05/remote-desktop-services-rds-rd-session-host-and-web-access-in-farm-high-availability-rd-connection-broker-in-nlb-cluster-on-windows-server-2012/#comments">229 Комментариев</a>)</span></li>
+                  <li><a href="https://blog.it-kb.ru/2014/06/26/forward-proxy-squid-3-3-on-ubuntu-server-14-04-lts-part-5-squid-conf-settings-for-kerberos-ntlm-basic-and-access-rules/" title="Настройка прокси сервера Squid 3.3 на Ubuntu Server 14.04 LTS. Часть 5. Конфигурация Squid 3">Настройка прокси сервера Squid 3.3 на Ubuntu Server 14.04 LTS. Часть 5. Конфигурация Squid 3</a><span class="detailed comment-number"> (<a href="https://blog.it-kb.ru/2014/06/26/forward-proxy-squid-3-3-on-ubuntu-server-14-04-lts-part-5-squid-conf-settings-for-kerberos-ntlm-basic-and-access-rules/#comments">124 Комментариев</a>)</span></li>
+                  <li><a href="https://blog.it-kb.ru/2010/11/11/how-to-install-hp-systems-insight-manager-sim/" title="Установка HP Systems Insight Manager (SIM)">Установка HP Systems Insight Manager (SIM)</a><span class="detailed comment-number"> (<a href="https://blog.it-kb.ru/2010/11/11/how-to-install-hp-systems-insight-manager-sim/#comments">89 Комментариев</a>)</span></li>
+                  <li><a href="https://blog.it-kb.ru/2014/06/24/forward-proxy-squid-3-3-on-ubuntu-server-14-04-lts-part-4-configure-kerberos-and-ntlm-on-samba-and-winbind/" title="Настройка прокси сервера Squid 3.3 на Ubuntu Server 14.04 LTS. Часть 4. Конфигурация Kerberos и NTLM">Настройка прокси сервера Squid 3.3 на Ubuntu Server 14.04 LTS. Часть 4. Конфигурация Kerberos и NTLM</a><span class="detailed comment-number"> (<a href="https://blog.it-kb.ru/2014/06/24/forward-proxy-squid-3-3-on-ubuntu-server-14-04-lts-part-4-configure-kerberos-and-ntlm-on-samba-and-winbind/#comments">85 Комментариев</a>)</span></li>
+                  <li><a href="https://blog.it-kb.ru/2011/12/09/remote-desktop-services-rds-rd-session-host-farm-rd-connection-broker-in-failover-cluster/" title="Remote Desktop Services - Строим отказоустойчивую ферму RD Connection Broker">Remote Desktop Services - Строим отказоустойчивую ферму RD Connection Broker</a><span class="detailed comment-number"> (<a href="https://blog.it-kb.ru/2011/12/09/remote-desktop-services-rds-rd-session-host-farm-rd-connection-broker-in-failover-cluster/#comments">79 Комментариев</a>)</span></li>
+                </ul>
+        <ul class="tab-pane" id="random-article">
+                  <li><a href="https://blog.it-kb.ru/2010/08/19/gpp-long-time-applying-group-policy-drive-maps-policy/" title="Долгая обработка GPP на этапе “Applying Group Policy Drive Maps policy” на клиентах RODC Windows Server 2008 R2">Долгая обработка GPP на этапе “Applying Group Policy Drive Maps policy” на клиентах RODC Windows Server 2008 R2</a></li>
+                <li><a href="https://blog.it-kb.ru/2014/10/09/transliteration-and-compile-powershell-script-to-executable-binary-file/" title="Безделушка для транслитерации на PowerShell скомпилированная в исполняемый файл.">Безделушка для транслитерации на PowerShell скомпилированная в исполняемый файл.</a></li>
+                <li><a href="https://blog.it-kb.ru/2010/11/21/scom-2007-r2-enable-agent-proxy/" title="SCOM 2007 R2 – Включение Agent Proxy на группе агентов">SCOM 2007 R2 – Включение Agent Proxy на группе агентов</a></li>
+                <li><a href="https://blog.it-kb.ru/2010/02/16/remove-hide-run-command-from-start-menu-windows-server-via-group-policy-gpo/" title="Интересный параметр GPO: Удалить команду &quot;Выполнить&quot; из меню &quot;Пуск&quot;">Интересный параметр GPO: Удалить команду "Выполнить" из меню "Пуск"</a></li>
+                <li><a href="https://blog.it-kb.ru/2013/05/30/move-database-system-center-2012-orchestrator-scorch-sco-to-another-separate-sql-server/" title="Перенос БД System Center 2012 Orchestrator на другой сервер">Перенос БД System Center 2012 Orchestrator на другой сервер</a></li>
+                </ul>
+      </div>
+      </div><div id="meta-2" class="widget widget_meta"><h3 class="widget-title widget_primary_title">Мета<b class="caret"></b></h3>			<ul>
+						<li><a rel="nofollow" href="https://blog.it-kb.ru/wp-login.php">Войти</a></li>
+			<li><a href="https://blog.it-kb.ru/feed/"><abbr title="Really Simple Syndication">RSS</abbr> записей</a></li>
+			<li><a href="https://blog.it-kb.ru/comments/feed/"><abbr title="Really Simple Syndication">RSS</abbr> комментариев</a></li>
+			<li><a href="https://ru.wordpress.org/" title="Сайт работает на WordPress — современной персональной платформе для публикаций.">WordPress.org</a></li>			</ul>
+			</div><div id="text-8" class="widget widget_text"><h3 class="widget-title widget_primary_title">Реклама от Google<b class="caret"></b></h3>			<div class="textwidget"><div style="text-align: center;"><script async="" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/adsbygoogle.js"></script>
+<!-- GoogleADS1 -->
+<ins gjpwjtw="" class="adsbygoogle" style="display:inline-block;width:240px;height:400px" data-ad-client="ca-pub-4454996047325904" data-ad-slot="3313611477" hidden=""></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div></div>
+		</div>  </div> 
+        </div>
+    </div>
+          <div id="sidebar-secondary" class="container">
+      <div class="row">
+          <div id="zalive_widget_social_links-2" class="widget widget_zalive_widget_social_links widget_secondary span3"><h4 class="widget-title">Социальные ссылки<b class="line"></b></h4><p>Email:&nbsp;<a title="Email" href="mailto:Blog@IT-KB.RU" class="email">Blog@IT-KB.RU</a></p><p><a target="_blank" title="RSS" href="http://blog.it-kb.ru/feed/" class="social-link"><span class="social-icon social-icon-rss"></span></a><a target="_blank" title="Twitter" href="https://twitter.com/Blog_IT_KB" class="social-link"><span class="social-icon social-icon-twitter"></span></a><a target="_blank" title="Facebook" href="https://www.facebook.com/blog.it.kb" class="social-link"><span class="social-icon social-icon-facebook"></span></a><a target="_blank" title="Google Plus" href="https://plus.google.com/115134238896229141625" class="social-link"><span class="social-icon social-icon-google-plus"></span></a><a target="_blank" title="Tumblr" href="http://blog-it-kb.tumblr.com/" class="social-link"><span class="social-icon social-icon-tumblr"></span></a><a target="_blank" title="Вконтакте" href="http://vk.com/blogitkb" class="social-link"><span class="social-icon social-icon-vkontakte"></span></a></p></div><div id="text-4" class="widget widget_text widget_secondary span3"><h4 class="widget-title">Купи свой домен!<b class="line"></b></h4>			<div class="textwidget"><div style="position:relative;width:234px;height:60px;background:url(https://www.webnames.ru/img/branch/bg_4.gif) no-repeat #fd7c04">
+<form action="https://www.webnames.ru/scripts/check.pl" method="post">
+	<input name="ref_id" value="289021" type="hidden">
+
+	<input maxlength="70" name="domname" placeholder="Артур-Пирожков.рф" style="vertical-align:middle;font-size:12px;color:#000000;position:absolute;top:29px;left:2px;width:147px;height:15px;background:url(https://www.webnames.ru/img/branch/input_4.gif) no-repeat #ffffff;border:none;margin:0px;padding:6px;" type="text">
+
+	<input value="Проверить" style="font-size:12px;font-family:tahoma;color:#ffffff;position:absolute;top:27px;left:162px;width:70px;height:31px;background:url(https://www.webnames.ru/img/branch/send_4.gif) no-repeat #dbdbdb;border:none;padding:0px" type="submit">
+</form>
+</div></div>
+		</div><div id="text-13" class="widget widget_text widget_secondary span3">			<div class="textwidget"></div>
+		</div><div id="text-3" class="widget widget_text widget_secondary span3">			<div class="textwidget"><p align="right">
+<!--LiveInternet counter--><script type="text/javascript"><!--
+document.write("<a href='http://www.liveinternet.ru/stat/blog.it-kb.ru' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t29.19;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: показано количество просмотров и"+
+" посетителей' "+
+"border='0' width='88' height='120'><\/a>")
+//--></script><a href="http://www.liveinternet.ru/stat/blog.it-kb.ru" target="_blank"><img style="display: none ! important;" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/hit.gif" alt="" title="LiveInternet: показано количество просмотров и посетителей" border="0" height="120" hidden="" width="88"></a><!--/LiveInternet-->
+</p></div>
+		</div>      </div>
+    </div>
+      
+    
+    
+    
+    
+    
+    
+    
+        <div id="footer">
+      <div class="container">
+        <div class="copyright-text">
+                    © <a href="https://blog.it-kb.ru/">Блог IT-KB</a> All Rights Reserved.
+          Theme zAlive by <a href="http://www.zenoven.com/" title="zenoven">zenoven</a>.
+        </div>
+        
+        <ul class="copyright-links">
+          <li id="menu-item-17428" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17428"><a href="https://blog.it-kb.ru/cform/">Контактная форма</a></li>
+<li id="menu-item-17429" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17429"><a href="https://blog.it-kb.ru/about-this-blog/">Команда авторов</a></li>
+        </ul>
+      </div>
+    </div>
+    	<div style="display:none">
+	<div class="grofile-hash-map-255456771843cd9cbaf49937445eb089">
+	</div>
+	<div class="grofile-hash-map-1c20d19a1848a1eb2ec9b495e7cf691e">
+	</div>
+	<div class="grofile-hash-map-1df3e1569c4ff6e2b5b837ed40e17696">
+	</div>
+	<div class="grofile-hash-map-663e6b3a5fb3ec00db3ef668fda24953">
+	</div>
+	<div class="grofile-hash-map-4dbb33e3646beadf36e287dc2915501a">
+	</div>
+	</div>
+<!-- zAlive Footer Custom Scripts Begin -->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter37925125 = new Ya.Metrika({
+                    id:37925125,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/37925125" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter --><!-- zAlive Footer Custom Scripts End -->
+<script type="text/javascript" charset="UTF-8" id="polldaddyRatings"><!--//--><![CDATA[//><!--
+PDRTJS_settings_7095907_post_14880={"id":7095907,"unique_id":"wp-post-14880","title":"%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB","permalink":"https:\/\/blog.it-kb.ru\/2016\/06\/20\/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability\/","item_id":"_post_14880"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_7095907_post_14880 == 'undefined' ){PDRTJS_7095907_post_14880 = new PDRTJS_RATING( PDRTJS_settings_7095907_post_14880 );}}
+//--><!]]></script><script type="text/javascript" charset="UTF-8" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/rating.js"></script>
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/blog.it-kb.ru\/2016\/06\/20\/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability\/":14880};
+	</script>
+	
+		<script type="text/javascript">
+/* <![CDATA[ */
+var wpcf7 = {"apiSettings":{"root":"https:\/\/blog.it-kb.ru\/wp-json\/","namespace":"contact-form-7\/v1"},"recaptcha":{"messages":{"empty":"\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043f\u043e\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435, \u0447\u0442\u043e \u0432\u044b \u043d\u0435 \u0440\u043e\u0431\u043e\u0442."}}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/scripts.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/devicepx-jetpack.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/gprofiles.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/wpgroho.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/bootstrap.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/jquery.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var zAlive_i18n = {"gotop":"\u041d\u0430\u0432\u0435\u0440\u0445","slider_pause_time":"6000"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/function.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/twitter-bootstrap-hover-dropdown.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/comment-reply.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"ru","ajaxurl":"https:\/\/blog.it-kb.ru\/wp-admin\/admin-ajax.php","nonce":"ebecf5f790","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"\u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439","post_comment":"\u041e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439","write_comment":"\u041e\u043f\u0443\u0431\u043b\u0438\u043a\u043e\u0432\u0430\u0442\u044c \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439...","loading_comments":"\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u044e\u0442\u0441\u044f \u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0438... ","download_original":"\u041f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c \u0432 \u043f\u043e\u043b\u043d\u043e\u043c \u0440\u0430\u0437\u043c\u0435\u0440\u0435 <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043d\u0430\u043f\u0438\u0448\u0438\u0442\u0435 \u0442\u0435\u043a\u0441\u0442 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u044f.","no_comment_email":"\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u0443\u043a\u0430\u0436\u0438\u0442\u0435 \u0430\u0434\u0440\u0435\u0441 \u044d\u043b. \u043f\u043e\u0447\u0442\u044b, \u0447\u0442\u043e\u0431\u044b \u043e\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439.","no_comment_author":"\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u0443\u043a\u0430\u0436\u0438\u0442\u0435 \u0441\u0432\u043e\u0435 \u0438\u043c\u044f, \u0447\u0442\u043e\u0431\u044b \u043e\u0441\u0442\u0430\u0432\u0438\u0442\u044c \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439.","comment_post_error":"\u0421\u043e\u0436\u0430\u043b\u0435\u0435\u043c, \u043d\u043e \u0432\u043e \u0432\u0440\u0435\u043c\u044f \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u0438 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u044f \u0432\u043e\u0437\u043d\u0438\u043a\u043b\u0430 \u043e\u0448\u0438\u0431\u043a\u0430. \u041f\u043e\u043f\u0440\u043e\u0431\u0443\u0439\u0442\u0435 \u0435\u0449\u0435 \u0440\u0430\u0437.","comment_approved":"\u0412\u0430\u0448 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439 \u0431\u044b\u043b \u043e\u0434\u043e\u0431\u0440\u0435\u043d.","comment_unapproved":"\u0412\u0430\u0448 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439 \u043e\u0436\u0438\u0434\u0430\u0435\u0442 \u043f\u0440\u043e\u0432\u0435\u0440\u043a\u0438.","camera":"\u041a\u0430\u043c\u0435\u0440\u0430","aperture":"\u0410\u043f\u0435\u0440\u0442\u0443\u0440\u0430","shutter_speed":"\u0412\u044b\u0434\u0435\u0440\u0436\u043a\u0430","focal_length":"\u0414\u043b\u0438\u043d\u0430 \u0424\u043e\u043a\u0443\u0441\u0430","copyright":"\u0410\u0432\u0442\u043e\u0440\u0441\u043a\u0438\u0435 \u043f\u0440\u0430\u0432\u0430","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/blog.it-kb.ru\/wp-login.php?redirect_to=https%3A%2F%2Fblog.it-kb.ru%2F2016%2F06%2F20%2Fnetwork-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability%2F","blog_id":"1","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">E-mail (\u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u043e)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">\u0418\u043c\u044f (\u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u043e)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">\u0421\u0430\u0439\u0442<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/jetpack-carousel.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/wp-embed.js"></script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/form.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/sharing.js"></script>
+<script type="text/javascript">
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-google-plus-1', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-skype', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomskype', 'menubar=1,resizable=1,width=305,height=665' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-linkedin', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-tumblr', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-telegram', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtelegram', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-pocket', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcompocket', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+</script>
+
+		<!--[if IE]>
+		<script type="text/javascript">
+		if ( 0 === window.location.hash.indexOf( '#comment-' ) ) {
+			// window.location.reload() doesn't respect the Hash in IE
+			window.location.hash = window.location.hash;
+		}
+		</script>
+		<![endif]-->
+		<script type="text/javascript">
+			var comm_par_el = document.getElementById( 'comment_parent' ),
+			    comm_par = (comm_par_el && comm_par_el.value) ? comm_par_el.value : '',
+			    frame = document.getElementById( 'jetpack_remote_comment' ),
+			    tellFrameNewParent;
+
+			tellFrameNewParent = function() {
+				if ( comm_par ) {
+					frame.src = "https://jetpack.wordpress.com/jetpack-comment/?blogid=56866448&postid=14880&comment_registration=0&require_name_email=1&stc_enabled=1&stb_enabled=1&show_avatars=1&avatar_default=mystery&greeting=%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%B8%D1%82%D1%8C+%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B9&greeting_reply=%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%B8%D1%82%D1%8C+%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B9+%D0%B4%D0%BB%D1%8F+%25s&color_scheme=light&lang=ru_RU&jetpack_version=5.1&sig=21964b5ac47ebf9cd2e7f9b0822c043f354f5356#parent=https%3A%2F%2Fblog.it-kb.ru%2F2016%2F06%2F20%2Fnetwork-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability%2F" + '&replytocom=' + parseInt( comm_par, 10 ).toString();
+				} else {
+					frame.src = "https://jetpack.wordpress.com/jetpack-comment/?blogid=56866448&postid=14880&comment_registration=0&require_name_email=1&stc_enabled=1&stb_enabled=1&show_avatars=1&avatar_default=mystery&greeting=%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%B8%D1%82%D1%8C+%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B9&greeting_reply=%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%B8%D1%82%D1%8C+%D0%BA%D0%BE%D0%BC%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B9+%D0%B4%D0%BB%D1%8F+%25s&color_scheme=light&lang=ru_RU&jetpack_version=5.1&sig=21964b5ac47ebf9cd2e7f9b0822c043f354f5356#parent=https%3A%2F%2Fblog.it-kb.ru%2F2016%2F06%2F20%2Fnetwork-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability%2F";
+				}
+			};
+
+	
+			if ( 'undefined' !== typeof addComment ) {
+				addComment._Jetpack_moveForm = addComment.moveForm;
+
+				addComment.moveForm = function( commId, parentId, respondId, postId ) {
+					var returnValue = addComment._Jetpack_moveForm( commId, parentId, respondId, postId ), cancelClick, cancel;
+
+					if ( false === returnValue ) {
+						cancel = document.getElementById( 'cancel-comment-reply-link' );
+						cancelClick = cancel.onclick;
+						cancel.onclick = function() {
+							var cancelReturn = cancelClick.call( this );
+							if ( false !== cancelReturn ) {
+								return cancelReturn;
+							}
+
+							if ( !comm_par ) {
+								return cancelReturn;
+							}
+
+							comm_par = 0;
+
+							tellFrameNewParent();
+
+							return cancelReturn;
+						};
+					}
+
+					if ( comm_par == parentId ) {
+						return returnValue;
+					}
+
+					comm_par = parentId;
+
+					tellFrameNewParent();
+
+					return returnValue;
+				};
+			}
+
+	
+			if ( window.postMessage ) {
+				if ( document.addEventListener ) {
+					window.addEventListener( 'message', function( event ) {
+						if ( "https:\/\/jetpack.wordpress.com" !== event.origin ) {
+							return;
+						}
+
+						jQuery( frame ).height( event.data );
+					} );
+				} else if ( document.attachEvent ) {
+					window.attachEvent( 'message', function( event ) {
+						if ( "https:\/\/jetpack.wordpress.com" !== event.origin ) {
+							return;
+						}
+
+						jQuery( frame ).height( event.data );
+					} );
+				}
+			}
+		</script>
+
+	<script type="text/javascript" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/e-201730.js" async="" defer="defer"></script>
+<script type="text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:5.1',blog:'56866448',post:'14880',tz:'3',srv:'blog.it-kb.ru'} ]);
+	_stq.push([ 'clickTrackerInit', '56866448', '14880' ]);
+</script>
+
+<a style="position: fixed; z-index: 2147483647; display: block;" title="Наверх" href="#top" id="goTop">Наверх</a><div id="sharing_email" style="display: none;">
+		<form action="/2016/06/20/network-bonding-with-vlan-and-802-3ad-lacp-on-centos-linux-7-2-and-lag-channel-group-on-switch-cisco-catalyst-ws-c3560g-with-testing-load-balancing-and-high-availability/" method="post">
+			<label for="target_email">Отправить на электронный адрес</label>
+			<input name="target_email" id="target_email" type="email">
+
+			
+				<label for="source_name">Ваше имя</label>
+				<input name="source_name" id="source_name" type="text">
+
+				<label for="source_email">Ваш адрес электронной почты</label>
+				<input name="source_email" id="source_email" type="email">
+
+						<input id="jetpack-source_f_name" name="source_f_name" class="input" size="25" autocomplete="off" title="Это поле предназначено для проверки и не должно быть изменено" type="text">
+			<script>jQuery( document ).ready( function(){ document.getElementById('jetpack-source_f_name').value = '' });</script>
+			
+			<img style="float: right; display: none" class="loading" src="%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0%20Network%20Bonding%20%D1%81%20LACP%20%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%20CentOS%20Linux%207.2%20%D0%B8%20%D0%BA%D0%BE%D0%BC%D0%BC%D1%83%D1%82%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%BC%20Cisco%203560G%20-%20%D0%91%D0%BB%D0%BE%D0%B3%20IT-KB_files/loading.gif" alt="loading" height="16" width="16">
+			<input value="Отправить сообщение электронной почты" class="sharing_send" type="submit">
+			<a rel="nofollow" href="#cancel" class="sharing_cancel">Отмена</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Сообщение не было отправлено — проверьте адреса электронной почты!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Проверка по электронной почте не удалась, попробуйте еще раз			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				К сожалению, ваш блог не может делиться ссылками на записи по электронной почте.			</div>
+		</form>
+	</div></body><div data="{&quot;a&quot;:&quot;setShowingSafe&quot;,&quot;f&quot;:false}" style="display:none" id="sp_console_event"></div></html>

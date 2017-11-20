@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]> <html class="no-js" lang="en"> 		   <![endif]-->
+<html class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+ 
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>PHReeK.oRG » CentOS 7 LACP Network Bonding | Blog</title>
+<meta name="author" content="Scott Parry - iKreativ">
+<meta name="description" content="">
+<meta name="keywords" content="">
+ 
+<meta name="viewport" content="width=device-width,initial-scale=1">
+ 
+<!-- base href="https://phreek.org/" -->
+ 
+ 
+<link href="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/plugins.css" type="text/css" rel="stylesheet">
+<link href="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/workless.css" type="text/css" rel="stylesheet">
+<link href="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/shadowbox.css" type="text/css" rel="stylesheet">
+<link href="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/custom.css" type="text/css" rel="stylesheet">
+ 
+ 
+<link rel="stylesheet" href="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/css.css" type="text/css">
+<link rel="stylesheet" href="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/css_002.css" type="text/css">
+ 
+<link href="https://phreek.org/addons/shared_addons/themes/base/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link href="https://phreek.org/addons/shared_addons/themes/base/apple-touch-icon.png" rel="apple-touch-icon" type="image/x-icon">
+<link href="https://phreek.org/addons/shared_addons/themes/base/apple-touch-icon-precomposed.png" rel="apple-touch-icon" type="image/x-icon">
+<link href="https://phreek.org/addons/shared_addons/themes/base/apple-touch-icon-57x57-precomposed.png" rel="apple-touch-icon" type="image/x-icon">
+<link href="https://phreek.org/addons/shared_addons/themes/base/apple-touch-icon-72x72-precomposed.png" rel="apple-touch-icon" type="image/x-icon">
+<link href="https://phreek.org/addons/shared_addons/themes/base/apple-touch-icon-114x114-precomposed.png" rel="apple-touch-icon" type="image/x-icon">
+ 
+<script type="text/javascript" src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/modernizr.js"></script>
+ 
+<script src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/jquery.js"></script>
+<script>window.jQuery || document.write('addons/shared_addons/themes/baselibs/jquery.js')</script>
+<script type="text/javascript" src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/shadowbox.js"></script>
+<script>
+		Shadowbox.init();
+	</script>
+<script type="text/javascript">
+					var APPPATH_URI = "/system/cms/";
+					var BASE_URI = "/";
+				</script>
+<link rel="canonical" href="https://phreek.org/blog/2014/11/centos-7-lacp-network-bonding">
+<link rel="alternate" type="application/rss+xml" title="PHReeK.oRG" href="https://phreek.org/blog/rss/all.rss">
+<meta name="description" content="
+	How to bond network interfaces under CentOS 7 with LACP 802.3ad to improve network performance and reliability.">
+<meta name="keywords" content="centos, lacp, network">
+ 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28562582-1']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_trackPageLoadTime']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+  })();
+
+</script><script src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/ga.js" async="" type="text/javascript"></script>
+ 
+<style type="text/css">body{background:url(addons/shared_addons/themes/base/img/bg_black.jpg) fixed repeat;}.pagination ul li a:hover,.pagination ul li.active a,nav#primary ul li.current{background:#bada55;}a:hover,.single_post h5 small a:hover,nav#primary ul li a:hover{color:#bada55;}</style>
+</head>
+<body class="blog" onload="prettyPrint()">
+ 
+<div class="container">
+<header>
+<div id="logo">
+<a href="https://phreek.org/">
+<h1>PHReeK.oRG</h1>
+</a>
+<span class="slogan">
+Blame it on the hax
+</span>
+</div>
+<nav id="primary">
+<ul>
+<li class="first"><a href="http://phreek.org/home">Home</a></li><li><a href="http://phreek.org/blog">Blog</a></li><li><a href="http://phreek.org/projects">Projects</a></li><li><a href="http://phreek.org/guides">Guides</a></li><li class="last"><a href="http://phreek.org/contact">Contact</a></li>
+</ul>
+</nav>
+</header>
+ 
+ 
+ 
+ 
+<section id="content">
+<aside>
+<ul>
+<li class="single"><a href="https://phreek.org/guides/ubuntu-14-samba-ad-member-server">Ubuntu 14.x SAMBA AD Member Server</a></li>
+</ul>
+</aside>
+<article class="single_post">
+<h5><img src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/link.png" alt="link"> CentOS 7 LACP Network Bonding<small><a href="https://phreek.org/blog" title="Back to the blog">← Back</a></small></h5>
+<div class="post_date">
+<span class="date">
+<img src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/date.png" alt="date">
+ 
+29 Nov, 2014 </span>
+</div>
+<hr>
+<div class="post_body">
+<p>I wanted to enable LACP bonding on my HP MicroServer Gen8. This 
+configuration allows load balancing and fault tolerance. When 
+transferring data to the server it will only be received via 1 NIC 
+meaning a 1Gbps limit per connection, but 2 connections can transfer at 
+1Gbps each. When receiving data it will load balance over both NICs 
+meaning you can achieve up to 2Gbps on a single connection. This post 
+will also work on RHEL 7.</p>
+<p><b>NB:</b> While making these changes you will need to be logged into the server from either the console or ILO as the network connection <b>WILL</b> go down.</p>
+<ol>
+<li>Disable NetworkManager
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">systemctl stop </span><span class="typ">NetworkManager</span></li><li class="L1"><span class="pln">systemctl disable </span><span class="typ">NetworkManager</span></li><li class="L2"><span class="pln">yum erase </span><span class="typ">NetworkManager</span><span class="pun">*</span></li></ol></pre></li>
+<li>Take note of the names of your NICs and their MAC addresses
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">ip link</span></li></ol></pre>
+In my case they are called <i>eno1</i> and <i>eno2</i> so you will need to substitute your own values accordingly in the following steps.</li>
+<li>Setup your switch ports as an LACP trunk. You'll need to consult your documentation on how to do that.</li>
+<li>Edit <i>/etc/modprobe.d/bond.conf</i>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="kwd">alias</span><span class="pln"> bond0 bonding</span></li><li class="L1"><span class="pln">options bond0 miimon</span><span class="pun">=</span><span class="lit">100</span><span class="pln"> mode</span><span class="pun">=</span><span class="lit">4</span><span class="pln"> lacp_rate</span><span class="pun">=</span><span class="lit">1</span></li></ol></pre></li>
+<li>Edit <i>/etc/sysconfig/network-scripts/ifcfg-eno1</i>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">DEVICE</span><span class="pun">=</span><span class="pln">eno1</span></li><li class="L1"><span class="pln">NM_CONTROLLED</span><span class="pun">=</span><span class="kwd">no</span></li><li class="L2"><span class="pln">BOOTPROTO</span><span class="pun">=</span><span class="pln">none</span></li><li class="L3"><span class="pln">NAME</span><span class="pun">=</span><span class="pln">eno1</span></li><li class="L4"><span class="pln">ONBOOT</span><span class="pun">=</span><span class="pln">yes</span></li><li class="L5"><span class="pln">SLAVE</span><span class="pun">=</span><span class="pln">yes</span></li><li class="L6"><span class="pln">MASTER</span><span class="pun">=</span><span class="pln">bond0</span></li></ol></pre></li>
+<li>Edit <i>/etc/sysconfig/network-scripts/ifcfg-eno2</i>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">DEVICE</span><span class="pun">=</span><span class="pln">eno2</span></li><li class="L1"><span class="pln">NM_CONTROLLED</span><span class="pun">=</span><span class="kwd">no</span></li><li class="L2"><span class="pln">BOOTPROTO</span><span class="pun">=</span><span class="pln">none</span></li><li class="L3"><span class="pln">NAME</span><span class="pun">=</span><span class="pln">eno2</span></li><li class="L4"><span class="pln">ONBOOT</span><span class="pun">=</span><span class="pln">yes</span></li><li class="L5"><span class="pln">SLAVE</span><span class="pun">=</span><span class="pln">yes</span></li><li class="L6"><span class="pln">MASTER</span><span class="pun">=</span><span class="pln">bond0</span></li></ol></pre></li>
+<li>Edit <i>/etc/sysconfig/network-scripts/ifcfg-bond0</i>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">DEVICE</span><span class="pun">=</span><span class="pln">bond0</span></li><li class="L1"><span class="pln">NAME</span><span class="pun">=</span><span class="pln">bond0</span></li><li class="L2"><span class="pln">IPADDR</span><span class="pun">=</span><span class="lit">10.1</span><span class="pun">.</span><span class="lit">1.5</span></li><li class="L3"><span class="pln">NETMASK</span><span class="pun">=</span><span class="lit">255.255</span><span class="pun">.</span><span class="lit">255.0</span></li><li class="L4"><span class="pln">GATEWAY</span><span class="pun">=</span><span class="lit">10.1</span><span class="pun">.</span><span class="lit">1.1</span></li><li class="L5"><span class="pln">DNS1</span><span class="pun">=</span><span class="lit">10.1</span><span class="pun">.</span><span class="lit">1.1</span></li><li class="L6"><span class="pln">DNS2</span><span class="pun">=</span><span class="lit">10.1</span><span class="pun">.</span><span class="lit">1.2</span></li><li class="L7"><span class="com">#IPV6INIT=yes</span></li><li class="L8"><span class="pln">ONBOOT</span><span class="pun">=</span><span class="pln">yes</span></li><li class="L9"><span class="pln">USERCTL</span><span class="pun">=</span><span class="kwd">no</span></li></ol></pre></li>
+<li>Restart your server so that the bonding module is loaded with the correct options during boot.</li>
+<li>Check that the bond0 interface is up
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">ip addr</span></li></ol></pre>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="lit">1</span><span class="pun">:</span><span class="pln"> lo</span><span class="pun">:</span><span class="pln"> </span><loopback,up,lower_up><span class="pln"> mtu </span><span class="lit">65536</span><span class="pln"> qdisc noqueue state UNKNOWN</span></loopback,up,lower_up></li><li class="L1"><loopback,up,lower_up><span class="pln">    link</span><span class="pun">/</span><span class="pln">loopback </span><span class="lit">00</span><span class="pun">:</span><span class="lit">00</span><span class="pun">:</span><span class="lit">00</span><span class="pun">:</span><span class="lit">00</span><span class="pun">:</span><span class="lit">00</span><span class="pun">:</span><span class="lit">00</span><span class="pln"> brd </span><span class="lit">00</span><span class="pun">:</span><span class="lit">00</span><span class="pun">:</span><span class="lit">00</span><span class="pun">:</span><span class="lit">00</span><span class="pun">:</span><span class="lit">00</span><span class="pun">:</span><span class="lit">00</span></loopback,up,lower_up></li><li class="L2"><loopback,up,lower_up><span class="pln">    inet </span><span class="lit">127.0</span><span class="pun">.</span><span class="lit">0.1</span><span class="pun">/</span><span class="lit">8</span><span class="pln"> scope host lo</span></loopback,up,lower_up></li><li class="L3"><loopback,up,lower_up><span class="pln">       valid_lft forever preferred_lft forever</span></loopback,up,lower_up></li><li class="L4"><loopback,up,lower_up><span class="pln">    inet6 </span><span class="pun">::</span><span class="lit">1</span><span class="pun">/</span><span class="lit">128</span><span class="pln"> scope host</span></loopback,up,lower_up></li><li class="L5"><loopback,up,lower_up><span class="pln">       valid_lft forever preferred_lft forever</span></loopback,up,lower_up></li><li class="L6"><loopback,up,lower_up><span class="lit">2</span><span class="pun">:</span><span class="pln"> eno1</span><span class="pun">:</span><span class="pln"> </span><broadcast,multicast,slave,up,lower_up><span class="pln"> mtu </span><span class="lit">1500</span><span class="pln"> qdisc mq master bond0 state UP qlen </span><span class="lit">1000</span></broadcast,multicast,slave,up,lower_up></loopback,up,lower_up></li><li class="L7"><loopback,up,lower_up><broadcast,multicast,slave,up,lower_up><span class="pln">    link</span><span class="pun">/</span><span class="pln">ether a0</span><span class="pun">:</span><span class="lit">1d</span><span class="pun">:</span><span class="lit">48</span><span class="pun">:</span><span class="pln">c7</span><span class="pun">:</span><span class="lit">12</span><span class="pun">:</span><span class="lit">64</span><span class="pln"> brd ff</span><span class="pun">:</span><span class="pln">ff</span><span class="pun">:</span><span class="pln">ff</span><span class="pun">:</span><span class="pln">ff</span><span class="pun">:</span><span class="pln">ff</span><span class="pun">:</span><span class="pln">ff</span></broadcast,multicast,slave,up,lower_up></loopback,up,lower_up></li><li class="L8"><loopback,up,lower_up><broadcast,multicast,slave,up,lower_up><span class="lit">3</span><span class="pun">:</span><span class="pln"> eno2</span><span class="pun">:</span><span class="pln"> </span><broadcast,multicast,slave,up,lower_up><span class="pln"> mtu </span><span class="lit">1500</span><span class="pln"> qdisc mq master bond0 state UP qlen </span><span class="lit">1000</span></broadcast,multicast,slave,up,lower_up></broadcast,multicast,slave,up,lower_up></loopback,up,lower_up></li><li class="L9"><loopback,up,lower_up><broadcast,multicast,slave,up,lower_up><broadcast,multicast,slave,up,lower_up><span class="pln">    link</span><span class="pun">/</span><span class="pln">ether a0</span><span class="pun">:</span><span class="lit">1d</span><span class="pun">:</span><span class="lit">48</span><span class="pun">:</span><span class="pln">c7</span><span class="pun">:</span><span class="lit">12</span><span class="pun">:</span><span class="lit">64</span><span class="pln"> brd ff</span><span class="pun">:</span><span class="pln">ff</span><span class="pun">:</span><span class="pln">ff</span><span class="pun">:</span><span class="pln">ff</span><span class="pun">:</span><span class="pln">ff</span><span class="pun">:</span><span class="pln">ff</span></broadcast,multicast,slave,up,lower_up></broadcast,multicast,slave,up,lower_up></loopback,up,lower_up></li><li class="L0"><loopback,up,lower_up><broadcast,multicast,slave,up,lower_up><broadcast,multicast,slave,up,lower_up><span class="lit">4</span><span class="pun">:</span><span class="pln"> bond0</span><span class="pun">:</span><span class="pln"> </span><broadcast,multicast,master,up,lower_up><span class="pln"> mtu </span><span class="lit">1500</span><span class="pln"> qdisc noqueue state UP</span></broadcast,multicast,master,up,lower_up></broadcast,multicast,slave,up,lower_up></broadcast,multicast,slave,up,lower_up></loopback,up,lower_up></li><li class="L1"><loopback,up,lower_up><broadcast,multicast,slave,up,lower_up><broadcast,multicast,slave,up,lower_up><broadcast,multicast,master,up,lower_up><span class="pln">    link</span><span class="pun">/</span><span class="pln">ether a0</span><span class="pun">:</span><span class="lit">1d</span><span class="pun">:</span><span class="lit">48</span><span class="pun">:</span><span class="pln">c7</span><span class="pun">:</span><span class="lit">12</span><span class="pun">:</span><span class="lit">64</span><span class="pln"> brd ff</span><span class="pun">:</span><span class="pln">ff</span><span class="pun">:</span><span class="pln">ff</span><span class="pun">:</span><span class="pln">ff</span><span class="pun">:</span><span class="pln">ff</span><span class="pun">:</span><span class="pln">ff</span></broadcast,multicast,master,up,lower_up></broadcast,multicast,slave,up,lower_up></broadcast,multicast,slave,up,lower_up></loopback,up,lower_up></li><li class="L2"><loopback,up,lower_up><broadcast,multicast,slave,up,lower_up><broadcast,multicast,slave,up,lower_up><broadcast,multicast,master,up,lower_up><span class="pln">    inet </span><span class="lit">10.1</span><span class="pun">.</span><span class="lit">1.5</span><span class="pun">/</span><span class="lit">24</span><span class="pln"> brd </span><span class="lit">10.1</span><span class="pun">.</span><span class="lit">1.255</span><span class="pln"> scope </span><span class="kwd">global</span><span class="pln"> bond0</span></broadcast,multicast,master,up,lower_up></broadcast,multicast,slave,up,lower_up></broadcast,multicast,slave,up,lower_up></loopback,up,lower_up></li><li class="L3"><loopback,up,lower_up><broadcast,multicast,slave,up,lower_up><broadcast,multicast,slave,up,lower_up><broadcast,multicast,master,up,lower_up><span class="pln">       valid_lft forever preferred_lft forever</span></broadcast,multicast,master,up,lower_up></broadcast,multicast,slave,up,lower_up></broadcast,multicast,slave,up,lower_up></loopback,up,lower_up></li><li class="L4"><loopback,up,lower_up><broadcast,multicast,slave,up,lower_up><broadcast,multicast,slave,up,lower_up><broadcast,multicast,master,up,lower_up><span class="pln">    inet6 fe80</span><span class="pun">::</span><span class="pln">a21d</span><span class="pun">:</span><span class="lit">48ff</span><span class="pun">:</span><span class="pln">fec7</span><span class="pun">:</span><span class="lit">1264</span><span class="pun">/</span><span class="lit">64</span><span class="pln"> scope link</span></broadcast,multicast,master,up,lower_up></broadcast,multicast,slave,up,lower_up></broadcast,multicast,slave,up,lower_up></loopback,up,lower_up></li><li class="L5"><loopback,up,lower_up><broadcast,multicast,slave,up,lower_up><broadcast,multicast,slave,up,lower_up><broadcast,multicast,master,up,lower_up><span class="pln">       valid_lft forever preferred_lft forever</span></broadcast,multicast,master,up,lower_up></broadcast,multicast,slave,up,lower_up></broadcast,multicast,slave,up,lower_up></loopback,up,lower_up></li></ol></pre></li>
+
+<li>View the status of your bonded interfaces
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="pln">cat </span><span class="pun">/</span><span class="pln">proc</span><span class="pun">/</span><span class="pln">net</span><span class="pun">/</span><span class="pln">bonding</span><span class="pun">/</span><span class="pln">bond0</span></li></ol></pre>
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="typ">Ethernet</span><span class="pln"> </span><span class="typ">Channel</span><span class="pln"> </span><span class="typ">Bonding</span><span class="pln"> </span><span class="typ">Driver</span><span class="pun">:</span><span class="pln"> v3</span><span class="pun">.</span><span class="lit">7.1</span><span class="pln"> </span><span class="pun">(</span><span class="typ">April</span><span class="pln"> </span><span class="lit">27</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2011</span><span class="pun">)</span></li><li class="L1"><span class="pln">&nbsp;</span></li><li class="L2"><span class="typ">Bonding</span><span class="pln"> </span><span class="typ">Mode</span><span class="pun">:</span><span class="pln"> IEEE </span><span class="lit">802.3ad</span><span class="pln"> </span><span class="typ">Dynamic</span><span class="pln"> link aggregation</span></li><li class="L3"><span class="typ">Transmit</span><span class="pln"> </span><span class="typ">Hash</span><span class="pln"> </span><span class="typ">Policy</span><span class="pun">:</span><span class="pln"> layer2 </span><span class="pun">(</span><span class="lit">0</span><span class="pun">)</span></li><li class="L4"><span class="pln">MII </span><span class="typ">Status</span><span class="pun">:</span><span class="pln"> up</span></li><li class="L5"><span class="pln">MII </span><span class="typ">Polling</span><span class="pln"> </span><span class="typ">Interval</span><span class="pln"> </span><span class="pun">(</span><span class="pln">ms</span><span class="pun">):</span><span class="pln"> </span><span class="lit">100</span></li><li class="L6"><span class="typ">Up</span><span class="pln"> </span><span class="typ">Delay</span><span class="pln"> </span><span class="pun">(</span><span class="pln">ms</span><span class="pun">):</span><span class="pln"> </span><span class="lit">0</span></li><li class="L7"><span class="typ">Down</span><span class="pln"> </span><span class="typ">Delay</span><span class="pln"> </span><span class="pun">(</span><span class="pln">ms</span><span class="pun">):</span><span class="pln"> </span><span class="lit">0</span></li><li class="L8"><span class="pln">&nbsp;</span></li><li class="L9"><span class="lit">802.3ad</span><span class="pln"> info</span></li><li class="L0"><span class="pln">LACP rate</span><span class="pun">:</span><span class="pln"> fast</span></li><li class="L1"><span class="typ">Min</span><span class="pln"> links</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span></li><li class="L2"><span class="typ">Aggregator</span><span class="pln"> selection policy </span><span class="pun">(</span><span class="pln">ad_select</span><span class="pun">):</span><span class="pln"> stable</span></li><li class="L3"><span class="typ">Active</span><span class="pln"> </span><span class="typ">Aggregator</span><span class="pln"> </span><span class="typ">Info</span><span class="pun">:</span></li><li class="L4"><span class="pln">        </span><span class="typ">Aggregator</span><span class="pln"> ID</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span></li><li class="L5"><span class="pln">        </span><span class="typ">Number</span><span class="pln"> of ports</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2</span></li><li class="L6"><span class="pln">        </span><span class="typ">Actor</span><span class="pln"> </span><span class="typ">Key</span><span class="pun">:</span><span class="pln"> </span><span class="lit">17</span></li><li class="L7"><span class="pln">        </span><span class="typ">Partner</span><span class="pln"> </span><span class="typ">Key</span><span class="pun">:</span><span class="pln"> </span><span class="lit">10</span></li><li class="L8"><span class="pln">        </span><span class="typ">Partner</span><span class="pln"> </span><span class="typ">Mac</span><span class="pln"> </span><span class="typ">Address</span><span class="pun">:</span><span class="pln"> </span><span class="lit">88</span><span class="pun">:</span><span class="lit">51</span><span class="pun">:</span><span class="pln">fb</span><span class="pun">:</span><span class="lit">8d</span><span class="pun">:</span><span class="lit">3b</span><span class="pun">:</span><span class="lit">30</span></li><li class="L9"><span class="pln">&nbsp;</span></li><li class="L0"><span class="typ">Slave</span><span class="pln"> </span><span class="typ">Interface</span><span class="pun">:</span><span class="pln"> eno1</span></li><li class="L1"><span class="pln">MII </span><span class="typ">Status</span><span class="pun">:</span><span class="pln"> up</span></li><li class="L2"><span class="typ">Speed</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1000</span><span class="pln"> </span><span class="typ">Mbps</span></li><li class="L3"><span class="typ">Duplex</span><span class="pun">:</span><span class="pln"> full</span></li><li class="L4"><span class="typ">Link</span><span class="pln"> </span><span class="typ">Failure</span><span class="pln"> </span><span class="typ">Count</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span></li><li class="L5"><span class="typ">Permanent</span><span class="pln"> HW addr</span><span class="pun">:</span><span class="pln"> a0</span><span class="pun">:</span><span class="lit">1d</span><span class="pun">:</span><span class="lit">48</span><span class="pun">:</span><span class="pln">c7</span><span class="pun">:</span><span class="lit">12</span><span class="pun">:</span><span class="lit">64</span></li><li class="L6"><span class="typ">Aggregator</span><span class="pln"> ID</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span></li><li class="L7"><span class="typ">Slave</span><span class="pln"> queue ID</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span></li><li class="L8"><span class="pln">&nbsp;</span></li><li class="L9"><span class="typ">Slave</span><span class="pln"> </span><span class="typ">Interface</span><span class="pun">:</span><span class="pln"> eno2</span></li><li class="L0"><span class="pln">MII </span><span class="typ">Status</span><span class="pun">:</span><span class="pln"> up</span></li><li class="L1"><span class="typ">Speed</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1000</span><span class="pln"> </span><span class="typ">Mbps</span></li><li class="L2"><span class="typ">Duplex</span><span class="pun">:</span><span class="pln"> full</span></li><li class="L3"><span class="typ">Link</span><span class="pln"> </span><span class="typ">Failure</span><span class="pln"> </span><span class="typ">Count</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span></li><li class="L4"><span class="typ">Permanent</span><span class="pln"> HW addr</span><span class="pun">:</span><span class="pln"> a0</span><span class="pun">:</span><span class="lit">1d</span><span class="pun">:</span><span class="lit">48</span><span class="pun">:</span><span class="pln">c7</span><span class="pun">:</span><span class="lit">12</span><span class="pun">:</span><span class="lit">65</span></li><li class="L5"><span class="typ">Aggregator</span><span class="pln"> ID</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span></li><li class="L6"><span class="typ">Slave</span><span class="pln"> queue ID</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span></li></ol></pre></li>
+
+</ol>	</div>
+			
+	<div class="post_meta">
+					<img src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/tags.png" alt="tags">
+			<span class="tags">
+				<a href="https://phreek.org/blog/tagged/centos">centos</a>, <a href="https://phreek.org/blog/tagged/lacp">lacp</a>, <a href="https://phreek.org/blog/tagged/network">network</a>			</span>
+			</div>			
+
+			<hr>
+
+<div id="comments">		
+	<h6>Comments</h6>
+	
+	<hr>
+
+		
+					<div class="comment">
+				<div class="avatar">
+					<img src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/fe795b6c41aa6f2b7b10f2a31e65ad59.jpg" alt="Gravatar" class="gravatar">				</div>
+			
+				<div class="details">
+					<div class="name">
+						<p>
+															<a href="http://www.dublu.click/">Alex</a>													</p>
+					</div>
+				
+					<div class="date">
+						<p>2016-07-28</p>
+					</div>
+				
+					<div class="content">
+													<p>Worked just fine on CentOS 7 x64.<br>
+<br>
+Thanks for the tutorial.</p>
+											</div>
+				</div>
+			</div>
+					<div class="comment">
+				<div class="avatar">
+					<img src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/40361e2669c92cb339fe015a928e327a.jpg" alt="Gravatar" class="gravatar">				</div>
+			
+				<div class="details">
+					<div class="name">
+						<p>
+															Martin													</p>
+					</div>
+				
+					<div class="date">
+						<p>2016-03-22</p>
+					</div>
+				
+					<div class="content">
+													<p>@Mzcktyler<br>
+You have to add LAG on sg200, assign ports to the LAG (ie. LAG 2  KVM-01-VIRT  Enabled  Link Up  GE1, GE2, GE3 ) </p>
+											</div>
+				</div>
+			</div>
+					<div class="comment">
+				<div class="avatar">
+					<img src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/fadae25ead17a4eab4b22b2e0fdd22f5.jpg" alt="Gravatar" class="gravatar">				</div>
+			
+				<div class="details">
+					<div class="name">
+						<p>
+															<a href="http://www.tekops.com/">Tekops</a>													</p>
+					</div>
+				
+					<div class="date">
+						<p>2015-08-01</p>
+					</div>
+				
+					<div class="content">
+													<p>If you are using OEL 7/7.1 it is much easier and faster 
+to use nmtui.  Make sure your interfaces are all configured, then your 
+switch has all the ports in the same etherchannel group, then in nmtui 
+create a new "bond0" interface and add the ethernet ports, set the 
+static IP, gateway, DNS, search, etc.  Once you save it; it activates 
+and immediately begins working.  I recommend doing this from the console
+ or a port that is not in the "bond".<br>
+<br>
+-David</p>
+											</div>
+				</div>
+			</div>
+					<div class="comment">
+				<div class="avatar">
+					<img src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/98c9230c61b2138e2851f689bb807d1e.jpg" alt="Gravatar" class="gravatar">				</div>
+			
+				<div class="details">
+					<div class="name">
+						<p>
+															<a href="http://www.shibashish.com/">Shib</a>													</p>
+					</div>
+				
+					<div class="date">
+						<p>2015-03-27</p>
+					</div>
+				
+					<div class="content">
+													<p>I'm getting a different "Aggregator ID" for the 2nd interface. What could be the reason? And how to fix that?</p>
+											</div>
+				</div>
+			</div>
+					<div class="comment">
+				<div class="avatar">
+					<img src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/1d4477981d88d2012aaacb8f0ae795f2.jpg" alt="Gravatar" class="gravatar">				</div>
+			
+				<div class="details">
+					<div class="name">
+						<p>
+															<a href="http://./">Mzcktyler</a>													</p>
+					</div>
+				
+					<div class="date">
+						<p>2015-01-29</p>
+					</div>
+				
+					<div class="content">
+													<p>Hi, it doesn't work on my centos 7, my cisco sg200 shows link down and I can't ping address on my network..<br>
+<br>
+I also tried with team0 config type, same issue<br>
+<br>
+Any idear ?<br>
+<br>
+Thanks</p>
+											</div>
+				</div>
+			</div>
+				
+				
+		<form action="https://phreek.org/comments/create/blog/74" id="create-comment" method="post" accept-charset="utf-8">			<h6>Post a comment</h6>
+
+			
+<input name="redirect_to" value="blog/2014/11/centos-7-lacp-network-bonding" type="hidden">
+				<noscript><input type="text" name="d0ntf1llth1s1n" value="" style="display:none" /></noscript>
+
+									<div class="form_name">
+						<input name="name" id="name" maxlength="40" placeholder="Your name..." type="text">
+					</div>
+
+					<div class="form_email">
+						<input name="email" maxlength="40" placeholder="Email address..." type="text">
+					</div>
+
+					<div class="form_url">
+						<input name="website" maxlength="40" placeholder="Website..." type="text">
+					</div>
+				
+				<div class="form_textarea">
+					<textarea name="comment" id="message" rows="5" cols="30" class="width-full"></textarea>
+				</div>
+
+				<div class="form_submit">
+					<input name="submit" value="Comment" type="submit">				</div>
+		</form></div>	</article>
+	</section>
+	<!-- /content -->
+
+	<footer>
+		
+		
+		<ul>
+			
+		</ul>
+		
+		<!--
+		- You can modify these social links to suit. 
+		- Add your username and links, add or remove items.
+		-->
+		<div class="widget social">
+			<h3>Socialise</h3>
+			<ul>
+				<li><a original-title="Follow on Twitter" class="tooltip-s" href="https://twitter.com/geoffhodder" target="_blank"><img src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/twitter.png" alt="twitter"></a></li>
+				<li><a original-title="Follow on Facebook" class="tooltip-s" href="https://facebook.com/ghodder" target="_blank"><img src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/facebook.png" alt="facebook"></a></li>
+			</ul>
+		</div>	
+	</footer>
+	
+	</div>
+	<!-- /container -->
+
+  	<!-- JavaScript at the bottom for fast page loading -->
+
+  	<!-- Scripts -->
+  	<script type="text/javascript" src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/plugins.js"></script>
+  	<script type="text/javascript" src="PHReeK.oRG%20%C2%BB%20CentOS%207%20LACP%20Network%20Bonding%20_%20Blog_files/script.js"></script>
+  	<!-- End Scripts -->
+
+  	<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6. chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  	<!--[if lt IE 7 ]>
+    	<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    	<script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+  	<![endif]-->
+  
+
+<div id="sb-container"><div id="sb-overlay"></div><div id="sb-wrapper"><div id="sb-title"><div id="sb-title-inner"></div></div><div id="sb-wrapper-inner"><div id="sb-body"><div id="sb-body-inner"></div><div id="sb-loading"><div id="sb-loading-inner"><span>loading</span></div></div></div></div><div id="sb-info"><div id="sb-info-inner"><div id="sb-counter"></div><div id="sb-nav"><a id="sb-nav-close" title="Close" onclick="Shadowbox.close()"></a><a id="sb-nav-next" title="Next" onclick="Shadowbox.next()"></a><a id="sb-nav-play" title="Play" onclick="Shadowbox.play()"></a><a id="sb-nav-pause" title="Pause" onclick="Shadowbox.pause()"></a><a id="sb-nav-previous" title="Previous" onclick="Shadowbox.previous()"></a></div></div></div></div></div></body><div data="{&quot;a&quot;:&quot;setShowingSafe&quot;,&quot;f&quot;:false}" style="display:none" id="sp_console_event"></div></html>

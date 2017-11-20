@@ -1,0 +1,6 @@
+PDRTJS_7095907_post_14880.avg_rating = 5;
+PDRTJS_7095907_post_14880.votes = 3;		
+PDRTJS_settings_7095907_post_14880= { "type" : "stars" , "star_color" : "yellow" , "size" : "sml" , "custom_star" : "" , "font_align" : "left" , "font_position" : "right" , "font_family" : "" , "font_size" : "" , "font_line_height" : "16px" , "font_bold" : "normal" , "font_italic" : "normal" , "text_vote" : "Оценка" , "text_votes" : "Оценок" , "text_rate_this" : "Оценить" , "text_1_star" : "Бесполезно" , "text_2_star" : "Слабовато" , "text_3_star" : "Приемлемо" , "text_4_star" : "Хорошо" , "text_5_star" : "Прелестно" , "text_thank_you" : "Спасибо" , "text_rate_up" : "Rate Up" , "text_rate_down" : "Rate Down" , "font_color" : "000000" , "text_popcontent" : "Самое популярное" , "text_close" : "Закрыть" , "text_all" : "Все" , "text_today" : "Сегодня" , "text_thisweek" : "Эта неделя" , "text_thismonth" : "Этот месяц" , "text_rated" : "Оценено" , "text_noratings" : "Нет оценок за этот период" , "popup" : "on"  };
+PDRTJS_7095907_post_14880.init();		
+PDRTJS_7095907_post_14880.token='c01eade51e8c5fbf904422b70a951058';
+/*7095907,_post_14880,wp-post-14880,3645757426,5-3*/

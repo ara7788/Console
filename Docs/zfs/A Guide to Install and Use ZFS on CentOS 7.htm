@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en-US" prefix="og: http://ogp.me/ns#" class="ie6"><![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" prefix="og: http://ogp.me/ns#" class="ie7"><![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" prefix="og: http://ogp.me/ns#" class="ie8"><![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" prefix="og: http://ogp.me/ns#" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html prefix="og: http://ogp.me/ns#" class="csstransforms csstransforms3d csstransitions" lang="en-US"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://linoxide.com/xmlrpc.php">
+<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<title>A Guide to Install and Use ZFS on CentOS 7</title>
+
+		<!-- Google Plus Link -->
+		<link rel="author" href="https://plus.google.com/+Linoxide">
+
+	
+<!-- This site is optimized with the Yoast SEO plugin v4.9 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="This is an article dealing with installing ZFS on CentOS 7 and using zpool, zfs utilities of the filesystem to create and maintain disk pools and datasets.">
+<link rel="canonical" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/a_005.htm">
+<link rel="publisher" href="https://plus.google.com/Linoxide/posts">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Guide to Install and Use ZFS on CentOS 7">
+<meta property="og:description" content="This is an article dealing with installing ZFS on CentOS 7 and using zpool, zfs utilities of the filesystem to create and maintain disk pools and datasets.">
+<meta property="og:url" content="https://linoxide.com/tools/guide-install-use-zfs-centos-7/">
+<meta property="og:site_name" content="LinOxide">
+<meta property="article:tag" content="zfs Filesystem">
+<meta property="article:section" content="LINUX HOWTO">
+<meta property="article:published_time" content="2016-03-29T03:00:49+01:00">
+<meta property="article:modified_time" content="2016-09-25T01:02:31+01:00">
+<meta property="og:updated_time" content="2016-09-25T01:02:31+01:00">
+<!-- / Yoast SEO plugin. -->
+
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="LinOxide » Feed" href="https://linoxide.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="LinOxide » Comments Feed" href="https://linoxide.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="LinOxide » A Guide to Install and Use ZFS on CentOS 7 Comments Feed" href="https://linoxide.com/tools/guide-install-use-zfs-centos-7/feed/">
+		<script src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/ca-pub-1494089593353074.js"></script><script async="" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/analytics.js"></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/linoxide.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.8"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b===c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/wp-emoji-release.js" type="text/javascript" defer="defer"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="main-style-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/main.css" type="text/css" media="all">
+<link rel="stylesheet" id="color-bg-tag-cloud-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/color-bg-tag-cloud.css" type="text/css" media="all">
+<link rel="stylesheet" id="easy_author_image-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/easy-author-image.css" type="text/css" media="all">
+<link rel="stylesheet" id="wp-pagenavi-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/pagenavi-css.css" type="text/css" media="all">
+<link rel="stylesheet" id="font-awesome-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/font-awesome.css" type="text/css" media="all">
+<link rel="stylesheet" id="bootstrap-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/bootstrap.css" type="text/css" media="all">
+<link rel="stylesheet" id="flexslider-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/flexslider.css" type="text/css" media="all">
+<link rel="stylesheet" id="theme-shortcodes-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/shortcodes.css" type="text/css" media="all">
+<link rel="stylesheet" id="default-google-fonts-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/css.css" type="text/css" media="all">
+<link rel="stylesheet" id="dashicons-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/dashicons.css" type="text/css" media="all">
+<link rel="stylesheet" id="theme-print_styles-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/style-print.css" type="text/css" media="print">
+<link rel="stylesheet" id="theme-main-styles-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="theme-custom_styles-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/style-custom.css" type="text/css" media="all">
+<link rel="stylesheet" id="recent-posts-widget-with-thumbnails-public-style-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/public.css" type="text/css" media="all">
+<link rel="stylesheet" id="wordpress-popular-posts-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/wpp.css" type="text/css" media="all">
+<link rel="stylesheet" id="sccss_style-css" href="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/a.css" type="text/css" media="all">
+<script type="text/javascript" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/jquery_005.js"></script>
+<script type="text/javascript" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/jquery-migrate.js"></script>
+<script type="text/javascript" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/jquery_004.js"></script>
+<link rel="https://api.w.org/" href="https://linoxide.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://linoxide.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://linoxide.com/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 4.8">
+<link rel="shortlink" href="https://linoxide.com/?p=12998">
+<link rel="alternate" type="application/json+oembed" href="https://linoxide.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Flinoxide.com%2Ftools%2Fguide-install-use-zfs-centos-7%2F">
+<style type="text/css">
+.ai-viewport-3                { display: none !important;}
+.ai-viewport-2                { display: none !important;}
+.ai-viewport-1                { display: inherit !important;}
+.ai-viewport-0                { display: none !important;}
+@media (min-width: 768px) and (max-width: 979px) {
+.ai-viewport-1                { display: none !important;}
+.ai-viewport-2                { display: inherit !important;}
+}
+@media (max-width: 767px) {
+.ai-viewport-1                { display: none !important;}
+.ai-viewport-3                { display: inherit !important;}
+}
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Custom Styles from Theme Setting Page -->
+<style type="text/css">
+.site-container, .unboxed .site-inner, .unboxed .wrap { max-width:1280px; }
+.unboxed .slideslider .flex-caption-wrap { max-width:1280px !important; }
+.site-header .wrap { height:140px;}
+h1.site-title, .site-title { font-family:PT Serif;font-style:normal;font-weight:normal;font-size:24px;text-transform:none; }
+h1,h2,h3,h4,h5,h6 { font-family:PT Serif;font-style:normal;font-weight:normal;text-transform:none; }
+h2.widgettitle, h2.widget-title {font-size:18px;}
+h1 {font-size:30px;}
+h2 {font-size:28px;}
+h3 {font-size:26px;}
+h4 {font-size:24px;}
+h5 {font-size:20px;}
+h6 {font-size:18px;}
+body { font-family:Source Sans Pro;font-style:normal;font-weight:normal;font-size:16px;line-height:1.5;text-transform:none; }
+.site-inner .sidebar { font-family:Source Sans Pro;font-style:normal;font-weight:normal;font-size:14px;line-height:1.5;text-transform:none; }
+.nav-primary { font-family:Source Sans Pro;font-style:normal;font-weight:normal;font-size:14px;text-transform:none; }
+.nav-secondary { font-family:Source Sans Pro;font-style:normal;font-weight:normal;font-size:14px;text-transform:none; }
+.nav-fixed { font-family:Source Sans Pro;font-style:normal;font-weight:normal;font-size:14px;text-transform:none; }
+.comment-metadata,.wp-caption,.wp-caption-text,.entry-caption,.gallery-caption,.entry-media .thumb-caption,.sitemap-entry-meta,.entry-meta { font-family:Source Sans Pro;font-style:normal;font-weight:normal;font-size:14px;text-transform:none; }
+.site-container { border: 0; }
+.site-container { border-color:#000000; }
+#footer-widgets { background-color:#ffffff; }
+#footer-widgets h1, #footer-widgets h2, footer-widgets h3, #footer-widgets h4, #footer-widgets h5, #footer-widgets h6 { color:#ffffff !important; }
+#footer-widgets h2.widgettitle, #footer-widgets h2.widgettitle a { color:#ffffff !important; }
+  .site-branding {
+    margin-top: 30px !important;
+}
+
+
+  .fl.newsdesc a {
+    line-height: 0 !important;
+}
+.fl.newsdesc h2 {
+    margin: 0;
+}
+
+.search-button{
+  vertical-align: top !important;
+    padding-top: 10px !important;
+}
+@media only screen and (min-width: 961px) {
+#secnav{
+    
+    vertical-align: top;
+    font-size: 16px;
+}
+nav.nav-secondary{
+    height:30px !important;
+}
+.subicons.site-icons {
+    position: relative;
+    margin-bottom: -3%;
+        width: 20%;
+}
+.site-inner, .wrap {
+    padding: 0 15px;
+}
+
+#category_post_list_widget-5 
+.widgettitle , #category_post_list_widget-4 .widgettitle , #text-19 .widgettitle ,.widget_color_bg_tag_cloud .widgettitle {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    margin-bottom: 6px  !important;
+    background: none repeat scroll 0 0 #12b7d5 !important;
+    text-align: center;
+    padding: 10px;
+    border-bottom: none;
+}
+
+#text-19 form {
+    
+    background: #194357;
+    border-radius: 11px;
+}
+
+.fl.newsdesc {
+    border-bottom: 1px solid #cfc7c7;
+    margin-bottom: 10px;
+}
+
+.fl.newsdesc p:last-child {
+    margin-bottom:0;
+    margin-bottom: 10px;
+}
+
+.widget_category_post_list_widget .post_content {
+    border-bottom: transparent;
+}
+.fl.newsdesc h2 a {
+    font-size: 16px !important;
+    margin: 0 !important;
+    color: #777 !important;
+    font-family: 'Open Sans' !important;
+    font-weight: normal !important;
+    line-height: normal !important;
+}
+</style>
+				<!-- WordPress Popular Posts v3.3.4 -->
+				<script type="text/javascript">
+
+					var sampling_active = 0;
+					var sampling_rate   = 100;
+					var do_request = false;
+
+					if ( !sampling_active ) {
+						do_request = true;
+					} else {
+						var num = Math.floor(Math.random() * sampling_rate) + 1;
+						do_request = ( 1 === num );
+					}
+
+					if ( do_request ) {
+
+						/* Create XMLHttpRequest object and set variables */
+						var xhr = ( window.XMLHttpRequest )
+						  ? new XMLHttpRequest()
+						  : new ActiveXObject( "Microsoft.XMLHTTP" ),
+						url = 'https://linoxide.com/wp-admin/admin-ajax.php',
+						params = 'action=update_views_ajax&token=11d39ef166&wpp_id=12998';
+						/* Set request method and target URL */
+						xhr.open( "POST", url, true );
+						/* Set request header */
+						xhr.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" );
+						/* Hook into onreadystatechange */
+						xhr.onreadystatechange = function() {
+							if ( 4 === xhr.readyState && 200 === xhr.status ) {
+								if ( window.console && window.console.log ) {
+									window.console.log( xhr.responseText );
+								}
+							}
+						};
+						/* Send request */
+						xhr.send( params );
+
+					}
+
+				</script>
+				<!-- End WordPress Popular Posts v3.3.4 -->
+				
+<!-- Dynamic Widgets by QURL - http://www.qurl.nl //-->
+</head>
+
+<body class="post-template-default single single-post postid-12998 single-format-standard c-sw two-column unboxed nav-arrows " itemscope="itemscope" itemtype="http://schema.org/WebPage">
+
+	
+	
+	<!-- OUTER SITE CONTAINER (.site-container) -->
+	<div class="site-container">
+
+		
+		<!-- TOPBAR NAVIGATION (.nav-primary) -->
+<nav class="nav-primary" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
+
+	<div class="wrap">
+
+		<span title="Display Menu" class="menu-toggle">
+			<i class="fa fa-navicon"></i>
+		</span>
+
+		
+<div class="subicons site-icons">
+
+	<a data-toggle="tooltip" data-placement="bottom" class="subicon rss" rel="external" title="" href="https://linoxide.com/feed/" data-original-title="RSS Feed"><i class="fa fa-rss"></i></a><a data-toggle="tooltip" data-placement="bottom" class="subicon twitter" rel="external" title="" href="https://twitter.com/LinOxide" data-original-title="Connect on Twitter"><i class="fa fa-twitter"></i></a><a data-toggle="tooltip" data-placement="bottom" class="subicon facebook" rel="external" title="" href="https://www.facebook.com/Linoxide" data-original-title="Connect on Facebook"><i class="fa fa-facebook"></i></a><a data-toggle="tooltip" data-placement="bottom" class="subicon googleplus" rel="external" title="" href="https://plus.google.com/+Linoxide" data-original-title="Connect on Google+"><i class="fa fa-google-plus"></i></a><a data-toggle="tooltip" data-placement="bottom" class="subicon youtube" rel="external" title="" href="https://www.youtube.com/channel/UC9y60e21PnE5xmc0PfcKgjw" data-original-title="Connect on Youtube"><i class="fa fa-youtube-play"></i></a>
+</div><ul id="topnav" class="nav-menu sf-js-enabled"><li id="menu-item-14787" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-14787"><a href="http://linoxide.com/">HOME</a></li>
+<li id="menu-item-14784" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14784"><a href="https://linoxide.com/about/">ABOUT</a></li>
+<li id="menu-item-14785" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-14785"><a href="https://linoxide.com/category/trending/">TRENDING</a></li>
+<li id="menu-item-14786" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14786"><a href="http://linoxide.tradepub.com/category/information-technology-servers-and-linux-server-os/806/">FREE EBOOKS</a></li>
+</ul>
+	</div><!-- .wrap -->
+
+</nav>
+<!-- END PRIMARY NAVIGATION (.nav-primary) -->
+				<!-- SITE HEADER (.site-header) -->
+		<header class="site-header" itemscope="itemscope" itemtype="http://schema.org/WPHeader">
+
+			<div class="wrap">
+
+				<div class="site-branding">
+					<a href="https://linoxide.com/" title="LinOxide" rel="home">
+						<div class="site-title" itemprop="headline">
+																<span class="site-logo">
+										<img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/banner-linoxide.png" alt="LinOxide">
+									</span>
+														</div>
+											</a>
+				</div><!-- .site-branding -->
+
+				<!-- HEADER NAVIGATION (.nav-secondary) -->
+<nav class="nav-secondary" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
+
+	<div class="wrap">
+
+		<span title="Display Menu" class="menu-toggle">
+			<i class="fa fa-navicon"></i>
+		</span>
+
+		<ul id="secnav" class="nav-menu sf-js-enabled"><li id="menu-item-3855" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-3855"><a href="https://linoxide.com/category/linux-how-to/">LINUX HOWTO</a></li>
+<li id="menu-item-14788" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-14788"><a href="https://linoxide.com/category/distros/">LINUX DISTROS</a></li>
+<li id="menu-item-10470" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-10470"><a href="https://linoxide.com/category/linux-command/">LINUX COMMANDS</a></li>
+<li id="menu-item-14789" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-14789"><a href="https://linoxide.com/category/tools/">LINUX TOOLS</a></li>
+<li id="menu-item-14790" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-14790"><a class="sf-with-ul">AUTOMATION</a>
+<ul class="sub-menu" style="display: none;">
+	<li id="menu-item-14791" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-14791"><a href="https://linoxide.com/category/linux-shell-script/">SHELL SCRIPTS</a></li>
+	<li id="menu-item-14792" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-14792"><a href="https://linoxide.com/category/devops/">DEVOPS</a></li>
+</ul>
+</li>
+<li id="menu-item-14793" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-14793"><a href="https://linoxide.com/category/webserver/">WEB SERVERS</a></li>
+<li id="menu-item-3856" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3856"><a href="https://linoxide.com/category/ubuntu-how-to/">UBUNTU HOWTO</a></li>
+</ul>				<span title="Display Search Form" class="search-button">
+					<i class="fa fa-search"></i>
+				</span>
+			
+	</div><!-- .wrap -->
+
+</nav> 
+<!-- END SECONDARY NAVIGATION (.nav-secondary) -->
+			</div><!-- .wrap -->
+
+		</header>
+		<!-- END SITE HEADER (.site-header) -->
+		
+		
+					<!-- TOPBAR SEARCH FORM (.topnav-search) -->
+			<div class="topnav-search">
+				<div class="wrap">
+					<form method="get" class="search-form clearfix" action="https://linoxide.com/">
+	<label><span class="screen-reader-text">Search for: </span></label>
+	<i class="fa fa-search"></i>
+	<input class="search-field" placeholder="Enter Search Terms" name="s" title="Enter Search Terms" type="text"><input class="search-submit" value="Search" type="submit">
+</form>				</div>
+			</div><!-- .topnav-search) -->
+			<!-- END SEARCH FORM (.topnav-search) -->
+		
+		
+		<!-- INNER SITE CONTAINER (.site-inner) -->
+		<div class="site-inner">
+
+			<div class="site-inner-wrap">
+
+			<div class="tb-col-border narrow"></div>
+
+			<div class="tb-col-border wide"></div>
+
+			<!-- PRIMARY CONTENT AREA (#primary) -->
+			<div id="primary" class="content-area">
+
+				<!-- CONTENT AREA (.site-content) -->
+				<main id="content" class="site-content" itemprop="mainContentOfPage">
+
+					
+						<div itemscope="itemscope" itemtype="http://schema.org/Blog">
+							<article id="post-12998" class="post-12998 post type-post status-publish format-standard hentry category-linux-how-to category-tools tag-zfs-filesystem linux-how-to tools" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+								
+							<div class="entry-wrap">
+
+								<div class="entry-container">
+
+									 
+										<header class="entry-header">
+													<h1 class="entry-title" itemprop="headline">
+			<span>
+								A Guide to Install and Use ZFS on CentOS 7			</span>
+		</h1>
+	<div class="entry-meta"><span class="date"><i class="fa fa-clock-o"></i><time class="entry-date" itemprop="datePublished" datetime="2016-03-29T03:00:49+00:00">March 29, 2016</time></span><span class="author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person">By <a class="entry-author-link" href="https://linoxide.com/author/bnpoornima/" title="View all posts by B N Poornima" itemprop="url" rel="author"><span itemprop="name">B N Poornima</span></a></span><span>Updated September 25, 2016</span></div><!-- .entry-meta -->	<div id="sharelinks" class="share-icons">
+
+		
+		<a data-toggle="tooltip" title="" rel="external" class="facebook" href="http://www.facebook.com/sharer/sharer.php?u=https://linoxide.com/?p=12998" data-original-title="Share this Entry on Facebook"><i class="fa fa-facebook"></i>Facebook</a><a data-toggle="tooltip" title="" rel="external" class="googleplus" href="https://plus.google.com/share?url=https://linoxide.com/?p=12998" data-original-title="Share this Entry on Google+"><i class="fa fa-google-plus"></i>Google+</a><a data-toggle="tooltip" title="" rel="external" class="twitter" href="http://twitter.com/home?status=A+Guide+to+Install+and+Use+ZFS+on+CentOS+7:https://linoxide.com/?p=12998" data-original-title="Tweet this Entry on Twitter"><i class="fa fa-twitter"></i>Twitter</a><a data-toggle="tooltip" title="" rel="external" class="pinterest" href="http://pinterest.com/pin/create/button/?url=https://linoxide.com/?p=12998&amp;media=" data-original-title="Pin this Entry on Pinterest"><i class="fa fa-pinterest"></i>Pinterest</a><a data-toggle="tooltip" title="" rel="external" class="linkedin" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://linoxide.com/?p=12998&amp;title=A+Guide+to+Install+and+Use+ZFS+on+CentOS+7" data-original-title="Share this Entry on LinkedIn"><i class="fa fa-linkedin"></i>LinkedIn</a><a data-toggle="tooltip" title="" rel="external" class="stumbleupon" href="http://www.stumbleupon.com/submit?url=https://linoxide.com/?p=12998&amp;title=A+Guide+to+Install+and+Use+ZFS+on+CentOS+7" data-original-title="Stumble this Entry on StumbleUpon"><i class="fa fa-stumbleupon"></i>StumbleUpon</a><a data-toggle="tooltip" title="" rel="external" class="reddit" href="http://reddit.com/submit?url=https://linoxide.com/?p=12998&amp;title=A+Guide+to+Install+and+Use+ZFS+on+CentOS+7" data-original-title="Share this on Reddit"><i class="fa fa-reddit"></i>Reddit</a><a data-toggle="tooltip" title="" rel="external" class="email" href="mailto:?subject=A+Guide+to+Install+and+Use+ZFS+on+CentOS+7&amp;body=A+Guide+to+Install+and+Use+ZFS+on+CentOS+7:https://linoxide.com/?p=12998" data-original-title="Share this Entry via Email"><i class="fa fa-linkedin"></i>Email</a>
+	</div>
+
+										</header><!-- .entry-header -->
+									
+									
+									<div class="entry-content" itemprop="text">
+										<p>ZFS, short form of Zettabyte Filesystem is an advanced and 
+highly scalable filesystem. It was originally developed by Sun 
+Microsystems and is now part of the OpenZFS project. With so many 
+filesystems available on Linux, it is quite natural to ask what is 
+special about ZFS. &nbsp;Unlike other filesystems, it is not just a 
+filesystem but a logical volume manager as well. &nbsp;Some of the 
+features of ZFS that make it popular are:</p><div class="code-block code-block-2 ai-viewport-3" style="margin: 8px auto; text-align: center;">
+<script async="" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/adsbygoogle.js"></script>
+<!-- linoxide_mobile_300x250 -->
+<ins class="adsbygoogle" style="display: inline-block; width: 300px; height: 250px;" data-ad-client="ca-pub-1494089593353074" data-ad-slot="8003513341" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;width:300px;height:250px;" frameborder="0" width="300" height="250"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+
+<ul>
+<li>Data Integrity - &nbsp;data consistency and integrity are ensured through copy-on-write and checksum techniques</li>
+<li>Pooling of storage space - available storage drives can be put together into a single pool called zpool</li>
+<li>Software RAID - Setting up a raidz array is as simple as issuing a single command.</li>
+<li>Inbuilt volume manager - ZFS acts as a volume manager as well.</li>
+<li>Snaphots, clones, compression - these are some of the advanced features that ZFS provides.</li>
+</ul>
+<p>ZFS &nbsp;is a 128-bit filesystem and has the capacity to store 256 
+zetta bytes! &nbsp;In this guide, we will be learning how to install, 
+setup and also to use some important ZFS commands on a CentOS 7 server.</p>
+<p><em>NOTE: The installation part is specific to CentOS server while the commands are common on any Linux system</em></p>
+<h2>Terminology</h2>
+<p>Before we move on, let us understand some of the terminologies that are commonly used in ZFS.</p>
+<h3>Pool</h3>
+<p>Logical grouping of storage drives. It is the basic building block of
+ ZFS and it is from here that storage space gets allocated for datasets.</p>
+<h3>Datasets</h3>
+<p>The components of ZFS filesystem namely filesystem, clones, snapshots and volumes are referred to as datasets.</p>
+<h3>Mirror</h3>
+<p>A virtual device storing identical data copies on two or more disks. 
+In situations where one disk fails, same data is available on other 
+disks of that mirror.</p>
+<h3>Resilvering</h3>
+<p>Process of copying data from one disk to another in the event of restoring a device.</p>
+<h3>Scrub</h3>
+<p>Scrub is used for consistency check in ZFS like how fsck is used in other filesystems</p>
+<h2>Installing ZFS</h2>
+<p>In order to install ZFS on CentOS, we need to first setup the 
+EPEL&nbsp;&nbsp;repository for supporting packages and then the ZFS 
+repository to install the required ZFS packages.</p>
+<p><em>Note: Please prefix sudo to all the commands if you are not the root user.&nbsp;</em></p>
+<blockquote><p>yum localinstall --nogpgcheck http://epel.mirror.net.in/epel/7/x86_64/e/epel-release-7-5.noarch.rpm</p>
+<p>yum localinstall --nogpgcheck http://archive.zfsonlinux.org/epel/zfs-release.el7.noarch.rpm</p></blockquote>
+<p>Now install the kernel development and zfs packages. Kernel 
+development packages are needed as ZFS is built as a module and inserted
+ into the kernel.</p>
+<blockquote><p>yum install kernel-devel zfs</p></blockquote>
+<p>Verify if the zfs module is inserted into the kernel using 'lsmod' 
+command and if not, insert it manually using 'modprobe' command.</p>
+<blockquote>[root@li1467-130 ~]# lsmod |grep zfs<p></p>
+[root@li1467-130 ~]# modprobe zfs<p></p>
+[root@li1467-130 ~]# lsmod |grep zfs<br>
+zfs 2790271 0<br>
+zunicode 331170 1 zfs<br>
+zavl 15236 1 zfs<br>
+zcommon 55411 1 zfs<br>
+znvpair 89086 2 zfs,zcommon<br>
+spl 92029 3 zfs,zcommon,znvpair<p></p></blockquote>
+<p>Let us check if we are able to use the zfs commands:</p>
+<blockquote>[root@li1467-130 ~]# zfs list<br>
+no datasets available<p></p></blockquote>
+<h2>Administration</h2>
+<p>ZFS has two main utilities, zpool and zfs. &nbsp;While zpool deals 
+with creation and maintenance of pools using disks zfs utility is 
+responsible for creation and maintenance of datasets.</p>
+<h2>zpool utility</h2>
+<h4>Creating and destroying pools</h4>
+<p>First verify the disks available for you to create a storage pool.</p>
+<blockquote>[root@li1467-130 ~]# ls -l /dev/sd*<br>
+brw-rw---- 1 root disk 8, &nbsp;0 &nbsp;Mar 16 08:12 /dev/sda<br>
+brw-rw---- 1 root disk 8, 16 Mar 16 08:12 /dev/sdb<br>
+brw-rw---- 1 root disk 8, 32 Mar 16 08:12 /dev/sdc<br>
+brw-rw---- 1 root disk 8, 48 Mar 16 08:12 /dev/sdd<br>
+brw-rw---- 1 root disk 8, 64 Mar 16 08:12 /dev/sde<br>
+brw-rw---- 1 root disk 8, 80 Mar 16 08:12 /dev/sdf<p></p></blockquote>
+<p>Create a pool from a set of drives.</p>
+<blockquote><p>zpool create &lt;option&gt; &lt;pool name. &lt;drive 1&gt; &lt;drive 2&gt; .... &lt;drive n&gt;</p></blockquote>
+<blockquote>[root@li1467-130 ~]# zpool create -f zfspool sdc sdd sde sdf<p></p></blockquote>
+<p>'zpool status' command displays the status of the available pools</p>
+<blockquote>[root@li1467-130 ~]# zpool status<br>
+pool: zfspool<br>
+state: ONLINE<br>
+scan: none requested<br>
+config:<p></p>
+<p>NAME STATE READ WRITE CKSUM<br>
+zfspool ONLINE 0 0 0<br>
+sdc ONLINE 0 0 0<br>
+sdd ONLINE 0 0 0<br>
+sde ONLINE 0 0 0<br>
+sdf ONLINE 0 0 0</p>
+<p>errors: No known data errors</p></blockquote>
+<p>Verify if the pool creation was successful.</p>
+<blockquote>[root@li1467-130 ~]# df -h<br>
+Filesystem &nbsp; &nbsp;Size &nbsp; Used &nbsp; &nbsp; &nbsp;Avail &nbsp;Use%&nbsp; &nbsp;Mounted on<br>
+/dev/sda &nbsp; &nbsp; &nbsp;19G &nbsp; &nbsp;1.4G &nbsp; &nbsp; &nbsp; &nbsp;17G &nbsp; &nbsp; &nbsp;8% &nbsp; &nbsp; &nbsp;/<br>
+devtmpfs &nbsp; &nbsp;488M &nbsp; &nbsp; &nbsp; &nbsp;0 &nbsp; &nbsp; &nbsp;488M &nbsp; &nbsp; &nbsp;0% &nbsp; &nbsp; /dev<br>
+tmpfs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;497M &nbsp; &nbsp; &nbsp; 
+&nbsp;0 &nbsp; &nbsp; &nbsp;497M &nbsp; &nbsp; &nbsp;0% &nbsp; 
+&nbsp;/dev/shm<br>
+tmpfs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;497M &nbsp; &nbsp;50M &nbsp; &nbsp; 447M &nbsp; &nbsp; 11% &nbsp; /run<br>
+tmpfs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;497M &nbsp; &nbsp; &nbsp; &nbsp;
+ 0 &nbsp; &nbsp; 497M &nbsp; &nbsp; &nbsp;0% &nbsp; /sys/fs/cgroup<br>
+tmpfs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;100M &nbsp; &nbsp; &nbsp; &nbsp;
+ 0 &nbsp; &nbsp; 100M &nbsp; &nbsp; &nbsp;0% &nbsp; /run/user/0<br>
+zfspool &nbsp; &nbsp; &nbsp; &nbsp; 3.7G &nbsp; &nbsp; &nbsp; &nbsp; 0 
+&nbsp; &nbsp; &nbsp; 3.7G &nbsp; &nbsp; &nbsp;0% &nbsp;/zfspool<p></p></blockquote>
+<p>As you can see, zpool has created a pool by name 'zfspool' of size 3.7 GB and has also mounted it in /zfspool.</p>
+<p>To destroy a pool, use the 'zpool destroy' command</p>
+<blockquote><p>zpool destroy &lt;pool name&gt;</p>
+[root@li1467-130 ~]# zpool destroy zfspool<br>
+[root@li1467-130 ~]# zpool status<br>
+no pools available<p></p></blockquote>
+<p>Let us now try creating a simple mirror pool.</p>
+<blockquote><p>zpool create &lt;option&gt; &lt;pool name&gt; mirror &lt;drive 1&gt; &lt;drive 2&gt;... &lt;drive n&gt;</p></blockquote>
+<p>We can also create multiple mirrors at the same time by repeating the mirror keyword followed by the drives.</p>
+<blockquote>[root@li1467-130 ~]# zpool create -f mpool mirror sdc sdd mirror sde sdf<br>
+[root@li1467-130 ~]# zpool status<br>
+pool: mpool<br>
+state: ONLINE<br>
+scan: none requested<br>
+config:<p></p>
+<p>NAME STATE READ WRITE CKSUM<br>
+mpool ONLINE 0 0 0<br>
+mirror-0 ONLINE 0 0 0<br>
+sdc ONLINE 0 0 0<br>
+sdd ONLINE 0 0 0<br>
+mirror-1 ONLINE 0 0 0<br>
+sde ONLINE 0 0 0<br>
+sdf ONLINE 0 0 0</p>
+<p>errors: No known data errors</p></blockquote>
+<p>In the above example, we have created mirror pools each with two disks.</p>
+<p>Similarly, we can create a raidz pool.</p>
+<blockquote>[root@li1467-130 ~]# zpool create -f rpool raidz sdc sdd sde sdf<br>
+[root@li1467-130 ~]# zpool status<br>
+pool: rpool<br>
+state: ONLINE<br>
+scan: none requested<br>
+config:<p></p>
+<p>NAME STATE READ WRITE CKSUM<br>
+rpool ONLINE 0 0 0<br>
+raidz1-0 ONLINE 0 0 0<br>
+sdc ONLINE 0 0 0<br>
+sdd ONLINE 0 0 0<br>
+sde ONLINE 0 0 0<br>
+sdf ONLINE 0 0 0</p>
+<p>errors: No known data errors</p></blockquote>
+<h4>Managing devices in ZFS pools</h4>
+<p>Once a pool is created, it is possible to add or remove hot spares 
+and cache &nbsp;devices from the pool, attach or detach devices from 
+mirrored pools and replace devices. But non-redundant and raidz devices 
+cannot be removed from a pool. &nbsp;We will see how to perform some of 
+these operations in this section.</p>
+<p>I'm first creating a pool called 'testpool' consisting of two 
+devices, sdc and sdd. &nbsp;Another device sde will then be added to 
+this.</p>
+<blockquote>[root@li1467-130 ~]# zpool create -f testpool sdc sdd<p></p>
+[root@li1467-130 ~]# zpool add testpool sde<br>
+[root@li1467-130 ~]# zpool status<br>
+pool: testpool<br>
+state: ONLINE<br>
+scan: none requested<br>
+config:<p></p>
+<p>NAME STATE READ WRITE CKSUM<br>
+testpool ONLINE 0 0 0<br>
+sdc ONLINE 0 0 0<br>
+sdd ONLINE 0 0 0<br>
+sde ONLINE 0 0 0</p>
+<p>errors: No known data errors</p></blockquote>
+<p>As mentioned earlier, I cannot remove this newly added device as it is not a redundant or raidz pool.</p>
+<blockquote>[root@li1467-130 ~]# zpool remove testpool sde<br>
+cannot remove sde: only inactive hot spares, cache, top-level, or log devices can be removed<p></p></blockquote>
+<p>But I can add a spare disk to this pool and remove it.</p>
+<blockquote>[root@li1467-130 ~]# zpool add testpool spare sdf<br>
+[root@li1467-130 ~]# zpool status<br>
+pool: testpool<br>
+state: ONLINE<br>
+scan: none requested<br>
+config:<p></p>
+<p>NAME STATE READ WRITE CKSUM<br>
+testpool ONLINE 0 0 0<br>
+sdc ONLINE 0 0 0<br>
+sdd ONLINE 0 0 0<br>
+sde ONLINE 0 0 0<br>
+spares<br>
+sdf AVAIL</p>
+<p>errors: No known data errors<br>
+[root@li1467-130 ~]# zpool remove testpool sdf<br>
+[root@li1467-130 ~]# zpool status<br>
+pool: testpool<br>
+state: ONLINE<br>
+scan: none requested<br>
+config:</p>
+<p>NAME &nbsp; &nbsp; &nbsp; &nbsp;STATE &nbsp; &nbsp; &nbsp; READ &nbsp;WRITE &nbsp;&nbsp;CKSUM<br>
+testpool&nbsp; &nbsp; ONLINE &nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp;0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0<br>
+sdc&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ONLINE &nbsp; &nbsp; &nbsp;
+ 0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; 0<br>
+sdd&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ONLINE &nbsp; &nbsp; 
+&nbsp;0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;0 &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; 0<br>
+sde&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ONLINE &nbsp; &nbsp; 
+&nbsp;0 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;0 &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; 0</p>
+<p>errors: No known data errors</p></blockquote>
+<p>Similarly, we can use attach command to attach disks to a mirrored or
+ non-mirrored pool and detach command to detach disks from a mirrored 
+pool.</p>
+<blockquote><p>zpool attach &lt;options&gt; &lt;pool name&gt; &lt;device&gt; &lt;new device&gt;</p>
+<p>zpool detach &lt;pool name&gt; &lt;device&gt;</p></blockquote>
+<p>When a device fails or gets corrupted, we can replace it using the 'replace' command.</p>
+<blockquote><p>zpool replace &lt;options&gt; &lt;pool name&gt; &lt;device&gt; &lt;new device&gt;</p></blockquote>
+<p>We will test this by forcefully corrupting a device in a mirrored configuration.</p>
+<blockquote>[root@li1467-130 ~]# zpool create -f testpool mirror sdd sde<p></p></blockquote>
+<p>This creates a mirror pool consisting of disks sdd and sde. Now, let 
+us deliberately corrupt sdd drive by writing zeroes into it.</p>
+<blockquote>[root@li1467-130 ~]# dd if=/dev/zero of=/dev/sdd<br>
+dd: writing to ‘/dev/sdd’: No space left on device<br>
+2048001+0 records in<br>
+2048000+0 records out<br>
+1048576000 bytes (1.0 GB) copied, 22.4804 s, 46.6 MB/s<p></p></blockquote>
+<p>We will use the 'scrub' command to detect this corruption.</p>
+<blockquote>[root@li1467-130 ~]# zpool scrub testpool<br>
+[root@li1467-130 ~]# zpool status<br>
+pool: testpool<br>
+state: ONLINE<br>
+status: One or more devices could not be used because the label is missing or<br>
+invalid. Sufficient replicas exist for the pool to continue<br>
+functioning in a degraded state.<br>
+action: Replace the device using 'zpool replace'.<br>
+see: http://zfsonlinux.org/msg/ZFS-8000-4J<br>
+scan: scrub repaired 0 in 0h0m with 0 errors on Fri Mar 18 09:59:40 2016<br>
+config:<p></p>
+<p>NAME STATE READ WRITE CKSUM<br>
+testpool ONLINE 0 0 0<br>
+mirror-0 ONLINE 0 0 0<br>
+sdd UNAVAIL 0 0 0 corrupted data<br>
+sde ONLINE 0 0 0</p>
+<p>errors: No known data errors</p></blockquote>
+<p>We will now replace sdd with sdc.</p>
+<blockquote>[root@li1467-130 ~]# zpool replace testpool sdd sdc; zpool status<br>
+pool: testpool<br>
+state: ONLINE<br>
+scan: resilvered 83.5K in 0h0m with 0 errors on Fri Mar 18 10:05:17 2016<br>
+config:<p></p>
+<p>NAME STATE READ WRITE CKSUM<br>
+testpool ONLINE 0 0 0<br>
+mirror-0 ONLINE 0 0 0<br>
+replacing-0 UNAVAIL 0 0 0<br>
+sdd UNAVAIL 0 0 0 corrupted data<br>
+sdc ONLINE 0 0 0<br>
+sde ONLINE 0 0 0</p>
+<p>errors: No known data errors</p>
+[root@li1467-130 ~]# zpool status<br>
+pool: testpool<br>
+state: ONLINE<br>
+scan: resilvered 74.5K in 0h0m with 0 errors on Fri Mar 18 10:00:36 2016<br>
+config:<p></p>
+<p>NAME STATE READ WRITE CKSUM<br>
+testpool ONLINE 0 0 0<br>
+mirror-0 ONLINE 0 0 0<br>
+sdc ONLINE 0 0 0<br>
+sde ONLINE 0 0 0</p>
+<p>errors: No known data errors</p></blockquote>
+<h4>Migration of pools</h4>
+<p>We can migrate storage pools between different hosts&nbsp;using 
+export and import commands. For this, the disks used in the pool should 
+be available from both the systems.</p>
+<blockquote>[root@li1467-130 ~]# zpool export testpool<br>
+[root@li1467-130 ~]# zpool status<br>
+no pools available<p></p></blockquote>
+<p>The command 'zpool import' lists all the pools that are available for
+ importing. Execute this command from the system where you want to 
+import the pool.</p>
+<blockquote>[root@li1467-131 ~]# zpool import<br>
+pool: testpool<br>
+id: 3823664125009563520<br>
+state: ONLINE<br>
+action: The pool can be imported using its name or numeric identifier.<br>
+config:<p></p>
+<p>testpool ONLINE<br>
+sdc ONLINE<br>
+sdd ONLINE<br>
+sde ONLINE</p></blockquote>
+<p>Now import the required pool</p>
+<blockquote>[root@li1467-131 ~]# zpool import testpool<br>
+[root@li1467-131 ~]# zpool status<br>
+pool: testpool<br>
+state: ONLINE<br>
+scan: none requested<br>
+config:<p></p>
+<p>NAME STATE READ WRITE CKSUM<br>
+testpool ONLINE 0 0 0<br>
+sdc ONLINE 0 0 0<br>
+sdd ONLINE 0 0 0<br>
+sde ONLINE 0 0 0</p>
+<p>errors: No known data errors</p></blockquote>
+<h4>iostat</h4>
+<p>One can verify the io statistics of the pool devices using the iostat command.</p>
+<blockquote>[root@li1467-130 ~]# zpool iostat -v testpool<br>
+capacity &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;operations &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp;bandwidth<br>
+pool &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;alloc &nbsp; &nbsp; &nbsp;free 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;read &nbsp; &nbsp; write &nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; read &nbsp; write<br>
+---------- &nbsp; &nbsp;----- &nbsp; &nbsp; ----- &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp;----- &nbsp; &nbsp; ----- &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;----- &nbsp; -----<br>
+testpool &nbsp; &nbsp;1.80M &nbsp;2.86G &nbsp; &nbsp; &nbsp; &nbsp;22 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;27 &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; 470K &nbsp;417K<br>
+sdc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 598K &nbsp; 975M &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; 8 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp;9 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 200K &nbsp;139K<br>
+sdd &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 636K &nbsp;975M &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;7 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp;9 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp;135K &nbsp;139K<br>
+sde &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 610K &nbsp; 975M &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; 6 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp;9 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 135K 
+139K<br>
+---------- &nbsp; ----- &nbsp; &nbsp; ----- &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; ----- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;----- &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ----- &nbsp;-----<p></p></blockquote>
+<h2>zfs utility</h2>
+<p>We will now move on to&nbsp;the zfs utility. &nbsp;Here we will take a
+ look at how to create, destroy datasets, filesystem compression, quotas
+ and snapshots.</p>
+<h3>Creating and destroying filesystem</h3>
+<p>ZFS filesystem can be created using the zfs create command</p>
+<blockquote><p>zfs create &lt;filesystem&gt;</p></blockquote>
+<p>&nbsp;</p>
+<blockquote>[root@li1467-130 ~]# zfs create testpool/students<br>
+[root@li1467-130 ~]# zfs create testpool/professors<br>
+[root@li1467-130 ~]# df -h<br>
+Filesystem &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp;Size &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Used &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp;Avail &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Use% 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Mounted on<br>
+/dev/sda &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; 19G &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1.4G 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;17G &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; 8% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; /<br>
+devtmpfs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+488M &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;0 
+&nbsp; &nbsp; &nbsp;488M &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0% 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp;/dev<br>
+tmpfs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp;497M &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp;0 &nbsp; &nbsp; &nbsp; 497M &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp;0% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; /dev/shm<br>
+tmpfs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp;497M &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp;50M &nbsp; &nbsp; &nbsp; 447M &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+11% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;/run<br>
+tmpfs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp;497M &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; &nbsp;497M &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp;0% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp;/sys/fs/cgroup<br>
+testpool &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; 2.8G&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp;&nbsp;0 &nbsp; &nbsp; &nbsp; &nbsp; 2.8G &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp;0% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; /testpool<br>
+tmpfs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp;100M &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp;0 &nbsp; &nbsp; &nbsp; &nbsp;100M &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;0% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; /run/user/0<br>
+testpool/students &nbsp; &nbsp; 2.8G &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; &nbsp; 2.8G &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp;/testpool/students<br>
+testpool/professors &nbsp;2.8G &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; &nbsp; 2.8G &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; 0% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+/testpool/professors<p></p></blockquote>
+<p>From the above output, observe that though there is no mount point 
+given at the time of filesystem creation, mountpoint&nbsp;is created 
+using the same path relationship as that of the pool.</p>
+<p>zfs create allows &nbsp;using -o with it using which we can specify options like mountpoint, compression, quota, exec etc.</p>
+<p>One can list the available filesystem using zfs list:</p>
+<blockquote>[root@li1467-130 ~]# zfs list<br>
+NAME &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; USED &nbsp; &nbsp; AVAIL &nbsp; &nbsp; REFER
+ &nbsp; &nbsp;MOUNTPOINT<br>
+testpool &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; 100M &nbsp; &nbsp; &nbsp; 2.67G &nbsp; &nbsp; 
+&nbsp; 19K &nbsp; &nbsp; &nbsp; &nbsp; /testpool<br>
+testpool/professors &nbsp; &nbsp; &nbsp; &nbsp;31K &nbsp; &nbsp; 1024M 
+&nbsp; 20.5K &nbsp; &nbsp; &nbsp; &nbsp;/testpool/professors<br>
+testpool/students &nbsp; &nbsp; &nbsp; &nbsp;1.57M &nbsp; &nbsp; 98.4M &nbsp; 1.57M &nbsp; &nbsp; &nbsp;/testpool/students<p></p></blockquote>
+<p>We can destroy a filesystem using the destroy option</p>
+<blockquote><p>zfs destroy &lt;filesystem&gt;</p></blockquote>
+<h3>Compression</h3>
+<p>We will now understand how compression works in ZFS. Before we start 
+using compression, we need to enable it using 'set compression'</p>
+<blockquote><p>zfs set &lt;compression=value&gt; &lt;filesystem|volume|snapshot&gt;</p></blockquote>
+<p>Once this is done, compression and decompression happens on the filesystem on the fly transparently.</p>
+<p>In our example, I will be enabling compression on the students directory using lz4 compression algorithm.</p>
+<blockquote>[root@li1467-130 ~]# zfs set compression=lz4 testpool/students<p></p></blockquote>
+<p>I will now copy a file of size 15M into this filesystem and check the size once it is copied.</p>
+<blockquote>[root@li1467-130 /]# cd /var/log<br>
+[root@li1467-130 log]# du -h secure<br>
+15M secure<p></p>
+[root@li1467-130 ~]# cp /var/log/secure /testpool/students/<p></p>
+[root@li1467-130 students]# df -h .<br>
+Filesystem &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Size &nbsp; 
+&nbsp; Used &nbsp; Avail &nbsp; &nbsp;Use% &nbsp; &nbsp; &nbsp;Mounted 
+on<br>
+testpool/students &nbsp; 100M &nbsp; 1.7M &nbsp; 99M &nbsp; &nbsp; &nbsp; &nbsp;2% &nbsp; &nbsp; &nbsp;/testpool/students<p></p></blockquote>
+<p>Notice that the size used in the filesystem is only 1.7M while the 
+file size was 15M. We can check the compression ratio as well..</p>
+<blockquote>[root@li1467-130 ~]# zfs get compressratio testpool<br>
+NAME &nbsp; &nbsp; &nbsp;PROPERTY &nbsp; &nbsp; &nbsp; &nbsp; VALUE &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SOURCE<br>
+testpool &nbsp; &nbsp;compressratio &nbsp; &nbsp; 9.03x &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -<p></p></blockquote>
+<h3>&nbsp;Quotas and reservation</h3>
+<p>Let me explain quotas with a real life example. Suppose we have a 
+requirement in a university to limit the disk space used by the 
+filesystem for&nbsp;professors and students. Let us assume that we need 
+to allocate 100MB for students and 1GB for professors. We can make use 
+of 'quotas' in ZFS to fulfill this requirement. Quotas&nbsp;ensure that 
+the amount of disk space used by a filesystem doesn't exceed the limits 
+set.&nbsp;Reservation helps in actually allocating and guaranteeing that
+ the required amount of disk space is available for the filesystem.</p>
+<blockquote><p>zfs set quota=&lt;value&gt;&nbsp;&lt;filesystem|volume|snapshot&gt;</p>
+<p>zfs set reservation=&lt;value&gt; &lt;filesystem|volume|snapshot&gt;</p></blockquote>
+<blockquote>[root@li1467-130 ~]# zfs set quota=100M testpool/students<br>
+[root@li1467-130 ~]# zfs set reservation=100M testpool/students<br>
+[root@li1467-130 ~]# zfs list<br>
+NAME &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp;USED &nbsp; &nbsp; &nbsp;AVAIL &nbsp; 
+&nbsp;REFER &nbsp; &nbsp;MOUNTPOINT<br>
+testpool &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp;100M &nbsp; &nbsp; &nbsp; 2.67G &nbsp; &nbsp; &nbsp;
+ 19K &nbsp; &nbsp; &nbsp; &nbsp;/testpool<br>
+testpool/professors &nbsp; &nbsp; &nbsp;19K &nbsp; &nbsp; &nbsp; 2.67G 
+&nbsp; &nbsp; &nbsp; &nbsp;19K &nbsp; &nbsp; &nbsp; /testpool/professors<br>
+testpool/students &nbsp; &nbsp; &nbsp;1.57M &nbsp; &nbsp; &nbsp; 98.4M &nbsp; &nbsp;1.57M &nbsp; &nbsp;/testpool/students<p></p>
+[root@li1467-130 ~]# zfs set quota=1G testpool/professors<br>
+[root@li1467-130 ~]# zfs list<br>
+NAME &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; USED &nbsp; &nbsp; AVAIL &nbsp; &nbsp;REFER 
+&nbsp; &nbsp;MOUNTPOINT<br>
+testpool &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; 100M &nbsp; &nbsp; 2.67G &nbsp; &nbsp; &nbsp; 19K 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;/testpool<br>
+testpool/professors &nbsp; &nbsp; &nbsp; 19K &nbsp; &nbsp;1024M &nbsp; 
+&nbsp; &nbsp; 19K &nbsp; &nbsp; &nbsp; &nbsp; /testpool/professors<br>
+testpool/students &nbsp; &nbsp; &nbsp; 1.57M &nbsp; &nbsp;98.4M &nbsp; &nbsp;1.57M &nbsp; &nbsp; &nbsp; /testpool/students<p></p></blockquote>
+<p>In the above example, we have allocated 100MB for students and 1GB 
+for professors. Observe the 'AVAIL' column in 'zfs list'. 
+&nbsp;Initially they had the size of 2.67GB each and after setting the 
+quota, the values have changed accordingly.</p>
+<h3>Snapshots</h3>
+<p>Snapshots are read-only copy of the ZFS filesystem at a given point 
+in time. They do not consume any extra space in zfs pool. We can either 
+roll back to the same state at a later stage or extract only a single or
+ a set of files as per the user requirement.</p>
+<p>I will now create some directories and a file under 
+'/testpool/professors' from our previous example and then take a 
+snapshot of this filesystem.</p>
+<blockquote>[root@li1467-130 ~]# cd /testpool/professors/<p></p>
+[root@li1467-130 professors]# mkdir maths physics chemistry<p></p>
+[root@li1467-130 professors]# cat &gt; qpaper.txt<br>
+Question paper for the year 2016-17<br>
+[root@li1467-130 professors]# ls -la<br>
+total 4<br>
+drwxr-xr-x &nbsp;5 &nbsp;root root &nbsp; &nbsp;6 &nbsp; Mar 19 10:34 .<br>
+drwxr-xr-x &nbsp;4 &nbsp;root root &nbsp; &nbsp;4 &nbsp; Mar 19 09:59 ..<br>
+drwxr-xr-x &nbsp;2 &nbsp;root root &nbsp; &nbsp;2 &nbsp; Mar 19 10:33 chemistry<br>
+drwxr-xr-x &nbsp;2 &nbsp;root root &nbsp; &nbsp;2 &nbsp; Mar 19 10:32 maths<br>
+drwxr-xr-x &nbsp;2 &nbsp;root root &nbsp; &nbsp;2 &nbsp; Mar 19 10:32 physics<br>
+-rw-r--r-- &nbsp; &nbsp; 1 &nbsp;root root &nbsp;36 &nbsp; Mar 19 10:35 qpaper.txt<p></p></blockquote>
+<p>To take a snapshot, use the following syntax:</p>
+<blockquote><p>zfs snapshot &lt;filesystem|volume@&lt;snap&gt;&gt;</p></blockquote>
+<blockquote>[root@li1467-130 professors]# zfs snapshot testpool/professors@03-2016<br>
+[root@li1467-130 professors]# zfs list -t snapshot<br>
+NAME &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; USED &nbsp; &nbsp; &nbsp; &nbsp; AVAIL &nbsp; 
+&nbsp; REFER &nbsp; &nbsp; MOUNTPOINT<br>
+testpool/professors@03-2016 &nbsp; &nbsp; &nbsp; 0 &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp;20.5K &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-<p></p></blockquote>
+<p>I'll now delete the file that was created and extract it from the snapshots</p>
+<blockquote>[root@li1467-130 professors]# rm -rf qpaper.txt<br>
+[root@li1467-130 professors]# ls<br>
+chemistry maths physics<br>
+[root@li1467-130 professors]# cd .zfs<br>
+[root@li1467-130 .zfs]# cd snapshot/03-2016/<br>
+[root@li1467-130 03-2016]# ls<br>
+chemistry maths physics qpaper.txt<p></p>
+[root@li1467-130 03-2016]# cp -a qpaper.txt /testpool/professors/<br>
+[root@li1467-130 03-2016]# cd /testpool/professors/<br>
+[root@li1467-130 professors]# ls<br>
+chemistry maths physics qpaper.txt<p></p></blockquote>
+<p>The deleted file is back in its place.</p>
+<p>We can list all the available snapshots using zfs list:</p>
+<blockquote>[root@li1467-130 ~]# zfs list -t snapshot<br>
+NAME &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; USED &nbsp; &nbsp; AVAIL &nbsp; &nbsp;REFER &nbsp; 
+&nbsp;MOUNTPOINT<br>
+testpool/professors@03-2016 &nbsp; &nbsp;10.5K &nbsp; &nbsp; &nbsp; - 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;20.5K &nbsp; &nbsp; 
+&nbsp; -<p></p></blockquote>
+<p>Finally, let's destroy the snapshot using the zfs destroy command:</p>
+<blockquote><p>zfs destroy &lt;filesystem|volume@&lt;snap&gt;&gt;</p></blockquote>
+<blockquote>[root@li1467-130 ~]# zfs destroy testpool/professors@03-2016<p></p>
+[root@li1467-130 ~]# zfs list -t snapshot<br>
+no datasets available<p></p></blockquote>
+<h2>Conclusion</h2>
+<p>In this article, you have learnt how to install ZFS on CentOS 7 and 
+use some basic and important commands from zpool and zfs utilities. This
+ is not a comprehensive list. ZFS has much more capabilities and you can
+ explore them further from its <a href="http://zfsonlinux.org/" target="_blank">official page</a>.</p>
+<div class="code-block code-block-7" style="margin: 8px 0;">
+<script async="" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/adsbygoogle.js"></script>
+<!-- Blog Posts - After Second Paragraph -->
+<ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-1494089593353074" data-ad-slot="2401512540" data-adsbygoogle-status="done"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;width:336px;height:280px;" frameborder="0" width="336" height="280"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+									</div><!-- .entry-content -->
+
+								</div> <!-- .entry-container -->
+
+								<footer class="entry-footer">
+
+									<div class="entry-meta"><span class="categories-links"><i class="fa fa-folder-open"></i><a href="https://linoxide.com/category/linux-how-to/" rel="category tag">LINUX HOWTO</a>, <a href="https://linoxide.com/category/tools/" rel="category tag">OPEN SOURCE TOOLS</a></span><span class="tags-links"><i class="fa fa-tag"></i><a href="https://linoxide.com/tag/zfs-filesystem/" rel="tag">zfs Filesystem</a></span><meta itemprop="image" content="https://blog.linoxide.com/wp-content/themes/wp-prosperity/bg18.jpg"></div><!-- .entry-meta -->
+<div class="author-info ">
+
+	<h3 class="author-title">About B N Poornima</h3>
+
+		<img alt="" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/Poornima-Nagesh-Rao.jpg" srcset="https://blog.linoxide.com/wp-content/uploads/2017/07/Poornima-Nagesh-Rao.jpg" class="avatar avatar-120 photo" width="120" height="120">
+
+	<div class="author-description" itemprop="description">
+		<p class="author-bio">
+			She is a Linux professional working on Linux and open source since 
+2003. She loves blogging, travelling, photography and music.		</p>
+	</div><!-- .author-description -->
+
+	
+<div class="subicons author-icons">
+
+	<a data-toggle="tooltip" class="subicon rss" rel="external" title="" href="https://linoxide.com/author/bnpoornima/feed/" data-original-title="B N Poornima's RSS Feed"><i class="fa fa-rss"></i></a>
+</div>
+	<a class="author-archive-link" href="https://linoxide.com/author/bnpoornima/">Author Archive Page</a>
+
+</div><!-- .author-info -->
+<div class="tb-related-posts"><h3 class="related-title">Related Posts</h3><div class="related-wrap">			<div class="relpost">
+				
+	<a class="post-thumbnail medium" href="https://linoxide.com/linux-how-to/2-ways-create-docker-base-image/">
+					<img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/creating-base-image-using-scratch-400x52.png" class="medium-thumbnail wp-post-image" alt="creating docker base image using scratch" width="400" height="52">			</a>
+
+									<div class="rel-title-excerpt">
+													<a class="rel-title" href="https://linoxide.com/linux-how-to/2-ways-create-docker-base-image/" title="2 Ways to Create Your Own Docker Base Image">2 Ways to Create Your Own Docker Base Image</a>
+																			<div class="rel-excerpt"><p>Greetings to everyone, 
+today we'll learn about docker base Images and how we can build our 
+own.&nbsp;Docker is an Open Source project that provides an open 
+platform&nbsp;to pack, ship and run any application as a lightweight 
+container. It has no [...]</p>
+</div>
+											</div>
+							</div>
+					<div class="relpost">
+				
+	<a class="post-thumbnail medium" href="https://linoxide.com/linux-command/linux-command-to-show-list-all-users-in-the-system/">
+					<img class="wp-post-image medium-thumbnail" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/rel-default.jpg" alt="Linux Command To Show / List All Users In the System" itemprop="image">
+			</a>
+
+									<div class="rel-title-excerpt">
+													<a class="rel-title" href="https://linoxide.com/linux-command/linux-command-to-show-list-all-users-in-the-system/" title="Linux Command To Show / List All Users In the System">Linux Command To Show / List All Users In the System</a>
+																			<div class="rel-excerpt"><p>In Linux, you will be 
+able to find two types of users; which are normal users (created using 
+useradd command) and system users. Most of the system users are created 
+while installing the OS which creates the users during various [...]</p>
+</div>
+											</div>
+							</div>
+					<div class="relpost">
+				
+	<a class="post-thumbnail medium" href="https://linoxide.com/linux-how-to/vivaldi-multi-platform-browser-linux/">
+					<img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/Workstation-2015-01-28-09-35-52-e1422430725512-400x266.png" class="medium-thumbnail wp-post-image" alt="linoxide" width="400" height="266">			</a>
+
+									<div class="rel-title-excerpt">
+													<a class="rel-title" href="https://linoxide.com/linux-how-to/vivaldi-multi-platform-browser-linux/" title="Install Vivaldi in Linux - Awesome Multi Platform Browser">Install Vivaldi in Linux - Awesome Multi Platform Browser</a>
+																			<div class="rel-excerpt"><p>A new browser is on the 
+market.&nbsp;Vivaldi is a web browser based on Chromium / Blink&nbsp;(A 
+project from Google), especially created for users who "have problems 
+fitting all their open tabs on one screen" and for 
+better&nbsp;performance&nbsp;than the existing browsers [...]</p>
+</div>
+											</div>
+							</div>
+		</div></div><div class="google-ads-content"><h3 class="related-title">Suggested Articles</h3><script async="" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/adsbygoogle.js"></script>
+		<!-- Blog Posts - Matched Content Right Column -->
+		<ins class="adsbygoogle" style="display: inline-block; width: 856.1px; height: 400px;" data-ad-client="ca-pub-1494089593353074" data-ad-slot="2060232545" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:400px;margin:0;padding:0;position:relative;visibility:visible;width:856px;background-color:transparent"><ins id="aswift_2_anchor" style="display:block;border:none;height:400px;margin:0;padding:0;position:relative;visibility:visible;width:856px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;width:856px;height:400px;" frameborder="0" width="856" height="400"></iframe></ins></ins></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script></div>								</footer><!-- .entry-footer -->
+
+							</div> <!-- .entry-wrap -->							</article><!-- .post -->
+
+
+	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Have anything to say? <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://linoxide.com/tools/guide-install-use-zfs-centos-7/#respond" style="display:none;">Cancel Comment</a></small></h3>			<form action="https://linoxide.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate="">
+				<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-author"><span class="genericon genericon-user"></span><input id="author" placeholder="Name *" name="author" size="30" aria-required="true" type="text"></p>
+<p class="comment-form-email"><span class="genericon genericon-mail"></span><input id="email" placeholder="Email *" name="email" size="30" aria-required="true" type="text"></p>
+<p class="comment-form-comment"><textarea placeholder="" id="comment" name="comment" cols="45" rows="3" aria-required="true"></textarea></p>
+<p id="commentquiz" style="clear:both">
+All comments are subject to moderation.<br>
+<label for="quiz">What is linoxide based on ? Windows or Linux ? Type your answer into the box </label><input name="quiz" id="quiz" size="22" tabindex="4" type="text">
+</p><p class="form-submit"><input name="submit" id="submit" class="submit" value="Submit Your Comment" type="submit"> <input name="comment_post_ID" value="12998" id="comment_post_ID" type="hidden">
+<input name="comment_parent" id="comment_parent" value="0" type="hidden">
+</p>			</form>
+			</div><!-- #respond -->
+	
+<div id="comments" class="entry-comments">
+
+	
+		<div class="comments-container">
+
+			<h3 class="comments-title">
+				5 Comments			</h3>
+
+			
+			<ol class="comment-list">
+						<li id="comment-2525" class="comment even thread-even depth-1">
+			<article id="div-comment-2525" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn">Floyd Briscoe</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://linoxide.com/tools/guide-install-use-zfs-centos-7/#comment-2525">
+							<time datetime="2016-11-20T05:36:48+00:00">
+								November 20, 2016 at 5:36 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Excellent tutorial, very precise methodology and testing. Thank you.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel="nofollow" class="comment-reply-link" href="#comment-2525" onclick='return addComment.moveForm( "div-comment-2525", "2525", "respond", "12998" )' aria-label="Reply to Floyd Briscoe">Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-2583" class="comment odd alt thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-2583" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn"><a href="http://www.decware.com.ar/" rel="external nofollow" class="url">Fernando</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://linoxide.com/tools/guide-install-use-zfs-centos-7/#comment-2583">
+							<time datetime="2016-12-22T17:51:24+00:00">
+								December 22, 2016 at 5:51 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>New location for zfs-release: <a href="http://download.zfsonlinux.org/epel/zfs-release.el7_3.noarch.rpm" rel="nofollow">http://download.zfsonlinux.org/epel/zfs-release.el7_3.noarch.rpm</a></p>
+<p>In Install item replace:<br>
+yum localinstall --nogpgcheck <a href="http://archive.zfsonlinux.org/epel/zfs-release.el7.noarch.rpm" rel="nofollow">http://archive.zfsonlinux.org/epel/zfs-release.el7.noarch.rpm</a></p>
+<p>for </p>
+<p>yum install <a href="http://download.zfsonlinux.org/epel/zfs-release.el7_3.noarch.rpm" rel="nofollow">http://download.zfsonlinux.org/epel/zfs-release.el7_3.noarch.rpm</a></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel="nofollow" class="comment-reply-link" href="#comment-2583" onclick='return addComment.moveForm( "div-comment-2583", "2583", "respond", "12998" )' aria-label="Reply to Fernando">Reply</a></div>			</article><!-- .comment-body -->
+<ol class="children">
+		<li id="comment-2585" class="comment byuser comment-author-bobbin even depth-2">
+			<article id="div-comment-2585" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn">Bobbin Zachariah</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://linoxide.com/tools/guide-install-use-zfs-centos-7/#comment-2585">
+							<time datetime="2016-12-22T23:46:54+00:00">
+								December 22, 2016 at 11:46 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks Fernando</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel="nofollow" class="comment-reply-link" href="#comment-2585" onclick='return addComment.moveForm( "div-comment-2585", "2585", "respond", "12998" )' aria-label="Reply to Bobbin Zachariah">Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-2710" class="comment odd alt thread-even depth-1">
+			<article id="div-comment-2710" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn">Joe</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://linoxide.com/tools/guide-install-use-zfs-centos-7/#comment-2710">
+							<time datetime="2017-03-14T01:50:43+00:00">
+								March 14, 2017 at 1:50 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Excellent intro. Thanks!</p>
+<p>I thought after "export" the host can still use the exported pool but
+ apparently it's no longer available. If I setup a JBOD using zfs and 
+want to share it with many hosts, should I use NFS or some better way?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel="nofollow" class="comment-reply-link" href="#comment-2710" onclick='return addComment.moveForm( "div-comment-2710", "2710", "respond", "12998" )' aria-label="Reply to Joe">Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-2751" class="comment even thread-odd thread-alt depth-1">
+			<article id="div-comment-2751" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn">huang</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://linoxide.com/tools/guide-install-use-zfs-centos-7/#comment-2751">
+							<time datetime="2017-04-08T17:21:07+00:00">
+								April 8, 2017 at 5:21 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>It's very nice!!! Thank you!!!</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel="nofollow" class="comment-reply-link" href="#comment-2751" onclick='return addComment.moveForm( "div-comment-2751", "2751", "respond", "12998" )' aria-label="Reply to huang">Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+			</ol><!-- .comment-list -->
+
+			
+			
+		</div><!-- .comments-container -->
+
+	
+	
+
+</div><!-- #comments --></div>
+					
+				</main><!-- END CONTENT AREA (.site-content) -->
+
+				
+			</div><!-- END PRIMARY CONTENT AREA (#primary) -->
+
+
+
+			<!-- SECONDARY CONTENT AREA (#secondary) -->
+			<div id="secondary" class="sidebar-area">
+
+				<!-- SIDEBAR-WIDE TOP (.sidebar-wide-top) -->
+				<aside class="sidebar sidebar-wide-top" itemscope="itemscope" itemtype="http://schema.org/WPSideBar">
+					<section id="text-18" class="widget widget_text"><div class="widget-wrap">			<div class="textwidget">
+<div class="social_share_widget">
+<div class="social_share_widget_totalcount"> <span class="share_totalcount_count">15.9K</span><span class="share_totalcount_count_label">Follows</span> </div>
+<ul class="et_social_icons_container">
+<li class="et_social_twitter"> <a href="https://twitter.com/LinOxide" class="et_social_follow" data-social_name="twitter" data-social_type="follow" target="_blank"><i class="fa fa-twitter"></i>
+<div class="et_social_network_label">
+<div class="et_social_networkname">Twitter</div>
+<div class="et_social_count"> <span>970</span> <span class="et_social_count_label">Followers</span> </div>
+<p></p></div>
+</a><p><a href="https://twitter.com/LinOxide" class="et_social_follow" data-social_name="twitter" data-social_type="follow" target="_blank"> <span class="et_social_overlay"></span></a></p></li>
+<li class="et_social_youtube"> <a href="https://www.youtube.com/channel/UC9y60e21PnE5xmc0PfcKgjw" class="et_social_follow" data-social_name="youtube" data-social_type="follow" target="_blank"> <i class="fa fa-youtube-play"></i>
+<div class="et_social_network_label">
+<div class="et_social_networkname">YouTube</div>
+<div class="et_social_count"> <span>134</span> <span class="et_social_count_label">Followers</span></div>
+</div>
+</a><p><a href="https://www.youtube.com/channel/UC9y60e21PnE5xmc0PfcKgjw" class="et_social_follow" data-social_name="youtube" data-social_type="follow" target="_blank"><span class="et_social_overlay"></span> </a> </p></li>
+<li class="et_social_facebook"> <a href="https://www.facebook.com/Linoxide" class="et_social_follow" data-social_name="twitter" data-social_type="follow" target="_blank"> <i class="fa fa-facebook"></i>
+<div class="et_social_network_label">
+<div class="et_social_networkname">Facebook</div>
+<div class="et_social_count"> <span>14.0K</span> <span class="et_social_count_label">Followers</span></div>
+</div>
+</a><p><a href="https://www.facebook.com/Linoxide" class="et_social_follow" data-social_name="twitter" data-social_type="follow" target="_blank"><span class="et_social_overlay"></span> </a> </p></li>
+<li class="et_social_google"> <a href="https://plus.google.com/+Linoxide" class="et_social_follow" data-social_name="twitter" data-social_type="follow" target="_blank"> <i class="fa fa-google"></i>
+<div class="et_social_network_label">
+<div class="et_social_networkname">Google Plus</div>
+<div class="et_social_count"><span>816</span><span class="et_social_count_label">Followers</span></div>
+</div>
+</a><p><a href="https://plus.google.com/+Linoxide" class="et_social_follow" data-social_name="twitter" data-social_type="follow" target="_blank"><span class="et_social_overlay"></span></a></p></li>
+</ul></div>
+</div>
+		</div></section><section id="text-20" class="widget widget_text"><div class="widget-wrap">			<div class="textwidget"><p><script async="" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/adsbygoogle.js"></script><br>
+<!-- Blog Posts - Right Column Row1 --><br>
+<ins class="adsbygoogle" style="display: inline-block; width: 336px; height: 280px;" data-ad-client="ca-pub-1494089593353074" data-ad-slot="9479741343" data-adsbygoogle-status="done"><ins id="aswift_3_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><ins id="aswift_3_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;width:336px;height:280px;" frameborder="0" width="336" height="280"></iframe></ins></ins></ins><br>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+</div>
+		</div></section><section id="recent-posts-widget-with-thumbnails-2" class="widget recent-posts-widget-with-thumbnails"><div class="widget-wrap"><div id="rpwwt-recent-posts-widget-with-thumbnails-2" class="rpwwt-widget">
+	<h2 class="widget-title widgettitle">Recent Articles</h2>	<ul>
+			<li><a href="https://linoxide.com/linux-how-to/mmwatch-alternative-linux-watch-command/"><img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/mmwatch-tool-150x150.jpg" class="attachment-150x150 size-150x150 wp-post-image" alt="mmwatch tool" width="150" height="150"><span class="rpwwt-post-title">mmwatch - Alternative Linux Watch Command which Print Rates</span></a></li>
+			<li><a href="https://linoxide.com/linux-how-to/install-spotify-fedora-26/"><img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/spotify-fedora26-150x150.jpg" class="attachment-150x150 size-150x150 wp-post-image" alt="spotify fedora26" width="150" height="150"><span class="rpwwt-post-title">How to Install Spotify on Fedora 26</span></a></li>
+			<li><a href="https://linoxide.com/linux-how-to/list-number-packages-updates-linux/"><img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/Number-packages-updates-linux-150x150.jpg" class="attachment-150x150 size-150x150 wp-post-image" alt="List number packages updates" width="150" height="150"><span class="rpwwt-post-title">How to List Packages Having Updates Available in Linux</span></a></li>
+			<li><a href="https://linoxide.com/ubuntu-how-to/enable-disable-unattended-upgrades-ubuntu-16-04/"><img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/unattended-upgrades-150x150.jpg" class="attachment-150x150 size-150x150 wp-post-image" alt="Unattended upgrades" width="150" height="150"><span class="rpwwt-post-title">How to Enable / Disable Unattended Upgrades in Ubuntu 16.04</span></a></li>
+			<li><a href="https://linoxide.com/linux-how-to/heimdall-tool-manage-vulnerable-packages-linux-unix/"><img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/heimdall-vulnerability-management-150x150.jpg" class="attachment-150x150 size-150x150 wp-post-image" alt="heimdall vulnerability management" width="150" height="150"><span class="rpwwt-post-title">Heimdall - A Tool to Manage Vulnerable Packages on Linux &amp; Unix Systems</span></a></li>
+			<li><a href="https://linoxide.com/linux-how-to/show-progress-bar-linux-commands/"><img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/progress-bar-linux-1-150x150.jpg" class="attachment-150x150 size-150x150 wp-post-image" alt="progress bar linux" width="150" height="150"><span class="rpwwt-post-title">How to Show Progress Bar for Linux Selective Commands</span></a></li>
+		</ul>
+</div><!-- .rpwwt-widget -->
+</div></section><section id="text-22" class="widget widget_text"><div class="widget-wrap">			<div class="textwidget"><p><script async="" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/adsbygoogle.js"></script><br>
+<!-- Blog Posts - Right Column Row2 --><br>
+<ins class="adsbygoogle" style="display: inline-block; width: 300px; height: 600px;" data-ad-client="ca-pub-1494089593353074" data-ad-slot="6247073342" data-adsbygoogle-status="done"><ins id="aswift_4_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_4_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_4" name="aswift_4" style="left:0;position:absolute;top:0;width:300px;height:600px;" frameborder="0" width="300" height="600"></iframe></ins></ins></ins><br>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+</div>
+		</div></section>
+<!-- WordPress Popular Posts Plugin v3.3.4 [W] [weekly] [views] [custom] -->
+<section id="wpp-3" class="widget popular-posts"><div class="widget-wrap">
+<h2 class="widget-title widgettitle">Recent Popular Posts</h2>
+<ul class="wpp-list">
+<li>
+<a href="https://linoxide.com/linux-command/essential-linux-basic-commands/"></a><a href="https://linoxide.com/linux-command/essential-linux-basic-commands/" title="38 Basic Linux Commands To Learn With Examples" target="_self"><img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/547-featured-150x150.png" title="38 Basic Linux Commands To Learn With Examples" alt="38 Basic Linux Commands To Learn With Examples" class="wpp-thumbnail wpp_cached_thumb wpp_featured" width="150" height="150"></a>  
+<a href="https://linoxide.com/linux-command/essential-linux-basic-commands/" title="38 Basic Linux Commands To Learn With Examples" class="wpp-post-title" target="_self">38 Basic Linux Commands To Learn With Examples</a> 
+
+
+</li>
+<li>
+<a href="https://linoxide.com/how-tos/centos-7-step-by-step-screenshots/"></a><a href="https://linoxide.com/how-tos/centos-7-step-by-step-screenshots/" title="How to Install CentOS 7 Step by Step with Screenshots" target="_self"><img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/7899-featured-150x150.png" title="How to Install CentOS 7 Step by Step with Screenshots" alt="How to Install CentOS 7 Step by Step with Screenshots" class="wpp-thumbnail wpp_cached_thumb wpp_featured" width="150" height="150"></a>  
+<a href="https://linoxide.com/how-tos/centos-7-step-by-step-screenshots/" title="How to Install CentOS 7 Step by Step with Screenshots" class="wpp-post-title" target="_self">How to Install CentOS 7 Step by Step with Screenshots</a> 
+
+
+</li>
+<li>
+<a href="https://linoxide.com/linux-command/mv-command-linux/"></a><a href="https://linoxide.com/linux-command/mv-command-linux/" title="Moving or Rename File / Directory in Linux - 10 Practical mv Command Examples" target="_self"><img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/7131-featured-150x150.png" title="Moving or Rename File / Directory in Linux - 10 Practical mv Command Examples" alt="Moving or Rename File / Directory in Linux - 10 Practical mv Command Examples" class="wpp-thumbnail wpp_cached_thumb wpp_featured" width="150" height="150"></a>  
+<a href="https://linoxide.com/linux-command/mv-command-linux/" title="Moving or Rename File / Directory in Linux - 10 Practical mv Command Examples" class="wpp-post-title" target="_self">Moving or Rename File / Directory in Linux - 10 Practical mv Command Examples</a> 
+
+
+</li>
+<li>
+<a href="https://linoxide.com/linux-shell-script/shell-scripting-interview-questions-answers/"></a><a href="https://linoxide.com/linux-shell-script/shell-scripting-interview-questions-answers/" title="70 Shell Scripting Interview Questions &amp; Answers" target="_self"><img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/penguine-only.jpg" title="70 Shell Scripting Interview Questions &amp; Answers" alt="70 Shell Scripting Interview Questions &amp; Answers" class="wpp-thumbnail wpp_def_noPath wpp_featured" width="150" height="150"></a>  
+<a href="https://linoxide.com/linux-shell-script/shell-scripting-interview-questions-answers/" title="70 Shell Scripting Interview Questions &amp; Answers" class="wpp-post-title" target="_self">70 Shell Scripting Interview Questions &amp; Answers</a> 
+
+
+</li>
+<li>
+<a href="https://linoxide.com/linux-how-to/linux-interview-questions-answers/"></a><a href="https://linoxide.com/linux-how-to/linux-interview-questions-answers/" title="26 Linux Interview Questions and Answers (Basic and Scenarios)" target="_self"><img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/8026-featured-150x150.jpg" title="26 Linux Interview Questions and Answers (Basic and Scenarios)" alt="26 Linux Interview Questions and Answers (Basic and Scenarios)" class="wpp-thumbnail wpp_cached_thumb wpp_featured" width="150" height="150"></a>  
+<a href="https://linoxide.com/linux-how-to/linux-interview-questions-answers/" title="26 Linux Interview Questions and Answers (Basic and Scenarios)" class="wpp-post-title" target="_self">26 Linux Interview Questions and Answers (Basic and Scenarios)</a> 
+
+
+</li>
+<li>
+<a href="https://linoxide.com/linux-how-to/heimdall-tool-manage-vulnerable-packages-linux-unix/"></a><a href="https://linoxide.com/linux-how-to/heimdall-tool-manage-vulnerable-packages-linux-unix/" title="Heimdall - A Tool to Manage Vulnerable Packages on Linux &amp; Unix Systems" target="_self"><img src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/16825-featured-150x150.jpg" title="Heimdall - A Tool to Manage Vulnerable Packages on Linux &amp; Unix Systems" alt="Heimdall - A Tool to Manage Vulnerable Packages on Linux &amp; Unix Systems" class="wpp-thumbnail wpp_cached_thumb wpp_featured" width="150" height="150"></a>  
+<a href="https://linoxide.com/linux-how-to/heimdall-tool-manage-vulnerable-packages-linux-unix/" title="Heimdall - A Tool to Manage Vulnerable Packages on Linux &amp; Unix Systems" class="wpp-post-title" target="_self">Heimdall - A Tool to Manage Vulnerable Packages on Linux &amp; Unix Systems</a> 
+
+
+</li>
+
+</ul>
+</div></section>
+<!-- End WordPress Popular Posts Plugin v3.3.4 -->
+<section id="text-23" class="widget widget_text"><div class="widget-wrap"><h2 class="widget-title widgettitle">SUBSCRIBE TO FREE NEWSLETTER</h2>			<div class="textwidget"><form class="subscribe-box" action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow">
+<div class="textwidget">
+<div class="feedwidgetdiv">
+<h4>Get Delivered Free In Your Inbox Something New About Linux</h4>
+<p>Join <b style="color: #ec9c3b;">10400+</b> Linux Troop</p>
+<div><input name="email" required="required" placeholder="Enter Your Email *" type="email"><input class="feedsubmit" value="Subscribe" type="submit"><input name="uri" value="linoxideblog" type="hidden"><input name="loc" value="en_US" type="hidden"></div>
+<p>100% privacy – We will never spam you</p></div>
+</div>
+</form>
+</div>
+		</div></section>				</aside><!-- END SIDEBAR-WIDE TOP (.sidebar-wide-top) -->
+
+				
+			</div><!-- END SECONDARY CONTENT AREA (#secondary) -->
+
+
+		</div><!-- .site-inner-wrap -->
+
+		</div><!-- END INNER SITE CONTAINER (.site-inner) -->
+
+				<!-- ABOVE FOOTER BANNER -->
+		<div class="banner-ad ad-above-footer" style="background-color:">
+			<div class="wrap">
+				<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-47319559-1', 'auto');
+  ga('send', 'pageview');
+
+</script>			</div>
+		</div>
+	
+		
+			<!-- FOOTER WIDGETS (#footer-widgets) -->
+			<div id="footer-widgets">
+				<div class="wrap">
+					<div class="row">
+						<!-- FOOTER WIDGETS LEFT (.footer-widgets-left) -->
+						<aside class="sidebar col-md-4 footer-widgets-left">
+							<section id="category_post_list_widget-4" class="widget widget_category_post_list_widget"><div class="widget-wrap"><h2 class="widget-title widgettitle">LINUX TOOLS</h2>		<script type="text/javascript">
+	        jQuery(document).ready(function() {
+	        		var effect = 'none';
+	                if(effect != 'none')
+	                {
+	                    jQuery('.news_scroll_1500966000_6685').cycle({ 
+	                        fx: effect, 
+	                        timeout: '3000',
+	                        random:  1
+	                    }); 
+	                }
+	            });
+	    </script>
+	   	<div class="post_content" style="height:;px; width:;px;">
+			<div class="ovflhidden news_scroll news_scroll_1500966000_6685">				
+										
+		            		<div class="fl newsdesc">								
+																<h2><a class="post-title" href="https://linoxide.com/linux-how-to/mmwatch-alternative-linux-watch-command/" rel="bookmark" title="Permanent link to mmwatch - Alternative Linux Watch Command which Print Rates">mmwatch - Alternative Linux Watch Command which Print Rates</a></h2>
+																	<p class="post_date">24 Jul, 2017</p>
+															</div>												
+												
+		            		<div class="fl newsdesc">								
+																<h2><a class="post-title" href="https://linoxide.com/linux-how-to/install-spotify-fedora-26/" rel="bookmark" title="Permanent link to How to Install Spotify on Fedora 26">How to Install Spotify on Fedora 26</a></h2>
+																	<p class="post_date">21 Jul, 2017</p>
+															</div>												
+												
+		            		<div class="fl newsdesc">								
+																<h2><a class="post-title" href="https://linoxide.com/linux-how-to/list-number-packages-updates-linux/" rel="bookmark" title="Permanent link to How to List Packages Having Updates Available in Linux">How to List Packages Having Updates Available in Linux</a></h2>
+																	<p class="post_date">20 Jul, 2017</p>
+															</div>												
+												
+		            		<div class="fl newsdesc">								
+																<h2><a class="post-title" href="https://linoxide.com/ubuntu-how-to/enable-disable-unattended-upgrades-ubuntu-16-04/" rel="bookmark" title="Permanent link to How to Enable / Disable Unattended Upgrades in Ubuntu 16.04">How to Enable / Disable Unattended Upgrades in Ubuntu 16.04</a></h2>
+																	<p class="post_date">19 Jul, 2017</p>
+															</div>												
+												
+		            		<div class="fl newsdesc">								
+																<h2><a class="post-title" href="https://linoxide.com/linux-how-to/heimdall-tool-manage-vulnerable-packages-linux-unix/" rel="bookmark" title="Permanent link to Heimdall - A Tool to Manage Vulnerable Packages on Linux &amp; Unix Systems">Heimdall - A Tool to Manage Vulnerable Packages on Linux &amp; Unix Systems</a></h2>
+																	<p class="post_date">18 Jul, 2017</p>
+															</div>												
+									</div>
+		</div>
+		<div class="view_all_link">
+					</div>
+		</div></section>						</aside><!-- END FOOTER WIDGETS LEFT (.footer-widgets-left) -->
+
+						<!-- FOOTER WIDGETS CENTER (.footer-widgets-center) -->
+						<aside class="sidebar col-md-4 footer-widgets-center">
+							<section id="category_post_list_widget-5" class="widget widget_category_post_list_widget"><div class="widget-wrap"><h2 class="widget-title widgettitle">LINUX COMMANDS</h2>		<script type="text/javascript">
+	        jQuery(document).ready(function() {
+	        		var effect = 'none';
+	                if(effect != 'none')
+	                {
+	                    jQuery('.news_scroll_1500966000_6525').cycle({ 
+	                        fx: effect, 
+	                        timeout: '3000',
+	                        random:  1
+	                    }); 
+	                }
+	            });
+	    </script>
+	   	<div class="post_content" style="height:;px; width:;px;">
+			<div class="ovflhidden news_scroll news_scroll_1500966000_6525">				
+										
+		            		<div class="fl newsdesc">								
+																<h2><a class="post-title" href="https://linoxide.com/linux-command/15-examples-screen-command-linux-terminal/" rel="bookmark" title="Permanent link to 15 Linux Screen Command for Dealing Terminal Sessions">15 Linux Screen Command for Dealing Terminal Sessions</a></h2>
+																	<p class="post_date">21 Jun, 2017</p>
+															</div>												
+												
+		            		<div class="fl newsdesc">								
+																<h2><a class="post-title" href="https://linoxide.com/linux-how-to/methods-find-top-files-directory-linux/" rel="bookmark" title="Permanent link to 6 Ways to Find Largest Top Files and Directory in Linux">6 Ways to Find Largest Top Files and Directory in Linux</a></h2>
+																	<p class="post_date">27 Apr, 2017</p>
+															</div>												
+												
+		            		<div class="fl newsdesc">								
+																<h2><a class="post-title" href="https://linoxide.com/linux-command/linux-df-command/" rel="bookmark" title="Permanent link to 13 Practical df Command Examples to Check Disk Space in Linux">13 Practical df Command Examples to Check Disk Space in Linux</a></h2>
+																	<p class="post_date">24 Mar, 2017</p>
+															</div>												
+												
+		            		<div class="fl newsdesc">								
+																<h2><a class="post-title" href="https://linoxide.com/linux-how-to/linux-hexdump-command-examples/" rel="bookmark" title="Permanent link to How to Use Linux Hexdump Command with Practical Examples">How to Use Linux Hexdump Command with Practical Examples</a></h2>
+																	<p class="post_date">13 Mar, 2017</p>
+															</div>												
+												
+		            		<div class="fl newsdesc">								
+																<h2><a class="post-title" href="https://linoxide.com/linux-how-to/linux-kill-command-examples/" rel="bookmark" title="Permanent link to A Guide to Kill Process in Different Ways on Linux">A Guide to Kill Process in Different Ways on Linux</a></h2>
+																	<p class="post_date">20 Sep, 2016</p>
+															</div>												
+									</div>
+		</div>
+		<div class="view_all_link">
+					</div>
+		</div></section>						</aside><!-- END FOOTER WIDGET CENTER (.footer-widgets-center) -->
+
+						<!-- FOOTER WIDGETS RIGHT (.footer-widgets-right) -->
+						<aside class="sidebar col-md-4 footer-widgets-right">
+							<section id="text-19" class="widget widget_text"><div class="widget-wrap"><h2 class="widget-title widgettitle">SUBSCRIBE TO FREE NEWSLETTER</h2>			<div class="textwidget"><form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow">
+<div class="textwidget">
+<div class="feedwidgetdiv">
+<h4>Get Delivered Free In Your Inbox Something New About Linux</h4>
+<p>Join <b style="color: #ec9c3b;">10400+</b> Linux Troop</p>
+<div style="text-align: center;"><input name="email" required="required" placeholder="Enter Your Email *" type="email"> <input class="feedsubmit" value="Subscribe" type="submit"> <input name="uri" value="linoxideblog" type="hidden"> <input name="loc" value="en_US" type="hidden"></div>
+<p style="margin-bottom: 0px;">100% privacy – We will never spam you</p>
+</div>
+</div>
+</form>
+</div>
+		</div></section>						</aside><!-- END FOOTER WIDGETS LEFT (.footer-widgets-right) -->
+					</div><!-- .row -->
+				</div><!-- END .wrap -->
+			</div><!-- END FOOTER WIDGETS (#footer-widgets) -->
+		
+		<!-- SITE FOOTER (.site-footer) -->
+		<footer class="site-footer" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
+
+			<div class="wrap">
+
+				
+<div class="subicons site-icons">
+
+	<a data-toggle="tooltip" data-placement="bottom" class="subicon rss" rel="external" title="" href="https://linoxide.com/feed/" data-original-title="RSS Feed"><i class="fa fa-rss"></i></a><a data-toggle="tooltip" data-placement="bottom" class="subicon twitter" rel="external" title="" href="https://twitter.com/LinOxide" data-original-title="Connect on Twitter"><i class="fa fa-twitter"></i></a><a data-toggle="tooltip" data-placement="bottom" class="subicon facebook" rel="external" title="" href="https://www.facebook.com/Linoxide" data-original-title="Connect on Facebook"><i class="fa fa-facebook"></i></a><a data-toggle="tooltip" data-placement="bottom" class="subicon googleplus" rel="external" title="" href="https://plus.google.com/+Linoxide" data-original-title="Connect on Google+"><i class="fa fa-google-plus"></i></a><a data-toggle="tooltip" data-placement="bottom" class="subicon youtube" rel="external" title="" href="https://www.youtube.com/channel/UC9y60e21PnE5xmc0PfcKgjw" data-original-title="Connect on Youtube"><i class="fa fa-youtube-play"></i></a>
+</div><ul id="footernav" class="footer-nav-menu"><li id="menu-item-16860" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16860"><a href="https://linoxide.com/tos/">Terms of Service</a></li>
+<li id="menu-item-16861" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16861"><a href="https://linoxide.com/privacy-policy/">PRIVACY</a></li>
+<li id="menu-item-16862" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16862"><a href="https://linoxide.com/contact-us/">CONTACT</a></li>
+</ul> 
+						<div class="site-info hasnav">
+							Copyright © 2017 LinOxide.  All rights reserved						</div>
+					
+			</div><!-- .wrap -->
+
+		</footer><!-- END SITE FOOTER (.site-footer) -->
+
+	</div><!-- END OUTER SITE CONTAINER (.site-container) -->
+
+		  <style type="text/css">
+	        .entry-meta span.author  span {
+	        	  margin-right:0;
+	        }
+		    #category_post_list_widget-5 
+		    .widgettitle, #category_post_list_widget-4 .widgettitle, #text-16 .widgettitle, .widget_color_bg_tag_cloud .widgettitle{
+		         background: #12b7d5!important;
+		             font-size: 16px !important;
+				    font-weight: 600 !important;
+				    text-transform: uppercase;
+				    margin-bottom: 6px !important;
+				   
+				    text-align: center;
+				    padding: 10px;
+				    border-bottom: none;
+		    
+		   }
+
+		  #footer-widgets .post_content {
+		   	      border:none;
+		   }
+		   .fl.newsdesc {
+			    border-bottom: 1px solid #cfc7c7;
+			    margin-bottom: 10px;
+			}
+		   #text-16 form {
+			    background: #194357;
+			    border-radius: 11px;
+			}
+		 body .fl.newsdesc h2 a:hover{
+		 	color:#000!important;
+		 }
+	  </style>
+	<script type="text/javascript" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/comment-reply.js"></script>
+<script type="text/javascript" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/bootstrap.js"></script>
+<script type="text/javascript" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/plugins.js"></script>
+<script type="text/javascript" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/effect.js"></script>
+<script type="text/javascript" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/jquery.js"></script>
+<script type="text/javascript" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/jquery_002.js"></script>
+<script type="text/javascript" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/manual-trigger.js"></script>
+<script type="text/javascript" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/jquery_003.js"></script>
+<script type="text/javascript" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/functions.js"></script>
+<script type="text/javascript" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/q2w3-fixed-widget.js"></script>
+<script type="text/javascript" src="A%20Guide%20to%20Install%20and%20Use%20ZFS%20on%20CentOS%207_files/wp-embed.js"></script>
+
+	<div id="backtotop" style="display: none;"><i class="fa fa-angle-up fa-lg"></i></div>
+
+
+
+
+</body></html>
+<!-- Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/
+
+Object Caching 2894/3037 objects using disk
+Page Caching using disk: enhanced
+Content Delivery Network via blog.linoxide.com
+Database Caching 2/59 queries in 0.213 seconds using disk
+
+ Served from: linoxide.com @ 2017-07-25 03:36:18 by W3 Total Cache -->

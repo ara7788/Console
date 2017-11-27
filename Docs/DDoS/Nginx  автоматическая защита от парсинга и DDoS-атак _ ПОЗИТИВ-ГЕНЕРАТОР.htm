@@ -1,0 +1,721 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="https://www.w3.org/1999/xhtml" dir="ltr" lang="ru-RU-lite">
+
+<head profile="https://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Nginx: автоматическая защита от парсинга и DDoS-атак | ПОЗИТИВ-ГЕНЕРАТОР</title>
+<meta name="description" content="Позитивные статьи на любой вкус. Документация и новое в сети, технологии и размышления в сфере ИТ. Ничего лишнего." />
+<meta name="keywords" content="Позитивные статьи на любой вкус. Документация и новое в сети, технологии и размышления в сфере ИТ. Документация, новости, скрипты, софт, бесплатно." />
+<link rel="stylesheet" href="https://nagg.ru/wp-content/themes/iRecipes/css/screen.css" type="text/css" media="screen, projection" />
+<link rel="shortcut icon" href="/wp-content/uploads/favicon.gif" type="image/x-icon" />
+<link rel="stylesheet" href="https://nagg.ru/wp-content/themes/iRecipes/css/print.css" type="text/css" media="print" />
+<!--[if IE]><link rel="stylesheet" href="https://nagg.ru/wp-content/themes/iRecipes/css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+<link media="screen" type="text/css" href="https://nagg.ru/wp-content/themes/iRecipes/style.css" rel="stylesheet" />
+<!--[if IE 6]>
+	<script src="https://nagg.ru/wp-content/themes/iRecipes/js/pngfix.js"></script>
+<![endif]--> 
+<link href="https://nagg.ru/feed" title="ПОЗИТИВ ГЕНЕРАТОР RSS Feed" type="application/rss+xml" rel="alternate"/>
+<link rel="alternate" type="application/atom+xml" title="ПОЗИТИВ-ГЕНЕРАТОР Atom Feed" href="https://nagg.ru/feed/atom/" />
+<link href="https://nagg.ru/xmlrpc.php" rel="pingback"/>
+<script src="https://nagg.ru/wp-content/themes/iRecipes/menu/mootools-1.2.1-core-yc.js" type="text/javascript"></script>
+<link rel="stylesheet" href="https://nagg.ru/wp-content/themes/iRecipes/menu/MenuMatic.css" type="text/css" media="screen" charset="utf-8" />
+<!--[if lt IE 7]>
+	<link rel="stylesheet" href="https://nagg.ru/wp-content/themes/iRecipes/menu/MenuMatic-ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+<!-- Load the MenuMatic Class -->
+<script src="https://nagg.ru/wp-content/themes/iRecipes/menu/MenuMatic_0.68.3.js" type="text/javascript" charset="utf-8"></script>
+
+
+
+			<script type="text/javascript">//<![CDATA[
+			// Google Analytics for WordPress by Yoast v4.2.8 | http://yoast.com/wordpress/google-analytics/
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-10836926-1']);
+							_gaq.push(['_trackPageview']);
+			(function () {
+				var ga = document.createElement('script');
+				ga.type = 'text/javascript';
+				ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(ga, s);
+			})();
+			//]]></script>
+			<link rel="alternate" type="application/rss+xml" title="ПОЗИТИВ-ГЕНЕРАТОР &raquo; Лента комментариев к &laquo;Nginx: автоматическая защита от парсинга и DDoS-атак&raquo;" href="https://nagg.ru/2017/04/nginx-avtomaticheskaya-zashhita-ot-parsinga-i-ddos-atak/feed/" />
+<link rel='stylesheet' id='wp-pagenavi-css'  href='https://nagg.ru/wp-content/plugins/wp-pagenavi/pagenavi-css.css?ver=2.70' type='text/css' media='all' />
+<link rel='stylesheet' id='quotescollection-css'  href='https://nagg.ru/wp-content/plugins/quotes-collection/css/quotes-collection.css?ver=2.0.4' type='text/css' media='all' />
+<script type='text/javascript' src='https://nagg.ru/wp-includes/js/l10n.js?ver=20101110'></script>
+<script type='text/javascript' src='https://nagg.ru/wp-includes/js/jquery/jquery.js?ver=1.6.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var quotescollectionAjax = {
+	ajaxUrl: "https://nagg.ru/wp-admin/admin-ajax.php",
+	nonce: "705ca06be2",
+	nextQuote: "Next quote &raquo;",
+	loading: "Loading...",
+	error: "Error getting quote",
+	autoRefreshMax: "20",
+	autoRefreshCount: "0"
+};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://nagg.ru/wp-content/plugins/quotes-collection/js/quotes-collection.js?ver=2.0.4'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://nagg.ru/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://nagg.ru/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='ПОЗИТИВ-ГЕНЕРАТОР' href='https://nagg.ru/' />
+<link rel='start' title='Asterisk &#8211; храним CDR в БД MySQL.' href='https://nagg.ru/2010/09/asterisk-mysql-cd/' />
+<link rel='prev' title='Docker + Consul. Начало' href='https://nagg.ru/2016/11/docker-consul-nachalo/' />
+<link rel='next' title='CentOS: udev renamed network interface eth0 to em1' href='https://nagg.ru/2017/04/centos-udev-renamed-network-interface-eth0-to-em1/' />
+<meta name="generator" content="WordPress 3.2.1" />
+<link rel='shortlink' href='https://nagg.ru/?p=3345' />
+
+<!-- All in One SEO Pack 1.6.15.3 by Michael Torbert of Semper Fi Web Design[313,444] -->
+<meta name="keywords" content="ddos,nginx,testcookie" />
+<!-- /all in one seo pack -->
+<!-- HeadSpace SEO 3.6.41 by John Godley - urbangiraffe.com -->
+<!-- HeadSpace -->
+	
+<!-- START: Syntax Highlighter ComPress -->
+<script type="text/javascript" src="https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shCore.js"></script>
+<script type="text/javascript" src="https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shAutoloader.js"></script>
+<link type="text/css" rel="stylesheet" href="https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/styles/shCoreDefault.css"/>
+<!-- END: Syntax Highlighter ComPress -->
+
+  <style type="text/css">
+body { background-color: #ffffff; }
+</style>
+<script type="text/javascript" src="https://userapi.com/js/api/openapi.js?22"></script>
+<script type="text/javascript">
+  VK.init({
+    apiId: 5336856,
+    onlyWidgets: true
+  });
+</script>
+
+<style type="text/css" id="syntaxhighlighteranchor"></style>
+</head>
+<body>
+<script type="text/javascript">
+	window.addEvent('domready', function() {			
+			var myMenu = new MenuMatic();
+	});	
+</script>
+	<div id="wrapper">
+		<div id="container" class="container">  
+            <div class="span-24">
+                <div id="topsearch" > 
+            		 
+<div id="search">
+    <form method="get" id="searchform" action="https://nagg.ru/"> 
+        <input type="text" value="Поиск интересного" 
+            name="s" id="s"  onblur="if (this.value == '')  {this.value = 'Поиск интересного';}"  
+            onfocus="if (this.value == 'Поиск интересного') {this.value = '';}" />
+        <input type="image" src="https://nagg.ru/wp-content/themes/iRecipes/images/search.gif" style="border:0; vertical-align: top;" /> 
+    </form>
+</div> 
+            	</div>
+            </div>
+            
+			<div class="span-20">
+    			<div id="pagemenucontainer">
+    				                        <ul id="pagemenu">
+    						<li ><a href="https://nagg.ru/">ГЛАВНАЯ</a></li>
+    						<li class="page_item page-item-816"><a href="https://nagg.ru/quote/" title="Цитатник">Цитатник</a></li>
+<li class="page_item page-item-685"><a href="https://nagg.ru/blog/" title="БЛОГГЕР">БЛОГГЕР</a></li>
+    					</ul>
+                            			</div>
+	       	</div>
+            <div class="span-4 last">
+                <div class="topright">
+					<a href="https://nagg.ru/feed/"><img src="https://nagg.ru/wp-content/themes/iRecipes/images/rss.png"  style="margin:0 2px 0 0; vertical-align:top;"  /> RSS Feed</a>		
+					&nbsp; <a href="http://twitter.com/NAGGRU" title="Следуй за нами на Twitter!"><img src="https://nagg.ru/wp-content/themes/iRecipes/images/twitter.png"  style="margin:0 2px 0 0; vertical-align:top;"  title="Следуй за нами на Twitter!" /> Twitter</a>				</div>
+            </div>
+            
+            
+			<div id="header" class="span-24">
+				<div class="span-11">
+											<h1><a href="https://nagg.ru">ПОЗИТИВ-ГЕНЕРАТОР</a></h1>
+						<h2></h2>
+											
+				</div>
+				
+				<div class="span-13 last" style="padding-top: 12px; text-align:center;">
+									</div>
+			</div>
+			
+			<div class="span-24">
+				
+				<div id="navcontainer">
+					                            <ul id="nav">
+                                <li ><a href="https://nagg.ru">ГЛАВНАЯ</a></li>
+        							<li class="cat-item cat-item-6"><a href="https://nagg.ru/category/hack/" title="Просмотреть все записи в рубрике &laquo;HACK TOOLS&raquo;">HACK TOOLS</a>
+</li>
+	<li class="cat-item cat-item-179"><a href="https://nagg.ru/category/dlya-chaynikov/" title="Настройка PPPoE-соединения для разных ОС">Для &quot;чайников&quot;</a>
+<ul class='children'>
+	<li class="cat-item cat-item-201"><a href="https://nagg.ru/category/dlya-chaynikov/vsyachina/" title="Просмотреть все записи в рубрике &laquo;Всячина&raquo;">Всячина</a>
+</li>
+	<li class="cat-item cat-item-192"><a href="https://nagg.ru/category/dlya-chaynikov/nastroyka-pppoe-na-pk/" title="Просмотреть все записи в рубрике &laquo;Настройка PPPoE на ПК&raquo;">Настройка PPPoE на ПК</a>
+</li>
+	<li class="cat-item cat-item-194"><a href="https://nagg.ru/category/dlya-chaynikov/nastroyka-modemov-i-routerov/" title="Просмотреть все записи в рубрике &laquo;Настройка модемов и роутеров&raquo;">Настройка модемов и роутеров</a>
+</li>
+	<li class="cat-item cat-item-193"><a href="https://nagg.ru/category/dlya-chaynikov/nastroyka-pochtovyih-programm/" title="Просмотреть все записи в рубрике &laquo;Настройка почтовых программ&raquo;">Настройка почтовых программ</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-44"><a href="https://nagg.ru/category/tools/" title="Просмотреть все записи в рубрике &laquo;Инструменты&raquo;">Инструменты</a>
+<ul class='children'>
+	<li class="cat-item cat-item-50"><a href="https://nagg.ru/category/tools/happy-soft/" title="Просмотреть все записи в рубрике &laquo;Полезный софт&raquo;">Полезный софт</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="https://nagg.ru/category/tools/scripts/" title="Просмотреть все записи в рубрике &laquo;Скрипты&raquo;">Скрипты</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://nagg.ru/category/list/" title="Просмотреть все записи в рубрике &laquo;Статьи&raquo;">Статьи</a>
+<ul class='children'>
+	<li class="cat-item cat-item-59"><a href="https://nagg.ru/category/list/red5/" title="Просмотреть все записи в рубрике &laquo;FMS: RED5&raquo;">FMS: RED5</a>
+</li>
+	<li class="cat-item cat-item-188"><a href="https://nagg.ru/category/list/freebsd/" title="Просмотреть все записи в рубрике &laquo;FreeBSD&raquo;">FreeBSD</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://nagg.ru/category/list/linux-leve1/" title="Просмотреть все записи в рубрике &laquo;Linux: для начинающих&raquo;">Linux: для начинающих</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://nagg.ru/category/list/linux-leve10/" title="Просмотреть все записи в рубрике &laquo;Linux: для профи&raquo;">Linux: для профи</a>
+</li>
+	<li class="cat-item cat-item-189"><a href="https://nagg.ru/category/list/ubuntu-list/" title="Просмотреть все записи в рубрике &laquo;Ubuntu&raquo;">Ubuntu</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="https://nagg.ru/category/list/www-learn/" title="Просмотреть все записи в рубрике &laquo;Www: веб мастеру&raquo;">Www: веб мастеру</a>
+</li>
+	<li class="cat-item cat-item-145"><a href="https://nagg.ru/category/list/nezavisimyie-avtorskie-stati/" title="Просмотреть все записи в рубрике &laquo;Независимые авторские статьи&raquo;">Независимые авторские статьи</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://nagg.ru/category/tech/" title="Просмотреть все записи в рубрике &laquo;Тех.документация&raquo;">Тех.документация</a>
+<ul class='children'>
+	<li class="cat-item cat-item-10"><a href="https://nagg.ru/category/tech/tag-cisco-tech/" title="Просмотреть все записи в рубрике &laquo;Cisco Systems&raquo;">Cisco Systems</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="https://nagg.ru/category/tech/businesstech/" title="Просмотреть все записи в рубрике &laquo;Технологии&raquo;">Технологии</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-74"><a href="https://nagg.ru/category/q/" title="Цитаты из книг : лучшие цитаты ">Цитаты из книг</a>
+</li>
+        					</ul>
+                            				</div>
+			</div>
+	<div class="span-24" id="contentwrap">	
+			<div class="span-16">
+				<div id="content">	
+						
+						                        <div class="postwrap">
+						<div class="post-3345 post type-post status-publish format-standard hentry category-bez-rubriki tag-ddos tag-nginx tag-testcookie" id="post-3345">
+							<h2 class="title">Nginx: автоматическая защита от парсинга и DDoS-атак</h2>
+							<div class="postdate"><img src="https://nagg.ru/wp-content/themes/iRecipes/images/date.png" /> Апрель 16th, 2017 <img src="https://nagg.ru/wp-content/themes/iRecipes/images/user.png" /> Фомин Сергей </div>
+			
+							<div class="entry">
+								<p>В своей прошлой <a href="https://nagg.ru/2013/12/nginx-zashhita-ot-ddos-atak/" >статье</a> я писал о возможности применения данного способа защиты от атак с помощью модуля Nginx testcookie. Сегодня мы более подробно остановимся на реализации скрипта, который автоматически будет включать защиту, обновляя конфиг и отправляя уведомление на email при срабатывании.</p>
+<p>Устанавливаем и включаем модуль:</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+yum install nginx-module-testcookie
+
+# /etc/nginx/module.inc.conf
+load_module modules/ngx_http_testcookie_access_module.so;
+</pre>
+<p>Скрипт <strong>/srv/scripts/check_ddos.sh</strong> выглядит следующим образом и работает довольно просто. Он мониторит LA и количество коннектов к nginx. При превышении установленных порогов LA_ACTIVATE или NGINX_CONNECT включает тесткуку и отправляет письмо на email. При снижении LA ниже порога LA_DEACTIVATE, скрипт выключает тесткуку:</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+#!/bin/sh
+
+NGINX_CONF=/srv/www/nagg.ru/conf/nginx.conf
+MAIL=&quot;&quot; # true is enable send mail
+MAILTO=root
+LA_ACTIVATE=17
+LA_DEACTIVATE=5
+NGINX_CONNECT=1000
+
+########################################################
+TMPLOG=/tmp/testcookie_module.tmp
+NGINXCONN=`curl -s http://localhost/nginx-status | grep &quot;Active&quot; | awk '{print($3)}'`
+LA=`cat /proc/loadavg | awk -F '.' '{print($1)}'`
+
+function e {
+    echo -en $(date &quot;+%F %T&quot;): &quot;$1&quot;
+}
+
+if [ ! -f $TMPLOG ];then echo 0 &gt; $TMPLOG; fi
+LASTRESULT=`cat $TMPLOG`
+
+if [ -n &quot;$NGINXCONN&quot; ]; then
+  if [ $NGINXCONN -gt $NGINX_CONNECT ]; then
+    ALERT1=&quot;1&quot;
+  fi
+fi
+
+if [ -n &quot;$LA&quot; ]; then
+  if [ $LA -gt $LA_ACTIVATE ]; then
+    ALERT2=&quot;1&quot;
+  fi
+fi
+
+ALERT=$ALERT1$ALERT2
+
+if [ -n &quot;$ALERT&quot; -a $LASTRESULT -eq 0 ]; then
+    e; printf &quot;Nginx connect: %-4s LA: %-3s | Activate testcookie\n&quot; &quot;$NGINXCONN&quot; &quot;$LA&quot;
+    sed -i 's/.*##-AUTO-DDOS-LABEL-##/\ttestcookie on; ##-AUTO-DDOS-LABEL-##/g' $NGINX_CONF
+    /sbin/service nginx reload &gt;/dev/null 2&gt;&amp;1
+    echo 1 &gt; $TMPLOG
+    if [ &quot;$MAIL&quot; = &quot;true&quot; ];then
+        echo &quot;Nginx connect $NGINXCONN, LA $LA. Nginx test-cookie enable&quot; | mail -s &quot;`hostname` DDOS detected. Nginx test-cookie enable&quot; $MAILTO
+    fi
+fi
+
+if [ $LA -le $LA_DEACTIVATE -a $LASTRESULT -eq 1 ]; then
+    e; printf &quot;Nginx connect: %-4s LA: %-3s | Dectivate testcookie\n&quot; &quot;$NGINXCONN&quot; &quot;$LA&quot;
+    sed -i 's/.*##-AUTO-DDOS-LABEL-##/\ttestcookie off; ##-AUTO-DDOS-LABEL-##/g' $NGINX_CONF
+    /sbin/service nginx reload &gt;/dev/null 2&gt;&amp;1
+    echo 0 &gt; $TMPLOG
+fi
+</pre>
+<p><span id="more-3345"></span></p>
+<p>После установки rpm с собранным модулем testcookie, конфги должен выглядеть следующим образом:</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+nagg.ru.conf 
+
+server {
+    listen 80;
+    server_name nagg.ru;
+
+    testcookie off;
+    testcookie_name RCPC;
+    testcookie_secret XXXXXXXXXXXXXXXXXXXX;
+    testcookie_session $remote_addr;
+    testcookie_arg attempt;
+    testcookie_max_attempts 3;
+    testcookie_fallback /cookies.html?backurl=http://$host$request_uri;
+    testcookie_get_only on;
+    testcookie_redirect_via_refresh on;
+
+    testcookie_refresh_encrypt_cookie on;
+    testcookie_refresh_encrypt_cookie_key random;
+    testcookie_refresh_encrypt_cookie_iv random;
+    testcookie_refresh_template '&lt;html&gt;&lt;body&gt;setting cookie...&lt;script type=\&quot;text/javascript\&quot; src=\&quot;/aes.min.js\&quot; &gt;&lt;/script&gt;&lt;script&gt;function toNumbers(d){var e=[];d.replace(/(..)/g,function(d){e.push(parseInt(d,16))});return e}function toHex(){for(var d=[],d=1==arguments.length&amp;&amp;arguments[0].constructor==Array?arguments[0]:arguments,e=&quot;&quot;,f=0;f&lt;d.length;f++)e+=(16&gt;d[f]?&quot;0&quot;:&quot;&quot;)+d[f].toString(16);return e.toLowerCase()}var a=toNumbers(&quot;$testcookie_enc_key&quot;),b=toNumbers(&quot;$testcookie_enc_iv&quot;),c=toNumbers(&quot;$testcookie_enc_set&quot;);document.cookie=&quot;RCPC=&quot;+toHex(slowAES.decrypt(c,2,a,b))+&quot;; expires=Thu, 31-Dec-37 23:55:55 GMT; path=/&quot;;document.location.href=&quot;$testcookie_nexturl&quot;;&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;';
+
+    # добавляем в исключение IP
+    testcookie_whitelist {
+       X.X.X.X/32;
+       Y.Y.Y.Y/32;
+    }
+
+    location = /aes.min.js {
+        gzip on;
+        gzip_min_length 1000;
+        gzip_types text/plain;
+        gzip_static on;
+        root /srv/www/nagg.ru/data;
+    }
+
+    location = /cookies.html {
+        root /srv/www/nagg.ru/htdocs;
+    }
+
+    location / {
+testcookie off; ##-AUTO-DDOS-LABEL-##
+	proxy_pass http://127.0.0.1:8080;
+	proxy_set_header Proxy &quot;&quot;;
+	proxy_redirect off;
+	proxy_set_header Host $host;
+	proxy_set_header X-Real-IP $remote_addr;
+	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+	proxy_read_timeout 600;
+	client_max_body_size 256m;
+
+	proxy_buffer_size 16k;
+	proxy_buffers 32 16k;
+    }
+
+    include vhost.inc.conf;
+}
+</pre>
+<p>В локейшене обязательно должны быть файлы <a href="https://nagg.ru/wp-content/uploads/2017/04/aes.min.js" >aes.min.js</a> и <a href="https://nagg.ru/wp-content/uploads/2017/04/aes.min.js.gz" >aes.min.js.gz</a>, скачать их можно по ссылкам. Меняем <strong>testcookie_secret</strong> и кладем в каталог с сайтом скрипт aes.min.js.</p>
+<p>Осталось дело за малым &#8211; добавить в крон скрипт на запуск раз в минуту и применить изменения в nginx.</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+/etc/cron.d/check_ddos_testcookie_module
+* * * * * root /srv/scripts/check_ddos.sh &gt; &gt;&gt;/srv/www/nagg.ru/logs/testcookie_module-acc 2&gt;&amp;1
+</pre>
+<p>При активации скрипта необходимо выключить защиту вручную, изменив в конфиге nginx переменную &laquo;testcookie on&raquo; на &laquo;testcookie off&raquo;.</p>
+<p>Обратите внимание, при включении защиты testcookie, доступ будет осложнен не только для атакующих ботов, но и для поисковых, это серьезная проблема и одновременно причина не держать постоянно включенной защиту без необходимости, помните, вы включаете защиту только во время атаки и выключаете как атака завершится.</p>
+<p>Related posts:</p><ol>
+<li><a href='https://nagg.ru/2013/12/nginx-zashhita-ot-ddos-atak/' rel='bookmark' title='Nginx защита от DDoS атак'>Nginx защита от DDoS атак</a> <small>При несложных атаках, можно защититься средствами сервера, в некоторых случаях...</small></li>
+<li><a href='https://nagg.ru/2014/09/nginx-zashhita-ot-ddos-atak-prodolzhenie/' rel='bookmark' title='Nginx защита от DDoS атак &#8211; продолжение'>Nginx защита от DDoS атак &#8211; продолжение</a> <small>Обычно атака ботов происходит на любой участок сайта, обычно это...</small></li>
+<li><a href='https://nagg.ru/2014/12/proksirovanie-zaprosov-s-pomoshhyu-nginx/' rel='bookmark' title='Проксирование запросов с помощью Nginx'>Проксирование запросов с помощью Nginx</a> <small>Например стоит задача спроксировать через свой домен (mydomain.ru) ссылки вида:...</small></li>
+<li><a href='https://nagg.ru/2014/09/peredacha-https-prilozheniyu-v-svyazke-nginx-apache/' rel='bookmark' title='Передача HTTPS приложению в связке Nginx Apache'>Передача HTTPS приложению в связке Nginx Apache</a> <small>Иногда при работе по защищенному HTTPS-соединению, приложение не может определить...</small></li>
+<li><a href='https://nagg.ru/2015/02/nginx-prinuditelnoe-keshirovanie-sayta/' rel='bookmark' title='Nginx: принудительное кэширование сайта'>Nginx: принудительное кэширование сайта</a> <small>Резкие всплески посещаемости всегда дают о себе знать высокой нагрузкой,...</small></li>
+</ol>															</div>
+							<div class="postmeta"><img src="https://nagg.ru/wp-content/themes/iRecipes/images/folder.png" /> Posted in <a href="https://nagg.ru/category/bez-rubriki/" title="Просмотреть все записи в рубрике &laquo;ДЕФОЛТ&raquo;" rel="category tag">ДЕФОЛТ</a>  <img src="https://nagg.ru/wp-content/themes/iRecipes/images/tag.png" /> Tags: <a href="https://nagg.ru/tag/ddos/" rel="tag">ddos</a>, <a href="https://nagg.ru/tag/nginx/" rel="tag">NGINX</a>, <a href="https://nagg.ru/tag/testcookie/" rel="tag">testcookie</a></div>
+						
+							<div class="navigation clearfix">
+								<div class="alignleft">&laquo; <a href="https://nagg.ru/2016/11/docker-consul-nachalo/" rel="prev">Docker + Consul. Начало</a></div>
+								<div class="alignright"><a href="https://nagg.ru/2017/04/centos-udev-renamed-network-interface-eth0-to-em1/" rel="next">CentOS: udev renamed network interface eth0 to em1</a> &raquo;</div>
+							</div>
+							
+															You can <a href="#respond">leave a response</a>, or <a href="https://nagg.ru/2017/04/nginx-avtomaticheskaya-zashhita-ot-parsinga-i-ddos-atak/trackback/" rel="trackback">trackback</a> from your own site.
+	
+													</div><!--/post-3345-->
+						</div>
+				
+<div id="vk_comments"></div>
+<script type="text/javascript">
+VK.Widgets.Comments("vk_comments", {
+	limit: 20, 
+	width: 500, 
+	attach: "video,photo,audio,link,graffiti",
+    autoPublish: 0,
+	onChange: vkontakte_comments_save_data
+});
+
+
+function vkontakte_comments_save_data( num, last_comment, date ) {
+
+	var params = {
+		action: 'vkcomments_comment_activity',
+		num: num,
+		last_comment: last_comment,
+		date: date
+	};
+
+    jQuery.ajax({
+        url: 'https://nagg.ru/wp-admin/admin-ajax.php',
+        dataType : "json",
+        type: "POST",
+        data: params
+    });
+
+	
+}
+
+</script>
+   
+
+<!-- You can start editing here. -->
+
+
+			<!-- If comments are open, but there are no comments. -->
+
+	 
+
+
+<div id="respond">
+
+<h3>Оставить комментарий</h3>
+
+<div class="cancel-comment-reply">
+	<small><a rel="nofollow" id="cancel-comment-reply-link" href="/2017/04/nginx-avtomaticheskaya-zashhita-ot-parsinga-i-ddos-atak/#respond" style="display:none;">Нажмите, чтобы отменить ответ.</a></small>
+</div>
+
+
+<form action="https://nagg.ru/wp-comments-post.php" method="post" id="commentform">
+
+
+<p><input type="text" name="author" id="author" value="" size="22" tabindex="1" aria-required='true' />
+<label for="author"><small>Name (required)</small></label></p>
+
+<p><input type="text" name="email" id="email" value="" size="22" tabindex="2" aria-required='true' />
+<label for="email"><small>Mail (will not be published) (required)</small></label></p>
+
+<p><input type="text" name="url" id="url" value="" size="22" tabindex="3" />
+<label for="url"><small>Website</small></label></p>
+
+
+<!--<p><small><strong>XHTML:</strong> You can use these tags: <code>&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </code></small></p>-->
+
+<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
+
+<p><input name="submit" type="submit" id="submit" tabindex="5" value="Комментировать" />
+<input type='hidden' name='comment_post_ID' value='3345' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p>
+
+<div id="captchaImgDiv">
+
+<div class="captchaSizeDivLarge"><img id="si_image_com" class="si-captcha" src="https://nagg.ru/wp-content/plugins/si-captcha-for-wordpress/captcha/securimage_show.php?si_form_id=com&amp;prefix=Xqs47pUm3rGALm9d" width="175" height="60" alt="CAPTCHA Image" title="CAPTCHA Image" />
+    <input id="si_code_com" name="si_code_com" type="hidden"  value="Xqs47pUm3rGALm9d" />
+    <div id="si_refresh_com">
+<a href="#" rel="nofollow" title="Refresh Image" onclick="si_captcha_refresh('si_image_com','com','/wp-content/plugins/si-captcha-for-wordpress/captcha','https://nagg.ru/wp-content/plugins/si-captcha-for-wordpress/captcha/securimage_show.php?si_form_id=com&amp;prefix='); return false;">
+      <img class="captchaImgRefresh" src="https://nagg.ru/wp-content/plugins/si-captcha-for-wordpress/captcha/images/refresh.png" width="22" height="20" alt="Refresh Image" onclick="this.blur();" /></a>
+  </div>
+  </div>
+<div id="captchaInputDiv"><input id="captcha_code" name="captcha_code" type="text" value="" tabindex="4"  />
+ <label id="captcha_code_label" for="captcha_code">CAPTCHA Code</label><span class="required"> *</span>
+ </div>
+</div>
+      <script type='text/javascript'>
+          var sUrlInput = document.getElementById("comment");
+                  var oParent = sUrlInput.parentNode;
+          var sSubstitue = document.getElementById("captchaImgDiv");
+                  oParent.appendChild(sSubstitue, sUrlInput);
+      </script>
+            <noscript>
+          <style type='text/css'>#submit {display:none;}</style><br />           <input name="submit" type="submit" id="submit-alt" tabindex="6" value="Submit Comment" />
+          </noscript>
+  <p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="b63a34b608" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="210"/></p>
+</form>
+
+</div>
+
+											</div>
+			</div>
+		<div class="span-8 last">
+
+	
+	<div class="sidebar">
+            			<div class="addthis_toolbox">   
+    			    <div class="custom_images">
+    			            <a class="addthis_button_twitter"><img src="https://nagg.ru/wp-content/themes/iRecipes/images/socialicons/twitter.png" width="32" height="32" alt="Twitter" /></a>
+    			            <a class="addthis_button_delicious"><img src="https://nagg.ru/wp-content/themes/iRecipes/images/socialicons/delicious.png" width="32" height="32" alt="Delicious" /></a>
+    			            <a class="addthis_button_facebook"><img src="https://nagg.ru/wp-content/themes/iRecipes/images/socialicons/facebook.png" width="32" height="32" alt="Facebook" /></a>
+    			            <a class="addthis_button_digg"><img src="https://nagg.ru/wp-content/themes/iRecipes/images/socialicons/digg.png" width="32" height="32" alt="Digg" /></a>
+    			            <a class="addthis_button_stumbleupon"><img src="https://nagg.ru/wp-content/themes/iRecipes/images/socialicons/stumbleupon.png" width="32" height="32" alt="Stumbleupon" /></a>
+    			            <a class="addthis_button_favorites"><img src="https://nagg.ru/wp-content/themes/iRecipes/images/socialicons/favorites.png" width="32" height="32" alt="Favorites" /></a>
+    			            <a class="addthis_button_more"><img src="https://nagg.ru/wp-content/themes/iRecipes/images/socialicons/more.png" width="32" height="32" alt="More" /></a>
+    			    </div>
+    			    <script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js?pub=xa-4a65e1d93cd75e94"></script>
+    			</div>
+    			        
+
+		
+				<ul>
+			<li id="text-5" class="widget widget_text"><h2 class="widgettitle">Хостинг сайта</h2>			<div class="textwidget"><a href="https://backupspace.ru/" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','http://backupspace.ru']);">https://backupspace.ru/</a></div>
+		</li>		<li id="recent-posts-3" class="widget widget_recent_entries">		<h2 class="widgettitle">Новое на сайте</h2>		<ul>
+				<li><a href="https://nagg.ru/2017/05/ustanovka-i-nastroyka-sertifikatov-let-s-encrypt/" title="Установка и настройка сертификатов Let&#8217;s Encrypt">Установка и настройка сертификатов Let&#8217;s Encrypt</a></li>
+				<li><a href="https://nagg.ru/2017/04/centos-udev-renamed-network-interface-eth0-to-em1/" title="CentOS: udev renamed network interface eth0 to em1">CentOS: udev renamed network interface eth0 to em1</a></li>
+				<li><a href="https://nagg.ru/2017/04/nginx-avtomaticheskaya-zashhita-ot-parsinga-i-ddos-atak/" title="Nginx: автоматическая защита от парсинга и DDoS-атак">Nginx: автоматическая защита от парсинга и DDoS-атак</a></li>
+				<li><a href="https://nagg.ru/2016/11/docker-consul-nachalo/" title="Docker + Consul. Начало">Docker + Consul. Начало</a></li>
+				<li><a href="https://nagg.ru/2016/09/kak-v-linux-nayti-i-rekursivno-zamenit-stroku-vo-vseh-faylah/" title="Как в Linux найти и рекурсивно заменить строку во всех файлах?">Как в Linux найти и рекурсивно заменить строку во всех файлах?</a></li>
+				</ul>
+		</li><li id="calendar-8" class="widget widget_calendar"><h2 class="widgettitle">Календарь записей</h2><div id="calendar_wrap"><table id="wp-calendar">
+	<caption>Апрель 2017</caption>
+	<thead>
+	<tr>
+		<th scope="col" title="Понедельник">Пн</th>
+		<th scope="col" title="Вторник">Вт</th>
+		<th scope="col" title="Среда">Ср</th>
+		<th scope="col" title="Четверг">Чт</th>
+		<th scope="col" title="Пятница">Пт</th>
+		<th scope="col" title="Суббота">Сб</th>
+		<th scope="col" title="Воскресенье">Вс</th>
+	</tr>
+	</thead>
+
+	<tfoot>
+	<tr>
+		<td colspan="3" id="prev"><a href="https://nagg.ru/2016/11/" title="Посмотреть записи за Ноябрь 2016">&laquo; Ноя</a></td>
+		<td class="pad">&nbsp;</td>
+		<td colspan="3" id="next"><a href="https://nagg.ru/2017/05/" title="Посмотреть записи за Май 2017">Май &raquo;</a></td>
+	</tr>
+	</tfoot>
+
+	<tbody>
+	<tr>
+		<td colspan="5" class="pad">&nbsp;</td><td>1</td><td>2</td>
+	</tr>
+	<tr>
+		<td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td>
+	</tr>
+	<tr>
+		<td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td><a href="https://nagg.ru/2017/04/16/" title="Nginx: автоматическая защита от парсинга и DDoS-атак">16</a></td>
+	</tr>
+	<tr>
+		<td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td>
+	</tr>
+	<tr>
+		<td><a href="https://nagg.ru/2017/04/24/" title="CentOS: udev renamed network interface eth0 to em1">24</a></td><td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td>
+	</tr>
+	</tbody>
+	</table></div></li><li id="tag_cloud-3" class="widget widget_tag_cloud"><h2 class="widgettitle">Метки</h2><div class="tagcloud"><a href='https://nagg.ru/tag/apache/' class='tag-link-67' title='6 записей' style='font-size: 9.4788732394366pt;'>APACHE</a>
+<a href='https://nagg.ru/tag/asterisk/' class='tag-link-40' title='8 записей' style='font-size: 10.464788732394pt;'>ASTERISK</a>
+<a href='https://nagg.ru/tag/centos/' class='tag-link-136' title='7 записей' style='font-size: 9.9718309859155pt;'>centos</a>
+<a href='https://nagg.ru/tag/tag-cisco/' class='tag-link-34' title='11 записей' style='font-size: 11.746478873239pt;'>CISCO</a>
+<a href='https://nagg.ru/tag/exim/' class='tag-link-239' title='4 записи' style='font-size: 8pt;'>exim</a>
+<a href='https://nagg.ru/tag/freepbx/' class='tag-link-42' title='4 записи' style='font-size: 8pt;'>FREEPBX</a>
+<a href='https://nagg.ru/tag/generation-p/' class='tag-link-85' title='26 записей' style='font-size: 15.197183098592pt;'>GenerationП</a>
+<a href='https://nagg.ru/tag/ip-telefoniya/' class='tag-link-58' title='4 записи' style='font-size: 8pt;'>IP ТЕЛЕФОНИЯ</a>
+<a href='https://nagg.ru/tag/linux/' class='tag-link-36' title='37 записей' style='font-size: 16.676056338028pt;'>LINUX</a>
+<a href='https://nagg.ru/tag/mysql/' class='tag-link-62' title='11 записей' style='font-size: 11.746478873239pt;'>MySQL</a>
+<a href='https://nagg.ru/tag/nginx/' class='tag-link-66' title='14 записей' style='font-size: 12.732394366197pt;'>NGINX</a>
+<a href='https://nagg.ru/tag/openvz/' class='tag-link-251' title='5 записей' style='font-size: 8.7887323943662pt;'>openvz</a>
+<a href='https://nagg.ru/tag/s-n-u-f-f/' class='tag-link-219' title='17 записей' style='font-size: 13.521126760563pt;'>s.n.u.f.f.</a>
+<a href='https://nagg.ru/tag/ssl/' class='tag-link-31' title='4 записи' style='font-size: 8pt;'>SSL</a>
+<a href='https://nagg.ru/tag/vpn/' class='tag-link-35' title='4 записи' style='font-size: 8pt;'>VPN</a>
+<a href='https://nagg.ru/tag/wordpress/' class='tag-link-69' title='5 записей' style='font-size: 8.7887323943662pt;'>WORDPRESS</a>
+<a href='https://nagg.ru/tag/ampir-v/' class='tag-link-81' title='19 записей' style='font-size: 13.915492957746pt;'>Ампир В</a>
+<a href='https://nagg.ru/tag/ananasnaya-voda-dlya-prekrasnoy-damyi/' class='tag-link-125' title='6 записей' style='font-size: 9.4788732394366pt;'>Ананасная вода для прекрасной дамы</a>
+<a href='https://nagg.ru/tag/security/' class='tag-link-30' title='9 записей' style='font-size: 10.957746478873pt;'>БЕЗОПАСНОСТЬ</a>
+<a href='https://nagg.ru/tag/betman-apollo/' class='tag-link-288' title='9 записей' style='font-size: 10.957746478873pt;'>Бэтман Аполло</a>
+<a href='https://nagg.ru/tag/viktor-pelevin/' class='tag-link-119' title='73 записи' style='font-size: 19.535211267606pt;'>Виктор Пелевин</a>
+<a href='https://nagg.ru/tag/dzen-i-iskusstvo-uhoda-za-mototsiklom/' class='tag-link-352' title='9 записей' style='font-size: 10.957746478873pt;'>Дзен и искусство ухода за мотоциклом</a>
+<a href='https://nagg.ru/tag/den-millmen/' class='tag-link-318' title='10 записей' style='font-size: 11.352112676056pt;'>Дэн Миллмэн</a>
+<a href='https://nagg.ru/tag/kollektsioner/' class='tag-link-91' title='7 записей' style='font-size: 9.9718309859155pt;'>Коллекционер</a>
+<a href='https://nagg.ru/tag/master-i-margarita/' class='tag-link-118' title='6 записей' style='font-size: 9.4788732394366pt;'>Мастер и Маргарита</a>
+<a href='https://nagg.ru/tag/matsuo-monro/' class='tag-link-298' title='7 записей' style='font-size: 9.9718309859155pt;'>Мацуо Монро</a>
+<a href='https://nagg.ru/tag/mihail-bulgakov/' class='tag-link-117' title='6 записей' style='font-size: 9.4788732394366pt;'>Михаил Булгаков</a>
+<a href='https://nagg.ru/tag/nastroyka-pppoe-soedineniya/' class='tag-link-184' title='6 записей' style='font-size: 9.4788732394366pt;'>Настройка PPPoE-соединения</a>
+<a href='https://nagg.ru/tag/nauchi-menya-umirat/' class='tag-link-299' title='7 записей' style='font-size: 9.9718309859155pt;'>Научи меня умирать</a>
+<a href='https://nagg.ru/tag/neulovimyiy-habba-hen/' class='tag-link-108' title='5 записей' style='font-size: 8.7887323943662pt;'>Неуловимый Хабба Хэн</a>
+<a href='https://nagg.ru/tag/put-mirnogo-voina/' class='tag-link-319' title='10 записей' style='font-size: 11.352112676056pt;'>Путь мирного воина</a>
+<a href='https://nagg.ru/tag/put-samuraya/' class='tag-link-307' title='4 записи' style='font-size: 8pt;'>Путь самурая</a>
+<a href='https://nagg.ru/tag/robert-pirsig/' class='tag-link-351' title='10 записей' style='font-size: 11.352112676056pt;'>Роберт Пирсиг</a>
+<a href='https://nagg.ru/tag/%d1%81%d0%ba%d1%80%d0%b8%d0%bf%d1%82%d1%8b/' class='tag-link-51' title='5 записей' style='font-size: 8.7887323943662pt;'>СКРИПТЫ</a>
+<a href='https://nagg.ru/tag/svyashhennaya-kniga-oborotnya/' class='tag-link-78' title='29 записей' style='font-size: 15.69014084507pt;'>Священная книга оборотня</a>
+<a href='https://nagg.ru/tag/t/' class='tag-link-82' title='6 записей' style='font-size: 9.4788732394366pt;'>Т</a>
+<a href='https://nagg.ru/tag/teh-stati/' class='tag-link-28' title='5 записей' style='font-size: 8.7887323943662pt;'>ТЕХНИЧЕСКИЕ СТАТЬИ</a>
+<a href='https://nagg.ru/tag/tsitatyi-iz-knig/' class='tag-link-75' title='13 записей' style='font-size: 12.43661971831pt;'>ЦИТАТЫ ИЗ КНИГ</a>
+<a href='https://nagg.ru/tag/pelevin/' class='tag-link-76' title='131 запись' style='font-size: 22pt;'>Цитаты: Виктор Пелевин</a>
+<a href='https://nagg.ru/tag/dzhon-faulz/' class='tag-link-92' title='16 записей' style='font-size: 13.225352112676pt;'>Цитаты: Джон Фаулз</a>
+<a href='https://nagg.ru/tag/maks-fray/' class='tag-link-106' title='20 записей' style='font-size: 14.112676056338pt;'>Цитаты: Макс Фрай</a>
+<a href='https://nagg.ru/tag/tsunetomo-yamamoto/' class='tag-link-306' title='4 записи' style='font-size: 8pt;'>Цунэтомо Ямамото</a>
+<a href='https://nagg.ru/tag/chapaev-i-pustota/' class='tag-link-79' title='8 записей' style='font-size: 10.464788732394pt;'>Чапаев и Пустота</a>
+<a href='https://nagg.ru/tag/volhv/' class='tag-link-150' title='6 записей' style='font-size: 9.4788732394366pt;'>волхв</a>
+<a href='https://nagg.ru/tag/intervyu/' class='tag-link-142' title='12 записей' style='font-size: 12.042253521127pt;'>интервью</a></div>
+</li>		</ul>
+			</div>
+</div>
+	</div>
+	</div>
+	<div id="footer">Copyright &copy; <a href="https://nagg.ru"><strong>ПОЗИТИВ-ГЕНЕРАТОР</strong></a>  -     3.73MB<script type='text/javascript' src='https://nagg.ru/wp-content/plugins/si-captcha-for-wordpress/captcha/si_captcha.js?ver=1.0'></script>
+<script type="text/javascript">
+//<![CDATA[
+var si_captcha_styles = "\
+<!-- begin SI CAPTCHA Anti-Spam - comment form style -->\
+<style type='text/css'>\
+div#captchaImgDiv { display:block; }\
+.captchaSizeDivSmall { width:175px; height:45px; padding-top:10px; }\
+.captchaSizeDivLarge { width:250px; height:60px; padding-top:10px; }\
+img#si_image_com,#si_image_reg,#si_image_log,#si_image_side_login { border-style:none; margin:0; padding-right:5px; float:left; }\
+.captchaImgRefresh { border-style:none; margin:0; vertical-align:bottom; }\
+div#captchaInputDiv { display:block; padding-top:15px; padding-bottom:5px; }\
+label#captcha_code_label { margin:0; }\
+input#captcha_code { width:65px; }\
+</style>\
+<!-- end SI CAPTCHA Anti-Spam - comment form style -->\
+";
+jQuery(document).ready(function($) {
+$('head').append(si_captcha_styles);
+});
+//]]>
+</script>
+	
+<!-- START: Syntax Highlighter ComPress -->
+<script type="text/javascript">
+    SyntaxHighlighter.autoloader(
+        'applescript			https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushAppleScript.js',
+        'actionscript3 as3		https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushAS3.js',
+        'bash shell				https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushBash.js',
+        'coldfusion cf			https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushColdFusion.js',
+        'cpp c					https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushCpp.js',
+        'c# c-sharp csharp		https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushCSharp.js',
+        'css					https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushCss.js',
+        'delphi pascal pas		https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushDelphi.js',
+        'diff patch			    https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushDiff.js',
+        'erl erlang				https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushErlang.js',
+        'groovy					https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushGroovy.js',
+        'java					https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushJava.js',
+        'jfx javafx				https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushJavaFX.js',
+        'js jscript javascript	https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushJScript.js',
+        'perl pl				https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushPerl.js',
+        'php					https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushPhp.js',
+        'text plain				https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushPlain.js',
+        'powershell ps          https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushPowerShell.js',
+        'py python				https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushPython.js',
+        'ruby rails ror rb		https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushRuby.js',
+        'sass scss              https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushSass.js',
+        'scala					https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushScala.js',
+        'sql					https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushSql.js',
+        'vb vbnet				https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushVb.js',
+        'xml xhtml xslt html	https://nagg.ru/wp-content/plugins/syntax-highlighter-compress/scripts/shBrushXml.js'
+    );
+                    SyntaxHighlighter.defaults['toolbar'] = false;     SyntaxHighlighter.defaults['tab-size'] = 4;
+    SyntaxHighlighter.all();
+</script>
+<!-- END: Syntax Highlighter ComPress -->
+
+	<script type='text/javascript' src='https://nagg.ru/wp-content/plugins/akismet/_inc/form.js?ver=3.1.8'></script>
+<script type='text/javascript' src='https://nagg.ru/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shCore.js?ver=3.0.9'></script>
+<script type='text/javascript' src='https://nagg.ru/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushBash.js?ver=3.0.9'></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://nagg.ru/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "https://nagg.ru/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?ver=3.0.9";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['auto-links'] = false;
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.all();
+</script>
+ <!--9 / 0,056 -->/ 9 запросов за 0,056 секунд.
+</div>
+
+<div id="footer2">
+<!--LiveInternet counter--><script type="text/javascript">document.write("<a href='http://www.liveinternet.ru/click' target=_blank><img src='//counter.yadro.ru/hit?t26.6;r" + escape(document.referrer) + ((typeof(screen)=="undefined")?"":";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?screen.colorDepth:screen.pixelDepth)) + ";u" + escape(document.URL) +";i" + escape("Жж"+document.title.substring(0,80)) + ";" + Math.random() + "' border=0 width=88 height=15 alt='' title='LiveInternet: показано число посетителей за сегодня'><\/a>")</script><!--/LiveInternet-->
+ </div>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter31772596 = new Ya.Metrika({
+                    id:31772596,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/31772596" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+        <!--<div id="footerw2">Powered by <a href="http://wordpress.org/"><strong>WordPress</strong></a> | Find Wireless Deals at <a href="http://www.bestincellphones.com">BestInCellPhones.com</a>. | Thanks to <a href="http://www.icellphonedeals.com">iCellPhoneDeals.com</a> Free Cell Phones, Find <a href="http://www.thepiggybanker.com/">Highest CD Rates</a> and <a href="http://incineradordegrasaespecial.com">Incinerador De Grasa Revisión</a></div>-->
+</div>
+
+</div>
+</body>
+</html>
+
